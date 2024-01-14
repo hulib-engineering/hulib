@@ -11,7 +11,7 @@ const emailChannel = new EmailAlertChannel('email-channel', {
 export const config = defineConfig({
   projectName: 'Human Library',
   logicalId: 'human-library',
-  repoUrl: 'https://github.com',
+  repoUrl: 'https://github.com/HumanLibrary/hulib.git',
   checks: {
     frequency: Frequency.EVERY_24H,
     locations: ['us-east-1'],
