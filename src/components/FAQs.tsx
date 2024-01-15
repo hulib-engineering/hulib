@@ -28,7 +28,7 @@ const outfit = Outfit({
 const FAQs = (): JSX.Element => {
   return (
     // TODO remove bg
-    <section className="flex flex-col items-center gap-8 self-stretch bg-slate-200 px-[5.625rem] py-[6.25rem] text-[#002254]">
+    <section className="flex flex-col items-center justify-center gap-8 self-stretch bg-slate-200 py-[5.625rem] text-[#002254]">
       <div className="flex w-full flex-col items-center gap-6">
         <h1
           className={`${outfit.className} w-full text-center text-5xl font-bold leading-[3.6rem] `}

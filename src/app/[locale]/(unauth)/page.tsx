@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
+import CTA from '@/components/CTA';
 import FAQs from '@/components/FAQs';
 
 export async function generateMetadata({
@@ -19,6 +20,7 @@ export default function Index() {
   return (
     <div>
       <FAQs />
+      <CTA />
     </div>
   );
 }
