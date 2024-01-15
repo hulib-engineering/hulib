@@ -1,5 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 
+import FAQs from '@/components/FAQs';
+
 export async function generateMetadata({
   params: { locale },
 }: {
@@ -14,5 +16,9 @@ export async function generateMetadata({
 }
 
 export default function Index() {
-  return <div />;
+  return (
+    <div>
+      <FAQs />
+    </div>
+  );
 }
