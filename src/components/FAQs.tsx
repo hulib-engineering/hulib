@@ -1,5 +1,3 @@
-'use client';
-
 import { Outfit } from 'next/font/google';
 import React from 'react';
 
@@ -29,22 +27,23 @@ const FAQs = (): JSX.Element => {
   return (
     // TODO remove bg
     <section className="flex flex-col items-center justify-center gap-8 self-stretch bg-slate-200 py-[5.625rem] text-[#002254]">
-      <div className="flex w-full flex-col items-center gap-6">
-        <h1
-          className={`${outfit.className} w-full text-center text-5xl font-bold leading-[3.6rem] `}
-        >
-          FAQs
-        </h1>
-      </div>
-      <div className="flex w-full flex-col items-start gap-4 self-stretch">
-        {faqs.map((faq) => (
-          <AccordionItem
-            key={Math.floor(Math.random())}
-            question={faq.question}
-            answer={faq.answer}
-            font={outfit.className}
-          />
-        ))}
+      <div
+        className={`${outfit.className} flex w-[48rem] flex-col items-center justify-center gap-8`}
+      >
+        <div className="flex w-full flex-col items-center gap-6">
+          <h1 className="w-full text-center text-5xl font-bold leading-[3.6rem] ">
+            FAQs
+          </h1>
+        </div>
+        <div className="flex w-full flex-col items-start self-stretch">
+          {faqs.map((faq) => (
+            <AccordionItem
+              key={Math.floor(Math.random() * 1000 * faqs.length)}
+              question={faq.question}
+              answer={faq.answer}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
