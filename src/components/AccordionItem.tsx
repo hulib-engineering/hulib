@@ -1,15 +1,12 @@
+'use client';
+
 import React, { useState } from 'react';
 
 interface AccordionItemProps {
   question: string;
   answer: string;
-  font: string;
 }
-const AccordionItem: React.FC<AccordionItemProps> = ({
-  question,
-  answer,
-  font,
-}) => {
+const AccordionItem: React.FC<AccordionItemProps> = ({ question, answer }) => {
   const [accordionOpen, setAccordionOpen] = useState(false);
   return (
     <div className="flex w-full flex-col items-center gap-4 self-stretch rounded-xl px-6">
@@ -18,9 +15,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
         type="button"
         className="flex w-full items-center justify-center rounded-xl bg-white px-6 py-4"
       >
-        <span
-          className={`${font} w-full text-start text-xl font-medium leading-[1.875rem] `}
-        >
+        <span className="w-full text-start text-xl font-medium leading-[1.875rem] ">
           {question}
         </span>
         <div className="flex h-[2rem] w-[2rem] min-w-[2rem] items-center justify-center rounded-lg bg-[#D9E7FD] ">
@@ -59,9 +54,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
         }`}
       >
         <div className="overflow-hidden">
-          <div
-            className={`${font} overflow-hidden p-6 pt-0 text-base font-light leading-normal `}
-          >
+          <div className="overflow-hidden p-6 pt-0 text-base font-light leading-normal ">
             {answer}
           </div>
         </div>
