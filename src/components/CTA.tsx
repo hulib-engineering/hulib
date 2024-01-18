@@ -1,15 +1,16 @@
-import { Outfit } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import React from 'react';
 
 import CTAform from './CTAform';
 
-const outfit = Outfit({
+const poppins = Poppins({
   subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
 });
 const CTA = (): JSX.Element => {
   return (
     <section
-      className={`${outfit.className} flex w-full flex-col items-center justify-center gap-20 self-stretch bg-gray-500 px-[17.5rem] py-[6.25rem] text-[#002254]`}
+      className={`${poppins.className} flex w-full flex-col items-center justify-center gap-20 self-stretch bg-gray-500 px-[17.5rem] py-[6.25rem] text-[#002254]`}
     >
       {/* add backdrop-blur can cause fps drop in low-end devices backdrop-blur-[50px] */}
       <div className="flex w-[78.75rem]  justify-center rounded-[2rem] border-4 border-solid border-white  bg-[rgba(255,_255,_255,_0.50)] ">
