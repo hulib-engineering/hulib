@@ -1,6 +1,6 @@
-import { useTranslations } from 'next-intl';
 import { type ReactNode } from 'react';
 
+import Footer from '@/components/Footer';
 import { AppConfig } from '@/utils/AppConfig';
 
 type IBaseTemplateProps = {
@@ -10,8 +10,6 @@ type IBaseTemplateProps = {
 };
 
 const BaseTemplate = (props: IBaseTemplateProps) => {
-  const t = useTranslations('BaseTemplate');
-
   return (
     <div className="w-full px-1 text-gray-700 antialiased">
       <div className="mx-auto max-w-screen-md">
@@ -40,7 +38,7 @@ const BaseTemplate = (props: IBaseTemplateProps) => {
 
         <main>{props.children}</main>
 
-        <footer className="border-t border-gray-300 py-8 text-center text-sm">
+        {/* <footer className="border-t border-gray-300 py-8 text-center text-sm">
           © Copyright {new Date().getFullYear()} {AppConfig.name}.
           {` ${t('made_with')} `}
           <a
@@ -50,14 +48,9 @@ const BaseTemplate = (props: IBaseTemplateProps) => {
             HuLib
           </a>
           .
-          {/*
-           * PLEASE READ THIS SECTION
-           * I'm an indie maker with limited resources and funds, I'll really appreciate if you could have a link to my website.
-           * The link doesn't need to appear on every page, one link on one page is enough.
-           * For example, in the `About` page. Thank you for your support, it'll mean a lot to me.
-           */}
-        </footer>
+        </footer> */}
       </div>
+      <Footer />
     </div>
   );
 };
