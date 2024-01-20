@@ -13,18 +13,18 @@ const CTAform = (): JSX.Element => {
     setEmail(e.target.value);
   };
   return (
-    <form className="relative flex h-[4.5rem] w-full flex-row items-center justify-center gap-4 self-stretch rounded-[3.125rem] bg-white pr-3">
+    <form className="relative flex h-[4.5rem] w-full flex-row items-center justify-end gap-4 self-stretch rounded-[3.125rem] bg-white">
       <input
         title="Email"
         placeholder="Email Address*"
-        className="h-full w-full rounded-[3.125rem_0_0_3.125rem] pl-7 text-xl outline-none"
+        className="h-full w-full rounded-[3.125rem] pl-7 pr-44 text-xl outline-none"
         onChange={handleChange}
         value={email}
       />
       <button
         type="button"
         onClick={handleClick}
-        className="h-[3rem] items-center justify-center rounded-[2rem] bg-[#0061EF] px-8 py-3 text-base
+        className="absolute right-3 h-[3rem] items-center justify-center rounded-[2rem] bg-[#0061EF] px-8 py-3 text-base
         font-medium leading-6 text-white transition-all duration-300 ease-out hover:bg-[#0056d6]"
       >
         SUBSCRIBE
