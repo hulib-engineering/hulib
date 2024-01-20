@@ -1,7 +1,6 @@
-import { Poppins } from 'next/font/google';
 import React from 'react';
 
-import AccordionItem from './AccordionItem';
+import AccordionItem from '../common/AccordionItem';
 
 const faqs = [
   {
@@ -20,17 +19,12 @@ const faqs = [
       'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor libero ea non similique blanditiis distinctio ipsam dicta, veritatis fugiat aut sequi culpa ipsum quidem earum nam quod quia dolores nesciunt!',
   },
 ];
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
-});
+
 const FAQs = (): JSX.Element => {
   return (
     // TODO remove bg
-    <section className="flex flex-col items-center justify-center gap-8 self-stretch bg-slate-200 py-[5.625rem] text-[#002254]">
-      <div
-        className={`${poppins.className} flex w-[48rem] flex-col items-center justify-center gap-8`}
-      >
+    <section className="flex flex-col items-center justify-center gap-8 self-stretch py-[5.625rem] text-[#002254]">
+      <div className="flex w-[48rem] flex-col items-center justify-center gap-8">
         <div className="flex w-full flex-col items-center gap-6">
           <h1 className="w-full text-center text-5xl font-bold leading-[3.6rem] ">
             FAQs

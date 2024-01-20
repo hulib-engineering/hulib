@@ -2,6 +2,8 @@ import { getTranslations } from 'next-intl/server';
 
 import CTA from '@/components/CTA';
 import FAQs from '@/components/FAQs';
+import Feature from '@/components/Feature';
+import Hero from '@/components/Hero';
 
 export async function generateMetadata({
   params: { locale },
@@ -18,7 +20,9 @@ export async function generateMetadata({
 
 export default function Index() {
   return (
-    <div>
+    <div className="mt-24 flex flex-col items-center justify-center">
+      <Hero />
+      <Feature />
       <FAQs />
       <CTA />
     </div>

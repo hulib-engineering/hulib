@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+#shining::before {
+/* TODO Make shining become a reuseable component */
+  content: "";
+  width: 1rem;
+  height: 6rem;
+  position: absolute;
+  left: -5rem;
+  top: -0.5rem;
+  filter: blur(4px);
+  background: #ffffff;
+  opacity: 0.9;
+  box-shadow: 0 0 10px #ffffff;
+  transition: all;
+  transition-duration: 0.5s;
+  transform: rotate(-20deg) ;
+  z-index: 10;
+}
+#shining:hover::before{
+  left: 17rem;
+}
