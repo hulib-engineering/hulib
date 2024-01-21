@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import React from 'react';
 
+import heroArtwork from '../../public/assets/images/Hero-artwork.png';
+
 const Hero = () => {
   return (
     <section className="flex flex-col items-center justify-center gap-[2rem] self-stretch p-[2rem_5.625rem_12rem_5.625rem]">
@@ -39,11 +41,9 @@ const Hero = () => {
       <div className="relative h-[27.75rem] w-[78.75rem]">
         <div className="relative flex h-[31.9375rem] w-[77.9375rem] shrink-0 justify-center ">
           <Image
-            width={800}
-            height={500}
             alt="Hero Artwork"
-            src="/assets/images/Hero-artwork.png"
-            className=" shrink-0"
+            src={heroArtwork}
+            className="h-[32rem] w-[50rem] shrink-0"
             loading="lazy"
           />
           <Image

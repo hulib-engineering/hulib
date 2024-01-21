@@ -12,7 +12,7 @@ const FeatureCard = (feat: Props) => {
   return (
     <div
       style={{ backgroundColor: feat.bgColor }}
-      className="flex h-[16.25rem] flex-[1_0_0] flex-col items-start gap-2 rounded-[1.25rem] border-4 border-solid border-white p-8  text-[#002254] shadow-[0_12px_24px_0_rgba(187,249,158,0.25)] backdrop-blur-[50px]"
+      className="flex max-w-96 flex-[1_0_0] flex-col items-start gap-2 self-stretch rounded-[1.25rem] border-4 border-solid border-white p-8  text-[#002254] shadow-[0_12px_24px_0_rgba(187,249,158,0.25)] backdrop-blur-[50px]"
     >
       <div className="flex flex-col items-start gap-4">
         <Image

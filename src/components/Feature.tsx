@@ -26,8 +26,8 @@ const featureList = [
 ];
 const Feature = () => {
   return (
-    <section className="flex flex-col items-center gap-20 self-stretch px-80 py-[6.25rem]">
-      <div className="flex items-center justify-center gap-6 self-stretch p-8">
+    <section className="flex flex-col items-center gap-20 self-stretch py-[6.25rem]">
+      <div className="flex items-center justify-center gap-6 self-stretch px-40">
         {featureList.map((feat) => (
           <FeatureCard
             content={feat.content}
