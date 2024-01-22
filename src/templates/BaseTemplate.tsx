@@ -1,65 +1,53 @@
-import { useTranslations } from 'next-intl';
+// import { useTranslations } from 'next-intl';
+import { Poppins } from 'next/font/google';
 import { type ReactNode } from 'react';
 
-import { AppConfig } from '@/utils/AppConfig';
+import { mergeClassnames } from '@/components/private/utils';
+import Footer from '@/layouts/Footer';
+import Header from '@/layouts/Header';
 
 type IBaseTemplateProps = {
-  // leftNav?: ReactNode;
-  // rightNav?: ReactNode;
   children: ReactNode;
 };
 
-const BaseTemplate = (props: IBaseTemplateProps) => {
-  const t = useTranslations('BaseTemplate');
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+});
 
-  return (
-    <div className="w-full px-1 text-gray-700 antialiased">
-      <div className="mx-auto max-w-screen-md">
-        <header className="border-b border-gray-300">
-          <div className="pb-8 pt-16">
-            <h1 className="text-3xl font-bold text-gray-900">
-              {AppConfig.name}
-            </h1>
-            {/* <h2 className="text-xl">{t('description')}</h2> */}
-          </div>
+const BaseTemplate = (props: IBaseTemplateProps) => (
+  <div
+    className={mergeClassnames(
+      poppins.className,
+      'relative w-full bg-main-pattern px-1 antialiased',
+    )}
+  >
+    <div className="mx-auto flex max-w-screen-md flex-col items-center justify-center">
+      <Header />
 
-          {/* <div className="flex justify-between"> */}
-          {/*  <nav> */}
-          {/*    <ul className="flex flex-wrap gap-x-5 text-xl"> */}
-          {/*      {props.leftNav} */}
-          {/*    </ul> */}
-          {/*  </nav> */}
+      <main>{props.children}</main>
 
-          {/*  <nav> */}
-          {/*    <ul className="flex flex-wrap gap-x-5 text-xl"> */}
-          {/*      {props.rightNav} */}
-          {/*    </ul> */}
-          {/*  </nav> */}
-          {/* </div> */}
-        </header>
+      <Footer />
 
-        <main>{props.children}</main>
-
-        <footer className="border-t border-gray-300 py-8 text-center text-sm">
-          © Copyright {new Date().getFullYear()} {AppConfig.name}.
-          {` ${t('made_with')} `}
-          <a
-            href="https://creativedesignsguru.com"
-            className="text-blue-700 hover:border-b-2 hover:border-blue-700"
-          >
-            HuLib
-          </a>
-          .
-          {/*
-           * PLEASE READ THIS SECTION
-           * I'm an indie maker with limited resources and funds, I'll really appreciate if you could have a link to my website.
-           * The link doesn't need to appear on every page, one link on one page is enough.
-           * For example, in the `About` page. Thank you for your support, it'll mean a lot to me.
-           */}
-        </footer>
-      </div>
+      {/* <footer className="border-t border-gray-300 py-8 text-center text-sm"> */}
+      {/*  © Copyright {new Date().getFullYear()} {AppConfig.name}. */}
+      {/*  {` ${t('made_with')} `} */}
+      {/*  <a */}
+      {/*    href="https://creativedesignsguru.com" */}
+      {/*    className="text-blue-700 hover:border-b-2 hover:border-blue-700" */}
+      {/*  > */}
+      {/*    HuLib */}
+      {/*  </a> */}
+      {/*  . */}
+      {/*  /!* */}
+      {/*   * PLEASE READ THIS SECTION */}
+      {/*   * I'm an indie maker with limited resources and funds, I'll really appreciate if you could have a link to my website. */}
+      {/*   * The link doesn't need to appear on every page, one link on one page is enough. */}
+      {/*   * For example, in the `About` page. Thank you for your support, it'll mean a lot to me. */}
+      {/*   *!/ */}
+      {/* </footer> */}
     </div>
-  );
-};
+  </div>
+);
 
 export { BaseTemplate };

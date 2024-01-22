@@ -1,19 +1,16 @@
 {
-  "RootLayout": {
-    "home_link": "Home",
-    "about_link": "About",
-    "guestbook_link": "Guestbook",
-    "portfolio_link": "Portfolio",
-    "sign_in_link": "Sign in",
-    "sign_up_link": "Sign up"
+  "Header": {
+    "contact_us": "contact us"
   },
-  "BaseTemplate": {
-    "description": "Starter code for your Nextjs Boilerplate with Tailwind CSS",
-    "made_with": "Made with"
+  "Footer": {
+    "copyright": "© 2024 HuLib. All rights reserved.",
+    "privacy_policy": "privacy policy",
+    "term_of_service": "term of service",
+    "cookie_settings": "cookie settings"
   },
   "Index": {
-    "meta_title": "Next.js Boilerplate Presentation",
-    "meta_description": "Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework."
+    "meta_title": "HuLib | Landing Page",
+    "meta_description": "There is a story and experience within each of us, so we are born to be somebody."
   },
   "Guestbook": {
     "meta_title": "Guestbook",

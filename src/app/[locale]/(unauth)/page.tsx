@@ -1,5 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 
+import Hero from '@/layouts/Hero';
+
 export async function generateMetadata({
   params: { locale },
 }: {
@@ -14,5 +16,5 @@ export async function generateMetadata({
 }
 
 export default function Index() {
-  return <div />;
+  return <Hero />;
 }

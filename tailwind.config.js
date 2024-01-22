@@ -14,6 +14,10 @@ module.exports = {
       '5xl': '3rem',
       '6xl': '4rem',
     },
+    colors: {
+      primary: '#0061EF',
+      light: '#B0CEFA',
+    },
     extend: {
       colors: {
         gray: {
@@ -38,6 +42,12 @@ module.exports = {
           800: '#2c5282',
           900: '#2a4365',
         },
+        slate: {
+          100: '#f1f5f9',
+        },
+      },
+      backgroundImage: {
+        'main-pattern': "url('/assets/images/bg-pattern.png')",
       },
     },
   },

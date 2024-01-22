@@ -9,11 +9,11 @@
   },
   "BaseTemplate": {
     "description": "Code de démarrage pour Next.js avec Tailwind CSS",
-    "made_with": "Fait avec"
+    "made_with": "Được tạo với"
   },
   "Index": {
-    "meta_title": "Présentation de Next.js Boilerplate",
-    "meta_description": "Next js Boilerplate est le code de démarrage parfait pour votre projet. Construisez votre application React avec le framework Next.js."
+    "meta_title": "HuLib | Landing Page",
+    "meta_description": "Chúng ta đều có một câu chuyện và một trải nghiệm, vì vậy chúng ta đều sinh ra để trở thành một ai đó."
   },
   "Guestbook": {
     "meta_title": "Livre d'or",
