@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
@@ -17,6 +19,8 @@ module.exports = {
     colors: {
       primary: '#0061EF',
       light: '#B0CEFA',
+      white: colors.white,
+      slate: colors.slate,
     },
     extend: {
       colors: {
@@ -43,7 +47,7 @@ module.exports = {
           900: '#2a4365',
         },
         slate: {
-          100: '#f1f5f9',
+          1000: '#002254',
         },
       },
       backgroundImage: {
