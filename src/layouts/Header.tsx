@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 z-[999] flex w-full flex-col items-center justify-center bg-[#f1f4f9bf] px-[5.625rem] py-6 backdrop-blur-[50px]">
-      <div className="flex w-[78.75rem] items-center justify-between">
+      <div className="flex w-full items-center justify-between">
         <div className="flex shrink grow basis-0 items-start">
           <div className="pb-[0.26788rem] pt-[0.3125rem]">
             <Link href="/">

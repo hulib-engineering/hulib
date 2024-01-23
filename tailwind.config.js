@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const colors = require('tailwindcss/colors');
 
 /** @type {import('tailwindcss').Config} */
@@ -21,6 +22,9 @@ module.exports = {
       light: '#B0CEFA',
       white: colors.white,
       slate: colors.slate,
+      lime: colors.lime,
+      violet: colors.violet,
+      amber: colors.amber,
     },
     extend: {
       colors: {
@@ -48,6 +52,15 @@ module.exports = {
         },
         slate: {
           1000: '#002254',
+        },
+        lime: {
+          350: '#bbf99e',
+        },
+        violet: {
+          350: '#ccbafe',
+        },
+        amber: {
+          75: '#ffdf8e',
         },
       },
       backgroundImage: {

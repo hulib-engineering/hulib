@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
+import Features from '@/layouts/Features';
 import Hero from '@/layouts/Hero';
 
 export async function generateMetadata({
@@ -16,5 +17,10 @@ export async function generateMetadata({
 }
 
 export default function Index() {
-  return <Hero />;
+  return (
+    <>
+      <Hero />
+      <Features />
+    </>
+  );
 }
