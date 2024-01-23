@@ -17,7 +17,19 @@
     "hero_call_to_action": "learn more",
     "hero_message_1": "”There is <important>a crack</important> in everything, that’s how <important>the light</important> gets in.”",
     "hero_message_2": "“You are <important>not alone</important> in your <important>struggles</important>.”",
-    "hero_mentor_quantity": "100 <normal>Experienced Mentors</normal>"
+    "hero_mentor_quantity": "100 <normal>Experienced Mentors</normal>",
+    "feature_peers": {
+      "title": "People with the same stories and experiences",
+      "description": "100+ mentors and volunteers having personal experience with the same problem you’re into."
+    },
+    "feature_online_meetings": {
+      "title": "Online Meeting",
+      "description": "Book a meeting with any mentor you want to share and let them know about your struggles."
+    },
+    "feature_safely_sharing": {
+      "title": "Safely Sharing",
+      "description": "Feel free to share your stories without being judged."
+    }
   },
   "Guestbook": {
     "meta_title": "Guestbook",
