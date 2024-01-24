@@ -21,11 +21,13 @@ module.exports = {
       primary: '#0061EF',
       secondary: '#FFC745',
       light: '#B0CEFA',
+      'light-hover': '#D9E7FD',
       white: colors.white,
       slate: colors.slate,
       lime: colors.lime,
       violet: colors.violet,
       amber: colors.amber,
+      indigo: colors.indigo,
     },
     extend: {
       colors: {
