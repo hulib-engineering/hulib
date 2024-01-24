@@ -19,6 +19,7 @@ module.exports = {
     },
     colors: {
       primary: '#0061EF',
+      secondary: '#FFC745',
       light: '#B0CEFA',
       white: colors.white,
       slate: colors.slate,

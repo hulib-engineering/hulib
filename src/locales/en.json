@@ -17,7 +17,7 @@
     "hero_call_to_action": "learn more",
     "hero_message_1": "”There is <important>a crack</important> in everything, that’s how <important>the light</important> gets in.”",
     "hero_message_2": "“You are <important>not alone</important> in your <important>struggles</important>.”",
-    "hero_mentor_quantity": "100 <normal>Experienced Mentors</normal>",
+    "hero_mentor_quantity": "100+ <normal>Experienced Mentors</normal>",
     "feature_peers": {
       "title": "People with the same stories and experiences",
       "description": "100+ mentors and volunteers having personal experience with the same problem you’re into."
@@ -29,6 +29,20 @@
     "feature_safely_sharing": {
       "title": "Safely Sharing",
       "description": "Feel free to share your stories without being judged."
+    },
+    "about_title": "what is hulib",
+    "about_description": "a community project aims to promote well-being through shared stories with mentors.",
+    "about_stories": {
+      "title": "our <highlight>stories</highlight>",
+      "description": "We believe everyone has experienced moments of falling short, uncertainty, and the struggle to connect. <br></br><br></br>At HuLib, inspired by personal encounters and mentorship, we aim to create a safe space for young souls, offering companionship, shared stories, and support. Join us on this dream journey to uncover more happiness together."
+    },
+    "about_mission": {
+      "title": "our <br></br><highlight>mission</highlight>",
+      "description": "At HuLib, we believe in the power of individual stories and experiences, affirming that everyone is destined for significance. <br></br><br></br>Our mission is to forge connections and foster personal growth by providing a dedicated space for sharing these unique narratives."
+    },
+    "about_vision": {
+      "title": "our <br></br><highlight>vision</highlight>",
+      "description": "HuLib envisions contributing to individual well-being by facilitating the exchange of stories with mentors. We aim to construct a supportive community where shared experiences act as a catalyst for positive change. Through mentorship and storytelling, we strive to create a transformative environment that promotes mental health, challenges societal norms, and addresses sensitive issues. <br></br><br></br>HuLib endeavors to be a beacon of empathy, understanding, and connection, shaping a future where every individual's story is both valued and celebrated."
     }
   },
   "Guestbook": {

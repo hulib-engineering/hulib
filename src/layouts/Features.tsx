@@ -20,11 +20,12 @@ const FeatureList = [
     shadowColor: 'shadow-[0_12px_24px_0_rgba(255,224,142,0.25)]',
   },
 ];
+
 const Features = () => {
   const t = useTranslations('Index');
 
   return (
-    <section className="px-[5.625rem] py-[6.25rem]">
+    <section className="px-[20.625rem] py-[6.25rem]">
       <div className="grid grid-cols-3 gap-6 p-8">
         {FeatureList.map((feature) => (
           <FeatureCard
