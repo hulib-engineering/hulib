@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
+import About from '@/layouts/About';
 import Features from '@/layouts/Features';
 import Hero from '@/layouts/Hero';
 
@@ -21,6 +22,7 @@ export default function Index() {
     <>
       <Hero />
       <Features />
+      <About />
     </>
   );
 }

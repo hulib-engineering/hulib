@@ -22,7 +22,7 @@ const BaseTemplate = (props: IBaseTemplateProps) => (
       'relative w-full bg-main-pattern px-1 antialiased',
     )}
   >
-    <div className="mx-auto flex max-w-screen-md flex-col items-center justify-center">
+    <div className="mx-auto flex max-w-full flex-col items-center justify-center">
       <Header />
 
       <main>{props.children}</main>

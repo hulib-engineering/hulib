@@ -7,14 +7,24 @@ import React, { type ReactNode } from 'react';
 import { mergeClassnames } from '@/components/private/utils';
 
 const StarIcons = [
-  { size: 70, yPosition: 'top-60', xPosition: 'right-28' },
-  { size: 35, yPosition: 'top-[26rem]', xPosition: 'right-16' },
-  { size: 35, yPosition: 'top-24', xPosition: 'left-60' },
+  { size: 16, yPosition: 'top-[6.1875rem]', xPosition: 'left-[17.6875rem]' },
+  { size: 60, yPosition: 'bottom-[222px]', xPosition: 'right-[171px]' },
+  { size: 30, yPosition: 'bottom-[115px]', xPosition: 'right-[123px]' },
 ];
 const VectorIcons = [
-  { width: 57, height: 75, yPosition: 'top-[22rem]', xPosition: 'left-0' },
-  { width: 49, height: 65, yPosition: 'top-20', xPosition: 'right-0' },
-  { width: 36, height: 53, yPosition: 'top-40', xPosition: 'left-32' },
+  {
+    width: 57,
+    height: 75,
+    yPosition: 'bottom-[141px]',
+    xPosition: 'left-[13px]',
+  },
+  { width: 49, height: 65, yPosition: 'top-[67px]', xPosition: 'right-0' },
+  {
+    width: 36,
+    height: 53,
+    yPosition: 'top-[136px]',
+    xPosition: 'left-[177px]',
+  },
 ];
 
 const customMessage = (font: string): (() => ReactNode) => {
@@ -28,7 +38,7 @@ const Hero = () => {
   const t = useTranslations('Index');
 
   return (
-    <section className="flex flex-col items-center justify-center gap-32 self-stretch px-[5.625rem] pb-[5.625rem] pt-8">
+    <section className="flex flex-col items-center justify-center gap-32 self-stretch px-[20.625rem] pb-[5.625rem] pt-8">
       <div className="flex w-[48rem] flex-col items-center gap-6 pb-3">
         <div className="flex flex-col items-center gap-4 self-stretch">
           <p className="self-stretch text-center text-lg font-medium uppercase leading-[1.6875rem] text-primary">
@@ -60,45 +70,44 @@ const Hero = () => {
         </div>
       </div>
       <div className="relative w-full">
-        <div className="relative flex h-[31.9375rem] w-[77.9375rem] shrink-0 justify-center">
+        <div className="relative flex justify-center">
           <Image
             alt="Hero artwork"
             src="/assets/images/hero-artwork.png"
-            className="shrink-0"
+            // className="pr-5"
+            priority
             width={748}
             height={511}
-            priority
-            // fill
           />
-          {StarIcons.map((each, index) => (
-            <Image
-              key={index}
-              width={each.size}
-              height={each.size}
-              alt={`Hero star ${index}`}
-              src="/assets/images/icons/star-icon.svg"
-              className={mergeClassnames(
-                'absolute shrink-0',
-                each.xPosition && each.xPosition,
-                each.yPosition && each.yPosition,
-              )}
-            />
-          ))}
-          {VectorIcons.map((each, index) => (
-            <Image
-              key={index}
-              width={each.width}
-              height={each.height}
-              alt={`Hero vector ${index}`}
-              src={`/assets/images/icons/vectors/vector-${index}.svg`}
-              className={mergeClassnames(
-                'absolute shrink-0',
-                each.xPosition && each.xPosition,
-                each.yPosition && each.yPosition,
-              )}
-            />
-          ))}
         </div>
+        {StarIcons.map((each, index) => (
+          <Image
+            key={index}
+            width={each.size}
+            height={each.size}
+            alt={`Hero star ${index}`}
+            src={`/assets/images/icons/stars/star-${index}.svg`}
+            className={mergeClassnames(
+              'absolute shrink-0',
+              each.xPosition && each.xPosition,
+              each.yPosition && each.yPosition,
+            )}
+          />
+        ))}
+        {VectorIcons.map((each, index) => (
+          <Image
+            key={index}
+            width={each.width}
+            height={each.height}
+            alt={`Hero vector ${index}`}
+            src={`/assets/images/icons/vectors/vector-${index}.svg`}
+            className={mergeClassnames(
+              'absolute shrink-0',
+              each.xPosition && each.xPosition,
+              each.yPosition && each.yPosition,
+            )}
+          />
+        ))}
         <p className="absolute right-0 w-[13.5rem] text-right text-base font-normal leading-normal text-slate-1000">
           {t.rich('hero_message_2', {
             important: customMessage('font-bold'),
@@ -111,11 +120,11 @@ const Hero = () => {
         </p>
         <div
           className={mergeClassnames(
-            'absolute right-16 top-44 flex flex-col items-start justify-center gap-3 rounded-2xl px-5 py-3',
-            ' w-[16.75rem] bg-[#eaeaea4d] shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[25px]',
+            'absolute right-[97px] top-[159px] rounded-2xl px-5 py-3',
+            'bg-[#eaeaea4d] shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[25px]',
           )}
         >
-          <div className="flex items-center gap-2 self-stretch">
+          <div className="flex items-center gap-2">
             <Image
               // onClick={() => console.log('clicked')}
               width={56}
@@ -132,12 +141,7 @@ const Hero = () => {
             />
           </div>
         </div>
-        <div
-          className={mergeClassnames(
-            'absolute left-6 top-24 inline-flex flex-col gap-3 overflow-hidden rounded-lg p-4',
-            'bg-[#ffffff4d] shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[20px]',
-          )}
-        >
+        <div className="absolute left-6 top-24 rounded-lg bg-[#ffffff4d] p-4 shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[20px]">
           <div className="relative flex flex-col items-start gap-1">
             <Image
               width={72}
