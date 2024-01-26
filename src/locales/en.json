@@ -19,7 +19,7 @@
     "hero_message_2": "“You are <important>not alone</important> in your <important>struggles</important>.”",
     "hero_mentor_quantity": "100+ <normal>Experienced Mentors</normal>",
     "feature_peers": {
-      "title": "People with the same stories and experiences",
+      "title": "People with the same stories",
       "description": "100+ mentors and volunteers having personal experience with the same problem you’re into."
     },
     "feature_online_meetings": {
@@ -57,7 +57,9 @@
     "faqs_question_2": {
       "question": "3. How can I get involved with HuLib?",
       "answer": "Joining HuLib is easy! As a participant, you can sign up to share your story, connect with mentors, or engage in virtual discussions. If you're an expert or volunteer interested in mentoring, we welcome your contribution. Stay tuned for updates on workshops and community projects. Explore the possibilities of involvement and make a positive impact with HuLib."
-    }
+    },
+    "newsletter_title": "join with us",
+    "newsletter_description": "become the first person to share your experience"
   },
   "Guestbook": {
     "meta_title": "Guestbook",

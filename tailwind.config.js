@@ -19,15 +19,20 @@ module.exports = {
     },
     colors: {
       primary: '#0061EF',
+      'primary-hover': '#0057D7',
       secondary: '#FFC745',
       light: '#B0CEFA',
+      'blue-light': 'var(--foundation-blue-light)',
+      'blue-darker': 'var(--foundation-blue-darker)',
       'light-hover': '#D9E7FD',
       white: colors.white,
+      black: colors.black,
       slate: colors.slate,
       lime: colors.lime,
       violet: colors.violet,
       amber: colors.amber,
       indigo: colors.indigo,
+      red: colors.red,
     },
     extend: {
       colors: {
