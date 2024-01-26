@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import type { ReactNode } from 'react';
 
+import StoreProvider from '@/app/StoreProvider';
 import { AppConfig } from '@/utils/AppConfig';
 
 export const metadata: Metadata = {
@@ -51,7 +52,7 @@ export default function RootLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <StoreProvider>{children}</StoreProvider>
         </NextIntlClientProvider>
       </body>
     </html>

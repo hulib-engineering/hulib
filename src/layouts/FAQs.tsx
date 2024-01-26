@@ -13,7 +13,6 @@ const FAQs = () => {
   const t = useTranslations('Index');
 
   return (
-    // TODO remove bg
     <section className="flex flex-col items-center justify-center py-[5.625rem] text-slate-1000">
       <div className="flex w-4/12 flex-col items-center justify-center">
         <div className="mb-8 w-full text-center">
