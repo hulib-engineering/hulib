@@ -31,6 +31,7 @@
     --foundation-blue-normal: rgba(0, 97, 239, 1);
     --swiper-pagination-progressbar-length: 1.25rem;
 }
+html { scroll-behavior: smooth; }
 .swiper {
     height: max-content;
     padding-bottom: 5.5rem;

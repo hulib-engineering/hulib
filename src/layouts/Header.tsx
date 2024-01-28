@@ -18,8 +18,8 @@ const Header = () => {
         </div>
         <div className="relative flex items-center justify-end gap-6">
           <LocaleSwitcher className="shrink" />
-          <button
-            type="button"
+          <Link
+            href="#newsletter"
             className={mergeClassnames(
               'flex items-center justify-center !flex-[0_0_auto] gap-1 rounded-full border border-primary px-8 py-3',
               'hover:bg-light',
@@ -28,7 +28,7 @@ const Header = () => {
             <p className="text-base font-medium uppercase leading-normal text-primary">
               {t('contact_us')}
             </p>
-          </button>
+          </Link>
         </div>
       </div>
     </header>
