@@ -74,7 +74,12 @@ module.exports = {
       backgroundImage: {
         'main-pattern': "url('/assets/images/bg-pattern.png')",
       },
+      lineClamp: {
+        7: '7',
+        9: '9',
+      },
     },
   },
+  // eslint-disable-next-line global-require,import/no-extraneous-dependencies
   plugins: [],
 };

@@ -1,5 +1,8 @@
 import Image from 'next/image';
 import React from 'react';
+import { useSwiperSlide } from 'swiper/react';
+
+import { mergeClassnames } from '@/components/private/utils';
 
 type ITestimonialItemCardProps = {
   avatarUrl: string;
@@ -8,31 +11,41 @@ type ITestimonialItemCardProps = {
   role: string;
 };
 
-const TestimonialItemCard = (props: ITestimonialItemCardProps) => (
-  <div className="flex h-[20rem] w-[30rem] flex-col items-start gap-6 p-8 text-[#002254]">
-    <div className="flex flex-[1_0_0] flex-col items-start justify-between self-stretch">
-      <p className="flex-[1_0_0] self-stretch text-xl font-light leading-normal ">
-        {props.content}
-      </p>
-      <div className="flex items-center gap-5">
-        <Image
-          alt={`${props.name} avatar`}
-          src={props.avatarUrl}
-          width={56} // cus 3.5rem * 16 = 56 px
-          height={56}
-          style={{ borderRadius: 56 }}
-        />
-        <div className="flex flex-col items-start">
-          <p className="!my-0 text-xl font-semibold leading-[1.875rem]">
-            {props.name}
-          </p>
-          <p className="!my-0 text-xl font-normal leading-[1.875rem]">
-            {props.role}
-          </p>
+const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
+  const parentSlide = useSwiperSlide();
+
+  return (
+    <div
+      className={mergeClassnames(
+        'rounded-xl bg-white p-6',
+        parentSlide.isActive ? 'w-[30rem] h-[25rem]' : 'w-[27.5rem] h-[22rem]',
+      )}
+    >
+      <div className="flex h-full shrink grow basis-0 flex-col items-start justify-between">
+        <p
+          className={mergeClassnames(
+            'self-stretch text-wrap text-xl font-light',
+            parentSlide.isActive ? 'line-clamp-9' : 'line-clamp-7',
+          )}
+        >
+          {props.content}
+        </p>
+        <div className="flex items-center gap-5">
+          <Image
+            alt="Member avatar"
+            src={props.avatarUrl}
+            width={56} // cus 3.5rem * 16 = 56 px
+            height={56}
+            className="h-14 w-14 rounded-full object-cover object-center"
+          />
+          <div className="flex flex-col items-start text-xl">
+            <p className="font-semibold">{props.name}</p>
+            <p className="font-normal">{props.role}</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default TestimonialItemCard;
