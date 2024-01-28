@@ -21,7 +21,7 @@ const Header = () => {
           <Link
             href="#newsletter"
             className={mergeClassnames(
-              'flex items-center justify-center !flex-[0_0_auto] gap-1 rounded-full border border-primary px-8 py-3',
+              'md:flex items-center justify-center !flex-[0_0_auto] gap-1 rounded-full border border-primary px-8 py-3 hidden',
               'hover:bg-light',
             )}
           >
