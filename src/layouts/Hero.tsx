@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import React, { type ReactNode } from 'react';
 
@@ -52,8 +53,9 @@ const Hero = () => {
           </p>
         </div>
         <div className="flex flex-col items-center gap-2.5">
-          <button
-            type="button"
+          <Link
+            download
+            href="/assets/docs/project-proposal.pdf"
             className="flex h-12 items-center justify-center gap-1 rounded-[2rem] bg-primary px-8 py-3"
           >
             <p className="text-base font-medium uppercase leading-6 text-white">
@@ -66,7 +68,7 @@ const Hero = () => {
               alt="Download icon"
               loading="lazy"
             />
-          </button>
+          </Link>
         </div>
       </div>
       <div className="relative w-full">
