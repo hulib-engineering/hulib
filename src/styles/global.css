@@ -29,13 +29,60 @@
     --foundation-blue-darker: rgba(0, 34, 84, 1);
     --foundation-blue-light: rgba(255, 255, 255, 1);
     --foundation-blue-normal: rgba(0, 97, 239, 1);
+    --swiper-pagination-progressbar-length: 1.25rem;
 }
-
-.shadow-moon-lg {
-    --tw-shadow: 0 32px 32px -8px rgba(0, 0, 0, 0.08),
-    0 0 32px -8px rgba(0, 0, 0, 0.12), 0 0 1px rgba(0, 0, 0, 0.2);
-    --tw-shadow-colored: 0 32px 32px -8px var(--tw-shadow-color),
-    0 0 32px -8px var(--tw-shadow-color), 0 0 1px var(--tw-shadow-color);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+.swiper {
+    height: max-content;
+    padding-bottom: 5.5rem;
+}
+.swiper-wrapper {
+    align-items: center; /* add this will all relevant prefixes */
+}
+.swiper-pagination-progressbar {
+    position: absolute;
+    background-color: var(--foundation-blue-light-active);
+    margin-top: 2.5rem;
+    /*margin-left: 330px;*/
+}
+.swiper-horizontal > .swiper-pagination-progressbar, .swiper-pagination-progressbar.swiper-pagination-horizontal {
+    width: 15rem;
+    height: 0.5rem;
+    border-radius: 13px;
+    left: 330px;
+    bottom: 0;
+    top: unset;
+}
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+    background-color: var(--foundation-blue-normal);
+    border-radius: 13px;
+}
+.swiper-button-prev, .swiper-button-next {
+    width: 3rem;
+    height: 3rem;
+    padding: 0.75rem;
+    background-color: white;
+    border-radius: 50px;
+    margin-top: 2.5rem;
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+}
+.swiper-button-prev {
+    left: 78.33%;
+    right: auto;
+}
+.swiper-button-next {
+    right: 16.67%;
+    left: auto;
+}
+/*.swiper-button-prev:after, .swiper-button-next:after {*/
+/*    vertical-align: -50%;*/
+/*}*/
+.swiper-button-prev:after {
+    content: url("/assets/images/icons/arrow-left.png");
+}
+.swiper-button-next:after {
+    content: url("/assets/images/icons/arrow-right.png");
 }

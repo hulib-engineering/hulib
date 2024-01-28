@@ -2,6 +2,7 @@
 
 import emailjs from '@emailjs/browser';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
 // import { useRouter } from 'next/navigation';
 // import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
@@ -23,7 +24,7 @@ const NewsletterForm = () => {
 
   // const router = useRouter();
   //
-  // const t = useTranslations('Index');
+  const t = useTranslations('Index');
 
   const handleSubscribe = handleSubmit(async (data) => {
     try {
@@ -86,7 +87,7 @@ const NewsletterForm = () => {
           <input
             autoComplete="off"
             id="email"
-            placeholder="Email Address*"
+            placeholder={t('newsletter_form_email_placeholder')}
             className="w-full p-3 leading-tight text-slate-1000 outline-none autofill:bg-white"
             {...register('email')}
           />

@@ -2,7 +2,7 @@
 
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import Image from 'next/image';
-// import { useLocale } from 'next-intl';
+import { useLocale } from 'next-intl';
 import type { JSX } from 'react';
 import { useState } from 'react';
 
@@ -10,7 +10,7 @@ import { Chip } from '@/components/chip/Chip';
 import Dropdown from '@/components/dropdown/Dropdown';
 import MenuItem from '@/components/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/private/utils';
-// import { usePathname, useRouter } from '@/libs/i18nNavigation';
+import { usePathname, useRouter } from '@/libs/i18nNavigation';
 
 const Locales = [
   {
@@ -38,33 +38,50 @@ const Locales = [
 ];
 
 const LocaleSwitcher = ({ className }: { className?: string }) => {
-  // const router = useRouter();
-  //
-  // const pathname = usePathname();
+  const router = useRouter();
 
-  // const locale = useLocale();
+  const pathname = usePathname();
 
-  const [option, setOption] = useState<{ locale: string; flag: JSX.Element }>({
-    locale: 'en',
-    flag: (
-      <Image
-        width={24}
-        height={24}
-        src="/assets/images/flags/us.png"
-        alt="American flag"
-      />
-    ),
-  });
+  const locale = useLocale();
 
-  // const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-  //   router.push(pathname, { locale: event.target.value });
-  //   router.refresh();
-  // };
+  const [option, setOption] = useState<{ locale: string; flag: JSX.Element }>(
+    locale === 'en'
+      ? {
+          locale: 'en',
+          flag: (
+            <Image
+              width={24}
+              height={24}
+              src="/assets/images/flags/us.png"
+              alt="American flag"
+            />
+          ),
+        }
+      : {
+          locale: 'vi',
+          flag: (
+            <Image
+              width={24}
+              height={24}
+              src="/assets/images/flags/vn.png"
+              alt="Vietnamese flag"
+            />
+          ),
+        },
+  );
+
+  console.log(option);
+
+  const handleChange = (value: { locale: string; flag: JSX.Element }) => {
+    setOption(value);
+    router.push(pathname, { locale: value.locale });
+    router.refresh();
+  };
 
   return (
     <Dropdown
       value={option}
-      onChange={setOption}
+      onChange={handleChange}
       className={mergeClassnames(className && className)}
     >
       {({ open }) => (

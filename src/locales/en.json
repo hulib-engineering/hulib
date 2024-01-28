@@ -59,7 +59,8 @@
       "answer": "Joining HuLib is easy! As a participant, you can sign up to share your story, connect with mentors, or engage in virtual discussions. If you're an expert or volunteer interested in mentoring, we welcome your contribution. Stay tuned for updates on workshops and community projects. Explore the possibilities of involvement and make a positive impact with HuLib."
     },
     "newsletter_title": "join with us",
-    "newsletter_description": "become the first person to share your experience"
+    "newsletter_description": "become the first person to share your experience",
+    "newsletter_form_email_placeholder": "Email Address*"
   },
   "Guestbook": {
     "meta_title": "Guestbook",
