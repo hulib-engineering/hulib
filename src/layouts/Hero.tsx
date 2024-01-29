@@ -1,9 +1,11 @@
 'use client';
 
+import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import React, { type ReactNode } from 'react';
+import React, { type ReactNode, useCallback, useState } from 'react';
+import type WaveSurfer from 'wavesurfer.js';
 
 import { mergeClassnames } from '@/components/private/utils';
 
@@ -37,6 +39,30 @@ const customMessage = (font: string): (() => ReactNode) => {
 
 const Hero = () => {
   const t = useTranslations('Index');
+
+  // @ts-ignore
+  const [wavesurfer, setWavesurfer] = useState<WaveSurfer>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const onReady = (ws: WaveSurfer) => {
+    setWavesurfer(ws);
+    setIsPlaying(false);
+  };
+
+  const onPlayPause = useCallback(async () => {
+    if (wavesurfer) {
+      await wavesurfer.playPause();
+    }
+  }, [wavesurfer]);
+
+  // const waveSurfer = WaveSurfer.create({
+  //   container: '#waveform-container',
+  //   waveColor: 'rgb(200, 0, 200)',
+  //   progressColor: 'rgb(100, 0, 100)',
+  //   url: '/examples/audio/audio.wav',
+  //   autoScroll: true,
+  //   dragToSeek: true,
+  // });
 
   return (
     <section className="flex flex-col items-center justify-center gap-32 self-stretch px-[20.625rem] pb-[5.625rem] pt-8">
@@ -128,18 +154,24 @@ const Hero = () => {
         >
           <div className="flex items-center gap-2">
             <Image
-              // onClick={() => console.log('clicked')}
+              onClick={onPlayPause}
               width={56}
               height={56}
               alt="Play icon"
-              src="/assets/images/icons/play-circle.svg"
+              src={`/assets/images/icons/${
+                isPlaying ? 'pause' : 'play'
+              }-circle.svg`}
               className="cursor-pointer"
             />
-            <Image
-              width={164}
+            <WavesurferPlayer
               height={46}
-              src="/assets/images/soundwave.svg"
-              alt="Soundwave"
+              width={164}
+              progressColor="#002254"
+              waveColor="#8E98A8"
+              url="/assets/media/healing-sound.mp3"
+              onReady={onReady}
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
             />
           </div>
         </div>
