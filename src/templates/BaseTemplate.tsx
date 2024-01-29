@@ -1,5 +1,6 @@
 import { Poppins } from 'next/font/google';
 import { type ReactNode } from 'react';
+import { Bounce, ToastContainer } from 'react-toastify';
 
 import { mergeClassnames } from '@/components/private/utils';
 import Footer from '@/layouts/Footer';
@@ -28,6 +29,19 @@ const BaseTemplate = (props: IBaseTemplateProps) => (
 
       <Footer />
     </div>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop
+      closeOnClick={false}
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      transition={Bounce}
+    />
   </div>
 );
 

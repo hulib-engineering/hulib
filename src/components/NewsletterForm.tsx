@@ -3,9 +3,9 @@
 import emailjs from '@emailjs/browser';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-// import { useRouter } from 'next/navigation';
-// import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import type { z } from 'zod';
 
 import { mergeClassnames } from '@/components/private/utils';
@@ -22,11 +22,14 @@ const NewsletterForm = () => {
     resolver: zodResolver(NewsletterValidation),
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   // const router = useRouter();
   //
   const t = useTranslations('Index');
 
   const handleSubscribe = handleSubmit(async (data) => {
+    setIsLoading(true);
     try {
       await emailjs.send(
         Env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
@@ -36,41 +39,19 @@ const NewsletterForm = () => {
         },
         Env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
       );
-      alert(
-        '🚀 Your message is on its way! Thanks for reaching out 😊. Have a fantastic day ahead! 🌟',
+      toast.success(
+        '🚀 Your message is on its way! Thanks for reaching out 😊',
       );
+      // alert(
+      //   '🚀 Your message is on its way! Thanks for reaching out 😊. Have a fantastic day ahead! 🌟',
+      // );
     } catch (error: any) {
       console.log(error);
-      alert(`Error: ${error.message}`);
+      toast.error(`Error: ${error.message}`);
+      // alert(`Error: ${error.message}`);
     } finally {
-      // setIsLoading(false);
+      setIsLoading(false);
     }
-    // await sendMail(data.email, 'Subscribe Newsletter', 'Hello new subscriber!');
-    // if (props.edit) {
-    //   await fetch(`/api/guestbook`, {
-    //     method: 'PUT',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       id: props.id,
-    //       ...data,
-    //     }),
-    //   });
-    //
-    //   props.handleStopEditing();
-    // } else {
-    //   await fetch(`/api/guestbook`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(data),
-    //   });
-    //
-    //   reset();
-    // }
-    // router.refresh();
   });
 
   return (
@@ -92,18 +73,14 @@ const NewsletterForm = () => {
             {...register('email')}
           />
         </label>
-        {/* {errors.email?.message && ( */}
-        {/*  <div className="my-2 text-xs italic text-red-500"> */}
-        {/*    {errors.email?.message} */}
-        {/*  </div> */}
-        {/* )} */}
       </div>
       <div>
         <button
           type="submit"
+          disabled={isLoading}
           className={mergeClassnames(
             'rounded-full bg-primary px-8 py-3 text-base font-medium text-white uppercase',
-            'transition-all duration-300 ease-out hover:bg-primary-hover',
+            'transition-all duration-300 ease-out hover:bg-primary-hover disabled:bg-opacity-75',
           )}
         >
           subscribe
