@@ -1,6 +1,7 @@
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import 'react-toastify/dist/ReactToastify.css';
 import '@/styles/global.css';
 
 import type { Metadata } from 'next';
