@@ -78,6 +78,19 @@ module.exports = {
         7: '7',
         9: '9',
       },
+      keyframes: {
+        slide: {
+          '0%': {
+            transform: 'translateX(0%)',
+          },
+          '100%': {
+            transform: 'translateX(-100%)',
+          },
+        },
+      },
+      animation: {
+        slide: 'slide 10s infinite linear',
+      },
     },
   },
   // eslint-disable-next-line global-require,import/no-extraneous-dependencies

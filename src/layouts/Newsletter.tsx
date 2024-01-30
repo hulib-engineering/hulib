@@ -16,7 +16,7 @@ const Newsletter = () => {
           <p className="mb-6 text-[0.75rem] font-semibold uppercase text-primary lg:text-lg">
             {t('newsletter_title')}
           </p>
-          <h1 className="text-[1.75rem] font-bold capitalize lg:text-5xl">
+          <h1 className="text-[1.75rem] font-semibold capitalize lg:text-5xl lg:font-bold">
             {t('newsletter_description')}
           </h1>
         </div>

@@ -16,7 +16,7 @@ const FAQs = () => {
     <section className="flex flex-col items-center justify-center py-8 text-slate-1000 lg:py-[5.625rem]">
       <div className="flex w-[23rem] flex-col items-center justify-center lg:w-4/12">
         <div className="mb-6 w-full text-center lg:mb-8">
-          <h1 className="w-full text-[1.75rem] font-bold md:text-4xl lg:text-5xl">
+          <h1 className="w-full text-[1.75rem] font-semibold md:text-4xl lg:text-5xl lg:font-bold">
             FAQs
           </h1>
         </div>
