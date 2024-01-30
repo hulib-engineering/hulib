@@ -1,19 +1,66 @@
 {
-  "RootLayout": {
-    "home_link": "Home",
-    "about_link": "About",
-    "guestbook_link": "Guestbook",
-    "portfolio_link": "Portfolio",
-    "sign_in_link": "Sign in",
-    "sign_up_link": "Sign up"
+  "Header": {
+    "contact_us": "contact us"
   },
-  "BaseTemplate": {
-    "description": "Starter code for your Nextjs Boilerplate with Tailwind CSS",
-    "made_with": "Made with"
+  "Footer": {
+    "copyright": "© 2024 HuLib. All rights reserved.",
+    "privacy_policy": "privacy policy",
+    "term_of_service": "term of service",
+    "cookie_settings": "cookie settings"
   },
   "Index": {
-    "meta_title": "Next.js Boilerplate Presentation",
-    "meta_description": "Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework."
+    "meta_title": "HuLib | Landing Page",
+    "meta_description": "There is a story and experience within each of us, so we are born to be somebody.",
+    "hero_title": "a social project",
+    "hero_motto": "we are here to support you",
+    "hero_description": "There is a story and experience within each of us, so we are born to be somebody.",
+    "hero_call_to_action": "learn more",
+    "hero_message_1": "”There is <important>a crack</important> in everything, that’s how <important>the light</important> gets in.”",
+    "hero_message_2": "“You are <important>not alone</important> in your <important>struggles</important>.”",
+    "hero_mentor_quantity": "100+ <normal>Experienced Mentors</normal>",
+    "feature_peers": {
+      "title": "People with the same stories",
+      "description": "100+ mentors and volunteers having personal experience with the same problem you’re into."
+    },
+    "feature_online_meetings": {
+      "title": "Online Meeting",
+      "description": "Book a meeting with any mentor you want to share and let them know about your struggles."
+    },
+    "feature_safely_sharing": {
+      "title": "Safely Sharing",
+      "description": "Feel free to share your stories without being judged."
+    },
+    "about_title": "what is hulib",
+    "about_description": "a community project aims to promote well-being through shared stories with mentors.",
+    "about_stories": {
+      "title": "our <highlight>stories</highlight>",
+      "description": "We believe everyone has experienced moments of falling short, uncertainty, and the struggle to connect. <br></br><br></br>At HuLib, inspired by personal encounters and mentorship, we aim to create a safe space for young souls, offering companionship, shared stories, and support. Join us on this dream journey to uncover more happiness together."
+    },
+    "about_mission": {
+      "title": "our <br></br><highlight>mission</highlight>",
+      "description": "At HuLib, we believe in the power of individual stories and experiences, affirming that everyone is destined for significance. <br></br><br></br>Our mission is to forge connections and foster personal growth by providing a dedicated space for sharing these unique narratives."
+    },
+    "about_vision": {
+      "title": "our <br></br><highlight>vision</highlight>",
+      "description": "HuLib envisions contributing to individual well-being by facilitating the exchange of stories with mentors. We aim to construct a supportive community where shared experiences act as a catalyst for positive change. Through mentorship and storytelling, we strive to create a transformative environment that promotes mental health, challenges societal norms, and addresses sensitive issues. <br></br><br></br>HuLib endeavors to be a beacon of empathy, understanding, and connection, shaping a future where every individual's story is both valued and celebrated."
+    },
+    "testimonial_title": "meet our team",
+    "testimonial_description": "What do our members say?",
+    "faqs_question_0": {
+      "question": "1. What is HuLib, and how does it work?",
+      "answer": "HuLib is a platform dedicated to fostering well-being through shared stories and mentorship. Discover how individuals, mentors, and the community come together to create a supportive environment. Explore our features and understand the seamless process of connecting with mentors and sharing your own experiences."
+    },
+    "faqs_question_1": {
+      "question": "2. Who can benefit from HuLib?",
+      "answer": "HuLib is designed for high school students, university students, and newly graduates (ages 16-25), with a focus on those in Coastal Central Vietnam. Whether you're seeking mentorship, looking to share your story, or participating in virtual discussions and workshops, HuLib provides a space for personal and professional growth."
+    },
+    "faqs_question_2": {
+      "question": "3. How can I get involved with HuLib?",
+      "answer": "Joining HuLib is easy! As a participant, you can sign up to share your story, connect with mentors, or engage in virtual discussions. If you're an expert or volunteer interested in mentoring, we welcome your contribution. Stay tuned for updates on workshops and community projects. Explore the possibilities of involvement and make a positive impact with HuLib."
+    },
+    "newsletter_title": "join with us",
+    "newsletter_description": "become the first person to share your experience",
+    "newsletter_form_email_placeholder": "Email Address*"
   },
   "Guestbook": {
     "meta_title": "Guestbook",

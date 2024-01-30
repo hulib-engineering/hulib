@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+const colors = require('tailwindcss/colors');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
@@ -13,6 +16,23 @@ module.exports = {
       '4xl': '2.25rem',
       '5xl': '3rem',
       '6xl': '4rem',
+    },
+    colors: {
+      primary: '#0061EF',
+      'primary-hover': '#0057D7',
+      secondary: '#FFC745',
+      light: '#B0CEFA',
+      'blue-light': 'var(--foundation-blue-light)',
+      'blue-darker': 'var(--foundation-blue-darker)',
+      'light-hover': '#D9E7FD',
+      white: colors.white,
+      black: colors.black,
+      slate: colors.slate,
+      lime: colors.lime,
+      violet: colors.violet,
+      amber: colors.amber,
+      indigo: colors.indigo,
+      red: colors.red,
     },
     extend: {
       colors: {
@@ -38,8 +58,28 @@ module.exports = {
           800: '#2c5282',
           900: '#2a4365',
         },
+        slate: {
+          1000: '#002254',
+        },
+        lime: {
+          350: '#bbf99e',
+        },
+        violet: {
+          350: '#ccbafe',
+        },
+        amber: {
+          75: '#ffdf8e',
+        },
+      },
+      backgroundImage: {
+        'main-pattern': "url('/assets/images/bg-pattern.png')",
+      },
+      lineClamp: {
+        7: '7',
+        9: '9',
       },
     },
   },
+  // eslint-disable-next-line global-require,import/no-extraneous-dependencies
   plugins: [],
 };
