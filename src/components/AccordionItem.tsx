@@ -18,8 +18,10 @@ const AccordionItem = ({
         type="button"
         className="flex w-full items-center justify-center rounded-xl bg-white px-6 py-4"
       >
-        <span className="w-full text-start text-xl font-medium">{trigger}</span>
-        <div className="flex h-8 w-8 min-w-8 items-center justify-center rounded-lg bg-light-hover">
+        <span className="w-full text-wrap text-start text-base font-medium lg:text-xl">
+          {trigger}
+        </span>
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-light-hover">
           <svg
             className="fill-indigo-500"
             width="20"
@@ -55,7 +57,7 @@ const AccordionItem = ({
         }`}
       >
         <div className="overflow-hidden">
-          <div className="overflow-hidden p-6 pt-0 text-base font-light">
+          <div className="overflow-hidden p-6 pt-0 text-sm font-light lg:text-base">
             {content}
           </div>
         </div>

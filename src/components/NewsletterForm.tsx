@@ -2,6 +2,7 @@
 
 import emailjs from '@emailjs/browser';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 // import { useRouter } from 'next/navigation';
 // import { useTranslations } from 'next-intl';
@@ -88,7 +89,7 @@ const NewsletterForm = () => {
             autoComplete="off"
             id="email"
             placeholder={t('newsletter_form_email_placeholder')}
-            className="w-full p-3 leading-tight text-slate-1000 outline-none autofill:bg-white"
+            className="w-full p-[0_0.75rem] leading-tight text-slate-1000 outline-none autofill:bg-white lg:p-3"
             {...register('email')}
           />
         </label>
@@ -98,7 +99,7 @@ const NewsletterForm = () => {
         {/*  </div> */}
         {/* )} */}
       </div>
-      <div>
+      <div className="hidden lg:flex">
         <button
           type="submit"
           className={mergeClassnames(
@@ -107,6 +108,16 @@ const NewsletterForm = () => {
           )}
         >
           subscribe
+        </button>
+      </div>
+      <div className="flex lg:hidden">
+        <button type="submit">
+          <Image
+            width={40}
+            height={40}
+            alt="go"
+            src="/assets/images/icons/arrow-right-2.svg"
+          />
         </button>
       </div>
     </form>
