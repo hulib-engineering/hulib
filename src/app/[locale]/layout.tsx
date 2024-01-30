@@ -1,3 +1,6 @@
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 import '@/styles/global.css';
 
 import type { Metadata } from 'next';
@@ -5,6 +8,7 @@ import { notFound } from 'next/navigation';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import type { ReactNode } from 'react';
 
+import StoreProvider from '@/app/StoreProvider';
 import { AppConfig } from '@/utils/AppConfig';
 
 export const metadata: Metadata = {
@@ -51,7 +55,7 @@ export default function RootLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <StoreProvider>{children}</StoreProvider>
         </NextIntlClientProvider>
       </body>
     </html>

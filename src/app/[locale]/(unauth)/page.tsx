@@ -1,9 +1,11 @@
 import { getTranslations } from 'next-intl/server';
 
-import CTA from '@/components/CTA';
-import FAQs from '@/components/FAQs';
-import Feature from '@/components/Feature';
-import Hero from '@/components/Hero';
+import About from '@/layouts/About';
+import FAQs from '@/layouts/FAQs';
+import Features from '@/layouts/Features';
+import Hero from '@/layouts/Hero';
+import Newsletter from '@/layouts/Newsletter';
+import Testimonial from '@/layouts/Testimonial';
 
 export async function generateMetadata({
   params: { locale },
@@ -20,11 +22,13 @@ export async function generateMetadata({
 
 export default function Index() {
   return (
-    <div className="mt-24 flex flex-col items-center justify-center">
+    <>
       <Hero />
-      <Feature />
+      <Features />
+      <About />
+      <Testimonial />
       <FAQs />
-      <CTA />
-    </div>
+      <Newsletter />
+    </>
   );
 }
