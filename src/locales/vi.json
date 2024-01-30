@@ -62,6 +62,9 @@
     "newsletter_description": "become the first person to share your experience",
     "newsletter_form_email_placeholder": "Địa chỉ email*"
   },
+  "Sponsors": {
+    "sponsors_title": "nhà tài trợ"
+  },
   "Guestbook": {
     "meta_title": "Guestbook",
     "meta_description": "An example of CRUD operation",
