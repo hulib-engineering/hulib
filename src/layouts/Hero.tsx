@@ -82,7 +82,9 @@ const Hero = () => {
         </div>
         <div className="flex flex-col items-center gap-2.5">
           <Link
-            download
+            // download
+            rel="noopener noreferrer"
+            target="_blank"
             href="/assets/docs/project-proposal.pdf"
             className="flex h-12 items-center justify-center gap-1 rounded-[2rem] bg-primary px-8 py-3"
           >
