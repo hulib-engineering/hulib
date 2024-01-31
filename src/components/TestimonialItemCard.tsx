@@ -17,7 +17,7 @@ const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
   return (
     <div
       className={mergeClassnames(
-        'rounded-xl bg-white p-6',
+        'rounded-xl bg-white p-6 hover:shadow',
         parentSlide.isActive ? 'w-[30rem] h-[25rem]' : 'w-[27.5rem] h-[22rem]',
       )}
     >
@@ -25,7 +25,7 @@ const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
         <p
           className={mergeClassnames(
             'self-stretch text-wrap text-xl font-light',
-            parentSlide.isActive ? 'line-clamp-9' : 'line-clamp-7',
+            parentSlide.isActive ? 'line-clamp-6' : 'line-clamp-4',
           )}
         >
           {props.content}

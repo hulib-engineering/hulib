@@ -78,6 +78,9 @@ module.exports = {
         7: '7',
         9: '9',
       },
+      content: {
+        flash: 'url("/assets/images/flash-vector.svg")',
+      },
     },
   },
   // eslint-disable-next-line global-require,import/no-extraneous-dependencies
