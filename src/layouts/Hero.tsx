@@ -7,6 +7,8 @@ import { useTranslations } from 'next-intl';
 import React, { type ReactNode, useCallback, useState } from 'react';
 import type WaveSurfer from 'wavesurfer.js';
 
+// eslint-disable-next-line import/no-cycle
+import { HighlightContentBox } from '@/components/HighlightContentBox';
 import { mergeClassnames } from '@/components/private/utils';
 
 const StarIcons = [
@@ -30,7 +32,7 @@ const VectorIcons = [
   },
 ];
 
-const customMessage = (font: string): (() => ReactNode) => {
+export const customMessage = (font: string): (() => ReactNode) => {
   // eslint-disable-next-line react/display-name
   return (...chunks: ReactNode[]): ReactNode => {
     return <span className={font}>{chunks}</span>;
@@ -175,7 +177,7 @@ const Hero = () => {
             />
           </div>
         </div>
-        <div className="absolute left-6 top-24 rounded-lg bg-[#ffffff4d] p-4 shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[20px]">
+        <HighlightContentBox className="absolute left-6 top-24">
           <div className="relative flex flex-col items-start gap-1">
             <Image
               width={72}
@@ -189,7 +191,7 @@ const Hero = () => {
               })}
             </p>
           </div>
-        </div>
+        </HighlightContentBox>
       </div>
     </section>
   );

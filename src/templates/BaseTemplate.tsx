@@ -19,7 +19,7 @@ const BaseTemplate = (props: IBaseTemplateProps) => (
   <div
     className={mergeClassnames(
       poppins.className,
-      'relative w-full bg-fixed bg-main-pattern bg-cover bg-center px-1 antialiased',
+      'relative w-full bg-fixed bg-main-pattern 2xl:bg-cover bg-no-repeat bg-center px-1 antialiased',
     )}
   >
     <div className="mx-auto flex max-w-full flex-col items-center justify-center">
