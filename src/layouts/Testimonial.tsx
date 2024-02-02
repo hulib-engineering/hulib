@@ -1,10 +1,11 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import React, { useState } from 'react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import Modal from '@/components/Modal';
 import TestimonialItemCard from '@/components/TestimonialItemCard';
 
 const TestimonialItems = [
@@ -111,6 +112,14 @@ const TestimonialItems = [
 const Testimonial = () => {
   const t = useTranslations('Index');
 
+  const [isCardDetailOpen, setIsCardDetailOpen] = useState(false);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+
+  const handleOpenCardDetailModal = (index: number) => {
+    setCurrentCardIndex(index);
+    setIsCardDetailOpen(true);
+  };
+
   return (
     <section className="flex flex-col items-center justify-center py-[6.25rem] text-slate-1000">
       <div className="mb-8 px-[20.625rem] text-center">
@@ -123,20 +132,19 @@ const Testimonial = () => {
       </div>
       <div className="w-screen">
         <Swiper
-          spaceBetween={36}
+          spaceBetween={32}
           slidesPerView={4}
-          // slidesPerGroup={4}
           loop
           centeredSlides
-          pagination={{
-            // clickable: true,
-            type: 'progressbar',
-          }}
           navigation
           modules={[Pagination, Navigation]}
+          slideToClickedSlide
         >
           {TestimonialItems.map((each, index) => (
-            <SwiperSlide key={index}>
+            <SwiperSlide
+              key={index}
+              onClick={() => handleOpenCardDetailModal(index)}
+            >
               <TestimonialItemCard
                 content={each.content}
                 avatarUrl={each.avatarUrl}
@@ -147,20 +155,20 @@ const Testimonial = () => {
           ))}
         </Swiper>
       </div>
-      {/* <div className="flex w-full flex-row items-center justify-between px-[20.625rem]"> */}
-      {/* <div className="relative"> */}
-      {/*   <div className="h-2 w-[50px] rounded-[13px] bg-blue-200" /> */}
-      {/*   <div className="h-2 w-5 rounded-[13px] bg-blue-600" /> */}
-      {/* </div> */}
-      {/* <div className="flex items-start justify-start gap-[15px]"> */}
-      {/*  <div className="flex items-center justify-center gap-2 rounded-[50px] bg-white p-3"> */}
-      {/*    <div className="relative h-6 w-6" /> */}
-      {/*  </div> */}
-      {/*  <div className="flex items-center justify-center gap-2 rounded-[50px] bg-white p-3"> */}
-      {/*    <div className="relative h-6 w-6" /> */}
-      {/*  </div> */}
-      {/* </div> */}
-      {/* </div> */}
+      <Modal open={isCardDetailOpen} onClose={() => setIsCardDetailOpen(false)}>
+        <Modal.Backdrop />
+        <Modal.Panel>
+          {TestimonialItems[currentCardIndex] && (
+            <TestimonialItemCard
+              className="scale-150"
+              avatarUrl={TestimonialItems[currentCardIndex]?.avatarUrl || ''}
+              content={TestimonialItems[currentCardIndex]?.content || ''}
+              name={TestimonialItems[currentCardIndex]?.name || ''}
+              role={TestimonialItems[currentCardIndex]?.position || ''}
+            />
+          )}
+        </Modal.Panel>
+      </Modal>
     </section>
   );
 };

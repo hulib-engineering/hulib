@@ -82,7 +82,6 @@ const Hero = () => {
         </div>
         <div className="flex flex-col items-center gap-2.5">
           <Link
-            // download
             rel="noopener noreferrer"
             target="_blank"
             href="/assets/docs/project-proposal.pdf"
@@ -164,7 +163,7 @@ const Hero = () => {
               alt="Play icon"
               src={`/assets/images/icons/${
                 isPlaying ? 'pause' : 'play'
-              }-circle.svg`}
+              }-circle.png`}
               className="cursor-pointer"
             />
             <WavesurferPlayer

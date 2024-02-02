@@ -26,10 +26,10 @@ const Newsletter = () => {
           <NewsletterForm />
         </div>
       </div>
-      <div className="absolute right-8 top-[-16rem]">
+      <div className="absolute right-8 top-[-16rem] animate-move-up">
         <GradientSplash />
       </div>
-      <div className="absolute bottom-[-16rem] left-8">
+      <div className="absolute bottom-[-16rem] left-8 animate-move-down">
         <GradientSplash />
       </div>
     </section>
