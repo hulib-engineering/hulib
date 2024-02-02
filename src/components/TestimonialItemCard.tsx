@@ -9,6 +9,7 @@ type ITestimonialItemCardProps = {
   content: string;
   name: string;
   role: string;
+  className?: string;
 };
 
 const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
@@ -17,15 +18,20 @@ const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
   return (
     <div
       className={mergeClassnames(
-        'rounded-xl bg-white p-6 hover:shadow',
-        parentSlide.isActive ? 'w-[30rem] h-[25rem]' : 'w-[27.5rem] h-[22rem]',
+        'h-[22rem] rounded-xl bg-white p-6 hover:shadow-[0px_8px_24px_#0061ef14] transition-all duration-200 ease-linear scale-90',
+        // parentSlide.isActive ? 'w-[30rem] h-[25rem]' : 'w-[27.5rem] h-[22rem]',
+        parentSlide && parentSlide.isActive && 'scale-120',
+        props.className && props.className,
       )}
     >
       <div className="flex h-full shrink grow basis-0 flex-col items-start justify-between">
         <p
           className={mergeClassnames(
             'self-stretch text-wrap text-xl font-light',
-            parentSlide.isActive ? 'line-clamp-6' : 'line-clamp-4',
+            parentSlide && parentSlide.isActive
+              ? 'line-clamp-6'
+              : 'line-clamp-4',
+            !parentSlide && 'line-clamp-none',
           )}
         >
           {props.content}

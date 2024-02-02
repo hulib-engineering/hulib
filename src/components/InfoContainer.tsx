@@ -43,7 +43,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
   const t = useTranslations('Index');
 
   return (
-    <div className="flex items-center justify-between px-[5.625rem]">
+    <div className="flex items-center justify-between gap-8 px-[5.625rem]">
       {props.imagePos === 'left' && (
         <Image
           alt={props.imageAlt}

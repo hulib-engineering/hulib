@@ -9,7 +9,7 @@ const Header = () => {
   const t = useTranslations('Header');
 
   return (
-    <header className="fixed top-0 z-[999] w-full bg-[#f1f4f9bf] px-[20.625rem] py-6 backdrop-blur-[50px]">
+    <header className="sticky top-0 z-[999] w-full bg-[#f1f4f9bf] px-[20.625rem] py-6 backdrop-blur-[50px]">
       <div className="relative flex flex-[0_0_auto] items-center justify-between">
         <div className="relative flex flex-1 grow items-start pb-[0.26788rem] pt-[0.3125rem]">
           <Link href="/">

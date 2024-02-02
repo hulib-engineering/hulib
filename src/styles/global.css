@@ -63,7 +63,6 @@ html { scroll-behavior: smooth; }
     padding: 0.75rem;
     background-color: white;
     border-radius: 50px;
-    margin-top: 2.5rem;
     position: absolute;
     top: auto;
     bottom: 0;
@@ -71,19 +70,24 @@ html { scroll-behavior: smooth; }
     align-items: center;
 }
 .swiper-button-prev {
-    left: 78.33%;
-    right: auto;
-}
-.swiper-button-next {
-    right: 16.67%;
+    right: 50.5%;
     left: auto;
 }
-/*.swiper-button-prev:after, .swiper-button-next:after {*/
-/*    vertical-align: -50%;*/
-/*}*/
+.swiper-button-next {
+    left: 50.5%;
+    right: auto;
+}
+.swiper-button-prev:after, .swiper-button-next:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
 .swiper-button-prev:after {
-    content: url("/assets/images/icons/arrow-left.png");
+    background: url("/assets/images/icons/arrow-left.png") center no-repeat;
 }
 .swiper-button-next:after {
-    content: url("/assets/images/icons/arrow-right.png");
+    background: url("/assets/images/icons/arrow-right.png") center no-repeat;
 }

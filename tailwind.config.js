@@ -81,6 +81,18 @@ module.exports = {
       content: {
         flash: 'url("/assets/images/flash-vector.svg")',
       },
+      keyframes: {
+        moveUp: {
+          to: { transform: 'translateY(50px)' },
+        },
+        moveDown: {
+          to: { transform: 'translateY(-50px)' },
+        },
+      },
+      animation: {
+        'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
+        'move-down': 'moveDown 2s ease-in infinite alternate-reverse',
+      },
     },
   },
   // eslint-disable-next-line global-require,import/no-extraneous-dependencies
