@@ -138,18 +138,16 @@ const Testimonial = () => {
           centeredSlides
           navigation
           modules={[Pagination, Navigation]}
-          slideToClickedSlide
+          // slideToClickedSlide
         >
           {TestimonialItems.map((each, index) => (
-            <SwiperSlide
-              key={index}
-              onClick={() => handleOpenCardDetailModal(index)}
-            >
+            <SwiperSlide key={index}>
               <TestimonialItemCard
                 content={each.content}
                 avatarUrl={each.avatarUrl}
                 name={each.name}
                 role={each.position}
+                onClick={() => handleOpenCardDetailModal(index)}
               />
             </SwiperSlide>
           ))}
@@ -160,6 +158,8 @@ const Testimonial = () => {
         <Modal.Panel>
           {TestimonialItems[currentCardIndex] && (
             <TestimonialItemCard
+              isPopup
+              onClose={() => setIsCardDetailOpen(false)}
               className="scale-150"
               avatarUrl={TestimonialItems[currentCardIndex]?.avatarUrl || ''}
               content={TestimonialItems[currentCardIndex]?.content || ''}

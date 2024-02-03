@@ -48,15 +48,33 @@
     "testimonial_description": "What do our members say?",
     "faqs_question_0": {
       "question": "1. What is HuLib, and how does it work?",
-      "answer": "HuLib is a platform dedicated to fostering well-being through shared stories and mentorship. Discover how individuals, mentors, and the community come together to create a supportive environment. Explore our features and understand the seamless process of connecting with mentors and sharing your own experiences."
+      "answer": {
+        "heading": "HuLib is a community dedicated to fostering well-being through shared stories and mentorship in three main fields, including education, career, and relationship.",
+        "body_paras": {
+          "p1": "High school students take advice on university choices from mentors with diverse expertise for a fulfilling college experience.",
+          "p2": "New graduates receive career guidance through one-on-one sessions, workshops, and industry expert discussions.",
+          "p3": "Young adults dealing with pressures benefit from personalized mentoring focusing on well-being."
+        }
+      }
     },
     "faqs_question_1": {
       "question": "2. Who can benefit from HuLib?",
-      "answer": "HuLib is designed for high school students, university students, and newly graduates (ages 16-25), with a focus on those in Coastal Central Vietnam. Whether you're seeking mentorship, looking to share your story, or participating in virtual discussions and workshops, HuLib provides a space for personal and professional growth."
+      "answer": {
+        "heading": "",
+        "body_paras": {
+          "p1": "HuLib is designed for high school students, university students, and new graduates (ages 16-25), with a focus on those in Coastal Central Vietnam. Whether you're seeking mentorship, looking to share your story, or participating in virtual discussions and workshops, HuLib provides a space for personal and professional growth."
+        }
+      }
     },
     "faqs_question_2": {
       "question": "3. How can I get involved with HuLib?",
-      "answer": "Joining HuLib is easy! As a participant, you can sign up to share your story, connect with mentors, or engage in virtual discussions. If you're an expert or volunteer interested in mentoring, we welcome your contribution. Stay tuned for updates on workshops and community projects. Explore the possibilities of involvement and make a positive impact with HuLib."
+      "answer": {
+        "heading": "Joining HuLib is easy!",
+        "body_paras": {
+          "p1": "As a participant, you can sign up to share your story, connect with mentors, or engage in virtual discussions.",
+          "p2": "If you're an expert or volunteer interested in mentoring, we welcome your contribution. Stay tuned for updates on workshops and community projects. Explore the possibilities of involvement and make a positive impact with HuLib."
+        }
+      }
     },
     "newsletter_title": "join with us",
     "newsletter_description": "become the first person to share your experience",
