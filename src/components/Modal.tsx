@@ -17,7 +17,7 @@ type ModalComponentProps = (
 
 const ModalRoot: ModalComponentProps = ({ open, onClose, children }) => (
   <Transition appear show={open} as={React.Fragment}>
-    <Dialog as="div" className="relative z-10" onClose={onClose}>
+    <Dialog as="div" className="relative z-[1000]" onClose={onClose}>
       {children}
     </Dialog>
   </Transition>
@@ -40,7 +40,7 @@ const Panel = ({ children, className }: WithChildren<PanelProps>) => (
       >
         <Dialog.Panel
           className={mergeClassnames(
-            'w-full max-w-4xl inline-block transform rounded-xl bg-white align-middle shadow-lg transition-all',
+            'w-full max-w-5xl inline-block transform rounded-3xl bg-white align-middle shadow-lg transition-all',
             className,
           )}
         >
