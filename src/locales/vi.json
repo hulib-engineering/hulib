@@ -11,55 +11,73 @@
   "Index": {
     "meta_title": "HuLib | Landing Page",
     "meta_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
-    "hero_title": "một dự án cộng đồng",
-    "hero_motto": "tụi mình ở đây vì các bạn",
-    "hero_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
-    "hero_call_to_action": "tìm hiểu",
-    "hero_message_1": "”There is <important>a crack</important> in everything, that’s how <important>the light</important> gets in.”",
-    "hero_message_2": "“Bạn <important>không cô đơn</important> trong <important>mớ bồng bong của mình</important>.”",
-    "hero_mentor_quantity": "100+ <normal>mentor kinh nghiệm</normal>",
+    "hero_title": "a social project",
+    "hero_motto": "HuLib ở đây đồng hành cùng bạn",
+    "hero_description": "Mỗi người đều có một câu chuyện và trải nghiệm riêng nên chúng ta sinh ra để trở thành một ai đó, phần đặc biệt của thế giới này.",
+    "hero_call_to_action": "tìm hiểu thêm",
+    "hero_message_1": "”Vạn vật ẩn dấu <important>các vết nứt</important>, đó là nơi <important>ánh sáng</important> chiếu rọi.”",
+    "hero_message_2": "“Bạn <important>không đơn dộc</important> trước <important>những rào cản</important> của chính mình.”",
+    "hero_mentor_quantity": "100+ <normal>Mentors với nhiều trải nghiệm phong phú</normal>",
     "feature_peers": {
-      "title": "People with the same stories",
-      "description": "100+ mentors and volunteers having personal experience with the same problem you’re into."
+      "title": "Cộng đồng với những câu chuyện \"không của riêng ai\"",
+      "description": "Hơn 100 mentors và tình nguyện viên có trải nghiệm phù hợp mà bạn đang tìm kiếm."
     },
     "feature_online_meetings": {
-      "title": "Online Meeting",
-      "description": "Book a meeting with any mentor you want to share and let them know about your struggles."
+      "title": "Gặp Gỡ Trực Tuyến",
+      "description": "Đặt cuộc hẹn với bất kỳ mentor nào bạn muốn chia sẻ về những thắc mắc của bản thân."
     },
     "feature_safely_sharing": {
-      "title": "Safely Sharing",
-      "description": "Feel free to share your stories without being judged."
+      "title": "Bày Tỏ Chân Thành",
+      "description": "Tự do chia sẻ câu chuyện của bạn mà không ngại bị đánh giá."
     },
-    "about_title": "hulib là gì",
-    "about_description": "a community project aims to promote well-being through shared stories with mentors.",
+    "about_title": "cùng với HuLib",
+    "about_description": "thúc đẩy giá trị hạnh phúc thông qua kết nối những câu chuyện rất cá nhân với mentors.",
     "about_stories": {
-      "title": "<highlight>câu chuyện</highlight> của chúng tôi",
-      "description": "We believe everyone has experienced moments of falling short, uncertainty, and the struggle to connect. <br></br><br></br>At HuLib, inspired by personal encounters and mentorship, we aim to create a safe space for young souls, offering companionship, shared stories, and support. Join us on this dream journey to uncover more happiness together."
+      "title": "<highlight>câu chuyện</highlight> <br></br> của chúng tớ",
+      "description": "Bạn cảm thấy bản thân chưa bao giờ đủ tốt? Lúc bạn bè ở vạch đích thì bạn vẫn lò mò điểm xuất phát? Bạn từng vô định và ước một cánh tay nắm lấy mình? Đã bao giờ bạn căng thẳng lo âu tìm cách xoay xở một mình? Bạn từng thiếu tự tin kết nối và mong mỏi một ai đó hướng dẫn?<br></br><br></br>HuLib ra đời vì tất cả câu hỏi trên, vì chúng tớ cũng đã đang trải qua tất cả cảm xúc này. Hãy cùng chúng mình theo đuổi ước mơ và hạnh phúc hơn nữa bạn nhé."
     },
     "about_mission": {
-      "title": "của chúng tôi <br></br><highlight>nhiệm vụ</highlight>",
+      "title": "<highlight>nhiệm vụ</highlight> <br></br> của chúng tớ",
       "description": "At HuLib, we believe in the power of individual stories and experiences, affirming that everyone is destined for significance. <br></br><br></br>Our mission is to forge connections and foster personal growth by providing a dedicated space for sharing these unique narratives."
     },
     "about_vision": {
-      "title": "của chúng tôi <br></br><highlight>tầm nhìn</highlight>",
-      "description": "HuLib envisions contributing to individual well-being by facilitating the exchange of stories with mentors. We aim to construct a supportive community where shared experiences act as a catalyst for positive change. Through mentorship and storytelling, we strive to create a transformative environment that promotes mental health, challenges societal norms, and addresses sensitive issues. <br></br><br></br>HuLib endeavors to be a beacon of empathy, understanding, and connection, shaping a future where every individual's story is both valued and celebrated."
+      "title": "<highlight>tầm nhìn</highlight> <br></br> của chúng tớ",
+      "description": "HuLib mong muốn gây dựng cộng đồng các bạn trẻ hỗ trợ lẫn nhau cùng với sự cộng tác và hướng dẫn từ các anh chị có kinh nghiệm. Chúng mình nỗ lực trở thành nguồn động viên, thấu hiểu và kết nối, định hình một tương lai nơi câu chuyện của mỗi cá nhân đều được trân trọng và vinh danh."
     },
-    "testimonial_title": "gặp gỡ biệt đội hùng mạnh",
-    "testimonial_description": "Các avenger của tụi mình nghĩ gì?",
+    "testimonial_title": "meet our team",
+    "testimonial_description": "Gặp gỡ các thành viên của HuLib bạn nhé",
     "faqs_question_0": {
       "question": "1. HuLib là gì và nó hoạt động như thế nào?",
-      "answer": "HuLib is a platform dedicated to fostering well-being through shared stories and mentorship. Discover how individuals, mentors, and the community come together to create a supportive environment. Explore our features and understand the seamless process of connecting with mentors and sharing your own experiences."
+      "answer": {
+        "heading": "HuLib gây dựng một cộng đồng thúc đẩy phát triển mỗi cá nhân thông qua việc chia sẻ câu chuyện và tham gia mentoring trong 3 lĩnh vực chính, bao gồm giáo dục, sự nghiệp và quan hệ xã hội. ",
+        "body_paras": {
+          "p1": "Học sinh trung học phổ thông nhận được lời khuyên về chọn trường đại học từ các mentors với đa dạng chuyên môn để có trải nghiệm đại học trọn vẹn.",
+          "p2": "Những bạn mới tốt nghiệp nhận được định hướng nghề nghiệp thông qua các buổi kết nối riêng tư, các hội thảo và trao đổi với các anh chị thuộc nhiều lĩnh vực.",
+          "p3": "Những người trẻ đang đối diện áp lực có thể trò chuyện 1-1 với cá nhân đã từng trải qua các vấn đề liên quan."
+        }
+      }
     },
     "faqs_question_1": {
-      "question": "2. Who can benefit from HuLib?",
-      "answer": "HuLib is designed for high school students, university students, and newly graduates (ages 16-25), with a focus on those in Coastal Central Vietnam. Whether you're seeking mentorship, looking to share your story, or participating in virtual discussions and workshops, HuLib provides a space for personal and professional growth."
+      "question": "2. Ai có thể hưởng lợi từ HuLib?",
+      "answer": {
+        "heading": "",
+        "body_paras": {
+          "p1": "HuLib dành cho học sinh trung học phổ thông, sinh viên đại học và những người mới tốt nghiệp (từ 16-25 tuổi) sinh sống ở miền Trung, Việt Nam. Bạn đang tìm kiếm mentors, không gian chia sẻ câu chuyện của mình, hoặc mong muốn tham gia vào các buổi trao đổi trực tuyến thì HuLib chính là cộng đồng hỗ trợ bạn phát triển cá nhân cũng như chuyên nghiệp."
+        }
+      }
     },
     "faqs_question_2": {
-      "question": "3. How can I get involved with HuLib?",
-      "answer": "Joining HuLib is easy! As a participant, you can sign up to share your story, connect with mentors, or engage in virtual discussions. If you're an expert or volunteer interested in mentoring, we welcome your contribution. Stay tuned for updates on workshops and community projects. Explore the possibilities of involvement and make a positive impact with HuLib."
+      "question": "3. Làm thế nào để mình tham gia với HuLib?",
+      "answer": {
+        "heading": "Tham gia HuLib cực dễ nha! ",
+        "body_paras": {
+          "p1": "Với tư cách mentee, bạn có thể đăng ký chia sẻ câu chuyện của mình, kết nối với mentor, hoặc tham gia gặp gỡ HuLibers khác trực tuyến.",
+          "p2": "Nếu bạn là chuyên gia hoặc tình nguyện viên quan tâm đến việc lan toả câu chuyện và trải nghiệm độc đáo, HuLib rất hoan nghênh đóng góp của bạn. Hãy theo dõi HuLib để cập nhật các sự kiện ý nghĩa nhé. Khám phá, đóng góp và tạo ảnh hưởng tích cực cùng chúng tớ nghen."
+        }
+      }
     },
-    "newsletter_title": "tham gia cùng chúng mình",
-    "newsletter_description": "become the first person to share your experience",
+    "newsletter_title": "join with us",
+    "newsletter_description": "hãy trở thành HuLibers đầu tiên với chúng mình nhaaa!",
     "newsletter_form_email_placeholder": "Địa chỉ email*"
   },
   "Guestbook": {
