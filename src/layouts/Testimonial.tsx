@@ -155,7 +155,7 @@ const Testimonial = () => {
       </div>
       <Modal open={isCardDetailOpen} onClose={() => setIsCardDetailOpen(false)}>
         <Modal.Backdrop />
-        <Modal.Panel>
+        <Modal.Panel className="w-[53.875rem]">
           {TestimonialItems[currentCardIndex] && (
             <TestimonialItemCard
               isPopup
