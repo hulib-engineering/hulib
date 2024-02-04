@@ -29,9 +29,12 @@
     --foundation-blue-darker: rgba(0, 34, 84, 1);
     --foundation-blue-light: rgba(255, 255, 255, 1);
     --foundation-blue-normal: rgba(0, 97, 239, 1);
+    --foundation-grey-100: rgba(200, 200, 200, 1);
     --swiper-pagination-progressbar-length: 1.25rem;
 }
 html { scroll-behavior: smooth; }
+
+/*Swiperjs custom styles*/
 .swiper {
     height: max-content;
     padding-bottom: 5.5rem;
@@ -90,4 +93,25 @@ html { scroll-behavior: smooth; }
 }
 .swiper-button-next:after {
     background: url("/assets/images/icons/arrow-right.png") center no-repeat;
+}
+
+/* Webkit Scrollbar custom styles */
+@layer utilities {
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: var(--foundation-grey-100);
+        border-radius: 12px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: var(--foundation-blue-normal);
+        border-radius: 12px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #c0a0b9;
+    }
 }

@@ -13,6 +13,8 @@ export const Env = createEnv({
     NEXT_PUBLIC_EMAILJS_SERVICE_ID: z.string().trim().min(1),
     NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: z.string().trim().min(1),
     NEXT_PUBLIC_EMAILJS_PUBLIC_KEY: z.string().trim().min(1),
+    NEXT_PUBLIC_CONTACT_EMAIL: z.string().trim().email(),
+    NEXT_PUBLIC_CONTACT_PHONE_NUMBER: z.string().trim().min(9),
   },
   // You need to destructure all the keys manually
   runtimeEnv: {
@@ -25,5 +27,9 @@ export const Env = createEnv({
     process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
     NEXT_PUBLIC_EMAILJS_PUBLIC_KEY:
     process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
+    NEXT_PUBLIC_CONTACT_EMAIL:
+    process.env.NEXT_PUBLIC_CONTACT_EMAIL,
+    NEXT_PUBLIC_CONTACT_PHONE_NUMBER:
+    process.env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER,
   },
 });

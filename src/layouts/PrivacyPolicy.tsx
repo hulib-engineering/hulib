@@ -1,7 +1,54 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
-// import { useTranslations } from 'next-intl';
-import React from 'react';
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import React, { type ReactNode } from 'react';
+
+import { newLineMessage } from '@/components/InfoContainer';
+import { mergeClassnames } from '@/components/private/utils';
+import { customMessage } from '@/layouts/Hero';
+import { Env } from '@/libs/Env.mjs';
+
+export const unorderedMessageList = (listStyle: string): (() => ReactNode) => {
+  // eslint-disable-next-line react/display-name
+  return (...chunks: ReactNode[]): ReactNode => {
+    return <ul className={listStyle}>{chunks}</ul>;
+  };
+};
+
+export const listMessageItem = (): (() => ReactNode) => {
+  // eslint-disable-next-line react/display-name
+  return (...chunks: ReactNode[]): ReactNode => {
+    return <li>{chunks}</li>;
+  };
+};
+
+export const customInternalLink = (href: string): (() => ReactNode) => {
+  // eslint-disable-next-line react/display-name
+  return (...chunks: ReactNode[]): ReactNode => {
+    return (
+      <Link href={href} className="text-primary">
+        {chunks}
+      </Link>
+    );
+  };
+};
+
+export const customExternalLink = (href: string): (() => ReactNode) => {
+  // eslint-disable-next-line react/display-name
+  return (...chunks: ReactNode[]): ReactNode => {
+    return (
+      <Link
+        href={href}
+        className="text-primary"
+        target="_blank"
+        rel="noreferrer"
+      >
+        {chunks}
+      </Link>
+    );
+  };
+};
 
 // const InfoList = [
 //   {
@@ -28,7 +75,21 @@ import React from 'react';
 // ];
 
 const PrivacyPolicy = ({ onClose }: { onClose: () => void }) => {
-  // const t = useTranslations('Index');
+  const contentIndexes = [
+    'index_0',
+    'index_1',
+    'index_2',
+    'index_3',
+    'index_4',
+    'index_5',
+    'index_6',
+    'index_7',
+    'index_8',
+    'index_9',
+    'index_10',
+  ] as const;
+
+  const t = useTranslations('Index');
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-12 rounded-3xl bg-white p-12">
@@ -41,76 +102,68 @@ const PrivacyPolicy = ({ onClose }: { onClose: () => void }) => {
           className="object-contain"
           loading="eager"
         />
-        <h1 className="text-[28px] font-semibold text-slate-1000">
-          Privacy Policy
+        <h1 className="text-[28px] font-semibold capitalize text-slate-1000">
+          {t('privacy_policy_title')}
         </h1>
         <button type="button" onClick={onClose}>
           <XMarkIcon width={24} height={24} />
         </button>
       </div>
-      <div className="mb-8 h-[25.5rem] overflow-y-auto leading-snug">
-        <h2 className="mb-1 text-xl font-semibold text-gray-800">Overview</h2>
-        <p className="text-base font-normal text-gray-400">
-          Dorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-          turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec
-          fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus
-          elit sed risus. Maecenas eget condimentum velit, sit amet feugiat
-          lectus. Class aptent taciti sociosqu ad litora torquent per conubia
-          nostra, per inceptos himenaeos. Praesent auctor purus luctus enim
-          egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex.
-          Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum
-          lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in
-          elementum tellus.
-          <br />
+      <div
+        className={mergeClassnames(
+          'custom-scrollbar scroll-smooth mb-8 flex h-[25.5rem] flex-col items-center justify-start gap-6 overflow-y-scroll',
+          'text-base font-normal leading-snug text-gray-400',
+        )}
+      >
+        <p>
+          {t.rich('privacy_policy_description', {
+            important: customMessage('font-semibold text-gray-800'),
+            br: newLineMessage(),
+            linkTohHome: customInternalLink('/'),
+            sendEmail: customExternalLink('mailto:hulibvietnam@gmail.com'),
+          })}
         </p>
-        <h2 className="mb-1 text-xl font-semibold text-gray-800">Overview</h2>
-        <p className="text-base font-normal text-gray-400">
-          Dorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-          turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec
-          fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus
-          elit sed risus. Maecenas eget condimentum velit, sit amet feugiat
-          lectus. Class aptent taciti sociosqu ad litora torquent per conubia
-          nostra, per inceptos himenaeos. Praesent auctor purus luctus enim
-          egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex.
-          Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum
-          lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in
-          elementum tellus.
-          <br />
-        </p>
-        <h2 className="mb-1 text-xl font-semibold text-gray-800">Overview</h2>
-        <p className="text-base font-normal text-gray-400">
-          Dorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-          turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec
-          fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus
-          elit sed risus. Maecenas eget condimentum velit, sit amet feugiat
-          lectus. Class aptent taciti sociosqu ad litora torquent per conubia
-          nostra, per inceptos himenaeos. Praesent auctor purus luctus enim
-          egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex.
-          Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum
-          lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in
-          elementum tellus.
-          <br />
-        </p>
-        <h2 className="mb-1 text-xl font-semibold text-gray-800">Overview</h2>
-        <p className="text-base font-normal text-gray-400">
-          Dorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-          turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec
-          fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus
-          elit sed risus. Maecenas eget condimentum velit, sit amet feugiat
-          lectus. Class aptent taciti sociosqu ad litora torquent per conubia
-          nostra, per inceptos himenaeos. Praesent auctor purus luctus enim
-          egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex.
-          Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum
-          lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in
-          elementum tellus.
-          <br />
-        </p>
+        <div className="w-full">
+          <h2 className="mt-1 text-xl font-semibold text-gray-800">
+            {t('privacy_policy_table_of_content.title')}
+          </h2>
+          <ul className="block list-none text-primary">
+            {contentIndexes.map((index, i) => (
+              <li key={index}>
+                <Link href={`#privacy-policy-${i}`}>
+                  {t(`privacy_policy_table_of_content.${index}`)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {contentIndexes.map((index, i) => (
+          <section key={index} id={`privacy-policy-${i}`}>
+            <h2 className="mb-1 text-xl font-semibold text-gray-800">
+              {t(`privacy_policy_sections.${index}.heading`)}
+            </h2>
+            <p>
+              {t.rich(`privacy_policy_sections.${index}.content`, {
+                br: newLineMessage(),
+                ul: unorderedMessageList('list-disc pl-6'),
+                li: listMessageItem(),
+                important: customMessage('font-semibold text-gray-800'),
+                sendEmail: customExternalLink(
+                  `mailto:${Env.NEXT_PUBLIC_CONTACT_EMAIL}`,
+                ),
+                call: customInternalLink(
+                  `tel:${Env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER}`,
+                ),
+              })}
+            </p>
+          </section>
+        ))}
       </div>
       <div className="inline-flex w-full items-center justify-end">
         <button
           type="button"
           onClick={onClose}
-          className="flex items-center justify-center gap-1 rounded-full bg-primary px-8 py-3 text-base font-medium capitalize leading-normal text-white shadow"
+          className="flex items-center justify-center gap-1 rounded-full bg-primary px-8 py-3 text-base font-medium capitalize leading-normal text-white shadow-[0px_8px_24px_#1979ff40]"
         >
           accept
         </button>
