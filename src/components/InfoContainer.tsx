@@ -23,7 +23,7 @@ const highlightMessage = (
   };
 };
 
-const newLineMessage = (): (() => ReactNode) => {
+export const newLineMessage = (): (() => ReactNode) => {
   // eslint-disable-next-line react/display-name
   return (): ReactNode => {
     return <br />;
