@@ -2,11 +2,11 @@
 
 import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import React, { type ReactNode, useCallback, useState } from 'react';
 import type WaveSurfer from 'wavesurfer.js';
 
+import Button from '@/components/button/Button';
 // eslint-disable-next-line import/no-cycle
 import { HighlightContentBox } from '@/components/HighlightContentBox';
 import { mergeClassnames } from '@/components/private/utils';
@@ -57,15 +57,6 @@ const Hero = () => {
     }
   }, [wavesurfer]);
 
-  // const waveSurfer = WaveSurfer.create({
-  //   container: '#waveform-container',
-  //   waveColor: 'rgb(200, 0, 200)',
-  //   progressColor: 'rgb(100, 0, 100)',
-  //   url: '/examples/audio/audio.wav',
-  //   autoScroll: true,
-  //   dragToSeek: true,
-  // });
-
   return (
     <section className="flex flex-col items-center justify-center gap-32 self-stretch px-[20.625rem] pb-[5.625rem] pt-8">
       <div className="flex w-[48rem] flex-col items-center gap-6 pb-3">
@@ -81,23 +72,24 @@ const Hero = () => {
           </p>
         </div>
         <div className="flex flex-col items-center gap-2.5">
-          <Link
+          <Button
+            as="a"
             rel="noopener noreferrer"
             target="_blank"
             href="/assets/docs/project-proposal.pdf"
-            className="flex h-12 items-center justify-center gap-1 rounded-[2rem] bg-primary px-8 py-3"
+            className="rounded-full uppercase"
+            iconRight={
+              <Image
+                width={24}
+                height={24}
+                src="/assets/images/icons/download-icon.svg"
+                alt="Download icon"
+                loading="lazy"
+              />
+            }
           >
-            <p className="text-base font-medium uppercase leading-6 text-white">
-              {t('hero_call_to_action')}
-            </p>
-            <Image
-              width={24}
-              height={24}
-              src="/assets/images/icons/download-icon.svg"
-              alt="Download icon"
-              loading="lazy"
-            />
-          </Link>
+            {t('hero_call_to_action')}
+          </Button>
         </div>
       </div>
       <div className="relative w-full">

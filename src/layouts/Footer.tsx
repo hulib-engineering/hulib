@@ -24,17 +24,19 @@ const Footer = () => {
       <footer className="w-full px-[20.625rem] py-[5.625rem]">
         <div className="flex w-full items-center justify-between">
           <Logo />
-          <div className="flex gap-6">
-            <p className="text-sm font-normal leading-[1.375rem] text-[rgba(0,_87,_215,_0.50)]">
-              {t('copyright')}
-            </p>
+          <div className="flex items-center justify-center gap-6">
+            <div>
+              <p className="text-sm font-normal text-[rgba(0,_87,_215,_0.50)]">
+                {t('copyright')}
+              </p>
+            </div>
             {Links.map((link, index) => (
-              <div key={index}>
+              <div key={index} className="mb-1">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
                   className={mergeClassnames(
-                    'text-sm font-normal leading-[1.375rem] text-[rgba(0,_87,_215,_0.50)] underline transition duration-200 capitalize',
+                    'text-sm font-normal text-primary-hover/50 underline transition duration-200 capitalize',
                     'hover:-translate-y-1',
                   )}
                 >
