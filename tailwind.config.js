@@ -25,6 +25,7 @@ module.exports = {
       'blue-light': 'var(--foundation-blue-light)',
       'blue-darker': 'var(--foundation-blue-darker)',
       'light-hover': '#D9E7FD',
+      'light-active': 'var(--foundation-blue-light-active)',
       white: colors.white,
       black: colors.black,
       slate: colors.slate,

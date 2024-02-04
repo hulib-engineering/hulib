@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import React, { type ReactNode } from 'react';
 
+import Button from '@/components/button/Button';
 import { newLineMessage } from '@/components/InfoContainer';
 import { mergeClassnames } from '@/components/private/utils';
 import { customMessage } from '@/layouts/Hero';
@@ -160,13 +161,12 @@ const PrivacyPolicy = ({ onClose }: { onClose: () => void }) => {
         ))}
       </div>
       <div className="inline-flex w-full items-center justify-end">
-        <button
-          type="button"
+        <Button
+          className="rounded-full capitalize shadow-[0px_8px_24px_#1979ff40] transition-all duration-300 hover:translate-y-0.5 hover:shadow-none"
           onClick={onClose}
-          className="flex items-center justify-center gap-1 rounded-full bg-primary px-8 py-3 text-base font-medium capitalize leading-normal text-white shadow-[0px_8px_24px_#1979ff40]"
         >
           accept
-        </button>
+        </Button>
       </div>
     </div>
   );
