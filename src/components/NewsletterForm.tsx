@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import type { z } from 'zod';
 
+import { pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/private/utils';
 import { Env } from '@/libs/Env.mjs';
 import { NewsletterValidation } from '@/validations/NewsletterValidation';
@@ -39,9 +40,7 @@ const NewsletterForm = () => {
         },
         Env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
       );
-      toast.success(
-        '🚀 Your message is on its way! Thanks for reaching out 😊',
-      );
+      pushSuccess('🚀 Your message is on its way! Thanks for reaching out 😊');
       // alert(
       //   '🚀 Your message is on its way! Thanks for reaching out 😊. Have a fantastic day ahead! 🌟',
       // );
