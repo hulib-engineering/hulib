@@ -1,34 +1,8 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import React, { type ReactNode } from 'react';
+import React from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
-
-const highlightMessage = (
-  isOutstanding: boolean,
-  textColor: string,
-): (() => ReactNode) => {
-  // eslint-disable-next-line react/display-name
-  return (...chunks: ReactNode[]): ReactNode => {
-    return (
-      <span
-        className={mergeClassnames(
-          textColor === 'primary' ? 'text-primary' : 'text-secondary',
-          isOutstanding && 'text-[5.625rem]',
-        )}
-      >
-        {chunks}
-      </span>
-    );
-  };
-};
-
-export const newLineMessage = (): (() => ReactNode) => {
-  // eslint-disable-next-line react/display-name
-  return (): ReactNode => {
-    return <br />;
-  };
-};
+import { highlightMessage, newLineMessage } from '@/utils/i18NRichTextUtils';
 
 type IInfoContainerProps = {
   i18nKey: 'about_stories' | 'about_mission' | 'about_vision';

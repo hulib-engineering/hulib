@@ -3,13 +3,14 @@
 import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import React, { type ReactNode, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import type WaveSurfer from 'wavesurfer.js';
 
 import Button from '@/components/button/Button';
 // eslint-disable-next-line import/no-cycle
 import { HighlightContentBox } from '@/components/HighlightContentBox';
 import { mergeClassnames } from '@/components/private/utils';
+import { customMessage } from '@/utils/i18NRichTextUtils';
 
 const StarIcons = [
   { size: 16, yPosition: 'top-[6.1875rem]', xPosition: 'left-[17.6875rem]' },
@@ -31,13 +32,6 @@ const VectorIcons = [
     xPosition: 'left-[177px]',
   },
 ];
-
-export const customMessage = (font: string): (() => ReactNode) => {
-  // eslint-disable-next-line react/display-name
-  return (...chunks: ReactNode[]): ReactNode => {
-    return <span className={font}>{chunks}</span>;
-  };
-};
 
 const Hero = () => {
   const t = useTranslations('Index');

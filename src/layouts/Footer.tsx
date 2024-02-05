@@ -4,14 +4,20 @@ import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 import { Logo } from '@/components/Logo';
-import Modal from '@/components/Modal';
+import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
 import { mergeClassnames } from '@/components/private/utils';
-import PrivacyPolicy from '@/layouts/PrivacyPolicy';
+import TermOfUseModal from '@/components/TermOfUseModal';
 
 const Footer = () => {
   const t = useTranslations('Footer');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentModalRef, setCurrentModalRef] = useState('');
+
+  const handleClick = (modalName: string) => {
+    setIsModalOpen(true);
+    setCurrentModalRef(modalName);
+  };
 
   const Links = [
     { content: t('privacy_policy'), modalName: 'privacy_policy' },
@@ -34,7 +40,7 @@ const Footer = () => {
               <div key={index} className="mb-1">
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={() => handleClick(link.modalName)}
                   className={mergeClassnames(
                     'text-sm font-normal text-primary-hover/50 underline transition duration-200 capitalize',
                     'hover:-translate-y-1',
@@ -47,12 +53,24 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <Modal.Backdrop />
-        <Modal.Panel className="w-[56.25rem]">
-          <PrivacyPolicy onClose={() => setIsModalOpen(false)} />
-        </Modal.Panel>
-      </Modal>
+      {currentModalRef === 'privacy_policy' && (
+        <PrivacyPolicyModal
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
+      {currentModalRef === 'term_of_service' && (
+        <TermOfUseModal
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
+      {/* <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}> */}
+      {/*  <Modal.Backdrop /> */}
+      {/*  <Modal.Panel className="w-[56.25rem]"> */}
+      {/*    <PrivacyPolicy onClose={() => setIsModalOpen(false)} /> */}
+      {/*  </Modal.Panel> */}
+      {/* </Modal> */}
     </>
   );
 };
