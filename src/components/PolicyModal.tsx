@@ -68,7 +68,7 @@ const PolicyModal = (props: WithChildren<IPolicyModalProps>) => {
               className="rounded-full capitalize shadow-[0px_8px_24px_#1979ff40] transition-all duration-300 hover:translate-y-0.5 hover:shadow-none"
               onClick={props.onClose}
             >
-              accept
+              {t('txt_accept')}
             </Button>
           </div>
         </div>

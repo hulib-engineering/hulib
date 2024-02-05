@@ -79,6 +79,7 @@
     "newsletter_title": "join with us",
     "newsletter_description": "become the first person to share your experience",
     "newsletter_form_email_placeholder": "Email Address*",
+    "newsletter_form_submit": "subscribe",
     "privacy_policy_title": "privacy policy",
     "privacy_policy_description": "<important>Last updated by [Date]</important><br></br>This privacy notice for HuLib (\"we,\" \"us,\" or \"our\"), describes how and why we might collect, store, use, and/or share (\"process\") your information when you use our services (\"Services\"), such as when you:<br></br>1. Visit our webapp at <linkTohHome>https://www.hulib.com</linkTohHome>, or any application of ours that links to this privacy notice<br></br>2. Download and use our mobile application (HuLib), or any other application of ours that links to this privacy notice<br></br>3. Engage with us in other related ways, including any sales, marketing, or events<br></br>If you still have any questions or concerns, please contact us at <sendEmail>hulibvietnam@gmail.com</sendEmail>",
     "privacy_policy_table_of_content": {
@@ -141,6 +142,7 @@
         "content": "If you have questions or comments about this notice, you may email us at <sendEmail>hulibvietnam@gmail.com</sendEmail> or contact us by HuLib Admin: <call>[HA phone number]</call>"
       }
     },
+    "txt_accept": "accept",
     "term_of_use_title": "term of use",
     "term_of_use_table_of_content": {
       "title": "Table of content",

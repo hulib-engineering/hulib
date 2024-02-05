@@ -5,10 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import type { z } from 'zod';
 
-import { pushSuccess } from '@/components/CustomToastifyContainer';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/private/utils';
 import { Env } from '@/libs/Env.mjs';
 import { NewsletterValidation } from '@/validations/NewsletterValidation';
@@ -25,8 +24,6 @@ const NewsletterForm = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  // const router = useRouter();
-  //
   const t = useTranslations('Index');
 
   const handleSubscribe = handleSubmit(async (data) => {
@@ -46,7 +43,8 @@ const NewsletterForm = () => {
       // );
     } catch (error: any) {
       console.log(error);
-      toast.error(`Error: ${error.message}`);
+      pushError(`Error: ${error.message}`);
+      // toast.error(`Error: ${error.message}`);
       // alert(`Error: ${error.message}`);
     } finally {
       setIsLoading(false);
@@ -82,7 +80,7 @@ const NewsletterForm = () => {
             'transition-all duration-300 ease-out hover:bg-primary-hover disabled:bg-opacity-75',
           )}
         >
-          subscribe
+          {t('newsletter_form_submit')}
         </button>
       </div>
     </form>
