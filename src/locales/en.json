@@ -38,7 +38,7 @@
     },
     "about_mission": {
       "title": "our <br></br><highlight>mission</highlight>",
-      "description": "At HuLib, we believe in the power of individual stories and experiences, affirming that everyone is destined for significance. <br></br><br></br>Our mission is to forge connections and foster personal growth by providing a dedicated space for sharing these unique narratives."
+      "description": "We endeavor to be a beacon of empathy, understanding, and connection, shaping a future where every individual's story is both valued and celebrated."
     },
     "about_vision": {
       "title": "our <br></br><highlight>vision</highlight>",
@@ -139,6 +139,88 @@
       "index_10": {
         "heading": "11. How can you contact us about this notice?",
         "content": "If you have questions or comments about this notice, you may email us at <sendEmail>hulibvietnam@gmail.com</sendEmail> or contact us by HuLib Admin: <call>[HA phone number]</call>"
+      }
+    },
+    "term_of_use_title": "term of use",
+    "term_of_use_table_of_content": {
+      "title": "Table of content",
+      "index_0": "1. ABOUT THIS AGREEMENT",
+      "index_1": "2. CHANGES TO THIS AGREEMENT",
+      "index_2": "3. THE PLATFORM",
+      "index_3": "4. OUR COMMITMENT TO YOU",
+      "index_4": "5. USERS",
+      "index_5": "6. INTELLECTUAL PROPERTY",
+      "index_6": "7. TERMINATION",
+      "index_7": "8. DISPUTE RESOLUTION"
+    },
+    "term_of_use_sections": {
+      "index_0": {
+        "heading": "1. ABOUT THIS AGREEMENT",
+        "content": "This agreement is between HuLib (“HuLib”, “we”, “us” and “our”) and the person signing up to be a User of the HuLib application (“you” and “your”). This agreement comprises these terms of use and any other document specified in these Terms of Use (“Agreement”). This Agreement governs the rights and obligations between HuLib and you, governing our provision and your use of our Services, web app or other software provided, and any material, communications, links or information contained on, or made available through, our Services. Together, the web app and Services provided comprise the “Platform”. <br></br> By signing up to the Platform, you acknowledge that you have read and agree to comply with and be bound by this Agreement (including any variations HuLib makes from time to time) and by HuLib’s Privacy Policy (available at <linkToPrivacy>www.huLib.com.au/privacy-policy/</linkToPrivacy>). If you do not agree to this Agreement and the Privacy Policy, you must terminate your registration as a User."
+      },
+      "index_1": {
+        "heading": "2. CHANGES TO THIS AGREEMENT",
+        "content": "We may amend this Agreement from time to time.  We will keep you informed of any changes by posting the amended Agreement on the Platform.  If you continue to access or use the Platform after we amend the Agreement, then you are taken to have agreed to such amendments.  You are responsible for checking all amendments from time to time."
+      },
+      "index_2": {
+        "heading": "3. THE PLATFORM",
+        "content": "The Platform is designed to give you a space to view and/or listen to personal stories of overcoming difficulties from mentors, through video or audio recordings, photographs or written pieces uploaded to the Platform (each upload a “Story”). The platform also connects you with other young people."
+      },
+      "index_3": {
+        "heading": "4. OUR COMMITMENT TO YOU",
+        "content": "HuLib will ensure that the Platform is provided to you with due care and skill, and by suitably qualified personnel.  We do not warrant that the Platform will be error-free, virus-free, continuous, suitable for you, or that the Platform will be compatible with your equipment. HuLib does not take responsibility for any actions or omissions by Users on or in relation to the Platform. <br></br> HuLib may add to, change or remove any features and functionality of the Platform at any time (with or without notice to you).  The features and functionality available on the Platform may also vary depending on the device or application that is used to access it (e.g. mobile vs desktop). <br></br> HuLib does not represent or guarantee that the Platform will be free from loss, corruption, interference, attack or other intrusion (“Security Incident”), and you release us from any liability relating to any such Security Incident."
+      },
+      "index_4": {
+        "heading": "5. USERS",
+        "content_sections": {
+          "index_0": {
+            "heading": "5.1 Eligibility",
+            "content": "You may only become a User of the Platform if:<ul><li>(a)    you are from 16 to 25 years old;</li> <li>(b)     you satisfy all the other requirements (including restrictions) set out in this Agreement, and as otherwise notified by us.</li></ul> You are responsible for keeping your details up to date, and you acknowledge that HuLib will not be responsible for any incorrect or fraudulent details provided."
+          },
+          "index_1": {
+            "heading": "5.2 Restrictions",
+            "content": "You must not:<ul><li>(a)    submit more than one registration application for yourself, whether directly or indirectly; and</li> <li>(b)     register any person other than yourself as a User.</li></ul> HuLib does not guarantee to address mental health issues. In the case of needing mental health support, HuLib encourages users to contact mental health professionals or specialized organizations for appropriate assistance."
+          },
+          "index_2": {
+            "heading": "5.3 Your commitments as a User",
+            "content": "You agree:<ul><li>(a)    that you have legal authority, and will continue to have such legal authority at all times during your registration, to enter into this Agreement;</li> <li>(b)     to only communicate information (including photographs and videos) that you have all necessary rights to;</li> <li>(c)    to compensate HuLib fully for any loss or damage that HuLib suffers as a result of any claims made or brought by a third party against HuLib due to your breach of this Agreement;</li> <li>(d)    to obtain all moral rights and intellectual property waivers and consents necessary to allow HuLib to freely use, modify and exploit the User Material (whether such use, modification or exploitation occurred before or after the waiver or consent is given) as permitted by this Agreement, and provide such waivers and consents to HuLib promptly on HuLib’s request;</li> <li>(e)      not to infringe any Intellectual Property Rights or Moral Rights of any person (including mentors), and to obtain any required consents to use any soundtrack or other work subject to copyright featured on any videos, photos or stories;</li> <li>(f)    to only depict individuals in a Story with their consent;</li> <li>(g)      that you may only be a User for your own personal use and in your personal capacity, and not for any commercial or other capacity;</li> <li>(h)      not to bring any claim against HuLib in relation to any act or omission occurring in relation to the Platform, except that the foregoing does not limit your ability to bring a claim against HuLib for its negligence or other breach of this Agreement;</li> <li>(i)     to assume all liability for any risk arising from any Story that you upload or view, or from your use of any information on the Platform;</li> <li>(k)      that uploading a Story will not breach any agreements that you have entered into;</li> <li>(j)   to comply with the HuLib community values (as notified by us from time to time);</li> <li>(l)    to cooperate with HuLib in good faith, and to assist with any reasonable requests for the purposes of an investigation undertaken by HuLib or a legal authority regarding misuse of the Platform;</li> <li>(m)    not to provide any false, incomplete or misleading information, including information provided in your personal details;</li> <li>(n)    not to upload any content or use language that is inappropriate, profane, defamatory, infringing, obscene, indecent, unlawful, likely to offend, insult or humiliate others based on ethnicity, race, gender, sexuality, age or any disability or otherwise vilifies any person or incites violence or hatred;</li> <li>(o)      not to defame, abuse, stalk, harass, threaten or otherwise violate the legal rights of others, including rights relating to privacy and publicity;</li> <li>(p)      not to use the Platform to sell or advertise any goods or services;</li> <li>(q)     not to transfer your registration to another person.You must have all necessary consents, permissions, licences and approvals to enter into this Agreement and perform your obligations under it.</li> <li>(r)  if you are not satisfied with the mentor or the mentor has any inappropriate behaviour, you need to contact the email in section 8.2</li></ul> If you believe that another User has provided fraudulent or incorrect information on the Platform, you must immediately inform HuLib.  HuLib is not responsible for any loss arising out of or in connection with any such fraudulent or incorrect information."
+          },
+          "index_3": {
+            "heading": "5.4 Security of your information",
+            "content": "You must keep your user login details (including password) secret and confidential and not disclose such details to any third party or allow another person to access or use the Platform using your details.  You agree that you will be solely responsible for all access and use of the Platform by anyone using your login details, whether or not you authorised such access or use.  You must immediately notify HuLib if you are aware of, or have any reason to suspect or believe that, your login details have been subject to unauthorised use or have otherwise been compromised."
+          }
+        }
+      },
+      "index_5": {
+        "heading": "6. INTELLECTUAL PROPERTY",
+        "content": "This Agreement does not, in any way, transfer or assign any right, interest, or title pertaining to the Intellectual Property Rights (including Moral Rights) of any party, except as explicitly stated. Between you and HuLib, ownership of any User Material published on the Platform resides with you or its creator. You grant HuLib, and will secure the necessary third-party licenses to grant, a worldwide, royalty-free, perpetual, irrevocable, transferable, and non-exclusive license to:<br></br> <br></br> (a) Utilize, reproduce, modify, adapt, communicate, display, perform, store, and distribute your User Material to fulfill our obligations under this Agreement and for the broader purposes of providing the Platform and conducting our general business activities (including marketing-related purposes). (b) Generate reports, statistics, databases, and compilations for use by HuLib and third parties. (c) Allow any person to assist HuLib in carrying out the activities mentioned in this paragraph. (d) Sub-license any of the rights granted to HuLib under this paragraph to any person.<br></br> <br></br> Without limiting the foregoing, you unconditionally consent to such use of your User Material by HuLib, which would, but for your consent, constitute a breach of your Moral Rights. You acknowledge that you are solely liable for any losses, damages, claims, and expenses (including legal costs) resulting from any User Material that violates third-party Intellectual Property Rights or Moral Rights.<br></br> <br></br> All materials, text, images, software, code, sounds, applications, and other content located on the Platform, or otherwise provided by HuLib, are owned or licensed by HuLib. Except for your User Material, you must not copy, modify, or transmit any such content without written permission from HuLib. The Platform may contain trademarks, logos, service names, and trade names of HuLib and third parties, which may be registered or otherwise protected by law. You are not permitted to use any trademarks, logos, service names, or trade names appearing on the Platform without our prior written permission."
+      },
+      "index_6": {
+        "heading": "7. TERMINATION",
+        "content_sections": {
+          "index_0": {
+            "heading": "7.1 Termination of registration or this Agreement",
+            "content": "We may terminate this Agreement and your registration as a User on 10 days' written notice to you. You may terminate this Agreement and your registration as a User at any time by selecting \"delete profile\" on the Platform's profile page."
+          },
+          "index_1": {
+            "heading": "7.2 Termination for cause",
+            "content": "We may terminate your registration immediately by giving you notice in writing if one of these situation occurs.<ul><li>(a) Serious Breach: If you do something that goes against the rules of this agreement, and it's something that can't be fixed.</li> <li>(b) Fixable Breach: If you make a mistake, and it's something that can be fixed, we will let you know. You'll have seven days to make things right from the time we tell you about the issue.</li> <li>(c) Repeated Breaches: If you keep breaking the same rule, or if you break a lot of rules often, even if you fix them, we might have to end your participation.</li> <li>(d) Legal Restrictions: If you're in a country that's considered as supporting terrorism or if you're on a list of people that the government says we can't work with, unfortunately, we won't be able to continue with your participation.</li> <li>(e) Sometimes, we might have to end your participation if the agreement allows us to do so for a specific reason.</li></ul> HuLib does not guarantee to address mental health issues. In the case of needing mental health support, HuLib encourages users to contact mental health professionals or specialized organizations for appropriate assistance."
+          }
+        }
+      },
+      "index_7": {
+        "heading": "8. DISPUTE RESOLUTION",
+        "content": "You may notify us of any issue or dispute with HuLib (\"Dispute Notice\"). We both agree to try and resolve the dispute in such Dispute Notice in good faith, before either party commences any formal proceedings (other than for urgent interlocutory or other relief).",
+        "content_sections": {
+          "index_0": {
+            "heading": "8.1 Notice",
+            "content": "Unless expressly stated otherwise in this Agreement, all notices, certificates, consents, approvals, waivers, and other communications in connection with this Agreement must be in writing. HuLib may provide notice by:<ul><li>(a) Posting the notice on the Platform; or</li> <li>(b) Emailing the notice to the email address that you last provided to HuLib.</li></ul> HuLib does not guarantee to address mental health issues. In the case of needing mental health support, HuLib encourages users to contact mental health professionals or specialized organizations for appropriate assistance."
+          },
+          "index_1": {
+            "heading": "8.2 Contact us",
+            "content": "We will make an effort to provide online support for Users. To request online support, you need to contact us through the \"Contact Us\" page on the Platform or by sending an email to the specified email address on that page. <br></br> Although HuLib will attempt to respond to all online support requests, HuLib does not guarantee the resolution of every issue or all issues, nor does it promise to do so within a specific timeframe."
+          }
+        }
       }
     }
   },
