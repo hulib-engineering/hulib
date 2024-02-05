@@ -52,8 +52,8 @@ const Hero = () => {
   }, [wavesurfer]);
 
   return (
-    <section className="flex flex-col items-center justify-center gap-32 self-stretch px-[20.625rem] pb-[5.625rem] pt-8">
-      <div className="flex w-[48rem] flex-col items-center gap-6 pb-3">
+    <section className="flex w-full flex-col items-center justify-center gap-32 px-[20.625rem] pb-[5.625rem] pt-8">
+      <div className="flex w-1/2 max-w-screen-md flex-col items-center gap-6 pb-3">
         <div className="flex flex-col items-center gap-4 self-stretch">
           <p className="self-stretch text-center text-lg font-medium uppercase leading-[1.6875rem] text-primary">
             {t('hero_title')}
@@ -125,12 +125,12 @@ const Hero = () => {
             )}
           />
         ))}
-        <p className="absolute right-0 w-[13.5rem] text-right text-base font-normal leading-normal text-slate-1000">
+        <p className="absolute right-0 h-12 max-w-64 text-right text-base font-normal leading-normal text-slate-1000">
           {t.rich('hero_message_2', {
             important: customMessage('font-bold'),
           })}
         </p>
-        <p className="w-[17rem] text-base font-normal leading-normal text-slate-1000">
+        <p className="h-12 max-w-64 text-base font-normal leading-normal text-slate-1000">
           {t.rich('hero_message_1', {
             important: customMessage('font-bold'),
           })}

@@ -8,6 +8,7 @@ const FeatureList = [
     key: 'feature_peers' as const,
     bgColor: 'bg-lime-350/[.75]',
     shadowColor: 'shadow-[0_12px_24px_0_rgba(187,249,158,0.25)]',
+    thumbnailUrl: '/assets/images/feature-0.png',
   },
   {
     key: 'feature_online_meetings' as const,
@@ -34,6 +35,7 @@ const Features = () => {
             description={t(`${feature.key}.description`)}
             bgColor={feature.bgColor}
             shadowColor={feature.shadowColor}
+            thumbnailUrl={feature.thumbnailUrl}
           />
         ))}
       </div>
