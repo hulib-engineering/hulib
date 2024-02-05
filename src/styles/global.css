@@ -30,6 +30,10 @@
     --foundation-blue-light: rgba(255, 255, 255, 1);
     --foundation-blue-normal: rgba(0, 97, 239, 1);
     --foundation-grey-100: rgba(200, 200, 200, 1);
+    --toastify-color-info: rgba(0, 97, 239, 1);
+    --toastify-color-success: #32D583;
+    --toastify-color-warning: #FFD21F;
+    --toastify-color-error: #F04438;
     --swiper-pagination-progressbar-length: 1.25rem;
 }
 html { scroll-behavior: smooth; }
@@ -114,4 +118,32 @@ html { scroll-behavior: smooth; }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
         background: #c0a0b9;
     }
+}
+
+/* Toastify custom styles */
+.toastify-custom-container {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0.75rem;
+    background-color: var(--foundation-blue-normal);
+    border-radius: 0.5rem;
+}
+.toastify-custom-container::before {
+    content: '';
+    position: absolute;
+    left: -50%;
+    top: -50%;
+    height: 13.25rem;
+    width: 13.25rem;
+    border-radius: 6.625rem;
+    background-image: radial-gradient(50% 50% at 50% 50%, rgba(0,236.9,80.54,0.12) 0%, rgba(0,236.9,123.19,0) 100%);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 1000ms;
+}
+.Toastify__toast-icon {
+    margin-inline-end: 10px;
+    flex-shrink: 0;
+    width: 2rem;
+    display: flex;
 }
