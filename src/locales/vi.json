@@ -45,7 +45,7 @@
       "description": "HuLib mong muốn gây dựng cộng đồng các bạn trẻ hỗ trợ lẫn nhau cùng với sự cộng tác và hướng dẫn từ các anh chị có kinh nghiệm. Chúng mình nỗ lực trở thành nguồn động viên, thấu hiểu và kết nối, định hình một tương lai nơi câu chuyện của mỗi cá nhân đều được trân trọng và vinh danh."
     },
     "testimonial_title": "meet our team",
-    "testimonial_description": "Gặp gỡ các thành viên của HuLib bạn nhé",
+    "testimonial_description": "Gặp gỡ các thành viên của HuLib",
     "faqs_question_0": {
       "question": "1. HuLib là gì và nó hoạt động như thế nào?",
       "answer": {
@@ -58,7 +58,7 @@
       }
     },
     "faqs_question_1": {
-      "question": "2. Ai có thể hưởng lợi từ HuLib?",
+      "question": "2. Đối tượng mà Hulib hướng đến?",
       "answer": {
         "heading": "",
         "body_paras": {
