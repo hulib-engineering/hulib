@@ -13,7 +13,7 @@ const SponsorsLogo = [
   { name: 'Momo', logoUrl: '/assets/images/sponsors/sponsors-1.png' },
 ];
 const Sponsors = () => {
-  const t = useTranslations('Sponsors');
+  const t = useTranslations('Index');
   return (
     <section className="flex w-full flex-col items-center gap-12 overflow-hidden py-3 text-slate-1000 lg:py-[5.625rem]">
       <div className="flex  flex-col items-center self-stretch">

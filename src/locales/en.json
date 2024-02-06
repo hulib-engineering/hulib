@@ -46,6 +46,7 @@
     },
     "testimonial_title": "meet our team",
     "testimonial_description": "What do our members say?",
+    "sponsors_title": "Our Sponsors",
     "faqs_question_0": {
       "question": "1. What is HuLib, and how does it work?",
       "answer": "HuLib is a platform dedicated to fostering well-being through shared stories and mentorship. Discover how individuals, mentors, and the community come together to create a supportive environment. Explore our features and understand the seamless process of connecting with mentors and sharing your own experiences."
@@ -61,9 +62,6 @@
     "newsletter_title": "join with us",
     "newsletter_description": "become the first person to share your experience",
     "newsletter_form_email_placeholder": "Email Address*"
-  },
-  "Sponsors": {
-    "sponsors_title": "Our Sponsors"
   },
   "Guestbook": {
     "meta_title": "Guestbook",
