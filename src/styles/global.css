@@ -1,3 +1,149 @@
 @tailwind base;
-@tailwind components;
 @tailwind utilities;
+@tailwind components;
+/*@layer components {*/
+/*    .all-\[unset\] {*/
+/*        all: unset;*/
+/*    }*/
+/*}*/
+
+:root {
+    --black: rgba(20, 18, 19, 1);
+    --foundation-blue-dark: rgba(0, 73, 179, 1);
+    --foundation-blue-dark-active: rgba(0, 44, 108, 1);
+    --foundation-blue-dark-hover: rgba(0, 58, 143, 1);
+    --foundation-blue-light-active: rgba(176, 206, 250, 1);
+    --foundation-blue-light-hover: rgba(217, 231, 253, 1);
+    --foundation-blue-normal-active: rgba(0, 78, 191, 1);
+    --foundation-blue-normal-hover: rgba(0, 87, 215, 1);
+    --foundation-yellow-dark: rgba(191, 149, 52, 1);
+    --foundation-yellow-dark-active: rgba(115, 90, 31, 1);
+    --foundation-yellow-dark-hover: rgba(153, 119, 41, 1);
+    --foundation-yellow-darker: rgba(89, 70, 24, 1);
+    --foundation-yellow-light: rgba(255, 249, 236, 1);
+    --foundation-yellow-light-active: rgba(255, 238, 197, 1);
+    --foundation-yellow-light-hover: rgba(255, 247, 227, 1);
+    --foundation-yellow-normal: rgba(255, 199, 69, 1);
+    --foundation-yellow-normal-active: rgba(204, 159, 55, 1);
+    --foundation-yellow-normal-hover: rgba(230, 179, 62, 1);
+    --foundation-blue-darker: rgba(0, 34, 84, 1);
+    --foundation-blue-light: rgba(255, 255, 255, 1);
+    --foundation-blue-normal: rgba(0, 97, 239, 1);
+    --foundation-grey-100: rgba(200, 200, 200, 1);
+    --toastify-color-info: rgba(0, 97, 239, 1);
+    --toastify-color-success: #32D583;
+    --toastify-color-warning: #FFD21F;
+    --toastify-color-error: #F04438;
+    --swiper-pagination-progressbar-length: 1.25rem;
+}
+html { scroll-behavior: smooth; }
+
+/*Swiperjs custom styles*/
+.swiper {
+    height: max-content;
+    padding-bottom: 5.5rem;
+}
+.swiper-wrapper {
+    align-items: center; /* add this will all relevant prefixes */
+}
+.swiper-pagination-progressbar {
+    position: absolute;
+    background-color: var(--foundation-blue-light-active);
+    margin-top: 2.5rem;
+    /*margin-left: 330px;*/
+}
+.swiper-horizontal > .swiper-pagination-progressbar, .swiper-pagination-progressbar.swiper-pagination-horizontal {
+    width: 15rem;
+    height: 0.5rem;
+    border-radius: 13px;
+    left: 330px;
+    bottom: 0;
+    top: unset;
+}
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+    background-color: var(--foundation-blue-normal);
+    border-radius: 13px;
+}
+.swiper-button-prev, .swiper-button-next {
+    width: 3rem;
+    height: 3rem;
+    padding: 0.75rem;
+    background-color: white;
+    border-radius: 50px;
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+}
+.swiper-button-prev {
+    right: 50.5%;
+    left: auto;
+}
+.swiper-button-next {
+    left: 50.5%;
+    right: auto;
+}
+.swiper-button-prev:after, .swiper-button-next:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.swiper-button-prev:after {
+    background: url("/assets/images/icons/arrow-left.png") center no-repeat;
+}
+.swiper-button-next:after {
+    background: url("/assets/images/icons/arrow-right.png") center no-repeat;
+}
+
+/* Webkit Scrollbar custom styles */
+@layer utilities {
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: var(--foundation-grey-100);
+        border-radius: 12px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: var(--foundation-blue-normal);
+        border-radius: 12px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #c0a0b9;
+    }
+}
+
+/* Toastify custom styles */
+.toastify-custom-container {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0.75rem;
+    background-color: var(--foundation-blue-normal);
+    border-radius: 0.5rem;
+}
+.toastify-custom-container::before {
+    content: '';
+    position: absolute;
+    left: -50%;
+    top: -50%;
+    height: 13.25rem;
+    width: 13.25rem;
+    border-radius: 6.625rem;
+    background-image: radial-gradient(50% 50% at 50% 50%, rgba(0,236.9,80.54,0.12) 0%, rgba(0,236.9,123.19,0) 100%);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 1000ms;
+}
+.Toastify__toast-icon {
+    margin-inline-end: 10px;
+    flex-shrink: 0;
+    width: 2rem;
+    display: flex;
+}

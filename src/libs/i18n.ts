@@ -1,6 +1,6 @@
 import { getRequestConfig } from 'next-intl/server';
 
-// NextJS Boilerplate uses Crowdin as the localization software.
+// Next.js Boilerplate uses Crowdin as the localization software.
 // As a developer, you only need to take care of the English (or another default language) version.
 // Other languages are automatically generated and handled by Crowdin.
 
@@ -13,4 +13,5 @@ import { getRequestConfig } from 'next-intl/server';
 // Using internationalization in Server Components
 export default getRequestConfig(async ({ locale }) => ({
   messages: (await import(`../locales/${locale}.json`)).default,
+  timeZone: 'Asia/Bangkok',
 }));

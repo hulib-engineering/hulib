@@ -1,19 +1,230 @@
 {
-  "RootLayout": {
-    "home_link": "Home",
-    "about_link": "About",
-    "guestbook_link": "Guestbook",
-    "portfolio_link": "Portfolio",
-    "sign_in_link": "Sign in",
-    "sign_up_link": "Sign up"
+  "Header": {
+    "contact_us": "contact us"
   },
-  "BaseTemplate": {
-    "description": "Starter code for your Nextjs Boilerplate with Tailwind CSS",
-    "made_with": "Made with"
+  "Footer": {
+    "copyright": "© 2024 HuLib. All rights reserved.",
+    "privacy_policy": "privacy policy",
+    "term_of_service": "term of service",
+    "cookie_settings": "cookie settings"
   },
   "Index": {
-    "meta_title": "Next.js Boilerplate Presentation",
-    "meta_description": "Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework."
+    "meta_title": "HuLib | Landing Page",
+    "meta_description": "There is a story and experience within each of us, so we are born to be somebody.",
+    "hero_title": "a social project",
+    "hero_motto": "we are here to support you",
+    "hero_description": "There is a story and experience within each of us, so we are born to be somebody.",
+    "hero_call_to_action": "learn more",
+    "hero_message_1": "”There is <important>a crack</important> in everything, that’s how <important>the light</important> gets in.”",
+    "hero_message_2": "“You are <important>not alone</important> in your <important>struggles</important>.”",
+    "hero_mentor_quantity": "100+ <normal>Experienced Mentors</normal>",
+    "feature_peers": {
+      "title": "People with the same stories",
+      "description": "100+ mentors and volunteers having personal experience with the same problem you’re into."
+    },
+    "feature_online_meetings": {
+      "title": "Online Meeting",
+      "description": "Book a meeting with any mentor you want to share and let them know about your struggles."
+    },
+    "feature_safely_sharing": {
+      "title": "Safely Sharing",
+      "description": "Feel free to share your stories without being judged."
+    },
+    "about_title": "what is hulib",
+    "about_description": "a community project aims to promote well-being through shared stories with mentors.",
+    "about_stories": {
+      "title": "our <highlight>stories</highlight>",
+      "description": "We believe everyone has experienced moments of falling short, uncertainty, and the struggle to connect. <br></br><br></br>At HuLib, inspired by personal encounters and mentorship, we aim to create a safe space for young souls, offering companionship, shared stories, and support. Join us on this dream journey to uncover more happiness together."
+    },
+    "about_mission": {
+      "title": "our <br></br><highlight>mission</highlight>",
+      "description": "We endeavor to be a beacon of empathy, understanding, and connection, shaping a future where every individual's story is both valued and celebrated."
+    },
+    "about_vision": {
+      "title": "our <br></br><highlight>vision</highlight>",
+      "description": "HuLib envisions contributing to individual well-being by facilitating the exchange of stories with mentors. We aim to construct a supportive community where shared experiences act as a catalyst for positive change. Through mentorship and storytelling, we strive to create a transformative environment that promotes mental health, challenges societal norms, and addresses sensitive issues. <br></br><br></br>HuLib endeavors to be a beacon of empathy, understanding, and connection, shaping a future where every individual's story is both valued and celebrated."
+    },
+    "testimonial_title": "meet our team",
+    "testimonial_description": "What do our members say?",
+    "faqs_question_0": {
+      "question": "1. What is HuLib, and how does it work?",
+      "answer": {
+        "heading": "HuLib is a community dedicated to fostering well-being through shared stories and mentorship in three main fields, including education, career, and relationship.",
+        "body_paras": {
+          "p1": "High school students take advice on university choices from mentors with diverse expertise for a fulfilling college experience.",
+          "p2": "New graduates receive career guidance through one-on-one sessions, workshops, and industry expert discussions.",
+          "p3": "Young adults dealing with pressures benefit from personalized mentoring focusing on well-being."
+        }
+      }
+    },
+    "faqs_question_1": {
+      "question": "2. Who can benefit from HuLib?",
+      "answer": {
+        "heading": "",
+        "body_paras": {
+          "p1": "HuLib is designed for high school students, university students, and new graduates (ages 16-25), with a focus on those in Coastal Central Vietnam. Whether you're seeking mentorship, looking to share your story, or participating in virtual discussions and workshops, HuLib provides a space for personal and professional growth."
+        }
+      }
+    },
+    "faqs_question_2": {
+      "question": "3. How can I get involved with HuLib?",
+      "answer": {
+        "heading": "Joining HuLib is easy!",
+        "body_paras": {
+          "p1": "As a participant, you can sign up to share your story, connect with mentors, or engage in virtual discussions.",
+          "p2": "If you're an expert or volunteer interested in mentoring, we welcome your contribution. Stay tuned for updates on workshops and community projects. Explore the possibilities of involvement and make a positive impact with HuLib."
+        }
+      }
+    },
+    "newsletter_title": "join with us",
+    "newsletter_description": "become the first person to share your experience",
+    "newsletter_form_email_placeholder": "Email Address*",
+    "newsletter_form_submit": "subscribe",
+    "privacy_policy_title": "privacy policy",
+    "privacy_policy_description": "<important>Last updated by [Date]</important><br></br>This privacy notice for HuLib (\"we,\" \"us,\" or \"our\"), describes how and why we might collect, store, use, and/or share (\"process\") your information when you use our services (\"Services\"), such as when you:<br></br>1. Visit our webapp at <linkTohHome>https://www.hulib.com</linkTohHome>, or any application of ours that links to this privacy notice<br></br>2. Download and use our mobile application (HuLib), or any other application of ours that links to this privacy notice<br></br>3. Engage with us in other related ways, including any sales, marketing, or events<br></br>If you still have any questions or concerns, please contact us at <sendEmail>hulibvietnam@gmail.com</sendEmail>",
+    "privacy_policy_table_of_content": {
+      "title": "Table of content",
+      "index_0": "1. What information do we collect?",
+      "index_1": "2. How do we process your information?",
+      "index_2": "3. What legal bases do we rely on to process your information?",
+      "index_3": "4. When and with whom do we share your personal information?",
+      "index_4": "5. Do we use cookies and other tracking technologies?",
+      "index_5": "6. How do we handle your social logins?",
+      "index_6": "7. How long do we keep your information?",
+      "index_7": "8. How do we keep your information safe?",
+      "index_8": "9. What are your privacy rights?",
+      "index_9": "10. Do we make updates to this notice?",
+      "index_10": "11. How can you contact us about this notice?"
+    },
+    "privacy_policy_sections": {
+      "index_0": {
+        "heading": "1. What information do we collect?",
+        "content": "When you visit, use, or navigate our services, we may process personal information depending on how you interact with us and the services, the choices you make, and the products and features you use. <ul><li>The personal information we collect may include the following:<br></br>1. names<br></br>2. phone numbers<br></br>3. email addresses<br></br>4. usernames<br></br>5. passwords<br></br>6. contact preferences<br></br>7. contact or authentication data</li></ul>"
+      },
+      "index_1": {
+        "heading": "2. How do we process your information?",
+        "content": "<ul><li>To facilitate account creation and authentication and otherwise manage user accounts. We may process your information so you can create and login to your account, as well as keep your account in working order.</li> <li>To deliver and facilitate delivery of services to the user. We may process your information to provide you with the requested service.</li> <li>To respond to user inquiries/offer support to users. We may process your information to respond to your inquiries and solve any potential issues you might have with the requested service.</li> <li>To send administrative information to you. We may process your information to send you details about our products and services, changes to our terms and policies, and other similar information.</li> <li>To enable user-to-user communications. We may process your information if you choose to use any of our offerings that allow for communication with another user.</li> <li>To request feedback. We may process your information when necessary to request feedback and to contact you about your use of our services.</li> <li>To send you marketing and promotional communications. We may process the personal information you send to us for our marketing purposes, if this is in accordance with your marketing preferences. You can opt out of our marketing emails at any time. For more information, see \"WHAT ARE YOUR PRIVACY RIGHTS?\" below.</li> <li>To protect our services. We may process your information as part of our efforts to keep our services safe and secure, including fraud monitoring and prevention.</li> <li>To evaluate and improve our services, products, marketing and your experience. We may process your information when we believe it is necessary to identify usage trends, determine the effectiveness of our promotional campaigns, and to evaluate and improve our services, product marketing, and your experience.</li> <li>We may process sensitive personal information when necessary with your consent or, as otherwise permitted by applicable law, we process the following categories of sensitive information: <br></br> 1. student data <br></br> 2. genetic data <br></br> 3. health data</li></ul>"
+      },
+      "index_2": {
+        "heading": "3. What legal bases do we rely on to process your information?",
+        "content": "<ul><li>We have a valid legal reason (i.e., legal basis) to do so under applicable law, like with your consent, to comply with laws, to provide you with services to enter into or fulfill our contractual obligations, to protect your rights, or to fulfill legitimate business interests.</li> <li>We may process your information if you have given us specific permission (i.e.,express consent) to use your personal information for a specific purpose, or in situations where your permission can be inferred (i.e., implied consent). You can withdraw your consent at any time.</li> <li>If disclosure is required to comply with a warrant, court-order, or rules of the court relating to the production of records. If it was produced by an individual in the course of their employment, business, or profession and the collection is consistent with the purposes for which the information was produced. If the collection is solely for journalistic, artistic, or literary purposes. If the information is publicly available and is specified by the regulations.</li></ul>"
+      },
+      "index_3": {
+        "heading": "4. When and with whom do we share your personal information?",
+        "content": "Depending on where you are located geographically, the applicable privacy law may mean you have certain rights regarding your personal information.<ul><li><important>Partner Transfers:</important> We may share or transfer your information in connection with, or during negotiations of, any marketing, financing, or a portion of our business to partners and sponsors.</li><li><important>Other Users</important> <br></br> When you share personal information (for example: by posting comments, contributions, or other content to the services) otherwise interact with public areas of the services, such personal information may be viewed by all users and may be publicly made available outside the services in perpetuity. <br></br> If you interact with other users of our services and register for our services through a social network (such as Facebook), your contacts on the social network will see your name, profile photo, and descriptions of your activity. Similarly, other users will be able to view descriptions of your activity, communicate with you within our Services, and view your profile.</li></ul>"
+      },
+      "index_4": {
+        "heading": "5. Do we use cookies and other tracking technologies?",
+        "content": "We may use cookies and similar tracking technologies to access or store information. Specific information about how we use such technologies and how you can refuse certain cookies is set out in our Cookie Notice."
+      },
+      "index_5": {
+        "heading": "6. How do we handle your social logins?",
+        "content": "<ul><li>Our services offer you the ability to register and log in using your third-party social media account details (like your Facebook or Twitter logins). When you choose to do this, we will receive certain profile information about you from your social media provider. The profile information we receive may vary depending on the social media provider concerned, but will often include your name, email address, friends list, and profile picture, as well as other information you choose to make public on such a social media platform.</li> <li>We will use the information we receive only for the purposes that are described in this privacy notice or that are otherwise made clear to you or the relevant services. Please note that we do not control, and are not responsible for, other uses of your personal information by your third-party social media provider. We recommend that you review their privacy notice to understand how they collect, use, and share your personal information, and how you can set your privacy preferences on their sites and apps.</li> <li><important>Geolocation Information:</important> Location-based information from your mobile device, either continuously or while you are using our mobile application(s), to provide certain location-based services. If you wish to change our access or permissions, you may do so in your device's settings.</li> <li><important>Push Notifications</important> <br></br> We may request to send you push notifications regarding our account or certain features of the application(s). If you wish to opt out from receiving these types of communications, you may turn them off in your device's settings. <br></br> This information is primarily needed to maintain the security and operation of our application(s), for troubleshooting, and for our internal analytics and reporting purposes. <br></br> All personal information that you provide to us must be true, complete, and accurate, and you must notify us of any changes to such personal information.</li></ul>"
+      },
+      "index_6": {
+        "heading": "7. How long do we keep your information?",
+        "content": "We keep your information for as long as necessary to fulfill the purposes outlined in this privacy notice unless otherwise required by law. <ul><li>We will only keep your personal information for as long as it is necessary for the purposes set out in this privacy notice.</li> <li>No purpose in this notice will require us to keep your personal information for longer than the period in which users have an account with us.</li></ul>When we have no ongoing legitimate business need to process your personal information, we will either delete or anonymize such information, or, if this is not possible (for example, because your personal information has been stored in backup archives), then we will securely store your personal information and isolate it from any further processing until deletion is possible."
+      },
+      "index_7": {
+        "heading": "8. How do we keep your information safe?",
+        "content": "<ul><li>We aim to protect your personal information through a system of organizational and technical security measures. We have implemented appropriate and reasonable technical and organizational security measures designed to protect the security of any personal information we process.</li> <li>However, despite our safeguards and efforts to secure your information, no electronic transmission over the Internet or information storage technology can be guaranteed to be 100% secure, so we cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat our security and improperly collect, access, steal, or modify your information.</li> <li>Although we will do our best to protect your personal information, transmission of personal information to and from our services is at your own risk. You should only access the services within a secure environment.</li></ul>"
+      },
+      "index_8": {
+        "heading": "9. What are your privacy rights?",
+        "content": "You have rights that allow you greater access to and control over your personal information. You may review, change, or terminate your account at any time. These may include the right: <ul><li><important>Withdrawing your consent:</important> If we are relying on your consent to process your personal information, which may be express and/or implied consent depending on the applicable law, you have the right to withdraw your consent at any time. You can withdraw your consent at any time by contacting us by using the contact details provided in the section \"HOW CAN YOU CONTACT US ABOUT THIS NOTICE?\" below. However, please note that this will not affect the lawfulness of the processing before its withdrawal..</li> <li><important>Opting out of marketing and promotional communications:</important> You can unsubscribe from our marketing and promotional communications at any time by clicking on the unsubscribe link in the emails that we send, or by contacting us using the details provided in the section \"HOW CAN YOU CONTACT US ABOUT THIS NOTICE?\" below. You will then be removed from the marketing lists. However, we may still communicate with you, for example, to send you service-related messages that are necessary for the administration and use of your account, to respond to service requests, or for other non-marketing purposes.</li> <li><important>Account Information:</important> If you would at any time like to review or change the information in your account or terminate your account, you can: Log in to your account settings and update your user account. Upon your request to terminate your account, we will deactivate or delete your account and information from our active databases. However, we may retain some information in our files to prevent fraud, troubleshoot problems, assist with any investigations, and/or comply with applicable legal requirements.</li> <li><important>Cookies and similar technologies:</important> Most Web browsers are set to accept cookies by default. If you prefer, you can usually choose to set your browser to remove cookies and to reject cookies. If you choose to remove cookies or reject cookies, this could affect certain features or services of our Service. If you have questions or comments about your privacy rights, you may email us at <sendEmail>hulibvietnam@gmail.com</sendEmail>.</li></ul>"
+      },
+      "index_9": {
+        "heading": "10. Do we make updates to this notice?",
+        "content": "<ul><li>Yes, we will update this notice as necessary to stay compliant with relevant laws. We may update this privacy notice from time to time. The updated version will be indicated by an updated \"Revised\" date and the updated version will be effective as soon as it is accessible.</li> <li>If we make material changes to this privacy notice, we may notify you either by prominently posting a notice of such changes or by directly sending you a notification. We encourage you to review this privacy notice frequently to be informed of how we are protecting your information.</li></ul>"
+      },
+      "index_10": {
+        "heading": "11. How can you contact us about this notice?",
+        "content": "If you have questions or comments about this notice, you may email us at <sendEmail>hulibvietnam@gmail.com</sendEmail> or contact us by HuLib Admin: <call>[HA phone number]</call>"
+      }
+    },
+    "txt_accept": "accept",
+    "term_of_use_title": "term of use",
+    "term_of_use_table_of_content": {
+      "title": "Table of content",
+      "index_0": "1. ABOUT THIS AGREEMENT",
+      "index_1": "2. CHANGES TO THIS AGREEMENT",
+      "index_2": "3. THE PLATFORM",
+      "index_3": "4. OUR COMMITMENT TO YOU",
+      "index_4": "5. USERS",
+      "index_5": "6. INTELLECTUAL PROPERTY",
+      "index_6": "7. TERMINATION",
+      "index_7": "8. DISPUTE RESOLUTION"
+    },
+    "term_of_use_sections": {
+      "index_0": {
+        "heading": "1. ABOUT THIS AGREEMENT",
+        "content": "This agreement is between HuLib (“HuLib”, “we”, “us” and “our”) and the person signing up to be a User of the HuLib application (“you” and “your”). This agreement comprises these terms of use and any other document specified in these Terms of Use (“Agreement”). This Agreement governs the rights and obligations between HuLib and you, governing our provision and your use of our Services, web app or other software provided, and any material, communications, links or information contained on, or made available through, our Services. Together, the web app and Services provided comprise the “Platform”. <br></br> By signing up to the Platform, you acknowledge that you have read and agree to comply with and be bound by this Agreement (including any variations HuLib makes from time to time) and by HuLib’s Privacy Policy (available at <linkToPrivacy>www.huLib.com.au/privacy-policy/</linkToPrivacy>). If you do not agree to this Agreement and the Privacy Policy, you must terminate your registration as a User."
+      },
+      "index_1": {
+        "heading": "2. CHANGES TO THIS AGREEMENT",
+        "content": "We may amend this Agreement from time to time.  We will keep you informed of any changes by posting the amended Agreement on the Platform.  If you continue to access or use the Platform after we amend the Agreement, then you are taken to have agreed to such amendments.  You are responsible for checking all amendments from time to time."
+      },
+      "index_2": {
+        "heading": "3. THE PLATFORM",
+        "content": "The Platform is designed to give you a space to view and/or listen to personal stories of overcoming difficulties from mentors, through video or audio recordings, photographs or written pieces uploaded to the Platform (each upload a “Story”). The platform also connects you with other young people."
+      },
+      "index_3": {
+        "heading": "4. OUR COMMITMENT TO YOU",
+        "content": "HuLib will ensure that the Platform is provided to you with due care and skill, and by suitably qualified personnel.  We do not warrant that the Platform will be error-free, virus-free, continuous, suitable for you, or that the Platform will be compatible with your equipment. HuLib does not take responsibility for any actions or omissions by Users on or in relation to the Platform. <br></br> HuLib may add to, change or remove any features and functionality of the Platform at any time (with or without notice to you).  The features and functionality available on the Platform may also vary depending on the device or application that is used to access it (e.g. mobile vs desktop). <br></br> HuLib does not represent or guarantee that the Platform will be free from loss, corruption, interference, attack or other intrusion (“Security Incident”), and you release us from any liability relating to any such Security Incident."
+      },
+      "index_4": {
+        "heading": "5. USERS",
+        "content_sections": {
+          "index_0": {
+            "heading": "5.1 Eligibility",
+            "content": "You may only become a User of the Platform if:<ul><li>(a)    you are from 16 to 25 years old;</li> <li>(b)     you satisfy all the other requirements (including restrictions) set out in this Agreement, and as otherwise notified by us.</li></ul> You are responsible for keeping your details up to date, and you acknowledge that HuLib will not be responsible for any incorrect or fraudulent details provided."
+          },
+          "index_1": {
+            "heading": "5.2 Restrictions",
+            "content": "You must not:<ul><li>(a)    submit more than one registration application for yourself, whether directly or indirectly; and</li> <li>(b)     register any person other than yourself as a User.</li></ul> HuLib does not guarantee to address mental health issues. In the case of needing mental health support, HuLib encourages users to contact mental health professionals or specialized organizations for appropriate assistance."
+          },
+          "index_2": {
+            "heading": "5.3 Your commitments as a User",
+            "content": "You agree:<ul><li>(a)    that you have legal authority, and will continue to have such legal authority at all times during your registration, to enter into this Agreement;</li> <li>(b)     to only communicate information (including photographs and videos) that you have all necessary rights to;</li> <li>(c)    to compensate HuLib fully for any loss or damage that HuLib suffers as a result of any claims made or brought by a third party against HuLib due to your breach of this Agreement;</li> <li>(d)    to obtain all moral rights and intellectual property waivers and consents necessary to allow HuLib to freely use, modify and exploit the User Material (whether such use, modification or exploitation occurred before or after the waiver or consent is given) as permitted by this Agreement, and provide such waivers and consents to HuLib promptly on HuLib’s request;</li> <li>(e)      not to infringe any Intellectual Property Rights or Moral Rights of any person (including mentors), and to obtain any required consents to use any soundtrack or other work subject to copyright featured on any videos, photos or stories;</li> <li>(f)    to only depict individuals in a Story with their consent;</li> <li>(g)      that you may only be a User for your own personal use and in your personal capacity, and not for any commercial or other capacity;</li> <li>(h)      not to bring any claim against HuLib in relation to any act or omission occurring in relation to the Platform, except that the foregoing does not limit your ability to bring a claim against HuLib for its negligence or other breach of this Agreement;</li> <li>(i)     to assume all liability for any risk arising from any Story that you upload or view, or from your use of any information on the Platform;</li> <li>(k)      that uploading a Story will not breach any agreements that you have entered into;</li> <li>(j)   to comply with the HuLib community values (as notified by us from time to time);</li> <li>(l)    to cooperate with HuLib in good faith, and to assist with any reasonable requests for the purposes of an investigation undertaken by HuLib or a legal authority regarding misuse of the Platform;</li> <li>(m)    not to provide any false, incomplete or misleading information, including information provided in your personal details;</li> <li>(n)    not to upload any content or use language that is inappropriate, profane, defamatory, infringing, obscene, indecent, unlawful, likely to offend, insult or humiliate others based on ethnicity, race, gender, sexuality, age or any disability or otherwise vilifies any person or incites violence or hatred;</li> <li>(o)      not to defame, abuse, stalk, harass, threaten or otherwise violate the legal rights of others, including rights relating to privacy and publicity;</li> <li>(p)      not to use the Platform to sell or advertise any goods or services;</li> <li>(q)     not to transfer your registration to another person.You must have all necessary consents, permissions, licences and approvals to enter into this Agreement and perform your obligations under it.</li> <li>(r)  if you are not satisfied with the mentor or the mentor has any inappropriate behaviour, you need to contact the email in section 8.2</li></ul> If you believe that another User has provided fraudulent or incorrect information on the Platform, you must immediately inform HuLib.  HuLib is not responsible for any loss arising out of or in connection with any such fraudulent or incorrect information."
+          },
+          "index_3": {
+            "heading": "5.4 Security of your information",
+            "content": "You must keep your user login details (including password) secret and confidential and not disclose such details to any third party or allow another person to access or use the Platform using your details.  You agree that you will be solely responsible for all access and use of the Platform by anyone using your login details, whether or not you authorised such access or use.  You must immediately notify HuLib if you are aware of, or have any reason to suspect or believe that, your login details have been subject to unauthorised use or have otherwise been compromised."
+          }
+        }
+      },
+      "index_5": {
+        "heading": "6. INTELLECTUAL PROPERTY",
+        "content": "This Agreement does not, in any way, transfer or assign any right, interest, or title pertaining to the Intellectual Property Rights (including Moral Rights) of any party, except as explicitly stated. Between you and HuLib, ownership of any User Material published on the Platform resides with you or its creator. You grant HuLib, and will secure the necessary third-party licenses to grant, a worldwide, royalty-free, perpetual, irrevocable, transferable, and non-exclusive license to:<br></br> <br></br> (a) Utilize, reproduce, modify, adapt, communicate, display, perform, store, and distribute your User Material to fulfill our obligations under this Agreement and for the broader purposes of providing the Platform and conducting our general business activities (including marketing-related purposes). (b) Generate reports, statistics, databases, and compilations for use by HuLib and third parties. (c) Allow any person to assist HuLib in carrying out the activities mentioned in this paragraph. (d) Sub-license any of the rights granted to HuLib under this paragraph to any person.<br></br> <br></br> Without limiting the foregoing, you unconditionally consent to such use of your User Material by HuLib, which would, but for your consent, constitute a breach of your Moral Rights. You acknowledge that you are solely liable for any losses, damages, claims, and expenses (including legal costs) resulting from any User Material that violates third-party Intellectual Property Rights or Moral Rights.<br></br> <br></br> All materials, text, images, software, code, sounds, applications, and other content located on the Platform, or otherwise provided by HuLib, are owned or licensed by HuLib. Except for your User Material, you must not copy, modify, or transmit any such content without written permission from HuLib. The Platform may contain trademarks, logos, service names, and trade names of HuLib and third parties, which may be registered or otherwise protected by law. You are not permitted to use any trademarks, logos, service names, or trade names appearing on the Platform without our prior written permission."
+      },
+      "index_6": {
+        "heading": "7. TERMINATION",
+        "content_sections": {
+          "index_0": {
+            "heading": "7.1 Termination of registration or this Agreement",
+            "content": "We may terminate this Agreement and your registration as a User on 10 days' written notice to you. You may terminate this Agreement and your registration as a User at any time by selecting \"delete profile\" on the Platform's profile page."
+          },
+          "index_1": {
+            "heading": "7.2 Termination for cause",
+            "content": "We may terminate your registration immediately by giving you notice in writing if one of these situation occurs.<ul><li>(a) Serious Breach: If you do something that goes against the rules of this agreement, and it's something that can't be fixed.</li> <li>(b) Fixable Breach: If you make a mistake, and it's something that can be fixed, we will let you know. You'll have seven days to make things right from the time we tell you about the issue.</li> <li>(c) Repeated Breaches: If you keep breaking the same rule, or if you break a lot of rules often, even if you fix them, we might have to end your participation.</li> <li>(d) Legal Restrictions: If you're in a country that's considered as supporting terrorism or if you're on a list of people that the government says we can't work with, unfortunately, we won't be able to continue with your participation.</li> <li>(e) Sometimes, we might have to end your participation if the agreement allows us to do so for a specific reason.</li></ul> HuLib does not guarantee to address mental health issues. In the case of needing mental health support, HuLib encourages users to contact mental health professionals or specialized organizations for appropriate assistance."
+          }
+        }
+      },
+      "index_7": {
+        "heading": "8. DISPUTE RESOLUTION",
+        "content": "You may notify us of any issue or dispute with HuLib (\"Dispute Notice\"). We both agree to try and resolve the dispute in such Dispute Notice in good faith, before either party commences any formal proceedings (other than for urgent interlocutory or other relief).",
+        "content_sections": {
+          "index_0": {
+            "heading": "8.1 Notice",
+            "content": "Unless expressly stated otherwise in this Agreement, all notices, certificates, consents, approvals, waivers, and other communications in connection with this Agreement must be in writing. HuLib may provide notice by:<ul><li>(a) Posting the notice on the Platform; or</li> <li>(b) Emailing the notice to the email address that you last provided to HuLib.</li></ul> HuLib does not guarantee to address mental health issues. In the case of needing mental health support, HuLib encourages users to contact mental health professionals or specialized organizations for appropriate assistance."
+          },
+          "index_1": {
+            "heading": "8.2 Contact us",
+            "content": "We will make an effort to provide online support for Users. To request online support, you need to contact us through the \"Contact Us\" page on the Platform or by sending an email to the specified email address on that page. <br></br> Although HuLib will attempt to respond to all online support requests, HuLib does not guarantee the resolution of every issue or all issues, nor does it promise to do so within a specific timeframe."
+          }
+        }
+      }
+    }
   },
   "Guestbook": {
     "meta_title": "Guestbook",
