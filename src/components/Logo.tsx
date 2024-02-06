@@ -51,6 +51,7 @@ const Logo = () => (
     </svg>
   </div>
 );
+
 const LogoSmall = () => (
   <div className="flex items-center gap-3">
     <svg

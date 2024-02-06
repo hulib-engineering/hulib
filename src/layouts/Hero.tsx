@@ -4,7 +4,7 @@ import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import React, { type ReactNode, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import type WaveSurfer from 'wavesurfer.js';
 
 import { mergeClassnames } from '@/components/private/utils';
@@ -29,13 +29,6 @@ const VectorIcons = [
     xPosition: 'left-[177px]',
   },
 ];
-
-const customMessage = (font: string): (() => ReactNode) => {
-  // eslint-disable-next-line react/display-name
-  return (...chunks: ReactNode[]): ReactNode => {
-    return <span className={font}>{chunks}</span>;
-  };
-};
 
 const Hero = () => {
   const t = useTranslations('Index');
@@ -137,14 +130,14 @@ const Hero = () => {
           />
         ))}
         <p className="absolute right-0 w-[13.5rem] text-right text-base font-normal leading-normal text-slate-1000">
-          {t.rich('hero_message_2', {
-            important: customMessage('font-bold'),
-          })}
+          {/* {t.rich('hero_message_2', { */}
+          {/*  important: customMessage('font-bold'), */}
+          {/* })} */}
         </p>
         <p className="w-[17rem] text-base font-normal leading-normal text-slate-1000">
-          {t.rich('hero_message_1', {
-            important: customMessage('font-bold'),
-          })}
+          {/* {t.rich('hero_message_1', { */}
+          {/*  important: customMessage('font-bold'), */}
+          {/* })} */}
         </p>
         <div
           className={mergeClassnames(
@@ -184,9 +177,9 @@ const Hero = () => {
               alt="Mentor avatars"
             />
             <p className="text-base font-black leading-normal text-slate-1000">
-              {t.rich('hero_mentor_quantity', {
-                normal: customMessage('font-normal'),
-              })}
+              {/* {t.rich('hero_mentor_quantity', { */}
+              {/*  normal: customMessage('font-normal'), */}
+              {/* })} */}
             </p>
           </div>
         </div>
