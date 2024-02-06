@@ -1,4 +1,12 @@
 import { getTranslations } from 'next-intl/server';
+import React from 'react';
+
+import About from '@/layouts/About';
+import FAQs from '@/layouts/FAQs';
+import Features from '@/layouts/Features';
+import Hero from '@/layouts/Hero';
+import Newsletter from '@/layouts/Newsletter';
+import Testimonial from '@/layouts/Testimonial';
 
 export async function generateMetadata({
   params: { locale },
@@ -14,5 +22,14 @@ export async function generateMetadata({
 }
 
 export default function Index() {
-  return <div />;
+  return (
+    <>
+      <Hero />
+      <Features />
+      <About />
+      <Testimonial />
+      <FAQs />
+      <Newsletter />
+    </>
+  );
 }

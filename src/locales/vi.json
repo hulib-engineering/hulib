@@ -1,0 +1,277 @@
+{
+  "Header": {
+    "contact_us": "liên hệ"
+  },
+  "Footer": {
+    "copyright": "© 2024 HuLib. Đã đăng ký bản quyền.",
+    "privacy_policy": "chính sách bảo mật",
+    "term_of_service": "điều khoản dịch vụ",
+    "cookie_settings": "cài đặt cookie"
+  },
+  "Index": {
+    "meta_title": "HuLib | Landing Page",
+    "meta_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
+    "hero_title": "a social project",
+    "hero_motto": "HuLib ở đây đồng hành cùng bạn",
+    "hero_description": "Mỗi người đều có một câu chuyện và trải nghiệm riêng nên chúng ta sinh ra để trở thành một ai đó, phần đặc biệt của thế giới này.",
+    "hero_call_to_action": "tìm hiểu thêm",
+    "hero_message_1": "”Vạn vật ẩn dấu <important>các vết nứt</important>, đó là nơi <important>ánh sáng</important> chiếu rọi.”",
+    "hero_message_2": "“Bạn <important>không đơn dộc</important> trước <important>những rào cản</important> của chính mình.”",
+    "hero_mentor_quantity": "100+ <normal>Mentors với nhiều trải nghiệm phong phú</normal>",
+    "feature_peers": {
+      "title": "Cộng đồng với những câu chuyện \"không của riêng ai\"",
+      "description": "Hơn 100 mentors và tình nguyện viên có trải nghiệm phù hợp mà bạn đang tìm kiếm."
+    },
+    "feature_online_meetings": {
+      "title": "Gặp Gỡ Trực Tuyến",
+      "description": "Đặt cuộc hẹn với bất kỳ mentor nào bạn muốn chia sẻ về những thắc mắc của bản thân."
+    },
+    "feature_safely_sharing": {
+      "title": "Bày Tỏ Chân Thành",
+      "description": "Tự do chia sẻ câu chuyện của bạn mà không ngại bị đánh giá."
+    },
+    "about_title": "cùng với HuLib",
+    "about_description": "thúc đẩy giá trị hạnh phúc thông qua kết nối những câu chuyện rất cá nhân với mentors.",
+    "about_stories": {
+      "title": "<highlight>câu chuyện</highlight> <br></br> của chúng tớ",
+      "description": "Bạn cảm thấy bản thân chưa bao giờ đủ tốt? Lúc bạn bè ở vạch đích thì bạn vẫn lò mò điểm xuất phát? Bạn từng vô định và ước một cánh tay nắm lấy mình? Đã bao giờ bạn căng thẳng lo âu tìm cách xoay xở một mình? Bạn từng thiếu tự tin kết nối và mong mỏi một ai đó hướng dẫn?<br></br><br></br>HuLib ra đời vì tất cả câu hỏi trên, vì chúng tớ cũng đã đang trải qua tất cả cảm xúc này. Hãy cùng chúng mình theo đuổi ước mơ và hạnh phúc hơn nữa bạn nhé."
+    },
+    "about_mission": {
+      "title": "<highlight>sứ mệnh</highlight> <br></br> của chúng tớ",
+      "description": "Chúng mình nỗ lực trở thành nguồn động viên, thấu hiểu và kết nối, định hình một tương lai nơi câu chuyện của mỗi cá nhân đều được trân trọng và vinh danh."
+    },
+    "about_vision": {
+      "title": "<highlight>tầm nhìn</highlight> <br></br> của chúng tớ",
+      "description": "HuLib mong muốn gây dựng cộng đồng các bạn trẻ hỗ trợ lẫn nhau cùng với sự cộng tác và hướng dẫn từ các anh chị có kinh nghiệm. Chúng mình nỗ lực trở thành nguồn động viên, thấu hiểu và kết nối, định hình một tương lai nơi câu chuyện của mỗi cá nhân đều được trân trọng và vinh danh."
+    },
+    "testimonial_title": "meet our team",
+    "testimonial_description": "Gặp gỡ các thành viên của HuLib bạn nhé",
+    "faqs_question_0": {
+      "question": "1. HuLib là gì và nó hoạt động như thế nào?",
+      "answer": {
+        "heading": "HuLib gây dựng một cộng đồng thúc đẩy phát triển mỗi cá nhân thông qua việc chia sẻ câu chuyện và tham gia mentoring trong 3 lĩnh vực chính, bao gồm giáo dục, sự nghiệp và quan hệ xã hội. ",
+        "body_paras": {
+          "p1": "Học sinh trung học phổ thông nhận được lời khuyên về chọn trường đại học từ các mentors với đa dạng chuyên môn để có trải nghiệm đại học trọn vẹn.",
+          "p2": "Những bạn mới tốt nghiệp nhận được định hướng nghề nghiệp thông qua các buổi kết nối riêng tư, các hội thảo và trao đổi với các anh chị thuộc nhiều lĩnh vực.",
+          "p3": "Những người trẻ đang đối diện áp lực có thể trò chuyện 1-1 với cá nhân đã từng trải qua các vấn đề liên quan."
+        }
+      }
+    },
+    "faqs_question_1": {
+      "question": "2. Ai có thể hưởng lợi từ HuLib?",
+      "answer": {
+        "heading": "",
+        "body_paras": {
+          "p1": "HuLib dành cho học sinh trung học phổ thông, sinh viên đại học và những người mới tốt nghiệp (từ 16-25 tuổi) sinh sống ở miền Trung, Việt Nam. Bạn đang tìm kiếm mentors, không gian chia sẻ câu chuyện của mình, hoặc mong muốn tham gia vào các buổi trao đổi trực tuyến thì HuLib chính là cộng đồng hỗ trợ bạn phát triển cá nhân cũng như chuyên nghiệp."
+        }
+      }
+    },
+    "faqs_question_2": {
+      "question": "3. Làm thế nào để mình tham gia với HuLib?",
+      "answer": {
+        "heading": "Tham gia HuLib cực dễ nha! ",
+        "body_paras": {
+          "p1": "Với tư cách mentee, bạn có thể đăng ký chia sẻ câu chuyện của mình, kết nối với mentor, hoặc tham gia gặp gỡ HuLibers khác trực tuyến.",
+          "p2": "Nếu bạn là chuyên gia hoặc tình nguyện viên quan tâm đến việc lan toả câu chuyện và trải nghiệm độc đáo, HuLib rất hoan nghênh đóng góp của bạn. Hãy theo dõi HuLib để cập nhật các sự kiện ý nghĩa nhé. Khám phá, đóng góp và tạo ảnh hưởng tích cực cùng chúng tớ nghen."
+        }
+      }
+    },
+    "newsletter_title": "join with us",
+    "newsletter_description": "hãy trở thành HuLibers đầu tiên với chúng mình nhaaa!",
+    "newsletter_form_email_placeholder": "Địa chỉ email*",
+    "newsletter_form_submit": "đăng ký",
+    "privacy_policy_title": "chính sách quyền riêng tư",
+    "privacy_policy_description": "<important>Cập nhật lần cuối lúc [Date]</important><br></br>Chính sách quyền riêng tư này dành cho HuLib (\"chúng tôi\" hoặc \"của chúng tôi\"), mô tả cách thức và lý do chúng tôi có thể thu thập, lưu trữ, sử dụng và/hoặc chia sẻ (\"xử lý\") thông tin của bạn khi bạn sử dụng dịch vụ của chúng tôi (\"Services\"), chẳng hạn như khi bạn:<br></br>1. Truy cập ứng dụng web của chúng tôi tại <linkTohHome>https://www.hulib.com</linkTohHome>hoặc bất kỳ ứng dụng nào của chúng tôi liên kết đến chính sách quyền riêng tư này<br></br>2. Tải xuống và sử dụng ứng dụng di động của chúng tôi (HuLib) hoặc bất kỳ ứng dụng nào khác của chúng tôi có liên kết đến chính sách về quyền riêng tư này<br></br>3. Tương tác với chúng tôi theo những cách liên quan khác, bao gồm mọi hoạt động bán hàng, tiếp thị hoặc sự kiện<br></br>Nếu bạn vẫn còn thắc mắc hoặc quan tâm, vui lòng liên hệ với chúng tôi theo địa chỉ <sendEmail>hulibvietnam@gmail.com</sendEmail>",
+    "privacy_policy_table_of_content": {
+      "title": "Mục lục",
+      "index_0": "1. Chúng tôi thu thập thông tin gì?",
+      "index_1": "2. Chúng tôi xử lý thông tin của bạn như thế nào?",
+      "index_2": "3. Chúng tôi dựa vào cơ sở pháp lý nào để xử lý thông tin của bạn?",
+      "index_3": "4. Chúng tôi chia sẻ thông tin cá nhân của bạn khi nào và với ai?",
+      "index_4": "5. Chúng tôi có sử dụng cookie và các công nghệ theo dõi khác không?",
+      "index_5": "6. Chúng tôi xử lý thông tin đăng nhập của bạn từ các nền tảng mạng xã hội như thế nào?",
+      "index_6": "7. Chúng tôi lưu giữ thông tin của bạn trong bao lâu?",
+      "index_7": "8. Chúng tôi bảo vệ thông tin của bạn như thế nào?",
+      "index_8": "9. Các quyền riêng tư của bạn",
+      "index_9": "10. Chúng tôi có cập nhật chính sách này không?",
+      "index_10": "11. Cách liên hệ với chúng tôi về chính sách quyền riêng tư"
+    },
+    "privacy_policy_sections": {
+      "index_0": {
+        "heading": "1. Chúng tôi thu thập thông tin gì?",
+        "content": "Khi bạn truy cập, sử dụng hoặc điều hướng các dịch vụ của chúng tôi, chúng tôi có thể xử lý thông tin cá nhân tùy thuộc vào cách bạn tương tác với chúng tôi và các dịch vụ, lựa chọn bạn thực hiện cũng như các sản phẩm và tính năng bạn sử dụng. <ul><li>Thông tin cá nhân chúng tôi thu thập có thể bao gồm:<br></br>1. tên<br></br>2. số điện thoại<br></br>3. địa chỉ email<br></br>4. tên người dùng<br></br>5. mật khẩu<br></br>6. liên hệ tuỳ chọn<br></br>7. dữ liệu liên lạc hoặc xác thực</li></ul>"
+      },
+      "index_1": {
+        "heading": "2. Chúng tôi xử lý thông tin của bạn như thế nào?",
+        "content": "<ul><li>Để tạo điều kiện thuận lợi cho việc tạo và xác thực tài khoản cũng như quản lý tài khoản người dùng, chúng tôi có thể thu nhập thông tin của bạn để bạn có thể tạo và đăng nhập vào tài khoản cũng như duy trì tài khoản của bạn hoạt động bình thường.</li> <li>Cung cấp và tạo điều kiện thuận lợi cho việc cung cấp dịch vụ cho người dùng. Chúng tôi có thể xử lý thông tin của bạn để cung cấp cho bạn dịch vụ được yêu cầu.</li> <li>Để trả lời các câu hỏi của người dùng/cung cấp hỗ trợ cho người dùng. Chúng tôi có thể xử lý thông tin của bạn để trả lời các câu hỏi của bạn và giải quyết mọi vấn đề tiềm ẩn mà bạn có thể gặp phải với dịch vụ được yêu cầu.</li> <li>Để gửi thông tin hành chính cho bạn. Chúng tôi có thể xử lý thông tin của bạn để gửi cho bạn thông tin chi tiết về sản phẩm và dịch vụ của chúng tôi, các thay đổi về điều khoản và chính sách của chúng tôi cũng như các thông tin tương tự khác.</li> <li>Để cho phép giao tiếp giữa người dùng với người dùng. Chúng tôi có thể xử lý thông tin của bạn nếu bạn chọn sử dụng bất kỳ dịch vụ nào của chúng tôi cho phép liên lạc với người dùng khác.</li> <li>Để yêu cầu phản hồi. Chúng tôi có thể xử lý thông tin của bạn khi cần thiết để yêu cầu phản hồi và liên hệ với bạn về việc bạn sử dụng dịch vụ của chúng tôi.</li> <li>Để gửi cho bạn thông tin tiếp thị và khuyến mại. Chúng tôi có thể xử lý thông tin cá nhân mà bạn gửi cho chúng tôi cho mục đích tiếp thị của chúng tôi, nếu điều này phù hợp với sở thích tiếp thị của bạn. Bạn có thể từ chối nhận email tiếp thị của chúng tôi bất kỳ lúc nào.  Để biết thêm thông tin, hãy xem \"CÁC QUYỀN RIÊNG TƯ CỦA BẠN\" bên dưới.</li> <li>Để bảo vệ dịch vụ của chúng tôi. Chúng tôi có thể xử lý thông tin của bạn như một phần trong nỗ lực giữ cho các dịch vụ của chúng tôi an toàn và bảo mật, bao gồm cả việc giám sát và ngăn chặn gian lận.</li> <li>Để đánh giá và cải thiện dịch vụ, sản phẩm, hoạt động tiếp thị và trải nghiệm của bạn. Chúng tôi có thể xử lý thông tin của bạn khi chúng tôi tin rằng cần phải xác định xu hướng sử dụng, xác định tính hiệu quả của các chiến dịch quảng cáo cũng như đánh giá và cải thiện dịch vụ, tiếp thị sản phẩm và trải nghiệm của bạn.</li> <li>Chúng tôi có thể xử lý thông tin cá nhân nhạy cảm khi cần thiết với sự đồng ý của bạn hoặc, nếu được pháp luật hiện hành cho phép, chúng tôi xử lý các loại thông tin nhạy cảm sau: <br></br> 1. dữ liệu học sinh <br></br> 2. dữ liệu di truyền <br></br> 3. dữ liệu sức khỏe</li></ul>"
+      },
+      "index_2": {
+        "heading": "3. Chúng tôi dựa vào cơ sở pháp lý nào để xử lý thông tin của bạn?",
+        "content": "<ul><li>Chúng tôi có lý do pháp lý hợp lệ (tức là cơ sở pháp lý) để làm như vậy theo luật hiện hành, chẳng hạn như với sự đồng ý của bạn, tuân thủ luật pháp, cung cấp cho bạn các dịch vụ để tham gia hoặc thực hiện nghĩa vụ hợp đồng của chúng tôi, để bảo vệ quyền của bạn, hoặc  nhằm thực hiện lợi ích kinh doanh chính đáng.</li> <li>Chúng tôi có thể xử lý thông tin của bạn nếu bạn đã cấp cho chúng tôi sự cho phép cụ thể (tức là thể hiện sự đồng ý) để sử dụng thông tin cá nhân của bạn cho một mục đích cụ thể hoặc trong các trường hợp có thể suy ra sự cho phép của bạn (tức là sự đồng ý ngụ ý).  Bạn có thể rút lại sự đồng ý của mình bất cứ lúc nào.</li> <li>Nếu việc tiết lộ là cần thiết để tuân theo lệnh, lệnh của tòa án hoặc các quy định của tòa án liên quan đến việc sản xuất hồ sơ.  Nếu nó được tạo ra bởi một cá nhân trong quá trình làm việc, kinh doanh hoặc nghề nghiệp của họ và việc thu thập thông tin đó phù hợp với mục đích mà thông tin được tạo ra.  Nếu bộ sưu tập chỉ dành cho mục đích báo chí, nghệ thuật hoặc văn học.  Nếu thông tin được công bố rộng rãi và được quy định cụ thể.</li></ul>"
+      },
+      "index_3": {
+        "heading": "4. Chúng tôi chia sẻ thông tin cá nhân của bạn khi nào và với ai?",
+        "content": "Tùy thuộc vào vị trí được định vị của bạn, luật bảo mật hiện hành có thể quy định rằng bạn có một số quyền nhất định đối với thông tin cá nhân của mình.<ul><li><important>Chuyển nhượng đối tác:</important> Chúng tôi có thể chia sẻ hoặc chuyển thông tin của bạn liên quan đến hoặc trong quá trình đàm phán về bất kỳ hoạt động tiếp thị, tài trợ hoặc một phần hoạt động kinh doanh nào của chúng tôi cho các đối tác và nhà tài trợ.</li><li><important>Người dùng khác</important> <br></br> Khi bạn chia sẻ thông tin cá nhân (ví dụ: bằng cách đăng nhận xét, đóng góp hoặc nội dung khác lên dịch vụ) tương tác với các không gian mờ của dịch vụ, tất cả người dùng có thể xem thông tin này và có thể được cung cấp công khai bên ngoài vĩnh viễn.<br></br> <br></br> Nếu bạn tương tác với những người dùng khác của chúng tôi và đăng ký dịch vụ của chúng tôi thông qua mạng xã hội (chẳng hạn như Facebook), những người liên hệ của bạn trên mạng xã hội sẽ thấy tên, ảnh hồ sơ và mô tả hoạt động của bạn. Tương tự, những người dùng khác sẽ có thể xem mô tả về hoạt động của bạn, liên lạc với bạn trong Dịch vụ của chúng tôi và xem hồ sơ của bạn.</li></ul>"
+      },
+      "index_4": {
+        "heading": "5. Chúng tôi có sử dụng cookie và các công nghệ theo dõi khác không?",
+        "content": "Chúng tôi có thể sử dụng cookie và các công nghệ theo dõi tương tự để truy cập hoặc lưu trữ thông tin. Thông tin cụ thể về cách chúng tôi sử dụng các công nghệ này và cách bạn có thể tắt một số cookie được mô tả chi tiết trong \"Thông báo Cookie\" của chúng tôi."
+      },
+      "index_5": {
+        "heading": "6. Chúng tôi xử lý thông tin đăng nhập của bạn từ các nền tảng mạng xã hội như thế nào?",
+        "content": "<ul><li>Nền tảng của chúng tôi cung cấp cho bạn chức năng đăng ký và đăng nhập bằng cách sử dụng thông tin tài khoản mạng xã hội của bên thứ ba (như Facebook hoặc Twitter). Khi bạn sử dụng chức năng này, chúng tôi sẽ nhận được một số thông tin hồ sơ của bạn từ nhà cung cấp dịch vụ mạng xã hội mà bạn dùng để đăng nhập. Thông tin hồ sơ mà chúng tôi nhận được có thể thay đổi tùy thuộc vào chính sách của từng mạng xã hội, nhưng thường bao gồm tên của bạn, địa chỉ email, danh sách bạn bè, hình đại diện, cũng như các thông tin khác mà bạn chọn công khai trên nền tảng mạng xã hội đó.</li> <li>Chúng tôi sẽ sử dụng thông tin mà chúng tôi nhận được chỉ cho những mục đích được mô tả trong chính sách quyền riêng tư này hoặc những mục đích khác được làm rõ với bạn hoặc các dịch vụ liên quan. Lưu ý rằng chúng tôi không kiểm soát và không chịu trách nhiệm về việc sử dụng thông tin cá nhân của bạn bởi nhà cung cấp dịch vụ mạng xã hội bên thứ ba. Chúng tôi khuyến nghị bạn tham khảo chính sách quyền riêng tư của các dịch vụ mạng xã hội này để hiểu cách họ thu thập, sử dụng và chia sẻ thông tin cá nhân của bạn, cũng như cách bạn có thể thiết lập các ưu tiên quyền riêng tư trên trang web và ứng dụng của họ.</li> <li><important>Thông tin định vị vị trí:</important> Thông tin dựa trên vị trí từ thiết bị di động của bạn, được cập nhật liên tục hoặc trong khi bạn đang sử dụng ứng dụng di động của chúng tôi, để cung cấp một số dịch vụ nhật định dựa trên vị trí. Nếu bạn muốn thay đổi quyền truy cập mà chúng tôi có, bạn có thể cập nhật quyền này trong mục cài đặt trên thiết bị của bạn.</li> <li><important>Thông báo đẩy:</important> Chúng tôi có thể yêu cầu gửi thông báo đẩy đến bạn các thông tin liên quan đến tài khoản hoặc một số tính năng cụ thể của ứng dụng. Nếu bạn muốn từ chối nhận loại thông báo này, bạn có thể tắt chúng trong mục cài đặt trên thiết bị của bạn.</li></ul> <br></br> This information is primarily needed to maintain the security and operation of our application(s), for troubleshooting, and for our internal analytics and reporting purposes.<br></br> All personal information that you provide to us must be true, complete, and accurate, and you must notify us of any changes to such personal information."
+      },
+      "index_6": {
+        "heading": "7. Chúng tôi lưu giữ thông tin của bạn trong bao lâu?",
+        "content": "Chúng tôi lưu trữ thông tin của bạn trong thời gian cần thiết để đáp ứng các mục đích được mô tả trong chính sách quyền riêng tư này, trừ khi có yêu cầu khác liên quan tới vấn đề pháp lý. <ul><li>Chúng tôi chỉ lưu thông tin cá nhân của bạn trong thời gian cần thiết cho các mục đích được đề cập trong chính sách quyền riêng tư này.</li> <li>Không có mục đích nào được nêu trong chính sách này yêu cầu chúng tôi giữ thông tin cá nhân của bạn lâu hơn so với thời gian mà bạn có tài khoản trên nền tảng của chúng tôi.</li></ul> When we have no ongoing legitimate business need to process your personal information, we will either delete or anonymize such information, or, if this is not possible (for example, because your personal information has been stored in backup archives), then we will securely store your personal information and isolate it from any further processing until deletion is possible."
+      },
+      "index_7": {
+        "heading": "8. Chúng tôi bảo vệ thông tin của bạn như thế nào?",
+        "content": "<ul><li>Chúng tôi đặt mục tiêu bảo vệ thông tin cá nhân của bạn thông qua một hệ thống các biện pháp thích hợp. Chúng tôi đã triển khai các biện pháp hợp lý về kỹ thuật và an ninh để bảo vệ an toàn thông tin cá nhân của bạn mà chúng tôi sử dụng.</li> <li>Tuy nhiên, mặc dù có các biện pháp bảo vệ và nỗ lực để đảm bảo thông tin của bạn an toàn, không có phương tiện truyền thông điện tử qua Internet hoặc công nghệ lưu trữ thông tin nào có thể đảm bảo thông tin bạn cung cấp được lưu trữ an toàn 100%, vì vậy chúng tôi không thể hứa hoặc đảm bảo rằng tin tặc, tội phạm mạng hoặc bất kỳ bên thứ ba trái phép nào sẽ không thể vượt qua được biện pháp bảo mật của chúng tôi và truy cập, thu thập, lấy cắp hoặc thay đổi thông tin của bạn một cách trái phép.</li> <li>Mặc dù chúng tôi sẽ làm hết sức mình để bảo vệ thông tin cá nhân của bạn, việc truyền thông tin cá nhân tới và từ nền tảng của chúng tôi có thể dẫn tới những rủi ro mà bạn phải tự chịu trách nhiệm. Bạn chỉ nên truy cập dịch vụ trong không gian mạng an toàn.</li></ul>"
+      },
+      "index_8": {
+        "heading": "9. Các quyền riêng tư của bạn",
+        "content": "Bạn có những quyền giúp bạn có thể truy cập và kiểm soát nhiều hơn đối với thông tin cá nhân của mình. Bạn có thể xem xét, thay đổi hoặc hủy tài khoản của mình bất kỳ lúc nào. Các quyền riêng tư của bạn bao gồm: <ul><li><important>Thu hồi sự đồng ý:</important> Nếu chúng tôi đang dựa vào sự đồng ý của bạn để xử lý thông tin cá nhân, có thể là sự đồng ý rõ ràng và/hoặc ngụ ý tùy thuộc vào luật pháp áp dụng, bạn có quyền thu hồi sự đồng ý của mình bất kỳ lúc nào. Bạn có thể thu hồi sự đồng ý của mình bất kỳ lúc nào bằng cách liên hệ với chúng tôi qua thông tin liên hệ được cung cấp trong phần \"CÁCH LIÊN HỆ VỚI CHÚNG TÔI VỀ CHÍNH SÁCH QUYỀN RIÊNG TƯ\" phía dưới. Tuy nhiên, lưu ý rằng điều này sẽ không ảnh hưởng đến tính hợp pháp của việc xử lý thông tin trước khi thu hồi.</li> <li><important>Từ chối nhận thông tin tiếp thị và quảng cáo:</important> Bạn có thể hủy đăng ký nhận thông tin tiếp thị và quảng cáo của chúng tôi bất kỳ lúc nào bằng cách nhấp vào liên kết hủy đăng ký trong các email mà chúng tôi gửi hoặc bằng cách liên hệ với chúng tôi qua thông tin liên hệ được cung cấp trong phần \"CÁCH LIÊN HỆ VỚI CHÚNG TÔI VỀ CHÍNH SÁCH QUYỀN RIÊNG TƯ\" phía dưới. Sau đó, bạn sẽ được loại khỏi danh sách tiếp thị. Tuy nhiên, chúng tôi vẫn có thể liên lạc với bạn, ví dụ như để gửi những thông báo liên quan đến dịch vụ cần thiết cho quản lý và sử dụng tài khoản của bạn, để đáp ứng các yêu cầu dịch vụ, hoặc cho các mục đích khác không phải là tiếp thị.</li> <li><important>Thông tin tài khoản:</important> Nếu bạn muốn xem xét hoặc thay đổi thông tin trong tài khoản hoặc hủy bỏ tài khoản của mình bất kỳ lúc nào, bạn có thể: Đăng nhập vào cài đặt tài khoản của bạn và cập nhật tài khoản người dùng. Khi bạn yêu cầu hủy bỏ tài khoản, chúng tôi sẽ vô hiệu hóa hoặc xóa tài khoản và thông tin của bạn khỏi cơ sở dữ liệu hoạt động của chúng tôi. Tuy nhiên, chúng tôi có thể giữ lại một số thông tin trong các tệp của chúng tôi để ngăn chặn gian lận, khắc phục sự cố, hỗ trợ các cuộc điều tra và/hoặc tuân thủ yêu cầu pháp lý được áp dụng tại từng thời điểm.</li> <li><important>Cookies và các công nghệ tương tự:</important> Hầu hết các trình duyệt web được cài đặt để chấp nhận cookie ở chế độ mặc định. Nếu bạn muốn, bạn thường có thể chọn cài đặt trình duyệt của mình để xóa cookie và từ chối cookie. Nếu bạn chọn xóa cookie hoặc từ chối cookie, điều này có thể ảnh hưởng đến một số tính năng hoặc dịch vụ của chúng tôi. Nếu bạn có câu hỏi hoặc ý kiến về quyền riêng tư của bạn, bạn có thể gửi email cho chúng tôi tại địa chỉ <sendEmail>hulibvietnam@gmail.com</sendEmail>.</li></ul>"
+      },
+      "index_9": {
+        "heading": "10. Chúng tôi có cập nhật chính sách này không?",
+        "content": "<ul><li>Chúng tôi sẽ cập nhật thông chính sách khi cần thiết để tuân thủ với các luật lệ liên quan. Chúng tôi có thể cập nhật chính sách quyền riêng tư này định kỳ. Phiên bản cập nhật sẽ được chỉ định bằng vào thời gian sửa đổi được cập nhật, và phiên bản cập nhật sẽ có hiệu lực ngay khi sẵn sàng.</li> <li>Nếu chúng tôi thực hiện các thay đổi quan trọng trong chính sách quyền riêng tư này, chúng tôi có thể thông báo cho bạn qua các thông báo về những thay đổi này trên nền tảng hoặc trực tiếp thông báo cho bạn. Chúng tôi khuyến khích bạn thường xuyên xem xét chính sách quyền riêng tư này để cập nhật thông tin về cách chúng tôi bảo vệ thông tin của bạn.</li></ul>"
+      },
+      "index_10": {
+        "heading": "11. Cách liên hệ với chúng tôi về chính sách quyền riêng tư",
+        "content": "Nếu bạn có bất kỳ câu hỏi hoặc ý kiến về chính sách quyền riêng tư này, bạn có thể gửi tới chúng tôi thông qua địa chỉ: <sendEmail>hulibvietnam@gmail.com</sendEmail> hoặc liên hệ với bộ phận quản trị của HuLib qua số điện thoại: <call>[HA phone number]</call>"
+      }
+    },
+    "txt_accept": "đồng ý",
+    "term_of_use_title": "điều khoản sử dụng",
+    "term_of_use_table_of_content": {
+      "title": "Mục lục",
+      "index_0": "1. sự đồng thuận",
+      "index_1": "2. thay đổi của thoả thuận",
+      "index_2": "3. nền tảng",
+      "index_3": "4. cam kết của chúng tôi",
+      "index_4": "5. người dùng",
+      "index_5": "6. quyền sở hữu trí tuệ",
+      "index_6": "7. chấm dứt quá trình sử dụng",
+      "index_7": "8. giải quyết tranh chấp"
+    },
+    "term_of_use_sections": {
+      "index_0": {
+        "heading": "1. sự đồng thuận",
+        "content": "Thỏa thuận này là giữa HuLib (“HuLib”, “chúng tôi”, và “của chúng tôi”) và người dùng ứng dụng HuLib (“bạn” và “của bạn”). Thỏa thuận này bao gồm các điều khoản và bất kỳ tài liệu nào khác được quy định trong Điều khoản sử dụng (“Thỏa thuận”). Thỏa thuận này quản lý quyền và nghĩa vụ giữa HuLib và bạn, điều chỉnh quyền hạn chúng tôi và việc bạn sử dụng dịch vụ, ứng dụng web hoặc phần mềm khác được cung cấp cũng như mọi tài liệu, thông tin liên lạc, liên kết hoặc thông tin cđược cung cấp thông qua dịch vụ của chúng tôi. Ứng dụng web HuLib và Dịch vụ kèm theo tạo thành “Nền tảng”.<br></br> <br></br> Khi đăng ký trên nền tảng, người dùng thừa nhận đã đọc và đồng ý tuân thủ theo Thỏa thuận này cũng như Chính sách Riêng tư của HuLib (xem tại <linkToPrivacy>www.huLib.com.au/privacy-policy/</linkToPrivacy>).<br></br> <br></br> Nếu bạn không đồng ý với Thỏa thuận và Chính sách Riêng tư của chúng tôi, bạn phải chấm dứt việc sử dụng dịch vụ của HuLib."
+      },
+      "index_1": {
+        "heading": "2. thay đổi của thoả thuận",
+        "content": "Chúng tôi có thể thay đổi Thỏa thuận này trong tương lai. Chúng tôi sẽ thông báo cho bạn về bất kỳ thay đổi nào bằng cách đăng Thỏa thuận được sửa đổi trên Nền tảng. Nếu bạn tiếp tục truy cập hoặc sử dụng Nền tảng sau khi chúng tôi sửa đổi Thỏa thuận, thì bạn được xem là đã đồng ý với những sửa đổi đó."
+      },
+      "index_2": {
+        "heading": "3. nền tảng",
+        "content": "Nền tảng được thiết kế để cung cấp cho bạn một không gian để xem và/hoặc nghe những câu chuyện cá nhân về việc vượt qua khó khăn từ các mentor, thông qua các đoạn video hoặc tệp âm thanh, hình ảnh hoặc bài viết được tải lên Nền tảng (mỗi bản tải lên được gọi là \"Story\"). Nền tảng cũng kết nối bạn với những người trẻ khác."
+      },
+      "index_3": {
+        "heading": "4. cam kết của chúng tôi",
+        "content": "<ul><li>Các nhân sự chất lượng HuLib sẽ đảm bảo rằng bạn sẽ nhận được sự quan tâm đầy đủ.</li> <li>Chúng tôi không đảm bảo rằng Nền tảng sẽ không có lỗi, không có virus hoặc tương thích với thiết bị của bạn.</li> <li>HuLib có thể thêm, thay đổi hoặc loại bỏ bất kỳ tính năng và chức năng nào của Nền tảng bất cứ lúc nào (có hoặc không thông báo cho bạn).</li> <li>HuLib không bảo đảm rằng Nền tảng sẽ không bị mất, hỏng, can thiệp, bị tấn công hoặc xâm phạm bởi sự xâm nhập khác (\"Sự cố An ninh\")</li> <li>Chúng tôi không chịu bất kỳ trách nhiệm nào liên quan đến bất kỳ Sự cố An ninh bất khả kháng.</li></ul>"
+      },
+      "index_4": {
+        "heading": "5. người dùng",
+        "content_sections": {
+          "index_0": {
+            "heading": "5.1 Điều kiện",
+            "content": "Bạn chỉ có thể trở thành Người Dùng của Nền tảng nếu:<ul><li>(a)    bạn từ 16 đến 25 tuổi;</li> <li>(b)     bạn đáp ứng tất cả các yêu cầu khác (bao gồm cả các hạn chế) được nêu trong Thỏa thuận này và những thông báo khác của chúng tôi.</li></ul> You are responsible for keeping your details up to date, and you acknowledge that HuLib will not be responsible for any incorrect or fraudulent details provided."
+          },
+          "index_1": {
+            "heading": "5.2 Hạn chế",
+            "content": "Bạn không được:<ul><li>(a)    nộp hơn một đơn đăng ký cho chính mình, trực tiếp hoặc gián tiếp; và</li> <li>(b)     đăng ký thay cho bất kỳ người nào khác ngoài chính bạn.</li></ul> HuLib không đảm bảo giải quyết các vấn đề về sức khỏe tinh thần. Trong trường hợp cần sự hỗ trợ về sức khỏe, HuLib khuyến khích người dùng liên hệ với các chuyên gia tâm lý hoặc tổ chức chuyên nghiệp có chuyên môn về vấn đề này để có sự giúp đỡ phù hợp."
+          },
+          "index_2": {
+            "heading": "5.3 Cam kết người dùng",
+            "content": "Bạn đồng ý:<ul><li>(a)    rằng bạn có quyền pháp lý, và sẽ tiếp tục giữ quyền lực pháp lý đó vào mọi thời điểm trong quá trình đăng ký của bạn, để ký kết Thỏa thuận này;</li> <li>(b)     chỉ truyền đạt thông tin (bao gồm cả ảnh và video) mà bạn được cấp quyền;</li> <li>(c)    bồi thường đầy đủ cho bất kỳ thiệt hại nào mà HuLib phải chịu do bất kỳ khiếu nại nào của bên thứ ba đối với HuLib do vi phạm của bạn đối với Thỏa thuận này;</li> <li>(d)    hu được tất cả các quyền đạo đức và sự chấp thuận về sở hữu trí tuệ cần thiết để cho phép HuLib tự do sử dụng, sửa đổi và khai thác Nội dung Người Dùng (dù sử dụng, sửa đổi hay khai thác đó có xảy ra trước hay sau khi chấp thuận được thực hiện), và cung cấp những sự chấp thuận và sự chấp thuận đó cho HuLib ngay lập tức khi HuLib yêu cầu;</li> <li>(e)      không vi phạm bất kỳ Quyền Sở Hữu Trí Tuệ hoặc Quyền Đạo Đức nào của bất kỳ người nào (bao gồm cả người hướng dẫn), và thu được mọi sự chấp thuận cần thiết để sử dụng bất kỳ nhạc nền hoặc công trình khác thuộc quyền tác giả xuất hiện trên bất kỳ video, ảnh hoặc câu chuyện nào;</li> <li>(f)    chỉ miêu tả những người trong một Câu chuyện sau sự đồng thuận của họ;</li> <li>(g)      bạn chỉ có thể là Người Dùng cho mục đích cá nhân của bạn và dưới sự chủ thể cá nhân của bạn, và không phải cho bất kỳ mục đích thương mại hoặc mục đích khác;</li> <li>(h)      không đưa ra bất kỳ khiếu nại nào đối với HuLib liên quan đến bất kỳ hành động hoặc bỏ sót nào xảy ra liên quan đến Nền tảng, trừ khi điều này không hạn chế khả năng của bạn khiếu nại HuLib về sự cẩu thả hoặc vi phạm Thỏa thuận này;</li> <li>(i)     chấp nhận mọi trách nhiệm về bất kỳ rủi ro nào xuất phát từ bất kỳ Câu chuyện nào bạn tải lên hoặc xem, hoặc từ việc sử dụng bất kỳ thông tin nào trên Nền tảng;</li> <li>(j)      that uploading a Story will not breach any agreements that you have entered into;</li> <li>(k)   tuân thủ các giá trị cộng đồng của HuLib (như được thông báo bởi chúng tôi từ thời gian này đến thời gian khác);</li> <li>(l)    hợp tác với HuLib một cách tốt đẹp, và hỗ trợ mọi yêu cầu hợp lý cho mục đích điều tra của HuLib hoặc một cơ quan chính phủ liên quan đối với việc lạm dụng Nền tảng;</li> <li>(m)    không cung cấp bất kỳ thông tin sai lệch hoặc gian lận nào, bao gồm cả thông tin được cung cấp trong chi tiết cá nhân của bạn;</li> <li>(n)    không tải lên nội dung hoặc sử dụng ngôn ngữ không thích hợp, tục tĩu, vi phạm, không hợp pháp, có khả năng làm xúc phạm, xúc phạm hoặc làm nhục người khác dựa trên sắc tộc, chủng tộc, giới tính, tình dục, tuổi hoặc bất kỳ khuyết tật nào khác hoặc phê phán bất kỳ người nào hoặc kích động bạo lực hoặc hận thù;</li> <li>(o)      không phỉ báng, lạm dụng, theo đuổi, quấy rối, đe dọa hoặc vi phạm quyền pháp lý của người khác, bao gồm quyền liên quan đến quyền riêng tư và công khai;</li> <li>(p)      không sử dụng Nền tản để bán hoặc quảng cáo bất kỳ hàng hóa hoặc dịch vụ nào;</li> <li>(q)     không chuyển nhượng đăng ký của bạn cho người khác. Bạn phải có tất cả các sự chấp thuận, quyền hạn, giấy phép và sự chấp thuận cần thiết để ký vào Thỏa thuận này và thực hiện các nghĩa vụ của bạn theo nó.</li> <li>(r)  nếu bạn không hài lòng với mentor hoặc mentor có bất kỳ hành vi không thích hợp nào, bạn cần gửi khiếu nại đến địa chỉ email mục 8.2.</li></ul> Nếu bạn tin rằng một Người Dùng khác đã cung cấp thông tin gian lận hoặc không chính xác trên Nền tảng, bạn phải ngay lập tức thông báo cho HuLib. HuLib không chịu trách nhiệm đối với bất kỳ thiệt hại nào phát sinh từ hoặc liên quan đến bất kỳ thông tin gian lận hoặc không chính xác nào như vậy."
+          },
+          "index_3": {
+            "heading": "5.4 Bảo mật thông tin của bản thân",
+            "content": "Bạn phải giữ bí mật và không tiết lộ chi tiết đăng nhập người dùng của bạn (bao gồm cả mật khẩu) cho bất kỳ bên thứ ba nào hoặc cho phép người khác truy cập hoặc sử dụng Nền tảng bằng cách sử dụng thông tin của bạn. Bạn đồng ý rằng bạn sẽ hoàn toàn chịu trách nhiệm cho tất cả việc truy cập và sử dụng Nền tảng bởi bất kỳ ai sử dụng chi tiết đăng nhập của bạn, dù có hoặc không có sự cho phép của bạn. Bạn phải ngay lập tức thông báo cho HuLib nếu bạn nhận thức hoặc có bất kỳ lý do nào nghi ngờ hoặc tin rằng thông tin đăng nhập của bạn đã bị sử dụng mà không được ủy quyền hoặc đã bị đe dọa bảo mật một cách khác."
+          }
+        }
+      },
+      "index_5": {
+        "heading": "6. quyền sở hữu trí tuệ",
+        "content": "Thỏa thuận này không chuyển giao hoặc ủy quyền bất kỳ quyền, quyền lợi hoặc tiêu đề liên quan đến Quyền Sở hữu Trí tuệ (bao gồm Quyền Đạo Đức) của bất kỳ bên nào, trừ khi được nêu rõ. Giữa bạn và HuLib, quyền sở hữu của bất kỳ Nội dung Người Dùng nào được công bố trên Nền tảng đều thuộc về bạn hoặc người tạo ra nó. Bạn cấp cho HuLib, và sẽ bảo đảm các giấy phép của bên thứ ba cần thiết để cấp, một giấy phép toàn cầu, miễn phí, vô thời hạn, không thể thu hồi, có thể chuyển giao và độc quyền để:<br></br> <br></br> (a) Sử dụng, sao chép, sửa đổi, điều chỉnh, truyền thông, hiển thị, thực hiện, lưu trữ và phân phối Nội dung Người Dùng của bạn để thực hiện các nghĩa vụ của chúng tôi theo Thỏa thuận này và cho các mục đích rộng lớn khác nhau liên quan đến việc cung cấp Nền tảng và thực hiện các hoạt động kinh doanh tổng quát của chúng tôi (bao gồm cả mục đích liên quan đến tiếp thị).<br></br> (b) Tạo ra báo cáo, thống kê, cơ sở dữ liệu và bộ sưu tập để sử dụng bởi HuLib và bên thứ ba.<br></br> (c) Cho phép bất kỳ người nào hỗ trợ HuLib trong việc thực hiện các hoạt động được đề cập trong đoạn này. (d) Cấp phép con của bất kỳ quyền nào được cấp cho HuLib theo đoạn này cho bất kỳ người nào khác.<br></br> <br></br> Không hạn chế các điều đã nói, bạn không điều kiện đồng ý một cách không điều kiện cho việc sử dụng Nội dung Người Dùng của bạn bởi HuLib, điều này, nếu không có sự đồng ý của bạn, sẽ tạo thành một vi phạm đối với Quyền Đạo Đức của bạn. Bạn thừa nhận rằng bạn hoàn toàn chịu trách nhiệm cho mọi mất mát, thiệt hại, yêu cầu và chi phí (bao gồm cả chi phí pháp lý) phát sinh từ bất kỳ Nội dung Người Dùng nào vi phạm Quyền Sở hữu Trí tuệ hoặc Quyền Đạo Đức của bên thứ ba.<br></br> <br></br>Tất cả các vật liệu, văn bản, hình ảnh, phần mềm, mã nguồn, âm thanh, ứng dụng và nội dung khác trên Nền tảng, hoặc được cung cấp bởi HuLib, đều thuộc sở hữu hoặc được cấp phép bởi HuLib. Ngoại trừ Nội dung Người Dùng của bạn, bạn không được sao chép, sửa đổi hoặc truyền tải bất kỳ nội dung nào như vậy mà không có sự cho phép bằng văn bản từ HuLib. Nền tảng có thể chứa các nhãn hiệu, biểu tượng, tên dịch vụ và tên thương hiệu của HuLib và bên thứ ba, có thể đã được đăng ký hoặc được bảo vệ bởi luật pháp. Bạn không được phép sử dụng bất kỳ nhãn hiệu, biểu tượng, tên dịch vụ hoặc tên thương hiệu nào xuất hiện trên Nền tảng mà không có sự cho phép bằng văn bản của chúng tôi."
+      },
+      "index_6": {
+        "heading": "7. chấm dứt quá trình sử dụng",
+        "content_sections": {
+          "index_0": {
+            "heading": "7.1 Chấm dứt đăng ký",
+            "content": "Chúng tôi có quyền chấm dứt đăng ký của bạn làm Người Dùng thông qua thông báo bằng văn bản trước 10 ngày. Bạn cũng có quyền chấm dứt đăng ký của bạn bất cứ lúc nào bằng cách chọn \"xóa hồ sơ\" trên trang hồ sơ của Nền tảng."
+          },
+          "index_1": {
+            "heading": "7.2 Lý do chấm dứt",
+            "content": "Chúng tôi có thể chấm dứt đăng ký của bạn ngay lập tức thông qua thông báo bằng văn bản nếu một trong những tình huống sau xảy ra:<ul><li>(a) Vi phạm ít nghiêm trọng: Trong trường hợp vi phạm có thể sửa chữa, chúng tôi sẽ thông báo cho bạn, và bạn sẽ có bảy ngày để khắc phục vấn đề.</li> <li>(b) Vi phạm nghiêm trọng: Nếu bạn thực hiện một hành động vi phạm nghiêm trọng các quy định của thỏa thuận này.</li> <li>(c) Tái vi phạm: Nếu bạn liên tục vi phạm 1 quy tắc, hoặc nếu bạn vi phạm nhiều quy tắc khác nhau, việc chấm dứt có thể là cần thiết, ngay cả khi bạn sửa chữa các vấn đề.</li> <li>(d) Trường hợp khác: Trong một số trường hợp được nêu chi tiết trong sự đồng thuận, việc chấm dứt có thể là cần thiết với lý do khác.</li></ul>"
+          }
+        }
+      },
+      "index_7": {
+        "heading": "8. giải quyết tranh chấp",
+        "content": "Bạn có thể thông báo cho chúng tôi về bất kỳ vấn đề hoặc tranh chấp nào với HuLib (\"Thông báo Tranh chấp\"). Chúng tôi đồng thuận cố gắng giải quyết tranh chấp trong Thông báo Tranh chấp đó một cách tốt tính, trước khi có sự can thiệp bởi bên thứ 3 (trừ khi đối với các biện pháp tạm thời cấp thiết hoặc các biện pháp khác).",
+        "content_sections": {
+          "index_0": {
+            "heading": "8.1 Thông báo",
+            "content": "Trừ khi có quy định rõ ràng khác trong Thỏa thuận này, tất cả các thông báo, chứng chỉ, sự đồng ý, sự chấp thuận, việc từ chối và các thông điệp khác liên quan đến Thỏa thuận này phải được thực hiện bằng văn bản. HuLib có thể thông báo bằng cách:<ul><li>(a) Đăng thông báo trên Nền tảng; hoặc</li> <li>(b) Gửi thông báo đến địa chỉ email mà bạn cuối cùng cung cấp cho HuLib.</li></ul>"
+          },
+          "index_1": {
+            "heading": "8.2 Liên hệ với chúng tôi",
+            "content": "Chúng tôi sẽ nỗ lực để cung cấp hỗ trợ trực tuyến cho Người Dùng. Để yêu cầu hỗ trợ trực tuyến, bạn cần liên hệ với chúng tôi qua trang \"Liên hệ chúng tôi\" trên Nền tảng hoặc bằng cách gửi email đến địa chỉ email được chỉ định trên trang đó. <br></br> Mặc dù HuLib sẽ cố gắng phản hồi cho tất cả các yêu cầu hỗ trợ trực tuyến, nhưng HuLib không đảm bảo sẽ khắc phục mọi vấn đề hoặc tất cả các vấn đề, cũng như không hứa sẽ thực hiện điều này trong một khoảng thời gian cụ thể."
+          }
+        }
+      }
+    }
+  },
+  "Guestbook": {
+    "meta_title": "Guestbook",
+    "meta_description": "An example of CRUD operation",
+    "database_powered_by": "Database powered by"
+  },
+  "GuestbookForm": {
+    "username": "Username",
+    "body": "Body",
+    "save": "Save"
+  },
+  "About": {
+    "meta_title": "About",
+    "meta_description": "About page description",
+    "about_paragraph": "Welcome to our About page! We are a team of passionate individuals dedicated to creating amazing software.",
+    "translation_powered_by": "Translation powered by"
+  },
+  "Portfolio": {
+    "meta_title": "Portfolio",
+    "meta_description": "Welcome to my portfolio page!",
+    "presentation": "Welcome to my portfolio page! Here you will find a carefully curated collection of my work and accomplishments. Through this portfolio, I'm to showcase my expertise, creativity, and the value I can bring to your projects.",
+    "portfolio_name": "Portfolio {name}"
+  },
+  "PortfolioSlug": {
+    "meta_title": "Portfolio {slug}",
+    "meta_description": "Portfolio {slug} description",
+    "header": "Portfolio {slug}",
+    "content": "Created a set of promotional materials and branding elements for a corporate event. Crafted a visually unified theme, encompassing a logo, posters, banners, and digital assets. Integrated the client's brand identity while infusing it with a contemporary and innovative approach. Garnered favorable responses from event attendees, resulting in a successful event with heightened participant engagement and increased brand visibility."
+  },
+  "SignIn": {
+    "meta_title": "Sign in",
+    "meta_description": "Seamlessly sign in to your account with our user-friendly login process."
+  },
+  "SignUp": {
+    "meta_title": "Sign up",
+    "meta_description": "Effortlessly create an account through our intuitive sign-up process."
+  },
+  "Dashboard": {
+    "meta_title": "Dashboard",
+    "hello_message": "Hello {email}!"
+  },
+  "UserProfile": {
+    "meta_title": "User Profile"
+  },
+  "DashboardLayout": {
+    "dashboard_link": "Dashboard",
+    "user_profile_link": "Manage your account",
+    "sign_out": "Sign out"
+  }
+}
