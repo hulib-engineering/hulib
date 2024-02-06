@@ -18,9 +18,6 @@ export const Env = createEnv({
   },
   // You need to destructure all the keys manually
   runtimeEnv: {
-    // DATABASE_URL: process.env.DATABASE_URL,
-    // DATABASE_AUTH_TOKEN: process.env.DATABASE_AUTH_TOKEN,
-    // CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     NEXT_PUBLIC_EMAILJS_SERVICE_ID:
       process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
     NEXT_PUBLIC_EMAILJS_TEMPLATE_ID:
