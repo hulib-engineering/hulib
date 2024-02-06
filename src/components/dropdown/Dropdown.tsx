@@ -149,6 +149,7 @@ const Trigger = ({
   ...rest
 }: WithChildren<{ className?: string }>) => {
   const { popper } = useDropdownContext('MenuItem.Trigger');
+
   return (
     <Listbox.Button
       ref={popper?.setAnchor}

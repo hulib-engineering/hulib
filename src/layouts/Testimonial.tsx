@@ -46,7 +46,7 @@ const TestimonialItems = [
   },
   {
     content:
-      'Mình mong muốn đóng góp một cái nhìn mới mẻ hơn về khái niệm well-being tại Việt Nam dành cho các bạn trẻ. Và HuLib đã thực hiện được điều đó, tự hào lắm *bắn tym*',
+      'Mình rất vui và tự hào vì được tham gia vào HuLib để tạo nên cộng đồng và giúp đỡ các bạn trẻ. Thông qua dự án mình cũng đã làm quen được nhiều người tài giỏi, giúp mình phát triển kinh nghiệm và trải nghiệm trong nhiều lĩnh vực.',
     name: 'Đặng Hùng Vĩnh',
     avatarUrl: '/assets/images/avatars/td_member_2.png',
     position: 'Team TD',
