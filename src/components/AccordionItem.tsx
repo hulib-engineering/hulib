@@ -7,7 +7,7 @@ const AccordionItem = ({
   content,
 }: {
   trigger: string;
-  content: string;
+  content: { heading: string; bodyParams: string[] };
 }) => {
   const [isExpanding, setIsExpanding] = useState(false);
 
@@ -58,7 +58,12 @@ const AccordionItem = ({
       >
         <div className="overflow-hidden">
           <div className="overflow-hidden p-6 pt-0 text-sm font-light lg:text-base">
-            {content}
+            {content.heading !== '' && content.heading}
+            <ul className="list-disc px-6">
+              {content.bodyParams.map((each, index) => (
+                <li key={index}>{each}</li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

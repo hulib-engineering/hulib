@@ -12,9 +12,7 @@ export default function Layout({
 
   return (
     <BaseTemplate>
-      <div className="pt-24 text-xl [&_a:hover]:border-b-2 [&_a:hover]:border-blue-700 [&_a]:text-blue-700 [&_ul]:my-6">
-        {children}
-      </div>
+      <div className="pt-24 text-xl [&_ul]:my-6">{children}</div>
     </BaseTemplate>
   );
 }

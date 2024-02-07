@@ -70,8 +70,6 @@ const LocaleSwitcher = ({ className }: { className?: string }) => {
         },
   );
 
-  console.log(option);
-
   const handleChange = (value: { locale: string; flag: JSX.Element }) => {
     setOption(value);
     router.push(pathname, { locale: value.locale });

@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import React from 'react';
 
 import About from '@/layouts/About';
 import FAQs from '@/layouts/FAQs';

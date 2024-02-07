@@ -3,10 +3,19 @@ import React from 'react';
 
 import AccordionItem from '@/components/AccordionItem';
 
-const FAQItems = [
-  'faqs_question_0' as const,
-  'faqs_question_1' as const,
-  'faqs_question_2' as const,
+const FAQItemList = [
+  {
+    key: 'faqs_question_0' as const,
+    bodyParas: ['p1', 'p2', 'p3'] as const,
+  },
+  {
+    key: 'faqs_question_1' as const,
+    bodyParas: ['p1'] as const,
+  },
+  {
+    key: 'faqs_question_2' as const,
+    bodyParas: ['p1', 'p2'] as const,
+  },
 ];
 
 const FAQs = () => {
@@ -21,11 +30,17 @@ const FAQs = () => {
           </h1>
         </div>
         <div className="flex w-full flex-col justify-center">
-          {FAQItems.map((key, index) => (
+          {FAQItemList.map((item, index) => (
             <AccordionItem
               key={index}
-              trigger={t(`${key}.question`)}
-              content={t(`${key}.answer`)}
+              trigger={t(`${item.key}.question`)}
+              content={{
+                heading: t(`${item.key}.answer.heading`),
+                bodyParams: item.bodyParas.map((paraIndex) =>
+                  // @ts-ignore
+                  t(`${item.key}.answer.body_paras.${paraIndex}`),
+                ),
+              }}
             />
           ))}
         </div>

@@ -1,20 +1,21 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import React, { useState } from 'react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import Modal from '@/components/Modal';
 import TestimonialItemCard from '@/components/TestimonialItemCard';
 
 const TestimonialItems = [
-  {
-    content:
-      'Mình mong muốn đóng góp một cái nhìn mới mẻ hơn về khái niệm well-being tại Việt Nam dành cho các bạn trẻ. Và HuLib đã thực hiện được điều đó, tự hào lắm *bắn tym*',
-    name: 'Nguyễn Tiến Đạt',
-    avatarUrl: '/assets/images/avatars/td_member_3.JPG',
-    position: 'Team TD',
-  },
+  // {
+  //   content:
+  //     'Mình mong muốn đóng góp một cái nhìn mới mẻ hơn về khái niệm well-being tại Việt Nam dành cho các bạn trẻ. Và HuLib đã thực hiện được điều đó, tự hào lắm *bắn tym*',
+  //   name: 'Nguyễn Tiến Đạt',
+  //   avatarUrl: '/assets/images/avatars/td_member_3.JPG',
+  //   position: 'Team TD',
+  // },
   {
     content:
       'Thực hiện một dự án với mục đích nâng cao "giá trị hạnh phúc" của các bạn trẻ luôn là ước mơ mà mình đã ấp ủ bấy lâu nay. Cơ duyên đưa mình đến HuLib, là nơi chữa lành mình và cũng là nơi giúp mọi người chữa lành. Biết ơn vì đã trở thành một cánh hoa của bông hoa xinh đẹp HuLib <3.',
@@ -45,7 +46,7 @@ const TestimonialItems = [
   },
   {
     content:
-      'Mình mong muốn đóng góp một cái nhìn mới mẻ hơn về khái niệm well-being tại Việt Nam dành cho các bạn trẻ. Và HuLib đã thực hiện được điều đó, tự hào lắm *bắn tym*',
+      'Mình rất vui và tự hào vì được tham gia vào HuLib để tạo nên cộng đồng và giúp đỡ các bạn trẻ. Thông qua dự án mình cũng đã làm quen được nhiều người tài giỏi, giúp mình phát triển kinh nghiệm và trải nghiệm trong nhiều lĩnh vực.',
     name: 'Đặng Hùng Vĩnh',
     avatarUrl: '/assets/images/avatars/td_member_2.png',
     position: 'Team TD',
@@ -57,13 +58,6 @@ const TestimonialItems = [
     avatarUrl: '/assets/images/avatars/po_member_2.jpg',
     position: 'Team PO',
   },
-  // {
-  //   content:
-  //     'Việc trở thành một phần của HuLib đã mang lại nhiều điều hơn tôi mong đợi. Trước khi tham gia, tôi thực sự yêu thích tầm nhìn và sứ mệnh của dự án này. Sau đó, với tư cách là một thành viên nhân sự, nó đã mở ra cho tôi một thế giới học hỏi và phát triển. Làm việc với nhóm của tôi là một niềm vui – họ không chỉ thân thiện mà còn tài năng và luôn hỗ trợ nhau. Và bạn biết điều gì thú vị không? HuLib không chỉ là một dự án, đó là hành trình hướng tới hạnh phúc của tôi. Tôi đã giải quyết được những khó khăn, có được nhiều người bạn đáng yêu và học được rất nhiều điều. Tôi hy vọng HuLib của chúng tôi sẽ thực sự thành công!',
-  //   name: 'Rumy (Phương Đoàn)',
-  //   avatarUrl: '',
-  //   position: 'Team HA',
-  // },
   {
     content:
       "Just quick note to say being part of HuLib has been more than I expected. Before joining, I genuinely loved the vision and mission of this project. As an HR member, it opened my eyes to a world of learning and growth. Working with my team has been a joy – they're not just friendly; they're talented and supportive. And you know what's cool? HuLib is more than a project; it's my journey to well-being. I've tackled insecurities, made many lovely friends, and learned tons. I hope our HuLib will be truly successful.",
@@ -87,18 +81,12 @@ const TestimonialItems = [
   },
   {
     content:
-      'Mình mong muốn đóng góp một cái nhìn mới mẻ hơn về khái niệm well-being tại Việt Nam dành cho các bạn trẻ. Và HuLib đã thực hiện được điều đó, tự hào lắm *bắn tym*',
+      'Rất là vui khi lần đầu được tham gia vào một dự án cộng đồng như vậy. Thông qua dự án mình cũng đã được áp dụng những kiến thức được học mà 3 năm làm việc vừa qua không có cơ hội biến những kiến thức đó thành hiện thực. Cũng rất vui vì vừa được tự do sáng tạo vừa có thể tạo ra một giá trị ý nghĩa cho cộng đồng <3',
     name: 'Phan Thanh Bảo Châu',
     avatarUrl: '/assets/images/avatars/td_member_1.jpg',
     position: 'Team TD',
   },
-  // {
-  //   content:
-  //     'Hulib là một dự án cộng đồng vô cùng ý nghĩa khi tạo ra một cộng đồng trực tuyến thân thiên và chu đáo. Tôi đã làm việc với team HR của team HuLib một thời gian và đã gặp gỡ những người đồng đội tuyệt vời. Chúng tôi đã cùng cố gắng động viên nhau vượt qua nhiều nhiệm vụ khó khăn. ',
-  //   name: 'Thai Hoai Thuong',
-  //   avatarUrl: '',
-  //   position: 'Team HA',
-  // },
+
   {
     content:
       'HuLib is a meaningful project, it has created a genuinely welcoming, thoughtful and caring community online. I find it amazing when meeting everyone, and so admire how they are motivating others.',
@@ -110,6 +98,14 @@ const TestimonialItems = [
 
 const Testimonial = () => {
   const t = useTranslations('Index');
+
+  const [isCardDetailOpen, setIsCardDetailOpen] = useState(false);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+
+  const handleOpenCardDetailModal = (index: number) => {
+    setCurrentCardIndex(index);
+    setIsCardDetailOpen(true);
+  };
 
   return (
     <section className="flex flex-col items-center justify-center py-[6.25rem] text-slate-1000">
@@ -123,17 +119,13 @@ const Testimonial = () => {
       </div>
       <div className="w-screen">
         <Swiper
-          spaceBetween={36}
+          spaceBetween={32}
           slidesPerView={4}
-          // slidesPerGroup={4}
           loop
           centeredSlides
-          pagination={{
-            // clickable: true,
-            type: 'progressbar',
-          }}
           navigation
           modules={[Pagination, Navigation]}
+          // slideToClickedSlide
         >
           {TestimonialItems.map((each, index) => (
             <SwiperSlide key={index}>
@@ -142,25 +134,28 @@ const Testimonial = () => {
                 avatarUrl={each.avatarUrl}
                 name={each.name}
                 role={each.position}
+                onClick={() => handleOpenCardDetailModal(index)}
               />
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
-      {/* <div className="flex w-full flex-row items-center justify-between px-[20.625rem]"> */}
-      {/* <div className="relative"> */}
-      {/*   <div className="h-2 w-[50px] rounded-[13px] bg-blue-200" /> */}
-      {/*   <div className="h-2 w-5 rounded-[13px] bg-blue-600" /> */}
-      {/* </div> */}
-      {/* <div className="flex items-start justify-start gap-[15px]"> */}
-      {/*  <div className="flex items-center justify-center gap-2 rounded-[50px] bg-white p-3"> */}
-      {/*    <div className="relative h-6 w-6" /> */}
-      {/*  </div> */}
-      {/*  <div className="flex items-center justify-center gap-2 rounded-[50px] bg-white p-3"> */}
-      {/*    <div className="relative h-6 w-6" /> */}
-      {/*  </div> */}
-      {/* </div> */}
-      {/* </div> */}
+      <Modal open={isCardDetailOpen} onClose={() => setIsCardDetailOpen(false)}>
+        <Modal.Backdrop />
+        <Modal.Panel className="w-[53.875rem]">
+          {TestimonialItems[currentCardIndex] && (
+            <TestimonialItemCard
+              isPopup
+              onClose={() => setIsCardDetailOpen(false)}
+              className="scale-150"
+              avatarUrl={TestimonialItems[currentCardIndex]?.avatarUrl || ''}
+              content={TestimonialItems[currentCardIndex]?.content || ''}
+              name={TestimonialItems[currentCardIndex]?.name || ''}
+              role={TestimonialItems[currentCardIndex]?.position || ''}
+            />
+          )}
+        </Modal.Panel>
+      </Modal>
     </section>
   );
 };

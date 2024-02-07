@@ -43,6 +43,7 @@
           }
         ], // Avoid conflict rule between Prettier and Airbnb Eslint
         "import/extensions": "off", // Avoid missing file extension errors, TypeScript already provides a similar feature
+        "jsx-a11y/control-has-associated-label": "off", // Disable A11y for icon button
         "react/function-component-definition": "off", // Disable Airbnb's specific function type
         "react/destructuring-assignment": "off", // Vscode doesn't support automatically destructuring, it's a pain to add a new variable
         "react/no-array-index-key": "warn", // Disable when array is often constant
