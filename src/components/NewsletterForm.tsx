@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
+import Button from '@/components/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/private/utils';
 import { Env } from '@/libs/Env.mjs';
@@ -56,18 +57,18 @@ const NewsletterForm = () => {
     <form
       autoComplete="off"
       className={mergeClassnames(
-        'relative flex w-full flex-row items-center justify-between rounded-[3.125rem] bg-white p-3',
+        'relative flex w-full flex-row items-center justify-between rounded-[3.125rem] bg-white p-2 sm:p-3',
         errors.email?.message && 'border border-solid border-red-500',
       )}
       onSubmit={handleSubscribe}
     >
       <div className="grow">
-        <label className="text-xl" htmlFor="email">
+        <label className="text-xs font-normal sm:text-xl" htmlFor="email">
           <input
             autoComplete="off"
             id="email"
             placeholder={t('newsletter_form_email_placeholder')}
-            className="w-full p-[0_0.75rem] leading-tight text-slate-1000 outline-none autofill:bg-white lg:p-3"
+            className="w-full p-[0_0.75rem] text-slate-1000 outline-none autofill:bg-white lg:p-3"
             {...register('email')}
           />
         </label>
@@ -77,24 +78,39 @@ const NewsletterForm = () => {
         {/*  </div> */}
         {/* )} */}
       </div>
+      {/* <div className="hidden lg:flex"> */}
+      {/*  <button */}
+      {/*    type="submit" */}
+      {/*    disabled={isLoading} */}
+      {/*    className={mergeClassnames( */}
+      {/*      'rounded-full bg-primary px-8 py-3 text-base font-medium text-white uppercase', */}
+      {/*      'transition-all duration-300 ease-out hover:bg-primary-hover disabled:bg-opacity-75', */}
+      {/*    )} */}
+      {/*  > */}
+      {/*    {t('newsletter_form_submit')} */}
+      {/*  </button> */}
+      {/* </div> */}
+      {/* <div className="flex lg:hidden"> */}
+      {/*  <button type="submit"> */}
+      {/*    <Image */}
+      {/*      width={40} */}
+      {/*      height={40} */}
+      {/*      alt="go" */}
+      {/*      src="/assets/images/icons/arrow-right-2.svg" */}
+      {/*    /> */}
+      {/*  </button> */}
+      {/* </div> */}
       <div className="hidden lg:flex">
-        <button
-          type="submit"
-          disabled={isLoading}
-          className={mergeClassnames(
-            'rounded-full bg-primary px-8 py-3 text-base font-medium text-white uppercase',
-            'transition-all duration-300 ease-out hover:bg-primary-hover disabled:bg-opacity-75',
-          )}
-        >
+        <Button disabled={isLoading} type="submit" className="uppercase">
           {t('newsletter_form_submit')}
-        </button>
+        </Button>
       </div>
       <div className="flex lg:hidden">
         <button type="submit">
           <Image
             width={40}
             height={40}
-            alt="go"
+            alt="Subscribe"
             src="/assets/images/icons/arrow-right-2.svg"
           />
         </button>
