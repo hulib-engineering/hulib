@@ -6,6 +6,7 @@ import FAQs from '@/layouts/FAQs';
 import Features from '@/layouts/Features';
 import Hero from '@/layouts/Hero';
 import Newsletter from '@/layouts/Newsletter';
+import Sponsors from '@/layouts/Sponsors';
 import Testimonial from '@/layouts/Testimonial';
 
 export async function generateMetadata({
@@ -28,6 +29,7 @@ export default function Index() {
       <Features />
       <About />
       <Testimonial />
+      <Sponsors />
       <FAQs />
       <Newsletter />
     </>

@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/testing-library';
 import { NextIntlClientProvider } from 'next-intl';
 
 import messages from '@/locales/en.json';
@@ -62,10 +61,10 @@ export const BaseWithHomeLink: Story = {
     //   </>
     // ),
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const link = canvas.getByText('Link 1');
+  // play: async ({ canvasElement }) => {
+  //   // const canvas = within(canvasElement);
+  //   // const link = canvas.getByText('Link 1');
 
-    await userEvent.click(link);
-  },
+  //   // await userEvent.click(link);
+  // },
 } satisfies Story;

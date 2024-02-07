@@ -86,6 +86,7 @@ const TestimonialItems = [
     avatarUrl: '/assets/images/avatars/td_member_1.jpg',
     position: 'Team TD',
   },
+
   {
     content:
       'HuLib is a meaningful project, it has created a genuinely welcoming, thoughtful and caring community online. I find it amazing when meeting everyone, and so admire how they are motivating others.',
