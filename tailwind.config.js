@@ -37,14 +37,14 @@ module.exports = {
     extend: {
       colors: {
         gray: {
-          100: '#f7fafc',
+          100: '#c8c8c8',
           200: '#edf2f7',
           300: '#e2e8f0',
-          400: '#cbd5e0',
-          500: '#a0aec0',
+          400: '#727272',
+          500: '#4f4f4f',
           600: '#718096',
           700: '#4a5568',
-          800: '#2d3748',
+          800: '#2b2b2b',
           900: '#1a202c',
         },
         blue: {
@@ -78,7 +78,16 @@ module.exports = {
         7: '7',
         9: '9',
       },
+      content: {
+        flash: 'url("/assets/images/flash-vector.svg")',
+      },
       keyframes: {
+        moveUp: {
+          to: { transform: 'translateY(50px)' },
+        },
+        moveDown: {
+          to: { transform: 'translateY(-50px)' },
+        },
         slide: {
           '0%': {
             transform: 'translateX(0%)',
@@ -89,6 +98,8 @@ module.exports = {
         },
       },
       animation: {
+        'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
+        'move-down': 'moveDown 2s ease-in infinite alternate-reverse',
         slide: 'slide 10s infinite linear',
       },
     },

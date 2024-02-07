@@ -2,12 +2,15 @@
 
 import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useState } from 'react';
 import type WaveSurfer from 'wavesurfer.js';
 
+import Button from '@/components/button/Button';
+// eslint-disable-next-line import/no-cycle
+import { HighlightContentBox } from '@/components/HighlightContentBox';
 import { mergeClassnames } from '@/components/private/utils';
+import { customMessage } from '@/utils/i18NRichTextUtils';
 
 const StarIcons = [
   { size: 16, yPosition: 'top-[6.1875rem]', xPosition: 'left-[17.6875rem]' },
@@ -48,18 +51,9 @@ const Hero = () => {
     }
   }, [wavesurfer]);
 
-  // const waveSurfer = WaveSurfer.create({
-  //   container: '#waveform-container',
-  //   waveColor: 'rgb(200, 0, 200)',
-  //   progressColor: 'rgb(100, 0, 100)',
-  //   url: '/examples/audio/audio.wav',
-  //   autoScroll: true,
-  //   dragToSeek: true,
-  // });
-
   return (
-    <section className="flex flex-col items-center justify-center gap-32 self-stretch px-[20.625rem] pb-[5.625rem] pt-8">
-      <div className="flex w-[48rem] flex-col items-center gap-6 pb-3">
+    <section className="flex w-full flex-col items-center justify-center gap-32 px-[20.625rem] pb-[5.625rem] pt-8">
+      <div className="flex w-1/2 max-w-screen-md flex-col items-center gap-6 pb-3">
         <div className="flex flex-col items-center gap-4 self-stretch">
           <p className="self-stretch text-center text-lg font-medium uppercase leading-[1.6875rem] text-primary">
             {t('hero_title')}
@@ -72,22 +66,24 @@ const Hero = () => {
           </p>
         </div>
         <div className="flex flex-col items-center gap-2.5">
-          <Link
-            download
+          <Button
+            as="a"
+            rel="noopener noreferrer"
+            target="_blank"
             href="/assets/docs/project-proposal.pdf"
-            className="flex h-12 items-center justify-center gap-1 rounded-[2rem] bg-primary px-8 py-3"
+            className="rounded-full uppercase"
+            iconRight={
+              <Image
+                width={24}
+                height={24}
+                src="/assets/images/icons/download-icon.svg"
+                alt="Download icon"
+                loading="lazy"
+              />
+            }
           >
-            <p className="text-base font-medium uppercase leading-6 text-white">
-              {t('hero_call_to_action')}
-            </p>
-            <Image
-              width={24}
-              height={24}
-              src="/assets/images/icons/download-icon.svg"
-              alt="Download icon"
-              loading="lazy"
-            />
-          </Link>
+            {t('hero_call_to_action')}
+          </Button>
         </div>
       </div>
       <div className="relative w-full">
@@ -129,15 +125,15 @@ const Hero = () => {
             )}
           />
         ))}
-        <p className="absolute right-0 w-[13.5rem] text-right text-base font-normal leading-normal text-slate-1000">
-          {/* {t.rich('hero_message_2', { */}
-          {/*  important: customMessage('font-bold'), */}
-          {/* })} */}
+        <p className="absolute right-0 h-12 max-w-64 text-right text-base font-normal leading-normal text-slate-1000">
+          {t.rich('hero_message_2', {
+            important: customMessage('font-bold'),
+          })}
         </p>
-        <p className="w-[17rem] text-base font-normal leading-normal text-slate-1000">
-          {/* {t.rich('hero_message_1', { */}
-          {/*  important: customMessage('font-bold'), */}
-          {/* })} */}
+        <p className="h-12 max-w-64 text-base font-normal leading-normal text-slate-1000">
+          {t.rich('hero_message_1', {
+            important: customMessage('font-bold'),
+          })}
         </p>
         <div
           className={mergeClassnames(
@@ -153,7 +149,7 @@ const Hero = () => {
               alt="Play icon"
               src={`/assets/images/icons/${
                 isPlaying ? 'pause' : 'play'
-              }-circle.svg`}
+              }-circle.png`}
               className="cursor-pointer"
             />
             <WavesurferPlayer
@@ -168,7 +164,7 @@ const Hero = () => {
             />
           </div>
         </div>
-        <div className="absolute left-6 top-24 rounded-lg bg-[#ffffff4d] p-4 shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[20px]">
+        <HighlightContentBox className="absolute left-6 top-24">
           <div className="relative flex flex-col items-start gap-1">
             <Image
               width={72}
@@ -177,12 +173,12 @@ const Hero = () => {
               alt="Mentor avatars"
             />
             <p className="text-base font-black leading-normal text-slate-1000">
-              {/* {t.rich('hero_mentor_quantity', { */}
-              {/*  normal: customMessage('font-normal'), */}
-              {/* })} */}
+              {t.rich('hero_mentor_quantity', {
+                normal: customMessage('font-normal'),
+              })}
             </p>
           </div>
-        </div>
+        </HighlightContentBox>
       </div>
     </section>
   );

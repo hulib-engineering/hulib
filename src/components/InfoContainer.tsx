@@ -1,34 +1,8 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import React, { type ReactNode } from 'react';
+import React from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
-
-const highlightMessage = (
-  isOutstanding: boolean,
-  textColor: string,
-): (() => ReactNode) => {
-  // eslint-disable-next-line react/display-name
-  return (...chunks: ReactNode[]): ReactNode => {
-    return (
-      <span
-        className={mergeClassnames(
-          textColor === 'primary' ? 'text-primary' : 'text-secondary',
-          isOutstanding && 'text-[5.625rem]',
-        )}
-      >
-        {chunks}
-      </span>
-    );
-  };
-};
-
-const newLineMessage = (): (() => ReactNode) => {
-  // eslint-disable-next-line react/display-name
-  return (): ReactNode => {
-    return <br />;
-  };
-};
+import { highlightMessage, newLineMessage } from '@/utils/i18NRichTextUtils';
 
 type IInfoContainerProps = {
   i18nKey: 'about_stories' | 'about_mission' | 'about_vision';
@@ -43,7 +17,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
   const t = useTranslations('Index');
 
   return (
-    <div className="flex items-center justify-between px-[5.625rem]">
+    <div className="flex items-center justify-between gap-8 px-[5.625rem]">
       {props.imagePos === 'left' && (
         <Image
           alt={props.imageAlt}

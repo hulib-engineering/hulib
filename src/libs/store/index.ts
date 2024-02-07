@@ -50,9 +50,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import menuItem from './menuItem';
+import uiState from './uiState';
 
 const reducers = combineReducers({
   menuItem,
+  uiState,
 });
 
 export const makeStore = () => {
