@@ -108,19 +108,29 @@ const Testimonial = () => {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center py-[6.25rem] text-slate-1000">
-      <div className="mb-8 px-[20.625rem] text-center">
-        <p className="text-lg font-semibold uppercase text-primary">
+    <section className="mt-8 flex flex-col items-center justify-center px-4 py-3 text-slate-1000 sm:mt-0 sm:px-0 sm:py-[6.25rem]">
+      <div className="mb-8 text-center sm:px-[20.625rem]">
+        <p className="mb-3 text-xs font-semibold uppercase text-primary sm:text-lg">
           {t('testimonial_title')}
         </p>
-        <h1 className="text-[3.5rem] font-medium">
+        <h1 className="text-[1.75rem] font-medium sm:text-[3.5rem]">
           {t('testimonial_description')}
         </h1>
       </div>
-      <div className="w-screen">
+      <div className="my-6 w-screen px-6 sm:my-0 sm:px-0">
         <Swiper
-          spaceBetween={32}
-          slidesPerView={4}
+          spaceBetween={8}
+          slidesPerView={1}
+          breakpoints={{
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 16,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 32,
+            },
+          }}
           loop
           centeredSlides
           navigation

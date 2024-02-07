@@ -7,10 +7,10 @@ import React, { useCallback, useState } from 'react';
 import type WaveSurfer from 'wavesurfer.js';
 
 import Button from '@/components/button/Button';
-// eslint-disable-next-line import/no-cycle
 import { HighlightContentBox } from '@/components/HighlightContentBox';
 import { mergeClassnames } from '@/components/private/utils';
 import { customMessage } from '@/utils/i18NRichTextUtils';
+// eslint-disable-next-line import/no-cycle
 
 const StarIcons = [
   { size: 16, yPosition: 'top-[6.1875rem]', xPosition: 'left-[17.6875rem]' },
@@ -52,16 +52,16 @@ const Hero = () => {
   }, [wavesurfer]);
 
   return (
-    <section className="flex w-full flex-col items-center justify-center gap-32 px-[20.625rem] pb-[5.625rem] pt-8">
-      <div className="flex w-1/2 max-w-screen-md flex-col items-center gap-6 pb-3">
-        <div className="flex flex-col items-center gap-4 self-stretch">
-          <p className="self-stretch text-center text-lg font-medium uppercase leading-[1.6875rem] text-primary">
+    <section className="w-full flex-col items-center justify-center gap-32 sm:pt-8 md:px-[20.625rem] md:pb-[5.625rem]">
+      <div className="pb-3 sm:w-1/2 sm:max-w-screen-md">
+        <div className="mb-6 flex w-full flex-col items-center justify-start gap-3 px-4 text-center sm:gap-4 sm:px-0">
+          <p className="text-xs font-medium uppercase text-primary sm:text-lg">
             {t('hero_title')}
           </p>
-          <h1 className="text-center text-[5rem] font-semibold capitalize leading-normal text-slate-1000">
+          <h1 className="px-4 text-[1.75rem] font-semibold capitalize text-slate-1000 sm:text-[5rem]">
             {t('hero_motto')}
           </h1>
-          <p className="self-stretch text-center text-2xl font-light leading-9 text-slate-1000 opacity-50">
+          <p className="text-sm font-light text-slate-1000 opacity-50 sm:text-2xl">
             {t('hero_description')}
           </p>
         </div>
@@ -86,15 +86,34 @@ const Hero = () => {
           </Button>
         </div>
       </div>
-      <div className="relative w-full">
-        <div className="relative flex justify-center">
+      <div className="relative mt-8 w-full">
+        <p className="relative h-12 px-2 text-center text-base font-normal text-slate-1000 sm:hidden">
+          {t.rich('hero_message_1', {
+            important: customMessage('font-bold'),
+          })}
+        </p>
+        <p className="relative h-12 text-center text-base font-normal text-slate-1000 sm:hidden">
+          {t.rich('hero_message_2', {
+            important: customMessage('font-bold'),
+          })}
+        </p>
+        <div className="hidden justify-center sm:flex sm:flex-col">
           <Image
             alt="Hero artwork"
             src="/assets/images/hero-artwork.png"
-            // className="pr-5"
             priority
             width={748}
             height={511}
+          />
+        </div>
+        <div className="mb-3 flex w-full flex-col items-center justify-center sm:hidden">
+          <Image
+            alt="Hero artwork"
+            src="/assets/images/fs-hero-artwork.png"
+            priority
+            width={276}
+            height={188}
+            className="object-scale-down object-center"
           />
         </div>
         {StarIcons.map((each, index) => (
@@ -125,60 +144,94 @@ const Hero = () => {
             )}
           />
         ))}
-        <p className="absolute right-0 h-12 max-w-64 text-right text-base font-normal leading-normal text-slate-1000">
+        <p className="right-0 hidden h-12 max-w-64 text-right text-base font-normal text-slate-1000 sm:absolute">
           {t.rich('hero_message_2', {
             important: customMessage('font-bold'),
           })}
         </p>
-        <p className="h-12 max-w-64 text-base font-normal leading-normal text-slate-1000">
+        <p className="left-0 hidden h-12 max-w-64 text-base font-normal text-slate-1000 sm:absolute">
           {t.rich('hero_message_1', {
             important: customMessage('font-bold'),
           })}
         </p>
-        <div
-          className={mergeClassnames(
-            'absolute right-[97px] top-[159px] rounded-2xl px-5 py-3',
-            'bg-[#eaeaea4d] shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[25px]',
-          )}
-        >
-          <div className="flex items-center gap-2">
-            <Image
-              onClick={onPlayPause}
-              width={56}
-              height={56}
-              alt="Play icon"
-              src={`/assets/images/icons/${
-                isPlaying ? 'pause' : 'play'
-              }-circle.png`}
-              className="cursor-pointer"
-            />
-            <WavesurferPlayer
-              height={46}
-              width={164}
-              progressColor="#002254"
-              waveColor="#8E98A8"
-              url="/assets/media/healing-sound.mp3"
-              onReady={onReady}
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-            />
+        <div className="grid grid-cols-2 gap-x-2 sm:block">
+          <div
+            className={mergeClassnames(
+              'relative sm:absolute sm:right-[97px] sm:top-[159px] rounded-2xl px-2 sm:px-5 py-3',
+              'bg-[#eaeaea4d] shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[25px]',
+            )}
+          >
+            <div className="hidden items-center gap-2 sm:flex">
+              <Image
+                onClick={onPlayPause}
+                width={56}
+                height={56}
+                alt="Play icon"
+                src={`/assets/images/icons/${
+                  isPlaying ? 'pause' : 'play'
+                }-circle.png`}
+                className="cursor-pointer"
+              />
+              <WavesurferPlayer
+                height={46}
+                width={164}
+                progressColor="#002254"
+                waveColor="#8E98A8"
+                url="/assets/media/healing-sound.mp3"
+                onReady={onReady}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+              />
+            </div>
+            <div className="flex items-center gap-2 sm:hidden">
+              <Image
+                onClick={onPlayPause}
+                width={32}
+                height={32}
+                alt="Play icon"
+                src={`/assets/images/icons/${
+                  isPlaying ? 'pause' : 'play'
+                }-circle.png`}
+                className="cursor-pointer"
+              />
+              <WavesurferPlayer
+                height={32}
+                width={124}
+                progressColor="#002254"
+                waveColor="#8E98A8"
+                url="/assets/media/healing-sound.mp3"
+                onReady={onReady}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+              />
+            </div>
           </div>
+          <HighlightContentBox className="relative sm:absolute sm:left-6 sm:top-24">
+            <div className="relative flex flex-col items-start gap-1">
+              <div className="hidden sm:visible">
+                <Image
+                  width={72}
+                  height={24}
+                  src="/assets/images/mentors.svg"
+                  alt="Mentor avatars"
+                />
+              </div>
+              <div className="visible sm:hidden">
+                <Image
+                  width={64}
+                  height={16}
+                  src="/assets/images/mentors.svg"
+                  alt="Mentor avatars"
+                />
+              </div>
+              <p className="text-xs font-black text-slate-1000 sm:text-base">
+                {t.rich('hero_mentor_quantity', {
+                  normal: customMessage('font-normal'),
+                })}
+              </p>
+            </div>
+          </HighlightContentBox>
         </div>
-        <HighlightContentBox className="absolute left-6 top-24">
-          <div className="relative flex flex-col items-start gap-1">
-            <Image
-              width={72}
-              height={24}
-              src="/assets/images/mentors.svg"
-              alt="Mentor avatars"
-            />
-            <p className="text-base font-black leading-normal text-slate-1000">
-              {t.rich('hero_mentor_quantity', {
-                normal: customMessage('font-normal'),
-              })}
-            </p>
-          </div>
-        </HighlightContentBox>
       </div>
     </section>
   );

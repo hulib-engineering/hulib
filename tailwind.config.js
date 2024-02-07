@@ -23,6 +23,7 @@ module.exports = {
       secondary: '#FFC745',
       light: '#B0CEFA',
       'blue-light': 'var(--foundation-blue-light)',
+      'blue-light-active': 'var(--foundation-blue-light-active)',
       'blue-darker': 'var(--foundation-blue-darker)',
       'light-hover': '#D9E7FD',
       white: colors.white,
