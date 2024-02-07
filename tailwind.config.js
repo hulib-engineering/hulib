@@ -25,10 +25,6 @@ module.exports = {
       'blue-light': 'var(--foundation-blue-light)',
       'blue-darker': 'var(--foundation-blue-darker)',
       'light-hover': '#D9E7FD',
-      'light-active': 'var(--foundation-blue-light-active)',
-      // success: '#32D583',
-      // error: '#F04438',
-      // warning: '#FFD21F',
       white: colors.white,
       black: colors.black,
       slate: colors.slate,
@@ -92,10 +88,19 @@ module.exports = {
         moveDown: {
           to: { transform: 'translateY(-50px)' },
         },
+        slide: {
+          '0%': {
+            transform: 'translateX(0%)',
+          },
+          '100%': {
+            transform: 'translateX(-100%)',
+          },
+        },
       },
       animation: {
         'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
         'move-down': 'moveDown 2s ease-in infinite alternate-reverse',
+        slide: 'slide 10s infinite linear',
       },
     },
   },
