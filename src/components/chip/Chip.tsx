@@ -1,10 +1,9 @@
-import type { ButtonHTMLAttributes } from 'react';
 import React, { forwardRef } from 'react';
 
 import { getPadding } from '@/components/chip/private/utils';
 import { mergeClassnames } from '@/components/private/utils';
 
-type IChipProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+type IChipProps = {
   isActive?: boolean;
   iconOnly?: React.ReactNode;
   iconLeft?: React.ReactNode;
@@ -14,9 +13,10 @@ type IChipProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'default' | 'ghost';
   children?: React.ReactNode;
   className?: string;
+  disabled?: boolean;
 };
 
-const Chip = forwardRef<HTMLButtonElement, IChipProps>(
+const Chip = forwardRef<HTMLDivElement, IChipProps>(
   (
     {
       children,
@@ -33,7 +33,7 @@ const Chip = forwardRef<HTMLButtonElement, IChipProps>(
     },
     ref,
   ) => (
-    <button
+    <div
       ref={ref}
       {...rest}
       className={mergeClassnames(
@@ -46,13 +46,13 @@ const Chip = forwardRef<HTMLButtonElement, IChipProps>(
         // getDisabled({ disabled, isStroke }),
         className,
       )}
-      type="button"
+      // type="button"
     >
       {iconLeft}
       {children}
       {iconOnly}
       {iconRight}
-    </button>
+    </div>
   ),
 );
 

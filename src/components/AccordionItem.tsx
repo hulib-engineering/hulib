@@ -12,11 +12,11 @@ const AccordionItem = ({
   const [isExpanding, setIsExpanding] = useState(false);
 
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="flex w-full flex-col">
       <button
         onClick={() => setIsExpanding(!isExpanding)}
         type="button"
-        className="flex w-full items-center justify-center rounded-xl bg-white px-6 py-4"
+        className="flex w-full items-center justify-center gap-[0.75rem] rounded-xl bg-white px-6 py-4"
       >
         <span className="w-full text-wrap text-start text-base font-medium lg:text-xl">
           {trigger}
@@ -52,19 +52,17 @@ const AccordionItem = ({
       <div
         className={`grid transition-all duration-500 ease-in-out ${
           isExpanding
-            ? 'grid-rows-[1fr] opacity-100'
+            ? 'mt-4 grid-rows-[1fr] opacity-100'
             : 'grid-rows-[0fr] opacity-0'
         }`}
       >
-        <div className="overflow-hidden">
-          <div className="overflow-hidden p-6 pt-0 text-sm font-light lg:text-base">
-            {content.heading !== '' && content.heading}
-            <ul className="list-disc px-6">
-              {content.bodyParams.map((each, index) => (
-                <li key={index}>{each}</li>
-              ))}
-            </ul>
-          </div>
+        <div className="overflow-hidden px-6 pt-0 text-sm font-light lg:text-base">
+          {content.heading !== '' && content.heading}
+          <ul className="list-disc px-6">
+            {content.bodyParams.map((each, index) => (
+              <li key={index}>{each}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

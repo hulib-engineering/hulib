@@ -54,7 +54,7 @@ export default function RootLayout({
 
   return (
     <html lang={locale}>
-      <body>
+      <body suppressHydrationWarning>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <StoreProvider>{children}</StoreProvider>
         </NextIntlClientProvider>

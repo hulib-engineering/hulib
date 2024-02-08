@@ -12,7 +12,9 @@ export default function Layout({
 
   return (
     <BaseTemplate>
-      <div className="pt-24 text-xl [&_ul]:my-6">{children}</div>
+      <div className="w-screen pb-8 pt-16 text-xl sm:pt-24 [&_ul]:my-6">
+        {children}
+      </div>
     </BaseTemplate>
   );
 }
