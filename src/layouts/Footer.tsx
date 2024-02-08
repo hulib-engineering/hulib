@@ -44,14 +44,14 @@ const Footer = () => {
       <footer
         className={mergeClassnames(
           'w-full border-t-[0.5px] border-t-[rgba(176,206,250,0.50)] px-4 py-3',
-          'sm:border-none sm:px-[20.625rem] sm:py-[5.625rem]',
+          'sm:border-none lg:px-[20.625rem] lg:py-[5.625rem]',
         )}
       >
         <div className="flex w-full flex-col items-center justify-between sm:flex-row">
-          <div className="hidden sm:visible">
+          <div className="hidden lg:visible">
             <Logo />
           </div>
-          <div className="mb-8 flex sm:hidden">
+          <div className="mb-8 flex lg:hidden">
             <Logo size="small" />
           </div>
           <div className="flex flex-col-reverse items-center justify-center gap-8 sm:flex-row sm:gap-6">

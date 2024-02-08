@@ -17,7 +17,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
   const t = useTranslations('Index');
 
   return (
-    <div className="flex flex-col flex-wrap items-center justify-between gap-4 sm:gap-8 sm:px-[5.625rem]">
+    <div className="flex flex-col flex-wrap items-center justify-between gap-4 lg:gap-8 lg:px-[5.625rem]">
       {props.imagePos === 'left' ? (
         <Image
           alt={props.imageAlt}
@@ -25,7 +25,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
           priority
           width={600}
           height={600}
-          className="rounded-3xl sm:basis-1/2"
+          className="rounded-3xl lg:basis-1/2"
         />
       ) : (
         <Image
@@ -34,10 +34,10 @@ const InfoContainer = (props: IInfoContainerProps) => {
           priority
           width={600}
           height={600}
-          className="rounded-3xl sm:hidden sm:basis-1/2"
+          className="rounded-3xl lg:hidden lg:basis-1/2"
         />
       )}
-      <div className="hidden text-[2rem] font-semibold capitalize text-slate-1000 sm:block sm:w-[36.5rem] sm:basis-1/2 sm:text-[3.5rem]">
+      <div className="hidden text-[2rem] font-semibold capitalize text-slate-1000 sm:text-[3.5rem] lg:block lg:max-w-xl lg:basis-1/2">
         {t.rich(`${props.i18nKey}.title`, {
           highlight: highlightMessage(
             props.isTitleOutstanding,
@@ -51,7 +51,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
           })}
         </div>
       </div>
-      <div className="block text-[2rem] font-semibold capitalize text-slate-1000 sm:hidden sm:w-[36.5rem] sm:basis-1/2 sm:text-[3.5rem]">
+      <div className="w-full text-[2rem] font-semibold capitalize text-slate-1000 sm:max-w-xl sm:basis-1/2 sm:text-[3.5rem] lg:hidden">
         {t.rich(`${props.i18nKey}.title`, {
           highlight: highlightMessage(false, props.titleHighlightTextColor),
           br: newLineMessage(),
@@ -69,7 +69,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
           priority
           width={600}
           height={600}
-          className="hidden rounded-3xl sm:visible sm:basis-1/2"
+          className="hidden rounded-3xl md:visible md:basis-1/2"
         />
       )}
     </div>
