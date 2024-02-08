@@ -9,11 +9,16 @@ const Header = () => {
   const t = useTranslations('Header');
 
   return (
-    <header className="sticky top-0 z-[999] w-full bg-[#f1f4f9bf] px-[20.625rem] py-6 backdrop-blur-[50px]">
-      <div className="relative flex flex-[0_0_auto] items-center justify-between">
-        <div className="relative flex flex-1 grow items-start pb-[0.26788rem] pt-[0.3125rem]">
+    <header className="fixed top-0 z-[999] w-full bg-[#f1f4f9bf] px-2 py-0.5 backdrop-blur-[50px] sm:px-[5.625rem] sm:py-6">
+      <div className="mx-auto flex items-center justify-between lg:w-3/4 lg:max-w-7xl">
+        <div className="relative hidden flex-1 grow items-start pb-[0.26788rem] pt-[0.3125rem] sm:flex">
           <Link href="/">
             <Logo />
+          </Link>
+        </div>
+        <div className="relative flex flex-1 grow items-start pb-[0.26788rem] pt-[0.3125rem] sm:hidden">
+          <Link href="/">
+            <Logo size="small" />
           </Link>
         </div>
         <div className="relative flex items-center justify-end gap-6">

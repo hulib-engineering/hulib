@@ -41,29 +41,41 @@ const Footer = () => {
     //       </p>
     //       <div className="flex flex-col items-center gap-4 lg:flex-row">
     <>
-      <footer className="w-full px-[20.625rem] py-[5.625rem]">
-        <div className="flex w-full items-center justify-between">
-          <Logo />
-          <div className="flex items-center justify-center gap-6">
-            <div>
-              <p className="text-sm font-normal text-[rgba(0,_87,_215,_0.50)]">
-                {t('copyright')}
-              </p>
+      <footer
+        className={mergeClassnames(
+          'w-full border-t-[0.5px] border-t-[rgba(176,206,250,0.50)] px-4 py-3',
+          'sm:border-none lg:px-[20.625rem] lg:py-[5.625rem]',
+        )}
+      >
+        <div className="mx-auto flex w-full flex-col items-center justify-between sm:flex-row lg:max-w-7xl">
+          <div className="hidden lg:flex">
+            <Logo />
+          </div>
+          <div className="mb-8 flex lg:hidden">
+            <Logo size="small" />
+          </div>
+          <div className="flex flex-col-reverse items-center justify-center gap-8 sm:flex-row sm:gap-6">
+            {/* <div> */}
+            <p className="text-sm font-normal text-[rgba(0,_87,_215,_0.50)]">
+              {t('copyright')}
+            </p>
+            <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
+              {Links.map((link, index) => (
+                <div key={index} className="mb-1">
+                  <button
+                    type="button"
+                    onClick={() => handleClick(link.modalName)}
+                    className={mergeClassnames(
+                      'text-sm font-normal text-primary-hover/50 underline transition duration-200 capitalize',
+                      'hover:-translate-y-1',
+                    )}
+                  >
+                    {link.content}
+                  </button>
+                </div>
+              ))}
             </div>
-            {Links.map((link, index) => (
-              <div key={index} className="mb-1">
-                <button
-                  type="button"
-                  onClick={() => handleClick(link.modalName)}
-                  className={mergeClassnames(
-                    'text-sm font-normal text-primary-hover/50 underline transition duration-200 capitalize',
-                    'hover:-translate-y-1',
-                  )}
-                >
-                  {link.content}
-                </button>
-              </div>
-            ))}
+            {/* </div> */}
           </div>
         </div>
       </footer>

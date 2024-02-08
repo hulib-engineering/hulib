@@ -8,7 +8,7 @@ export const getButtonCommonStyles = ({
   disabled,
 }: Pick<ButtonSettingsProps, 'disabled'>): string =>
   mergeClassnames(
-    'relative z-0 flex justify-center items-center font-medium no-underline overflow-hidden px-8 py-3',
+    'relative z-0 flex justify-center items-center font-medium no-underline overflow-hidden py-3 rounded-full',
     'whitespace-nowrap select-none transition duration-200 text-base leading-normal',
     disabled ? 'opacity-60 cursor-not-allowed' : 'active:scale-90',
   );

@@ -36,7 +36,7 @@
     --toastify-color-error: #F04438;
     --swiper-pagination-progressbar-length: 1.25rem;
 }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; box-sizing: border-box }
 
 /*Swiperjs custom styles*/
 .swiper {

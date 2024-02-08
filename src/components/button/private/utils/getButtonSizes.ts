@@ -57,7 +57,7 @@ const getMdPadding = ({
   fullWidth,
 }: ButtonSettingsProps): string => {
   if (fullWidth) {
-    return 'px-4';
+    return 'px-8';
   }
   // if (icon === 'left' || iconLeft) {
   //   return 'ps-2 pe-4';
@@ -68,7 +68,7 @@ const getMdPadding = ({
   if (icon === 'only' || iconOnly) {
     return 'px-2';
   }
-  return 'px-4';
+  return 'px-8';
 };
 
 const getLgPadding = ({
@@ -173,7 +173,7 @@ export const getButtonSizes = ({
   }
   return mergeClassnames(
     getMdPadding({ icon, iconLeft, iconRight, iconOnly, fullWidth }),
-    'py-2 gap-2 text-moon-14 rounded-lg',
+    'py-2 gap-2 text-sm rounded-full',
   );
 };
 

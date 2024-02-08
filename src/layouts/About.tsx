@@ -31,16 +31,16 @@ const About = () => {
   const t = useTranslations('Index');
 
   return (
-    <section className="px-60 py-[6.25rem]">
-      <div className="mb-[5.625rem] px-20 text-center">
-        <div className="text-lg font-semibold uppercase leading-[27px] text-primary">
+    <section className="mt-8 px-4 py-3 lg:px-60 lg:py-[6.25rem]">
+      <div className="mb-6 text-center sm:px-20 lg:mb-[5.625rem]">
+        <div className="text-xs font-semibold uppercase text-primary sm:text-lg">
           {t('about_title')}
         </div>
-        <div className="text-[56px] font-semibold capitalize text-slate-1000">
+        <div className="text-[28px] font-semibold capitalize text-slate-1000 sm:text-[56px]">
           {t('about_description')}
         </div>
       </div>
-      <div className="flex flex-col gap-[6.25rem]">
+      <div className="flex flex-col gap-6 lg:gap-[6.25rem]">
         {InfoList.map((info, index) => (
           <InfoContainer
             key={index}

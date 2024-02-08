@@ -23,6 +23,7 @@ module.exports = {
       secondary: '#FFC745',
       light: '#B0CEFA',
       'blue-light': 'var(--foundation-blue-light)',
+      'blue-light-active': 'var(--foundation-blue-light-active)',
       'blue-darker': 'var(--foundation-blue-darker)',
       'light-hover': '#D9E7FD',
       white: colors.white,
@@ -38,6 +39,7 @@ module.exports = {
       colors: {
         gray: {
           100: '#c8c8c8',
+          150: '#eaeaea',
           200: '#edf2f7',
           300: '#e2e8f0',
           400: '#727272',

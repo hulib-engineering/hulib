@@ -1,6 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
-// import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -16,27 +15,13 @@ export type IPolicyModalProps = {
 };
 
 const PolicyModal = (props: WithChildren<IPolicyModalProps>) => {
-  // const contentIndexes = [
-  //   'index_0',
-  //   'index_1',
-  //   'index_2',
-  //   'index_3',
-  //   'index_4',
-  //   'index_5',
-  //   'index_6',
-  //   'index_7',
-  //   'index_8',
-  //   'index_9',
-  //   'index_10',
-  // ] as const;
-
   const t = useTranslations('Index');
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Modal.Backdrop />
       <Modal.Panel className="w-[56.25rem]">
-        <div className="flex w-full flex-col items-center justify-center gap-12 rounded-3xl bg-white p-12">
+        <div className="flex w-full flex-col items-center justify-center gap-12 rounded-3xl bg-white p-6 md:p-12">
           <div className="inline-flex w-full items-center justify-between">
             <Image
               alt="HULIB minified logo"
