@@ -128,6 +128,10 @@ const Testimonial = () => {
             },
             1024: {
               slidesPerView: 3,
+              spaceBetween: 24,
+            },
+            1536: {
+              slidesPerView: 4,
               spaceBetween: 32,
             },
           }}

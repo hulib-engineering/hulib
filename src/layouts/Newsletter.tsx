@@ -25,22 +25,16 @@ const Newsletter = () => {
           <NewsletterForm />
         </div>
       </div>
-      {/* <div className="md:right-8 md:top-[-16rem] hidden animate-move-up md:absolute"> */}
-      {/*  <GradientSplash /> */}
-      {/* </div> */}
-      {/* <div className="md:bottom-[-16rem] md:left-8 hidden animate-move-down md:absolute"> */}
-      {/*  <GradientSplash /> */}
-      {/* </div> */}
       <div
         className={mergeClassnames(
-          'absolute -left-7 -top-7 h-[9.375rem] w-[9.375rem] md:right-8 md:top-[-16rem] md:hidden md:h-[18.75rem] md:w-[18.75rem]',
-          'animate-move-up rounded-full bg-gradient-to-r from-[#6D96FF] to-[#FF9CEF] opacity-30 blur-[200px]',
+          'absolute -left-7 -top-7 h-[9.375rem] w-[9.375rem] lg:left-3/4 lg:-top-[10%] lg:h-[18.75rem] lg:w-[18.75rem]',
+          'animate-move-up rounded-full bg-gradient-to-r from-[#6D96FF] to-[#FF9CEF] opacity-35 blur-[6.25rem]',
         )}
       />
       <div
         className={mergeClassnames(
-          'absolute -bottom-7 -right-7 h-[9.375rem] w-[9.375rem] md:bottom-[-16rem] md:left-8 md:hidden md:h-[18.75rem] md:w-[18.75rem]',
-          'animate-move-down rounded-full bg-gradient-to-r from-[#6D96FF] to-[#FF9CEF] opacity-30 blur-[200px]',
+          'absolute -bottom-7 -right-7 h-[9.375rem] w-[9.375rem] lg:-bottom-[10%] lg:left-[10%] lg:h-[18.75rem] lg:w-[18.75rem]',
+          'animate-move-down rounded-full bg-gradient-to-r from-[#6D96FF] to-[#FF9CEF] opacity-30 blur-[6.25rem]',
         )}
       />
     </section>

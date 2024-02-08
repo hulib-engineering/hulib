@@ -17,7 +17,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
   const t = useTranslations('Index');
 
   return (
-    <div className="flex flex-col flex-wrap items-center justify-between gap-4 lg:gap-8 lg:px-[5.625rem]">
+    <div className="flex flex-col flex-wrap items-center justify-between gap-4 lg:flex-row lg:gap-8 lg:px-[5.625rem]">
       {props.imagePos === 'left' ? (
         <Image
           alt={props.imageAlt}
@@ -69,7 +69,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
           priority
           width={600}
           height={600}
-          className="hidden rounded-3xl md:visible md:basis-1/2"
+          className="hidden rounded-3xl lg:block lg:basis-1/2"
         />
       )}
     </div>

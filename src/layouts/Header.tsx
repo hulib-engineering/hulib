@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 z-[999] w-full bg-[#f1f4f9bf] px-2 py-0.5 backdrop-blur-[50px] sm:px-[5.625rem] sm:py-6">
-      <div className="mx-auto flex items-center justify-between lg:max-w-7xl">
+      <div className="mx-auto flex items-center justify-between lg:w-3/4 lg:max-w-7xl">
         <div className="relative hidden flex-1 grow items-start pb-[0.26788rem] pt-[0.3125rem] sm:flex">
           <Link href="/">
             <Logo />
