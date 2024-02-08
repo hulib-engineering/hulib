@@ -44,7 +44,7 @@ const NewsletterForm = () => {
       //   '🚀 Your message is on its way! Thanks for reaching out 😊. Have a fantastic day ahead! 🌟',
       // );
     } catch (error: any) {
-      console.log(error);
+      // console.log(error);
       pushError(`Error: ${error.message}`);
       // toast.error(`Error: ${error.message}`);
       // alert(`Error: ${error.message}`);
@@ -72,34 +72,7 @@ const NewsletterForm = () => {
             {...register('email')}
           />
         </label>
-        {/* {errors.email?.message && ( */}
-        {/*  <div className="my-2 text-xs italic text-red-500"> */}
-        {/*    {errors.email?.message} */}
-        {/*  </div> */}
-        {/* )} */}
       </div>
-      {/* <div className="hidden lg:flex"> */}
-      {/*  <button */}
-      {/*    type="submit" */}
-      {/*    disabled={isLoading} */}
-      {/*    className={mergeClassnames( */}
-      {/*      'rounded-full bg-primary px-8 py-3 text-base font-medium text-white uppercase', */}
-      {/*      'transition-all duration-300 ease-out hover:bg-primary-hover disabled:bg-opacity-75', */}
-      {/*    )} */}
-      {/*  > */}
-      {/*    {t('newsletter_form_submit')} */}
-      {/*  </button> */}
-      {/* </div> */}
-      {/* <div className="flex lg:hidden"> */}
-      {/*  <button type="submit"> */}
-      {/*    <Image */}
-      {/*      width={40} */}
-      {/*      height={40} */}
-      {/*      alt="go" */}
-      {/*      src="/assets/images/icons/arrow-right-2.svg" */}
-      {/*    /> */}
-      {/*  </button> */}
-      {/* </div> */}
       <div className="hidden lg:flex">
         <Button disabled={isLoading} type="submit" className="uppercase">
           {t('newsletter_form_submit')}

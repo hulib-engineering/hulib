@@ -11,15 +11,10 @@ const AccordionItem = ({
 }) => {
   const [isExpanding, setIsExpanding] = useState(false);
 
-  const handleTrigger = () => {
-    setIsExpanding(!isExpanding);
-    console.log('Clicked');
-  };
-
   return (
     <div className="flex w-full flex-col">
       <button
-        onClick={handleTrigger}
+        onClick={() => setIsExpanding(!isExpanding)}
         type="button"
         className="flex w-full items-center justify-center gap-[0.75rem] rounded-xl bg-white px-6 py-4"
       >
