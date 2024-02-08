@@ -31,8 +31,8 @@ const About = () => {
   const t = useTranslations('Index');
 
   return (
-    <section className="mt-8 px-4 py-3 sm:px-60 sm:py-[6.25rem]">
-      <div className="mb-6 text-center sm:mb-[5.625rem] sm:px-20">
+    <section className="mt-8 px-4 py-3 lg:px-60 lg:py-[6.25rem]">
+      <div className="mb-6 text-center sm:px-20 lg:mb-[5.625rem]">
         <div className="text-xs font-semibold uppercase text-primary sm:text-lg">
           {t('about_title')}
         </div>
@@ -40,7 +40,7 @@ const About = () => {
           {t('about_description')}
         </div>
       </div>
-      <div className="flex flex-col gap-6 sm:gap-[6.25rem]">
+      <div className="flex flex-col gap-6 lg:gap-[6.25rem]">
         {InfoList.map((info, index) => (
           <InfoContainer
             key={index}

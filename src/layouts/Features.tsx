@@ -27,7 +27,7 @@ const Features = () => {
 
   return (
     <section className="mt-8 w-full flex-col items-center justify-center px-4 py-6 sm:mt-0 lg:px-[20.625rem] lg:py-[6.25rem]">
-      <div className="grid grid-cols-1 gap-y-6 lg:grid-cols-3 lg:gap-6">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:gap-6">
         {FeatureList.map((feature) => (
           <FeatureCard
             key={feature.key}

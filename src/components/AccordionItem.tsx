@@ -21,7 +21,7 @@ const AccordionItem = ({
       <button
         onClick={handleTrigger}
         type="button"
-        className="flex w-full items-center justify-center gap-[0.75rem] rounded-xl bg-white px-6 py-4 sm:px-0"
+        className="flex w-full items-center justify-center gap-[0.75rem] rounded-xl bg-white px-6 py-4"
       >
         <span className="w-full text-wrap text-start text-base font-medium lg:text-xl">
           {trigger}

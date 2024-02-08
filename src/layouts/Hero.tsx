@@ -52,7 +52,7 @@ const Hero = () => {
   }, [wavesurfer]);
 
   return (
-    <section className="w-full flex-col items-center justify-center gap-32 sm:pt-8 md:px-[20.625rem] md:pb-[5.625rem]">
+    <section className="flex w-full flex-col items-center justify-center pb-8 sm:gap-4 sm:pt-8 lg:px-[20.625rem] xl:pb-[5.625rem] 2xl:gap-32">
       <div className="pb-3 sm:w-1/2 sm:max-w-screen-md">
         <div className="mb-6 flex w-full flex-col items-center justify-start gap-3 px-4 text-center sm:gap-4 sm:px-0">
           <p className="text-xs font-medium uppercase text-primary sm:text-lg">
@@ -87,17 +87,17 @@ const Hero = () => {
         </div>
       </div>
       <div className="relative mt-8 w-full">
-        <p className="relative h-12 px-2 text-center text-base font-normal text-slate-1000 sm:hidden">
+        <p className="relative h-12 px-2 text-center text-base font-normal text-slate-1000 lg:hidden">
           {t.rich('hero_message_1', {
             important: customMessage('font-bold'),
           })}
         </p>
-        <p className="relative h-12 text-center text-base font-normal text-slate-1000 sm:hidden">
+        <p className="relative h-12 text-center text-base font-normal text-slate-1000 lg:hidden">
           {t.rich('hero_message_2', {
             important: customMessage('font-bold'),
           })}
         </p>
-        <div className="hidden justify-center sm:flex sm:flex-col">
+        <div className="hidden justify-center lg:flex lg:flex-col">
           <Image
             alt="Hero artwork"
             src="/assets/images/hero-artwork.png"
@@ -106,7 +106,7 @@ const Hero = () => {
             height={511}
           />
         </div>
-        <div className="mb-3 flex w-full flex-col items-center justify-center sm:hidden">
+        <div className="mb-3 flex w-full flex-col items-center justify-center lg:hidden">
           <Image
             alt="Hero artwork"
             src="/assets/images/fs-hero-artwork.png"
@@ -144,21 +144,46 @@ const Hero = () => {
             )}
           />
         ))}
-        <p className="right-0 hidden h-12 max-w-64 text-right text-base font-normal text-slate-1000 sm:absolute">
+        <p className="right-0 hidden h-12 max-w-64 text-right text-base font-normal text-slate-1000 lg:absolute">
           {t.rich('hero_message_2', {
             important: customMessage('font-bold'),
           })}
         </p>
-        <p className="left-0 hidden h-12 max-w-64 text-base font-normal text-slate-1000 sm:absolute">
+        <p className="left-0 hidden h-12 max-w-64 text-base font-normal text-slate-1000 lg:absolute">
           {t.rich('hero_message_1', {
             important: customMessage('font-bold'),
           })}
         </p>
-        <div className="grid grid-cols-2 gap-x-2 sm:block">
+        <div className="grid grid-cols-2 gap-x-2 px-4 lg:block">
+          <HighlightContentBox className="relative lg:absolute lg:left-6 lg:top-24">
+            <div className="relative flex flex-col items-start gap-1">
+              <div className="hidden lg:visible">
+                <Image
+                  width={72}
+                  height={24}
+                  src="/assets/images/mentors.svg"
+                  alt="Mentor avatars"
+                />
+              </div>
+              <div className="visible lg:hidden">
+                <Image
+                  width={64}
+                  height={16}
+                  src="/assets/images/mentors.svg"
+                  alt="Mentor avatars"
+                />
+              </div>
+              <p className="text-xs font-black text-slate-1000 lg:text-base">
+                {t.rich('hero_mentor_quantity', {
+                  normal: customMessage('font-normal'),
+                })}
+              </p>
+            </div>
+          </HighlightContentBox>
           <div
             className={mergeClassnames(
-              'relative sm:absolute sm:right-[97px] sm:top-[159px] rounded-2xl px-2 sm:px-5 py-3',
-              'bg-[#eaeaea4d] shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[25px]',
+              'flex flex-col justify-center relative lg:absolute lg:right-[97px] lg:top-[159px] rounded-lg lg:rounded-2xl px-2 lg:px-5 py-3',
+              'bg-white/30 lg:bg-gray-150 lg:bg-opacity-50 shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[35.63px] lg:backdrop-blur-[5px]',
             )}
           >
             <div className="hidden items-center gap-2 sm:flex">
@@ -173,8 +198,8 @@ const Hero = () => {
                 className="cursor-pointer"
               />
               <WavesurferPlayer
-                height={46}
-                width={164}
+                height={40}
+                width={240}
                 progressColor="#002254"
                 waveColor="#8E98A8"
                 url="/assets/media/healing-sound.mp3"
@@ -183,7 +208,7 @@ const Hero = () => {
                 onPause={() => setIsPlaying(false)}
               />
             </div>
-            <div className="flex items-center gap-2 sm:hidden">
+            <div className="flex items-center gap-2 overflow-hidden sm:hidden">
               <Image
                 onClick={onPlayPause}
                 width={32}
@@ -192,11 +217,11 @@ const Hero = () => {
                 src={`/assets/images/icons/${
                   isPlaying ? 'pause' : 'play'
                 }-circle.png`}
-                className="cursor-pointer"
+                className="h-8 w-8 cursor-pointer object-cover object-center"
               />
               <WavesurferPlayer
                 height={32}
-                width={124}
+                width={171}
                 progressColor="#002254"
                 waveColor="#8E98A8"
                 url="/assets/media/healing-sound.mp3"
@@ -206,31 +231,6 @@ const Hero = () => {
               />
             </div>
           </div>
-          <HighlightContentBox className="relative sm:absolute sm:left-6 sm:top-24">
-            <div className="relative flex flex-col items-start gap-1">
-              <div className="hidden sm:visible">
-                <Image
-                  width={72}
-                  height={24}
-                  src="/assets/images/mentors.svg"
-                  alt="Mentor avatars"
-                />
-              </div>
-              <div className="visible sm:hidden">
-                <Image
-                  width={64}
-                  height={16}
-                  src="/assets/images/mentors.svg"
-                  alt="Mentor avatars"
-                />
-              </div>
-              <p className="text-xs font-black text-slate-1000 sm:text-base">
-                {t.rich('hero_mentor_quantity', {
-                  normal: customMessage('font-normal'),
-                })}
-              </p>
-            </div>
-          </HighlightContentBox>
         </div>
       </div>
     </section>
