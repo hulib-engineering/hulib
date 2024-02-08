@@ -68,7 +68,7 @@ const TestimonialItems = [
   {
     content:
       'Mình mong muốn đóng góp một cái nhìn mới mẻ hơn về khái niệm well-being tại Việt Nam dành cho các bạn trẻ. Và HuLib đã thực hiện được điều đó, tự hào lắm *bắn tym*',
-    name: 'Trâm Phạm',
+    name: 'Pham Thi Bich Tram',
     avatarUrl: '/assets/images/avatars/pf_member_1.png',
     position: 'Team PF',
   },

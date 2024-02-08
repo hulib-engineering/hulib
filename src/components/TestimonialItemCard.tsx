@@ -44,7 +44,7 @@ const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
               src={props.avatarUrl}
               width={56} // cus 3.5rem * 16 = 56 px
               height={56}
-              className="h-14 w-14 rounded-full object-cover object-center"
+              className="h-14 w-14 rounded-full object-none object-center"
               loading="lazy"
             />
             <div className="flex flex-col items-start text-xl">
