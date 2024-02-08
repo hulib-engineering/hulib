@@ -87,17 +87,17 @@ const Hero = () => {
         </div>
       </div>
       <div className="relative mt-8 w-full">
-        <p className="relative h-12 px-2 text-center text-base font-normal text-slate-1000 lg:hidden">
+        <p className="relative h-12 px-2 text-center text-base font-normal text-slate-1000 lg:absolute lg:left-0 lg:top-0 lg:max-w-64 lg:px-0 lg:text-left">
           {t.rich('hero_message_1', {
             important: customMessage('font-bold'),
           })}
         </p>
-        <p className="relative h-12 text-center text-base font-normal text-slate-1000 lg:hidden">
+        <p className="relative h-12 text-center text-base font-normal text-slate-1000 lg:absolute lg:right-0 lg:top-0 lg:max-w-64 lg:text-right">
           {t.rich('hero_message_2', {
             important: customMessage('font-bold'),
           })}
         </p>
-        <div className="hidden justify-center lg:flex lg:flex-col">
+        <div className="hidden items-center justify-center lg:flex lg:flex-col">
           <Image
             alt="Hero artwork"
             src="/assets/images/hero-artwork.png"
@@ -144,33 +144,25 @@ const Hero = () => {
             )}
           />
         ))}
-        <p className="right-0 hidden h-12 max-w-64 text-right text-base font-normal text-slate-1000 lg:absolute">
-          {t.rich('hero_message_2', {
-            important: customMessage('font-bold'),
-          })}
-        </p>
-        <p className="left-0 hidden h-12 max-w-64 text-base font-normal text-slate-1000 lg:absolute">
-          {t.rich('hero_message_1', {
-            important: customMessage('font-bold'),
-          })}
-        </p>
         <div className="grid grid-cols-2 gap-x-2 px-4 lg:block">
-          <HighlightContentBox className="relative lg:absolute lg:left-6 lg:top-24">
+          <HighlightContentBox className="relative lg:absolute lg:bottom-[4.1875rem] lg:left-[10%]">
             <div className="relative flex flex-col items-start gap-1">
-              <div className="hidden lg:visible">
+              <div className="hidden lg:block">
                 <Image
                   width={72}
                   height={24}
                   src="/assets/images/mentors.svg"
                   alt="Mentor avatars"
+                  className="h-6 w-[4.5rem] object-fill object-center"
                 />
               </div>
-              <div className="visible lg:hidden">
+              <div className="block lg:hidden">
                 <Image
                   width={64}
                   height={16}
                   src="/assets/images/mentors.svg"
                   alt="Mentor avatars"
+                  className="h-4 w-16 object-fill object-center"
                 />
               </div>
               <p className="text-xs font-black text-slate-1000 lg:text-base">
@@ -182,7 +174,7 @@ const Hero = () => {
           </HighlightContentBox>
           <div
             className={mergeClassnames(
-              'flex flex-col justify-center relative lg:absolute lg:right-[97px] lg:top-[159px] rounded-lg lg:rounded-2xl px-2 lg:px-5 py-3',
+              'flex flex-col justify-center relative lg:absolute lg:right-[10%] lg:bottom-2 rounded-lg lg:rounded-2xl px-2 lg:px-5 py-3',
               'bg-white/30 lg:bg-gray-150 lg:bg-opacity-50 shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[35.63px] lg:backdrop-blur-[5px]',
             )}
           >

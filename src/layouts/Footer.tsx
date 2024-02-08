@@ -47,8 +47,8 @@ const Footer = () => {
           'sm:border-none lg:px-[20.625rem] lg:py-[5.625rem]',
         )}
       >
-        <div className="flex w-full flex-col items-center justify-between sm:flex-row">
-          <div className="hidden lg:visible">
+        <div className="mx-auto flex w-full flex-col items-center justify-between sm:flex-row lg:max-w-7xl">
+          <div className="hidden lg:flex">
             <Logo />
           </div>
           <div className="mb-8 flex lg:hidden">
