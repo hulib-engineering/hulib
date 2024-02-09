@@ -51,7 +51,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
           })}
         </div>
       </div>
-      <div className="w-full text-[2rem] font-semibold capitalize text-slate-1000 sm:text-[3.5rem] lg:hidden">
+      <div className="w-full text-[2rem] font-semibold capitalize text-slate-1000 sm:max-w-xl sm:text-[3.5rem] lg:hidden">
         {t.rich(`${props.i18nKey}.title`, {
           highlight: highlightMessage(false, props.titleHighlightTextColor),
           br: newLineMessage(),

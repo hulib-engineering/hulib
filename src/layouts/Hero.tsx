@@ -100,10 +100,11 @@ const Hero = () => {
         <div className="hidden items-center justify-center lg:flex lg:flex-col">
           <Image
             alt="Hero artwork"
-            src="/assets/images/hero-artwork.png"
+            src="/assets/images/fs-hero-artwork.png"
             priority
             width={748}
             height={511}
+            className="h-[32rm] w-[46.75rem] object-contain"
           />
         </div>
         <div className="mb-3 flex w-full flex-col items-center justify-center lg:hidden">
@@ -113,7 +114,7 @@ const Hero = () => {
             priority
             width={276}
             height={188}
-            className="object-scale-down object-center"
+            className="h-[11.75rem] w-[17.25rem] object-contain"
           />
         </div>
         {StarIcons.map((each, index) => (
