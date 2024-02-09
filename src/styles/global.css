@@ -1,11 +1,6 @@
 @tailwind base;
 @tailwind utilities;
 @tailwind components;
-/*@layer components {*/
-/*    .all-\[unset\] {*/
-/*        all: unset;*/
-/*    }*/
-/*}*/
 
 :root {
     --black: rgba(20, 18, 19, 1);
@@ -35,7 +30,17 @@
     --toastify-color-warning: #FFD21F;
     --toastify-color-error: #F04438;
     --swiper-pagination-progressbar-length: 1.25rem;
+
 }
+
+*, *:after, *:before{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-transition: all 100ms ease-in;
+    transition: all 100ms ease-in;
+}
+
 html { scroll-behavior: smooth; box-sizing: border-box }
 
 /*Swiperjs custom styles*/

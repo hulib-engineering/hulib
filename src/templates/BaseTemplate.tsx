@@ -1,10 +1,13 @@
+'use client';
+
 import localFont from 'next/font/local';
-import { type ReactNode } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/private/utils';
 import Footer from '@/layouts/Footer';
 import Header from '@/layouts/Header';
+import SpecialSection from '@/layouts/SpecialSection';
 
 type IBaseTemplateProps = {
   children: ReactNode;
@@ -80,22 +83,37 @@ const poppins = localFont({
   ],
 });
 
-const BaseTemplate = (props: IBaseTemplateProps) => (
-  <div
-    className={mergeClassnames(
-      poppins.className,
-      'relative w-screen bg-fixed bg-main-pattern 2xl:bg-cover bg-no-repeat bg-center px-1 antialiased overflow-hidden',
-    )}
-  >
-    <div className="mx-auto flex max-w-full flex-col items-center justify-center">
-      <Header />
+const BaseTemplate = (props: IBaseTemplateProps) => {
+  const [loading, setLoading] = useState(true);
 
-      <main>{props.children}</main>
+  useEffect(() => {
+    const preLoad = () => {
+      setTimeout(() => {
+        setLoading(false);
+      }, 7200);
+    };
+    preLoad();
+  }, []);
 
-      <Footer />
+  if (loading) return <SpecialSection />;
+
+  return (
+    <div
+      className={mergeClassnames(
+        poppins.className,
+        'relative w-screen bg-fixed bg-main-pattern 2xl:bg-cover bg-no-repeat bg-center px-1 antialiased overflow-hidden',
+      )}
+    >
+      <div className="mx-auto flex max-w-full flex-col items-center justify-center">
+        <Header />
+
+        <main>{props.children}</main>
+
+        <Footer />
+      </div>
+      <CustomToastifyContainer />
     </div>
-    <CustomToastifyContainer />
-  </div>
-);
+  );
+};
 
 export { BaseTemplate };
