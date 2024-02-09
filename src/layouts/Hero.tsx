@@ -194,7 +194,7 @@ const Hero = () => {
                 width={240}
                 progressColor="#002254"
                 waveColor="#8E98A8"
-                url="/assets/media/healing-sound.mp3"
+                url="/assets/media/hero-song.mp3"
                 onReady={onReady}
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
@@ -216,7 +216,7 @@ const Hero = () => {
                 width={171}
                 progressColor="#002254"
                 waveColor="#8E98A8"
-                url="/assets/media/healing-sound.mp3"
+                url="/assets/media/hero-song.mp3"
                 onReady={onReady}
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
