@@ -13,7 +13,7 @@ const Newsletter = () => {
       className="relative mt-8 flex w-full flex-col items-center justify-center px-4 py-3 text-slate-1000 sm:mt-0 lg:px-[20.625rem] lg:py-[6.25rem]"
     >
       <div className="w-full rounded-3xl border-4 border-solid border-white bg-white/50 py-6 backdrop-blur-[100px] sm:max-w-7xl lg:py-[5.625rem]">
-        <div className="mb-3 px-4 text-center sm:mb-8 lg:px-[17.5rem]">
+        <div className="mx-auto mb-3 w-full px-4 text-center sm:mb-8 lg:max-w-3xl">
           <p className="mb-3 text-[0.75rem] font-semibold uppercase text-primary sm:mb-6 sm:text-lg">
             {t('newsletter_title')}
           </p>
