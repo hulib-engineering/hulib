@@ -17,7 +17,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
   const t = useTranslations('Index');
 
   return (
-    <div className="flex flex-col flex-wrap items-center justify-between gap-4 lg:flex-row lg:gap-8 lg:px-[5.625rem]">
+    <div className="flex flex-col flex-wrap items-center justify-between gap-4 lg:flex-row lg:gap-8">
       {props.imagePos === 'left' ? (
         <Image
           alt={props.imageAlt}
@@ -51,7 +51,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
           })}
         </div>
       </div>
-      <div className="w-full text-[2rem] font-semibold capitalize text-slate-1000 sm:max-w-xl sm:basis-1/2 sm:text-[3.5rem] lg:hidden">
+      <div className="w-full text-[2rem] font-semibold capitalize text-slate-1000 sm:text-[3.5rem] lg:hidden">
         {t.rich(`${props.i18nKey}.title`, {
           highlight: highlightMessage(false, props.titleHighlightTextColor),
           br: newLineMessage(),
