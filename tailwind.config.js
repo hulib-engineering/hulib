@@ -73,8 +73,21 @@ module.exports = {
           75: '#ffdf8e',
         },
       },
+      rotate: {
+        30: '30deg',
+        60: '60deg',
+        120: '120deg',
+        150: '150deg',
+        210: '210deg',
+        240: '240deg',
+        270: '270deg',
+        300: '300deg',
+        330: '330deg',
+      },
       backgroundImage: {
         'main-pattern': "url('/assets/images/bg-pattern.png')",
+        'special-section-pattern':
+          "url('/assets/images/bg-special-pattern.webp')",
       },
       lineClamp: {
         7: '7',
@@ -98,11 +111,162 @@ module.exports = {
             transform: 'translateX(-100%)',
           },
         },
+        displayMessage: {
+          '0%': {
+            opacity: '0',
+            marginTop: '0px',
+          },
+          '100%': {
+            opacity: '1',
+            marginTop: '-200px',
+          },
+        },
+        changeToPrimary: {
+          '0%': {
+            color: '#FFFFFF',
+          },
+          '100%': {
+            color: 'var(--foundation-blue-normal)',
+          },
+        },
+        changeToSecondary: {
+          '0%': {
+            color: '#FFFFFF',
+          },
+          '100%': {
+            color: '#B276DC',
+          },
+        },
+        changeToOrange: {
+          '0%': {
+            color: '#FFFFFF',
+          },
+          '100%': {
+            color: '#FF8207',
+          },
+        },
+        changeToYellow: {
+          '0%': {
+            color: '#FFFFFF',
+          },
+          '100%': {
+            color: 'var(--foundation-yellow-normal)',
+          },
+        },
+        moveUpOld: {
+          '0%': {
+            top: '50%',
+          },
+          '100%': {
+            top: '-100%',
+          },
+        },
+        dropNew: {
+          '0%': {
+            right: '0%',
+          },
+          '66.6666%': {
+            right: '50%',
+            marginRight: '-300px',
+          },
+          '90%': {
+            right: '50%',
+            marginRight: '-300px',
+          },
+          '100%': {
+            right: '50%',
+            color: 'var(--foundation-blue-normal)',
+          },
+        },
+        float: {
+          '0%': {
+            right: '0%',
+          },
+          '40%': {
+            right: '50%',
+            marginRight: '-300px',
+          },
+          '50%': {
+            right: '50%',
+            marginRight: '-200px',
+            top: '50%',
+          },
+          '100%': {
+            right: '50%',
+            top: '-100%',
+          },
+        },
+        showFirework: {
+          '0%': {
+            marginTop: '100%',
+            opacity: '0',
+            width: '2px',
+            height: '30px',
+            display: 'block',
+            borderRadius: '50%',
+          },
+          '75%': {
+            marginTop: '0%',
+            opacity: '1',
+            width: '2px',
+            height: '30px',
+            display: 'block',
+            borderRadius: '50%',
+          },
+          '80%': {
+            marginTop: '0px',
+            marginLeft: '0px',
+            opacity: '1',
+            width: '10px',
+            height: '10px',
+            display: 'block',
+            borderRadius: '50%',
+            transform: 'scale(0.2)',
+          },
+          '100%': {
+            opacity: '1',
+            width: '10px',
+            height: '10px',
+            display: 'block',
+            borderRadius: '50%',
+            transform: 'scale(1)',
+          },
+        },
+        fire: {
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '1',
+          },
+        },
+        transformFromOldToNew: {
+          '0%': {
+            transform: 'rotate(-30deg)',
+            width: '40px',
+          },
+          '100%': {
+            transform: 'rotate(-150deg)',
+            width: '70px',
+          },
+        },
       },
       animation: {
         'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
         'move-down': 'moveDown 2s ease-in infinite alternate-reverse',
         slide: 'slide 10s infinite linear',
+        'display-message': 'displayMessage 2s ease-in-out 7s forwards',
+        'change-to-primary': 'changeToPrimary 2s ease-in-out 5.75s forwards',
+        'change-to-secondary':
+          'changeToSecondary 2s ease-in-out 5.75s forwards',
+        'change-to-orange': 'changeToOrange 2s ease-in-out 5.75s forwards',
+        'change-to-yellow': 'changeToYellow 2s ease-in-out 5.75s forwards',
+        'move-up-old-number': 'moveUpOld 5s ease-in-out 5s forwards',
+        'drop-new-number': 'dropNew 6s ease-in-out forwards',
+        float: 'float 10s ease-in-out forwards',
+        'show-firework': 'showFirework 1.5s ease-in-out 8s forwards',
+        fire: 'fire 0.5s ease-in-out 9s forwards',
+        'transform-from-old-to-new': 'transformFromOldToNew 1s ease-in-out 4s',
       },
     },
   },
