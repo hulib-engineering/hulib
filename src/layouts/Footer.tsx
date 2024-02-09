@@ -51,7 +51,7 @@ const Footer = () => {
           <div className="hidden lg:flex">
             <Logo />
           </div>
-          <div className="mb-8 flex lg:hidden">
+          <div className="mb-8 block sm:mb-0 lg:hidden">
             <Logo size="small" />
           </div>
           <div className="flex flex-col-reverse items-center justify-center gap-8 sm:flex-row sm:gap-6">
