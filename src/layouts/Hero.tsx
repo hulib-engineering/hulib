@@ -52,8 +52,8 @@ const Hero = () => {
   }, [wavesurfer]);
 
   return (
-    <section className="flex w-full flex-col items-center justify-center pb-8 sm:gap-4 sm:pt-8 lg:px-[20.625rem] xl:pb-[5.625rem] 2xl:gap-32">
-      <div className="pb-3 sm:w-1/2 sm:max-w-screen-md">
+    <section className="mx-auto flex w-full flex-col items-center justify-center pb-8 sm:gap-4 sm:pt-8 lg:max-w-7xl xl:pb-[5.625rem] 2xl:gap-32">
+      <div className="pb-3 sm:w-2/3 sm:max-w-screen-md">
         <div className="mb-6 flex w-full flex-col items-center justify-start gap-3 px-4 text-center sm:gap-4 sm:px-0">
           <p className="text-xs font-medium uppercase text-primary sm:text-lg">
             {t('hero_title')}
