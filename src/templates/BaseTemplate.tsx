@@ -90,7 +90,7 @@ const BaseTemplate = (props: IBaseTemplateProps) => {
     const preLoad = () => {
       setTimeout(() => {
         setLoading(false);
-      }, 7200);
+      }, 10000);
     };
     preLoad();
   }, []);
