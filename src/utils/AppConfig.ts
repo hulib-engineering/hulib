@@ -6,6 +6,6 @@ const localePrefix: LocalePrefix = 'as-needed';
 export const AppConfig = {
   name: 'Human Library',
   locales: ['en', 'vi'],
-  defaultLocale: 'en',
+  defaultLocale: 'vi',
   localePrefix,
 };

@@ -1,5 +1,18 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const colors = require('tailwindcss/colors');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const plugin = require('tailwindcss');
+
+const backfaceVisibility = plugin(function ({ addUtilities }) {
+  addUtilities({
+    '.backface-visible': {
+      'backface-visibility': 'visible',
+    },
+    '.backface-hidden': {
+      'backface-visibility': 'hidden',
+    },
+  });
+});
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -271,5 +284,5 @@ module.exports = {
     },
   },
   // eslint-disable-next-line global-require,import/no-extraneous-dependencies
-  plugins: [],
+  plugins: [backfaceVisibility, require('tailwindcss-3d')({ legacy: true })],
 };
