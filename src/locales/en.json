@@ -243,11 +243,9 @@
     "about_paragraph": "Welcome to our About page! We are a team of passionate individuals dedicated to creating amazing software.",
     "translation_powered_by": "Translation powered by"
   },
-  "Portfolio": {
-    "meta_title": "Portfolio",
-    "meta_description": "Welcome to my portfolio page!",
-    "presentation": "Welcome to my portfolio page! Here you will find a carefully curated collection of my work and accomplishments. Through this portfolio, I'm to showcase my expertise, creativity, and the value I can bring to your projects.",
-    "portfolio_name": "Portfolio {name}"
+  "MiniGame": {
+    "meta_title": "HuLib | Mini Game",
+    "meta_description": "Mini game for year of Dragon"
   },
   "PortfolioSlug": {
     "meta_title": "Portfolio {slug}",
