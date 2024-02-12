@@ -50,11 +50,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import menuItem from './menuItem';
+import minigame from './minigame';
 import uiState from './uiState';
 
 const reducers = combineReducers({
   menuItem,
   uiState,
+  minigame,
 });
 
 export const makeStore = () => {
