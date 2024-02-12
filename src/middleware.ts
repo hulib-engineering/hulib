@@ -8,6 +8,7 @@ const intlMiddleware = createMiddleware({
   locales: AppConfig.locales,
   localePrefix: AppConfig.localePrefix,
   defaultLocale: AppConfig.defaultLocale,
+  // localeDetection: false,
 });
 
 export default intlMiddleware;

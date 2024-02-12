@@ -1,62 +1,59 @@
-// import { useTranslations } from 'next-intl';
 import { Pacifico } from 'next/font/google';
 import React from 'react';
 
 import { mergeClassnames } from '@/components/private/utils';
 
-const Firework = ({ className }: { className?: string }) => {
-  return (
-    <div
+const Firework = ({ className }: { className?: string }) => (
+  <div
+    className={mergeClassnames(
+      'border-2 border-solid border-white absolute opacity-0 animate-show-firework',
+      className && className,
+    )}
+  >
+    <span
       className={mergeClassnames(
-        'border-2 border-solid border-white absolute opacity-0 animate-show-firework',
-        className && className,
+        'absolute left-0 top-0 block h-[.375rem] w-[.375rem] opacity-0 rotate-0 animate-fire',
+        'before:absolute before:top-[-3.75rem] before:left-0.5 before:w-0.5 before:block before:h-[3.125rem] before:bg-amber-75 before:content-[""]',
+        'after:absolute after:bottom-[-3.75rem] after:left-0.5 after:w-0.5 after:block after:h-[3.125rem] after:bg-amber-75 after:content-[""]',
       )}
     >
-      <span
+      <i
         className={mergeClassnames(
-          'absolute left-0 top-0 block h-[.375rem] w-[.375rem] opacity-0 rotate-0 animate-fire',
-          'before:absolute before:top-[-3.75rem] before:left-0.5 before:w-0.5 before:block before:h-[3.125rem] before:bg-amber-75 before:content-[""]',
-          'after:absolute after:bottom-[-3.75rem] after:left-0.5 after:w-0.5 after:block after:h-[3.125rem] after:bg-amber-75 after:content-[""]',
+          'before:absolute before:-top-4 before:left-[.625rem] before:block before:w-[3px] before:h-[3px] before:rounded-full before:bg-white before:content-[""]',
+          'after:absolute after:-top-4 after:right-[.625rem] after:block after:w-[3px] after:h-h-[3px] before:rounded-full before:bg-white after:content-[""]',
         )}
-      >
-        <i
-          className={mergeClassnames(
-            'before:absolute before:-top-4 before:left-[.625rem] before:block before:w-[3px] before:h-[3px] before:rounded-full before:bg-white before:content-[""]',
-            'after:absolute after:-top-4 after:right-[.625rem] after:block after:w-[3px] after:h-h-[3px] before:rounded-full before:bg-white after:content-[""]',
-          )}
-        />
-      </span>
-      <span
+      />
+    </span>
+    <span
+      className={mergeClassnames(
+        'absolute left-0 top-0 block h-[.375rem] w-[.375rem] opacity-0 rotate-120 animate-fire',
+        'before:absolute before:top-[-3.75rem] before:left-0.5 before:w-0.5 before:block before:h-[3.125rem] before:bg-amber-75 before:content-[""]',
+        'after:absolute after:bottom-[-3.75rem] after:left-0.5 after:w-0.5 after:block after:h-[3.125rem] after:bg-amber-75 after:content-[""]',
+      )}
+    >
+      <i
         className={mergeClassnames(
-          'absolute left-0 top-0 block h-[.375rem] w-[.375rem] opacity-0 rotate-120 animate-fire',
-          'before:absolute before:top-[-3.75rem] before:left-0.5 before:w-0.5 before:block before:h-[3.125rem] before:bg-amber-75 before:content-[""]',
-          'after:absolute after:bottom-[-3.75rem] after:left-0.5 after:w-0.5 after:block after:h-[3.125rem] after:bg-amber-75 after:content-[""]',
+          'before:absolute before:-top-4 before:left-[.625rem] before:block before:w-[3px] before:h-[3px] before:rounded-full before:bg-white before:content-[""]',
+          'after:absolute after:-top-4 after:right-[.625rem] after:block after:w-[3px] after:h-h-[3px] before:rounded-full before:bg-white after:content-[""]',
         )}
-      >
-        <i
-          className={mergeClassnames(
-            'before:absolute before:-top-4 before:left-[.625rem] before:block before:w-[3px] before:h-[3px] before:rounded-full before:bg-white before:content-[""]',
-            'after:absolute after:-top-4 after:right-[.625rem] after:block after:w-[3px] after:h-h-[3px] before:rounded-full before:bg-white after:content-[""]',
-          )}
-        />
-      </span>
-      <span
+      />
+    </span>
+    <span
+      className={mergeClassnames(
+        'absolute left-0 top-0 block h-[.375rem] w-[.375rem] opacity-0 rotate-240 animate-fire',
+        'before:absolute before:top-[-3.75rem] before:left-0.5 before:w-0.5 before:block before:h-[3.125rem] before:bg-amber-75 before:content-[""]',
+        'after:absolute after:bottom-[-3.75rem] after:left-0.5 after:w-0.5 after:block after:h-[3.125rem] after:bg-amber-75 after:content-[""]',
+      )}
+    >
+      <i
         className={mergeClassnames(
-          'absolute left-0 top-0 block h-[.375rem] w-[.375rem] opacity-0 rotate-240 animate-fire',
-          'before:absolute before:top-[-3.75rem] before:left-0.5 before:w-0.5 before:block before:h-[3.125rem] before:bg-amber-75 before:content-[""]',
-          'after:absolute after:bottom-[-3.75rem] after:left-0.5 after:w-0.5 after:block after:h-[3.125rem] after:bg-amber-75 after:content-[""]',
+          'before:absolute before:-top-4 before:left-[.625rem] before:block before:w-[3px] before:h-[3px] before:rounded-full before:bg-white before:content-[""]',
+          'after:absolute after:-top-4 after:right-[.625rem] after:block after:w-[3px] after:h-h-[3px] before:rounded-full before:bg-white after:content-[""]',
         )}
-      >
-        <i
-          className={mergeClassnames(
-            'before:absolute before:-top-4 before:left-[.625rem] before:block before:w-[3px] before:h-[3px] before:rounded-full before:bg-white before:content-[""]',
-            'after:absolute after:-top-4 after:right-[.625rem] after:block after:w-[3px] after:h-h-[3px] before:rounded-full before:bg-white after:content-[""]',
-          )}
-        />
-      </span>
-    </div>
-  );
-};
+      />
+    </span>
+  </div>
+);
 
 const pacifico = Pacifico({
   subsets: ['latin', 'vietnamese'],
