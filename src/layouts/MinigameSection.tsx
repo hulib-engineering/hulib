@@ -136,7 +136,7 @@ const MinigameSection = () => {
   };
 
   return (
-    <section className="grid grid-cols-6 gap-4">
+    <section className="grid grid-cols-4 gap-4 sm:grid-cols-6">
       {cardList.map((each) => (
         <MinigameCard
           key={each.id}
