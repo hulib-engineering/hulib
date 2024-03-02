@@ -14,13 +14,6 @@
       }
     ] // Avoid conflict rule between Prettier and Airbnb Eslint
   },
-  "settings": {
-    "import/resolver": {
-      "node": { "extensions": [
-        ".js", ".mjs"
-      ] }
-    }
-  },
   "overrides": [
     // Configuration for TypeScript files
     {
