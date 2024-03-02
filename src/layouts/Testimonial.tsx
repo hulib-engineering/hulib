@@ -9,13 +9,6 @@ import Modal from '@/components/Modal';
 import TestimonialItemCard from '@/components/TestimonialItemCard';
 
 const TestimonialItems = [
-  // {
-  //   content:
-  //     'Mình mong muốn đóng góp một cái nhìn mới mẻ hơn về khái niệm well-being tại Việt Nam dành cho các bạn trẻ. Và HuLib đã thực hiện được điều đó, tự hào lắm *bắn tym*',
-  //   name: 'Nguyễn Tiến Đạt',
-  //   avatarUrl: '/assets/images/avatars/td_member_3.JPG',
-  //   position: 'Team TD',
-  // },
   {
     content:
       'Thực hiện một dự án với mục đích nâng cao "giá trị hạnh phúc" của các bạn trẻ luôn là ước mơ mà mình đã ấp ủ bấy lâu nay. Cơ duyên đưa mình đến HuLib, là nơi chữa lành mình và cũng là nơi giúp mọi người chữa lành. Biết ơn vì đã trở thành một cánh hoa của bông hoa xinh đẹp HuLib <3.',
@@ -25,7 +18,7 @@ const TestimonialItems = [
   },
   {
     content:
-      'Mình ấn tưởng bởi bạn project manager cửa dự án này, bạn cho mình thấy được sự tận tâm và tâm huyết của bạn dành cho dự án và cộng đồng. Hi vọng dự án sẽ thành công và giúp đỡ được các bạn trẻ tại miền Trung.',
+      'Mình ấn tưởng bởi bạn quản lý dự án này, bạn cho mình thấy được sự tận tâm và tâm huyết của bạn dành cho dự án và cộng đồng. Hi vọng dự án sẽ thành công và giúp đỡ được các bạn trẻ tại miền Trung.',
     name: 'Nguyễn Ngọc Minh',
     avatarUrl: '/assets/images/avatars/ha_member_1.png',
     position: 'Team HA',
@@ -33,8 +26,8 @@ const TestimonialItems = [
   {
     content:
       "Theo mình Hulib là một dự án với mission mới toanh ở miền Trung nói riêng và Việt Nam nói chung. Kết nối những người có kinh nghiệm 'thực chiến' dày dặn trong lĩnh vực của họ với các bạn mentees chắc chắn sẽ là tạo ra ảnh hưởng lớn đến với các bạn trong tương lai. Mình mong dự án sẽ bay cao bay xa trong trong thời gian tới. Chúc toàn bộ team luôn giữ được nhiệt huyết ạ~",
-    name: 'Lê Thị Như Quỳnh',
-    avatarUrl: '/assets/images/avatars/pf_member_2.JPG',
+    name: 'Quỳnh Lê',
+    avatarUrl: '/assets/images/avatars/pf_member_2.jpeg',
     position: 'Team PF',
   },
   {
@@ -68,7 +61,7 @@ const TestimonialItems = [
   {
     content:
       'Mình mong muốn đóng góp một cái nhìn mới mẻ hơn về khái niệm well-being tại Việt Nam dành cho các bạn trẻ. Và HuLib đã thực hiện được điều đó, tự hào lắm *bắn tym*',
-    name: 'Pham Thi Bich Tram',
+    name: 'Trâm Phạm',
     avatarUrl: '/assets/images/avatars/pf_member_1.png',
     position: 'Team PF',
   },
@@ -109,7 +102,7 @@ const Testimonial = () => {
 
   return (
     <section className="mt-8 flex flex-col items-center justify-center px-4 py-3 text-slate-1000 sm:px-0 lg:mt-0 lg:py-[6.25rem]">
-      <div className="mb-8 text-center lg:px-[20.625rem]">
+      <div className="mb-8 text-center 2xl:px-[20.625rem]">
         <p className="mb-3 text-xs font-semibold uppercase text-primary sm:text-lg">
           {t('testimonial_title')}
         </p>

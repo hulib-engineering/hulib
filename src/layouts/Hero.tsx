@@ -10,7 +10,6 @@ import Button from '@/components/button/Button';
 import { HighlightContentBox } from '@/components/HighlightContentBox';
 import { mergeClassnames } from '@/components/private/utils';
 import { customMessage } from '@/utils/i18NRichTextUtils';
-// eslint-disable-next-line import/no-cycle
 
 const StarIcons = [
   { size: 16, yPosition: 'top-[6.1875rem]', xPosition: 'left-[17.6875rem]' },
