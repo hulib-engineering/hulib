@@ -51,10 +51,15 @@ const Hero = () => {
   }, [wavesurfer]);
 
   return (
-    <section className="mx-auto flex w-full flex-col items-center justify-center pb-8 sm:gap-4 sm:pt-8 lg:max-w-7xl xl:pb-[5.625rem] 2xl:gap-32">
-      <div className="pb-3 sm:w-2/3 sm:max-w-screen-md">
+    <section
+      className={mergeClassnames(
+        'mx-auto flex w-full flex-col items-center justify-center py-8',
+        'sm:w-3/4 sm:px-8 sm:gap-4 lg:max-w-7xl lg:px-10 2xl:gap-32 2xl:px-[5.625rem]',
+      )}
+    >
+      <div className="pb-3 lg:w-2/3 lg:max-w-screen-md">
         <div className="mb-6 flex w-full flex-col items-center justify-start gap-3 px-4 text-center sm:gap-4 sm:px-0">
-          <p className="text-xs font-medium uppercase text-primary sm:text-lg">
+          <p className="text-xs font-medium uppercase text-primary lg:text-lg">
             {t('hero_title')}
           </p>
           <h1 className="px-4 text-[1.75rem] font-semibold capitalize text-slate-1000 sm:text-[5rem]">
@@ -86,12 +91,12 @@ const Hero = () => {
         </div>
       </div>
       <div className="relative mt-8 w-full">
-        <p className="relative h-12 px-2 text-center text-base font-normal text-slate-1000 lg:absolute lg:left-0 lg:top-0 lg:max-w-64 lg:px-0 lg:text-left">
+        <p className="relative h-12 px-2 text-center text-base font-normal text-slate-1000 lg:absolute lg:-top-10 lg:left-0 lg:max-w-64 lg:px-0 lg:text-left 2xl:top-0">
           {t.rich('hero_message_1', {
             important: customMessage('font-bold'),
           })}
         </p>
-        <p className="relative h-12 text-center text-base font-normal text-slate-1000 lg:absolute lg:right-0 lg:top-0 lg:max-w-64 lg:text-right">
+        <p className="relative h-12 text-center text-base font-normal text-slate-1000 lg:absolute lg:-top-12 lg:right-0 lg:max-w-64 lg:text-right 2xl:top-0">
           {t.rich('hero_message_2', {
             important: customMessage('font-bold'),
           })}
@@ -144,8 +149,8 @@ const Hero = () => {
             )}
           />
         ))}
-        <div className="grid grid-cols-2 gap-x-2 px-4 lg:block">
-          <HighlightContentBox className="relative lg:absolute lg:bottom-[4.1875rem] lg:left-[10%]">
+        <div className="grid grid-cols-2 gap-x-2 px-4 sm:px-0 lg:block">
+          <HighlightContentBox className="relative lg:absolute lg:bottom-[4.1875rem] lg:left-0 2xl:left-[10%]">
             <div className="relative flex flex-col items-start gap-1">
               <div className="hidden lg:block">
                 <Image
@@ -174,11 +179,11 @@ const Hero = () => {
           </HighlightContentBox>
           <div
             className={mergeClassnames(
-              'flex flex-col justify-center relative lg:absolute lg:right-[10%] lg:bottom-2 rounded-lg lg:rounded-2xl px-2 lg:px-5 py-3',
+              'flex flex-col justify-center relative lg:absolute lg:right-0 2xl:right-[10%] lg:bottom-2 rounded-lg lg:rounded-2xl px-2 lg:px-5 py-3',
               'bg-white/30 lg:bg-gray-150 lg:bg-opacity-50 shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[35.63px] lg:backdrop-blur-[5px]',
             )}
           >
-            <div className="hidden items-center gap-2 sm:flex">
+            <div className="hidden items-center gap-2 overflow-x-hidden sm:flex">
               <Image
                 onClick={onPlayPause}
                 width={56}

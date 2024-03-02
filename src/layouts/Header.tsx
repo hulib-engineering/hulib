@@ -9,8 +9,13 @@ const Header = () => {
   const t = useTranslations('Header');
 
   return (
-    <header className="fixed top-0 z-[999] w-full bg-[#f1f4f9bf] px-2 py-0.5 backdrop-blur-[50px] sm:px-[5.625rem] sm:py-6">
-      <div className="mx-auto flex items-center justify-between lg:w-3/4 lg:max-w-7xl">
+    <header
+      className={mergeClassnames(
+        'fixed top-0 z-[999] w-full bg-[#f1f4f9bf] px-2 py-0.5 backdrop-blur-[50px]',
+        'sm:px-[1.875rem] sm:py-6 lg:px-12 2xl:px-[5.625rem]',
+      )}
+    >
+      <div className="mx-auto flex items-center justify-between sm:w-3/4">
         <div className="relative hidden flex-1 grow items-start pb-[0.26788rem] pt-[0.3125rem] sm:flex">
           <Link href="/">
             <Logo />
