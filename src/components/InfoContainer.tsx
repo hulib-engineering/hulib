@@ -22,7 +22,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
 
   return (
     <div className="flex flex-col flex-wrap items-center justify-between gap-4 lg:flex-row lg:flex-nowrap lg:gap-8">
-      <div className="max-w-xl ">
+      <div className="max-w-xl">
         {props.imagePos === 'left' ? (
           <Image
             alt={props.imageAlt}
@@ -66,6 +66,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
         <div className="text-lg font-normal normal-case text-slate-1000">
           {t.rich(`${props.i18nKey}.description`, {
             br: newLineMessage(),
+            important: customMessage('font-bold'),
           })}
         </div>
       </div>

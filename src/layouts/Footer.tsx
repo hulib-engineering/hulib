@@ -47,34 +47,34 @@ const Footer = () => {
     <>
       <footer
         className={mergeClassnames(
-          'w-full border-t-[0.5px] border-t-[rgba(176,206,250,0.50)] px-4 py-3 text-primary',
-          'sm:border-none lg:px-28 2xl:px-[20.625rem] 2xl:pt-[5.625rem] 2xl:pb-10',
+          'mx-auto w-full px-4 pt-8 pb-6 text-primary',
+          'lg:w-3/4 lg:px-8 2xl:pt-[5.625rem] 2xl:pb-10',
         )}
       >
         <div
           className={mergeClassnames(
-            'mx-auto mb-12 flex w-full flex-row items-start justify-between border-t-[0.5px] border-solid border-blue-light-active',
-            'sm:flex-row lg:max-w-7xl lg:py-20',
+            'mx-auto mb-3 flex w-full flex-col items-start justify-between border-t-[0.5px] border-t-solid border-t-[rgba(176,206,250,0.50)] py-8 gap-8',
+            'sm:flex-row sm:gap-0 lg:mb-12 lg:max-w-7xl lg:py-20',
           )}
         >
-          <div className="flex flex-col items-center gap-6 lg:items-start">
+          <div className="flex flex-col items-center gap-3 sm:items-start sm:gap-6 sm:pr-2">
             <div>
-              <div className="hidden lg:flex">
+              <div className="hidden 2xl:flex">
                 <Logo />
               </div>
-              <div className="mb-8 block sm:mb-0 lg:hidden">
+              <div className="block 2xl:hidden">
                 <Logo size="small" />
               </div>
             </div>
-            <div className="w-96">
-              <p className="text-center text-base font-light lg:text-start">
+            <div className="w-full">
+              <p className="text-center text-sm font-light sm:text-start lg:text-base">
                 {t('footer_description')}
               </p>
             </div>
           </div>
-          <div className="flex flex-col items-center gap-8 lg:items-start">
+          <div className="flex w-full flex-col items-center gap-8 sm:items-start">
             <h4 className="text-2xl font-semibold ">Help</h4>
-            <div className="flex flex-col items-center gap-4 lg:items-start">
+            <div className="flex flex-col items-center gap-4 sm:items-start">
               {Links.map((link, index) => (
                 <button
                   key={index}
@@ -90,21 +90,23 @@ const Footer = () => {
               ))}
             </div>
           </div>
-          <div className="flex flex-col items-center gap-8 lg:items-start">
+          <div className="flex w-full flex-col items-center gap-8 sm:items-start">
             <h4 className="text-center text-2xl font-semibold">Contact</h4>
-            <div className="flex flex-col items-center gap-4 lg:items-start">
+            <div className="flex flex-col items-center gap-4 text-sm sm:items-start">
               <Link
                 href={`tel:${Env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER}`}
                 className="flex items-center justify-center hover:text-primary-hover"
               >
                 <PhoneIcon width={24} height={24} />
-                <p className="ml-3 text-sm font-normal">(+84) 123 456 789</p>
+                <p className="ml-3 text-sm font-normal">
+                  {Env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER}
+                </p>
               </Link>
               <Link
                 href={`mailto:${Env.NEXT_PUBLIC_CONTACT_EMAIL}`}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center gap-3 hover:text-primary-hover"
+                className="flex items-center justify-center hover:text-primary-hover"
               >
                 <EnvelopeIcon width={24} height={24} />
                 <p className="ml-3 text-sm font-normal">
@@ -113,7 +115,7 @@ const Footer = () => {
               </Link>
             </div>
           </div>
-          <div className="flex flex-col items-center gap-8 lg:items-start">
+          <div className="flex w-full flex-col items-center gap-8">
             <h4 className="text-2xl font-semibold">Follow us</h4>
             <div className="flex w-full items-center justify-center gap-8">
               {SocialLinks.map((link, index) => (
@@ -136,7 +138,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between border-t-[0.5px] border-solid border-blue-light-active px-0 py-6">
+        <div className="flex flex-col items-center justify-between border-t-[0.5px] border-solid border-t-[rgba(176,206,250,0.50)] px-0 py-6">
           <p className="text-sm font-normal text-[rgba(0,_87,_215,_0.50)]">
             {t('copyright')}
           </p>
