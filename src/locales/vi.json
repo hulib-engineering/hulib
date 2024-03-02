@@ -11,8 +11,8 @@
   "Index": {
     "meta_title": "HuLib | Landing Page",
     "meta_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
-    "hero_title": "a social project",
-    "hero_motto": "HuLib ở đây đồng hành cùng bạn",
+    "hero_title": "dự án cộng đồng",
+    "hero_motto": "HuLib ở đây để đồng hành cùng bạn",
     "hero_description": "Mỗi người đều có một câu chuyện và trải nghiệm riêng nên chúng ta sinh ra để trở thành một ai đó, phần đặc biệt của thế giới này.",
     "hero_call_to_action": "tìm hiểu thêm",
     "hero_message_1": "”Vạn vật ẩn dấu <important>các vết nứt</important>, đó là nơi <important>ánh sáng</important> chiếu rọi.”",
@@ -34,7 +34,7 @@
     "about_description": "thúc đẩy giá trị hạnh phúc thông qua kết nối những câu chuyện rất cá nhân với mentors.",
     "about_stories": {
       "title": "<highlight>câu chuyện</highlight> <br></br> của chúng tớ",
-      "description": "Bạn cảm thấy bản thân chưa bao giờ đủ tốt? Lúc bạn bè ở vạch đích thì bạn vẫn lò mò điểm xuất phát? Bạn từng vô định và ước một cánh tay nắm lấy mình? Đã bao giờ bạn căng thẳng lo âu tìm cách xoay xở một mình? Bạn từng thiếu tự tin kết nối và mong mỏi một ai đó hướng dẫn?<br></br><br></br>HuLib ra đời vì tất cả câu hỏi trên, vì chúng tớ cũng đã đang trải qua tất cả cảm xúc này. Hãy cùng chúng mình theo đuổi ước mơ và hạnh phúc hơn nữa bạn nhé."
+      "description": "Bạn cảm thấy bản thân chưa bao giờ <important>đủ tốt</important>? Lúc bạn bè ở vạch đích thì bạn vẫn <important>lò mò điểm xuất phát</important>? Bạn từng <important>vô định</important> và ước một cánh tay nắm lấy mình?<br></br> <br></br> Đã bao giờ bạn <important>căng thẳng lo âu</important> tìm cách xoay xở <important>một mình</important>? Bạn từng <important>thiếu tự tin</important> kết nối và mong mỏi một ai đó hướng dẫn?<br></br> <br></br> <important>HuLib</important> ra đời vì tất cả câu hỏi trên, vì chúng tớ cũng đã đang <important>trải qua</important> tất cả <important>cảm xúc</important> này. Hãy <important>cùng chúng mình</important> theo đuổi <important>ước mơ</important> và <important>hạnh phúc</important> hơn nữa bạn nhé."
     },
     "about_mission": {
       "title": "<highlight>sứ mệnh</highlight> <br></br> của chúng tớ",
@@ -44,11 +44,11 @@
       "title": "<highlight>tầm nhìn</highlight> <br></br> của chúng tớ",
       "description": "HuLib hướng tới gây dựng cộng đồng các bạn trẻ hỗ trợ lẫn nhau cùng sự cộng tác từ các anh chị có kinh nghiệm nhằm thúc đẩy giá trị hạnh phúc và chia sẻ trải nghiệm cá nhân."
     },
-    "testimonial_title": "meet our team",
-    "testimonial_description": "Gặp gỡ các thành viên của HuLib",
+    "testimonial_title": "cùng gặp gỡ HuLib",
+    "testimonial_description": "Các thành viên HuLib đã chia sẻ những gì?",
     "sponsors_title": "nhà tài trợ",
     "faqs_question_0": {
-      "question": "1. HuLib là gì và nó hoạt động như thế nào?",
+      "question": "1. HuLib là gì và chúng mình hoạt động như thế nào?",
       "answer": {
         "heading": "HuLib gây dựng một cộng đồng thúc đẩy phát triển mỗi cá nhân thông qua việc chia sẻ câu chuyện và tham gia mentoring trong 3 lĩnh vực chính, bao gồm giáo dục, sự nghiệp và quan hệ xã hội. ",
         "body_paras": {
@@ -77,8 +77,8 @@
         }
       }
     },
-    "newsletter_title": "join with us",
-    "newsletter_description": "hãy trở thành HuLibers đầu tiên với chúng mình nhaaa!",
+    "newsletter_title": "tham gia cùng chúng mình",
+    "newsletter_description": "hãy trở thành thành viên đầu tiên tham gia cộng đồng!",
     "newsletter_form_email_placeholder": "Địa chỉ email*",
     "newsletter_form_submit": "đăng ký",
     "privacy_policy_title": "chính sách quyền riêng tư",

@@ -34,7 +34,7 @@
     "about_description": "a community project promotes well-being through shared stories with mentors.",
     "about_stories": {
       "title": "our <highlight>stories</highlight>",
-      "description": "Do you ever feel like you're constantly falling short? While others reach the finish line, do you find yourself unsure of where to go? Have you ever wished for a steadying hand during moments of uncertainty? Have you grappled with stress, trying to navigate through it all alone? Do you struggle with forging meaningful connections and yearn for someone to lead the way?<br></br> <br></br> HuLib emerged from the depths of these very questions, as we've intimately experienced these emotions. Join us on this dream journey to uncover more happiness together."
+      "description": "Do you ever feel like you're <important>constantly falling short</important>? While others reach the finish line, do you find yourself <important>unsure of where to go</important>? Have you ever wished for a steadying hand during moments of <important>uncertainty</important>?<br></br> <br></br> Have you grappled with <important>stress</important>, trying to navigate through it all <important>alone</important>? Do you <important>struggle</important> with forging meaningful <important>connections</important> and yearn for someone to lead the way?<br></br> <br></br> <important>HuLib</important> emerged from the depths of these very questions, as we've intimately <important>experienced these emotions</important>. <important>Join us</important> on this dream journey to uncover more <important>happiness together</important>."
     },
     "about_mission": {
       "title": "our <br></br><highlight>mission</highlight>",

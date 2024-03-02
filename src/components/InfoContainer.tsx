@@ -2,7 +2,11 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { highlightMessage, newLineMessage } from '@/utils/i18NRichTextUtils';
+import {
+  customMessage,
+  highlightMessage,
+  newLineMessage,
+} from '@/utils/i18NRichTextUtils';
 
 type IInfoContainerProps = {
   i18nKey: 'about_stories' | 'about_mission' | 'about_vision';
@@ -48,6 +52,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
         <div className="text-lg font-normal normal-case text-slate-1000">
           {t.rich(`${props.i18nKey}.description`, {
             br: newLineMessage(),
+            important: customMessage('font-bold'),
           })}
         </div>
       </div>
