@@ -31,7 +31,7 @@ const About = () => {
   const t = useTranslations('Index');
 
   return (
-    <section className="mt-8 px-4 py-3 lg:px-60 lg:py-[6.25rem]">
+    <section className="mt-8 px-4 py-3 sm:px-32 lg:py-[6.25rem] 2xl:px-60">
       <div className="mb-6 text-center sm:px-20 lg:mb-[5.625rem]">
         <div className="text-xs font-semibold uppercase text-primary sm:text-lg">
           {t('about_title')}

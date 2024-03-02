@@ -102,7 +102,7 @@ const Testimonial = () => {
 
   return (
     <section className="mt-8 flex flex-col items-center justify-center px-4 py-3 text-slate-1000 sm:px-0 lg:mt-0 lg:py-[6.25rem]">
-      <div className="mb-8 text-center lg:px-[20.625rem]">
+      <div className="mb-8 text-center 2xl:px-[20.625rem]">
         <p className="mb-3 text-xs font-semibold uppercase text-primary sm:text-lg">
           {t('testimonial_title')}
         </p>

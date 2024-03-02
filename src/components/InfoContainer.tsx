@@ -21,27 +21,29 @@ const InfoContainer = (props: IInfoContainerProps) => {
   const t = useTranslations('Index');
 
   return (
-    <div className="flex flex-col flex-wrap items-center justify-between gap-4 lg:flex-row lg:gap-8">
-      {props.imagePos === 'left' ? (
-        <Image
-          alt={props.imageAlt}
-          src={props.imageSrc}
-          priority
-          width={600}
-          height={600}
-          className="rounded-3xl lg:basis-1/2"
-        />
-      ) : (
-        <Image
-          alt={props.imageAlt}
-          src={props.imageSrc}
-          priority
-          width={600}
-          height={600}
-          className="rounded-3xl lg:hidden lg:basis-1/2"
-        />
-      )}
-      <div className="hidden text-[2rem] font-semibold capitalize text-slate-1000 sm:text-[3.5rem] lg:block lg:max-w-xl lg:basis-1/2">
+    <div className="flex flex-col flex-wrap items-center justify-between gap-4 lg:flex-row lg:flex-nowrap lg:gap-8">
+      <div className="max-w-xl ">
+        {props.imagePos === 'left' ? (
+          <Image
+            alt={props.imageAlt}
+            src={props.imageSrc}
+            priority
+            width={600}
+            height={600}
+            className="rounded-3xl"
+          />
+        ) : (
+          <Image
+            alt={props.imageAlt}
+            src={props.imageSrc}
+            priority
+            width={600}
+            height={600}
+            className="rounded-3xl lg:hidden"
+          />
+        )}
+      </div>
+      <div className="hidden text-[2rem] font-semibold capitalize text-slate-1000 sm:text-[3.5rem] lg:block lg:max-w-xl lg:basis-2/3">
         {t.rich(`${props.i18nKey}.title`, {
           highlight: highlightMessage(
             props.isTitleOutstanding,
@@ -67,16 +69,18 @@ const InfoContainer = (props: IInfoContainerProps) => {
           })}
         </div>
       </div>
-      {props.imagePos === 'right' && (
-        <Image
-          alt={props.imageAlt}
-          src={props.imageSrc}
-          priority
-          width={600}
-          height={600}
-          className="hidden rounded-3xl lg:block lg:basis-1/2"
-        />
-      )}
+      <div className="max-w-xl">
+        {props.imagePos === 'right' && (
+          <Image
+            alt={props.imageAlt}
+            src={props.imageSrc}
+            priority
+            width={600}
+            height={600}
+            className="hidden rounded-3xl lg:block"
+          />
+        )}
+      </div>
     </div>
   );
 };
