@@ -42,7 +42,7 @@ const AccordionItem = ({
               width="24"
               height="2"
               rx="1"
-              className={`origin-center rotate-90 transition duration-300 ease-in-out ${
+              className={`origin-center transition duration-300 ease-in-out rotate-90 ${
                 isExpanding && '!rotate-180'
               }`}
             />
