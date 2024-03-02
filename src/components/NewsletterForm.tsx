@@ -18,7 +18,6 @@ const NewsletterForm = () => {
   const {
     handleSubmit,
     register,
-    // reset,
     formState: { errors },
   } = useForm<z.infer<typeof NewsletterValidation>>({
     resolver: zodResolver(NewsletterValidation),
@@ -39,7 +38,9 @@ const NewsletterForm = () => {
         },
         Env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
       );
-      pushSuccess('🚀 Your message is on its way! Thanks for reaching out 😊');
+      pushSuccess(
+        '"Welcome aboard! 🌟 Your journey to wellness starts now. Keep an eye on your inbox for updates and exclusive content. Let\'s thrive together!" 📩🌿',
+      );
       // alert(
       //   '🚀 Your message is on its way! Thanks for reaching out 😊. Have a fantastic day ahead! 🌟',
       // );
