@@ -82,9 +82,6 @@ type IGameCardProps = {
 const MinigameSection = () => {
   const dispatch = useAppDispatch();
 
-  // const [cardList, setCardList] = useState(
-  //   [...GameCards, ...GameCards].map((card, index) => ({ ...card, id: index })),
-  // );
   const [cardList, setCardList] = useState<IGameCardProps[]>([]);
   const [firstCard, setFirstCard] = useState<IGameCardProps | null>(null);
   const [secondCard, setSecondCard] = useState<IGameCardProps | null>(null);
@@ -136,7 +133,7 @@ const MinigameSection = () => {
   };
 
   return (
-    <section className="grid grid-cols-4 gap-4 sm:grid-cols-6">
+    <section className="grid grid-cols-4 gap-4 md:grid-cols-6">
       {cardList.map((each) => (
         <MinigameCard
           key={each.id}

@@ -1,13 +1,12 @@
 'use client';
 
 import localFont from 'next/font/local';
-import { type ReactNode, useEffect, useState } from 'react';
+import { type ReactNode } from 'react';
 
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/private/utils';
 import Footer from '@/layouts/Footer';
 import Header from '@/layouts/Header';
-import SpecialSection from '@/layouts/SpecialSection';
 
 type IBaseTemplateProps = {
   children: ReactNode;
@@ -84,18 +83,18 @@ const poppins = localFont({
 });
 
 const BaseTemplate = (props: IBaseTemplateProps) => {
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const preLoad = () => {
-      setTimeout(() => {
-        setLoading(false);
-      }, 10000);
-    };
-    preLoad();
-  }, []);
+  // useEffect(() => {
+  //   const preLoad = () => {
+  //     setTimeout(() => {
+  //       setLoading(false);
+  //     }, 10000);
+  //   };
+  //   preLoad();
+  // }, []);
 
-  if (loading) return <SpecialSection />;
+  // if (loading) return <SpecialSection />;
 
   return (
     <div
