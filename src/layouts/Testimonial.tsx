@@ -27,7 +27,7 @@ const TestimonialItems = [
     content:
       "Theo mình Hulib là một dự án với mission mới toanh ở miền Trung nói riêng và Việt Nam nói chung. Kết nối những người có kinh nghiệm 'thực chiến' dày dặn trong lĩnh vực của họ với các bạn mentees chắc chắn sẽ là tạo ra ảnh hưởng lớn đến với các bạn trong tương lai. Mình mong dự án sẽ bay cao bay xa trong trong thời gian tới. Chúc toàn bộ team luôn giữ được nhiệt huyết ạ~",
     name: 'Quỳnh Lê',
-    avatarUrl: '/assets/images/avatars/pf_member_2.JPG',
+    avatarUrl: '/assets/images/avatars/pf_member_2.jpeg',
     position: 'Team PF',
   },
   {
