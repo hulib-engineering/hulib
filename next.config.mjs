@@ -1,5 +1,7 @@
 import { withSentryConfig } from '@sentry/nextjs';
+// eslint-disable-next-line import/extensions
 import './src/libs/Env.mjs';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import withNextIntl from 'next-intl/plugin';
 
