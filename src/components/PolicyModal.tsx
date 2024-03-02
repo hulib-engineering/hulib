@@ -50,7 +50,7 @@ const PolicyModal = (props: WithChildren<IPolicyModalProps>) => {
           </div>
           <div className="inline-flex w-full items-center justify-end">
             <Button
-              className="rounded-full capitalize shadow-[0px_8px_24px_#1979ff40] transition-all duration-300 hover:translate-y-0.5 hover:shadow-none"
+              className="rounded-full capitalize shadow-[0px_8px_24px_#1979ff40] transition-all duration-300 hover:shadow-none hover:translate-y-0.5"
               onClick={props.onClose}
             >
               {t('txt_accept')}
