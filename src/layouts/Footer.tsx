@@ -10,6 +10,7 @@ import { Logo } from '@/components/Logo';
 import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
 import { mergeClassnames } from '@/components/private/utils';
 import TermOfUseModal from '@/components/TermOfUseModal';
+import { Env } from '@/libs/Env.mjs';
 
 const SocialLinks = [
   {
@@ -67,9 +68,7 @@ const Footer = () => {
             </div>
             <div className="w-96">
               <p className="text-center text-base font-light lg:text-start">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse varius enim in eros elementum tristique. Duis
-                cursus, mi quis viverra ornare.
+                {t('footer_description')}
               </p>
             </div>
           </div>
@@ -95,20 +94,22 @@ const Footer = () => {
             <h4 className="text-center text-2xl font-semibold">Contact</h4>
             <div className="flex flex-col items-center gap-4 lg:items-start">
               <Link
-                href="tel:0707565362"
+                href={`tel:${Env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER}`}
                 className="flex items-center justify-center hover:text-primary-hover"
               >
                 <PhoneIcon width={24} height={24} />
                 <p className="ml-3 text-sm font-normal">(+84) 123 456 789</p>
               </Link>
               <Link
-                href="mailto:jooie020998@gmail.com"
+                href={`mailto:${Env.NEXT_PUBLIC_CONTACT_EMAIL}`}
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center justify-center gap-3 hover:text-primary-hover"
               >
                 <EnvelopeIcon width={24} height={24} />
-                <p className="ml-3 text-sm font-normal">EmailHulib@gmail.com</p>
+                <p className="ml-3 text-sm font-normal">
+                  {Env.NEXT_PUBLIC_CONTACT_EMAIL}
+                </p>
               </Link>
             </div>
           </div>
@@ -139,22 +140,6 @@ const Footer = () => {
           <p className="text-sm font-normal text-[rgba(0,_87,_215,_0.50)]">
             {t('copyright')}
           </p>
-          {/* <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4"> */}
-          {/*  {Links.map((link, index) => ( */}
-          {/*    <div key={index} className="mb-1"> */}
-          {/*      <button */}
-          {/*        type="button" */}
-          {/*        onClick={() => handleClick(link.modalName)} */}
-          {/*        className={mergeClassnames( */}
-          {/*          'text-sm font-normal text-primary-hover/50 underline transition duration-200 capitalize', */}
-          {/*          'hover:-translate-y-1', */}
-          {/*        )} */}
-          {/*      > */}
-          {/*        {link.content} */}
-          {/*      </button> */}
-          {/*    </div> */}
-          {/*  ))} */}
-          {/* </div> */}
         </div>
       </footer>
       {currentModalRef === 'privacy_policy' && (
