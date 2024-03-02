@@ -22,14 +22,14 @@ const FAQs = () => {
   const t = useTranslations('Index');
 
   return (
-    <section className="flex flex-col items-center justify-center py-8 text-slate-1000 lg:py-[5.625rem]">
+    <section className="flex flex-col items-center justify-center py-8 text-slate-1000 md:px-[5.625rem] lg:py-[5.625rem]">
       <div className="flex w-full flex-col items-center justify-center py-[0.75rem] lg:max-w-3xl">
         <div className="mb-6 w-full text-center lg:mb-8">
           <h1 className="w-full text-[1.75rem] font-semibold md:text-4xl lg:text-5xl lg:font-bold">
             FAQs
           </h1>
         </div>
-        <div className="flex w-full flex-col justify-center gap-4 px-4">
+        <div className="flex w-full flex-col justify-center gap-4 px-4 md:px-0">
           {FAQItemList.map((item, index) => (
             <AccordionItem
               key={index}
