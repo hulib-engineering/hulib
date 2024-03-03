@@ -22,7 +22,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
 
   return (
     <>
-      <div className="flex flex-col flex-wrap items-center justify-between gap-4 lg:hidden lg:flex-row lg:flex-nowrap lg:gap-8">
+      <div className="flex flex-col flex-wrap items-center justify-between gap-4 lg:hidden">
         <div className="max-w-xl lg:flex-1">
           <Image
             alt={props.imageAlt}
@@ -33,7 +33,7 @@ const InfoContainer = (props: IInfoContainerProps) => {
             className="rounded-3xl object-cover lg:hidden"
           />
         </div>
-        <div className="w-full text-[2rem] font-semibold capitalize text-slate-1000 sm:max-w-xl sm:text-[3.5rem] lg:hidden">
+        <div className="w-full text-[2rem] font-semibold capitalize text-slate-1000 sm:max-w-xl sm:text-[3.5rem]">
           {t.rich(`${props.i18nKey}.title`, {
             highlight: highlightMessage(false, props.titleHighlightTextColor),
             br: newLineMessage(),
