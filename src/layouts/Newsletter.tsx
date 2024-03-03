@@ -30,13 +30,13 @@ const Newsletter = () => {
       </div>
       <div
         className={mergeClassnames(
-          'absolute -left-7 -top-7 h-[9.375rem] w-[9.375rem] 2xl:left-3/4 2xl:-top-[10%] 2xl:h-[18.75rem] 2xl:w-[18.75rem]',
+          'absolute -left-7 -top-7 h-[9.375rem] w-[9.375rem] 2xl:left-[80%] 2xl:-top-[10%] 2xl:h-[18.75rem] 2xl:w-[18.75rem]',
           'animate-move-up rounded-full bg-gradient-to-r from-[#6D96FF] to-[#FF9CEF] opacity-35 blur-[6.25rem]',
         )}
       />
       <div
         className={mergeClassnames(
-          'absolute -bottom-7 -right-7 h-[9.375rem] w-[9.375rem] 2xl:-bottom-[10%] 2xl:left-[10%] 2xl:h-[18.75rem] 2xl:w-[18.75rem]',
+          'absolute -bottom-7 -right-7 h-[9.375rem] w-[9.375rem] 2xl:-bottom-[10%] 2xl:left-0 2xl:h-[18.75rem] 2xl:w-[18.75rem]',
           'animate-move-down rounded-full bg-gradient-to-r from-[#6D96FF] to-[#FF9CEF] opacity-30 blur-[6.25rem]',
         )}
       />
