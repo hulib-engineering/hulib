@@ -12,7 +12,7 @@ const Header = () => {
     <header
       className={mergeClassnames(
         'fixed top-0 z-[999] w-full bg-[#f1f4f9bf] px-2 py-0.5 backdrop-blur-[50px]',
-        'sm:px-[1.875rem] sm:py-6 lg:px-12 2xl:px-[5.625rem]',
+        'sm:px-[1.875rem] sm:py-6 lg:px-12 2xl:px-28',
       )}
     >
       <div className="mx-auto flex items-center justify-between sm:w-3/4">
