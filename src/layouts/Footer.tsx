@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
-import { Logo } from '@/components/Logo';
 import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
 import { mergeClassnames } from '@/components/private/utils';
 import TermOfUseModal from '@/components/TermOfUseModal';
@@ -48,7 +47,7 @@ const Footer = () => {
       <footer
         className={mergeClassnames(
           'mx-auto w-full px-4 pt-8 pb-6 text-primary',
-          'lg:w-3/4 lg:px-8 2xl:pt-[5.625rem] 2xl:pb-10',
+          'lg:w-3/4 lg:px-8 2xl:px-[5.625rem] 2xl:pt-[5.625rem] 2xl:pb-10',
         )}
       >
         <div
@@ -57,22 +56,7 @@ const Footer = () => {
             'sm:flex-row sm:gap-0 lg:mb-12 lg:max-w-7xl lg:py-20',
           )}
         >
-          <div className="flex flex-col items-center gap-3 sm:items-start sm:gap-6">
-            <div>
-              <div className="hidden 2xl:flex">
-                <Logo />
-              </div>
-              <div className="block 2xl:hidden">
-                <Logo size="small" />
-              </div>
-            </div>
-            <div className="w-11/12">
-              <p className="text-center text-sm font-light sm:text-start lg:text-base">
-                {t('footer_description')}
-              </p>
-            </div>
-          </div>
-          <div className="flex w-full flex-col items-center gap-8 sm:basis-2/3 sm:items-start">
+          <div className="flex w-full flex-col items-center gap-8 sm:items-start">
             <h4 className="text-2xl font-semibold ">Help</h4>
             <div className="flex flex-col items-center gap-4 sm:items-start">
               {Links.map((link, index) => (
@@ -90,7 +74,7 @@ const Footer = () => {
               ))}
             </div>
           </div>
-          <div className="flex w-full flex-col items-center gap-8 sm:basis-1/2 sm:items-start">
+          <div className="flex w-full flex-col items-center gap-8 sm:items-start">
             <h4 className="text-center text-2xl font-semibold">Contact</h4>
             <div className="flex flex-col items-center gap-4 text-sm sm:items-start">
               <Link
@@ -115,7 +99,7 @@ const Footer = () => {
               </Link>
             </div>
           </div>
-          <div className="flex w-full flex-col items-center gap-8 sm:basis-1/2">
+          <div className="flex w-full flex-col items-center gap-8">
             <h4 className="text-2xl font-semibold">Follow us</h4>
             <div className="flex w-full items-center justify-center gap-8">
               {SocialLinks.map((link, index) => (
