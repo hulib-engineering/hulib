@@ -12,7 +12,7 @@ const Newsletter = () => {
       id="newsletter"
       className={mergeClassnames(
         'relative mt-8 flex w-full flex-col items-center justify-center px-4 py-3 text-slate-1000',
-        'sm:mx-auto sm:mt-2 sm:w-3/4 lg:px-10 2xl:px-[20.625rem] 2xl:py-[6.25rem]',
+        'sm:mx-auto sm:mt-2 sm:w-3/4 lg:px-10 2xl:px-[5.625rem] 2xl:py-[6.25rem]',
       )}
     >
       <div className="w-full rounded-3xl border-4 border-solid border-white bg-white/50 py-6 backdrop-blur-[100px] sm:max-w-7xl lg:py-[5.625rem]">

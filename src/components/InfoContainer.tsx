@@ -21,68 +21,73 @@ const InfoContainer = (props: IInfoContainerProps) => {
   const t = useTranslations('Index');
 
   return (
-    <div className="flex flex-col flex-wrap items-center justify-between gap-4 lg:flex-row lg:flex-nowrap lg:gap-8">
-      <div className="max-w-xl">
-        {props.imagePos === 'left' ? (
+    <>
+      <div className="flex flex-col flex-wrap items-center justify-between gap-4 lg:hidden lg:flex-row lg:flex-nowrap lg:gap-8">
+        <div className="max-w-xl lg:flex-1">
           <Image
             alt={props.imageAlt}
             src={props.imageSrc}
             priority
             width={600}
             height={600}
-            className="rounded-3xl"
+            className="rounded-3xl object-cover lg:hidden"
           />
-        ) : (
-          <Image
-            alt={props.imageAlt}
-            src={props.imageSrc}
-            priority
-            width={600}
-            height={600}
-            className="rounded-3xl lg:hidden"
-          />
+        </div>
+        <div className="w-full text-[2rem] font-semibold capitalize text-slate-1000 sm:max-w-xl sm:text-[3.5rem] lg:hidden">
+          {t.rich(`${props.i18nKey}.title`, {
+            highlight: highlightMessage(false, props.titleHighlightTextColor),
+            br: newLineMessage(),
+          })}
+          <div className="text-lg font-normal normal-case text-slate-1000">
+            {t.rich(`${props.i18nKey}.description`, {
+              br: newLineMessage(),
+              important: customMessage('font-bold'),
+            })}
+          </div>
+        </div>
+      </div>
+      <div className="hidden flex-row flex-nowrap items-center justify-between gap-8 lg:flex">
+        {props.imagePos === 'left' && (
+          <div className="max-w-xl lg:flex-1">
+            <Image
+              alt={props.imageAlt}
+              src={props.imageSrc}
+              priority
+              width={600}
+              height={600}
+              className="rounded-3xl object-cover"
+            />
+          </div>
         )}
-      </div>
-      <div className="hidden text-[2rem] font-semibold capitalize text-slate-1000 sm:text-[3.5rem] lg:block lg:max-w-xl lg:basis-2/3">
-        {t.rich(`${props.i18nKey}.title`, {
-          highlight: highlightMessage(
-            props.isTitleOutstanding,
-            props.titleHighlightTextColor,
-          ),
-          br: newLineMessage(),
-        })}
-        <div className="text-lg font-normal normal-case text-slate-1000">
-          {t.rich(`${props.i18nKey}.description`, {
+        <div className="text-[2rem] font-semibold capitalize text-slate-1000 sm:text-[3.5rem] lg:max-w-xl lg:flex-1">
+          {t.rich(`${props.i18nKey}.title`, {
+            highlight: highlightMessage(
+              props.isTitleOutstanding,
+              props.titleHighlightTextColor,
+            ),
             br: newLineMessage(),
-            important: customMessage('font-bold'),
           })}
+          <div className="text-lg font-normal normal-case text-slate-1000">
+            {t.rich(`${props.i18nKey}.description`, {
+              br: newLineMessage(),
+              important: customMessage('font-bold'),
+            })}
+          </div>
         </div>
-      </div>
-      <div className="w-full text-[2rem] font-semibold capitalize text-slate-1000 sm:max-w-xl sm:text-[3.5rem] lg:hidden">
-        {t.rich(`${props.i18nKey}.title`, {
-          highlight: highlightMessage(false, props.titleHighlightTextColor),
-          br: newLineMessage(),
-        })}
-        <div className="text-lg font-normal normal-case text-slate-1000">
-          {t.rich(`${props.i18nKey}.description`, {
-            br: newLineMessage(),
-            important: customMessage('font-bold'),
-          })}
-        </div>
-      </div>
-      <div className="max-w-xl">
         {props.imagePos === 'right' && (
-          <Image
-            alt={props.imageAlt}
-            src={props.imageSrc}
-            priority
-            width={600}
-            height={600}
-            className="hidden rounded-3xl lg:block"
-          />
+          <div className="max-w-xl lg:flex-1">
+            <Image
+              alt={props.imageAlt}
+              src={props.imageSrc}
+              priority
+              width={600}
+              height={600}
+              className="hidden rounded-3xl lg:block"
+            />
+          </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
