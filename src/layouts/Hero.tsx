@@ -2,7 +2,7 @@
 
 import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import React, { useCallback, useState } from 'react';
 import type WaveSurfer from 'wavesurfer.js';
 
@@ -34,6 +34,8 @@ const VectorIcons = [
 
 const Hero = () => {
   const t = useTranslations('Index');
+  const locale = useLocale();
+  console.log(locale);
 
   // @ts-ignore
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer>(null);
@@ -74,7 +76,11 @@ const Hero = () => {
             as="a"
             rel="noopener noreferrer"
             target="_blank"
-            href="/assets/docs/project-proposal.pdf"
+            href={
+              locale === 'en'
+                ? '/assets/docs/project-proposal-eng.pdf'
+                : '/assets/docs/project-proposal-vi.pdf'
+            }
             className="rounded-full uppercase"
             iconRight={
               <Image
