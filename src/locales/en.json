@@ -18,21 +18,36 @@
     "hero_call_to_action": "learn more",
     "hero_message_1": "”There is <important>a crack</important> in everything, that’s how <important>the light</important> gets in.”",
     "hero_message_2": "“You are <important>not alone</important> in your <important>struggles</important>.”",
-    "hero_mentor_quantity": "100+ <normal>Experienced Mentors</normal>",
+    "hero_mentor_quantity": "100+ <normal>Experienced Human Books</normal>",
+    "event_title": "upcoming event on July 27, 2024",
+    "event_description": "Join us for “Emotional Bank” an event focused on achieving emotional balance and well-being.",
+    "event_call_to_action": "register",
     "feature_peers": {
       "title": "People with the same stories",
-      "description": "200+ mentors and volunteers having personal experience with the same problem you’re into."
+      "description": "200+ human books and volunteers having personal experience with the same problem you’re into."
     },
     "feature_online_meetings": {
       "title": "Online Meeting",
-      "description": "Book a meeting with any mentor you want to share and let them know about your struggles."
+      "description": "Book a meeting with any human book you want to share and let them know about your struggles."
     },
     "feature_safely_sharing": {
       "title": "Safely Sharing",
       "description": "Feel free to share your stories without being judged."
     },
+    "event_feature_peers": {
+      "title": "Meeting with experts",
+      "description": "Engaging with experts to gain valuable insights into achieving emotional balance and well-being."
+    },
+    "event_feature_online_meetings": {
+      "title": "Online Session",
+      "description": "It's free for everyone to join and participate in, offering valuable insights and practical guidance!"
+    },
+    "event_feature_safely_sharing": {
+      "title": "Safely Sharing",
+      "description": "Feel free to share your stories without being judged."
+    },
     "about_title": "what is hulib",
-    "about_description": "a community project promotes well-being through shared stories with mentors.",
+    "about_description": "a community project promotes well-being through shared stories with human books.",
     "about_stories": {
       "title": "our <highlight>stories</highlight>",
       "description": "Do you ever feel like you're <important>constantly falling short</important>? While others reach the finish line, do you find yourself <important>unsure of where to go</important>? Have you ever wished for a steadying hand during moments of <important>uncertainty</important>?<br></br> <br></br> Have you grappled with <important>stress</important>, trying to navigate through it all <important>alone</important>? Do you <important>struggle</important> with forging meaningful <important>connections</important> and yearn for someone to lead the way?<br></br> <br></br> <important>HuLib</important> emerged from the depths of these very questions, as we've intimately <important>experienced these emotions</important>. <important>Join us</important> on this dream journey to uncover more <important>happiness together</important>."
@@ -43,7 +58,7 @@
     },
     "about_vision": {
       "title": "our <br></br><highlight>vision</highlight>",
-      "description": "Our vision is to create a safe and proactive community, offering support from mentors, to promote well-being and shared experiences."
+      "description": "Our vision is to create a safe and proactive community, offering support from human books, to promote well-being and shared experiences."
     },
     "testimonial_title": "meet our team",
     "testimonial_description": "What do our members say?",
@@ -53,7 +68,7 @@
       "answer": {
         "heading": "HuLib is a community dedicated to fostering well-being through shared stories and mentorship in three main fields, including education, career, and relationship.",
         "body_paras": {
-          "p1": "High school students take advice on university choices from mentors with diverse expertise for a fulfilling college experience.",
+          "p1": "High school students take advice on university choices from human books with diverse expertise for a fulfilling college experience.",
           "p2": "New graduates receive career guidance through one-on-one sessions, workshops, and industry expert discussions.",
           "p3": "Young adults dealing with pressures benefit from personalized mentoring focusing on well-being."
         }
@@ -73,7 +88,7 @@
       "answer": {
         "heading": "Joining HuLib is easy!",
         "body_paras": {
-          "p1": "As a participant, you can sign up to share your story, connect with mentors, or engage in virtual discussions.",
+          "p1": "As a participant, you can sign up to share your story, connect with human books, or engage in virtual discussions.",
           "p2": "If you're an expert or volunteer interested in mentoring, we welcome your contribution. Stay tuned for updates on workshops and community projects. Explore the possibilities of involvement and make a positive impact with HuLib."
         }
       }
@@ -168,7 +183,7 @@
       },
       "index_2": {
         "heading": "3. THE PLATFORM",
-        "content": "The Platform is designed to give you a space to view and/or listen to personal stories of overcoming difficulties from mentors, through video or audio recordings, photographs or written pieces uploaded to the Platform (each upload a “Story”). The platform also connects you with other young people."
+        "content": "The Platform is designed to give you a space to view and/or listen to personal stories of overcoming difficulties from human books, through video or audio recordings, photographs or written pieces uploaded to the Platform (each upload a “Story”). The platform also connects you with other young people."
       },
       "index_3": {
         "heading": "4. OUR COMMITMENT TO YOU",
@@ -187,7 +202,7 @@
           },
           "index_2": {
             "heading": "5.3 Your commitments as a User",
-            "content": "You agree:<ul><li>(a)    that you have legal authority, and will continue to have such legal authority at all times during your registration, to enter into this Agreement;</li> <li>(b)     to only communicate information (including photographs and videos) that you have all necessary rights to;</li> <li>(c)    to compensate HuLib fully for any loss or damage that HuLib suffers as a result of any claims made or brought by a third party against HuLib due to your breach of this Agreement;</li> <li>(d)    to obtain all moral rights and intellectual property waivers and consents necessary to allow HuLib to freely use, modify and exploit the User Material (whether such use, modification or exploitation occurred before or after the waiver or consent is given) as permitted by this Agreement, and provide such waivers and consents to HuLib promptly on HuLib’s request;</li> <li>(e)      not to infringe any Intellectual Property Rights or Moral Rights of any person (including mentors), and to obtain any required consents to use any soundtrack or other work subject to copyright featured on any videos, photos or stories;</li> <li>(f)    to only depict individuals in a Story with their consent;</li> <li>(g)      that you may only be a User for your own personal use and in your personal capacity, and not for any commercial or other capacity;</li> <li>(h)      not to bring any claim against HuLib in relation to any act or omission occurring in relation to the Platform, except that the foregoing does not limit your ability to bring a claim against HuLib for its negligence or other breach of this Agreement;</li> <li>(i)     to assume all liability for any risk arising from any Story that you upload or view, or from your use of any information on the Platform;</li> <li>(k)      that uploading a Story will not breach any agreements that you have entered into;</li> <li>(j)   to comply with the HuLib community values (as notified by us from time to time);</li> <li>(l)    to cooperate with HuLib in good faith, and to assist with any reasonable requests for the purposes of an investigation undertaken by HuLib or a legal authority regarding misuse of the Platform;</li> <li>(m)    not to provide any false, incomplete or misleading information, including information provided in your personal details;</li> <li>(n)    not to upload any content or use language that is inappropriate, profane, defamatory, infringing, obscene, indecent, unlawful, likely to offend, insult or humiliate others based on ethnicity, race, gender, sexuality, age or any disability or otherwise vilifies any person or incites violence or hatred;</li> <li>(o)      not to defame, abuse, stalk, harass, threaten or otherwise violate the legal rights of others, including rights relating to privacy and publicity;</li> <li>(p)      not to use the Platform to sell or advertise any goods or services;</li> <li>(q)     not to transfer your registration to another person.You must have all necessary consents, permissions, licences and approvals to enter into this Agreement and perform your obligations under it.</li> <li>(r)  if you are not satisfied with the mentor or the mentor has any inappropriate behaviour, you need to contact the email in section 8.2</li></ul> If you believe that another User has provided fraudulent or incorrect information on the Platform, you must immediately inform HuLib.  HuLib is not responsible for any loss arising out of or in connection with any such fraudulent or incorrect information."
+            "content": "You agree:<ul><li>(a)    that you have legal authority, and will continue to have such legal authority at all times during your registration, to enter into this Agreement;</li> <li>(b)     to only communicate information (including photographs and videos) that you have all necessary rights to;</li> <li>(c)    to compensate HuLib fully for any loss or damage that HuLib suffers as a result of any claims made or brought by a third party against HuLib due to your breach of this Agreement;</li> <li>(d)    to obtain all moral rights and intellectual property waivers and consents necessary to allow HuLib to freely use, modify and exploit the User Material (whether such use, modification or exploitation occurred before or after the waiver or consent is given) as permitted by this Agreement, and provide such waivers and consents to HuLib promptly on HuLib’s request;</li> <li>(e)      not to infringe any Intellectual Property Rights or Moral Rights of any person (including human books), and to obtain any required consents to use any soundtrack or other work subject to copyright featured on any videos, photos or stories;</li> <li>(f)    to only depict individuals in a Story with their consent;</li> <li>(g)      that you may only be a User for your own personal use and in your personal capacity, and not for any commercial or other capacity;</li> <li>(h)      not to bring any claim against HuLib in relation to any act or omission occurring in relation to the Platform, except that the foregoing does not limit your ability to bring a claim against HuLib for its negligence or other breach of this Agreement;</li> <li>(i)     to assume all liability for any risk arising from any Story that you upload or view, or from your use of any information on the Platform;</li> <li>(k)      that uploading a Story will not breach any agreements that you have entered into;</li> <li>(j)   to comply with the HuLib community values (as notified by us from time to time);</li> <li>(l)    to cooperate with HuLib in good faith, and to assist with any reasonable requests for the purposes of an investigation undertaken by HuLib or a legal authority regarding misuse of the Platform;</li> <li>(m)    not to provide any false, incomplete or misleading information, including information provided in your personal details;</li> <li>(n)    not to upload any content or use language that is inappropriate, profane, defamatory, infringing, obscene, indecent, unlawful, likely to offend, insult or humiliate others based on ethnicity, race, gender, sexuality, age or any disability or otherwise vilifies any person or incites violence or hatred;</li> <li>(o)      not to defame, abuse, stalk, harass, threaten or otherwise violate the legal rights of others, including rights relating to privacy and publicity;</li> <li>(p)      not to use the Platform to sell or advertise any goods or services;</li> <li>(q)     not to transfer your registration to another person.You must have all necessary consents, permissions, licences and approvals to enter into this Agreement and perform your obligations under it.</li> <li>(r)  if you are not satisfied with the human book or the mentor has any inappropriate behaviour, you need to contact the email in section 8.2</li></ul> If you believe that another User has provided fraudulent or incorrect information on the Platform, you must immediately inform HuLib.  HuLib is not responsible for any loss arising out of or in connection with any such fraudulent or incorrect information."
           },
           "index_3": {
             "heading": "5.4 Security of your information",
