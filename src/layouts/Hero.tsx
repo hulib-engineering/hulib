@@ -35,7 +35,6 @@ const VectorIcons = [
 const Hero = () => {
   const t = useTranslations('Index');
   const locale = useLocale();
-  console.log(locale);
 
   // @ts-ignore
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer>(null);
@@ -58,6 +57,7 @@ const Hero = () => {
         'mx-auto flex w-full flex-col items-center justify-center py-8',
         'sm:w-3/4 sm:px-8 sm:gap-4 lg:max-w-7xl lg:px-10 2xl:gap-32 2xl:px-[5.625rem]',
       )}
+      data-testid="hero-section"
     >
       <div className="pb-3 lg:w-2/3 lg:max-w-screen-md">
         <div className="mb-6 flex w-full flex-col items-center justify-start gap-3 px-4 text-center sm:gap-4 sm:px-0">
@@ -114,7 +114,7 @@ const Hero = () => {
             priority
             width={748}
             height={511}
-            className="h-[32rm] w-[46.75rem] object-contain"
+            className="h-[32rem] w-[46.75rem] object-contain"
           />
         </div>
         <div className="mb-3 flex w-full flex-col items-center justify-center lg:hidden">
