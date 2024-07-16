@@ -22,7 +22,11 @@ const SocialLinks = [
     link: 'https://www.instagram.com/hulibofficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
     name: 'Instagram',
   },
-  // { iconUrl: '/assets/images/icons/linked-in.svg', link: '', name: 'Linkedin' },
+  {
+    iconUrl: '/assets/images/icons/tiktok.svg',
+    link: 'https://www.tiktok.com/@hulibvn?is_from_webapp=1&sender_device=pc',
+    name: 'Tiktok',
+  },
 ];
 
 const Footer = () => {
@@ -100,7 +104,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="flex w-full flex-col items-center gap-8">
-            <h4 className="text-2xl font-semibold">Follow us</h4>
+            <h4 className="text-left text-2xl font-semibold">Follow us</h4>
             <div className="flex w-full items-center justify-center gap-8">
               {SocialLinks.map((link, index) => (
                 <Link

@@ -18,21 +18,36 @@
     "hero_call_to_action": "tìm hiểu thêm",
     "hero_message_1": "”Vạn vật ẩn dấu <important>các vết nứt</important>, đó là nơi <important>ánh sáng</important> chiếu rọi.”",
     "hero_message_2": "“Bạn <important>không đơn độc</important> trước <important>những rào cản</important> của chính mình.”",
-    "hero_mentor_quantity": "100+ <normal>Mentors với nhiều trải nghiệm phong phú</normal>",
+    "hero_mentor_quantity": "100+ <normal>Human Book (Sách Sống) với nhiều trải nghiệm phong phú</normal>",
+    "event_title": "đón chờ sự kiện mới toanh -  27/07/2024",
+    "event_description": "Hãy tham gia “Ngân Hàng Cảm Xúc”, cùng chúng mình cân bằng những cung bậc cảm xúc và thật hạnh phúc nha.",
+    "event_call_to_action": "đăng ký ngay",
     "feature_peers": {
       "title": "Cộng đồng với những câu chuyện \"không của riêng ai\"",
-      "description": "Hơn 200 mentor và tình nguyện viên có trải nghiệm phù hợp mà bạn đang tìm kiếm."
+      "description": "Hơn 200 human book (sách sống) và tình nguyện viên có trải nghiệm phù hợp mà bạn đang tìm kiếm."
     },
     "feature_online_meetings": {
       "title": "Gặp Gỡ Trực Tuyến",
-      "description": "Đặt cuộc hẹn với bất kỳ mentor nào bạn muốn chia sẻ về những thắc mắc của bản thân."
+      "description": "Đặt cuộc hẹn với bất kỳ human book (sách sống) nào bạn muốn chia sẻ về những thắc mắc của bản thân."
     },
     "feature_safely_sharing": {
       "title": "Bày Tỏ Chân Thành",
       "description": "Tự do chia sẻ câu chuyện của bạn mà không ngại bị đánh giá."
     },
+    "event_feature_peers": {
+      "title": "Cùng Chuyên Gia",
+      "description": "Khám phá hạnh phúc và cân bằng cảm xúc."
+    },
+    "event_feature_online_meetings": {
+      "title": "Gặp Gỡ Trực Tuyến",
+      "description": "Đặt cuộc hẹn miễn phí với bất kỳ human book (sách sống) nào bạn muốn lắng nghe và hỏi đáp thắc mắc của bản thân."
+    },
+    "event_feature_safely_sharing": {
+      "title": "Bày Tỏ Chân Thành",
+      "description": "Tự do chia sẻ câu chuyện của bạn mà không ngại bị đánh giá."
+    },
     "about_title": "cùng với HuLib",
-    "about_description": "thúc đẩy giá trị hạnh phúc thông qua kết nối những câu chuyện rất cá nhân với mentors.",
+    "about_description": "thúc đẩy giá trị hạnh phúc thông qua kết nối những câu chuyện rất cá nhân với các human book (sách sống).",
     "about_stories": {
       "title": "<highlight>câu chuyện</highlight> <br></br> của chúng tớ",
       "description": "Bạn cảm thấy bản thân chưa bao giờ <important>đủ tốt</important>? Lúc bạn bè ở vạch đích thì bạn vẫn <important>lò mò điểm xuất phát</important>? Bạn từng <important>vô định</important> và ước một cánh tay nắm lấy mình?<br></br> <br></br> Đã bao giờ bạn <important>căng thẳng lo âu</important> tìm cách xoay xở <important>một mình</important>? Bạn từng <important>thiếu tự tin</important> kết nối và mong mỏi một ai đó hướng dẫn?<br></br> <br></br> <important>HuLib</important> ra đời vì tất cả câu hỏi trên, vì chúng tớ cũng đã đang <important>trải qua</important> tất cả <important>cảm xúc</important> này. Hãy <important>cùng chúng mình</important> theo đuổi <important>ước mơ</important> và <important>hạnh phúc</important> hơn nữa bạn nhé."
@@ -53,7 +68,7 @@
       "answer": {
         "heading": "HuLib gây dựng một cộng đồng thúc đẩy phát triển mỗi cá nhân thông qua việc chia sẻ câu chuyện và tham gia mentoring trong 3 lĩnh vực chính, bao gồm giáo dục, sự nghiệp và quan hệ xã hội. ",
         "body_paras": {
-          "p1": "Học sinh trung học phổ thông nhận được lời khuyên về chọn trường đại học từ các mentors với đa dạng chuyên môn để có trải nghiệm đại học trọn vẹn.",
+          "p1": "Học sinh trung học phổ thông nhận được lời khuyên về chọn trường đại học từ các human book (sách sống) với đa dạng chuyên môn để có trải nghiệm đại học trọn vẹn.",
           "p2": "Những bạn mới tốt nghiệp nhận được định hướng nghề nghiệp thông qua các buổi kết nối riêng tư, các hội thảo và trao đổi với các anh chị thuộc nhiều lĩnh vực.",
           "p3": "Những người trẻ đang đối diện áp lực có thể trò chuyện 1-1 với cá nhân đã từng trải qua các vấn đề liên quan."
         }
@@ -64,7 +79,7 @@
       "answer": {
         "heading": "",
         "body_paras": {
-          "p1": "HuLib dành cho học sinh trung học phổ thông, sinh viên đại học và những người mới tốt nghiệp (từ 16-25 tuổi) sinh sống ở miền Trung, Việt Nam. Bạn đang tìm kiếm mentors, không gian chia sẻ câu chuyện của mình, hoặc mong muốn tham gia vào các buổi trao đổi trực tuyến thì HuLib chính là cộng đồng hỗ trợ bạn phát triển cá nhân cũng như chuyên nghiệp."
+          "p1": "HuLib dành cho học sinh trung học phổ thông, sinh viên đại học và những người mới tốt nghiệp (từ 16-25 tuổi) sinh sống ở miền Trung, Việt Nam. Bạn đang tìm kiếm human book (sách sống), không gian chia sẻ câu chuyện của mình, hoặc mong muốn tham gia vào các buổi trao đổi trực tuyến thì HuLib chính là cộng đồng hỗ trợ bạn phát triển cá nhân cũng như chuyên nghiệp."
         }
       }
     },
@@ -73,7 +88,7 @@
       "answer": {
         "heading": "Tham gia HuLib cực dễ nha! ",
         "body_paras": {
-          "p1": "Với tư cách mentee, bạn có thể đăng ký chia sẻ câu chuyện của mình, kết nối với mentor, hoặc tham gia gặp gỡ HuLibers khác trực tuyến.",
+          "p1": "Với tư cách reader (bạn đọc), bạn có thể đăng ký chia sẻ câu chuyện của mình, kết nối với human book (sách sống), hoặc tham gia gặp gỡ HuLibers khác trực tuyến.",
           "p2": "Nếu bạn là chuyên gia hoặc tình nguyện viên quan tâm đến việc lan toả câu chuyện và trải nghiệm độc đáo, HuLib rất hoan nghênh đóng góp của bạn. Hãy theo dõi HuLib để cập nhật các sự kiện ý nghĩa nhé. Khám phá, đóng góp và tạo ảnh hưởng tích cực cùng chúng tớ nghen."
         }
       }
@@ -168,7 +183,7 @@
       },
       "index_2": {
         "heading": "3. nền tảng",
-        "content": "Nền tảng được thiết kế để cung cấp cho bạn một không gian để xem và/hoặc nghe những câu chuyện cá nhân về việc vượt qua khó khăn từ các mentor, thông qua các đoạn video hoặc tệp âm thanh, hình ảnh hoặc bài viết được tải lên Nền tảng (mỗi bản tải lên được gọi là \"Story\"). Nền tảng cũng kết nối bạn với những người trẻ khác."
+        "content": "Nền tảng được thiết kế để cung cấp cho bạn một không gian để xem và/hoặc nghe những câu chuyện cá nhân về việc vượt qua khó khăn từ các human book (sách sống), thông qua các đoạn video hoặc tệp âm thanh, hình ảnh hoặc bài viết được tải lên Nền tảng (mỗi bản tải lên được gọi là \"Story\"). Nền tảng cũng kết nối bạn với những người trẻ khác."
       },
       "index_3": {
         "heading": "4. cam kết của chúng tôi",
@@ -187,7 +202,7 @@
           },
           "index_2": {
             "heading": "5.3 Cam kết người dùng",
-            "content": "Bạn đồng ý:<ul><li>(a)    rằng bạn có quyền pháp lý, và sẽ tiếp tục giữ quyền lực pháp lý đó vào mọi thời điểm trong quá trình đăng ký của bạn, để ký kết Thỏa thuận này;</li> <li>(b)     chỉ truyền đạt thông tin (bao gồm cả ảnh và video) mà bạn được cấp quyền;</li> <li>(c)    bồi thường đầy đủ cho bất kỳ thiệt hại nào mà HuLib phải chịu do bất kỳ khiếu nại nào của bên thứ ba đối với HuLib do vi phạm của bạn đối với Thỏa thuận này;</li> <li>(d)    hu được tất cả các quyền đạo đức và sự chấp thuận về sở hữu trí tuệ cần thiết để cho phép HuLib tự do sử dụng, sửa đổi và khai thác Nội dung Người Dùng (dù sử dụng, sửa đổi hay khai thác đó có xảy ra trước hay sau khi chấp thuận được thực hiện), và cung cấp những sự chấp thuận và sự chấp thuận đó cho HuLib ngay lập tức khi HuLib yêu cầu;</li> <li>(e)      không vi phạm bất kỳ Quyền Sở Hữu Trí Tuệ hoặc Quyền Đạo Đức nào của bất kỳ người nào (bao gồm cả người hướng dẫn), và thu được mọi sự chấp thuận cần thiết để sử dụng bất kỳ nhạc nền hoặc công trình khác thuộc quyền tác giả xuất hiện trên bất kỳ video, ảnh hoặc câu chuyện nào;</li> <li>(f)    chỉ miêu tả những người trong một Câu chuyện sau sự đồng thuận của họ;</li> <li>(g)      bạn chỉ có thể là Người Dùng cho mục đích cá nhân của bạn và dưới sự chủ thể cá nhân của bạn, và không phải cho bất kỳ mục đích thương mại hoặc mục đích khác;</li> <li>(h)      không đưa ra bất kỳ khiếu nại nào đối với HuLib liên quan đến bất kỳ hành động hoặc bỏ sót nào xảy ra liên quan đến Nền tảng, trừ khi điều này không hạn chế khả năng của bạn khiếu nại HuLib về sự cẩu thả hoặc vi phạm Thỏa thuận này;</li> <li>(i)     chấp nhận mọi trách nhiệm về bất kỳ rủi ro nào xuất phát từ bất kỳ Câu chuyện nào bạn tải lên hoặc xem, hoặc từ việc sử dụng bất kỳ thông tin nào trên Nền tảng;</li> <li>(j)      that uploading a Story will not breach any agreements that you have entered into;</li> <li>(k)   tuân thủ các giá trị cộng đồng của HuLib (như được thông báo bởi chúng tôi từ thời gian này đến thời gian khác);</li> <li>(l)    hợp tác với HuLib một cách tốt đẹp, và hỗ trợ mọi yêu cầu hợp lý cho mục đích điều tra của HuLib hoặc một cơ quan chính phủ liên quan đối với việc lạm dụng Nền tảng;</li> <li>(m)    không cung cấp bất kỳ thông tin sai lệch hoặc gian lận nào, bao gồm cả thông tin được cung cấp trong chi tiết cá nhân của bạn;</li> <li>(n)    không tải lên nội dung hoặc sử dụng ngôn ngữ không thích hợp, tục tĩu, vi phạm, không hợp pháp, có khả năng làm xúc phạm, xúc phạm hoặc làm nhục người khác dựa trên sắc tộc, chủng tộc, giới tính, tình dục, tuổi hoặc bất kỳ khuyết tật nào khác hoặc phê phán bất kỳ người nào hoặc kích động bạo lực hoặc hận thù;</li> <li>(o)      không phỉ báng, lạm dụng, theo đuổi, quấy rối, đe dọa hoặc vi phạm quyền pháp lý của người khác, bao gồm quyền liên quan đến quyền riêng tư và công khai;</li> <li>(p)      không sử dụng Nền tản để bán hoặc quảng cáo bất kỳ hàng hóa hoặc dịch vụ nào;</li> <li>(q)     không chuyển nhượng đăng ký của bạn cho người khác. Bạn phải có tất cả các sự chấp thuận, quyền hạn, giấy phép và sự chấp thuận cần thiết để ký vào Thỏa thuận này và thực hiện các nghĩa vụ của bạn theo nó.</li> <li>(r)  nếu bạn không hài lòng với mentor hoặc mentor có bất kỳ hành vi không thích hợp nào, bạn cần gửi khiếu nại đến địa chỉ email mục 8.2.</li></ul> Nếu bạn tin rằng một Người Dùng khác đã cung cấp thông tin gian lận hoặc không chính xác trên Nền tảng, bạn phải ngay lập tức thông báo cho HuLib. HuLib không chịu trách nhiệm đối với bất kỳ thiệt hại nào phát sinh từ hoặc liên quan đến bất kỳ thông tin gian lận hoặc không chính xác nào như vậy."
+            "content": "Bạn đồng ý:<ul><li>(a)    rằng bạn có quyền pháp lý, và sẽ tiếp tục giữ quyền lực pháp lý đó vào mọi thời điểm trong quá trình đăng ký của bạn, để ký kết Thỏa thuận này;</li> <li>(b)     chỉ truyền đạt thông tin (bao gồm cả ảnh và video) mà bạn được cấp quyền;</li> <li>(c)    bồi thường đầy đủ cho bất kỳ thiệt hại nào mà HuLib phải chịu do bất kỳ khiếu nại nào của bên thứ ba đối với HuLib do vi phạm của bạn đối với Thỏa thuận này;</li> <li>(d)    hu được tất cả các quyền đạo đức và sự chấp thuận về sở hữu trí tuệ cần thiết để cho phép HuLib tự do sử dụng, sửa đổi và khai thác Nội dung Người Dùng (dù sử dụng, sửa đổi hay khai thác đó có xảy ra trước hay sau khi chấp thuận được thực hiện), và cung cấp những sự chấp thuận và sự chấp thuận đó cho HuLib ngay lập tức khi HuLib yêu cầu;</li> <li>(e)      không vi phạm bất kỳ Quyền Sở Hữu Trí Tuệ hoặc Quyền Đạo Đức nào của bất kỳ người nào (bao gồm cả người hướng dẫn), và thu được mọi sự chấp thuận cần thiết để sử dụng bất kỳ nhạc nền hoặc công trình khác thuộc quyền tác giả xuất hiện trên bất kỳ video, ảnh hoặc câu chuyện nào;</li> <li>(f)    chỉ miêu tả những người trong một Câu chuyện sau sự đồng thuận của họ;</li> <li>(g)      bạn chỉ có thể là Người Dùng cho mục đích cá nhân của bạn và dưới sự chủ thể cá nhân của bạn, và không phải cho bất kỳ mục đích thương mại hoặc mục đích khác;</li> <li>(h)      không đưa ra bất kỳ khiếu nại nào đối với HuLib liên quan đến bất kỳ hành động hoặc bỏ sót nào xảy ra liên quan đến Nền tảng, trừ khi điều này không hạn chế khả năng của bạn khiếu nại HuLib về sự cẩu thả hoặc vi phạm Thỏa thuận này;</li> <li>(i)     chấp nhận mọi trách nhiệm về bất kỳ rủi ro nào xuất phát từ bất kỳ Câu chuyện nào bạn tải lên hoặc xem, hoặc từ việc sử dụng bất kỳ thông tin nào trên Nền tảng;</li> <li>(j)      that uploading a Story will not breach any agreements that you have entered into;</li> <li>(k)   tuân thủ các giá trị cộng đồng của HuLib (như được thông báo bởi chúng tôi từ thời gian này đến thời gian khác);</li> <li>(l)    hợp tác với HuLib một cách tốt đẹp, và hỗ trợ mọi yêu cầu hợp lý cho mục đích điều tra của HuLib hoặc một cơ quan chính phủ liên quan đối với việc lạm dụng Nền tảng;</li> <li>(m)    không cung cấp bất kỳ thông tin sai lệch hoặc gian lận nào, bao gồm cả thông tin được cung cấp trong chi tiết cá nhân của bạn;</li> <li>(n)    không tải lên nội dung hoặc sử dụng ngôn ngữ không thích hợp, tục tĩu, vi phạm, không hợp pháp, có khả năng làm xúc phạm, xúc phạm hoặc làm nhục người khác dựa trên sắc tộc, chủng tộc, giới tính, tình dục, tuổi hoặc bất kỳ khuyết tật nào khác hoặc phê phán bất kỳ người nào hoặc kích động bạo lực hoặc hận thù;</li> <li>(o)      không phỉ báng, lạm dụng, theo đuổi, quấy rối, đe dọa hoặc vi phạm quyền pháp lý của người khác, bao gồm quyền liên quan đến quyền riêng tư và công khai;</li> <li>(p)      không sử dụng Nền tản để bán hoặc quảng cáo bất kỳ hàng hóa hoặc dịch vụ nào;</li> <li>(q)     không chuyển nhượng đăng ký của bạn cho người khác. Bạn phải có tất cả các sự chấp thuận, quyền hạn, giấy phép và sự chấp thuận cần thiết để ký vào Thỏa thuận này và thực hiện các nghĩa vụ của bạn theo nó.</li> <li>(r)  nếu bạn không hài lòng với human book (sách sống) hoặc human book (sách sống) có bất kỳ hành vi không thích hợp nào, bạn cần gửi khiếu nại đến địa chỉ email mục 8.2.</li></ul> Nếu bạn tin rằng một Người Dùng khác đã cung cấp thông tin gian lận hoặc không chính xác trên Nền tảng, bạn phải ngay lập tức thông báo cho HuLib. HuLib không chịu trách nhiệm đối với bất kỳ thiệt hại nào phát sinh từ hoặc liên quan đến bất kỳ thông tin gian lận hoặc không chính xác nào như vậy."
           },
           "index_3": {
             "heading": "5.4 Bảo mật thông tin của bản thân",

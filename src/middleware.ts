@@ -1,5 +1,3 @@
-// import { authMiddleware, redirectToSignIn } from '@clerk/nextjs';
-// import type { NextRequest } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 
 import { AppConfig } from './utils/AppConfig';

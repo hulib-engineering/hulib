@@ -1,32 +1,38 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
 
+import StoreProvider from '@/app/StoreProvider';
 import messages from '@/locales/en.json';
 
 import { BaseTemplate } from './BaseTemplate';
 
+// Mock useRouter:
+jest.mock('next/navigation', () => ({
+  useRouter() {
+    return {
+      prefetch: () => null,
+    };
+  },
+}));
+
 describe('Base template', () => {
   describe('Render method', () => {
-    it('should have 3 menu items', () => {
+    it('should have 3 sections', () => {
       render(
         <NextIntlClientProvider locale="en" messages={messages}>
-          <BaseTemplate
-          // leftNav={
-          //   <>
-          //     <li>link 1</li>
-          //     <li>link 2</li>
-          //     <li>link 3</li>
-          //   </>
-          // }
-          >
-            {null}
-          </BaseTemplate>
+          <StoreProvider>
+            <BaseTemplate>{null}</BaseTemplate>
+          </StoreProvider>
         </NextIntlClientProvider>,
       );
 
-      // const menuItemList = screen.getAllByRole('listitem');
+      const header = screen.getByRole('banner');
+      const main = screen.getByRole('main');
+      const footer = screen.getByRole('contentinfo');
 
-      // expect(menuItemList).toHaveLength(3);
+      expect(header).toBeInTheDocument();
+      expect(main).toBeInTheDocument();
+      expect(footer).toBeInTheDocument();
     });
 
     // it('should have a link to support creativedesignsguru.com', () => {
