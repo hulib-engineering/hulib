@@ -40,6 +40,7 @@ const PromotedEvent = () => {
           'sm:w-3/4 sm:px-8 gap-4 lg:max-w-7xl lg:px-10 lg:gap-16 2xl:px-[5.625rem]',
         )}
         data-testid="event-section"
+        id="event"
       >
         <div className="pb-3 lg:w-full lg:max-w-screen-lg">
           <div className="mb-6 flex w-full flex-col items-center justify-start px-4 text-center sm:px-0 lg:mb-12">
@@ -61,7 +62,7 @@ const PromotedEvent = () => {
               as="a"
               rel="noopener noreferrer"
               target="_blank"
-              href=""
+              href="https://docs.google.com/forms/d/e/1FAIpQLSemPvwCrQ1YSFs7Yv9a4FXpuzDF0sK7EKb9BFcwL5LlFh6bAw/viewform"
               className="rounded-full uppercase"
               iconRight={
                 <Image
@@ -77,10 +78,10 @@ const PromotedEvent = () => {
             </Button>
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full px-4 sm:px-0">
           <Image
             alt="Event banner"
-            src="/assets/images/temporary-banner.jpg"
+            src="/assets/images/event-banner.png"
             priority
             width={1196}
             height={480}
