@@ -10,7 +10,7 @@
     "cookie_settings": "cài đặt cookie"
   },
   "Index": {
-    "meta_title": "HuLib | Landing Page",
+    "meta_title": "HuLib | Trang chủ",
     "meta_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
     "hero_title": "dự án cộng đồng",
     "hero_motto": "HuLib ở đây để đồng hành cùng bạn",
@@ -260,8 +260,8 @@
     "translation_powered_by": "Translation powered by"
   },
   "MiniGame": {
-    "meta_title": "HuLib | Mini Game",
-    "meta_description": "Mini game for year of Dragon"
+    "meta_title": "HuLib | Trò Chơi",
+    "meta_description": "Trò chơi nhỏ chúc mừng năm Rồng"
   },
   "PortfolioSlug": {
     "meta_title": "Portfolio {slug}",
