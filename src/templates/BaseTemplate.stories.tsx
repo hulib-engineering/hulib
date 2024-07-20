@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { NextIntlClientProvider } from 'next-intl';
 
+import StoreProvider from '@/app/StoreProvider';
 import messages from '@/locales/en.json';
 
 import { BaseTemplate } from './BaseTemplate';
@@ -13,11 +14,14 @@ const meta = {
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/7.0/react/configure/story-layout
     layout: 'fullscreen',
+    nextjs: { appDirectory: true },
   },
   decorators: [
     (Story) => (
       <NextIntlClientProvider locale="en" messages={messages}>
-        <Story />
+        <StoreProvider>
+          <Story />
+        </StoreProvider>
       </NextIntlClientProvider>
     ),
   ],
