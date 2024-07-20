@@ -6,11 +6,19 @@ import messages from '@/locales/en.json';
 
 import { BaseTemplate } from './BaseTemplate';
 
-// Mock useRouter:
-jest.mock('next/navigation', () => ({
-  useRouter() {
+// Mock useRouter and usePathname of next-intl:
+jest.mock('next-intl/navigation', () => ({
+  createSharedPathnamesNavigation() {
     return {
-      prefetch: () => null,
+      useRouter() {
+        return {
+          push: () => jest.fn(),
+          replace: () => jest.fn(),
+        };
+      },
+      usePathname() {
+        return '';
+      },
     };
   },
 }));
