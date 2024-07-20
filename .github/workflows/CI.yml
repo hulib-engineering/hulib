@@ -69,10 +69,11 @@ jobs:
       - name: Run storybook tests
         run: npm run test-storybook:ci
 
-      - name: Run E2E tests
-        run: npx percy exec -- npm run test:e2e
-        env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+# No e2e tests yet
+#      - name: Run E2E tests
+#        run: npx percy exec -- npm run test:e2e
+#        env:
+#          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
 
       - uses: actions/upload-artifact@v3
         if: always()
