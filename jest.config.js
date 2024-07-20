@@ -32,10 +32,30 @@ const customJestConfig = {
   },
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: [
-    '<rootDir>/node_modules/',
+    '<rootDir>/node_modules/(?!swiper|ssr-window|dom7)',
     '<rootDir>/tests/',
     '<rootDir>/__checks__/',
   ],
 };
 
-module.exports = createJestConfig(customJestConfig);
+module.exports = async () => ({
+  /**
+   * Using ...(await createJestConfig(customJestConfig)()) to override transformIgnorePatterns
+   * provided byt next/jest.
+   *
+   * @link https://github.com/vercel/next.js/issues/36077#issuecomment-1096635363
+   */
+  ...(await createJestConfig(customJestConfig)()),
+  /**
+   * Swiper use ECMAScript Modules (ESM) and Jest provides some experimental support for it
+   * but "node_modules" are not transpiled by next/jest yet.
+   *
+   * The "transformIgnorePatterns" on "jest.config.js" prevents the Swiper files from being
+   * transformed by Jest, but it affects the CSS files that are provided by this package.
+   * Mocking these CSS files is the solution that demands the smallest configuration.
+   *
+   * @link https://github.com/vercel/next.js/issues/36077#issuecomment-1096698456
+   * @link https://jestjs.io/docs/ecmascript-modules
+   */
+  transformIgnorePatterns: ['node_modules/(?!(swiper)/)'],
+});
