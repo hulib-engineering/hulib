@@ -7,16 +7,15 @@ import Index from './page';
 
 describe('Index page', () => {
   describe('Render method', () => {
-    it('should have hero section', () => {
+    it('should have event section', () => {
       render(
         <NextIntlClientProvider locale="en" messages={messages}>
           <Index />
         </NextIntlClientProvider>,
       );
 
-      const hero = screen.getAllByTestId('hero-section');
-
-      expect(hero).toBeInTheDocument();
+      const event = screen.getByTestId('event-section');
+      expect(event).toBeInTheDocument();
     });
   });
 });
