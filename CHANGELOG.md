@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/HumanLibrary/hulib/compare/v1.1.2...v1.1.3) (2024-08-17)
+
+
+### Bug Fixes
+
+* **Assets:** fixed filenames ([8c09ca9](https://github.com/HumanLibrary/hulib/commit/8c09ca9ffcb4585712299d517ee54ffd1bf4715b))
+
 ## [1.1.2](https://github.com/HumanLibrary/hulib/compare/v1.1.1...v1.1.2) (2024-08-17)
 
 
