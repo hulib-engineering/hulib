@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/HumanLibrary/hulib/compare/v1.0.0...v1.1.0) (2024-08-17)
+
+
+### Features
+
+* **Sponsors Section:** added components and UI/UX layout (and hided Event Section) ([0ca80b5](https://github.com/HumanLibrary/hulib/commit/0ca80b53527e1fbb3f6becd90f8dd7b484741198))
+
 # 1.0.0 (2024-07-20)
 
 
