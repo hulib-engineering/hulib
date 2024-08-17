@@ -27,6 +27,7 @@ export default withSentryConfig(
         config.externals.push({
           bufferutil: 'bufferutil',
           'utf-8-validate': 'utf-8-validate',
+          '@headlessui/react': '@headlessui/react',
         });
 
         return config;
