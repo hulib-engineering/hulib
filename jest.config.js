@@ -5,6 +5,8 @@ const createJestConfig = nextJest({
   dir: './',
 });
 
+const esModules = ['@wavesurfer/react', 'swiper'].join('|');
+
 const customJestConfig = {
   moduleNameMapper: {
     // Handle module aliases (this will be automatically configured for you soon)
@@ -57,5 +59,5 @@ module.exports = async () => ({
    * @link https://github.com/vercel/next.js/issues/36077#issuecomment-1096698456
    * @link https://jestjs.io/docs/ecmascript-modules
    */
-  transformIgnorePatterns: ['node_modules/(?!(swiper)/)'],
+  transformIgnorePatterns: [`node_modules/(?!(${esModules})/)`],
 });

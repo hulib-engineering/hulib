@@ -20,6 +20,7 @@ export default withSentryConfig(
       },
       poweredByHeader: false,
       reactStrictMode: true,
+      transpilePackages: ['@wavesurfer/react'],
       webpack: (config) => {
         // config.externals is needed to resolve the following errors:
         // Module not found: Can't resolve 'bufferutil'
