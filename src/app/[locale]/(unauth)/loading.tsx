@@ -1,6 +1,6 @@
-import SpecialSection from '@/layouts/SpecialSection';
+import { Loader } from '@/components/Loader';
 
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
-  return <SpecialSection />;
+  return <Loader />;
 }

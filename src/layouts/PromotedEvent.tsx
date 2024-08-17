@@ -103,6 +103,7 @@ const PromotedEvent = () => {
           ))}
         </div>
       </section>
+      {/* <Loader /> */}
     </>
   );
 };
