@@ -48,7 +48,7 @@ const SponsorItemCard = (props: ISponsorItemCardProps) => {
               src={props.logoUrl}
               alt={props.name}
               height={64}
-              width={360}
+              width={300}
             />
           </div>
         </div>
