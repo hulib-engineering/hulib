@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/HumanLibrary/hulib/compare/v1.1.0...v1.1.1) (2024-08-17)
+
+
+### Bug Fixes
+
+* **Package:** fixed config for package ([4664494](https://github.com/HumanLibrary/hulib/commit/46644948bbfcaafc08e2d792ee44c06b67993d40))
+* **Testcase:** fixed test setup for ECSMA package ([5155306](https://github.com/HumanLibrary/hulib/commit/5155306a1c12c96b101bcaccca673e7149653fd5))
+* **Testcase:** modified package version ([6f1e09a](https://github.com/HumanLibrary/hulib/commit/6f1e09a086824a8beab4857ac59163048c424e84))
+
 # [1.1.0](https://github.com/HumanLibrary/hulib/compare/v1.0.0...v1.1.0) (2024-08-17)
 
 
