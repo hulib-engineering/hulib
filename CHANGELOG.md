@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/HumanLibrary/hulib/compare/v1.1.1...v1.1.2) (2024-08-17)
+
+
+### Bug Fixes
+
+* **Sponsor Section:** modified responsive layout, added link to index and intl phrases for sponsor ([5e27074](https://github.com/HumanLibrary/hulib/commit/5e270742a6d076b73e1a5baa63e268a18efd015e))
+* **Testcase:** added test case to raise coverage ([7169b80](https://github.com/HumanLibrary/hulib/commit/7169b8060d4167066fc69de1d4addc99ca880200))
+
 ## [1.1.1](https://github.com/HumanLibrary/hulib/compare/v1.1.0...v1.1.1) (2024-08-17)
 
 
