@@ -30,6 +30,7 @@ const SponsorItemCard = (props: ISponsorItemCardProps) => {
       </div>
       <a target="_blank" href={props.refUrl} rel="noopener noreferrer">
         <div
+          data-testid={`sponsor-item-${props.name}`}
           onMouseEnter={() => setIsCardHovered(true)}
           onMouseLeave={() => setIsCardHovered(false)}
           className="relative overflow-hidden rounded-xl bg-white p-8 transition-all duration-300 ease-out hover:shadow-[0px_8px_24px_#0061ef14]"
