@@ -55,9 +55,6 @@ const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
           <button type="button" onClick={props.onClose}>
             <XMarkIcon width={24} height={24} />
           </button>
-          {/* <div className="flex h-6 w-6 items-center justify-center"> */}
-          {/*  <div className="relative flex h-6 w-6 flex-col items-start justify-start" /> */}
-          {/* </div> */}
         </div>
         <p className="text-wrap text-xl font-light">{props.content}</p>
       </div>

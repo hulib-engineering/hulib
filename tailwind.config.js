@@ -101,6 +101,8 @@ module.exports = {
         'main-pattern': "url('/assets/images/bg-pattern.png')",
         'special-section-pattern':
           "url('/assets/images/bg-special-pattern.webp')",
+        'radial-gradient':
+          'radial-gradient(at 52% 57%, hsla(11,83%,72%,1) 0px, transparent 50%), radial-gradient(at 37% 57%, hsla(175,78%,66%,1) 0px, transparent 50%)',
       },
       lineClamp: {
         7: '7',
@@ -263,6 +265,11 @@ module.exports = {
             width: '70px',
           },
         },
+        loaderCircleJumping: {
+          '0%, 50%, 100%': { transform: 'translateY(0px)' },
+          '25%': { transform: 'translateY(-15px) scale(0.5)' },
+          '75%': { transform: 'translateY(5px) scale(0.9)' },
+        },
       },
       animation: {
         'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
@@ -280,9 +287,15 @@ module.exports = {
         'show-firework': 'showFirework 1.5s ease-in-out 8s forwards',
         fire: 'fire 0.5s ease-in-out 9s forwards',
         'transform-from-old-to-new': 'transformFromOldToNew 1s ease-in-out 4s',
+        'loader-circle-jump': 'loaderCircleJumping 2s infinite',
       },
     },
   },
-  // eslint-disable-next-line global-require,import/no-extraneous-dependencies
-  plugins: [backfaceVisibility, require('tailwindcss-3d')({ legacy: true })],
+  plugins: [
+    backfaceVisibility,
+    // eslint-disable-next-line global-require,import/no-extraneous-dependencies
+    require('tailwindcss-3d')({ legacy: true }),
+    // eslint-disable-next-line global-require,import/no-extraneous-dependencies
+    require('tailwindcss-animation-delay'),
+  ],
 };
