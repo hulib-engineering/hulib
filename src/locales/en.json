@@ -63,6 +63,14 @@
     "testimonial_title": "meet our team",
     "testimonial_description": "What do our members say?",
     "sponsors_title": "sponsors",
+    "diamond_sponsor": "diamond sponsor",
+    "gold_sponsor": "gold sponsor",
+    "silver_sponsor": "silver sponsor",
+    "legal_sponsor": "legal sponsor",
+    "professional_sponsor": "professional sponsor",
+    "media_sponsor": "media sponsor",
+    "media_support": "media support",
+    "scholarship_sponsor": "scholarship sponsor",
     "faqs_question_0": {
       "question": "1. What is HuLib, and how does it work?",
       "answer": {
