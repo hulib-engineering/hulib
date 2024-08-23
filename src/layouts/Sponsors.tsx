@@ -63,14 +63,14 @@ const SponsorList = [
     logoUrl: '/assets/images/sponsors/VEO.png',
     type: 'legal-sponsor',
     tooltipKey: 'legal_sponsor',
-    refUrl: '',
+    refUrl: 'https://veo.com.vn',
   },
   {
     name: 'WEC',
     logoUrl: '/assets/images/sponsors/WEC.png',
     type: 'diamond-sponsor',
     tooltipKey: 'diamond_sponsor',
-    refUrl: 'https://www.wecorlando.com/',
+    refUrl: 'https://www.facebook.com/WECOrlando',
   },
   {
     name: 'Blue Magnolia',
@@ -119,7 +119,7 @@ const SponsorList = [
     logoUrl: '/assets/images/sponsors/JCI.png',
     type: 'media-sponsor',
     tooltipKey: 'media_support',
-    refUrl: 'https://jci.vn/category/chapters/jci-danang/',
+    refUrl: 'https://jci.vn/category/chapters/jci-danang',
   },
 ] as const;
 
