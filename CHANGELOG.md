@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/HumanLibrary/hulib/compare/v1.1.4...v1.1.5) (2024-08-23)
+
+
+### Bug Fixes
+
+* **Locales:** modified localization string ([6cd6a02](https://github.com/HumanLibrary/hulib/commit/6cd6a02ea9b4c0e78a4a4e132ca4c8f3382ba937))
+
 ## [1.1.4](https://github.com/HumanLibrary/hulib/compare/v1.1.3...v1.1.4) (2024-08-23)
 
 
