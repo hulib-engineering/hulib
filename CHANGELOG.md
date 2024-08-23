@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/HumanLibrary/hulib/compare/v1.1.3...v1.1.4) (2024-08-23)
+
+
+### Bug Fixes
+
+* **Landing page:** update wec link, veo link, update proposal ([63e29d4](https://github.com/HumanLibrary/hulib/commit/63e29d441e3fa35ad7cc20c581695ad0b6f3e0d0))
+
 ## [1.1.3](https://github.com/HumanLibrary/hulib/compare/v1.1.2...v1.1.3) (2024-08-17)
 
 
