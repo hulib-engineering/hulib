@@ -48,10 +48,13 @@ const PromotedEvent = () => {
               {t('event_title')}
             </p>
             <h1 className="px-4 text-[1.75rem] font-semibold capitalize text-slate-1000 sm:text-[5rem]">
-              emotional bank!
+              Work or study
+            </h1>
+            <h1 className="px-4 text-[1.75rem] font-semibold capitalize text-slate-1000/30 sm:text-[5rem] ">
+              Đi học - Đi làm
             </h1>
             <h1 className="mb-6 px-4 text-[1.75rem] font-semibold capitalize text-slate-1000/30 sm:text-[5rem] lg:mb-12">
-              ngân hàng cảm xúc!
+              Hướng nào &quot;dễ&quot; hơn ?
             </h1>
             <p className="text-sm font-normal text-black sm:text-2xl">
               {t('event_description')}
@@ -62,7 +65,7 @@ const PromotedEvent = () => {
               as="a"
               rel="noopener noreferrer"
               target="_blank"
-              href="https://docs.google.com/forms/d/e/1FAIpQLSemPvwCrQ1YSFs7Yv9a4FXpuzDF0sK7EKb9BFcwL5LlFh6bAw/viewform"
+              href="https://docs.google.com/forms/d/1qqCLHf7UubelERnrRAmPgQsEqBtkC3O5GJ_dbwzWHMc/viewform"
               className="rounded-full uppercase"
               iconRight={
                 <Image
