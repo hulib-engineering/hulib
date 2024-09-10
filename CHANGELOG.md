@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/HumanLibrary/hulib/compare/v1.1.5...v1.2.0) (2024-09-10)
+
+
+### Features
+
+* **landingpage:** show event, hide hero and features ([c16ee54](https://github.com/HumanLibrary/hulib/commit/c16ee54f0d447d0af7cf3d394fc3dd80dacb3258))
+
 ## [1.1.5](https://github.com/HumanLibrary/hulib/compare/v1.1.4...v1.1.5) (2024-08-23)
 
 
