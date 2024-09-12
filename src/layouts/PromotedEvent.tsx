@@ -81,17 +81,29 @@ const PromotedEvent = () => {
             </Button>
           </div>
         </div>
-        <div className="w-full px-4 sm:px-0">
+        {/* <div className="w-full px-4 sm:px-0">
           <Image
             alt="Event banner"
-            src="/assets/images/event-banner.png"
+            src="/assets/images/event-banner-stretched.png"
             priority
             width={1196}
             height={480}
             className="object-cover object-center"
           />
-        </div>
+        </div> */}
       </section>
+
+      <div className="flex w-full justify-center px-4 sm:px-0 ">
+        <Image
+          alt="Event banner"
+          src="/assets/images/event-banner-stretched.png"
+          priority
+          width={1600}
+          height={400}
+          className=" object-cover object-center"
+        />
+      </div>
+
       <section className="w-full flex-col items-center justify-center px-8 py-6 sm:mt-0 lg:py-12 xl:px-48 2xl:px-[20.625rem]">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:gap-6">
           {EventFeatureList.map((feature) => (
