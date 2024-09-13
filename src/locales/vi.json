@@ -20,7 +20,7 @@
     "hero_message_2": "“Bạn <important>không đơn độc</important> trước <important>những rào cản</important> của chính mình.”",
     "hero_mentor_quantity": "100+ <normal>Human Book (Sách Sống) với nhiều trải nghiệm phong phú</normal>",
     "event_title": "đón chờ sự kiện mới toanh -  27/07/2024",
-    "event_description": "Hãy tham gia “Ngân Hàng Cảm Xúc”, cùng chúng mình cân bằng những cung bậc cảm xúc và thật hạnh phúc nha.",
+    "event_description": "Hãy tham gia “Đi học - Đi làm. Hướng nào dễ hơn ?”, để cùng lắng nghe những câu chuyện nửa cuộc đời của anh chị em Human Books nhà HuLib nha.",
     "event_call_to_action": "đăng ký ngay",
     "feature_peers": {
       "title": "Cộng đồng với những câu chuyện \"không của riêng ai\"",
@@ -40,7 +40,7 @@
     },
     "event_feature_online_meetings": {
       "title": "Gặp Gỡ Trực Tuyến",
-      "description": "Đặt cuộc hẹn miễn phí với bất kỳ human book (sách sống) nào bạn muốn lắng nghe và hỏi đáp thắc mắc của bản thân."
+      "description": "Đặt cuộc hẹn miễn phí với bất kỳ human book (sách sống) nào bạn muốn lắng nghe và hỏi đáp thắc mắc của bản thân!"
     },
     "event_feature_safely_sharing": {
       "title": "Bày Tỏ Chân Thành",
@@ -83,7 +83,7 @@
       }
     },
     "faqs_question_1": {
-      "question": "2. Đối tượng mà Hulib hướng đến?",
+      "question": "2. Đối tượng mà HuLib hướng đến?",
       "answer": {
         "heading": "",
         "body_paras": {
@@ -94,7 +94,7 @@
     "faqs_question_2": {
       "question": "3. Làm thế nào để mình tham gia với HuLib?",
       "answer": {
-        "heading": "Tham gia HuLib cực dễ nha! ",
+        "heading": "Tham gia HuLib cực dễ nha!",
         "body_paras": {
           "p1": "Với tư cách reader (bạn đọc), bạn có thể đăng ký chia sẻ câu chuyện của mình, kết nối với human book (sách sống), hoặc tham gia gặp gỡ HuLibers khác trực tuyến.",
           "p2": "Nếu bạn là chuyên gia hoặc tình nguyện viên quan tâm đến việc lan toả câu chuyện và trải nghiệm độc đáo, HuLib rất hoan nghênh đóng góp của bạn. Hãy theo dõi HuLib để cập nhật các sự kiện ý nghĩa nhé. Khám phá, đóng góp và tạo ảnh hưởng tích cực cùng chúng tớ nghen."
