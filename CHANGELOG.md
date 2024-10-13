@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/HumanLibrary/hulib/compare/v1.2.1...v1.3.0) (2024-10-13)
+
+
+### Features
+
+* **landingpage:** revert to post-event ([208cf3d](https://github.com/HumanLibrary/hulib/commit/208cf3d4315e61d1d861cbc0c60ff3d30c80ecf0))
+* **landingpage:** revert to post-event ([ab3b70f](https://github.com/HumanLibrary/hulib/commit/ab3b70f3f51cf6395348705a1bd9843aaee80b16))
+
 ## [1.2.1](https://github.com/HumanLibrary/hulib/compare/v1.2.0...v1.2.1) (2024-09-13)
 
 
