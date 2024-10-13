@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/HumanLibrary/hulib/compare/v1.2.0...v1.2.1) (2024-09-13)
+
+
+### Bug Fixes
+
+* **landingpage:** fix c16ee54f0d447d0af7cf3d394fc3dd80dacb3258 ([947eb8b](https://github.com/HumanLibrary/hulib/commit/947eb8b47d2f2a4588a8f94e5153ff0beef46fc3))
+
 # [1.2.0](https://github.com/HumanLibrary/hulib/compare/v1.1.5...v1.2.0) (2024-09-10)
 
 
