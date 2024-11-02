@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/HumanLibrary/hulib/compare/v1.3.0...v1.4.0) (2024-11-02)
+
+
+### Bug Fixes
+
+* **Auth API:** fixed definition imports ([e55ca27](https://github.com/HumanLibrary/hulib/commit/e55ca27c83b96556ba292c824c7c65c500f68c4d))
+
+
+### Features
+
+* **Register:** added components and Register UI layout ([6682015](https://github.com/HumanLibrary/hulib/commit/668201589d4095037e027716a9cc05e751913035))
+
 # [1.3.0](https://github.com/HumanLibrary/hulib/compare/v1.2.1...v1.3.0) (2024-10-13)
 
 
