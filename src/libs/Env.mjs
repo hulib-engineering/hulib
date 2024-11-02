@@ -10,6 +10,8 @@ export const Env = createEnv({
   //   DATABASE_AUTH_TOKEN: z.string().optional(),
   // },
   client: {
+    NEXT_PUBLIC_REACT_APP_BACKEND_VERSION: z.string().trim().min(1),
+    NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT: z.string().trim().min(1),
     NEXT_PUBLIC_EMAILJS_SERVICE_ID: z.string().trim().min(1),
     NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: z.string().trim().min(1),
     NEXT_PUBLIC_EMAILJS_PUBLIC_KEY: z.string().trim().min(1),
@@ -18,6 +20,10 @@ export const Env = createEnv({
   },
   // You need to destructure all the keys manually
   runtimeEnv: {
+    NEXT_PUBLIC_REACT_APP_BACKEND_VERSION:
+      process.env.NEXT_PUBLIC_REACT_APP_BACKEND_VERSION,
+    NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT:
+      process.env.NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT,
     NEXT_PUBLIC_EMAILJS_SERVICE_ID: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
     NEXT_PUBLIC_EMAILJS_TEMPLATE_ID:
       process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,

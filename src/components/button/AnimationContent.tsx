@@ -9,16 +9,6 @@ import { mergeClassnames } from '@/components/private/utils';
 import type { ButtonSettingsProps } from './private/types';
 import { getIconSize, getLoaderSize } from './private/utils/getButtonSizes';
 
-// import Loader from '../../../../loader/Loader';
-// import mergeClassnames from '../../../../mergeClassnames/mergeClassnames';
-// import GenericCheckAlternative from '../../../../private/icons/GenericCheckAlternative';
-// import IconLeft from '../../../styles/IconLeft';
-// import IconRight from '../../../styles/IconRight';
-// import type ButtonSettingsProps from '../../types/ButtonSettingsProps';
-// import getIconSize from '../buttonSizes/getIconSize';
-// import getLoaderSize from '../buttonSizes/getLoaderSize';
-// import getLoaderColor from '../buttonStyles/getLoaderColor';
-
 const AnimationContent = ({
   children,
   iconLeft,

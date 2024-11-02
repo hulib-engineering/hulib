@@ -9,8 +9,9 @@ export const getButtonCommonStyles = ({
 }: Pick<ButtonSettingsProps, 'disabled'>): string =>
   mergeClassnames(
     'relative z-0 flex justify-center items-center font-medium no-underline overflow-hidden py-3 rounded-full',
-    'whitespace-nowrap select-none transition duration-200 text-base leading-normal',
-    disabled ? 'opacity-60 cursor-not-allowed' : 'active:scale-90',
+    'whitespace-nowrap select-none transition duration-200 text-base leading-tight',
+    disabled ? 'cursor-not-allowed' : 'active:scale-90',
+    !disabled && 'focus:shadow-[0_0_0_2px] transition-colors ease-out',
   );
 
 export const getButtonVariants = ({
@@ -18,19 +19,23 @@ export const getButtonVariants = ({
   disabled,
   animation,
 }: Pick<ButtonSettingsProps, 'variant' | 'disabled' | 'animation'>): string => {
-  if (variant === 'secondary' || variant === 'outline') {
+  if (variant === 'outline') {
     return animation === 'error'
       ? mergeClassnames(
           'text-chichi bg-transparent ring-inset ring-1 ring-chichi',
           !disabled && 'hover:bg-chichi-10',
         )
       : mergeClassnames(
-          'text-bulma bg-transparent ring-inset ring-1 ring-trunks',
-          !disabled && 'hover:ring-bulma',
+          'text-primary-50 bg-transparent border border-[#C2C6CF]',
+          disabled && 'border-neutral-90',
+          !disabled &&
+            'hover:bg-primary-98 focus:border focus:border-[#C2C6CF] focus:shadow-primary-60',
         );
   }
   if (variant === 'tertiary') {
-    return animation === 'error' ? 'text-goten bg-chichi' : 'text-goten bg-hit';
+    return animation === 'error'
+      ? 'text-goten bg-chichi'
+      : 'text-primary-50 hover:bg-primary-98';
   }
   if (variant === 'ghost') {
     return animation === 'error'
@@ -39,13 +44,33 @@ export const getButtonVariants = ({
           !disabled && 'hover:bg-chichi-10',
         )
       : mergeClassnames(
-          'text-trunks bg-transparent',
-          !disabled && 'hover:text-bulma',
+          'text-primary-50 bg-transparent',
+          disabled && 'text-neutral-70',
+          !disabled &&
+            'hover:bg-primary-98 focus:border-2 focus:border-[#858DA0] focus:shadow-primary-60',
+        );
+  }
+  if (variant === 'secondary') {
+    return animation === 'error'
+      ? mergeClassnames(
+          'text-chichi bg-primary-90',
+          !disabled && 'hover:bg-chichi-10',
+        )
+      : mergeClassnames(
+          'text-primary-50 bg-primary-90',
+          disabled && 'bg-neutral-90 text-neutral-70',
+          !disabled &&
+            'hover:bg-primary-80 focus:border focus:border-primary-80 focus:shadow-primary-60',
         );
   }
   return animation === 'error'
     ? 'text-white bg-chichi'
-    : 'text-white bg-primary';
+    : mergeClassnames(
+        'text-white bg-primary-50',
+        disabled && 'bg-neutral-90 text-neutral-70',
+        !disabled &&
+          'hover:bg-primary-80 focus:border focus:border-primary-80 focus:shadow-primary-60',
+      );
 };
 
 type Props = { iconElement?: React.JSX.Element } & ButtonSettingsProps;

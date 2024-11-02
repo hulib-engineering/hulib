@@ -1,23 +1,96 @@
 import { Dialog, Transition } from '@headlessui/react';
-import type { ReactNode } from 'react';
+import localFont from 'next/font/local';
+import type { MutableRefObject, ReactElement, ReactNode } from 'react';
 import React from 'react';
 
-import Backdrop from '@/components/Backdrop';
 import type { WithChildren } from '@/components/private/types';
 import { mergeClassnames } from '@/components/private/utils';
+
+import Backdrop from './Backdrop';
+
+const poppins = localFont({
+  src: [
+    {
+      path: '../styles/fonts/SVN-Poppins-ExtraLight.otf',
+      weight: '200',
+      style: 'normal',
+    },
+    {
+      path: '../styles/fonts/SVN-Poppins-ExtraLightItalic.otf',
+      weight: '200',
+      style: 'italic',
+    },
+    {
+      path: '../styles/fonts/SVN-Poppins-Light.otf',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: '../styles/fonts/SVN-Poppins-LightItalic.otf',
+      weight: '300',
+      style: 'italic',
+    },
+    {
+      path: '../styles/fonts/SVN-Poppins-Medium.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../styles/fonts/SVN-Poppins-MediumItalic.otf',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: '../styles/fonts/SVN-Poppins-Bold.otf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../styles/fonts/SVN-Poppins-BoldItalic.otf',
+      weight: '700',
+      style: 'italic',
+    },
+    {
+      path: '../styles/fonts/SVN-Poppins-ExtraBold.otf',
+      weight: '800',
+      style: 'normal',
+    },
+    {
+      path: '../styles/fonts/SVN-Poppins-ExtraBoldItalic.otf',
+      weight: '800',
+      style: 'italic',
+    },
+    {
+      path: '../styles/fonts/SVN-Poppins-Black.otf',
+      weight: '900',
+      style: 'normal',
+    },
+    {
+      path: '../styles/fonts/SVN-Poppins-BlackItalic.otf',
+      weight: '900',
+      style: 'italic',
+    },
+  ],
+});
 
 type ModalRootProps = {
   open: boolean;
   onClose: () => void;
+  initialFocus?: MutableRefObject<HTMLElement | null>;
+  className?: string;
 };
 
 type ModalComponentProps = (
   props: WithChildren<ModalRootProps>,
-) => React.ReactElement | null;
+) => ReactElement | null;
 
 const ModalRoot: ModalComponentProps = ({ open, onClose, children }) => (
   <Transition appear show={open} as={React.Fragment}>
-    <Dialog as="div" className="relative z-[1000]" onClose={onClose}>
+    <Dialog
+      as="div"
+      className={mergeClassnames(poppins.className, 'relative z-[1000]')}
+      onClose={onClose}
+    >
       {children}
     </Dialog>
   </Transition>
