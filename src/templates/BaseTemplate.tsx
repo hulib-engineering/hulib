@@ -10,7 +10,7 @@ type IBaseTemplateProps = {
   children: ReactNode;
 };
 
-const poppins = localFont({
+export const poppins = localFont({
   src: [
     {
       path: '../styles/fonts/SVN-Poppins-ExtraLight.otf',

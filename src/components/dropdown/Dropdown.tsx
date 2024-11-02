@@ -1,14 +1,9 @@
 'use client';
 
 import { Listbox } from '@headlessui/react';
-import React, { useMemo, useState } from 'react';
+import React, { Children, Fragment, useMemo, useState } from 'react';
 import { usePopper } from 'react-popper';
 
-import type {
-  DropdownRootProps,
-  OptionProps,
-  OptionsProps,
-} from '@/components/dropdown/private/types';
 import {
   useFormContext,
   useFormItemContext,
@@ -16,6 +11,14 @@ import {
 import type { WithChildren } from '@/components/private/types';
 import { mergeClassnames } from '@/components/private/utils';
 
+import GenericHint from '../Hint';
+import SelectButton from '../selectButton/selectButton';
+import type {
+  DropdownRootProps,
+  OptionProps,
+  OptionsProps,
+  SelectProps,
+} from './private/types';
 import { DropdownContext, useDropdownContext } from './private/utils';
 
 const DropdownRoot = ({
@@ -65,23 +68,10 @@ const DropdownRoot = ({
     [attributes, disabled, isError, onClear, size, styles, value],
   );
 
-  // const states = {
-  //   value,
-  //   isError,
-  //   size,
-  //   disabled,
-  //   onClear,
-  //   popper: {
-  //     styles,
-  //     attributes,
-  //     setAnchor: setAnchorEl,
-  //     setPopper: setPopperEl,
-  //   },
-  // };
-
   const childrens =
-    typeof children !== 'function' ? React.Children.toArray(children) : [];
+    typeof children !== 'function' ? Children.toArray(children) : [];
   const callableChildren = typeof children === 'function' && children;
+
   return (
     <DropdownContext.Provider value={states}>
       <div
@@ -113,6 +103,7 @@ const Options = ({
   ...rest
 }: WithChildren<OptionsProps>) => {
   const { popper } = useDropdownContext('MenuItem.Options');
+
   return (
     <Listbox.Options
       ref={popper?.setPopper}
@@ -120,7 +111,8 @@ const Options = ({
       {...popper?.attributes?.popper}
       className={mergeClassnames(
         menuWidth || 'w-full min-w-[7.25rem]',
-        'z-5 mt-1 p-1 rounded-lg box-border bg-white shadow flex flex-col gap-1',
+        'z-[999] mt-1 p-2 rounded-2xl box-border bg-white shadow-lg',
+        'flex flex-col gap-1',
         className && className,
       )}
       {...rest}
@@ -139,6 +131,44 @@ const Option = ({ children, value }: OptionProps) => {
           : children
       }
     </Listbox.Option>
+  );
+};
+
+const Select = ({
+  open,
+  label,
+  placeholder,
+  children,
+  className,
+  ...rest
+}: WithChildren<SelectProps>) => {
+  const { size, popper, isError, disabled } =
+    useDropdownContext('Dropdown.Select');
+
+  return (
+    <>
+      {label && (
+        <SelectButton.Label idDisabled={disabled}>{label}</SelectButton.Label>
+      )}
+      <Listbox.Button as={Fragment}>
+        <SelectButton
+          size={size}
+          open={open}
+          isError={isError}
+          idDisabled={disabled}
+          ref={popper?.setAnchor}
+          {...rest}
+        >
+          <SelectButton.Input className={className}>
+            {children ? (
+              <SelectButton.Value>{children}</SelectButton.Value>
+            ) : (
+              <SelectButton.Placeholder>{placeholder}</SelectButton.Placeholder>
+            )}
+          </SelectButton.Input>
+        </SelectButton>
+      </Listbox.Button>
+    </>
   );
 };
 
@@ -161,11 +191,25 @@ const Trigger = ({
   );
 };
 
+const Hint = ({
+  children,
+  className,
+}: WithChildren<{ className?: string }>) => {
+  const { isError, disabled } = useDropdownContext('Dropdown.Input');
+  return (
+    <GenericHint error={isError} disabled={disabled} className={className}>
+      {children}
+    </GenericHint>
+  );
+};
+
 // MenuItem
 const Dropdown = Object.assign(DropdownRoot, {
   Options,
   Option,
+  Select,
   Trigger,
+  Hint,
 });
 
 export default Dropdown;

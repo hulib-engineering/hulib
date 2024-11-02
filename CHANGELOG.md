@@ -129,7 +129,7 @@
 * **Features:** added layout, component: Feature card and intl phrases ([84f604c](https://github.com/HumanLibrary/hulib/commit/84f604c668844fa01ba90c6639a71d70d0b5f6bb))
 * **Footer:** added new layout, with interactive link ([0c379ac](https://github.com/HumanLibrary/hulib/commit/0c379ac5faaf8f4b2431725fcd8a33e74caf8253))
 * **footer:** init footer ([f140dfd](https://github.com/HumanLibrary/hulib/commit/f140dfd3f89bc225466c256345e586d26ff088e2))
-* **Glob:** added components: Button, Loader, Animation ([f33f1af](https://github.com/HumanLibrary/hulib/commit/f33f1af988eba7303aa42637ce8a4ebe15ba263c))
+* **Glob:** added components: Button, Label, Animation ([f33f1af](https://github.com/HumanLibrary/hulib/commit/f33f1af988eba7303aa42637ce8a4ebe15ba263c))
 * **Global:** added responsive layout for whole page ([9a1c932](https://github.com/HumanLibrary/hulib/commit/9a1c932eafe688db05dda5c01eb149023ecde067))
 * **Glob:** initialized project ([4c260f0](https://github.com/HumanLibrary/hulib/commit/4c260f00b88143b8a1660705060b27da8da802d9))
 * **Glob:** modified configuration files and github actions workflow's secrets ([da6f642](https://github.com/HumanLibrary/hulib/commit/da6f642fb856f1dbbca2488b458fc6f2e620a334))

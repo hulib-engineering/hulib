@@ -47,6 +47,7 @@ module.exports = {
       amber: colors.amber,
       indigo: colors.indigo,
       red: colors.red,
+      neutral: colors.neutral,
     },
     extend: {
       colors: {
@@ -84,6 +85,33 @@ module.exports = {
         },
         amber: {
           75: '#ffdf8e',
+        },
+        yellow: {
+          90: '#FDF3CE',
+        },
+        neutral: {
+          10: '#171819',
+          20: '#2E3032',
+          30: '#45484A',
+          40: '#5C6063',
+          60: '#8F9397',
+          70: '#ABAEB1',
+          90: '#E3E4E5',
+          98: '#F9F9F9',
+        },
+        neutralVariant: {
+          90: '#E3E5EB',
+        },
+        primary: {
+          20: '#021A4C',
+          40: '#033599',
+          50: '#0442BF',
+          80: '#84ACFC',
+          90: '#CDDDFE',
+          98: '#F0F5FF',
+        },
+        red: {
+          50: '#EE0038',
         },
       },
       rotate: {
