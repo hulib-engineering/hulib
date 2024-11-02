@@ -8,6 +8,7 @@ import type {
   Ref,
   SetStateAction,
 } from 'react';
+import type React from 'react';
 
 type Placement =
   | 'top-start'
@@ -67,4 +68,19 @@ type OptionsProps = {
   className?: string;
 };
 
-export type { DropdownRootProps, DropdownState, OptionProps, OptionsProps };
+type SelectProps = {
+  label?: React.JSX.Element | string;
+  placeholder?: React.JSX.Element | string;
+  open?: boolean;
+  value?: undefined;
+  innerLabel?: boolean;
+  className?: string;
+};
+
+export type {
+  DropdownRootProps,
+  DropdownState,
+  OptionProps,
+  OptionsProps,
+  SelectProps,
+};

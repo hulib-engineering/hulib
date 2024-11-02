@@ -118,7 +118,7 @@ const PromotedEvent = () => {
           ))}
         </div>
       </section>
-      {/* <Loader /> */}
+      {/* <Label /> */}
     </>
   );
 };
