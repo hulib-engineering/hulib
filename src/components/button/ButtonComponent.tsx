@@ -54,6 +54,7 @@ const ButtonComponent = <C extends ElementType>({
         animation === 'error' && getAnimation('error'),
         fullWidth && !iconOnly && 'w-full',
         customClassName,
+        'font-medium',
       )}
       {...((!as || as === 'button') && { type: 'button' })}
       {...(disabled && { disabled })}
@@ -74,7 +75,7 @@ const Hover = ({
       ? 'bg-light-active'
       : variant === 'outline'
         ? 'bg-light-hover'
-        : 'bg-primary-hover';
+        : 'bg-primary-40';
 
   return (
     <span

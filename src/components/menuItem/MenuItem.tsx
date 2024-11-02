@@ -38,12 +38,12 @@ const MenuItemRoot = forwardRef(
         <Component
           ref={ref}
           className={mergeClassnames(
-            'flex gap-2 justify-start items-center px-3 py-2 bg-transparent rounded-md',
-            'text-sm text-slate-1000 focus:outline-none focus:shadow-focus cursor-pointer',
-            'hover:bg-black hover:bg-opacity-10 transition',
+            'flex gap-2 justify-start items-center p-2 bg-transparent rounded-lg',
+            'text-sm leading-4 text-neutral-20 focus:outline-none focus:shadow-focus cursor-pointer',
+            'hover:bg-primary-98 hover:text-neutral-20 transition',
             width || 'w-full',
-            (innerSelected || isActive) && 'bg-heles',
-            isDisabled && 'bg-gray-150',
+            (innerSelected || isActive) && 'bg-primary-90 text-primary-20',
+            isDisabled && 'text-neutral-70',
             className && className,
           )}
           disabled={isDisabled}
