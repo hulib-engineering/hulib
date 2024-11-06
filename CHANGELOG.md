@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/HumanLibrary/hulib/compare/v1.4.0...v1.4.1) (2024-11-06)
+
+
+### Bug Fixes
+
+* **Glob:** modified middleware and routing ([9f37a3a](https://github.com/HumanLibrary/hulib/commit/9f37a3aa0166417953c288a4170e7fd948b436c0))
+
 # [1.4.0](https://github.com/HumanLibrary/hulib/compare/v1.3.0...v1.4.0) (2024-11-02)
 
 
