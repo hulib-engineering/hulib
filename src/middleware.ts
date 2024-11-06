@@ -7,7 +7,6 @@ const intlMiddleware = createMiddleware({
   locales: AppConfig.locales,
   localePrefix: AppConfig.localePrefix,
   defaultLocale: AppConfig.defaultLocale,
-  // localeDetection: false,
 });
 
 export default async function middleware(request: NextRequest) {
@@ -48,14 +47,15 @@ export default async function middleware(request: NextRequest) {
 // });
 
 export const config = {
-  matcher: [
-    /*
-     * Match all paths except for:
-     * 1. /api routes
-     * 2. /_next (Next.js internals)
-     * 3. /_static (inside /public)
-     * 4. all root files inside /public (e.g. /favicon.ico)
-     */
-    '/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)',
-  ],
+  // matcher: [
+  /*
+   * Match all paths except for:
+   * 1. /api routes
+   * 2. /_next (Next.js internals)
+   * 3. /_static (inside /public)
+   * 4. all root files inside /public (e.g. /favicon.ico)
+   */
+  // '/((?!api/|_next/|_static/|_next/image|_vercel/|[\\w-]+\\.\\w+).*)',
+  // ],
+  matcher: ['/((?!.+\\.[\\w]+$|_next|monitoring).*)', '/', '/(api|trpc)(.*)'], // Also exclude tunnelRoute used in Sentry from the matcher
 };

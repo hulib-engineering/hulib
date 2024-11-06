@@ -61,7 +61,7 @@ const Hero = () => {
     >
       <div className="pb-3 lg:w-2/3 lg:max-w-screen-md">
         <div className="mb-6 flex w-full flex-col items-center justify-start gap-3 px-4 text-center sm:gap-4 sm:px-0">
-          <p className="text-xs font-medium uppercase text-primary lg:text-lg">
+          <p className="text-xs font-medium uppercase text-primary-10 lg:text-lg">
             {t('hero_title')}
           </p>
           <h1 className="px-4 text-[1.75rem] font-semibold capitalize text-slate-1000 sm:text-[5rem]">
