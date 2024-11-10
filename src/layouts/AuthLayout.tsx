@@ -4,15 +4,22 @@ import type { ReactNode } from 'react';
 import React from 'react';
 
 import { Logo } from '@/components/Logo';
+import { mergeClassnames } from '@/components/private/utils';
 
 type IAuthLayoutProps = {
   illustrationImage: StaticImageData;
   children: ReactNode;
+  isLogin?: boolean;
 };
 
 const AuthLayout = (props: IAuthLayoutProps) => (
   <>
-    <div className="hidden h-screen w-5/12 items-center justify-start bg-yellow-90 sm:flex">
+    <div
+      className={mergeClassnames(
+        'items-center justify-start hidden w-5/12 h-screen bg-blue-250 sm:flex',
+        props.isLogin ? 'bg-blue-250' : 'bg-yellow-90',
+      )}
+    >
       <Image
         alt="Illustration"
         className="h-full w-full object-contain object-center"
