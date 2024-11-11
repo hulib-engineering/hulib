@@ -12,7 +12,7 @@ type IAuthLayoutProps = {
 
 const AuthLayout = (props: IAuthLayoutProps) => (
   <>
-    <div className="hidden h-screen w-5/12 items-center justify-start bg-yellow-90 sm:flex">
+    <div className="hidden h-screen w-5/12 items-center justify-start sm:flex">
       <Image
         alt="Illustration"
         className="h-full w-full object-contain object-center"
