@@ -2,11 +2,12 @@
 
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import React, { useState } from 'react';
 
-import Button from '@/components/button/Button';
 import FeatureCard from '@/components/FeatureCard';
 import { mergeClassnames } from '@/components/private/utils';
+import EventFormModal from '@/layouts/EventFormModal';
+import SuccessModal from '@/layouts/SuccessModal';
 
 const EventFeatureList = [
   {
@@ -32,6 +33,16 @@ const EventFeatureList = [
 const PromotedEvent = () => {
   const t = useTranslations('Index');
 
+  const [isRegisteringEventFormModalOpen, setIsRegisteringEventFormModalOpen] =
+    useState(false);
+  const [isSuccessfulModalOpen, setIsSuccessfulModalOpen] = useState(false);
+  const [registerName, setRegisterName] = useState('');
+
+  const handleSuccess = (name: string) => {
+    setIsSuccessfulModalOpen(true);
+    setRegisterName(name);
+  };
+
   return (
     <>
       <section
@@ -42,66 +53,44 @@ const PromotedEvent = () => {
         data-testid="event-section"
         id="event"
       >
-        <div className="pb-3 lg:w-full lg:max-w-screen-lg">
-          <div className="mb-6 flex w-full flex-col items-center justify-start px-4 text-center sm:px-0 lg:mb-12">
-            <p className="mb-4 text-xs font-medium uppercase text-primary lg:mb-8 lg:text-lg">
+        <div className="pb-1 lg:w-full lg:max-w-screen-lg">
+          <div className="flex w-full flex-col items-center justify-start px-4 text-center sm:px-0">
+            <p className="mb-4 text-xs font-medium uppercase text-primary-10 lg:text-lg">
               {t('event_title')}
             </p>
-            <h1 className="px-4 text-[1.75rem] font-semibold capitalize text-slate-1000 sm:text-[5rem]">
-              Work or study
-            </h1>
-            <h1 className="px-4 text-[1.75rem] font-semibold capitalize text-slate-1000/30 sm:text-[5rem] ">
-              Đi học - Đi làm
-            </h1>
-            <h1 className="mb-6 px-4 text-[1.75rem] font-semibold capitalize text-slate-1000/30 sm:text-[5rem] lg:mb-12">
-              Hướng nào &quot;dễ&quot; hơn ?
-            </h1>
-            <p className="text-sm font-normal text-black sm:text-2xl">
-              {t('event_description')}
-            </p>
-          </div>
-          <div className="flex flex-col items-center gap-2.5">
-            <Button
-              as="a"
-              rel="noopener noreferrer"
-              target="_blank"
-              href="https://docs.google.com/forms/d/1qqCLHf7UubelERnrRAmPgQsEqBtkC3O5GJ_dbwzWHMc/viewform"
-              className="rounded-full uppercase"
-              iconRight={
-                <Image
-                  width={24}
-                  height={24}
-                  src="/assets/images/icons/arow-drop-right.svg"
-                  alt="Routing icon"
-                  loading="lazy"
-                />
-              }
-            >
-              {t('event_call_to_action')}
-            </Button>
           </div>
         </div>
-        {/* <div className="w-full px-4 sm:px-0">
-          <Image
-            alt="Event banner"
-            src="/assets/images/event-banner-stretched.png"
-            priority
-            width={1196}
-            height={480}
-            className="object-cover object-center"
-          />
-        </div> */}
       </section>
 
-      <div className="flex w-full justify-center px-4 sm:px-0 ">
-        <Image
-          alt="Event banner"
-          src="/assets/images/event-banner-stretched.png"
-          priority
-          width={1600}
-          height={400}
-          className=" object-cover object-center"
-        />
+      <div className="flex w-full items-center justify-center px-4 sm:px-0">
+        <div className="w-full md:w-5/6">
+          <Image
+            alt="Event banner"
+            src="/assets/images/event-banner.png"
+            priority
+            width={1920}
+            height={960}
+            className="mx-auto hidden object-contain md:block"
+            onClick={() =>
+              setIsRegisteringEventFormModalOpen(
+                !isRegisteringEventFormModalOpen,
+              )
+            }
+          />
+          <Image
+            alt="Event banner"
+            src="/assets/images/event-banner-sp.png"
+            priority
+            width={375}
+            height={375}
+            className="mx-auto object-contain md:hidden"
+            onClick={() =>
+              setIsRegisteringEventFormModalOpen(
+                !isRegisteringEventFormModalOpen,
+              )
+            }
+          />
+        </div>
       </div>
 
       <section className="w-full flex-col items-center justify-center px-8 py-6 sm:mt-0 lg:py-12 xl:px-48 2xl:px-[20.625rem]">
@@ -118,7 +107,18 @@ const PromotedEvent = () => {
           ))}
         </div>
       </section>
-      {/* <Label /> */}
+
+      <EventFormModal
+        open={isRegisteringEventFormModalOpen}
+        onClose={() => setIsRegisteringEventFormModalOpen(false)}
+        onSuccess={handleSuccess}
+      />
+
+      <SuccessModal
+        name={registerName}
+        open={isSuccessfulModalOpen}
+        onClose={() => setIsSuccessfulModalOpen(false)}
+      />
     </>
   );
 };
