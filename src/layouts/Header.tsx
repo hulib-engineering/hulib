@@ -35,7 +35,7 @@ const Header = () => {
               'hover:bg-light',
             )}
           >
-            <p className="text-base font-medium uppercase leading-normal text-primary">
+            <p className="text-base font-medium uppercase leading-normal text-primary-10">
               {t('contact_us')}
             </p>
           </Link>

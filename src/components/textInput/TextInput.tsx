@@ -32,6 +32,9 @@ export interface TextInputProps
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   const { inputSize = Size.MEDIUM, type } = props;
 
+  // const { ref: registerRef, ...rest } =
+  //   props.register && props.register(props.id ?? '');
+
   // render input with show/hide password
   if (type === 'password') {
     return <TextInputPassword {...props} ref={ref} />;

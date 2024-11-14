@@ -3,9 +3,8 @@ import React from 'react';
 
 import About from '@/layouts/About';
 import FAQs from '@/layouts/FAQs';
-import Features from '@/layouts/Features';
-import Hero from '@/layouts/Hero';
 import Newsletter from '@/layouts/Newsletter';
+import PromotedEvent from '@/layouts/PromotedEvent';
 import Sponsors from '@/layouts/Sponsors';
 import Testimonial from '@/layouts/Testimonial';
 
@@ -14,8 +13,6 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }) {
-  // unstable_setRequestLocale(locale);
-
   const t = await getTranslations({ locale, namespace: 'Index' });
 
   return {
@@ -27,9 +24,9 @@ export async function generateMetadata({
 export default function Index() {
   return (
     <>
-      {/* <PromotedEvent /> */}
-      <Hero />
-      <Features />
+      <PromotedEvent />
+      {/* <Hero /> */}
+      {/* <Features /> */}
       <About />
       <Testimonial />
       <Sponsors />
