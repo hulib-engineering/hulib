@@ -43,7 +43,6 @@ const Footer = () => {
   const Links = [
     { content: t('privacy_policy'), modalName: 'privacy_policy' },
     { content: t('term_of_service'), modalName: 'term_of_service' },
-    // { content: t('cookie_settings'), modalName: 'cookie_settings' },
   ];
 
   return (
