@@ -61,7 +61,7 @@ export const POST = async (request: Request) => {
           firstChoice,
           secondChoice,
           question,
-          `=IMAGE("${transferBill}",4,250,250)`,
+          transferBill,
           transferInfo,
           willingToBecomeAmbassador,
         ],
