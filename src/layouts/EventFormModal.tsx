@@ -291,7 +291,7 @@ const EventFormModal = (props: IEventFormModalProps) => {
                   options={Choices}
                   isVertical
                   control={form.control}
-                  isError={!!form.formState.errors.firstChoice}
+                  isError={!!form.formState.errors.secondChoice}
                 />
               </Form.Item>
               <Form.Item>
