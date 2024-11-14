@@ -35,7 +35,7 @@ const SuccessFormModal = (props: ISuccessFormModalProps) => (
               height={400}
               className="object-contain"
             />
-            <div className="text-center">
+            <div className="flex flex-col gap-2 text-center">
               <p>
                 Chào <span className="font-bold">{props.name}</span>,
               </p>
