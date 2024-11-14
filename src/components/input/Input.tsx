@@ -48,7 +48,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           getSizeStyles(size),
           getTypeStyles(type),
           error &&
-            'shadow-input-err hover:shadow-input-err focus:shadow-input-err focus-visible:shadow-input-err',
+            'input-err hover:input-err focus:input-err focus-visible:input-err',
           disabled && 'opacity-60 cursor-not-allowed',
           className && className,
         )}
