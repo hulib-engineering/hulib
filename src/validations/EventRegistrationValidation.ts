@@ -37,12 +37,9 @@ export const EmailRegistrationValidation = z.object({
     .string()
     .trim()
     .min(1, 'Bạn chưa điền thông tin này. Vui lòng hoàn tất trước khi gửi.'),
-  transferBill: z.union([
-    z.any().refine((file: File) => !!file, 'File is required'),
-    z.undefined(),
-  ]),
+  transferBill: z.any().optional(),
   transferInfo: z.string().optional(),
-  willingToBecomeAmbassador: z.union([z.string().trim().min(1), z.undefined()]),
+  willingToBecomeAmbassador: z.string().optional(),
 });
 
 export const BillUploadValidation = z.object({

@@ -43,7 +43,7 @@ const Option = ({ value, children, className, disabled }: OptionProps) => {
       value={value}
       disabled={disabled}
       className={mergeClassnames(
-        'flex gap-2 cursor-pointer text-moon-14 text-bulma data-disabled:opacity-60',
+        'flex gap-2 cursor-pointer text-sm leading-4 text-neutral-10 data-disabled:opacity-60',
         'data-disabled:cursor-default',
         className,
       )}

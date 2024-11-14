@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Upload, X } from '@phosphor-icons/react';
+import { Image as ImageIcon, Upload, X } from '@phosphor-icons/react';
 import Image from 'next/image';
 import React, { type ReactNode, useRef } from 'react';
 import type { UseControllerProps } from 'react-hook-form';
@@ -10,6 +10,7 @@ import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
+import IconButton from '@/components/iconButton/IconButton';
 import Label from '@/components/Label';
 import Modal from '@/components/Modal';
 import { mergeClassnames } from '@/components/private/utils';
@@ -89,18 +90,21 @@ const SocialMedia = [
   { value: 'Facebook', label: 'Facebook' },
   { value: 'Tiktok', label: 'Tiktok' },
   { value: 'Threads', label: 'Threads' },
+  { value: 'Khác', label: 'Khác' },
 ];
 const Careers = [
   { value: 'Học sinh THPT', label: 'Học sinh THPT' },
   { value: 'Sinh viên', label: 'Sinh viên' },
   { value: 'Đang gap year', label: 'Đang gap year' },
   { value: 'Đang đi làm', label: 'Đang đi làm' },
+  { value: 'Khác', label: 'Khác' },
 ];
 const Hometowns = [
   { value: 'Huế', label: 'Huế mộng mơ' },
   { value: 'Đà Nẵng', label: 'Đà Nẵng thân iu' },
   { value: 'TP. Hồ Chí Minh', label: 'Hồ Chí Minh iu dấu' },
   { value: 'Hà Nội', label: 'Hà Nội thân thương' },
+  { value: 'Khác', label: 'Khác' },
 ];
 const Choices = [
   { value: 'Family', label: 'Family (Gia đình)' },
@@ -133,6 +137,7 @@ const EventFormModal = (props: IEventFormModalProps) => {
       question: '',
       transferBill: '',
       transferInfo: '',
+      willingToBecomeAmbassador: '',
     },
   });
 
@@ -156,16 +161,20 @@ const EventFormModal = (props: IEventFormModalProps) => {
   };
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    const transferBill = await toBase64(data.transferBill);
+    let imageUrl = '';
+    if (data.transferBill.name) {
+      const transferBill = await toBase64(data.transferBill);
 
-    const uploadingImageRes = await fetch(`/api/sign-cloudinary-params`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ transferBill }),
-    });
-    const responseJson = await uploadingImageRes.json();
+      const uploadingImageRes = await fetch(`/api/sign-cloudinary-params`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ transferBill }),
+      });
+      const responseJson = await uploadingImageRes.json();
+      imageUrl = responseJson.imageURL;
+    }
 
     await fetch(`/api/sheet`, {
       method: 'POST',
@@ -174,7 +183,7 @@ const EventFormModal = (props: IEventFormModalProps) => {
       },
       body: JSON.stringify({
         ...data,
-        transferBill: responseJson.imageURL,
+        transferBill: imageUrl,
       }),
     });
 
@@ -186,8 +195,8 @@ const EventFormModal = (props: IEventFormModalProps) => {
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Modal.Backdrop />
-      <Modal.Panel className="w-5/6 lg:min-w-[345px] 2xl:w-7/12 2xl:min-w-[960px]">
-        <div className="flex w-full flex-col items-center justify-center rounded-[20px] bg-white">
+      <Modal.Panel className="w-11/12 lg:min-w-[345px] 2xl:w-7/12 2xl:min-w-[960px]">
+        <div className="flex h-5/6 w-full flex-col items-center justify-center rounded-[20px] bg-white">
           <div className="inline-flex w-full items-start justify-start gap-6 border-b border-solid border-neutral-90 p-4 lg:items-center lg:justify-between lg:p-8">
             <h4 className="text-[28px] font-medium leading-9 text-neutral-10">
               Đăng ký tham dự sự kiện HuLib
@@ -196,11 +205,7 @@ const EventFormModal = (props: IEventFormModalProps) => {
               <X size={24} color="#343330" />
             </button>
           </div>
-          <div
-            className={mergeClassnames(
-              'custom-scrollbar scroll-smooth flex h-5/6 w-full min-h-[25.5rem] flex-col items-center justify-start gap-6 overflow-y-scroll',
-            )}
-          >
+          <div className="custom-scrollbar flex h-[50rem] min-h-[25.5rem] w-full flex-col items-center justify-start gap-6 overflow-y-scroll scroll-smooth">
             <Form
               onSubmit={handleSubmit}
               className="flex w-full flex-col gap-5 px-4 py-5 lg:gap-6 lg:p-8"
@@ -221,7 +226,7 @@ const EventFormModal = (props: IEventFormModalProps) => {
                   <TextInput
                     id="birthday"
                     type="date"
-                    label="Ngày/ tháng/ năm sinh của bạn nha!"
+                    label="Ngày/tháng/ năm sinh của bạn nha!"
                     {...form.register('birthday')}
                     isError={!!form.formState.errors.birthday}
                     hintText={form.formState.errors.birthday?.message}
@@ -252,7 +257,7 @@ const EventFormModal = (props: IEventFormModalProps) => {
               <Form.Item>
                 <RadioGroup
                   name="career"
-                  label="Bạn là:"
+                  label="Bạn là"
                   options={Careers}
                   control={form.control}
                   isError={!!form.formState.errors.career}
@@ -262,43 +267,32 @@ const EventFormModal = (props: IEventFormModalProps) => {
               <Form.Item>
                 <RadioGroup
                   name="hometown"
-                  label="Bạn đến từ:"
+                  label="Bạn đến từ"
                   options={Hometowns}
                   control={form.control}
                   isError={!!form.formState.errors.hometown}
                   optionsClassname="flex flex-col gap-0 lg:flex-row lg:gap-12"
                 />
               </Form.Item>
-              <Form.Item className="flex flex-col gap-2">
-                <Label>
-                  Bạn hãy chọn căn phòng có chủ đề mà bạn có hứng thú nhất. Hãy
-                  điền thêm sự lựa chọn thứ 2 cho căn phòng mà bạn thích ở mục
-                  khác nhé.
-                </Label>
-                <div className="flex flex-col gap-2 lg:flex-row">
-                  <fieldset className="w-full">
-                    <RadioGroup
-                      name="firstChoice"
-                      label="Nguyện vọng 1"
-                      options={Choices}
-                      isVertical
-                      control={form.control}
-                      isError={!!form.formState.errors.firstChoice}
-                      labelClassname="text-neutral-40"
-                    />
-                  </fieldset>
-                  <fieldset className="w-full">
-                    <RadioGroup
-                      name="secondChoice"
-                      label="Nguyện vọng 2"
-                      options={Choices}
-                      isVertical
-                      control={form.control}
-                      isError={!!form.formState.errors.secondChoice}
-                      labelClassname="text-neutral-40"
-                    />
-                  </fieldset>
-                </div>
+              <Form.Item>
+                <RadioGroup
+                  name="firstChoice"
+                  label="Trong sự kiện lần này, HuLib đã chuẩn bị sẵn bốn căn phòng với những chủ đề khác nhau cho các bạn có thể lựa chọn. Để giúp buổi trò chuyện của chúng mình hiệu quả hơn, tập trung hơn và tụi mình có thể trao đổi sâu hơn về nội dung mà các bạn quan tâm, bạn hãy giúp HuLib chọn ra căn phòng có chủ đề mà bạn có hứng thú nhất nhé"
+                  options={Choices}
+                  isVertical
+                  control={form.control}
+                  isError={!!form.formState.errors.firstChoice}
+                />
+              </Form.Item>
+              <Form.Item>
+                <RadioGroup
+                  name="secondChoice"
+                  label="Trong trường hợp căn phòng bạn yêu thích nhất của bạn bị đầy hoặc bị quá tải, vậy thì đâu sẽ là sự lựa chọn thứ hai của bạn?"
+                  options={Choices}
+                  isVertical
+                  control={form.control}
+                  isError={!!form.formState.errors.firstChoice}
+                />
               </Form.Item>
               <Form.Item>
                 <TextInput
@@ -358,6 +352,21 @@ const EventFormModal = (props: IEventFormModalProps) => {
                     Thêm tệp
                   </Button>
                 </div>
+                {!form.formState.errors.transferBill &&
+                  form.watch('transferBill') &&
+                  form.watch('transferBill')?.name && (
+                    <div className="flex items-center gap-1 pl-2">
+                      <ImageIcon size={20} color="#0442bf" />
+                      <p className="truncate text-sm font-medium leading-4 text-primary-50">
+                        {form.watch('transferBill').name}
+                      </p>
+                      <IconButton
+                        icon={<X size={16} color="#2e3032" weight="bold" />}
+                        variant="ghost"
+                        onClick={() => form.setValue('transferBill', undefined)}
+                      />
+                    </div>
+                  )}
               </Form.Item>
               <Form.Item>
                 <TextInput
@@ -383,6 +392,7 @@ const EventFormModal = (props: IEventFormModalProps) => {
                   type="submit"
                   value="Submit"
                   disabled={form.formState.isSubmitting}
+                  animation={form.formState.isSubmitting && 'progress'}
                   className="w-full"
                 >
                   Gửi
@@ -390,6 +400,7 @@ const EventFormModal = (props: IEventFormModalProps) => {
               </Form.Item>
             </Form>
           </div>
+          <div className="h-2" />
         </div>
       </Modal.Panel>
     </Modal>
