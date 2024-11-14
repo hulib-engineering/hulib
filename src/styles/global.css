@@ -2,6 +2,12 @@
 @tailwind utilities;
 @tailwind components;
 
+@layer components {
+    .input-err {
+        @apply border-2 border-solid border-red-50;
+    }
+}
+
 :root {
     --black: rgba(20, 18, 19, 1);
     --foundation-blue-dark: rgba(0, 73, 179, 1);

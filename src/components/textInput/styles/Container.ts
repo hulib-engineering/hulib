@@ -28,6 +28,9 @@ const Container = styled.div<ContainerProps>(
       position: 'relative',
       zIndex: 0,
       backgroundColor: bgColor,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '8px',
       ...makeBorderRadius(
         isSharpLeftSide,
         isSharpRightSide,
