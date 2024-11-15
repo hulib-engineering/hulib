@@ -25,7 +25,7 @@ const SuccessFormModal = (props: ISuccessFormModalProps) => (
           'bg-[#F3F4F6] bg-opacity-100 bg-gradient-to-bl from-white/20 to-[#F9DA6C33] bg-blend-multiple',
         )}
       >
-        <div className="flex min-h-[25.5rem] w-2/3 flex-col items-center justify-start py-20">
+        <div className="flex min-h-[25.5rem] w-5/6 flex-col items-center justify-start py-20 lg:w-2/3">
           <div className="m-auto flex flex-col items-center justify-center gap-12">
             <Image
               alt="Illustration image"
@@ -41,7 +41,7 @@ const SuccessFormModal = (props: ISuccessFormModalProps) => (
               </p>
               <p>Chúng tôi xác nhận bạn đã đăng ký thành công.</p>
               <p>
-                Cảm ơn bạn đã đăng ký tham gia chương trình &rsquo;Bong, tiếng
+                Cảm ơn bạn đã đăng ký tham gia chương trình &rsquo;Boong, tiếng
                 chuông tỉnh thức!&rsquo; vào ngày 14/12/2024.
               </p>
               <p>
