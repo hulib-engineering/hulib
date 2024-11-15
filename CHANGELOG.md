@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/HumanLibrary/hulib/compare/v1.5.0...v1.5.1) (2024-11-15)
+
+
+### Bug Fixes
+
+* **Success Modal:** fixed check pipeline and success modal UI ([4b00940](https://github.com/HumanLibrary/hulib/commit/4b00940cd40c0cef71b5c2bed88d661a2540e16b))
+
 # [1.5.0](https://github.com/HumanLibrary/hulib/compare/v1.4.1...v1.5.0) (2024-11-14)
 
 
