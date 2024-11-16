@@ -1,3 +1,26 @@
+## [1.5.1](https://github.com/HumanLibrary/hulib/compare/v1.5.0...v1.5.1) (2024-11-15)
+
+
+### Bug Fixes
+
+* **Success Modal:** fixed check pipeline and success modal UI ([4b00940](https://github.com/HumanLibrary/hulib/commit/4b00940cd40c0cef71b5c2bed88d661a2540e16b))
+
+# [1.5.0](https://github.com/HumanLibrary/hulib/compare/v1.4.1...v1.5.0) (2024-11-14)
+
+
+### Bug Fixes
+
+* **Landing Page:** fixed conflict tw color config ([6184b00](https://github.com/HumanLibrary/hulib/commit/6184b00473c2732c196cd205d8e83f21dd1ca62f))
+* **Landing Page:** fixed event registration form validation ([43254b2](https://github.com/HumanLibrary/hulib/commit/43254b2d27f4f05c85486d1f7ac2b9339ffcbda0))
+* **Landing Page:** fixed form ([c2e94b4](https://github.com/HumanLibrary/hulib/commit/c2e94b4c950ab47934e98918f8f8a52ecf82c1b0))
+* **Landing Page:** fixed radio button layout ([84d67db](https://github.com/HumanLibrary/hulib/commit/84d67db5b2f8b32f64496b50c12cbd083f523796))
+* **Success Modal:** fixed content layout ([f2ad006](https://github.com/HumanLibrary/hulib/commit/f2ad00620af9f48fdf01dc8d2ba56a61577c5da2))
+
+
+### Features
+
+* **Landing Page:** added event registration form + API enpoints and updated event section ([b06dc6b](https://github.com/HumanLibrary/hulib/commit/b06dc6b518b46fea2bd8191ec92ae83c004029eb))
+
 ## [1.4.1](https://github.com/HumanLibrary/hulib/compare/v1.4.0...v1.4.1) (2024-11-06)
 
 
