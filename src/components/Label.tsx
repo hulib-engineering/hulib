@@ -35,7 +35,7 @@ const Label = forwardRef<HTMLLabelElement, WithChildren<LabelProps>>(
         ref={ref}
         htmlFor={htmlFor}
         className={mergeClassnames(
-          'w-full block text-sm text-neutral-10 leading-4 pb-1',
+          'w-full block text-sm text-neutral-10 leading-4',
           labelDisabled && 'opacity-60 cursor-not-allowed',
           className && className,
         )}
