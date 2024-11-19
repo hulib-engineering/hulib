@@ -64,7 +64,7 @@ export const getButtonVariants = ({
         );
   }
   return animation === 'error'
-    ? 'text-white bg-chichi'
+    ? 'text-white bg-red-50'
     : mergeClassnames(
         'text-white bg-primary-50',
         disabled && 'bg-neutral-90 text-neutral-70',

@@ -12,7 +12,9 @@ const baseQuery = fetchBaseQuery({
     // By default, if we have a token in the resto, let's use that for authenticated requests
     headers.set('hulib-service-key', 'hlb-93td6qrktpz6xrm4jj6dejgmffm4ya_pk');
     const accessToken =
-      endpoint !== 'loginAsUser' && endpoint !== 'loginAsAdmin'
+      endpoint !== 'loginAsUser' &&
+      endpoint !== 'loginAsAdmin' &&
+      endpoint !== 'register'
         ? localStorage.access_token
         : null;
     if (accessToken) {
@@ -86,6 +88,6 @@ const baseQueryWithInterceptor = async (
 
 export const api = createApi({
   baseQuery: baseQueryWithInterceptor,
-  tagTypes: ['User'],
+  tagTypes: ['User', 'OTP'],
   endpoints: () => ({}),
 });
