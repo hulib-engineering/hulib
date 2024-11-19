@@ -109,7 +109,7 @@ const Value = ({ children }: { children?: ReactNode }) => {
 const Label = ({ children, idDisabled }: LabelProps) => (
   <Listbox.Label
     className={mergeClassnames(
-      'block text-neutral-10 text-sm leading-4 pb-1',
+      'block text-neutral-10 text-sm leading-4 pb-2',
       idDisabled && 'opacity-60 cursor-not-allowed',
     )}
   >
