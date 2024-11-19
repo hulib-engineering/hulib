@@ -1,7 +1,10 @@
 import { api } from '../../api';
+import confirmEmail from './confirmEmail';
 import loginAsAdmin from './loginAsAdmin';
 import loginAsUser from './loginAsUser';
 import refresh from './refresh';
+import register from './register';
+import resendOTP from './resendOTP';
 
 interface Enum {
   id: string;
@@ -33,17 +36,25 @@ export type EmailLoginResponse = {
 };
 
 const authenticationApiWithTag = api.enhanceEndpoints({
-  addTagTypes: ['Admin', 'User'],
+  addTagTypes: ['Admin', 'User', 'OTP'],
 });
 
 export const authApi = authenticationApiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
-    loginAsManager: loginAsUser(build),
+    confirmEmail: confirmEmail(build),
     loginAsAdmin: loginAsAdmin(build),
+    loginAsManager: loginAsUser(build),
     refresh: refresh(build),
+    register: register(build),
+    resendOTP: resendOTP(build),
   }),
   overrideExisting: false,
 });
 
-export const { useLoginAsManagerMutation, useLoginAsAdminMutation }: any =
-  authApi;
+export const {
+  useConfirmEmailMutation,
+  useRegisterMutation,
+  useResendOTPMutation,
+  useLoginAsManagerMutation,
+  useLoginAsAdminMutation,
+}: any = authApi;

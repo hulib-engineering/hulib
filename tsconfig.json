@@ -14,7 +14,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": false,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "allowUnreachableCode": false,
     "noFallthroughCasesInSwitch": true,
 

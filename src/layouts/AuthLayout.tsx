@@ -16,8 +16,8 @@ const AuthLayout = (props: IAuthLayoutProps) => (
   <>
     <div
       className={mergeClassnames(
-        'items-center justify-start hidden w-5/12 h-screen bg-blue-250 sm:flex',
-        props.isLogin ? 'bg-blue-250' : 'bg-yellow-90',
+        'hidden h-screen w-5/12 items-center justify-start bg-yellow-90 sm:flex',
+        props.isLogin && 'bg-[#A6D4FF]',
       )}
     >
       <Image
