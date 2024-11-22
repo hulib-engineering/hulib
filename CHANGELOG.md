@@ -1,3 +1,19 @@
+# [1.6.0](https://github.com/HumanLibrary/hulib/compare/v1.5.1...v1.6.0) (2024-11-22)
+
+
+### Bug Fixes
+
+* **Event Section:** fixed form validation and newsletter/loader animation ([20fb97b](https://github.com/HumanLibrary/hulib/commit/20fb97bdf1fb6c741d5ee59d206dd81c9fd02a56))
+* **Typecheck:** modified typecheck rule temporarily ([1475a02](https://github.com/HumanLibrary/hulib/commit/1475a026274a6c354f4b39375183dad3754022c5))
+* **Validation:** fixed base 64 image type ([b7bb2ee](https://github.com/HumanLibrary/hulib/commit/b7bb2ee94354f50ae67dac82afa6330777a18b21))
+
+
+### Features
+
+* create forgot and reset password form ([8552512](https://github.com/HumanLibrary/hulib/commit/855251201d00cc7253ff5a2f4d6551422ac09167))
+* **Login:** added components and Login UI layout ([0c1e093](https://github.com/HumanLibrary/hulib/commit/0c1e093ce2db58d9156cf3eed4ec95c7cee20c94))
+* **Register:** added form validation and integrated API ([3d25615](https://github.com/HumanLibrary/hulib/commit/3d256156e8864e6efd9483e925f7bac919aba503))
+
 ## [1.5.1](https://github.com/HumanLibrary/hulib/compare/v1.5.0...v1.5.1) (2024-11-15)
 
 
