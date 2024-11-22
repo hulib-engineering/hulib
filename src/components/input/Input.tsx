@@ -28,6 +28,24 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const size = inputSize || formItemSize || formSize;
     const disabled = inputDisabled || formItemDisabled;
     const error = inputError || formItemError;
+
+    if (type === 'checkbox') {
+      return (
+        <input
+          ref={ref}
+          type="checkbox"
+          id={id}
+          disabled={disabled}
+          className={mergeClassnames(
+            'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 ring-offset-1 focus:ring-2 inline-block',
+            disabled && 'opacity-60 cursor-not-allowed',
+            className,
+          )}
+          {...rest}
+        />
+      );
+    }
+
     return (
       <input
         ref={ref}
@@ -50,7 +68,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           error &&
             'input-err hover:input-err focus:input-err focus-visible:input-err',
           disabled && 'opacity-60 cursor-not-allowed',
-          className && className,
+          className,
         )}
         {...rest}
       />

@@ -15,6 +15,8 @@ const reducers = combineReducers({
 export const makeStore = () => {
   return configureStore({
     reducer: reducers,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(api.middleware),
   });
 };
 

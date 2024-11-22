@@ -1,0 +1,94 @@
+'use client';
+
+import { Eye } from '@phosphor-icons/react';
+import Link from 'next/link';
+import React from 'react';
+
+import Button from '@/components/button/Button';
+import Form from '@/components/form/Form';
+import Input from '@/components/input/Input';
+import Label from '@/components/Label';
+import SocialButton from '@/components/SocialButton';
+import TextInput from '@/components/textInput/TextInput';
+import FacebookIcon from '@/public/assets/icons/facebook-icon.svg';
+import GoogleIcon from '@/public/assets/icons/google-icon.svg';
+
+const LoginForm = () => {
+  const handleSubmit = () => {};
+
+  return (
+    <>
+      <div className="text-center text-neutral-10">
+        <h2 className="text-4xl font-medium leading-[44px] tracking-[-2%]">
+          Welcome Back
+        </h2>
+        <p className="tracking-[0.5%]">Login to your Hulib account</p>
+      </div>
+      <Form className="flex w-full flex-col gap-4">
+        <Form.Item error>
+          <TextInput
+            id="email"
+            type="email"
+            label="Phone number or email address"
+            placeholder="hulib@gmail.com"
+            hintText="Supporting text"
+          />
+        </Form.Item>
+        <Form.Item>
+          <TextInput
+            id="password"
+            type="password"
+            label="Password"
+            showPasswordText={<Eye />}
+          />
+        </Form.Item>
+        <Form.Item className="flex justify-between">
+          <fieldset className="flex items-center gap-2">
+            <Input type="checkbox" id="remember" readOnly={false} />
+            <Label
+              htmlFor="remember"
+              type="checkbox"
+              className="cursor-pointer pb-0 pt-1 text-neutral-30"
+            >
+              Keep me logged in
+            </Label>
+          </fieldset>
+          <Link href="forgot-password" className="text-primary-50">
+            Forgot password?
+          </Link>
+        </Form.Item>
+        <Form.Item className="py-4">
+          <Button
+            type="button"
+            value="Submit"
+            className="w-full"
+            onClick={handleSubmit}
+          >
+            Login
+          </Button>
+        </Form.Item>
+      </Form>
+      <div className="inline-flex h-6 items-center justify-start gap-2 self-stretch">
+        <div className="h-[1px] w-full shrink grow basis-0 bg-neutral-90" />
+        <div className="text-center tracking-tight text-neutral-30">Or</div>
+        <div className="h-[1px] w-full shrink grow basis-0 bg-neutral-90" />
+      </div>
+      <div className="w-full space-y-2">
+        <SocialButton iconUrl={GoogleIcon} className="w-full">
+          Log in with Google
+        </SocialButton>
+        <SocialButton iconUrl={FacebookIcon} className="w-full">
+          Log in with Facebook
+        </SocialButton>
+      </div>
+      <div className="inline-flex items-center justify-center gap-4 py-3">
+        <div className="tracking-tight text-neutral-30">New to Hulib?</div>
+        <Link href="register" className="font-medium text-primary-50 underline">
+          Create an account
+        </Link>
+      </div>
+    </>
+  );
+};
+
+export { LoginForm };

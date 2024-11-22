@@ -64,7 +64,7 @@ export const getButtonVariants = ({
         );
   }
   return animation === 'error'
-    ? 'text-white bg-chichi'
+    ? 'text-white bg-red-50'
     : mergeClassnames(
         'text-white bg-primary-50',
         disabled && 'bg-neutral-90 text-neutral-70',
@@ -113,10 +113,10 @@ export const getLoaderColor = (variant?: ButtonVariants): string => {
   switch (variant) {
     case 'secondary':
     case 'outline':
-      return 'border-bulma';
+      return 'border-black';
     case 'ghost':
-      return 'border-trunks';
+      return 'border-neutral-50';
     default:
-      return 'border-goten';
+      return 'border-white';
   }
 };
