@@ -10,6 +10,7 @@ import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
+import Hint from '@/components/Hint';
 import IconButton from '@/components/iconButton/IconButton';
 import Label from '@/components/Label';
 import Modal from '@/components/Modal';
@@ -17,6 +18,13 @@ import { mergeClassnames } from '@/components/private/utils';
 import Radio from '@/components/radio/Radio';
 import TextInput from '@/components/textInput/TextInput';
 import { EmailRegistrationValidation } from '@/validations/EventRegistrationValidation';
+
+type IEventRegistration = Omit<
+  z.infer<typeof EmailRegistrationValidation>,
+  'transferBill'
+> & {
+  transferBill?: File;
+};
 
 interface RadioGroupProps {
   id?: string;
@@ -42,7 +50,9 @@ const RadioGroup = ({
   optionsClassname?: string;
   isVertical?: boolean;
 } & RadioGroupProps &
-  UseControllerProps<z.infer<typeof EmailRegistrationValidation>>) => {
+  UseControllerProps<
+    Omit<z.infer<typeof EmailRegistrationValidation>, 'transferBill'>
+  >) => {
   const {
     field: { onChange, value },
   } = useController({
@@ -124,7 +134,7 @@ export type IEventFormModalProps = {
 };
 
 const EventFormModal = (props: IEventFormModalProps) => {
-  const form = useForm<z.infer<typeof EmailRegistrationValidation>>({
+  const form = useForm<IEventRegistration>({
     resolver: zodResolver(EmailRegistrationValidation),
     defaultValues: {
       fullname: '',
@@ -135,7 +145,7 @@ const EventFormModal = (props: IEventFormModalProps) => {
       firstChoice: '',
       secondChoice: '',
       question: '',
-      transferBill: '',
+      transferBill: undefined,
       transferInfo: '',
       willingToBecomeAmbassador: '',
     },
@@ -162,21 +172,25 @@ const EventFormModal = (props: IEventFormModalProps) => {
 
   const handleSubmit = form.handleSubmit(async (data) => {
     let imageUrl = '';
-    if (data.transferBill.name) {
-      const transferBill = await toBase64(data.transferBill);
+    if (
+      data.transferBill &&
+      data.transferBill instanceof File &&
+      data.transferBill?.name
+    ) {
+      const base64TransferBill = await toBase64(data.transferBill);
 
       const uploadingImageRes = await fetch(`/api/sign-cloudinary-params`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ transferBill }),
+        body: JSON.stringify({ transferBill: base64TransferBill }),
       });
       const responseJson = await uploadingImageRes.json();
       imageUrl = responseJson.imageURL;
     }
 
-    await fetch(`/api/sheet`, {
+    const result = await fetch(`/api/sheet`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -187,17 +201,19 @@ const EventFormModal = (props: IEventFormModalProps) => {
       }),
     });
 
-    form.reset();
-    props.onClose();
-    props.onSuccess(data.fullname);
+    if (result.status) {
+      form.reset();
+      props.onClose();
+      props.onSuccess(data.fullname);
+    }
   });
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Modal.Backdrop />
-      <Modal.Panel className="w-11/12 lg:min-w-[345px] 2xl:w-7/12 2xl:min-w-[960px]">
+      <Modal.Panel className="w-full px-4 lg:min-w-[345px] 2xl:w-7/12 2xl:min-w-[960px] 2xl:px-0">
         <div className="flex h-5/6 w-full flex-col items-center justify-center rounded-[20px] bg-white">
-          <div className="inline-flex w-full items-start justify-start gap-6 border-b border-solid border-neutral-90 p-4 lg:items-center lg:justify-between lg:p-8">
+          <div className="inline-flex w-full items-center justify-start gap-6 border-b border-solid border-neutral-90 p-4 lg:justify-between lg:p-8">
             <h4 className="text-[28px] font-medium leading-9 text-neutral-10">
               Đăng ký tham dự sự kiện HuLib
             </h4>
@@ -335,7 +351,11 @@ const EventFormModal = (props: IEventFormModalProps) => {
                   onChange={(event) =>
                     event.target.files &&
                     event.target.files.length > 0 &&
-                    form.setValue('transferBill', event.target.files[0])
+                    form.setValue(
+                      'transferBill',
+                      event.target.files[0] ?? undefined,
+                      { shouldValidate: true },
+                    )
                   }
                 />
                 <div className="flex justify-start">
@@ -353,20 +373,25 @@ const EventFormModal = (props: IEventFormModalProps) => {
                   </Button>
                 </div>
                 {!form.formState.errors.transferBill &&
-                  form.watch('transferBill') &&
-                  form.watch('transferBill')?.name && (
-                    <div className="flex items-center gap-1 pl-2">
-                      <ImageIcon size={20} color="#0442bf" />
-                      <p className="truncate text-sm font-medium leading-4 text-primary-50">
-                        {form.watch('transferBill').name}
-                      </p>
-                      <IconButton
-                        icon={<X size={16} color="#2e3032" weight="bold" />}
-                        variant="ghost"
-                        onClick={() => form.setValue('transferBill', undefined)}
-                      />
-                    </div>
-                  )}
+                form.watch('transferBill') &&
+                form.watch('transferBill') instanceof File &&
+                form.watch('transferBill')?.name ? (
+                  <div className="flex items-center gap-1 pl-2">
+                    <ImageIcon size={20} color="#0442bf" />
+                    <p className="truncate text-sm font-medium leading-4 text-primary-50">
+                      {form.watch('transferBill')?.name}
+                    </p>
+                    <IconButton
+                      icon={<X size={16} color="#2e3032" weight="bold" />}
+                      variant="ghost"
+                      onClick={() => form.setValue('transferBill', undefined)}
+                    />
+                  </div>
+                ) : (
+                  <Hint error={!!form.formState.errors.transferBill}>
+                    {form.formState.errors.transferBill?.message ?? ''}
+                  </Hint>
+                )}
               </Form.Item>
               <Form.Item>
                 <TextInput

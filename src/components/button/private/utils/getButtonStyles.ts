@@ -113,10 +113,10 @@ export const getLoaderColor = (variant?: ButtonVariants): string => {
   switch (variant) {
     case 'secondary':
     case 'outline':
-      return 'border-bulma';
+      return 'border-black';
     case 'ghost':
-      return 'border-trunks';
+      return 'border-neutral-50';
     default:
-      return 'border-goten';
+      return 'border-white';
   }
 };

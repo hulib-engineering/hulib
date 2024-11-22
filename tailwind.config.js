@@ -51,6 +51,7 @@ module.exports = {
       indigo: colors.indigo,
       red: colors.red,
       neutral: colors.neutral,
+      transparent: 'transparent',
     },
     extend: {
       colors: {
@@ -303,6 +304,10 @@ module.exports = {
           '25%': { transform: 'translateY(-15px) scale(0.5)' },
           '75%': { transform: 'translateY(5px) scale(0.9)' },
         },
+        rotation: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
       },
       animation: {
         'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
@@ -321,6 +326,7 @@ module.exports = {
         fire: 'fire 0.5s ease-in-out 9s forwards',
         'transform-from-old-to-new': 'transformFromOldToNew 1s ease-in-out 4s',
         'loader-circle-jump': 'loaderCircleJumping 2s infinite',
+        loader: 'rotation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite',
       },
     },
   },
