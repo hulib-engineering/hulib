@@ -177,14 +177,14 @@ const EventFormModal = (props: IEventFormModalProps) => {
       data.transferBill instanceof File &&
       data.transferBill?.name
     ) {
-      const transferBill = await toBase64(data.transferBill);
+      const base64TransferBill = await toBase64(data.transferBill);
 
       const uploadingImageRes = await fetch(`/api/sign-cloudinary-params`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ transferBill }),
+        body: JSON.stringify({ transferBill: base64TransferBill }),
       });
       const responseJson = await uploadingImageRes.json();
       imageUrl = responseJson.imageURL;
