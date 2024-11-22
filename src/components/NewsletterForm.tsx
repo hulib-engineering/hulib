@@ -10,6 +10,7 @@ import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import IconButton from '@/components/iconButton/IconButton';
 import { mergeClassnames } from '@/components/private/utils';
 import { Env } from '@/libs/Env.mjs';
 import { NewsletterValidation } from '@/validations/NewsletterValidation';
@@ -41,14 +42,8 @@ const NewsletterForm = () => {
       pushSuccess(
         '"Welcome aboard! 🌟 Your journey to wellness starts now. Keep an eye on your inbox for updates and exclusive content. Let\'s thrive together!" 📩🌿',
       );
-      // alert(
-      //   '🚀 Your message is on its way! Thanks for reaching out 😊. Have a fantastic day ahead! 🌟',
-      // );
     } catch (error: any) {
-      // console.log(error);
       pushError(`Error: ${error.message}`);
-      // toast.error(`Error: ${error.message}`);
-      // alert(`Error: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
@@ -80,14 +75,18 @@ const NewsletterForm = () => {
         </Button>
       </div>
       <div className="flex lg:hidden">
-        <button type="submit">
-          <Image
-            width={40}
-            height={40}
-            alt="Subscribe"
-            src="/assets/images/icons/arrow-right-2.svg"
-          />
-        </button>
+        <IconButton
+          type="submit"
+          icon={
+            <Image
+              width={40}
+              height={40}
+              alt="Subscribe"
+              src="/assets/images/icons/arrow-right-2.svg"
+            />
+          }
+          className="bg-primary-10 p-0"
+        />
       </div>
     </form>
   );

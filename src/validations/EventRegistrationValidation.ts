@@ -37,8 +37,14 @@ export const EmailRegistrationValidation = z.object({
     .string()
     .trim()
     .min(1, 'Bạn chưa điền thông tin này. Vui lòng hoàn tất trước khi gửi.'),
-  transferBill: z.any().optional(),
-  transferInfo: z.string().optional(),
+  transferBill: z.instanceof(File, {
+    message:
+      'Bạn chưa đính kèm hình ảnh chứng minh đã chuyển khoản. Vui lòng hoàn tất trước khi gửi.',
+  }),
+  transferInfo: z
+    .string()
+    .trim()
+    .min(1, 'Bạn chưa điền thông tin này. Vui lòng hoàn tất trước khi gửi.'),
   willingToBecomeAmbassador: z.string().optional(),
 });
 
