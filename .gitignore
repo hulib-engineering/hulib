@@ -56,3 +56,5 @@ local
 
 # Sentry Config File
 .sentryclirc
+
+.early.coverage

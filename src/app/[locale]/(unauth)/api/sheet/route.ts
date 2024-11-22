@@ -1,12 +1,17 @@
 import { google } from 'googleapis';
 import { NextResponse } from 'next/server';
+import { z } from 'zod';
 
 import { Env } from '@/libs/Env.mjs';
 import { EmailRegistrationValidation } from '@/validations/EventRegistrationValidation';
 
+const EventRegistrationValidation = EmailRegistrationValidation.extend({
+  transferBill: z.string().trim().min(1),
+});
+
 export const POST = async (request: Request) => {
   const json = await request.json();
-  const parse = EmailRegistrationValidation.safeParse(json);
+  const parse = EventRegistrationValidation.safeParse(json);
 
   if (!parse.success) {
     return NextResponse.json(parse.error.format(), { status: 422 });
@@ -70,7 +75,7 @@ export const POST = async (request: Request) => {
   });
 
   return NextResponse.json({
-    message: 'It works!',
+    status: true,
     response,
   });
 };
