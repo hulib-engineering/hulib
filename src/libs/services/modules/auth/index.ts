@@ -1,5 +1,8 @@
+import resetPassword from '@/libs/services/modules/auth/resetPassword';
+
 import { api } from '../../api';
 import confirmEmail from './confirmEmail';
+import forgotPassword from './forgotPassword';
 import loginAsAdmin from './loginAsAdmin';
 import loginAsUser from './loginAsUser';
 import refresh from './refresh';
@@ -47,6 +50,8 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
     refresh: refresh(build),
     register: register(build),
     resendOTP: resendOTP(build),
+    forgotPassword: forgotPassword(build),
+    resetPassword: resetPassword(build),
   }),
   overrideExisting: false,
 });
@@ -57,4 +62,6 @@ export const {
   useResendOTPMutation,
   useLoginAsManagerMutation,
   useLoginAsAdminMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
 }: any = authApi;
