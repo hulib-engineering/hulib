@@ -2,8 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 import { AuthLayout } from '@/layouts/AuthLayout';
-import { ForgotPasswordForm } from '@/layouts/ForgotPasswordForm';
-import Illustration from '@/public/assets/images/fotgot-password-illustration.jpg';
+import { ResetPasswordForm } from '@/layouts/ResetPasswordForm';
 
 export async function generateMetadata({
   params: { locale },
@@ -20,8 +19,11 @@ export async function generateMetadata({
 
 export default function Index() {
   return (
-    <AuthLayout illustrationImage={Illustration}>
-      <ForgotPasswordForm />
+    <AuthLayout
+      illustrationImage="/assets/images/forgot-password-illustration.svg"
+      pathName="reset-password"
+    >
+      <ResetPasswordForm />
     </AuthLayout>
   );
 }
