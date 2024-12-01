@@ -7,6 +7,7 @@ export default (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       url: 'auth/email/confirm',
       method: 'POST',
       body,
+      responseHandler: 'text',
     }),
     invalidatesTags: [{ type: 'User' }, { type: 'OTP' }],
   });

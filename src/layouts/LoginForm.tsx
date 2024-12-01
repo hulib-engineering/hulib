@@ -120,10 +120,18 @@ const LoginForm = () => {
         <div className="h-[1px] w-full shrink grow basis-0 bg-neutral-90" />
       </div>
       <div className="w-full space-y-2">
-        <SocialButton iconUrl={GoogleIcon} className="w-full">
+        <SocialButton
+          iconUrl={GoogleIcon}
+          className="w-full"
+          onClick={() => {}}
+        >
           Log in with Google
         </SocialButton>
-        <SocialButton iconUrl={FacebookIcon} className="w-full">
+        <SocialButton
+          iconUrl={FacebookIcon}
+          className="w-full"
+          onClick={() => {}}
+        >
           Log in with Facebook
         </SocialButton>
       </div>

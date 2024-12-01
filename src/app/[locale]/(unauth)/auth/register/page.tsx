@@ -3,7 +3,6 @@ import React from 'react';
 
 import { AuthLayout } from '@/layouts/AuthLayout';
 import { RegistrationForm } from '@/layouts/RegistrationForm';
-import Illustration from '@/public/assets/images/register-illustration.jpg';
 
 export async function generateMetadata({
   params: { locale },
@@ -20,7 +19,7 @@ export async function generateMetadata({
 
 export default function Index() {
   return (
-    <AuthLayout illustrationImage={Illustration}>
+    <AuthLayout illustrationImage="/assets/images/register-illustration.svg">
       <RegistrationForm />
     </AuthLayout>
   );
