@@ -4,7 +4,7 @@ import GoogleProvider from 'next-auth/providers/google';
 
 import { Env } from '@/libs/Env.mjs';
 
-export const authOptions = {
+const authOptions = {
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
