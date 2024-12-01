@@ -185,8 +185,11 @@ const Step2Form = ({
                       {field.value}
                     </Dropdown.Select>
                     <Dropdown.Options>
-                      {genders.map((gender, index) => (
-                        <Dropdown.Option key={index} value={gender}>
+                      {genders.map((gender) => (
+                        <Dropdown.Option
+                          key={gender.value}
+                          value={gender.value}
+                        >
                           {({ selected, active }) => (
                             <MenuItem isActive={active} isSelected={selected}>
                               <MenuItem.Title>{gender.label}</MenuItem.Title>
@@ -397,7 +400,7 @@ const Step4Form = () => {
   return (
     <Modal open onClose={handleNavigateToLogin} className="z-50">
       <Modal.Backdrop className="bg-[#F3F4F6] bg-opacity-100 bg-gradient-to-bl from-white/20 to-[#F9DA6C33] bg-blend-multiply" />
-      <Modal.Panel className="bg-transparent flex max-w-xl flex-col items-center gap-12 p-8 shadow-none">
+      <Modal.Panel className="flex max-w-xl flex-col items-center gap-12 bg-transparent p-8 shadow-none">
         <div className="flex flex-row items-center justify-center gap-4 py-2">
           <h2 className="text-right text-4xl font-medium leading-tight text-neutral-10">
             Welcome to
