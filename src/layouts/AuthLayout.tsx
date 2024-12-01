@@ -1,4 +1,3 @@
-import type { StaticImageData } from 'next/image';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 import React from 'react';
@@ -7,34 +6,39 @@ import { Logo } from '@/components/Logo';
 import { mergeClassnames } from '@/components/private/utils';
 
 type IAuthLayoutProps = {
-  illustrationImage: StaticImageData;
+  illustrationImage: string;
   children: ReactNode;
-  isLogin?: boolean;
+  pathName?: string;
 };
 
-const AuthLayout = (props: IAuthLayoutProps) => (
-  <>
-    <div
-      className={mergeClassnames(
-        'hidden h-screen w-5/12 items-center justify-start bg-yellow-90 sm:flex',
-        props.isLogin && 'bg-[#A6D4FF]',
-      )}
-    >
-      <Image
-        alt="Illustration"
-        className="h-full w-full object-contain object-center"
-        src={props.illustrationImage}
-        width={600}
-        height={1024}
-      />
-    </div>
-    <div className="h-screen w-full sm:w-7/12">
-      <div className="m-auto flex h-full w-1/2 max-w-[420px] flex-col items-center justify-center gap-8">
-        <Logo />
-        {props.children}
+const AuthLayout = (props: IAuthLayoutProps) => {
+  return (
+    <div className="flex h-screen w-full items-center justify-center bg-gradient-to-bl from-[#C1D5FF] to-[#7986E7] bg-blend-multiply xl:bg-none">
+      <div
+        className={mergeClassnames(
+          'hidden h-screen w-5/12 items-center justify-center xl:flex',
+          props.pathName
+            ? props.pathName === 'login'
+              ? 'bg-[#A6D4FF]'
+              : 'bg-pink-90'
+            : 'bg-yellow-90',
+        )}
+      >
+        <Image
+          alt="Illustration"
+          className="h-auto w-5/6 object-contain"
+          src={props.illustrationImage}
+          width={600}
+          height={1024}
+        />
+      </div>
+      <div className="h-full w-full rounded-[26px] bg-white p-12 sm:h-5/6 sm:w-7/12 xl:h-full xl:p-0">
+        <div className="m-auto flex h-full w-full flex-col items-center justify-center gap-8 sm:w-5/6 xl:w-7/12">
+          <Logo />
+          {props.children}
+        </div>
       </div>
     </div>
-  </>
-);
-
+  );
+};
 export { AuthLayout };

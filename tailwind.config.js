@@ -119,6 +119,9 @@ module.exports = {
         red: {
           50: '#EE0038',
         },
+        pink: {
+          90: '#FFE4F1',
+        },
       },
       rotate: {
         30: '30deg',
