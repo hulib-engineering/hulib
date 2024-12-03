@@ -1,17 +1,14 @@
 'use client';
 
-import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import React, { useState } from 'react';
+import React from 'react';
 
-import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
-import { mergeClassnames } from '@/components/private/utils';
-import TermOfUseModal from '@/components/TermOfUseModal';
+import { Logo } from '@/components/Logo';
 import { Env } from '@/libs/Env.mjs';
 
-const SocialLinks = [
+const socialLinks = [
   {
     iconUrl: '/assets/images/icons/facebook.svg',
     link: 'https://www.facebook.com/hulibvietnam',
@@ -29,121 +26,131 @@ const SocialLinks = [
   },
 ];
 
+type FooterSection = {
+  title: string;
+  items: Partial<{
+    title: string;
+    iconUrl: string;
+    href: string;
+  }>[];
+};
+
 const Footer = () => {
   const t = useTranslations('Footer');
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentModalRef, setCurrentModalRef] = useState('');
-
-  const handleClick = (modalName: string) => {
-    setIsModalOpen(true);
-    setCurrentModalRef(modalName);
-  };
-
-  const Links = [
-    { content: t('privacy_policy'), modalName: 'privacy_policy' },
-    { content: t('term_of_service'), modalName: 'term_of_service' },
-  ];
+  const [footerSections] = React.useState<FooterSection[]>([
+    {
+      title: t('site'),
+      items: [
+        { title: t('my_schedule') },
+        { title: t('books') },
+        { title: t('profile') },
+      ],
+    },
+    {
+      title: t('help'),
+      items: [
+        { title: t('privacy_policy') },
+        { title: t('term_of_service') },
+        { title: t('cookie_settings') },
+      ],
+    },
+    {
+      title: t('contact'),
+      items: [
+        {
+          iconUrl: '/assets/images/icons/phone.svg',
+          title: Env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER,
+          href: `tel:${Env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER}`,
+        },
+        {
+          iconUrl: '/assets/images/icons/mail.svg',
+          title: Env.NEXT_PUBLIC_CONTACT_EMAIL,
+          href: `mailto:${Env.NEXT_PUBLIC_CONTACT_EMAIL}`,
+        },
+      ],
+    },
+  ]);
 
   return (
-    <>
-      <footer
-        className={mergeClassnames(
-          'mx-auto w-full px-4 pt-8 pb-6 text-primary-10',
-          'lg:w-3/4 lg:px-8 2xl:px-[5.625rem] 2xl:pt-[5.625rem] 2xl:pb-10',
-        )}
-      >
-        <div
-          className={mergeClassnames(
-            'mx-auto mb-3 flex w-full flex-col items-start justify-between border-t-[0.5px] border-t-solid border-t-[rgba(176,206,250,0.50)] py-8 gap-8',
-            'sm:flex-row sm:gap-0 lg:mb-12 lg:max-w-7xl lg:py-20',
-          )}
-        >
-          <div className="flex w-full flex-col items-center gap-8 sm:items-start">
-            <h4 className="text-2xl font-semibold ">Help</h4>
-            <div className="flex flex-col items-center gap-4 sm:items-start">
-              {Links.map((link, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  onClick={() => handleClick(link.modalName)}
-                  className={mergeClassnames(
-                    'text-sm font-normal transition duration-200 capitalize',
-                    'hover:-translate-y-1 hover:text-primary-hover',
-                  )}
-                >
-                  {link.content}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="flex w-full flex-col items-center gap-8 sm:items-start">
-            <h4 className="text-center text-2xl font-semibold">Contact</h4>
-            <div className="flex flex-col items-center gap-4 text-sm sm:items-start">
+    <footer className="w-full">
+      <div className="flex w-full flex-col justify-between rounded-md bg-white px-4 py-8 md:px-28 md:py-12 lg:flex-row">
+        <div className="flex flex-col gap-6">
+          <Logo size="small" />
+          <p className="w-full text-center text-base font-medium leading-6 text-neutral-30 sm:text-left md:w-[340px]">
+            {t('footer_description')}
+          </p>
+          <div className="flex flex-row justify-center gap-5 sm:justify-start">
+            {socialLinks.map((link) => (
               <Link
-                href={`tel:${Env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER}`}
-                className="flex items-center justify-center hover:text-primary-hover"
-              >
-                <PhoneIcon width={24} height={24} />
-                <p className="ml-3 text-sm font-normal">
-                  {Env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER}
-                </p>
-              </Link>
-              <Link
-                href={`mailto:${Env.NEXT_PUBLIC_CONTACT_EMAIL}`}
+                key={link.name}
+                href={link.link}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center hover:text-primary-hover"
+                className="hover:text-primary-hover"
               >
-                <EnvelopeIcon width={24} height={24} />
-                <p className="ml-3 text-sm font-normal">
-                  {Env.NEXT_PUBLIC_CONTACT_EMAIL}
-                </p>
+                <Image
+                  src={link.iconUrl}
+                  alt={link.name}
+                  width={24}
+                  height={24}
+                  loading="lazy"
+                />
               </Link>
-            </div>
-          </div>
-          <div className="flex w-full flex-col items-center gap-8">
-            <h4 className="text-left text-2xl font-semibold">Follow us</h4>
-            <div className="flex w-full items-center justify-center gap-8">
-              {SocialLinks.map((link, index) => (
-                <Link
-                  key={index}
-                  href={link.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-primary-hover"
-                >
-                  <Image
-                    src={link.iconUrl}
-                    alt={link.name}
-                    width={24}
-                    height={24}
-                    loading="lazy"
-                  />
-                </Link>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between border-t-[0.5px] border-solid border-t-[rgba(176,206,250,0.50)] px-0 py-6">
-          <p className="text-sm font-normal text-[rgba(0,_87,_215,_0.50)]">
-            {t('copyright')}
-          </p>
+        <div className="grid grid-cols-1 sm:grid-cols-3">
+          {footerSections.map((section) => (
+            <div
+              className="mt-16 flex w-fit flex-col gap-5 lg:mt-0"
+              key={section.title}
+            >
+              <h4 className="text-xl font-medium leading-7 text-primary-10">
+                {section.title.toUpperCase()}
+              </h4>
+              <div className="flex flex-col gap-6">
+                {section.items.map((item) => {
+                  const Wrapper: any = item?.href ? Link : 'div';
+                  return (
+                    <Wrapper
+                      key={item.title}
+                      className="flex cursor-pointer flex-row items-center gap-2 leading-5"
+                      {...(item.href
+                        ? {
+                            href: item.href as any,
+                            target: '_blank',
+                            rel: 'noreferrer',
+                          }
+                        : {})}
+                    >
+                      {item?.iconUrl && (
+                        <Image
+                          src={item?.iconUrl}
+                          alt={item.title || 'Icon'}
+                          height={14}
+                          width={18}
+                          loading="lazy"
+                          className="mb-[1px]"
+                        />
+                      )}
+
+                      <p className="text-base font-medium text-neutral-30">
+                        {item.title}
+                      </p>
+                    </Wrapper>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
-      </footer>
-      {currentModalRef === 'privacy_policy' && (
-        <PrivacyPolicyModal
-          open={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
-      {currentModalRef === 'term_of_service' && (
-        <TermOfUseModal
-          open={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
-    </>
+      </div>
+
+      <p className="border-t-[1px] border-solid border-neutral-90 bg-white py-5 text-center text-sm leading-4 text-neutral-30">
+        Copyright © 2024 HuLib Website. All rights reserved.
+      </p>
+    </footer>
   );
 };
 

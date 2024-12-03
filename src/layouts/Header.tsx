@@ -1,45 +1,176 @@
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+'use client';
 
-import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import React from 'react';
+
+import Bradge from '@/components/bradge/Bradge';
 import { Logo } from '@/components/Logo';
-import { mergeClassnames } from '@/components/private/utils';
+import SearchInput from '@/components/searchInput/SearchInput';
+import { useDeviceType } from '@/libs/hooks';
 
 const Header = () => {
   const t = useTranslations('Header');
+  const [token] = React.useState<string | null>('123');
+  const { deviceType } = useDeviceType();
+  if (deviceType === 'mobile') {
+    return (
+      <header
+        className="fixed inset-x-0 top-0 z-10"
+        style={{ width: 'calc(100% + 8px)' }}
+      >
+        <div className="flex w-full flex-col items-center gap-5 bg-white p-6">
+          <div className="flex w-full flex-row items-center justify-between">
+            <Logo size="small" />
+            <div>
+              {token ? (
+                <div className="flex flex-row items-center gap-6">
+                  <Bradge value={10}>
+                    <Image
+                      src="/assets/images/icons/message.svg"
+                      alt="Message Icon"
+                      width={22}
+                      height={22}
+                      loading="lazy"
+                    />
+                  </Bradge>
+                  <Bradge value={10}>
+                    <Image
+                      src="/assets/images/icons/bell.svg"
+                      alt="Message Icon"
+                      width={24}
+                      height={24}
+                      loading="lazy"
+                    />
+                  </Bradge>
+
+                  <div className="relative">
+                    <Image
+                      alt="Avatar Icon"
+                      width={44}
+                      height={44}
+                      loading="lazy"
+                      src="/assets/images/icons/avatar.svg"
+                    />
+                    <div className="absolute left-7 top-7">
+                      <div className="flex size-5 items-center justify-center rounded-full border-[2px] border-solid border-white bg-neutral-90">
+                        <Image
+                          src="/assets/images/icons/caret-down.svg"
+                          alt="Caret Down Icon"
+                          width={12}
+                          height={12}
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-row gap-3">
+                  <div className="h-[40px] cursor-pointer rounded-md border-[1px] border-solid border-[#C2C6CF] bg-white px-3 text-base font-medium leading-[40px] text-primary-50 hover:opacity-90">
+                    {t('log_in')}
+                  </div>
+                  <div className="h-[40px] cursor-pointer rounded-md bg-primary-50 px-3 text-base font-medium leading-[40px] text-white hover:opacity-90">
+                    {t('sign_up')}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          <SearchInput />
+          <div className="flex w-full flex-row items-center justify-around">
+            {token && (
+              <span className="cursor-pointer text-base font-medium leading-5">
+                {t('my_schedule')}
+              </span>
+            )}
+            <span className="cursor-pointer text-base font-medium leading-5">
+              {t('books')}
+            </span>
+            <span className="cursor-pointer text-base font-medium leading-5">
+              {t('mentors')}
+            </span>
+          </div>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header
-      className={mergeClassnames(
-        'fixed top-0 z-[999] w-full bg-[#f1f4f9bf] px-2 py-0.5 backdrop-blur-[50px]',
-        'sm:px-[1.875rem] sm:py-6 lg:px-12 2xl:px-28',
-      )}
+      className="fixed inset-x-0 top-0 z-10 min-w-[1100px]"
+      style={{ width: 'calc(100% + 8px)' }}
     >
-      <div className="mx-auto flex items-center justify-between sm:w-3/4">
-        <div className="relative hidden flex-1 grow items-start pb-[0.26788rem] pt-[0.3125rem] sm:flex">
-          <Link href="/">
-            <Logo />
-          </Link>
+      <div className="flex w-full flex-row items-center justify-around bg-white py-6">
+        <div className="flex w-fit flex-row items-center gap-10">
+          <Logo size="small" />
+          {token && (
+            <span className="cursor-pointer text-base font-medium leading-5">
+              {t('my_schedule')}
+            </span>
+          )}
+          <span className="cursor-pointer text-base font-medium leading-5">
+            {t('books')}
+          </span>
+          <span className="cursor-pointer text-base font-medium leading-5">
+            {t('mentors')}
+          </span>
         </div>
-        <div className="relative flex flex-1 grow items-start pb-[0.26788rem] pt-[0.3125rem] sm:hidden">
-          <Link href="/">
-            <Logo size="small" />
-          </Link>
+        <div className="w-[300px]">
+          <SearchInput />
         </div>
-        <div className="relative flex items-center justify-end gap-6">
-          <LocaleSwitcher className="shrink" />
-          <Link
-            href="#newsletter"
-            className={mergeClassnames(
-              'md:flex items-center justify-center !flex-[0_0_auto] gap-1 rounded-full border-2 border-primary-10 px-8 py-3 hidden',
-              'hover:bg-light',
-            )}
-          >
-            <p className="text-base font-medium uppercase leading-normal text-primary-10">
-              {t('contact_us')}
-            </p>
-          </Link>
-        </div>
+        {token ? (
+          <div className="flex flex-row items-center gap-6">
+            <Bradge value={10}>
+              <Image
+                src="/assets/images/icons/message.svg"
+                alt="Message Icon"
+                width={22}
+                height={22}
+                loading="lazy"
+              />
+            </Bradge>
+            <Bradge value={10}>
+              <Image
+                src="/assets/images/icons/bell.svg"
+                alt="Message Icon"
+                width={24}
+                height={24}
+                loading="lazy"
+              />
+            </Bradge>
+
+            <div className="relative">
+              <Image
+                alt="Avatar Icon"
+                width={44}
+                height={44}
+                loading="lazy"
+                src="/assets/images/icons/avatar.svg"
+              />
+              <div className="absolute left-7 top-7">
+                <div className="flex size-5 items-center justify-center rounded-full border-[2px] border-solid border-white bg-neutral-90">
+                  <Image
+                    src="/assets/images/icons/caret-down.svg"
+                    alt="Caret Down Icon"
+                    width={12}
+                    height={12}
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-row gap-3">
+            <div className="h-[40px] cursor-pointer rounded-md border-[1px] border-solid border-[#C2C6CF] bg-white px-3 text-base font-medium leading-[40px] text-primary-50 hover:opacity-90">
+              {t('log_in')}
+            </div>
+            <div className="h-[40px] cursor-pointer rounded-md bg-primary-50 px-3 text-base font-medium leading-[40px] text-white hover:opacity-90">
+              {t('sign_up')}
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );
