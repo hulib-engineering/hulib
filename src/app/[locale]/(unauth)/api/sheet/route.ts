@@ -6,7 +6,7 @@ import { Env } from '@/libs/Env.mjs';
 import { EmailRegistrationValidation } from '@/validations/EventRegistrationValidation';
 
 const EventRegistrationValidation = EmailRegistrationValidation.extend({
-  transferBill: z.string().trim().min(1),
+  transferBill: z.string(),
 });
 
 export const POST = async (request: Request) => {
@@ -28,7 +28,6 @@ export const POST = async (request: Request) => {
     secondChoice,
     question,
     transferBill,
-    transferInfo,
     willingToBecomeAmbassador,
   } = parse.data;
 
@@ -67,7 +66,7 @@ export const POST = async (request: Request) => {
           secondChoice,
           question,
           transferBill,
-          transferInfo,
+          '',
           willingToBecomeAmbassador,
         ],
       ],
