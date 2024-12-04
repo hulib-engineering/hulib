@@ -3,11 +3,10 @@ import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinit
 
 export default (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.mutation({
-    query: (body: { id: string | number }) => ({
-      url: 'auth/email/confirm',
+    query: (body: { password: string; hash: string }) => ({
+      url: 'auth/reset/password',
       method: 'POST',
       body,
-      responseHandler: 'text',
     }),
-    invalidatesTags: [{ type: 'User' }, { type: 'OTP' }],
+    invalidatesTags: [{ type: 'User' }],
   });
