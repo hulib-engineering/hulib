@@ -1,3 +1,21 @@
+# [1.7.0](https://github.com/HumanLibrary/hulib/compare/v1.6.0...v1.7.0) (2024-12-04)
+
+
+### Bug Fixes
+
+* **API route:** fixed invalid export ([6ef1fde](https://github.com/HumanLibrary/hulib/commit/6ef1fde8f3287f89e0d06a7be5d7d7fd969f11af))
+* **API route:** fixed social login API ([8c26d99](https://github.com/HumanLibrary/hulib/commit/8c26d99aa0ca0cac26f356ab09c4267cac31ba53))
+* **Event Section:** removed transfer bill upload and transfer account input ([572bf51](https://github.com/HumanLibrary/hulib/commit/572bf519887f588e21c0da98fcabbd0202a6039a))
+* **Pipeline:** fixed env var for running pipeline ([4df0312](https://github.com/HumanLibrary/hulib/commit/4df0312bd97adfdf1035f39373c127c49679d6dc))
+* **TypeError:** update type in loginAsAdmin services ([c8bdf61](https://github.com/HumanLibrary/hulib/commit/c8bdf6132cc81a593cccb712b7a091d2782f646d))
+
+
+### Features
+
+* implement forgot password and reset password ([79e761e](https://github.com/HumanLibrary/hulib/commit/79e761e16dc5b24e463b8d484703b9b38ba905bf))
+* **Login:** login API bindded ([748c32e](https://github.com/HumanLibrary/hulib/commit/748c32ebcb3316bf0533900f38c53832367d7df7))
+* **Social Login:** added social login buttons, updated illustrations and modified responsive layout ([dd67b29](https://github.com/HumanLibrary/hulib/commit/dd67b29981704c0ce292a7edb39061ea3e2d711b))
+
 # [1.6.0](https://github.com/HumanLibrary/hulib/compare/v1.5.1...v1.6.0) (2024-11-22)
 
 
