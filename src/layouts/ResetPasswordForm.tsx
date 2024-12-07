@@ -3,8 +3,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
@@ -57,8 +58,15 @@ const ResetPasswordSuccess = () => {
 
 const ResetPasswordForm = () => {
   const router = useRouter();
-  const { hash } = useParams();
   const [resetPassword] = useResetPasswordMutation();
+
+  const pageURL = useMemo(() => {
+    return new URL(window.location.href);
+  }, []);
+
+  const hash = useMemo(() => {
+    return pageURL.searchParams.get('hash');
+  }, [pageURL]);
 
   const {
     handleSubmit,
@@ -75,7 +83,7 @@ const ResetPasswordForm = () => {
       try {
         await resetPassword({
           password: data.password,
-          hash: hash?.toString() ?? '',
+          hash,
         });
         setSubmitSuccess(true);
       } catch (error: any) {
