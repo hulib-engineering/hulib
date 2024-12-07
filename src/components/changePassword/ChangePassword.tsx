@@ -2,6 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye } from '@phosphor-icons/react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -14,6 +16,8 @@ import ConfirmChangePassword from '@/layouts/ConfirmChangePassword';
 import { ChangePasswordValidation } from '@/validations/ChangePasswordValidation';
 
 const ChangePassword = () => {
+  const router = useRouter();
+
   const {
     handleSubmit,
     register,
@@ -35,8 +39,24 @@ const ChangePassword = () => {
   });
 
   return (
-    <>
-      <div>
+    <div className="h-full bg-[#F9F9F9]">
+      <button
+        type="button"
+        className="ml-[10%] flex cursor-pointer items-center gap-2 px-2 py-3 pt-10"
+        onClick={() => router.back()}
+      >
+        <Image
+          src="/assets/icons/ArrowLeft-icon.svg"
+          width={24}
+          height={24}
+          alt="arrow-icon"
+          loading="lazy"
+        />
+        <p className="text-base font-medium text-[#0442BF] underline">
+          Back to Previous
+        </p>
+      </button>
+      <div className="mx-auto mt-3 max-w-[600px] bg-white p-10">
         <h2 className="text-[2rem] font-medium leading-[40px] tracking-[-2%]">
           Change Your Password
         </h2>
@@ -101,7 +121,7 @@ const ChangePassword = () => {
         onClose={() => setIsOpen(!isOpen)}
         onSuccess={onHandleSubmit}
       />
-    </>
+    </div>
   );
 };
 

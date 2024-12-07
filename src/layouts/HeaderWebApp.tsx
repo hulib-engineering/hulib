@@ -15,10 +15,7 @@ const HeaderWebApp = () => {
   const { deviceType } = useDeviceType();
   if (deviceType === 'mobile') {
     return (
-      <header
-        className="fixed inset-x-0 top-0 z-10"
-        style={{ width: 'calc(100% + 8px)' }}
-      >
+      <header className="w-full">
         <div className="flex w-full flex-col items-center gap-5 bg-white p-6">
           <div className="flex w-full flex-row items-center justify-between">
             <Logo size="small" />
@@ -97,10 +94,7 @@ const HeaderWebApp = () => {
   }
 
   return (
-    <header
-      className="fixed inset-x-0 top-0 z-10 min-w-[1100px]"
-      style={{ width: 'calc(100% + 8px)' }}
-    >
+    <header className="w-full">
       <div className="flex w-full flex-row items-center justify-around bg-white py-6">
         <div className="flex w-fit flex-row items-center gap-10">
           <Logo size="small" />
