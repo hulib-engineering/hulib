@@ -5,12 +5,14 @@ import { Eye } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
 import TextInput from '@/components/textInput/TextInput';
+import { useResetPasswordMutation } from '@/libs/services/modules/auth';
 import { ResetPasswordValidation } from '@/validations/ResetPasswordValidation';
 
 const ResetPasswordSuccess = () => {
@@ -39,7 +41,7 @@ const ResetPasswordSuccess = () => {
       <Button
         type="button"
         className="w-fit px-4 py-3 text-white"
-        onClick={() => router.push('/login')}
+        onClick={() => router.push('/auth/login')}
       >
         Login now
         <Image
@@ -56,6 +58,15 @@ const ResetPasswordSuccess = () => {
 
 const ResetPasswordForm = () => {
   const router = useRouter();
+  const [resetPassword] = useResetPasswordMutation();
+
+  const pageURL = useMemo(() => {
+    return new URL(window.location.href);
+  }, []);
+
+  const hash = useMemo(() => {
+    return pageURL.searchParams.get('hash');
+  }, [pageURL]);
 
   const {
     handleSubmit,
@@ -67,9 +78,17 @@ const ResetPasswordForm = () => {
 
   const [submitSuccess, setSubmitSuccess] = React.useState<boolean>(false);
 
-  const onHandleSubmit = handleSubmit(() => {
+  const onHandleSubmit = handleSubmit(async (data) => {
     if (isValid) {
-      setSubmitSuccess(true);
+      try {
+        await resetPassword({
+          password: data.password,
+          hash,
+        });
+        setSubmitSuccess(true);
+      } catch (error: any) {
+        console.log(error);
+      }
     }
   });
 
@@ -82,38 +101,31 @@ const ResetPasswordForm = () => {
           Reset the password
         </h2>
       </div>
-      <Form className="flex w-full flex-col gap-4">
+      <Form className="flex w-full flex-col gap-4" onSubmit={onHandleSubmit}>
         <Form.Item>
           <TextInput
+            {...register('password')}
             id="password"
             type="password"
             label="Password"
             showPasswordText={<Eye />}
-            {...register('password')}
+            isError={!!errors.password}
+            hintText={
+              errors.password?.message ??
+              'Password must have at least 8 characters'
+            }
           />
-          {errors.password?.message ? (
-            <p className="mt-2 text-xs font-normal leading-[14px] text-red-50">
-              {errors.password?.message}
-            </p>
-          ) : (
-            <p className="mt-2 text-xs font-normal leading-[14px] text-neutral-60">
-              Password must have at least 8 characters
-            </p>
-          )}
         </Form.Item>
         <Form.Item>
           <TextInput
+            {...register('confirmPassword')}
             id="confirmPassword"
             type="password"
             label="Re-enter password"
             showPasswordText={<Eye />}
-            {...register('confirmPassword')}
+            isError={!!errors.confirmPassword}
+            hintText={errors.confirmPassword?.message}
           />
-          {errors.confirmPassword?.message && (
-            <p className="mt-2 text-xs font-normal leading-[14px] text-red-50">
-              {errors.confirmPassword?.message}
-            </p>
-          )}
         </Form.Item>
         <Form.Item className="py-4">
           <Button
@@ -130,7 +142,7 @@ const ResetPasswordForm = () => {
       <button
         type="button"
         className="flex items-center gap-x-2"
-        onClick={() => router.push('/login')}
+        onClick={() => router.push('/auth/login')}
       >
         <Image
           src="/assets/icons/ArrowLeft-icon.svg"

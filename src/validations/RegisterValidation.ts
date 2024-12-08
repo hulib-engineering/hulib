@@ -18,11 +18,28 @@ export const RegisterStep1Validation = z
     path: ['confirmPassword'],
   });
 
-export const RegisterStep2Validation = z.object({
-  fullname: z.string().trim().min(1),
-  gender: z.enum(['male', 'female', 'other']).default('other'),
-  birthday: z.string().trim().min(1),
-});
+export const RegisterStep2Validation = z
+  .object({
+    isUnderGuard: z.boolean().default(false),
+    fullname: z.string().trim().min(1),
+    gender: z.number().min(1).max(3).default(3),
+    birthday: z.string().trim().min(1),
+    parentPhoneNumber: z.any(),
+  })
+  .superRefine((values, context) => {
+    if (
+      values.isUnderGuard &&
+      (!values.parentPhoneNumber ||
+        values.parentPhoneNumber.length <= 0 ||
+        !/^\+[1-9]\d{1,14}$/.test(values.parentPhoneNumber))
+    ) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Please specify a parent phone number if you are under 18!',
+        path: ['phoneNumber'],
+      });
+    }
+  });
 
 export const RegisterStep3Validation = z.object({
   verificationCode: z.string().trim().length(6),

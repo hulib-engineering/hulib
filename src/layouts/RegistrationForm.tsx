@@ -5,7 +5,8 @@ import { CheckFat, Eye, X } from '@phosphor-icons/react';
 import { omit } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import React, { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 import PasswordChecklist from 'react-password-checklist';
@@ -13,12 +14,11 @@ import type { z } from 'zod';
 
 import AuthCode from '@/components/authCode/AuthCode';
 import Button from '@/components/button/Button';
-import Dropdown from '@/components/dropdown/Dropdown';
 import Form from '@/components/form/Form';
 import Hint from '@/components/Hint';
 import { Logo } from '@/components/Logo';
-import MenuItem from '@/components/menuItem/MenuItem';
 import Modal from '@/components/Modal';
+import { ControlledSelect } from '@/components/Select';
 import SocialButton from '@/components/SocialButton';
 import TextInput from '@/components/textInput/TextInput';
 import { useRouter } from '@/libs/i18nNavigation';
@@ -36,9 +36,9 @@ import {
 } from '@/validations/RegisterValidation';
 
 const genders = [
-  { value: 'male', label: 'Male' },
-  { value: 'female', label: 'Female' },
-  { value: 'other', label: 'Other' },
+  { value: 1, label: 'Male' },
+  { value: 2, label: 'Female' },
+  { value: 3, label: 'Other' },
 ];
 
 const Step1Form = ({
@@ -135,21 +135,37 @@ const Step2Form = ({
 }: {
   onSubmit: (data: z.infer<typeof RegisterStep2Validation>) => void;
 }) => {
-  // const [currentGender, setCurrentGender] = useState({ value: '', label: '' });
-
   const {
     control,
     register,
+    watch,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<z.infer<typeof RegisterStep2Validation>>({
     resolver: zodResolver(RegisterStep2Validation),
     defaultValues: {
+      isUnderGuard: false,
       fullname: '',
-      gender: 'other',
+      gender: 3,
       birthday: '',
     },
   });
+
+  useEffect(() => {
+    const today = new Date();
+    const birthDate = new Date(watch('birthday'));
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age -= 1;
+    }
+    if (age < 18) {
+      setValue('isUnderGuard', true);
+    } else {
+      setValue('isUnderGuard', false);
+    }
+  }, [watch('birthday')]);
 
   const handleFormSubmit = handleSubmit((data) => {
     onSubmit(data);
@@ -170,38 +186,11 @@ const Step2Form = ({
       </Form.Item>
       <Form.Item className="z-10 flex gap-2">
         <fieldset className="w-full">
-          <Controller
+          <ControlledSelect
             name="gender"
             control={control}
-            render={({ field }) => (
-              <Dropdown
-                id="gender"
-                value={field.value}
-                onChange={field.onChange}
-              >
-                {({ open }) => (
-                  <>
-                    <Dropdown.Select open={open} label="Gender">
-                      {field.value}
-                    </Dropdown.Select>
-                    <Dropdown.Options>
-                      {genders.map((gender, index) => (
-                        <Dropdown.Option key={index} value={gender}>
-                          {({ selected, active }) => (
-                            <MenuItem isActive={active} isSelected={selected}>
-                              <MenuItem.Title>{gender.label}</MenuItem.Title>
-                            </MenuItem>
-                          )}
-                        </Dropdown.Option>
-                      ))}
-                    </Dropdown.Options>
-                    {!!errors.gender && (
-                      <Dropdown.Hint>{errors.gender.message}</Dropdown.Hint>
-                    )}
-                  </>
-                )}
-              </Dropdown>
-            )}
+            label="Gender"
+            options={genders}
           />
         </fieldset>
         <fieldset className="w-full">
@@ -214,6 +203,20 @@ const Step2Form = ({
           />
         </fieldset>
       </Form.Item>
+      {watch('isUnderGuard') && (
+        <Form.Item>
+          <TextInput
+            id="parentPhoneNumber"
+            type="tel"
+            label="Parent Phone Number"
+            placeholder="+xxxxxxxxxxx"
+            {...register('parentPhoneNumber')}
+            isError={!!errors.parentPhoneNumber}
+            // @ts-ignore
+            hintText={errors.parentPhoneNumber?.message}
+          />
+        </Form.Item>
+      )}
       <Form.Item className="py-4">
         <Button
           type="submit"
@@ -245,17 +248,18 @@ const Step2Form = ({
   );
 };
 
-const Step3Form = ({
-  id,
-  email,
-  code,
-}: {
+type IStep3FormProps = {
   id: number;
   email: string;
   code: string;
-}) => {
+  onSuccess: () => void;
+};
+
+const Step3Form = (props: IStep3FormProps) => {
   const [confirmEmail] = useConfirmEmailMutation();
   const [resendOTP] = useResendOTPMutation();
+
+  const router = useRouter();
 
   const {
     control,
@@ -270,8 +274,9 @@ const Step3Form = ({
     },
   });
 
-  const [isOpen, setIsOpen] = useState(true);
-  const [currentVerificationCode, setCurrentVerificationCode] = useState(code);
+  const [currentVerificationCode, setCurrentVerificationCode] = useState(
+    props.code,
+  );
 
   const handleAuthCodeSubmit: SubmitHandler<
     z.infer<typeof RegisterStep3Validation>
@@ -285,7 +290,10 @@ const Step3Form = ({
       } else {
         clearErrors('verificationCode');
         try {
-          await confirmEmail({ id });
+          const result = await confirmEmail({ id: props.id });
+          if (result && !result.error) {
+            props.onSuccess();
+          }
         } catch (error: any) {
           console.log(error);
         }
@@ -295,20 +303,20 @@ const Step3Form = ({
 
   const handleResendOTP = async () => {
     try {
-      const result = await resendOTP({ id }).unwrap();
-      if (result.data) {
-        setCurrentVerificationCode(result.data.code);
+      const result = await resendOTP({ id: props.id }).unwrap();
+      if (result) {
+        setCurrentVerificationCode(result.code);
       }
     } catch (error: any) {
       console.log(error);
     }
   };
 
-  const closeModal = () => setIsOpen(false);
+  const handleNavigateToLogin = () => router.push('/auth/login');
 
   return (
-    <Modal open={isOpen} onClose={closeModal} className="z-50">
-      <Modal.Backdrop className="bg-[#F3F4F6] bg-opacity-100 bg-gradient-to-bl from-white/20 to-[#0442bf33] bg-blend-multiply" />
+    <Modal open onClose={handleNavigateToLogin} className="z-50">
+      <Modal.Backdrop className="bg-[#F3F4F6]/100 bg-gradient-to-bl from-white/20 to-[#0442bf33] bg-blend-multiply" />
       <Modal.Panel className="flex max-w-xl flex-col items-center gap-12 p-8">
         <Logo />
         <div className="flex flex-col gap-4 text-center text-neutral-10">
@@ -326,7 +334,7 @@ const Step3Form = ({
                 rel="noopener noreferrer"
                 className="text-primary-50 no-underline"
               >
-                {email}
+                {props.email}
               </Link>
             </span>
           </p>
@@ -397,7 +405,7 @@ const Step4Form = () => {
   return (
     <Modal open onClose={handleNavigateToLogin} className="z-50">
       <Modal.Backdrop className="bg-[#F3F4F6] bg-opacity-100 bg-gradient-to-bl from-white/20 to-[#F9DA6C33] bg-blend-multiply" />
-      <Modal.Panel className="bg-transparent flex max-w-xl flex-col items-center gap-12 p-8 shadow-none">
+      <Modal.Panel className="flex max-w-xl flex-col items-center gap-12 bg-transparent p-8 shadow-none">
         <div className="flex flex-row items-center justify-center gap-4 py-2">
           <h2 className="text-right text-4xl font-medium leading-tight text-neutral-10">
             Welcome to
@@ -461,7 +469,12 @@ const RegistrationForm = () => {
   };
 
   if (step === 2) {
-    return <Step3Form {...verificationData} />;
+    return (
+      <Step3Form
+        {...verificationData}
+        onSuccess={() => setStep((prevState) => prevState + 1)}
+      />
+    );
   }
 
   if (step === 3) {
@@ -489,8 +502,11 @@ const RegistrationForm = () => {
         <div className="h-[1px] w-full shrink grow basis-0 bg-neutral-90" />
       </div>
       <div className="flex items-center justify-center gap-2">
-        <SocialButton iconUrl={FacebookIcon} />
-        <SocialButton iconUrl={GoogleIcon} />
+        <SocialButton
+          iconUrl={FacebookIcon}
+          onClick={() => signIn('facebook')}
+        />
+        <SocialButton iconUrl={GoogleIcon} onClick={() => signIn('google')} />
       </div>
       <div className="inline-flex items-center justify-center gap-4 py-3">
         <div className="tracking-tight text-neutral-30">

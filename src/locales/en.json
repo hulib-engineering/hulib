@@ -2,12 +2,33 @@
   "Header": {
     "contact_us": "contact us"
   },
+  "HeaderWebApp": {
+    "contact_us": "contact us",
+    "my_schedule": "My schedule",
+    "books": "Books",
+    "mentors": "Mentors",
+    "log_in": "Log in",
+    "sign_up": "Sign up"
+  },
   "Footer": {
     "footer_description": "There is a story and experience within each of us, so we are born to be somebody.",
     "copyright": "© 2024 HuLib. All rights reserved.",
     "privacy_policy": "privacy policy",
     "term_of_service": "term of service",
     "cookie_settings": "cookie settings"
+  },
+  "FooterWebApp": {
+    "footer_description": "Promote happiness values ​by connecting very personal stories with human books.",
+    "copyright": "© 2024 HuLib. All rights reserved.",
+    "privacy_policy": "Privacy policy",
+    "term_of_service": "Term of service",
+    "cookie_settings": "Cookie settings",
+    "site": "Site",
+    "my_schedule": "My Schedule",
+    "books": "Books",
+    "profile": "Profile",
+    "help": "Help",
+    "contact": "Contact"
   },
   "Index": {
     "meta_title": "HuLib | Landing Page",

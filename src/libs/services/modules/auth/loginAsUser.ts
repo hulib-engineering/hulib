@@ -8,10 +8,10 @@ import type { EmailLoginResponse } from './index';
 
 export default (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.mutation<EmailLoginResponse, z.infer<typeof LoginValidation>>({
-    query: ({ username, password }) => ({
+    query: ({ email, password }) => ({
       url: '/auth/email/login',
       method: 'POST',
-      body: { username, password },
+      body: { email, password },
     }),
     invalidatesTags: [{ type: 'User' }],
   });

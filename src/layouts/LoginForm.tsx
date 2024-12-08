@@ -1,8 +1,12 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye } from '@phosphor-icons/react';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
@@ -10,11 +14,45 @@ import Input from '@/components/input/Input';
 import Label from '@/components/Label';
 import SocialButton from '@/components/SocialButton';
 import TextInput from '@/components/textInput/TextInput';
+import type { EmailLoginResponse } from '@/libs/services/modules/auth';
+import { useLoginAsManagerMutation } from '@/libs/services/modules/auth';
 import FacebookIcon from '@/public/assets/icons/facebook-icon.svg';
 import GoogleIcon from '@/public/assets/icons/google-icon.svg';
+import { LoginValidation } from '@/validations/LoginValidation';
 
 const LoginForm = () => {
-  const handleSubmit = () => {};
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<z.infer<typeof LoginValidation>>({
+    resolver: zodResolver(LoginValidation),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const [login] = useLoginAsManagerMutation();
+  const handleFormSubmit = async (data: z.infer<typeof LoginValidation>) => {
+    try {
+      const result = (await login({
+        email: data.email,
+        password: data.password,
+      }).unwrap()) as EmailLoginResponse;
+
+      if (result) {
+        Cookies.set('refresh_token', result.refreshToken, {
+          expires: result.tokenExpires,
+        });
+        // token to local storage
+        localStorage.setItem('token', result.token);
+        localStorage.setItem('user', JSON.stringify(result.user));
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -24,14 +62,19 @@ const LoginForm = () => {
         </h2>
         <p className="tracking-[0.5%]">Login to your Hulib account</p>
       </div>
-      <Form className="flex w-full flex-col gap-4">
-        <Form.Item error>
+      <Form
+        className="flex w-full flex-col gap-4"
+        onSubmit={handleSubmit(handleFormSubmit)}
+      >
+        <Form.Item>
           <TextInput
             id="email"
             type="email"
             label="Phone number or email address"
             placeholder="hulib@gmail.com"
-            hintText="Supporting text"
+            {...register('email')}
+            isError={!!errors.email}
+            hintText={errors.email?.message}
           />
         </Form.Item>
         <Form.Item>
@@ -40,6 +83,9 @@ const LoginForm = () => {
             type="password"
             label="Password"
             showPasswordText={<Eye />}
+            {...register('password')}
+            isError={!!errors.password}
+            hintText={errors.password?.message}
           />
         </Form.Item>
         <Form.Item className="flex justify-between">
@@ -59,10 +105,10 @@ const LoginForm = () => {
         </Form.Item>
         <Form.Item className="py-4">
           <Button
-            type="button"
+            type="submit"
             value="Submit"
             className="w-full"
-            onClick={handleSubmit}
+            disabled={isSubmitting}
           >
             Login
           </Button>
@@ -74,10 +120,18 @@ const LoginForm = () => {
         <div className="h-[1px] w-full shrink grow basis-0 bg-neutral-90" />
       </div>
       <div className="w-full space-y-2">
-        <SocialButton iconUrl={GoogleIcon} className="w-full">
+        <SocialButton
+          iconUrl={GoogleIcon}
+          className="w-full"
+          onClick={() => {}}
+        >
           Log in with Google
         </SocialButton>
-        <SocialButton iconUrl={FacebookIcon} className="w-full">
+        <SocialButton
+          iconUrl={FacebookIcon}
+          className="w-full"
+          onClick={() => {}}
+        >
           Log in with Facebook
         </SocialButton>
       </div>
