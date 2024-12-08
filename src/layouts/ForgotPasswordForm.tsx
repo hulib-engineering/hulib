@@ -10,6 +10,7 @@ import type { z } from 'zod';
 import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
 import TextInput from '@/components/textInput/TextInput';
+import { useForgotPasswordMutation } from '@/libs/services/modules/auth';
 import { ForgotPasswordValidation } from '@/validations/ForgotPasswordValidation';
 
 type SendLinkEmailSuccessProps = {
@@ -22,7 +23,7 @@ const SendLinkEmailSuccess = ({ inputEmail }: SendLinkEmailSuccessProps) => {
   return (
     <>
       <div className="text-center text-neutral-10">
-        <div className="flex items-center gap-x-2 py-2">
+        <div className="flex items-center justify-center gap-x-2 py-2">
           <Image
             src="/assets/icons/GreenEmail-icon.svg"
             width={45.5}
@@ -50,7 +51,7 @@ const SendLinkEmailSuccess = ({ inputEmail }: SendLinkEmailSuccessProps) => {
       <button
         type="button"
         className="flex items-center gap-x-2"
-        onClick={() => router.push('/login')}
+        onClick={() => router.push('/auth/login')}
       >
         <Image
           src="/assets/icons/ArrowLeft-icon.svg"
@@ -69,22 +70,31 @@ const SendLinkEmailSuccess = ({ inputEmail }: SendLinkEmailSuccessProps) => {
 
 const ForgotPasswordForm = () => {
   const router = useRouter();
+  const [forgotPassword] = useForgotPasswordMutation();
 
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<z.infer<typeof ForgotPasswordValidation>>({
     resolver: zodResolver(ForgotPasswordValidation),
+    defaultValues: {
+      email: '',
+    },
   });
 
   const [inputEmail, setInputEmail] = React.useState<string>('');
   const [submitSuccess, setSubmitSuccess] = React.useState<boolean>(false);
 
-  const onHandleSubmit = handleSubmit((data) => {
-    if (data.email) {
-      setInputEmail(data.email);
-      setSubmitSuccess(true);
+  const onHandleSubmit = handleSubmit(async (data) => {
+    if (isValid) {
+      try {
+        await forgotPassword({ email: data.email });
+        setInputEmail(data.email);
+        setSubmitSuccess(true);
+      } catch (error: any) {
+        console.log(error);
+      }
     }
   });
 
@@ -101,9 +111,10 @@ const ForgotPasswordForm = () => {
           reset your password.
         </p>
       </div>
-      <Form className="flex w-full flex-col gap-4">
+      <Form className="flex w-full flex-col gap-4" onSubmit={onHandleSubmit}>
         <Form.Item>
           <TextInput
+            {...register('email')}
             id="email"
             type="email"
             label="Email"
@@ -111,13 +122,9 @@ const ForgotPasswordForm = () => {
             className={
               errors.email?.message && 'border border-solid border-red-500'
             }
-            {...register('email')}
+            isError={!!errors.email}
+            hintText={errors.email?.message}
           />
-          {errors.email?.message && (
-            <p className="mt-2 text-xs font-normal leading-[14px] text-red-50">
-              {errors.email?.message}
-            </p>
-          )}
         </Form.Item>
         <Form.Item className="py-4">
           <Button
@@ -134,7 +141,7 @@ const ForgotPasswordForm = () => {
       <button
         type="button"
         className="flex items-center gap-x-2"
-        onClick={() => router.push('/login')}
+        onClick={() => router.push('/auth/login')}
       >
         <Image
           src="/assets/icons/ArrowLeft-icon.svg"

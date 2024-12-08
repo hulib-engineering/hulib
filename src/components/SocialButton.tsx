@@ -15,24 +15,24 @@ const SocialIcon = ({ iconUrl }: { iconUrl: string }) => (
   />
 );
 
-const SocialButton = ({
-  iconUrl,
-  children,
-  className,
-}: {
+type ISocialButtonProps = {
   iconUrl: string;
   children?: ReactNode;
   className?: string;
-}) => (
+  onClick: () => void;
+};
+
+const SocialButton = (props: ISocialButtonProps) => (
   <IconButton
-    icon={<SocialIcon iconUrl={iconUrl} />}
+    icon={<SocialIcon iconUrl={props.iconUrl} />}
     className={mergeClassnames(
       'h-11 border border-solid border-[#E3E5EB] bg-white text-center text-neutral-10 text-sm',
       'hover:border-[#E3E5EB] hover:bg-[#F3F4F6]',
-      className,
+      props.className,
     )}
+    onClick={props.onClick}
   >
-    {children}
+    {props.children}
   </IconButton>
 );
 

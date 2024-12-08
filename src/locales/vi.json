@@ -2,12 +2,33 @@
   "Header": {
     "contact_us": "liên hệ"
   },
+  "HeaderWebApp": {
+    "contact_us": "liên hệ",
+    "my_schedule": "Lịch trình của tôi",
+    "books": "Sách",
+    "mentors": "Cố vấn",
+    "log_in": "Đăng nhập",
+    "sign_up": "Đăng kí"
+  },
   "Footer": {
     "footer_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
     "copyright": "© 2024 HuLib. Đã đăng ký bản quyền.",
     "privacy_policy": "chính sách bảo mật",
     "term_of_service": "điều khoản dịch vụ",
     "cookie_settings": "cài đặt cookie"
+  },
+  "FooterWebApp": {
+    "footer_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
+    "copyright": "© 2024 HuLib. Đã đăng ký bản quyền.",
+    "privacy_policy": "Chính sách bảo mật",
+    "term_of_service": "Điều khoản dịch vụ",
+    "cookie_settings": "Cài đặt cookie",
+    "site": "Trang web",
+    "my_schedule": "Lịch trình của tôi",
+    "books": "Sách",
+    "profile": "Hồ sơ",
+    "help": "Trợ giúp",
+    "contact": "Liên hệ"
   },
   "Index": {
     "meta_title": "HuLib | Trang chủ",
