@@ -13,11 +13,12 @@ import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
 import TextInput from '@/components/textInput/TextInput';
 import ConfirmChangePassword from '@/layouts/ConfirmChangePassword';
+import { useChangePasswordMutation } from '@/libs/services/modules/auth';
 import { ChangePasswordValidation } from '@/validations/ChangePasswordValidation';
 
 const ChangePassword = () => {
   const router = useRouter();
-
+  const [changePassword] = useChangePasswordMutation();
   const {
     handleSubmit,
     register,
@@ -36,6 +37,16 @@ const ChangePassword = () => {
 
   const onHandleSubmit = handleSubmit((data) => {
     console.log('input success', data);
+    setIsOpen(!isOpen);
+    try {
+      changePassword({
+        currentPassword: data.oldPassword,
+        newPassword: data.newPassword,
+        confirmPassword: data.confirmPassword,
+      });
+    } catch (error: any) {
+      console.log(error);
+    }
   });
 
   return (
