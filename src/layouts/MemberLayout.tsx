@@ -10,7 +10,7 @@ type IMemberLayoutProps = {
 
 const MemberLayout = (props: IMemberLayoutProps) => {
   return (
-    <div className="flex h-screen w-full flex-col items-center">
+    <div className="flex h-full min-h-screen w-full flex-col items-center">
       <HeaderWebApp />
       <div className="h-screen w-full">{props.children}</div>
       <FooterWebApp />
