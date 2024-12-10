@@ -23,7 +23,7 @@ const SendLinkEmailSuccess = ({ inputEmail }: SendLinkEmailSuccessProps) => {
   return (
     <>
       <div className="text-center text-neutral-10">
-        <div className="flex items-center gap-x-2 py-2">
+        <div className="flex items-center justify-center gap-x-2 py-2">
           <Image
             src="/assets/icons/GreenEmail-icon.svg"
             width={45.5}
