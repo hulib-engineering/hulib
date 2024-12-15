@@ -3,12 +3,12 @@
 import Image from 'next/image';
 import * as React from 'react';
 
-import { AboutPanel } from '@/components/myProfile/AboutPanel';
-import { ReviewPanel } from '@/components/myProfile/ReviewPanel';
+import { AboutPanel } from '@/components/authorDetail/AboutPanel';
+import { ReviewPanel } from '@/components/authorDetail/ReviewPanel';
 import type { ProfileMenuItem } from '@/components/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/NavBar/NavBar';
 
-const MyProfile = () => {
+const AuthorDetail = () => {
   const [selectedMenuItem, setSelectedMenuItem] = React.useState<
     ProfileMenuItem | undefined
   >();
@@ -200,4 +200,4 @@ const MyProfile = () => {
     </div>
   );
 };
-export default MyProfile;
+export default AuthorDetail;
