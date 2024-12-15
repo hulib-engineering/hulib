@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import MyProfile from '@/components/myProfile/MyProfile';
+import AuthorDetail from '@/components/authorDetail/AuthorDetail';
 import { MemberLayout } from '@/layouts/MemberLayout';
 
 export default function Index() {
   return (
     <MemberLayout>
-      <MyProfile />
+      <AuthorDetail />
     </MemberLayout>
   );
 }
