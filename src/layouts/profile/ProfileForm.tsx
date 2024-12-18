@@ -45,7 +45,7 @@ export const ProfileForm = () => {
       fullname: data?.fullName ?? '',
       birthday: data?.birthday ?? '',
       email: data?.email ?? '',
-      gender: data?.gender.id ?? 3,
+      gender: (data?.gender && data?.gender?.id) || 3,
       phoneNumber: data?.phoneNumber ?? '',
       address: data?.address ?? '',
       parentPhoneNumber: data?.parentPhoneNumber ?? '',

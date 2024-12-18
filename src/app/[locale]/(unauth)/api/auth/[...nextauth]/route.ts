@@ -56,12 +56,8 @@ const authOptions = {
       token: any;
       user: any;
     }) {
-      console.log(user);
-      if (user) {
-        return { ...token, accessToken: user.accessToken };
-      }
-      if (account) {
-        if (account?.id_token) {
+      if (account && user) {
+        if (account?.provider === 'google') {
           const res = await fetch(
             `${AppConfig.api.endpoint}/${AppConfig.api.version}/auth/google/login`,
             {
@@ -71,27 +67,32 @@ const authOptions = {
             },
           );
           const resParsed = await res.json();
-          return { ...token, accessToken: resParsed.token };
+          // eslint-disable-next-line no-param-reassign
+          token = { ...token, accessToken: resParsed.token };
         }
-        const res = await fetch(
-          `${AppConfig.api.endpoint}/${AppConfig.api.version}/auth/facebook/login`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ accessToken: account?.access_token }),
-          },
-        );
-        const resParsed = await res.json();
-        console.log(resParsed);
-        return { ...token, accessToken: resParsed.token };
+        if (account?.provider === 'facebook') {
+          const res = await fetch(
+            `${AppConfig.api.endpoint}/${AppConfig.api.version}/auth/facebook/login`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ accessToken: account?.access_token }),
+            },
+          );
+          const resParsed = await res.json();
+          // eslint-disable-next-line no-param-reassign
+          token = { ...token, accessToken: resParsed.token };
+        }
+        if (account?.provider === 'credentials') {
+          // eslint-disable-next-line no-param-reassign
+          token = { ...token, accessToken: user.accessToken };
+        }
       }
 
       return token;
     },
     async session({ session, token }: { session: any; token: any }) {
       session.accessToken = token.accessToken;
-      console.log(session.user);
-      // nothing gets logged into the terminal?? WTF
 
       return session;
     },
