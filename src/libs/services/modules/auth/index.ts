@@ -1,3 +1,5 @@
+import changePassword from '@/libs/services/modules/auth/changePassword';
+
 import { api } from '../../api';
 import confirmEmail from './confirmEmail';
 import forgotPassword from './forgotPassword';
@@ -38,7 +40,7 @@ export type EmailLoginResponse = {
   user: User;
 };
 
-const authenticationApiWithTag = api.enhanceEndpoints({
+const authenticationApiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['Admin', 'User', 'OTP'],
 });
 
@@ -53,6 +55,7 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
     resendOTP: resendOTP(build),
     forgotPassword: forgotPassword(build),
     resetPassword: resetPassword(build),
+    changePassword: changePassword(build),
   }),
   overrideExisting: false,
 });
@@ -65,4 +68,5 @@ export const {
   useLoginAsManagerMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useChangePasswordMutation,
 }: any = authApi;
