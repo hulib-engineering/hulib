@@ -6,7 +6,7 @@ import React from 'react';
 
 import Bradge from '@/components/bradge/Bradge';
 import { Logo } from '@/components/Logo';
-import SearchInput from '@/components/searchInput/SearchInput';
+import SearchInput from '@/components/SearchInput';
 import { useDeviceType } from '@/libs/hooks';
 
 const HeaderWebApp = () => {
@@ -75,6 +75,64 @@ const HeaderWebApp = () => {
             </div>
           </div>
           <SearchInput />
+          {/* <Search */}
+          {/*  onChangeSearch={() => {}} */}
+          {/*  onChangeOpen={() => {}} */}
+          {/*  search="" */}
+          {/*  isOpen={false} */}
+          {/* > */}
+          {/*  <Search.Input> */}
+          {/*    <Search.Input.Icon /> */}
+          {/*    <Search.Input.Input /> */}
+          {/*    <Search.Input.ButtonClear>Clear</Search.Input.ButtonClear> */}
+          {/*  </Search.Input> */}
+
+          {/*  <Search.Transition> */}
+          {/*    <Search.Result> */}
+          {/*      /!* {filteredItems.length ? ( *!/ */}
+          {/*      /!*  filteredItems.map((list: Items) => ( *!/ */}
+          {/*      /!*    <ul className="space-y-1" key={list.id}> *!/ */}
+          {/*      /!*      <li> *!/ */}
+          {/*      /!*        <Search.ResultHeading> *!/ */}
+          {/*      /!*          {list.heading} *!/ */}
+          {/*      /!*        </Search.ResultHeading> *!/ */}
+          {/*      /!*        {list.items.map( *!/ */}
+          {/*      /!*          ({ id, children, href, ...rest }: Item) => ( *!/ */}
+          {/*      /!*            <Search.ResultItem *!/ */}
+          {/*      /!*              key={id} *!/ */}
+          {/*      /!*              index={searchGetItemIndex(filteredItems, id)} *!/ */}
+          {/*      /!*              closeOnSelect *!/ */}
+          {/*      /!*              {...rest} *!/ */}
+          {/*      /!*            > *!/ */}
+          {/*      /!*              {href ? ( *!/ */}
+          {/*      /!*                <a href={href}> *!/ */}
+          {/*      /!*                  <MenuItem> *!/ */}
+          {/*      /!*                    <MenuItem.Title>{children}</MenuItem.Title> *!/ */}
+          {/*      /!*                    <span className="text-moon-12 text-trunks"> *!/ */}
+          {/*      /!*                      {href} *!/ */}
+          {/*      /!*                    </span> *!/ */}
+          {/*      /!*                  </MenuItem> *!/ */}
+          {/*      /!*                </a> *!/ */}
+          {/*      /!*              ) : ( *!/ */}
+          {/*      /!*                <MenuItem> *!/ */}
+          {/*      /!*                  <MenuItem.Title>{children}</MenuItem.Title> *!/ */}
+          {/*      /!*                  <span className="text-moon-12 text-trunks"> *!/ */}
+          {/*      /!*                    Action *!/ */}
+          {/*      /!*                  </span> *!/ */}
+          {/*      /!*                </MenuItem> *!/ */}
+          {/*      /!*              )} *!/ */}
+          {/*      /!*            </Search.ResultItem> *!/ */}
+          {/*      /!*          ), *!/ */}
+          {/*      /!*        )} *!/ */}
+          {/*      /!*      </li> *!/ */}
+          {/*      /!*    </ul> *!/ */}
+          {/*      /!*  )) *!/ */}
+          {/*      /!* ) : ( *!/ */}
+          {/*      /!*  <Search.NoResults /> *!/ */}
+          {/*      /!* )} *!/ */}
+          {/*    </Search.Result> */}
+          {/*  </Search.Transition> */}
+          {/* </Search> */}
           <div className="flex w-full flex-row items-center justify-around">
             {token && (
               <span className="cursor-pointer text-base font-medium leading-5">
@@ -112,6 +170,64 @@ const HeaderWebApp = () => {
         </div>
         <div className="w-[300px]">
           <SearchInput />
+          {/* <Search */}
+          {/*  onChangeSearch={() => {}} */}
+          {/*  onChangeOpen={() => {}} */}
+          {/*  search="" */}
+          {/*  isOpen={false} */}
+          {/* > */}
+          {/*  <Search.Input> */}
+          {/*    <Search.Input.Icon /> */}
+          {/*    <Search.Input.Input /> */}
+          {/*    <Search.Input.ButtonClear>Clear</Search.Input.ButtonClear> */}
+          {/*  </Search.Input> */}
+
+          {/*  <Search.Transition> */}
+          {/*    <Search.Result> */}
+          {/*      /!* {filteredItems.length ? ( *!/ */}
+          {/*      /!*  filteredItems.map((list: Items) => ( *!/ */}
+          {/*      /!*    <ul className="space-y-1" key={list.id}> *!/ */}
+          {/*      /!*      <li> *!/ */}
+          {/*      /!*        <Search.ResultHeading> *!/ */}
+          {/*      /!*          {list.heading} *!/ */}
+          {/*      /!*        </Search.ResultHeading> *!/ */}
+          {/*      /!*        {list.items.map( *!/ */}
+          {/*      /!*          ({ id, children, href, ...rest }: Item) => ( *!/ */}
+          {/*      /!*            <Search.ResultItem *!/ */}
+          {/*      /!*              key={id} *!/ */}
+          {/*      /!*              index={searchGetItemIndex(filteredItems, id)} *!/ */}
+          {/*      /!*              closeOnSelect *!/ */}
+          {/*      /!*              {...rest} *!/ */}
+          {/*      /!*            > *!/ */}
+          {/*      /!*              {href ? ( *!/ */}
+          {/*      /!*                <a href={href}> *!/ */}
+          {/*      /!*                  <MenuItem> *!/ */}
+          {/*      /!*                    <MenuItem.Title>{children}</MenuItem.Title> *!/ */}
+          {/*      /!*                    <span className="text-moon-12 text-trunks"> *!/ */}
+          {/*      /!*                      {href} *!/ */}
+          {/*      /!*                    </span> *!/ */}
+          {/*      /!*                  </MenuItem> *!/ */}
+          {/*      /!*                </a> *!/ */}
+          {/*      /!*              ) : ( *!/ */}
+          {/*      /!*                <MenuItem> *!/ */}
+          {/*      /!*                  <MenuItem.Title>{children}</MenuItem.Title> *!/ */}
+          {/*      /!*                  <span className="text-moon-12 text-trunks"> *!/ */}
+          {/*      /!*                    Action *!/ */}
+          {/*      /!*                  </span> *!/ */}
+          {/*      /!*                </MenuItem> *!/ */}
+          {/*      /!*              )} *!/ */}
+          {/*      /!*            </Search.ResultItem> *!/ */}
+          {/*      /!*          ), *!/ */}
+          {/*      /!*        )} *!/ */}
+          {/*      /!*      </li> *!/ */}
+          {/*      /!*    </ul> *!/ */}
+          {/*      /!*  )) *!/ */}
+          {/*      /!* ) : ( *!/ */}
+          {/*      /!*  <Search.NoResults /> *!/ */}
+          {/*      /!* )} *!/ */}
+          {/*    </Search.Result> */}
+          {/*  </Search.Transition> */}
+          {/* </Search> */}
         </div>
         {token ? (
           <div className="flex flex-row items-center gap-6">

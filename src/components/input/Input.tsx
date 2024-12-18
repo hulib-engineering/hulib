@@ -59,7 +59,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           'focus:shadow-input-focus focus:outline-none focus-visible:shadow-input-focus',
           'focus-visible:outline-none before:box-border after:box-border placeholder:delay-75',
           'placeholder:text-neutral-40 placeholder:opacity-100 placeholder:transition-opacity',
-          'read-only:outline-0 read-only:border-none read-only:cursor-not-allowed',
+          'read-only:outline-0 read-only:cursor-not-allowed',
           'read-only:hover:shadow-input read-only:focus:shadow-input',
           'read-only:focus-visible:shadow-input invalid:focus-visible:shadow-input-err',
           'invalid:shadow-input-err invalid:hover:shadow-input-err invalid:focus:shadow-input-err',
@@ -67,7 +67,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           getTypeStyles(type),
           error &&
             'input-err hover:input-err focus:input-err focus-visible:input-err',
-          disabled && 'opacity-60 cursor-not-allowed',
+          disabled && 'bg-neutral-90 text-neutral-40 cursor-not-allowed',
           className,
         )}
         {...rest}

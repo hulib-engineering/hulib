@@ -38,10 +38,10 @@ const getSmPadding = ({
     return 'px-3';
   }
   if (icon === 'left' || iconLeft) {
-    return 'ps-1 pe-3';
+    return 'ps-1 pe-2';
   }
   if (icon === 'right' || iconRight) {
-    return 'ps-3 pe-1';
+    return 'ps-2 pe-1';
   }
   if (icon === 'only' || iconOnly) {
     return 'px-1';
@@ -51,20 +51,20 @@ const getSmPadding = ({
 
 const getMdPadding = ({
   icon,
-  // iconLeft,
-  // iconRight,
+  iconLeft,
+  iconRight,
   iconOnly,
   fullWidth,
 }: ButtonSettingsProps): string => {
   if (fullWidth) {
     return 'px-8';
   }
-  // if (icon === 'left' || iconLeft) {
-  //   return 'ps-2 pe-4';
-  // }
-  // if (icon === 'right' || iconRight) {
-  //   return 'ps-4 pe-2';
-  // }
+  if (icon === 'left' || iconLeft) {
+    return 'ps-2 pe-4';
+  }
+  if (icon === 'right' || iconRight) {
+    return 'ps-4 pe-2';
+  }
   if (icon === 'only' || iconOnly) {
     return 'px-2';
   }
@@ -132,7 +132,7 @@ export const getButtonSizes = ({
         iconOnly,
         fullWidth,
       }),
-      'h-6 py-1 gap-1 text-moon-12 rounded',
+      'h-6 py-1 gap-1 text-xs rounded',
     );
   }
   if (size === 'sm') {
@@ -144,7 +144,7 @@ export const getButtonSizes = ({
         iconOnly,
         fullWidth,
       }),
-      'h-8 py-1 gap-1 text-moon-14 rounded-lg',
+      'h-8 py-1 gap-1 text-sm rounded-lg',
     );
   }
   if (size === 'lg') {
@@ -156,7 +156,7 @@ export const getButtonSizes = ({
         iconOnly,
         fullWidth,
       }),
-      'h-12 py-3 gap-2 text-moon-16 rounded-lg',
+      'h-12 py-3 gap-2 rounded-lg',
     );
   }
   if (size === 'xl') {
@@ -168,7 +168,7 @@ export const getButtonSizes = ({
         iconOnly,
         fullWidth,
       }),
-      'h-14 py-4 gap-2 text-moon-16 rounded-xl',
+      'h-14 py-4 gap-2 rounded-xl',
     );
   }
   return mergeClassnames(
@@ -178,14 +178,14 @@ export const getButtonSizes = ({
 };
 
 export const getIconSize = (size?: ButtonSizes): string => {
-  if (size === 'xs') {
-    return 'text-moon-16';
+  if (size === 'sm') {
+    return 'text-base';
   }
   return 'text-xl';
 };
 
 export const getLoaderSize = (size?: ButtonSizes): LoaderSize => {
-  if (size === 'xs') {
+  if (size === 'sm') {
     return '2xs';
   }
   return 'xs';

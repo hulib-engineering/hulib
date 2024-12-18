@@ -44,3 +44,13 @@ export const RegisterStep2Validation = z
 export const RegisterStep3Validation = z.object({
   verificationCode: z.string().trim().length(6),
 });
+
+export const PhoneNumberValidation = z.object({
+  isVerified: z.boolean().default(false),
+  parentPhoneNumber: z
+    .string()
+    .trim()
+    .regex(/^\+[1-9]\d{1,14}$/),
+  verificationCode: z.string().trim().length(6),
+  verificationId: z.string().trim().min(1),
+});
