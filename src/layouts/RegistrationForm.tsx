@@ -21,6 +21,8 @@ import Modal from '@/components/Modal';
 import { ControlledSelect } from '@/components/Select';
 import SocialButton from '@/components/SocialButton';
 import TextInput from '@/components/textInput/TextInput';
+import { VerifiedPhoneNumberInput } from '@/components/VerifiedPhoneNumberInput';
+import { genders } from '@/libs/constants';
 import { useRouter } from '@/libs/i18nNavigation';
 import {
   useConfirmEmailMutation,
@@ -34,12 +36,6 @@ import {
   RegisterStep2Validation,
   RegisterStep3Validation,
 } from '@/validations/RegisterValidation';
-
-const genders = [
-  { value: 1, label: 'Male' },
-  { value: 2, label: 'Female' },
-  { value: 3, label: 'Other' },
-];
 
 const Step1Form = ({
   onSubmit,
@@ -205,15 +201,9 @@ const Step2Form = ({
       </Form.Item>
       {watch('isUnderGuard') && (
         <Form.Item>
-          <TextInput
-            id="parentPhoneNumber"
-            type="tel"
-            label="Parent Phone Number"
-            placeholder="+xxxxxxxxxxx"
-            {...register('parentPhoneNumber')}
-            isError={!!errors.parentPhoneNumber}
-            // @ts-ignore
-            hintText={errors.parentPhoneNumber?.message}
+          <VerifiedPhoneNumberInput
+            value=""
+            onChange={(value) => setValue('parentPhoneNumber', value)}
           />
         </Form.Item>
       )}
@@ -504,9 +494,12 @@ const RegistrationForm = () => {
       <div className="flex items-center justify-center gap-2">
         <SocialButton
           iconUrl={FacebookIcon}
-          onClick={() => signIn('facebook')}
+          onClick={() => signIn('facebook', { callbackUrl: '/profile' })}
         />
-        <SocialButton iconUrl={GoogleIcon} onClick={() => signIn('google')} />
+        <SocialButton
+          iconUrl={GoogleIcon}
+          onClick={() => signIn('google', { callbackUrl: '/profile' })}
+        />
       </div>
       <div className="inline-flex items-center justify-center gap-4 py-3">
         <div className="tracking-tight text-neutral-30">

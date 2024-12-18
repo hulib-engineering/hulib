@@ -2,7 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 import { AuthLayout } from '@/layouts/AuthLayout';
-import { LoginForm } from '@/layouts/LoginForm';
+import { LoginWithSession } from '@/layouts/LoginForm';
 
 export async function generateMetadata({
   params: { locale },
@@ -23,7 +23,7 @@ export default function Index() {
       illustrationImage="/assets/images/login-illustration.svg"
       pathName="login"
     >
-      <LoginForm />
+      <LoginWithSession />
     </AuthLayout>
   );
 }

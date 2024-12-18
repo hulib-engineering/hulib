@@ -52,6 +52,7 @@ module.exports = {
       red: colors.red,
       neutral: colors.neutral,
       transparent: 'transparent',
+      green: colors.green,
     },
     extend: {
       colors: {
@@ -121,6 +122,10 @@ module.exports = {
         },
         pink: {
           90: '#FFE4F1',
+        },
+        green: {
+          50: '#46D51B',
+          98: '#FBFEFA',
         },
       },
       rotate: {

@@ -16,7 +16,7 @@ import Container from '../styles/Container';
 
 interface TextInputXSandSmProps extends InputHTMLAttributes<HTMLInputElement> {
   id?: string;
-  inputSize?: TextInputSizeType | undefined;
+  inputSize?: TextInputSizeType;
   label?: ReactNode;
   type: TextInputTypes | string;
   icon?: ReactNode;
