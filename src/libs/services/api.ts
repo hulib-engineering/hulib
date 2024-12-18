@@ -1,6 +1,7 @@
 import type { BaseQueryApi, FetchArgs } from '@reduxjs/toolkit/query/react';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Mutex } from 'async-mutex';
+import { getSession } from 'next-auth/react';
 
 import { AppConfig } from '@/utils/AppConfig';
 
@@ -8,20 +9,15 @@ import { logout, refreshAccessToken } from '../store/authentication';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${AppConfig.api.endpoint}/${AppConfig.api.version}/`,
-  prepareHeaders: (headers, { endpoint }) => {
+  prepareHeaders: async (headers) => {
     // By default, if we have a token in the resto, let's use that for authenticated requests
     headers.set('hulib-service-key', 'hlb-93td6qrktpz6xrm4jj6dejgmffm4ya_pk');
-    const accessToken =
-      endpoint !== 'loginAsUser' &&
-      endpoint !== 'loginAsAdmin' &&
-      endpoint !== 'register'
-        ? localStorage.access_token
-        : null;
-    if (accessToken) {
-      headers.set('hulib-service-token', `Bearer ${accessToken}`);
-    } else {
-      headers.set('hulib-service-token', '');
+
+    const session: any = await getSession();
+    if (session) {
+      headers.set('Authorization', `Bearer ${session.accessToken}`);
     }
+
     return headers;
   },
   credentials: 'include',
@@ -52,8 +48,8 @@ const baseQueryWithInterceptor = async (
       if (hasLoggedIn) {
         const refreshRoute =
           localStorage.getItem('role') === 'admin'
-            ? 'admin/auth/refresh'
-            : 'auth/refresh';
+            ? 'admin/profile/refresh'
+            : 'profile/refresh';
         try {
           const refreshResult = await baseQuery(
             refreshRoute,
