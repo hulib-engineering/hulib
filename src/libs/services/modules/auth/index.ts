@@ -1,14 +1,15 @@
 import changePassword from '@/libs/services/modules/auth/changePassword';
-import resetPassword from '@/libs/services/modules/auth/resetPassword';
 
 import { api } from '../../api';
 import confirmEmail from './confirmEmail';
 import forgotPassword from './forgotPassword';
+import getPersonalInfo from './getPersonalInfo';
 import loginAsAdmin from './loginAsAdmin';
 import loginAsUser from './loginAsUser';
 import refresh from './refresh';
 import register from './register';
 import resendOTP from './resendOTP';
+import resetPassword from './resetPassword';
 
 interface Enum {
   id: string;
@@ -46,6 +47,7 @@ const authenticationApiWithTag = api.enhanceEndpoints?.({
 export const authApi = authenticationApiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
     confirmEmail: confirmEmail(build),
+    getPersonalInfo: getPersonalInfo(build),
     loginAsAdmin: loginAsAdmin(build),
     loginAsManager: loginAsUser(build),
     refresh: refresh(build),
@@ -60,10 +62,10 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
 
 export const {
   useConfirmEmailMutation,
+  useGetPersonalInfoQuery,
   useRegisterMutation,
   useResendOTPMutation,
   useLoginAsManagerMutation,
-  useLoginAsAdminMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useChangePasswordMutation,
