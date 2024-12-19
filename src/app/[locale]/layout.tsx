@@ -11,6 +11,7 @@ import type { ReactNode } from 'react';
 
 import StoreProvider from '@/app/StoreProvider';
 import { AppConfig } from '@/utils/AppConfig';
+import { ToastContainer } from 'react-toastify';
 
 export const metadata: Metadata = {
   icons: [
@@ -59,6 +60,7 @@ export default function RootLayout({
           <StoreProvider>{children}</StoreProvider>
         </NextIntlClientProvider>
       </body>
+      <ToastContainer />
     </html>
   );
 }
