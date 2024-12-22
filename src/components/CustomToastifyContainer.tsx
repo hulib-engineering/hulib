@@ -139,8 +139,8 @@ const CustomMessage = ({ message, toastProps }: ICustomMessageProps) => (
   </div>
 );
 
-export const pushInfo = (message: string) => {
-  return toast.info(<CustomMessage message={message} />, {
+export const pushInfo = (message: string) =>
+  toast.info(<CustomMessage message={message} />, {
     icon: InfoIcon,
     className: mergeClassnames(
       'flex items-center px-4 py-3 bg-white rounded-lg overflow-hidden',
@@ -148,10 +148,9 @@ export const pushInfo = (message: string) => {
       'before:[background:radial-gradient(50%_50%_at_50%_50%,rgba(0,236.9,80.54,0.12)_0%,rgba(0,236.9,123.19,0)_100%)]',
     ),
   });
-};
 
-export const pushSuccess = (message: string) => {
-  return toast.success(<CustomMessage message={message} />, {
+export const pushSuccess = (message: string) =>
+  toast.success(<CustomMessage message={message} />, {
     icon: SuccessIcon,
     className: mergeClassnames(
       'flex items-center px-4 py-3 bg-white rounded-lg overflow-hidden',
@@ -159,9 +158,8 @@ export const pushSuccess = (message: string) => {
       'before:[background:radial-gradient(50%_50%_at_50%_50%,rgba(0,236.9,80.54,0.12)_0%,rgba(0,236.9,123.19,0)_100%)]',
     ),
   });
-};
 
-export const pushError = (message: string) => {
+export const pushError = (message: string) =>
   toast.error(<CustomMessage message={message} />, {
     icon: ErrorIcon,
     className: mergeClassnames(
@@ -170,10 +168,9 @@ export const pushError = (message: string) => {
       'before:[background:radial-gradient(50%_50%_at_50%_50%,rgba(246.49,89.24,94.66,0.08)_0%,rgba(240,66,72,0)_100%)]',
     ),
   });
-};
 
-export const pushWarning = (message: string) => {
-  return toast.warning(<CustomMessage message={message} />, {
+export const pushWarning = (message: string) =>
+  toast.warning(<CustomMessage message={message} />, {
     icon: WarningIcon,
     className: mergeClassnames(
       'flex items-center px-4 py-3 bg-white rounded-lg overflow-hidden',
@@ -181,7 +178,6 @@ export const pushWarning = (message: string) => {
       'before:[background:radial-gradient(50%_50%_at_50%_50%,rgba(255,212,38,0.11)_0%,rgba(255,212,38,0)_100%)]',
     ),
   });
-};
 
 const CustomToastifyContainer = () => (
   <ToastContainer

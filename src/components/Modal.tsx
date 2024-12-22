@@ -77,6 +77,7 @@ type ModalRootProps = {
   open: boolean;
   onClose: () => void;
   initialFocus?: MutableRefObject<HTMLElement | null>;
+  disableClosingTrigger?: boolean;
   className?: string;
 };
 
@@ -84,12 +85,17 @@ type ModalComponentProps = (
   props: WithChildren<ModalRootProps>,
 ) => ReactElement | null;
 
-const ModalRoot: ModalComponentProps = ({ open, onClose, children }) => (
+const ModalRoot: ModalComponentProps = ({
+  open,
+  onClose,
+  children,
+  disableClosingTrigger,
+}) => (
   <Transition appear show={open} as={React.Fragment}>
     <Dialog
       as="div"
       className={mergeClassnames(poppins.className, 'relative z-[1000]')}
-      onClose={onClose}
+      onClose={() => !disableClosingTrigger && onClose()}
     >
       {children}
     </Dialog>

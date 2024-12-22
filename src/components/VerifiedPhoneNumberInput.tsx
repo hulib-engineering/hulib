@@ -109,10 +109,11 @@ const VerifiedPhoneNumberInput = ({
         <TextInput
           type="tel"
           label="Parent's phone number"
-          placeholder="+xxxxxxxxxxx"
+          placeholder="+84xxxxxxxxxx"
           {...register('parentPhoneNumber')}
           isError={!!errors.parentPhoneNumber}
           hintText={errors.parentPhoneNumber?.message}
+          disabled={watch('isVerified')}
         />
       </fieldset>
       <fieldset className="w-1/3">
