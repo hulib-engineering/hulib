@@ -8,6 +8,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import type { ReactNode } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import StoreProvider from '@/app/StoreProvider';
 import { AppConfig } from '@/utils/AppConfig';
@@ -59,6 +60,7 @@ export default function RootLayout({
           <StoreProvider>{children}</StoreProvider>
         </NextIntlClientProvider>
       </body>
+      <ToastContainer />
     </html>
   );
 }
