@@ -317,5 +317,33 @@
     "dashboard_link": "Dashboard",
     "user_profile_link": "Manage your account",
     "sign_out": "Sign out"
+  },
+
+  "MentorRegister": {
+    "register_as_a_human_book": "Đăng ký làm Người Sách",
+    "error_form_no_video": "Vui lòng chọn một file video hợp lệ!!!",
+    "About": "Giới thiệu",
+    "placeholder_about": "Hãy kể về bản thân bạn...",
+    "Sessions": "Phiên",
+    "placeholder_session": "Tìm kiếm phiên",
+    "Education": "Học vấn",
+    "placeholder_education": "Placeholder",
+    "From": "Từ",
+    "placeholder_from": "2024",
+    "To": "Đến",
+    "placeholder_to": "2024",
+    "footer_description_underline": "Lưu ý:",
+    "footer_description": "Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar tempor dui massa ut.",
+    "Next": "Tiếp theo",
+    "introduction_video": "Video giới thiệu",
+    "Back": "Quay lại",
+    "Register": "Đăng ký",
+    "error_browser_not_support_video": "Trình duyệt của bạn không hỗ trợ thẻ video.",
+    "drag_or_drop_files_here": "Kéo thả file vào đây",
+    "choose_file": "Chọn file",
+    "maxSize": "Tối đa 100MB",
+    "delete_selected_video": "Xoá",
+    "success_submit_form": "Đơn đăng ký đã được gửi thành công",
+    "back_to_home": "Trở về Trang chủ"
   }
 }
