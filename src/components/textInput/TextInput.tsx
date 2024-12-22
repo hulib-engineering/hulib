@@ -38,6 +38,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   if (type === 'password') {
     return <TextInputPassword {...props} ref={ref} />;
   }
+
   if (inputSize === Size.LARGE) {
     return <TextInputInnerLabel {...props} ref={ref} />;
   }

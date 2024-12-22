@@ -162,7 +162,7 @@ export const pushSuccess = (message: string) => {
 };
 
 export const pushError = (message: string) => {
-  return toast.error(<CustomMessage message={message} />, {
+  toast.error(<CustomMessage message={message} />, {
     icon: ErrorIcon,
     className: mergeClassnames(
       'flex items-center px-4 py-3 bg-white rounded-lg overflow-hidden',

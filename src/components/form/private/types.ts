@@ -31,3 +31,8 @@ type ItemState = {
 type Size = 'sm' | 'md' | 'lg';
 
 export type { FormProps, FormState, ItemProps, ItemState };
+
+export type LabelProps = {
+  children?: React.ReactNode;
+  required?: boolean;
+};
