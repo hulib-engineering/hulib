@@ -2,7 +2,7 @@ import React, { forwardRef, useMemo } from 'react';
 
 import type { WithChildren } from '../private/types';
 import { mergeClassnames } from '../private/utils';
-import type { FormProps, ItemProps } from './private/types';
+import type { FormProps, ItemProps, LabelProps } from './private/types';
 import { FormContext, ItemContext, useFormContext } from './private/utils';
 
 const FormRoot = forwardRef<HTMLFormElement, WithChildren<FormProps>>(
@@ -62,6 +62,18 @@ const Item = ({
 };
 FormRoot.displayName = 'FormRoot';
 
-const Form = Object.assign(FormRoot, { Item });
+const Label = (props: LabelProps) => {
+  const { children, required } = props;
+  return (
+    <span className="text-base font-normal leading-4 text-neutral-10">
+      {children}
+      {required && (
+        <span className="text-base font-normal leading-4 text-red-50">*</span>
+      )}
+    </span>
+  );
+};
+
+const Form = Object.assign(FormRoot, { Item, Label });
 
 export default Form;

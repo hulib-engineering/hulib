@@ -317,5 +317,33 @@
     "dashboard_link": "Dashboard",
     "user_profile_link": "Manage your account",
     "sign_out": "Sign out"
+  },
+
+  "MentorRegister": {
+    "register_as_a_human_book": "Register as a Human Book",
+    "error_form_no_video": "Please select a valid video file!!!",
+    "About": "About",
+    "placeholder_about": "Tell us about yourself...",
+    "Sessions": "Sessions",
+    "placeholder_session": "Search Sessions",
+    "Education": "Education",
+    "placeholder_education": "Placeholder",
+    "From": "From",
+    "placeholder_from": "2024",
+    "To": "To",
+    "placeholder_to": "2024",
+    "footer_description_underline": "Note:",
+    "footer_description": "Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar tempor dui massa ut.",
+    "Next": "Next",
+    "introduction_video": "Introduction Video",
+    "Back": "Back",
+    "Register": "Register",
+    "error_browser_not_support_video": "Your browser does not support the video tag.",
+    "drag_or_drop_files_here": "Drag or Drop files here",
+    "choose_file": "Choose File",
+    "maxSize": "Maximum at 100MB",
+    "delete_selected_video": "Delete",
+    "success_submit_form": "Application has been submitted",
+    "back_to_home": "Back to Home"
   }
 }
