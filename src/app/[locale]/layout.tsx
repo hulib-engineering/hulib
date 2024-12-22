@@ -4,6 +4,7 @@ import 'swiper/css/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import '@/styles/global.css';
 
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
@@ -59,6 +60,7 @@ export default function RootLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <StoreProvider>{children}</StoreProvider>
         </NextIntlClientProvider>
+        <Analytics />
       </body>
       <ToastContainer />
     </html>
