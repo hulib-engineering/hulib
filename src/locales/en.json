@@ -10,6 +10,11 @@
     "log_in": "Log in",
     "sign_up": "Sign up"
   },
+  "HumanBookBanner": {
+    "explore_now": "Explore the Human Book bookshelf now",
+    "log_in": "Log in",
+    "sign_up": "Sign up"
+  },
   "Footer": {
     "footer_description": "There is a story and experience within each of us, so we are born to be somebody.",
     "copyright": "© 2024 HuLib. All rights reserved.",
@@ -87,6 +92,7 @@
     "diamond_sponsor": "diamond sponsor",
     "gold_sponsor": "gold sponsor",
     "silver_sponsor": "silver sponsor",
+    "technology_sponsor": "technology sponsor",
     "legal_sponsor": "legal sponsor",
     "professional_sponsor": "professional sponsor",
     "media_sponsor": "media sponsor",
