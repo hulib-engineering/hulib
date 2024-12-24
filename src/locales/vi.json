@@ -10,6 +10,11 @@
     "log_in": "Đăng nhập",
     "sign_up": "Đăng kí"
   },
+  "HumanBookBanner": {
+    "explore_now": "Khám phá tủ sách Human Book ngay",
+    "log_in": "Đăng nhập",
+    "sign_up": "Đăng kí ngay"
+  },
   "Footer": {
     "footer_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
     "copyright": "© 2024 HuLib. Đã đăng ký bản quyền.",
@@ -87,6 +92,7 @@
     "diamond_sponsor": "tài trợ kim cương",
     "gold_sponsor": "tài trợ vàng",
     "silver_sponsor": "tài trợ bạc",
+    "technology_sponsor": "tài trợ công nghệ",
     "legal_sponsor": "bảo trợ pháp lý",
     "professional_sponsor": "bảo trợ chuyên môn",
     "media_sponsor": "bảo trợ truyền thông",

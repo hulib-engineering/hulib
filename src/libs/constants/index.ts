@@ -3,3 +3,8 @@ export const genders = [
   { value: 2, label: 'Female' },
   { value: 3, label: 'Other' },
 ];
+
+export const publicRoutes = {
+  REGISTER: '/auth/register',
+  LOGIN: '/auth/login',
+};
