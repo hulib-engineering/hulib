@@ -1,6 +1,6 @@
-import changePassword from '@/libs/services/modules/auth/changePassword';
-
 import { api } from '../../api';
+import changePassword from './changePassword';
+import checkEmail from './checkEmail';
 import confirmEmail from './confirmEmail';
 import forgotPassword from './forgotPassword';
 import getPersonalInfo from './getPersonalInfo';
@@ -46,6 +46,7 @@ const authenticationApiWithTag = api.enhanceEndpoints?.({
 
 export const authApi = authenticationApiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
+    checkEmail: checkEmail(build),
     confirmEmail: confirmEmail(build),
     getPersonalInfo: getPersonalInfo(build),
     loginAsAdmin: loginAsAdmin(build),
@@ -61,6 +62,7 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
 });
 
 export const {
+  useCheckEmailMutation,
   useConfirmEmailMutation,
   useGetPersonalInfoQuery,
   useRegisterMutation,
