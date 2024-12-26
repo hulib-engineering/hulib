@@ -29,6 +29,7 @@ import { VerifiedPhoneNumberInput } from '@/components/VerifiedPhoneNumberInput'
 import { genders } from '@/libs/constants';
 import { useRouter } from '@/libs/i18nNavigation';
 import {
+  useCheckEmailMutation,
   useConfirmEmailMutation,
   useRegisterMutation,
   useResendOTPMutation,
@@ -46,12 +47,15 @@ const Step1Form = ({
 }: {
   onSubmit: (data: z.infer<typeof RegisterStep1Validation>) => void;
 }) => {
+  const [checkEmail] = useCheckEmailMutation();
+
   const t = useTranslations('SignUp');
 
   const {
     register,
     watch,
     handleSubmit,
+    setError,
     formState: { errors, touchedFields, isSubmitting },
   } = useForm<z.infer<typeof RegisterStep1Validation>>({
     resolver: zodResolver(RegisterStep1Validation),
@@ -62,8 +66,19 @@ const Step1Form = ({
     },
   });
 
-  const handleFormSubmit = handleSubmit((data) => {
-    onSubmit(data);
+  const handleFormSubmit = handleSubmit(async (data) => {
+    try {
+      await checkEmail({ email: data.email }).unwrap();
+      onSubmit(data);
+    } catch (error: any) {
+      if (error.data && error.data?.errors && error.data?.errors?.email) {
+        setError('email', {
+          type: 'custom',
+          message: error.data?.errors?.email,
+        });
+      }
+      pushError(`Error: ${error.message}`);
+    }
   });
 
   return (
