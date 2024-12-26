@@ -1,9 +1,30 @@
+import { notFound } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+import { getTranslations } from 'next-intl/server';
 import * as React from 'react';
 
 import AvatarUploader from '@/components/AvatarUploader';
 import { ProfileForm } from '@/layouts/profile/ProfileForm';
+import { authOptions } from '@/libs/NextAuthOption';
 
-export default function Index() {
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const t = await getTranslations({ locale, namespace: 'Index' });
+
+  return {
+    title: t('meta_title'),
+    description: t('meta_description'),
+  };
+}
+
+export default async function Index() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) return notFound();
+
   return (
     <div className="mx-auto flex w-5/6 flex-1 flex-col gap-20 text-sm leading-5">
       <div className="flex flex-col gap-5">
