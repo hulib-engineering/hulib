@@ -11,8 +11,8 @@ const HintText = ({ children, isError }: Props) => (
   <p
     role="alert"
     className={mergeClassnames(
-      'inline-block mt-2 ps-4 text-moon-12',
-      isError ? 'text-red-50' : 'text-trunks',
+      'inline-block mt-2 text-xs leading-[14px]',
+      isError ? 'text-red-50' : 'text-neutral-60',
     )}
   >
     {children}
