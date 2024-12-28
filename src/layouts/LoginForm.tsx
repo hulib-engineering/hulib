@@ -29,6 +29,7 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<z.infer<typeof LoginValidation>>({
     resolver: zodResolver(LoginValidation),
@@ -59,6 +60,10 @@ const LoginForm = () => {
       }
     } catch (error: any) {
       console.log(error);
+      setError('password', {
+        type: 'custom',
+        message: 'Incorrect password, please try again.',
+      });
     }
   };
 

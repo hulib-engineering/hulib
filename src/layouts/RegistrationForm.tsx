@@ -246,7 +246,7 @@ const Step2Form = ({
             className="w-full"
             disabled={isSubmitting}
           >
-            {t('register')}{' '}
+            {t('register')}
           </Button>
         </Form.Item>
         <p className="text-center">
