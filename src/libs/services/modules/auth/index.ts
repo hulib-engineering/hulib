@@ -10,6 +10,7 @@ import refresh from './refresh';
 import register from './register';
 import resendOTP from './resendOTP';
 import resetPassword from './resetPassword';
+import updateProfile from './updateProfile';
 
 interface Enum {
   id: string;
@@ -57,6 +58,7 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
     forgotPassword: forgotPassword(build),
     resetPassword: resetPassword(build),
     changePassword: changePassword(build),
+    updateProfile: updateProfile(build),
   }),
   overrideExisting: false,
 });
@@ -71,4 +73,5 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useChangePasswordMutation,
+  useUpdateProfileMutation,
 }: any = authApi;
