@@ -1,30 +1,10 @@
-import type { InputHTMLAttributes, ReactNode } from 'react';
 import React, { forwardRef } from 'react';
 
 import { mergeClassnames } from '@/components/private/utils';
 
-import type { TextInputTypes } from './types';
+import type TextInputProps from './types';
 import { getSizeStyles, makeBorder } from './utils';
 
-export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  id?: string;
-  inputSize?: 'sm' | 'md' | 'lg' | 'xl' | string;
-  type?: TextInputTypes | string;
-  label?: ReactNode;
-  placeholder?: string;
-  hintText?: React.JSX.Element | string;
-  isError?: boolean;
-  dir?: 'ltr' | 'rtl' | 'auto';
-  showPasswordText?: React.JSX.Element | string;
-  bgColor?: string;
-  isSharpLeftSide?: boolean;
-  isSharpRightSide?: boolean;
-  isSharpTopSide?: boolean;
-  isSharpBottomSide?: boolean;
-  isTopBottomBorderHidden?: boolean;
-  isSideBorderHidden?: boolean;
-  isFirst?: boolean;
-}
 const Input = forwardRef<
   HTMLInputElement,
   TextInputProps & { isLabel?: boolean; isRtl?: boolean; isPassword?: boolean }
@@ -53,16 +33,15 @@ const Input = forwardRef<
       type={type}
       placeholder={placeholder}
       className={mergeClassnames(
-        'block w-full max-w-full py-0 px-4 m-0 appearance-none text-moon-16 text-bulma transition-shadow box-border relative z-[2]',
-        'shadow-input hover:shadow-input-hov',
-        'focus:shadow-input-focus focus:outline-none',
-        isError &&
-          'shadow-input-err hover:shadow-input-err focus:shadow-input-err',
+        'block w-full max-w-full py-0.5 px-3 m-0 appearance-none text-sm text-neutral-10 transition-shadow box-border relative z-[2]',
+        'input-def hover:input-hov',
+        'focus:input-focus focus:outline-none',
+        isError && 'input-err hover:input-err focus:input-err',
         bgColor || 'bg-transparent',
         getSizeStyles(inputSize as string),
         'before:box-border after:box-border',
-        'placeholder:text-trunks placeholder:opacity-100 placeholder:transition-opacity placeholder:delay-75',
-        'read-only:outline-0 read-only:border-none read-only:cursor-not-allowed read-only:hover:shadow-input read-only:focus:shadow-input',
+        'placeholder:text-neutral-40 placeholder:opacity-100 placeholder:transition-opacity placeholder:delay-75',
+        'read-only:outline-0 read-only:border-none read-only:cursor-not-allowed read-only:hover:input-def read-only:focus:input-def',
         type === 'number' && 'input-number-clear',
         type === 'date' && 'input-d',
         type === 'date' && isRtl && 'input-d-rtl',
@@ -82,7 +61,7 @@ const Input = forwardRef<
         (isSharpRightSide || isSharpBottomSide) &&
           !isError &&
           'rounded-ee-none',
-        'invalid:shadow-input-err invalid:hover:shadow-input-err invalid:focus:shadow-input-err',
+        'invalid:input-err invalid:hover:input-err invalid:focus:input-err',
         makeBorder(
           isSideBorderHidden,
           isTopBottomBorderHidden,

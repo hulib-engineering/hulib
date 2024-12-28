@@ -5,12 +5,12 @@ import { mergeClassnames } from '@/components/private/utils';
 
 import { getBorderRadius } from './utils';
 
-type Props = WithChildren<{
+type IContainerProps = WithChildren<{
   disabled?: boolean;
   inputSize?: string;
 }>;
 
-const Container = ({ children, disabled, inputSize }: Props) => (
+const Container = ({ children, disabled, inputSize }: IContainerProps) => (
   <div
     className={mergeClassnames(
       'w-full max-w-full relative z-0',
