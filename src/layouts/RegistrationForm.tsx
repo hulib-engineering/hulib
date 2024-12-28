@@ -24,7 +24,7 @@ import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
 import { ControlledSelect } from '@/components/Select';
 import SocialButton from '@/components/SocialButton';
 import TermOfUseModal from '@/components/TermOfUseModal';
-import TextInput from '@/components/textInput/TextInput';
+import TextInput from '@/components/textInput-v1/TextInput';
 import { VerifiedPhoneNumberInput } from '@/components/VerifiedPhoneNumberInput';
 import { genders } from '@/libs/constants';
 import { useRouter } from '@/libs/i18nNavigation';
@@ -506,7 +506,7 @@ const RegistrationForm = () => {
         ...omit(step1Data, 'confirmPassword'),
         fullName: data.fullname,
         ...omit(data, 'fullname'),
-        gender: { id: 3 },
+        gender: { id: data.gender },
       }).unwrap();
       if (result) {
         setVerificationData(result);

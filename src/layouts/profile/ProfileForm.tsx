@@ -9,13 +9,17 @@ import type { z } from 'zod';
 import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
 import { ControlledSelect } from '@/components/Select';
-import TextInput from '@/components/textInput/TextInput';
+import TextInput from '@/components/textInput-v1/TextInput';
 import { genders } from '@/libs/constants';
-import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
+import {
+  useGetPersonalInfoQuery,
+  useUpdateProfileMutation,
+} from '@/libs/services/modules/auth';
 import { ProfileValidation } from '@/validations/ProfileValidation';
 
 export const ProfileForm = () => {
   const { data } = useGetPersonalInfoQuery();
+  const [updateProfile] = useUpdateProfileMutation();
 
   const {
     control,
@@ -53,14 +57,7 @@ export const ProfileForm = () => {
   }, [data]);
 
   const handleUpdate = handleSubmit(async (values) => {
-    await fetch(`/api/counter`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(values),
-    });
-
+    await updateProfile({ ...values, gender: { id: values.gender } }).unwrap();
     reset();
     router.refresh();
   });
