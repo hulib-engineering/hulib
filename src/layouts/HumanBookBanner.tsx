@@ -9,8 +9,10 @@ import { publicRoutes } from '@/libs/constants';
 
 const HumanBookBanner = () => {
   const t = useTranslations('HumanBookBanner');
+
   return (
-    <div className="relative mt-5 flex h-16 bg-primary-40 px-12">
+    // eslint-disable-next-line tailwindcss/no-contradicting-classname
+    <div className="relative flex animate-flashing bg-[linear-gradient(120deg,_#0442bf_30%,_#0858fa80_38%,_#0858fa80_40%,_#0442bf_48%)] bg-[length:200%_100%] bg-right-top px-12">
       <div className="mx-auto flex w-full flex-row items-center justify-between px-3 py-8 sm:w-3/4 lg:max-w-7xl">
         <div className="flex flex-row items-center gap-3">
           <Link
