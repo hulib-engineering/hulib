@@ -21,9 +21,9 @@ export const RegisterStep1Validation = z
 export const RegisterStep2Validation = z
   .object({
     isUnderGuard: z.boolean().default(false),
-    fullname: z.string().trim().min(1),
+    fullname: z.string().trim().min(2),
     gender: z.number().min(1).max(3).default(3),
-    birthday: z.string().trim().min(1),
+    birthday: z.string().trim().min(1, 'Invalid date format.'),
     parentPhoneNumber: z.any(),
   })
   .superRefine((values, context) => {
