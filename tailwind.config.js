@@ -322,6 +322,48 @@ module.exports = {
           '0%': { transform: 'translateX(-100%)' },
           '100%': { transform: 'translateX(100%)' },
         },
+        borderCrawling: {
+          from: {
+            transform: 'rotate(0deg)',
+          },
+          to: {
+            transform: 'rotate(360deg)',
+          },
+        },
+        blobBounce: {
+          '0%': {
+            transform: 'translate(-100%, -100%) translate3d(0, 0, 0)',
+          },
+
+          '25%': {
+            transform: 'translate(-100%, -100%) translate3d(100%, 0, 0)',
+          },
+
+          '50%': {
+            transform: 'translate(-100%, -100%) translate3d(100%, 100%, 0)',
+          },
+
+          '75%': {
+            transform: 'translate(-100%, -100%) translate3d(0, 100%, 0)',
+          },
+
+          '100%': {
+            transform: 'translate(-100%, -100%) translate3d(0, 0, 0)',
+          },
+        },
+        glider: {
+          '0%': {
+            transform: 'rotate(5deg) translateX(-200%)',
+          },
+          '100%': {
+            transform: 'rotate(5deg) translateX(1920px)',
+          },
+        },
+        flash: {
+          '100%': {
+            backgroundPosition: '-100% 0',
+          },
+        },
       },
       animation: {
         'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
@@ -342,6 +384,10 @@ module.exports = {
         'loader-circle-jump': 'loaderCircleJumping 2s infinite',
         loader: 'rotation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite',
         'gradient-animation': 'gradientAnimation 1.2s linear infinite',
+        crawling: 'borderCrawling 3s linear infinite',
+        'blob-bounce': 'blobBounce 5s infinite ease',
+        glider: 'glider 1s infinite linear',
+        flashing: 'flash 3s infinite',
       },
     },
   },
