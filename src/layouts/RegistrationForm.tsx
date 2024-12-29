@@ -248,7 +248,7 @@ const Step2Form = ({
             disabled={isSubmitting}
             animation={isSubmitting && 'progress'}
           >
-            {t('register')}{' '}
+            {t('register')}
           </Button>
         </Form.Item>
         <p className="text-center">
