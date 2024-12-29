@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 const slice = createSlice({
   name: 'auth',
-  initialState: {},
+  initialState: { avatarUrl: '', avatarId: '' },
   reducers: {
     refreshAccessToken: (_state, action) => {
       const accessToken = action.payload;
@@ -13,13 +13,18 @@ const slice = createSlice({
       localStorage.clear();
       Cookies.remove('refresh_token');
       Cookies.remove('currentUser');
-      Cookies.set('NEXT_LOCALE', 'ja');
+      Cookies.set('NEXT_LOCALE', 'vi');
       Cookies.remove('defaultLocale');
       Cookies.remove('locales');
+    },
+    setAvatarUrl: (state, action) => {
+      const { path, id } = action.payload;
+      state.avatarUrl = path ?? '';
+      state.avatarId = id ?? '';
     },
   },
 });
 
-export const { logout, refreshAccessToken } = slice.actions;
+export const { logout, refreshAccessToken, setAvatarUrl } = slice.actions;
 
 export default slice.reducer;

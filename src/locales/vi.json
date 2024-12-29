@@ -324,7 +324,12 @@
     "user_profile_link": "Manage your account",
     "sign_out": "Sign out"
   },
-
+  "MyProfile": {
+    "meta_title": "HuLib | Thông tin của tôi",
+    "meta_description": "",
+    "upload": "tải ảnh đại diện",
+    "delete_ava": "xoá ảnh đại diện"
+  },
   "MentorRegister": {
     "register_as_a_human_book": "Đăng ký làm Người Sách",
     "error_form_no_video": "Vui lòng chọn một file video hợp lệ!!!",

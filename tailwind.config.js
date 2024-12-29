@@ -102,6 +102,7 @@ module.exports = {
           40: '#5C6063',
           60: '#8F9397',
           70: '#ABAEB1',
+          80: '#C7C9CB',
           90: '#E3E4E5',
           98: '#F9F9F9',
         },
@@ -317,6 +318,10 @@ module.exports = {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
+        gradientAnimation: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
       },
       animation: {
         'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
@@ -336,6 +341,7 @@ module.exports = {
         'transform-from-old-to-new': 'transformFromOldToNew 1s ease-in-out 4s',
         'loader-circle-jump': 'loaderCircleJumping 2s infinite',
         loader: 'rotation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite',
+        'gradient-animation': 'gradientAnimation 1.2s linear infinite',
       },
     },
   },

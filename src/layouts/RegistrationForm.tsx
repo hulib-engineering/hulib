@@ -139,6 +139,7 @@ const Step1Form = ({
           value="Submit"
           className="w-full"
           disabled={isSubmitting}
+          animation={isSubmitting && 'progress'}
         >
           {t('continue')}
         </Button>
@@ -245,6 +246,7 @@ const Step2Form = ({
             value="Submit"
             className="w-full"
             disabled={isSubmitting}
+            animation={isSubmitting && 'progress'}
           >
             {t('register')}{' '}
           </Button>

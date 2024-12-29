@@ -9,10 +9,13 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import type { ReactNode } from 'react';
+import { Suspense } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import StoreProvider from '@/app/StoreProvider';
 import { AppConfig } from '@/utils/AppConfig';
+
+import Loading from './loading';
 
 export const metadata: Metadata = {
   icons: [
@@ -57,12 +60,14 @@ export default function RootLayout({
   return (
     <html lang={locale}>
       <body suppressHydrationWarning>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <StoreProvider>{children}</StoreProvider>
-        </NextIntlClientProvider>
-        <Analytics />
+        <Suspense key={Date.now()} fallback={<Loading />}>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <StoreProvider>{children}</StoreProvider>
+            <ToastContainer />
+          </NextIntlClientProvider>
+          <Analytics />
+        </Suspense>
       </body>
-      <ToastContainer />
     </html>
   );
 }
