@@ -33,6 +33,17 @@ export default withSentryConfig(
 
         return config;
       },
+      images: {
+        remotePatterns: [
+          {
+            protocol: 'http',
+            hostname: 'localhost',
+            port: '3001',
+            pathname: '/api/v1/files/**',
+            search: '',
+          },
+        ],
+      },
     }),
   ),
   {

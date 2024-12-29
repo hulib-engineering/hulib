@@ -7,19 +7,27 @@ import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
+import { pushError } from '@/components/CustomToastifyContainer';
 import Form from '@/components/form/Form';
+import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 import { ControlledSelect } from '@/components/Select';
 import TextInput from '@/components/textInput-v1/TextInput';
 import { genders } from '@/libs/constants';
+import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import {
   useGetPersonalInfoQuery,
   useUpdateProfileMutation,
 } from '@/libs/services/modules/auth';
+import { setAvatarUrl } from '@/libs/store/authentication';
 import { ProfileValidation } from '@/validations/ProfileValidation';
 
 export const ProfileForm = () => {
-  const { data } = useGetPersonalInfoQuery();
+  const { data, isLoading } = useGetPersonalInfoQuery();
   const [updateProfile] = useUpdateProfileMutation();
+
+  const avatarId = useAppSelector((state) => state.auth.avatarId);
+
+  const dispatch = useAppDispatch();
 
   const {
     control,
@@ -54,13 +62,32 @@ export const ProfileForm = () => {
       address: data?.address ?? '',
       parentPhoneNumber: data?.parentPhoneNumber ?? '',
     });
+    dispatch(setAvatarUrl(data?.photo ?? {}));
   }, [data]);
 
   const handleUpdate = handleSubmit(async (values) => {
-    await updateProfile({ ...values, gender: { id: values.gender } }).unwrap();
-    reset();
-    router.refresh();
+    try {
+      await updateProfile({
+        ...values,
+        gender: { id: values.gender },
+        photo: avatarId !== '' ? { id: avatarId } : null,
+      }).unwrap();
+      return router.refresh();
+    } catch (error: any) {
+      if (error?.data) {
+        return pushError(`Error: ${error?.data?.message}`);
+      }
+      return pushError(`Error: ${error?.message}`);
+    }
   });
+
+  if (isLoading) {
+    return (
+      <div className="flex h-full w-full justify-center">
+        <LoadingSkeleton />
+      </div>
+    );
+  }
 
   return (
     <Form className="flex w-full flex-col gap-6" onSubmit={handleUpdate}>
@@ -143,6 +170,7 @@ export const ProfileForm = () => {
           value="Submit"
           className="w-full"
           disabled={isSubmitting}
+          animation={isSubmitting && 'progress'}
         >
           Update
         </Button>
