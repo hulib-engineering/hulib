@@ -316,6 +316,8 @@
     "contact_us": "If you need help, contact us via email"
   },
   "MyProfile": {
+    "meta_title": "HuLib | My Profile",
+    "meta_description": "Manage your profile effectively",
     "upload": "upload photo",
     "delete_ava": "delete avatar"
   },

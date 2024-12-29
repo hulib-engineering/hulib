@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { api } from '../services/api';
+import auth from './authentication';
 import menuItem from './menuItem';
 import minigame from './minigame';
 import uiState from './uiState';
@@ -9,6 +10,7 @@ const reducers = combineReducers({
   menuItem,
   uiState,
   minigame,
+  auth,
   api: api.reducer,
 });
 
