@@ -26,8 +26,8 @@ const HeaderWebApp = () => {
                     <Image
                       src="/assets/images/icons/message.svg"
                       alt="Message Icon"
-                      width={22}
-                      height={22}
+                      width={20}
+                      height={20}
                       loading="lazy"
                     />
                   </Bradge>

@@ -8,7 +8,7 @@ const SearchInput = () => {
 
   return (
     <div className="w-full">
-      <div className="relative rounded-lg border-[1px] border-solid border-neutral-90 bg-neutral-98 shadow-sm">
+      <div className="relative rounded-xl border-[1px] border-solid border-neutral-90 bg-neutral-98 shadow-sm">
         <input
           type="text"
           value={searchText}
