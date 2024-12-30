@@ -4,7 +4,7 @@ import React from 'react';
 import About from '@/layouts/About';
 import FAQs from '@/layouts/FAQs';
 import Features from '@/layouts/Features';
-import Hero from '@/layouts/Hero';
+import HeroV1 from '@/layouts/HeroV1';
 import HumanBookBanner from '@/layouts/HumanBookBanner';
 import Newsletter from '@/layouts/Newsletter';
 import Sponsors from '@/layouts/Sponsors';
@@ -27,7 +27,7 @@ export default function Index() {
   return (
     <>
       <HumanBookBanner />
-      <Hero />
+      <HeroV1 />
       <Features />
       <About />
       <Testimonial />

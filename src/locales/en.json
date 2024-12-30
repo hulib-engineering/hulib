@@ -15,6 +15,12 @@
     "log_in": "Log in",
     "sign_up": "Sign up"
   },
+  "Hero": {
+    "heading": "A Social project",
+    "sub_heading": "Explore the Human Book bookshelf now",
+    "description": "There is a story and experience within each of us, so we are born to be somebody.",
+    "register_now": "Register now"
+  },
   "Footer": {
     "footer_description": "There is a story and experience within each of us, so we are born to be somebody.",
     "copyright": "© 2024 HuLib. All rights reserved.",

@@ -15,6 +15,12 @@
     "log_in": "Đăng nhập",
     "sign_up": "Đăng kí ngay"
   },
+  "Hero": {
+    "heading": "Một dự án xã hội",
+    "sub_heading": "Khám phá tủ sách Human Book ngay",
+    "description": "Có một câu chuyện và trải nghiệm bên trong mỗi chúng ta, nên chúng ta sinh ra là để trở thành một ai đó.",
+    "register_now": "Đăng kí ngay"
+  },
   "Footer": {
     "footer_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
     "copyright": "© 2024 HuLib. Đã đăng ký bản quyền.",
