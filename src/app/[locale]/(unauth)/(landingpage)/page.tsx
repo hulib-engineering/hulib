@@ -3,7 +3,8 @@ import React from 'react';
 
 import About from '@/layouts/About';
 import FAQs from '@/layouts/FAQs';
-import Hero from '@/layouts/Hero';
+import Features from '@/layouts/Features';
+import HeroV1 from '@/layouts/HeroV1';
 import HumanBookBanner from '@/layouts/HumanBookBanner';
 import Newsletter from '@/layouts/Newsletter';
 import Sponsors from '@/layouts/Sponsors';
@@ -25,10 +26,9 @@ export async function generateMetadata({
 export default function Index() {
   return (
     <>
-      {/* <PromotedEvent /> */}
       <HumanBookBanner />
-      <Hero />
-      {/* <Features /> */}
+      <HeroV1 />
+      <Features />
       <About />
       <Testimonial />
       <Sponsors />
