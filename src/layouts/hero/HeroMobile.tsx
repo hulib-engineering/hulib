@@ -4,75 +4,46 @@ import { ArrowRight } from '@phosphor-icons/react';
 import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
-import React, { useCallback, useState } from 'react';
-import type WaveSurfer from 'wavesurfer.js';
 
 import Button from '@/components/button/Button';
 import { HighlightContentBox } from '@/components/HighlightContentBox';
 import { mergeClassnames } from '@/components/private/utils';
 import { customMessage } from '@/utils/i18NRichTextUtils';
 
-const StarIcons = [
-  { size: 16, yPosition: 'top-[6.1875rem]', xPosition: 'left-[17.6875rem]' },
-  { size: 60, yPosition: 'bottom-[222px]', xPosition: 'right-[171px]' },
-  { size: 30, yPosition: 'bottom-[115px]', xPosition: 'right-[123px]' },
-];
-const VectorIcons = [
-  {
-    width: 57,
-    height: 75,
-    yPosition: 'bottom-[141px]',
-    xPosition: 'left-[13px]',
-  },
-  { width: 49, height: 65, yPosition: 'top-[67px]', xPosition: 'right-0' },
-  {
-    width: 36,
-    height: 53,
-    yPosition: 'top-[136px]',
-    xPosition: 'left-[177px]',
-  },
-];
+import type { HeroProps } from '.';
 
-const Hero = () => {
+const HeroMobile = (props: HeroProps) => {
+  const {
+    StarIcons,
+    VectorIcons,
+    onReady,
+    isPlaying,
+    onPlayPause,
+    setIsPlaying,
+  } = props;
   const t = useTranslations('Index');
   const locale = useLocale();
-
-  // @ts-ignore
-  const [wavesurfer, setWavesurfer] = useState<WaveSurfer>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const onReady = (ws: WaveSurfer) => {
-    setWavesurfer(ws);
-    setIsPlaying(false);
-  };
-
-  const onPlayPause = useCallback(async () => {
-    if (wavesurfer) {
-      await wavesurfer.playPause();
-    }
-  }, [wavesurfer]);
-
   return (
     <section
       className={mergeClassnames(
-        'mx-auto flex w-full flex-row items-center justify-center px-2 py-0.5 gap-4',
-        'sm:px-[1.875rem] sm:py-6 lg:px-12 2xl:px-28 w-3/4',
+        'mx-auto flex w-full flex-col items-center justify-center py-8',
+        'sm:w-3/4 sm:px-8 sm:gap-4 lg:max-w-7xl lg:px-10 2xl:gap-32 2xl:px-[5.625rem]',
       )}
       data-testid="hero-section"
     >
-      <div className="pb-3 lg:w-[90%] lg:max-w-screen-md">
-        <div className="mb-6 flex w-full flex-col items-start justify-start gap-3 sm:gap-4 sm:px-0">
+      <div className="pb-3 lg:w-2/3 lg:max-w-screen-md">
+        <div className="mb-6 flex w-full flex-col items-center justify-start gap-3 px-4 text-center sm:gap-4 sm:px-0">
           <p className="text-xs font-medium uppercase text-primary-10 lg:text-lg">
             {t('hero_title')}
           </p>
-          <h1 className="text-start text-[1.75rem] font-semibold capitalize text-slate-1000 sm:text-[5rem]">
+          <h1 className="px-4 text-[1.75rem] font-semibold capitalize text-slate-1000 sm:text-[5rem]">
             {t('hero_motto')}
           </h1>
-          <p className="text-start text-sm font-light text-slate-1000 opacity-50 sm:text-2xl">
+          <p className="text-sm font-light text-slate-1000 opacity-50 sm:text-2xl">
             {t('hero_description')}
           </p>
         </div>
-        <div className="flex flex-col items-start gap-2.5">
+        <div className="flex flex-col items-center gap-2.5">
           <Button
             as="a"
             rel="noopener noreferrer"
@@ -233,4 +204,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default HeroMobile;
