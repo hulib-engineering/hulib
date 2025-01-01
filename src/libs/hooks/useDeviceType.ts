@@ -4,14 +4,20 @@ import React from 'react';
 
 export type DeviceType = 'mobile' | 'tablet' | 'desktop';
 
-const useDeviceType = () => {
-  const [deviceType, setDeviceType] = React.useState('desktop');
+export type BreakPoint = Partial<{
+  mobile: number;
+  desktop: number;
+}>;
+
+const useDeviceType = (breakPoint: BreakPoint = {}) => {
+  const [deviceType, setDeviceType] = React.useState<DeviceType>('desktop');
+  const { mobile = 768, desktop = 1024 } = breakPoint;
 
   React.useEffect(() => {
     const updateDeviceType = () => {
       const width = window.innerWidth;
-      if (width < 768) return 'mobile';
-      if (width < 1024) return 'tablet';
+      if (width < mobile) return 'mobile';
+      if (width < desktop) return 'tablet';
       return 'desktop';
     };
 
@@ -22,7 +28,7 @@ const useDeviceType = () => {
       window.removeEventListener('resize', () =>
         setDeviceType(updateDeviceType()),
       );
-  }, []);
+  }, [mobile, desktop]);
 
   return { deviceType };
 };
