@@ -1,96 +1,123 @@
 import { Transition as HeadlessTransition } from '@headlessui/react';
-import type { ReactNode } from 'react';
-import React, { useCallback, useContext, useEffect } from 'react';
+import type {
+  HTMLAttributes,
+  KeyboardEvent,
+  MutableRefObject,
+  ReactNode,
+} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import { mergeClassnames } from '@/components/private/utils';
-import NoResults from '@/components/search/private/components/NoResults';
-import ResultItem from '@/components/search/private/components/ResultItem';
 import useClickOutside from '@/libs/hooks/useClickOutside';
 
 import type { SearchProps } from '../types';
-import { SearchContext } from '../utils/context';
+import { SearchContext, SelectContext } from '../utils/context';
 import { Input } from './Input';
+import NoResults from './NoResults';
+import ResultItem from './ResultItem';
 
-const SearchRoot = ({ onChangeOpen, search }: SearchProps) => {
+const SearchRoot = ({
+  selected: selectedParent,
+  onChangeOpen,
+  onChangeSearch,
+  onChangeSelected,
+  search,
+  children,
+  isOpen,
+  className,
+}: SearchProps) => {
+  const isParentSelected =
+    typeof selectedParent === 'number' && onChangeSelected;
+
+  const inputRef = useRef<MutableRefObject<HTMLInputElement>>(null);
+
+  const [selected, setSelected] = useState(0);
+
   const [ref, hasClickedOutside] = useClickOutside();
-  // const inputRef = useRef<MutableRefObject<HTMLInputElement>>(null);
-  // const [selected, setSelected] =
-  //   typeof selectedParent === 'number' && onChangeSelected
-  //     ? [selectedParent, onChangeSelected]
-  //     : // eslint-disable-next-line react-hooks/rules-of-hooks
-  //       useState<number>(0);
 
-  function handleChangeSelected() {
-    // const items = document.querySelectorAll('.moon-search-list-item');
-    //
-    // let index = 0;
-    // let newIndex = 0;
-    // let newItem: Element;
-    //
-    // if (direction === 'down') {
-    //   items.forEach((_, i) => {
-    //     if (i === selected) {
-    //       index = i;
-    //     }
-    //   });
-    //
-    //   newIndex = index === items.length - 1 ? 0 : index + 1;
-    // } else if (direction === 'up') {
-    //   items.forEach((_, i) => {
-    //     if (i === selected) {
-    //       index = i;
-    //     }
-    //   });
-    //
-    //   newIndex = !index ? items.length - 1 : index - 1;
-    // } else {
-    //   setSelected(0);
-    // }
-    //
-    // newItem = items[newIndex];
-    //
-    // if (newItem && typeof newIndex === 'number') {
-    //   setSelected(newIndex);
-    //   newItem.scrollIntoView({
-    //     behavior: 'smooth',
-    //     block: newIndex ? 'center' : 'end',
-    //   });
-    // }
-  }
+  const handleChangeSelected = (direction?: 'up' | 'down') => {
+    const items = document.querySelectorAll('.search-list-item');
 
-  function handleSelect() {
-    // const items = document.querySelectorAll(
-    //   '.moon-search-list-item',
-    // ) as NodeListOf<HTMLButtonElement | HTMLAnchorElement>;
-    //
-    // let index = 0;
-    // let item: HTMLAnchorElement | HTMLButtonElement;
-    //
-    // items.forEach((_, i) => {
-    //   if (i === selected) {
-    //     index = i;
-    //   }
-    // });
-    //
-    // item = items[index];
-    //
-    // if (item) {
-    //   item.click();
-    //
-    //   if (
-    //     item.attributes.getNamedItem('data-close-on-select')?.value === 'true'
-    //   ) {
-    //     onChangeOpen(false);
-    //   }
-    // }
-  }
+    const selectedValue = isParentSelected ? selectedParent : selected;
+
+    let index = 0;
+    let newIndex = 0;
+
+    if (direction === 'down') {
+      items.forEach((_, i) => {
+        if (i === selectedValue) {
+          index = i;
+        }
+      });
+
+      newIndex = index === items.length - 1 ? 0 : index + 1;
+    } else if (direction === 'up') {
+      items.forEach((_, i) => {
+        if (i === selectedValue) {
+          index = i;
+        }
+      });
+
+      newIndex = !index ? items.length - 1 : index - 1;
+    } else if (isParentSelected) {
+      onChangeSelected(0);
+    } else {
+      setSelected(0);
+    }
+
+    const newItem = items[newIndex];
+
+    if (newItem) {
+      if (isParentSelected) {
+        onChangeSelected(newIndex);
+      } else {
+        setSelected(newIndex);
+      }
+      newItem.scrollIntoView({
+        behavior: 'smooth',
+        block: newIndex ? 'center' : 'end',
+      });
+    }
+  };
+  const handleSelect = () => {
+    const items = document.querySelectorAll('.search-list-item') as NodeListOf<
+      HTMLButtonElement | HTMLAnchorElement
+    >;
+    const selectedValue = isParentSelected ? selectedParent : selected;
+
+    let index = 0;
+
+    items.forEach((_, i) => {
+      if (i === selectedValue) {
+        index = i;
+      }
+    });
+
+    const item = items[index];
+
+    if (item) {
+      item.click();
+      if (
+        item.attributes.getNamedItem('data-close-on-select')?.value === 'true'
+      ) {
+        onChangeOpen(false);
+      }
+    }
+  };
 
   useEffect(() => {
     handleChangeSelected();
   }, [search]);
 
   const onKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
+    (e: KeyboardEvent) => {
       if (
         e.key === 'ArrowDown' ||
         (e.ctrlKey && e.key === 'n') ||
@@ -122,27 +149,32 @@ const SearchRoot = ({ onChangeOpen, search }: SearchProps) => {
     }
   });
 
+  const searchValues = useMemo(
+    () => ({ search, onChangeOpen, onChangeSearch, inputRef, isOpen }),
+    [search, onChangeOpen, onChangeSearch, inputRef, isOpen],
+  );
+  const selectValues = useMemo(() => ({ selected }), [selected]);
+
   const openSearch = useCallback(() => onChangeOpen(true), []);
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div ref={ref} onKeyDown={onKeyDown} onClick={openSearch}>
-      {/* <div */}
-      {/*  className={mergeClassnames( */}
-      {/*    'relative w-full h-full bg-goku flex flex-col border border-beerus transition-all', */}
-      {/*    '[&_.moon-search-result]:top-10 [&_.moon-search-transition>.moon-search-result]:top-0', */}
-      {/*    isOpen ? 'rounded-t-moon-s-sm' : 'rounded-moon-s-sm', */}
-      {/*    className, */}
-      {/*  )} */}
-      {/* > */}
-      {/*  <SearchContext.Provider */}
-      {/*    value={{ search, onChangeOpen, onChangeSearch, inputRef, isOpen }} */}
-      {/*  > */}
-      {/*    <SelectContext.Provider value={{ selected }}> */}
-      {/*      {children} */}
-      {/*    </SelectContext.Provider> */}
-      {/*  </SearchContext.Provider> */}
-      {/* </div> */}
+      <div
+        className={mergeClassnames(
+          'relative w-full h-full border border-neutral-90 flex flex-col transition-all',
+          isOpen
+            ? 'border-none rounded-t-2xl bg-white shadow-[0_8px_18px_-1px_#1C1E2124,_0_0_4px_0_#0F0F1014]'
+            : 'rounded-2xl bg-neutral-98',
+          className,
+        )}
+      >
+        <SearchContext.Provider value={searchValues}>
+          <SelectContext.Provider value={selectValues}>
+            {children}
+          </SelectContext.Provider>
+        </SearchContext.Provider>
+      </div>
     </div>
   );
 };
@@ -166,7 +198,7 @@ const Transition = ({
       leave="ease-in duration-200"
       leaveFrom="opacity-100 scale-100"
       leaveTo="opacity-0 scale-95"
-      className={mergeClassnames('moon-search-transition z-5', className)}
+      className={mergeClassnames('search-transition z-[999]', className)}
     >
       {children}
     </HeadlessTransition>
@@ -177,7 +209,7 @@ const Result = ({
   children,
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => {
+}: HTMLAttributes<HTMLDivElement>) => {
   const { isOpen } = useContext(SearchContext);
 
   if (!isOpen) {
@@ -187,9 +219,8 @@ const Result = ({
   return (
     <div
       className={mergeClassnames(
-        'moon-search-result',
-        'absolute z-5 w-full flex-1 focus:outline-none p-2 space-y-4 bg-goku shadow-moon-md ',
-        isOpen ? 'rounded-b-moon-s-sm' : 'rounded-moon-s-sm',
+        'search-result',
+        'absolute w-full rounded-b-2xl p-2 flex-1 bg-white shadow-[0_8px_18px_-1px_#1C1E2124,_0_0_4px_0_#0F0F1014] focus:outline-none',
         className,
       )}
       tabIndex={-1}
@@ -204,10 +235,10 @@ const ResultHeading = ({
   children,
   className,
   ...props
-}: React.HTMLAttributes<HTMLHeadingElement>) => (
+}: HTMLAttributes<HTMLHeadingElement>) => (
   <h5
     className={mergeClassnames(
-      'text-bulma text-moon-14 font-medium px-2 py-1',
+      'text-neutral-10 text-sm font-medium pl-1 pt-1',
       className,
     )}
     {...props}

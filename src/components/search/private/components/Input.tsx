@@ -10,10 +10,10 @@ const Wrapper = ({
   children,
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
+}: HTMLAttributes<HTMLDivElement>) => (
   <div
     className={mergeClassnames(
-      'flex items-center px-2 gap-2 moon-search-input',
+      'flex items-center px-3 gap-2 search-input',
       className,
     )}
     {...props}
@@ -28,10 +28,9 @@ const Icon = ({
 }: ComponentProps<typeof MagnifyingGlass>) => (
   <div>
     <MagnifyingGlass
-      className={mergeClassnames(
-        'pointer-events-none text-bulma text-moon-24',
-        className,
-      )}
+      color="#5C6063"
+      size={24}
+      className={mergeClassnames('pointer-events-none', className)}
       {...props}
     />
   </div>
@@ -49,13 +48,14 @@ const InnerInput = forwardRef(
     const { search, onChangeOpen, onChangeSearch, inputRef } =
       useContext(SearchContext);
     const ariaLabelValue = props['aria-label'] ? props['aria-label'] : 'Search';
+
     return (
       <input
         ref={(ref || inputRef) as LegacyRef<HTMLInputElement>}
         spellCheck={false}
         className={mergeClassnames(
-          'moon-search-input py-2 px-0 border-0 w-full focus:outline-none focus:border-0',
-          'focus:ring-0 bg-transparent placeholder-bulma text-bulma text-moon-14',
+          'search-input py-[10px] px-0 border-0 w-full focus:outline-none focus:border-0',
+          'focus:ring-0 bg-transparent placeholder-neutral-40 text-neutral-10 text-sm leading-4',
           className,
         )}
         onClick={() => {
@@ -92,14 +92,14 @@ export const ButtonClear = ({
   className,
   onClick,
   ...props
-}: React.HTMLAttributes<HTMLButtonElement>) => {
+}: HTMLAttributes<HTMLButtonElement>) => {
   const { onChangeSearch } = useContext(SearchContext);
   return (
     <button
       tabIndex={-1}
       type="button"
       className={mergeClassnames(
-        'cursor-pointer text-trunks text-moon-14 transition transform',
+        'cursor-pointer text-neutral-10 text-sm transition transform',
         className,
       )}
       onClick={(e) => {
