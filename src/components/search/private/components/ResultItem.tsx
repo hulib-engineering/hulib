@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { MouseEvent } from 'react';
 import React, { useContext } from 'react';
 
 import { mergeClassnames } from '@/components/private/utils';
@@ -6,18 +7,18 @@ import { mergeClassnames } from '@/components/private/utils';
 import type { ButtonProps, LinkProps } from '../types';
 import { OpenContext, SelectContext } from '../utils/context';
 
-const commonClasses = 'moon-search-list-item w-full';
+const commonClasses = 'search-list-item w-full';
 
 export const CustomLink = ({
   closeOnSelect = true,
   disabled = false,
   className,
   children,
-  // onClick,
+  onClick,
   index,
   ...rest
 }: LinkProps) => {
-  // const { onChangeOpen } = useContext(OpenContext);
+  const { onChangeOpen } = useContext(OpenContext);
   const { selected } = useContext(SelectContext);
 
   function renderLinkContent() {
@@ -30,25 +31,26 @@ export const CustomLink = ({
     );
   }
 
-  // function clickAndClose(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
-  //   if (rest.href && !disabled) {
-  //     if (onClick) {
-  //       onClick(e);
-  //     }
-  //
-  //     if (closeOnSelect) {
-  //       onChangeOpen(false);
-  //     }
-  //   }
-  // }
+  const clickAndClose = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (rest.href && !disabled) {
+      if (onClick) {
+        onClick(e);
+      }
+
+      if (closeOnSelect) {
+        onChangeOpen(false);
+      }
+    }
+  };
 
   return (
-    // @ts-ignore
     <Link
       data-close-on-select={closeOnSelect}
       aria-disabled={disabled}
-      // onClick={clickAndClose}
+      onClick={clickAndClose}
       className={mergeClassnames(commonClasses, className)}
+      href={rest.href || ''}
+      ref={rest.ref}
       {...rest}
     >
       {renderLinkContent()}
@@ -67,7 +69,7 @@ export const Button = ({
   const { selected } = useContext(SelectContext);
   const { onChangeOpen } = useContext(OpenContext);
 
-  function clickAndClose(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  const clickAndClose = (e: MouseEvent<HTMLButtonElement>) => {
     if (onClick) {
       onClick(e);
 
@@ -75,7 +77,7 @@ export const Button = ({
         onChangeOpen(false);
       }
     }
-  }
+  };
 
   return (
     <button
