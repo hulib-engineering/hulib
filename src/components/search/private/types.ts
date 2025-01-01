@@ -3,6 +3,7 @@ import type {
   ButtonHTMLAttributes,
   DetailedHTMLProps,
   ReactNode,
+  Ref,
 } from 'react';
 
 type SearchProps = {
@@ -38,6 +39,7 @@ type LinkProps = ListItemBaseProps &
     HTMLAnchorElement
   > & {
     children?: ReactNode | ((selected: boolean) => ReactNode);
+    ref?: Ref<HTMLAnchorElement> | undefined;
   };
 
 type JsonStructureItem = Omit<

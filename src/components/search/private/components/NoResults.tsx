@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 
 import { mergeClassnames } from '@/components/private/utils';
-import type { FreeSearchActionProps } from '@/components/search/private/types';
 
+import type { FreeSearchActionProps } from '../types';
 import { SearchContext } from '../utils/context';
 import ListItem from './ResultItem';
 
@@ -15,7 +15,7 @@ const NoResults = ({
 
   return (
     <ListItem index={0} showType={false} {...props}>
-      <p className={mergeClassnames('truncate text-bulma', className)}>
+      <p className={mergeClassnames('truncate text-neutral-20', className)}>
         {label} <span className="font-medium">{`${search}`}</span>
       </p>
     </ListItem>

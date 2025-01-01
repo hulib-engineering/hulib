@@ -1,10 +1,17 @@
+'use client';
+
 import localFont from 'next/font/local';
+import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
 
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import type { WithChildren } from '@/components/private/types';
 import { mergeClassnames } from '@/components/private/utils';
 import FooterWebApp from '@/layouts/FooterWebApp';
-import HeaderWebApp from '@/layouts/HeaderWebApp';
+import Header from '@/layouts/webapp/Header';
+import { useAppDispatch } from '@/libs/hooks';
+import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
+import { setUserInfo } from '@/libs/store/authentication';
 
 export const poppins = localFont({
   src: [
@@ -71,22 +78,35 @@ export const poppins = localFont({
   ],
 });
 
-const MainTemplate = (props: WithChildren) => (
-  <div
-    className={mergeClassnames(
-      poppins.className,
-      'relative w-screen bg-neutral-98 px-1 antialiased overflow-hidden',
-    )}
-  >
-    <div className="mx-auto flex max-w-full flex-col items-center justify-center">
-      <HeaderWebApp />
+const MainTemplate = (props: WithChildren) => {
+  const { data, error } = useGetPersonalInfoQuery();
 
-      <main>{props.children}</main>
+  const dispatch = useAppDispatch();
 
-      <FooterWebApp />
+  useEffect(() => {
+    dispatch(setUserInfo(data));
+  }, [data]);
+
+  if (error) return redirect('/auth/login');
+
+  return (
+    <div
+      className={mergeClassnames(
+        poppins.className,
+        'relative w-screen bg-neutral-98 antialiased overflow-hidden',
+      )}
+    >
+      <div className="mx-auto flex max-w-full flex-col items-center justify-center">
+        <Header />
+
+        <main>{props.children}</main>
+
+        <FooterWebApp />
+      </div>
+
+      <CustomToastifyContainer />
     </div>
-    <CustomToastifyContainer />
-  </div>
-);
+  );
+};
 
 export { MainTemplate };
