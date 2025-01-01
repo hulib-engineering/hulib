@@ -1,5 +1,6 @@
 'use client';
 
+import { ArrowRight } from '@phosphor-icons/react';
 import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
@@ -54,24 +55,24 @@ const Hero = () => {
   return (
     <section
       className={mergeClassnames(
-        'mx-auto flex w-full flex-col items-center justify-center py-8',
-        'sm:w-3/4 sm:px-8 sm:gap-4 lg:max-w-7xl lg:px-10 2xl:gap-32 2xl:px-[5.625rem]',
+        'mx-auto flex w-full flex-row items-center justify-center px-2 py-0.5 gap-4',
+        'sm:px-[1.875rem] sm:py-6 lg:px-12 2xl:px-28 w-3/4',
       )}
       data-testid="hero-section"
     >
-      <div className="pb-3 lg:w-2/3 lg:max-w-screen-md">
-        <div className="mb-6 flex w-full flex-col items-center justify-start gap-3 px-4 text-center sm:gap-4 sm:px-0">
+      <div className="pb-3 lg:w-[90%] lg:max-w-screen-md">
+        <div className="mb-6 flex w-full flex-col items-start justify-start gap-3 sm:gap-4 sm:px-0">
           <p className="text-xs font-medium uppercase text-primary-10 lg:text-lg">
             {t('hero_title')}
           </p>
-          <h1 className="px-4 text-[1.75rem] font-semibold capitalize text-slate-1000 sm:text-[5rem]">
+          <h1 className="text-start text-[1.75rem] font-semibold capitalize text-slate-1000 sm:text-[5rem]">
             {t('hero_motto')}
           </h1>
-          <p className="text-sm font-light text-slate-1000 opacity-50 sm:text-2xl">
+          <p className="text-start text-sm font-light text-slate-1000 opacity-50 sm:text-2xl">
             {t('hero_description')}
           </p>
         </div>
-        <div className="flex flex-col items-center gap-2.5">
+        <div className="flex flex-col items-start gap-2.5">
           <Button
             as="a"
             rel="noopener noreferrer"
@@ -82,15 +83,7 @@ const Hero = () => {
                 : '/assets/docs/project-proposal-vi.pdf'
             }
             className="rounded-full uppercase"
-            iconRight={
-              <Image
-                width={24}
-                height={24}
-                src="/assets/images/icons/download-icon.svg"
-                alt="Download icon"
-                loading="lazy"
-              />
-            }
+            iconRight={<ArrowRight color="#fff" />}
           >
             {t('hero_call_to_action')}
           </Button>
