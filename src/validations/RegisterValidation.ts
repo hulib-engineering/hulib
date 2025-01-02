@@ -23,7 +23,20 @@ export const RegisterStep2Validation = z
     isUnderGuard: z.boolean().default(false),
     fullname: z.string().trim().min(2),
     gender: z.number().min(1).max(3).default(3),
-    birthday: z.string().trim().min(1, 'Invalid date format.'),
+    birthday: z
+      .string()
+      .trim()
+      .refine(
+        (value) => {
+          return (
+            /^\d{4}-\d{2}-\d{2}$/.test(value) &&
+            !Number.isNaN(Date.parse(value))
+          );
+        },
+        {
+          message: 'Invalid date format.',
+        },
+      ),
     parentPhoneNumber: z.any(),
   })
   .superRefine((values, context) => {
