@@ -285,41 +285,41 @@
     "meta_description": "Trò chơi nhỏ chúc mừng năm Rồng"
   },
   "SignIn": {
-    "meta_title": "Sign in",
-    "meta_description": "Seamlessly sign in to your account with our user-friendly login process."
+    "meta_title": "Đăng nhập",
+    "meta_description": "Đăng nhập vào tài khoản của bạn thông qua quá trình đăng nhập thân thiện với người dùng."
   },
   "SignUp": {
     "meta_title": "Sign up",
-    "meta_description": "Effortlessly create an account through our intuitive sign-up process.",
-    "title": "Create an account",
-    "step": "Step {step} of 3",
+    "meta_description": "Đăng ký một tài khoản thông qua quá trình đăng ký thân thiện với người dùng.",
+    "title": "Tạo tài khoản",
+    "step": "Step {step}/3",
     "email": "Email",
-    "password": "Password",
-    "confirm_password": "Re-enter password",
-    "continue": "Continue",
-    "or_social_login": "Or sign up with",
-    "registered": "Already have an account?",
-    "log_in": "Log in",
-    "fullname": "Full name",
-    "gender": "Gender",
-    "birthday": "Date of birth",
-    "register": "Create account",
+    "password": "Mật khẩu",
+    "confirm_password": "Nhập lại mật khẩu",
+    "continue": "Tiếp tục",
+    "or_social_login": "Hoặc đăng ký bằng",
+    "registered": "Đã có tài khoản?",
+    "log_in": "Đăng nhập",
+    "fullname": "Họ và tên",
+    "gender": "Giới tính",
+    "birthday": "Ngày sinh",
+    "register": "Taọ tài khoản",
     "accept_pp_and_tac": {
-      "first": "By creating an account, I accept",
-      "second": "and"
+      "first": "Bằng việc tạo tài khoản, tôi đồng ý với",
+      "second": "và"
     },
-    "male": "Male",
-    "female": "Female",
-    "other": "Other",
-    "enter_otp": "Enter verification code",
-    "support_otp": "It’s almost done. please enter the 6-digit verification code we just sent to",
-    "not_receive_otp": "Haven’t receive the email?",
-    "resend": "Resend",
-    "contact_us": "If you need help, contact us via email"
+    "male": "Nam",
+    "female": "Nữ",
+    "other": "Khác",
+    "enter_otp": "Nhập mã xác minh",
+    "support_otp": "Hãy nhập mã xác minh 6 chữ số được gửi đến",
+    "not_receive_otp": "Chưa nhận được email?",
+    "resend": "Gửi lại",
+    "contact_us": "Nếu cần giúp đỡ, liên lạc với chúng tôi qua email"
   },
   "MyProfile": {
     "meta_title": "HuLib | Thông tin của tôi",
-    "meta_description": "Manage your profile effectively",
+    "meta_description": "Quản lý hồ sơ của bạn một cách hiệu quả",
     "upload": "tải ảnh đại diện",
     "delete_ava": "xoá ảnh đại diện"
   },
