@@ -2,6 +2,19 @@
   "Header": {
     "contact_us": "contact us"
   },
+  "HeaderWebApp": {
+    "contact_us": "contact us",
+    "my_schedule": "My schedule",
+    "books": "Books",
+    "mentors": "Mentors",
+    "log_in": "Log in",
+    "sign_up": "Sign up"
+  },
+  "HumanBookBanner": {
+    "explore_now": "Explore the Human Book bookshelf now",
+    "log_in": "Log in",
+    "sign_up": "Sign up"
+  },
   "Footer": {
     "footer_description": "There is a story and experience within each of us, so we are born to be somebody.",
     "copyright": "© 2024 HuLib. All rights reserved.",
@@ -9,13 +22,28 @@
     "term_of_service": "term of service",
     "cookie_settings": "cookie settings"
   },
+  "FooterWebApp": {
+    "footer_description": "Promote happiness values ​by connecting very personal stories with human books.",
+    "copyright": "© 2024 HuLib. All rights reserved.",
+    "privacy_policy": "Privacy policy",
+    "term_of_service": "Term of service",
+    "cookie_settings": "Cookie settings",
+    "site": "Site",
+    "my_schedule": "My Schedule",
+    "books": "Books",
+    "profile": "Profile",
+    "help": "Help",
+    "contact": "Contact",
+    "join_our_social_community": "JOIN OUR SOCIAL COMMUNITY",
+    "copy_right": "Copyright © 2024 HuLib Website. All rights reserved."
+  },
   "Index": {
     "meta_title": "HuLib | Landing Page",
     "meta_description": "There is a story and experience within each of us, so we are born to be somebody.",
     "hero_title": "a social project",
-    "hero_motto": "we are here to support you",
+    "hero_motto": "Explore the Human Book bookshelf now",
     "hero_description": "There is a story and experience within each of us, so we are born to be somebody.",
-    "hero_call_to_action": "learn more",
+    "hero_call_to_action": "Register Now",
     "hero_message_1": "”There is <important>a crack</important> in everything, that’s how <important>the light</important> gets in.”",
     "hero_message_2": "“You are <important>not alone</important> in your <important>struggles</important>.”",
     "hero_mentor_quantity": "100+ <normal>Experienced Human Books</normal>",
@@ -66,6 +94,7 @@
     "diamond_sponsor": "diamond sponsor",
     "gold_sponsor": "gold sponsor",
     "silver_sponsor": "silver sponsor",
+    "technology_sponsor": "technology sponsor",
     "legal_sponsor": "legal sponsor",
     "professional_sponsor": "professional sponsor",
     "media_sponsor": "media sponsor",
@@ -251,50 +280,74 @@
       }
     }
   },
-  "Guestbook": {
-    "meta_title": "Guestbook",
-    "meta_description": "An example of CRUD operation",
-    "database_powered_by": "Database powered by"
-  },
-  "GuestbookForm": {
-    "username": "Username",
-    "body": "Body",
-    "save": "Save"
-  },
-  "About": {
-    "meta_title": "About",
-    "meta_description": "About page description",
-    "about_paragraph": "Welcome to our About page! We are a team of passionate individuals dedicated to creating amazing software.",
-    "translation_powered_by": "Translation powered by"
-  },
   "MiniGame": {
     "meta_title": "HuLib | Mini Game",
     "meta_description": "Mini game for year of Dragon"
-  },
-  "PortfolioSlug": {
-    "meta_title": "Portfolio {slug}",
-    "meta_description": "Portfolio {slug} description",
-    "header": "Portfolio {slug}",
-    "content": "Created a set of promotional materials and branding elements for a corporate event. Crafted a visually unified theme, encompassing a logo, posters, banners, and digital assets. Integrated the client's brand identity while infusing it with a contemporary and innovative approach. Garnered favorable responses from event attendees, resulting in a successful event with heightened participant engagement and increased brand visibility."
   },
   "SignIn": {
     "meta_title": "Sign in",
     "meta_description": "Seamlessly sign in to your account with our user-friendly login process."
   },
   "SignUp": {
-    "meta_title": "Sign up",
-    "meta_description": "Effortlessly create an account through our intuitive sign-up process."
+    "meta_title": "HuLib | Create an account",
+    "meta_description": "Effortlessly create an account through our intuitive sign-up process.",
+    "title": "Create an account",
+    "step": "Step {step} of 3",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Re-enter password",
+    "continue": "Continue",
+    "or_social_login": "Or sign up with",
+    "registered": "Already have an account?",
+    "log_in": "Log in",
+    "fullname": "Full name",
+    "gender": "Gender",
+    "birthday": "Date of birth",
+    "register": "Create account",
+    "accept_pp_and_tac": {
+      "first": "By creating an account, I accept",
+      "second": "and"
+    },
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "enter_otp": "Enter verification code",
+    "support_otp": "It’s almost done. please enter the 6-digit verification code we just sent to",
+    "not_receive_otp": "Haven’t receive the email?",
+    "resend": "Resend",
+    "contact_us": "If you need help, contact us via email"
   },
-  "Dashboard": {
-    "meta_title": "Dashboard",
-    "hello_message": "Hello {email}!"
+  "MyProfile": {
+    "meta_title": "HuLib | My Profile",
+    "meta_description": "Manage your profile effectively",
+    "upload": "upload photo",
+    "delete_ava": "delete avatar"
   },
-  "UserProfile": {
-    "meta_title": "User Profile"
-  },
-  "DashboardLayout": {
-    "dashboard_link": "Dashboard",
-    "user_profile_link": "Manage your account",
-    "sign_out": "Sign out"
+  "MentorRegister": {
+    "register_as_a_human_book": "Register as a Human Book",
+    "error_form_no_video": "Please select a valid video file!!!",
+    "About": "About",
+    "placeholder_about": "Tell us about yourself...",
+    "Sessions": "Sessions",
+    "placeholder_session": "Search Sessions",
+    "Education": "Education",
+    "placeholder_education": "Placeholder",
+    "From": "From",
+    "placeholder_from": "2024",
+    "To": "To",
+    "placeholder_to": "2024",
+    "footer_description_underline": "Note:",
+    "footer_description": "Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar tempor dui massa ut.",
+    "Next": "Next",
+    "introduction_video": "Introduction Video",
+    "Back": "Back",
+    "Register": "Register",
+    "error_browser_not_support_video": "Your browser does not support the video tag.",
+    "drag_or_drop_files_here": "Drag or Drop files here",
+    "choose_file": "Choose File",
+    "maxSize": "Maximum at 100MB",
+    "delete_selected_video": "Delete",
+    "success_submit_form": "Application has been submitted",
+    "back_to_home": "Back to Home"
   }
 }

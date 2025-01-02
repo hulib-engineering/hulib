@@ -3,6 +3,6 @@ import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 
 export default (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query({
-    query: () => 'auth/refresh',
+    query: () => 'profile/refresh',
     providesTags: [{ type: 'User' }],
   });

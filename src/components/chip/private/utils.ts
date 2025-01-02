@@ -1,31 +1,31 @@
-import type { IChipProps } from '@/components/chip/Chip';
+import type { ChipProps } from './type';
 
 const getActive = ({
   isActive,
   isStroke,
-}: Pick<IChipProps, 'isActive' | 'isStroke'>): string =>
+}: Pick<ChipProps, 'isActive' | 'isStroke'>): string =>
   isStroke && isActive
-    ? 'shadow-interactive bg-jiren text-piccolo'
+    ? 'shadow-interactive bg-primary-98 text-primary-50'
     : isActive
-      ? 'bg-jiren text-piccolo'
-      : 'text-bulma';
+      ? 'bg-primary-98 text-primary-50'
+      : 'text-neutral-20';
 
 const getDisabled = ({
   disabled,
   isStroke,
-}: Pick<IChipProps, 'disabled' | 'isStroke'>): string =>
+}: Pick<ChipProps, 'disabled' | 'isStroke'>): string =>
   disabled
     ? 'opacity-60 cursor-not-allowed'
     : isStroke
-      ? 'hover:shadow-interactive hover:text-piccolo hover:bg-jiren'
-      : 'hover:text-piccolo hover:bg-jiren';
+      ? 'hover:shadow-interactive hover:text-primary-50 hover:bg-primary-98'
+      : 'hover:text-primary-50 hover:bg-primary-98';
 
 const getPadding = ({
   size,
   iconLeft,
   iconRight,
   iconOnly,
-}: IChipProps): string => {
+}: ChipProps): string => {
   if (size === 'sm') {
     if (iconLeft && !iconRight) {
       return 'py-1 ps-1 pe-2';

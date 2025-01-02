@@ -6,6 +6,7 @@ import { omit } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
@@ -14,15 +15,21 @@ import type { z } from 'zod';
 
 import AuthCode from '@/components/authCode/AuthCode';
 import Button from '@/components/button/Button';
+import { pushError } from '@/components/CustomToastifyContainer';
 import Form from '@/components/form/Form';
 import Hint from '@/components/Hint';
 import { Logo } from '@/components/Logo';
 import Modal from '@/components/Modal';
+import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
 import { ControlledSelect } from '@/components/Select';
 import SocialButton from '@/components/SocialButton';
-import TextInput from '@/components/textInput/TextInput';
+import TermOfUseModal from '@/components/TermOfUseModal';
+import TextInput from '@/components/textInput-v1/TextInput';
+import { VerifiedPhoneNumberInput } from '@/components/VerifiedPhoneNumberInput';
+import { genders } from '@/libs/constants';
 import { useRouter } from '@/libs/i18nNavigation';
 import {
+  useCheckEmailMutation,
   useConfirmEmailMutation,
   useRegisterMutation,
   useResendOTPMutation,
@@ -35,21 +42,20 @@ import {
   RegisterStep3Validation,
 } from '@/validations/RegisterValidation';
 
-const genders = [
-  { value: 1, label: 'Male' },
-  { value: 2, label: 'Female' },
-  { value: 3, label: 'Other' },
-];
-
 const Step1Form = ({
   onSubmit,
 }: {
   onSubmit: (data: z.infer<typeof RegisterStep1Validation>) => void;
 }) => {
+  const [checkEmail] = useCheckEmailMutation();
+
+  const t = useTranslations('SignUp');
+
   const {
     register,
     watch,
     handleSubmit,
+    setError,
     formState: { errors, touchedFields, isSubmitting },
   } = useForm<z.infer<typeof RegisterStep1Validation>>({
     resolver: zodResolver(RegisterStep1Validation),
@@ -60,8 +66,20 @@ const Step1Form = ({
     },
   });
 
-  const handleFormSubmit = handleSubmit((data) => {
-    onSubmit(data);
+  const handleFormSubmit = handleSubmit(async (data) => {
+    try {
+      await checkEmail({ email: data.email }).unwrap();
+      onSubmit(data);
+    } catch (error: any) {
+      if (error?.data?.errors?.email === 'emailAlreadyExists') {
+        setError('email', {
+          type: 'custom',
+          message: 'Email already exists. Please use a different email',
+        });
+      } else {
+        pushError(`Error: ${error.message}`);
+      }
+    }
   });
 
   return (
@@ -70,7 +88,7 @@ const Step1Form = ({
         <TextInput
           id="email"
           type="email"
-          label="Email"
+          label={t('email')}
           placeholder="john@company.com"
           {...register('email')}
           isError={!!errors.email}
@@ -81,7 +99,7 @@ const Step1Form = ({
         <TextInput
           id="password"
           type="password"
-          label="Password"
+          label={t('password')}
           showPasswordText={<Eye />}
           {...register('password')}
         />
@@ -90,7 +108,7 @@ const Step1Form = ({
         <TextInput
           id="confirmPassword"
           type="password"
-          label="Re-enter password"
+          label={t('confirm_password')}
           showPasswordText={<Eye />}
           {...register('confirmPassword')}
         />
@@ -122,8 +140,9 @@ const Step1Form = ({
           value="Submit"
           className="w-full"
           disabled={isSubmitting}
+          animation={isSubmitting && 'progress'}
         >
-          Continue
+          {t('continue')}
         </Button>
       </Form.Item>
     </Form>
@@ -135,6 +154,8 @@ const Step2Form = ({
 }: {
   onSubmit: (data: z.infer<typeof RegisterStep2Validation>) => void;
 }) => {
+  const t = useTranslations('SignUp');
+
   const {
     control,
     register,
@@ -151,6 +172,9 @@ const Step2Form = ({
       birthday: '',
     },
   });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentModalRef, setCurrentModalRef] = useState('');
 
   useEffect(() => {
     const today = new Date();
@@ -171,80 +195,97 @@ const Step2Form = ({
     onSubmit(data);
   });
 
+  const handleClick = (modalName: string) => {
+    setIsModalOpen(true);
+    setCurrentModalRef(modalName);
+  };
+
   return (
-    <Form className="flex w-full flex-col gap-4" onSubmit={handleFormSubmit}>
-      <Form.Item>
-        <TextInput
-          id="fullname"
-          type="text"
-          label="Fullname"
-          placeholder="John Doe"
-          {...register('fullname')}
-          isError={!!errors.fullname}
-          hintText={errors.fullname?.message}
-        />
-      </Form.Item>
-      <Form.Item className="z-10 flex gap-2">
-        <fieldset className="w-full">
-          <ControlledSelect
-            name="gender"
-            control={control}
-            label="Gender"
-            options={genders}
-          />
-        </fieldset>
-        <fieldset className="w-full">
-          <TextInput
-            type="date"
-            label="Date of birth"
-            {...register('birthday')}
-            isError={!!errors.birthday}
-            hintText={errors.birthday?.message}
-          />
-        </fieldset>
-      </Form.Item>
-      {watch('isUnderGuard') && (
+    <>
+      <Form className="flex w-full flex-col gap-4" onSubmit={handleFormSubmit}>
         <Form.Item>
           <TextInput
-            id="parentPhoneNumber"
-            type="tel"
-            label="Parent Phone Number"
-            placeholder="+xxxxxxxxxxx"
-            {...register('parentPhoneNumber')}
-            isError={!!errors.parentPhoneNumber}
-            // @ts-ignore
-            hintText={errors.parentPhoneNumber?.message}
+            id="fullname"
+            type="text"
+            label={t('fullname')}
+            placeholder="John Doe"
+            {...register('fullname')}
+            isError={!!errors.fullname}
+            hintText={errors.fullname?.message}
           />
         </Form.Item>
+        <Form.Item className="z-10 flex gap-2">
+          <fieldset className="w-full">
+            <ControlledSelect
+              name="gender"
+              control={control}
+              label={t('gender')}
+              options={genders}
+            />
+          </fieldset>
+          <fieldset className="w-full">
+            <TextInput
+              type="date"
+              label={t('birthday')}
+              {...register('birthday')}
+              isError={!!errors.birthday}
+              hintText={errors.birthday?.message}
+            />
+          </fieldset>
+        </Form.Item>
+        {watch('isUnderGuard') && (
+          <Form.Item>
+            <VerifiedPhoneNumberInput
+              value=""
+              onChange={(value) => setValue('parentPhoneNumber', value)}
+            />
+          </Form.Item>
+        )}
+        <Form.Item className="py-4">
+          <Button
+            type="submit"
+            value="Submit"
+            className="w-full"
+            disabled={isSubmitting}
+            animation={isSubmitting && 'progress'}
+          >
+            {t('register')}
+          </Button>
+        </Form.Item>
+        <p className="text-center">
+          {`${t('accept_pp_and_tac.first')} `}
+          <button
+            type="button"
+            onClick={() => handleClick('term_of_service')}
+            className="font-medium leading-tight tracking-tight text-primary-50 underline"
+          >
+            Terms of Use
+          </button>
+          {` ${t('accept_pp_and_tac.second')} `}
+          <button
+            type="button"
+            onClick={() => handleClick('privacy_policy')}
+            className="font-medium leading-tight tracking-tight text-primary-50 underline"
+          >
+            Privacy Policy
+          </button>
+          .
+        </p>
+      </Form>
+
+      {currentModalRef === 'privacy_policy' && (
+        <PrivacyPolicyModal
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
       )}
-      <Form.Item className="py-4">
-        <Button
-          type="submit"
-          value="Submit"
-          className="w-full"
-          disabled={isSubmitting}
-        >
-          Create account
-        </Button>
-      </Form.Item>
-      <p className="text-center">
-        By creating an account, I accept{' '}
-        <Link
-          href="#term-of-use"
-          className="font-medium leading-tight tracking-tight text-primary-50 underline"
-        >
-          Terms of Use
-        </Link>{' '}
-        and{' '}
-        <Link
-          href="#privacy-policy"
-          className="font-medium leading-tight tracking-tight text-primary-50 underline"
-        >
-          Privacy Policy
-        </Link>
-        .
-      </p>
-    </Form>
+      {currentModalRef === 'term_of_service' && (
+        <TermOfUseModal
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
+    </>
   );
 };
 
@@ -295,7 +336,7 @@ const Step3Form = (props: IStep3FormProps) => {
             props.onSuccess();
           }
         } catch (error: any) {
-          console.log(error);
+          pushError(`Error: ${error.message}`);
         }
       }
     }
@@ -308,14 +349,23 @@ const Step3Form = (props: IStep3FormProps) => {
         setCurrentVerificationCode(result.code);
       }
     } catch (error: any) {
-      console.log(error);
+      if (error && error?.data && error?.data?.errors) {
+        pushError(`Error: ${JSON.stringify(error?.data?.errors)}`);
+        return;
+      }
+      pushError(`Error: ${error.message}`);
     }
   };
 
   const handleNavigateToLogin = () => router.push('/auth/login');
 
   return (
-    <Modal open onClose={handleNavigateToLogin} className="z-50">
+    <Modal
+      open
+      onClose={handleNavigateToLogin}
+      disableClosingTrigger
+      className="z-50"
+    >
       <Modal.Backdrop className="bg-[#F3F4F6]/100 bg-gradient-to-bl from-white/20 to-[#0442bf33] bg-blend-multiply" />
       <Modal.Panel className="flex max-w-xl flex-col items-center gap-12 p-8">
         <Logo />
@@ -433,6 +483,8 @@ const Step4Form = () => {
 const RegistrationForm = () => {
   const [register] = useRegisterMutation();
 
+  const t = useTranslations('SignUp');
+
   const [step, setStep] = useState(0);
   const [step1Data, setStep1Data] =
     useState<z.infer<typeof RegisterStep1Validation>>();
@@ -457,14 +509,22 @@ const RegistrationForm = () => {
         ...omit(step1Data, 'confirmPassword'),
         fullName: data.fullname,
         ...omit(data, 'fullname'),
-        gender: { id: 3 },
+        gender: { id: data.gender },
       }).unwrap();
       if (result) {
         setVerificationData(result);
         setStep((prevState) => prevState + 1);
       }
     } catch (error: any) {
-      console.log(error);
+      if (error && error?.data && error?.data?.errors) {
+        if (error?.data?.errors?.email) {
+          pushError(error?.data?.errors?.email);
+          return;
+        }
+        pushError(`Error: ${JSON.stringify(error?.data?.errors)}`);
+        return;
+      }
+      pushError(`Error: ${error.message}`);
     }
   };
 
@@ -485,9 +545,9 @@ const RegistrationForm = () => {
     <>
       <div className="text-center text-neutral-10">
         <h2 className="text-4xl font-medium leading-[44px] tracking-[-2%]">
-          Create an account
+          {t('title')}
         </h2>
-        <p className="tracking-[0.5%]">Step {step + 1} of 3</p>
+        <p className="tracking-[0.5%]">{t('step', { step: step + 1 })}</p>
       </div>
       {step === 0 ? (
         <Step1Form onSubmit={handleStep1FormSubmit} />
@@ -497,23 +557,24 @@ const RegistrationForm = () => {
       <div className="inline-flex h-6 items-center justify-start gap-2 self-stretch">
         <div className="h-[1px] w-full shrink grow basis-0 bg-neutral-90" />
         <div className="text-center tracking-tight text-neutral-30">
-          Or sign up with
+          {t('or_social_login')}
         </div>
         <div className="h-[1px] w-full shrink grow basis-0 bg-neutral-90" />
       </div>
       <div className="flex items-center justify-center gap-2">
         <SocialButton
           iconUrl={FacebookIcon}
-          onClick={() => signIn('facebook')}
+          onClick={() => signIn('facebook', { callbackUrl: '/profile' })}
         />
-        <SocialButton iconUrl={GoogleIcon} onClick={() => signIn('google')} />
+        <SocialButton
+          iconUrl={GoogleIcon}
+          onClick={() => signIn('google', { callbackUrl: '/profile' })}
+        />
       </div>
       <div className="inline-flex items-center justify-center gap-4 py-3">
-        <div className="tracking-tight text-neutral-30">
-          Already have an account?
-        </div>
+        <div className="tracking-tight text-neutral-30">{t('registered')}</div>
         <Link href="login" className="font-medium text-primary-50 underline">
-          Log in
+          {t('log_in')}
         </Link>
       </div>
     </>

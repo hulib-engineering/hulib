@@ -21,9 +21,22 @@ export const RegisterStep1Validation = z
 export const RegisterStep2Validation = z
   .object({
     isUnderGuard: z.boolean().default(false),
-    fullname: z.string().trim().min(1),
+    fullname: z.string().trim().min(2),
     gender: z.number().min(1).max(3).default(3),
-    birthday: z.string().trim().min(1),
+    birthday: z
+      .string()
+      .trim()
+      .refine(
+        (value) => {
+          return (
+            /^\d{4}-\d{2}-\d{2}$/.test(value) &&
+            !Number.isNaN(Date.parse(value))
+          );
+        },
+        {
+          message: 'Invalid date format.',
+        },
+      ),
     parentPhoneNumber: z.any(),
   })
   .superRefine((values, context) => {
@@ -43,4 +56,14 @@ export const RegisterStep2Validation = z
 
 export const RegisterStep3Validation = z.object({
   verificationCode: z.string().trim().length(6),
+});
+
+export const PhoneNumberValidation = z.object({
+  isVerified: z.boolean().default(false),
+  parentPhoneNumber: z
+    .string()
+    .trim()
+    .regex(/^\+[1-9]\d{1,14}$/),
+  verificationCode: z.string().trim().length(6),
+  verificationId: z.string().trim().min(1),
 });

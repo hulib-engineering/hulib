@@ -1,56 +1,28 @@
 'use client';
 
+import { ArrowRight } from '@phosphor-icons/react';
 import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
-import React, { useCallback, useState } from 'react';
-import type WaveSurfer from 'wavesurfer.js';
 
 import Button from '@/components/button/Button';
 import { HighlightContentBox } from '@/components/HighlightContentBox';
 import { mergeClassnames } from '@/components/private/utils';
 import { customMessage } from '@/utils/i18NRichTextUtils';
 
-const StarIcons = [
-  { size: 16, yPosition: 'top-[6.1875rem]', xPosition: 'left-[17.6875rem]' },
-  { size: 60, yPosition: 'bottom-[222px]', xPosition: 'right-[171px]' },
-  { size: 30, yPosition: 'bottom-[115px]', xPosition: 'right-[123px]' },
-];
-const VectorIcons = [
-  {
-    width: 57,
-    height: 75,
-    yPosition: 'bottom-[141px]',
-    xPosition: 'left-[13px]',
-  },
-  { width: 49, height: 65, yPosition: 'top-[67px]', xPosition: 'right-0' },
-  {
-    width: 36,
-    height: 53,
-    yPosition: 'top-[136px]',
-    xPosition: 'left-[177px]',
-  },
-];
+import type { HeroProps } from '.';
 
-const Hero = () => {
+const HeroMobile = (props: HeroProps) => {
+  const {
+    StarIcons,
+    VectorIcons,
+    onReady,
+    isPlaying,
+    onPlayPause,
+    setIsPlaying,
+  } = props;
   const t = useTranslations('Index');
   const locale = useLocale();
-
-  // @ts-ignore
-  const [wavesurfer, setWavesurfer] = useState<WaveSurfer>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const onReady = (ws: WaveSurfer) => {
-    setWavesurfer(ws);
-    setIsPlaying(false);
-  };
-
-  const onPlayPause = useCallback(async () => {
-    if (wavesurfer) {
-      await wavesurfer.playPause();
-    }
-  }, [wavesurfer]);
-
   return (
     <section
       className={mergeClassnames(
@@ -82,15 +54,7 @@ const Hero = () => {
                 : '/assets/docs/project-proposal-vi.pdf'
             }
             className="rounded-full uppercase"
-            iconRight={
-              <Image
-                width={24}
-                height={24}
-                src="/assets/images/icons/download-icon.svg"
-                alt="Download icon"
-                loading="lazy"
-              />
-            }
+            iconRight={<ArrowRight color="#fff" />}
           >
             {t('hero_call_to_action')}
           </Button>
@@ -240,4 +204,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default HeroMobile;

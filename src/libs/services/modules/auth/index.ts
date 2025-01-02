@@ -1,13 +1,16 @@
-import resetPassword from '@/libs/services/modules/auth/resetPassword';
-
 import { api } from '../../api';
+import changePassword from './changePassword';
+import checkEmail from './checkEmail';
 import confirmEmail from './confirmEmail';
 import forgotPassword from './forgotPassword';
+import getPersonalInfo from './getPersonalInfo';
 import loginAsAdmin from './loginAsAdmin';
 import loginAsUser from './loginAsUser';
 import refresh from './refresh';
 import register from './register';
 import resendOTP from './resendOTP';
+import resetPassword from './resetPassword';
+import updateProfile from './updateProfile';
 
 interface Enum {
   id: string;
@@ -38,13 +41,15 @@ export type EmailLoginResponse = {
   user: User;
 };
 
-const authenticationApiWithTag = api.enhanceEndpoints({
+const authenticationApiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['Admin', 'User', 'OTP'],
 });
 
 export const authApi = authenticationApiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
+    checkEmail: checkEmail(build),
     confirmEmail: confirmEmail(build),
+    getPersonalInfo: getPersonalInfo(build),
     loginAsAdmin: loginAsAdmin(build),
     loginAsManager: loginAsUser(build),
     refresh: refresh(build),
@@ -52,16 +57,21 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
     resendOTP: resendOTP(build),
     forgotPassword: forgotPassword(build),
     resetPassword: resetPassword(build),
+    changePassword: changePassword(build),
+    updateProfile: updateProfile(build),
   }),
   overrideExisting: false,
 });
 
 export const {
+  useCheckEmailMutation,
   useConfirmEmailMutation,
+  useGetPersonalInfoQuery,
   useRegisterMutation,
   useResendOTPMutation,
   useLoginAsManagerMutation,
-  useLoginAsAdminMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useChangePasswordMutation,
+  useUpdateProfileMutation,
 }: any = authApi;

@@ -54,7 +54,6 @@ const ButtonComponent = <C extends ElementType>({
         animation === 'error' && getAnimation('error'),
         fullWidth && !iconOnly && 'w-full',
         customClassName,
-        'font-medium',
       )}
       {...((!as || as === 'button') && { type: 'button' })}
       {...(disabled && { disabled })}

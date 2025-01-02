@@ -22,8 +22,8 @@ export const getButtonVariants = ({
   if (variant === 'outline') {
     return animation === 'error'
       ? mergeClassnames(
-          'text-chichi bg-transparent ring-inset ring-1 ring-chichi',
-          !disabled && 'hover:bg-chichi-10',
+          'text-red-50 bg-transparent ring-inset ring-1 ring-red-50',
+          !disabled && 'hover:bg-red-10',
         )
       : mergeClassnames(
           'text-primary-50 bg-transparent border border-[#C2C6CF]',
@@ -40,8 +40,8 @@ export const getButtonVariants = ({
   if (variant === 'ghost') {
     return animation === 'error'
       ? mergeClassnames(
-          'text-chichi bg-transparent',
-          !disabled && 'hover:bg-chichi-10',
+          'text-red-50 bg-transparent',
+          !disabled && 'hover:bg-red-10',
         )
       : mergeClassnames(
           'text-primary-50 bg-transparent',
