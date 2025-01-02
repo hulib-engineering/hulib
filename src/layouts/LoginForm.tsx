@@ -83,7 +83,7 @@ const LoginForm = () => {
           <TextInput
             id="email"
             type="email"
-            label="Phone number or email address"
+            label="Email address"
             placeholder="hulib@gmail.com"
             {...register('email')}
             isError={!!errors.email}
