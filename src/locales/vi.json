@@ -280,31 +280,9 @@
       }
     }
   },
-  "Guestbook": {
-    "meta_title": "Guestbook",
-    "meta_description": "An example of CRUD operation",
-    "database_powered_by": "Database powered by"
-  },
-  "GuestbookForm": {
-    "username": "Username",
-    "body": "Body",
-    "save": "Save"
-  },
-  "About": {
-    "meta_title": "About",
-    "meta_description": "About page description",
-    "about_paragraph": "Welcome to our About page! We are a team of passionate individuals dedicated to creating amazing software.",
-    "translation_powered_by": "Translation powered by"
-  },
   "MiniGame": {
     "meta_title": "HuLib | Trò Chơi",
     "meta_description": "Trò chơi nhỏ chúc mừng năm Rồng"
-  },
-  "PortfolioSlug": {
-    "meta_title": "Portfolio {slug}",
-    "meta_description": "Portfolio {slug} description",
-    "header": "Portfolio {slug}",
-    "content": "Created a set of promotional materials and branding elements for a corporate event. Crafted a visually unified theme, encompassing a logo, posters, banners, and digital assets. Integrated the client's brand identity while infusing it with a contemporary and innovative approach. Garnered favorable responses from event attendees, resulting in a successful event with heightened participant engagement and increased brand visibility."
   },
   "SignIn": {
     "meta_title": "Sign in",
@@ -312,23 +290,36 @@
   },
   "SignUp": {
     "meta_title": "Sign up",
-    "meta_description": "Effortlessly create an account through our intuitive sign-up process."
-  },
-  "Dashboard": {
-    "meta_title": "Dashboard",
-    "hello_message": "Hello {email}!"
-  },
-  "UserProfile": {
-    "meta_title": "User Profile"
-  },
-  "DashboardLayout": {
-    "dashboard_link": "Dashboard",
-    "user_profile_link": "Manage your account",
-    "sign_out": "Sign out"
+    "meta_description": "Effortlessly create an account through our intuitive sign-up process.",
+    "title": "Create an account",
+    "step": "Step {step} of 3",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Re-enter password",
+    "continue": "Continue",
+    "or_social_login": "Or sign up with",
+    "registered": "Already have an account?",
+    "log_in": "Log in",
+    "fullname": "Full name",
+    "gender": "Gender",
+    "birthday": "Date of birth",
+    "register": "Create account",
+    "accept_pp_and_tac": {
+      "first": "By creating an account, I accept",
+      "second": "and"
+    },
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "enter_otp": "Enter verification code",
+    "support_otp": "It’s almost done. please enter the 6-digit verification code we just sent to",
+    "not_receive_otp": "Haven’t receive the email?",
+    "resend": "Resend",
+    "contact_us": "If you need help, contact us via email"
   },
   "MyProfile": {
     "meta_title": "HuLib | Thông tin của tôi",
-    "meta_description": "",
+    "meta_description": "Manage your profile effectively",
     "upload": "tải ảnh đại diện",
     "delete_ava": "xoá ảnh đại diện"
   },
