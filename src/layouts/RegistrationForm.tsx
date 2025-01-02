@@ -71,13 +71,14 @@ const Step1Form = ({
       await checkEmail({ email: data.email }).unwrap();
       onSubmit(data);
     } catch (error: any) {
-      if (error.data && error.data?.errors && error.data?.errors?.email) {
+      if (error?.data?.errors?.email === 'emailAlreadyExists') {
         setError('email', {
           type: 'custom',
-          message: error.data?.errors?.email,
+          message: 'Email already exists. Please use a different email',
         });
+      } else {
+        pushError(`Error: ${error.message}`);
       }
-      pushError(`Error: ${error.message}`);
     }
   });
 
