@@ -1,3 +1,36 @@
+# [1.8.0](https://github.com/HumanLibrary/hulib/compare/v1.7.0...v1.8.0) (2025-01-02)
+
+
+### Bug Fixes
+
+* **Account Setting:** added missing components ([cfca311](https://github.com/HumanLibrary/hulib/commit/cfca3113f0af7a8d35592be2bac29ec8f01492d8))
+* **Account Setting:** added Uploading avatar and handling Loading states ([db2a08c](https://github.com/HumanLibrary/hulib/commit/db2a08c538d9f25ae595d355ce78ce36e98897dd))
+* **HumanBookBanner:** adjust layout and add class for image shrink behavior ([a28903d](https://github.com/HumanLibrary/hulib/commit/a28903d327a80d9fafece64d9eebe0b8c498d0b7))
+* incorrect login ui ([ae98367](https://github.com/HumanLibrary/hulib/commit/ae98367cc470fa8a25e9ee792c5abd175c85bf1b))
+* **Login and Registration Forms:** update email label and improve error handling for existing emails ([31da47c](https://github.com/HumanLibrary/hulib/commit/31da47cb09615d51d04cac2316b8512d31761a9c))
+* **Register:** added email validation API to first step ([dff3789](https://github.com/HumanLibrary/hulib/commit/dff37897cff41dd90de6f9c4020619245416a1f5))
+* **Register:** fixed modal click outside or escape navigating to Profile ([a779cd3](https://github.com/HumanLibrary/hulib/commit/a779cd39f5c3022897be12800d29268205216bae))
+* **Social Login:** fixed social login jwt callback ([b115026](https://github.com/HumanLibrary/hulib/commit/b1150263bd18ecccc4ce72f927ff2c72f5e3f400))
+
+
+### Features
+
+* **Account Setting:** integrated updating my profile API, added Text Input v2 ([90db91f](https://github.com/HumanLibrary/hulib/commit/90db91fea190b282795c9a87df3466ab11f4288a))
+* **components:** add reusable header and footer components ([01840d9](https://github.com/HumanLibrary/hulib/commit/01840d9a639f783bf733c8f682bf362d7053e621))
+* **Google Analytics:** integrate Google Analytics 4 with dynamic measurement ID ([c069741](https://github.com/HumanLibrary/hulib/commit/c0697414704800f0510f6c1445f66b60d1c20625))
+* implement api change password form ([c97ce7f](https://github.com/HumanLibrary/hulib/commit/c97ce7f0c7f3d11a6d59e5dc9af9e9719264e48d))
+* implement change password form and confirm change password popup ([fc52e60](https://github.com/HumanLibrary/hulib/commit/fc52e609b2264d4bab7b48f48c7e486b0d21202a))
+* implement change password form with main layout ([55ef989](https://github.com/HumanLibrary/hulib/commit/55ef989b28356b64900cccf9a6bc73e1ce572d1f))
+* implement get hash value from link reset password gmail ([499e374](https://github.com/HumanLibrary/hulib/commit/499e3747b6c8198ced15b48cce93d926708a97c4))
+* implement get hash value from link reset password gmail ([b566a9e](https://github.com/HumanLibrary/hulib/commit/b566a9e6281f81ebeb174e643d3fe4be79612321))
+* implement get hash value from link reset password gmail ([7099745](https://github.com/HumanLibrary/hulib/commit/70997453edba50bdad9f9cc916504e936792ed78))
+* implement my profile screen ([9d81d3e](https://github.com/HumanLibrary/hulib/commit/9d81d3e3cacad26f67b913c14332660b4d2e7197))
+* **Landing Page:** added animation to header bar ([95e5267](https://github.com/HumanLibrary/hulib/commit/95e5267052cd3a6d57b9c451be1d015dd2426ece))
+* **Main Layout:** integrated fetching user info to Header & Footer and added Search Everywhere ([d7fa1f3](https://github.com/HumanLibrary/hulib/commit/d7fa1f3acee8320c4d0bf8b2fbc085525f5ff6cc))
+* **Profile:** modified fetch baseurl with nextauth session, added UI and integrated API ([65dcd7a](https://github.com/HumanLibrary/hulib/commit/65dcd7a62a2ebc0b53be5f8e94c30b7939c5646e))
+* rename component and page ([ce7ede7](https://github.com/HumanLibrary/hulib/commit/ce7ede75e7e79f39fd79523593a41216171fe02c))
+* **Social Login:** added handler with providers and callback + integrated facebook and google ([bb83cdc](https://github.com/HumanLibrary/hulib/commit/bb83cdcb727b881f0716d8a07b66c7574af70190))
+
 # [1.7.0](https://github.com/HumanLibrary/hulib/compare/v1.6.0...v1.7.0) (2024-12-04)
 
 
