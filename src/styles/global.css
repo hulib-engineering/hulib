@@ -3,8 +3,17 @@
 @tailwind components;
 
 @layer components {
+    .input-def {
+        @apply border border-solid border-neutral-90;
+    }
     .input-err {
         @apply border-2 border-solid border-red-50;
+    }
+    .input-hov {
+        @apply border-2 border-solid border-primary-50;
+    }
+    .input-focus {
+        @apply border-2 border-solid border-primary-50 shadow-[0_0_0_4px_rgba(205,221,254,1)];
     }
 }
 

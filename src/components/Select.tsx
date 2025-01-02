@@ -22,7 +22,6 @@ function ControlledSelect<T extends FieldValues>({
     field: { name, value, onChange },
     fieldState: { error },
   } = useController(controllerProps);
-  console.log(value);
 
   return (
     <Dropdown id={name} value={value} onChange={onChange} isError={!!error}>

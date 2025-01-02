@@ -16,7 +16,7 @@ import Container from '../styles/Container';
 
 interface TextInputXSandSmProps extends InputHTMLAttributes<HTMLInputElement> {
   id?: string;
-  inputSize?: TextInputSizeType | undefined;
+  inputSize?: TextInputSizeType;
   label?: ReactNode;
   type: TextInputTypes | string;
   icon?: ReactNode;
@@ -92,6 +92,7 @@ const TextInputBasic = forwardRef<HTMLInputElement, TextInputXSandSmProps>(
               isPassword
               {...inputProps}
               {...containerProps}
+              type={type}
             />
             {icon}
           </Inner>
@@ -105,6 +106,7 @@ const TextInputBasic = forwardRef<HTMLInputElement, TextInputXSandSmProps>(
             isRtl={dir === 'rtl'}
             {...inputProps}
             {...containerProps}
+            type={type}
           />
         )}
         {hintText && <Hint error={isError}>{hintText}</Hint>}

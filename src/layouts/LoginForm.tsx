@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye } from '@phosphor-icons/react';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
+import { SessionProvider, signIn, useSession } from 'next-auth/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
@@ -21,9 +22,14 @@ import GoogleIcon from '@/public/assets/icons/google-icon.svg';
 import { LoginValidation } from '@/validations/LoginValidation';
 
 const LoginForm = () => {
+  const { update } = useSession();
+
+  const [login] = useLoginAsManagerMutation();
+
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<z.infer<typeof LoginValidation>>({
     resolver: zodResolver(LoginValidation),
@@ -33,7 +39,6 @@ const LoginForm = () => {
     },
   });
 
-  const [login] = useLoginAsManagerMutation();
   const handleFormSubmit = async (data: z.infer<typeof LoginValidation>) => {
     try {
       const result = (await login({
@@ -45,17 +50,25 @@ const LoginForm = () => {
         Cookies.set('refresh_token', result.refreshToken, {
           expires: result.tokenExpires,
         });
-        // token to local storage
-        localStorage.setItem('token', result.token);
-        localStorage.setItem('user', JSON.stringify(result.user));
+        // save access token to session
+        await update({ accessToken: result.token });
+        await signIn('credentials', {
+          id: result.user.id,
+          accessToken: result.token,
+          callbackUrl: `${window.location.origin}/profile`,
+        });
       }
     } catch (error: any) {
       console.log(error);
+      setError('password', {
+        type: 'custom',
+        message: 'Incorrect password, please try again.',
+      });
     }
   };
 
   return (
-    <>
+    <SessionProvider>
       <div className="text-center text-neutral-10">
         <h2 className="text-4xl font-medium leading-[44px] tracking-[-2%]">
           Welcome Back
@@ -70,7 +83,7 @@ const LoginForm = () => {
           <TextInput
             id="email"
             type="email"
-            label="Phone number or email address"
+            label="Email address"
             placeholder="hulib@gmail.com"
             {...register('email')}
             isError={!!errors.email}
@@ -123,14 +136,14 @@ const LoginForm = () => {
         <SocialButton
           iconUrl={GoogleIcon}
           className="w-full"
-          onClick={() => {}}
+          onClick={() => signIn('google', { callbackUrl: '/profile' })}
         >
           Log in with Google
         </SocialButton>
         <SocialButton
           iconUrl={FacebookIcon}
           className="w-full"
-          onClick={() => {}}
+          onClick={() => signIn('facebook', { callbackUrl: '/profile' })}
         >
           Log in with Facebook
         </SocialButton>
@@ -141,8 +154,14 @@ const LoginForm = () => {
           Create an account
         </Link>
       </div>
-    </>
+    </SessionProvider>
   );
 };
+
+export const LoginWithSession = () => (
+  <SessionProvider>
+    <LoginForm />
+  </SessionProvider>
+);
 
 export { LoginForm };

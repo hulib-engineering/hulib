@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { InputHTMLAttributes, ReactNode } from 'react';
 import React, { forwardRef } from 'react';
 
 import type { ColorProps } from '@/components/private/types';
@@ -9,8 +9,7 @@ import TextInputInnerLabel from './private/TextInputInnerLabel';
 import TextInputPassword from './private/TextInputPassword';
 import type { TextInputSizeType, TextInputTypes } from './private/types';
 
-export interface TextInputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   id?: string;
   inputSize?: TextInputSizeType | undefined;
   type: TextInputTypes | string;
@@ -39,6 +38,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   if (type === 'password') {
     return <TextInputPassword {...props} ref={ref} />;
   }
+
   if (inputSize === Size.LARGE) {
     return <TextInputInnerLabel {...props} ref={ref} />;
   }

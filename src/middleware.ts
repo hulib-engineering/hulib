@@ -33,14 +33,14 @@ export default async function middleware(request: NextRequest) {
 //     !req.nextUrl.pathname.includes('/dashboard'),
 //
 //   beforeAuth: (req) => {
-//     // Execute next-intl middleware before Clerk's auth middleware
+//     // Execute next-intl middleware before Clerk's profile middleware
 //     return intlMiddleware(req);
 //   },
 //
 //   // eslint-disable-next-line consistent-return
-//   afterAuth(auth, req) {
+//   afterAuth(profile, req) {
 //     // Handle users who aren't authenticated
-//     if (!auth.userId && !auth.isPublicRoute) {
+//     if (!profile.userId && !profile.isPublicRoute) {
 //       return redirectToSignIn({ returnBackUrl: req.url });
 //     }
 //   },

@@ -2,6 +2,19 @@
   "Header": {
     "contact_us": "liên hệ"
   },
+  "HeaderWebApp": {
+    "contact_us": "liên hệ",
+    "my_schedule": "Lịch trình của tôi",
+    "books": "Sách",
+    "mentors": "Cố vấn",
+    "log_in": "Đăng nhập",
+    "sign_up": "Đăng kí"
+  },
+  "HumanBookBanner": {
+    "explore_now": "Khám phá tủ sách Human Book ngay",
+    "log_in": "Đăng nhập",
+    "sign_up": "Đăng kí ngay"
+  },
   "Footer": {
     "footer_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
     "copyright": "© 2024 HuLib. Đã đăng ký bản quyền.",
@@ -9,13 +22,28 @@
     "term_of_service": "điều khoản dịch vụ",
     "cookie_settings": "cài đặt cookie"
   },
+  "FooterWebApp": {
+    "footer_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
+    "copyright": "© 2024 HuLib. Đã đăng ký bản quyền.",
+    "privacy_policy": "Chính sách bảo mật",
+    "term_of_service": "Điều khoản dịch vụ",
+    "cookie_settings": "Cài đặt cookie",
+    "site": "Trang web",
+    "my_schedule": "Lịch trình của tôi",
+    "books": "Sách",
+    "profile": "Hồ sơ",
+    "help": "Trợ giúp",
+    "contact": "Liên hệ",
+    "join_our_social_community": "THAM GIA CỘNG ĐỒNG XÃ HỘI CỦA CHÚNG TÔI",
+    "copy_right": "Bản quyền © 2024 Trang web HuLib. Mọi quyền được bảo lưu."
+  },
   "Index": {
     "meta_title": "HuLib | Trang chủ",
     "meta_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
     "hero_title": "dự án cộng đồng",
-    "hero_motto": "HuLib ở đây để đồng hành cùng bạn",
+    "hero_motto": "Khám phá tủ sách Human Book ngay",
     "hero_description": "Mỗi người đều có một câu chuyện và trải nghiệm riêng nên chúng ta sinh ra để trở thành một ai đó, phần đặc biệt của thế giới này.",
-    "hero_call_to_action": "tìm hiểu thêm",
+    "hero_call_to_action": "Đăng ký ngay",
     "hero_message_1": "”Vạn vật ẩn dấu <important>các vết nứt</important>, đó là nơi <important>ánh sáng</important> chiếu rọi.”",
     "hero_message_2": "“Bạn <important>không đơn độc</important> trước <important>những rào cản</important> của chính mình.”",
     "hero_mentor_quantity": "100+ <normal>Human Book (Sách Sống) với nhiều trải nghiệm phong phú</normal>",
@@ -66,6 +94,7 @@
     "diamond_sponsor": "tài trợ kim cương",
     "gold_sponsor": "tài trợ vàng",
     "silver_sponsor": "tài trợ bạc",
+    "technology_sponsor": "tài trợ công nghệ",
     "legal_sponsor": "bảo trợ pháp lý",
     "professional_sponsor": "bảo trợ chuyên môn",
     "media_sponsor": "bảo trợ truyền thông",
@@ -296,5 +325,38 @@
     "dashboard_link": "Dashboard",
     "user_profile_link": "Manage your account",
     "sign_out": "Sign out"
+  },
+  "MyProfile": {
+    "meta_title": "HuLib | Thông tin của tôi",
+    "meta_description": "",
+    "upload": "tải ảnh đại diện",
+    "delete_ava": "xoá ảnh đại diện"
+  },
+  "MentorRegister": {
+    "register_as_a_human_book": "Đăng ký làm Người Sách",
+    "error_form_no_video": "Vui lòng chọn một file video hợp lệ!!!",
+    "About": "Giới thiệu",
+    "placeholder_about": "Hãy kể về bản thân bạn...",
+    "Sessions": "Phiên",
+    "placeholder_session": "Tìm kiếm phiên",
+    "Education": "Học vấn",
+    "placeholder_education": "Placeholder",
+    "From": "Từ",
+    "placeholder_from": "2024",
+    "To": "Đến",
+    "placeholder_to": "2024",
+    "footer_description_underline": "Lưu ý:",
+    "footer_description": "Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar tempor dui massa ut.",
+    "Next": "Tiếp theo",
+    "introduction_video": "Video giới thiệu",
+    "Back": "Quay lại",
+    "Register": "Đăng ký",
+    "error_browser_not_support_video": "Trình duyệt của bạn không hỗ trợ thẻ video.",
+    "drag_or_drop_files_here": "Kéo thả file vào đây",
+    "choose_file": "Chọn file",
+    "maxSize": "Tối đa 100MB",
+    "delete_selected_video": "Xoá",
+    "success_submit_form": "Đơn đăng ký đã được gửi thành công",
+    "back_to_home": "Trở về Trang chủ"
   }
 }

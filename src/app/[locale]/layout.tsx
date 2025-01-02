@@ -4,13 +4,20 @@ import 'swiper/css/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import '@/styles/global.css';
 
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import type { ReactNode } from 'react';
+import { Suspense } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import StoreProvider from '@/app/StoreProvider';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 import { AppConfig } from '@/utils/AppConfig';
+
+import Loading from './loading';
 
 export const metadata: Metadata = {
   icons: [
@@ -52,12 +59,36 @@ export default function RootLayout({
   // Using internationalization in Client Components
   const messages = useMessages();
 
+  // Google Analytics 4 Measurement ID
+  const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
   return (
     <html lang={locale}>
       <body suppressHydrationWarning>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <StoreProvider>{children}</StoreProvider>
-        </NextIntlClientProvider>
+        {gaMeasurementId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaMeasurementId}');
+              `}
+            </Script>
+            <GoogleAnalytics measurementId={gaMeasurementId} />
+          </>
+        )}
+        <Suspense key={Date.now()} fallback={<Loading />}>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <StoreProvider>{children}</StoreProvider>
+            <ToastContainer />
+          </NextIntlClientProvider>
+          <Analytics />
+        </Suspense>
       </body>
     </html>
   );

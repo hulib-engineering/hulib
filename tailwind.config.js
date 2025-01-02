@@ -52,6 +52,7 @@ module.exports = {
       red: colors.red,
       neutral: colors.neutral,
       transparent: 'transparent',
+      green: colors.green,
     },
     extend: {
       colors: {
@@ -101,6 +102,7 @@ module.exports = {
           40: '#5C6063',
           60: '#8F9397',
           70: '#ABAEB1',
+          80: '#C7C9CB',
           90: '#E3E4E5',
           98: '#F9F9F9',
         },
@@ -112,6 +114,7 @@ module.exports = {
           20: '#021A4C',
           40: '#033599',
           50: '#0442BF',
+          60: '#0858FA',
           80: '#84ACFC',
           90: '#CDDDFE',
           98: '#F0F5FF',
@@ -121,6 +124,10 @@ module.exports = {
         },
         pink: {
           90: '#FFE4F1',
+        },
+        green: {
+          50: '#46D51B',
+          98: '#FBFEFA',
         },
       },
       rotate: {
@@ -311,6 +318,52 @@ module.exports = {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
+        gradientAnimation: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        borderCrawling: {
+          from: {
+            transform: 'rotate(0deg)',
+          },
+          to: {
+            transform: 'rotate(360deg)',
+          },
+        },
+        blobBounce: {
+          '0%': {
+            transform: 'translate(-100%, -100%) translate3d(0, 0, 0)',
+          },
+
+          '25%': {
+            transform: 'translate(-100%, -100%) translate3d(100%, 0, 0)',
+          },
+
+          '50%': {
+            transform: 'translate(-100%, -100%) translate3d(100%, 100%, 0)',
+          },
+
+          '75%': {
+            transform: 'translate(-100%, -100%) translate3d(0, 100%, 0)',
+          },
+
+          '100%': {
+            transform: 'translate(-100%, -100%) translate3d(0, 0, 0)',
+          },
+        },
+        glider: {
+          '0%': {
+            transform: 'rotate(5deg) translateX(-200%)',
+          },
+          '100%': {
+            transform: 'rotate(5deg) translateX(1920px)',
+          },
+        },
+        flash: {
+          '100%': {
+            backgroundPosition: '-100% 0',
+          },
+        },
       },
       animation: {
         'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
@@ -330,6 +383,11 @@ module.exports = {
         'transform-from-old-to-new': 'transformFromOldToNew 1s ease-in-out 4s',
         'loader-circle-jump': 'loaderCircleJumping 2s infinite',
         loader: 'rotation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite',
+        'gradient-animation': 'gradientAnimation 1.2s linear infinite',
+        crawling: 'borderCrawling 3s linear infinite',
+        'blob-bounce': 'blobBounce 5s infinite ease',
+        glider: 'glider 1s infinite linear',
+        flashing: 'flash 3s infinite',
       },
     },
   },
