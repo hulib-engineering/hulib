@@ -57,6 +57,7 @@ export const authOptions = {
     }) {
       if (account && user) {
         if (account?.provider === 'google') {
+          console.log(AppConfig.api.endpoint);
           const res = await fetch(
             `${AppConfig.api.endpoint}/${AppConfig.api.version}/auth/google/login`,
             {
