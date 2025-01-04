@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/HumanLibrary/hulib/compare/v1.8.0...v1.8.1) (2025-01-04)
+
+
+### Bug Fixes
+
+* **NextAuth:** logged environment variables ([f3b3da7](https://github.com/HumanLibrary/hulib/commit/f3b3da71267a232cc0addc76f819ae3b870c2add))
+
 # [1.8.0](https://github.com/HumanLibrary/hulib/compare/v1.7.0...v1.8.0) (2025-01-02)
 
 
