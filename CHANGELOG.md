@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/HumanLibrary/hulib/compare/v1.8.1...v1.8.2) (2025-01-05)
+
+
+### Bug Fixes
+
+* **Next Auth:** refactored api folder to change route ([7286c82](https://github.com/HumanLibrary/hulib/commit/7286c82c212a12b9374c7ff32ec1bc55ebf4353a))
+
 ## [1.8.1](https://github.com/HumanLibrary/hulib/compare/v1.8.0...v1.8.1) (2025-01-04)
 
 
