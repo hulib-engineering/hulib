@@ -23,7 +23,6 @@ export default interface TextInputProps
   hintText?: React.JSX.Element | string;
   isError?: boolean;
   dir?: 'ltr' | 'rtl' | 'auto';
-  showPasswordText?: React.JSX.Element | string;
   bgColor?: string;
   isSharpLeftSide?: boolean;
   isSharpRightSide?: boolean;

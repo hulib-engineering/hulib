@@ -7,7 +7,7 @@ import { getSizeStyles, makeBorder } from './utils';
 
 const Input = forwardRef<
   HTMLInputElement,
-  TextInputProps & { isLabel?: boolean; isRtl?: boolean; isPassword?: boolean }
+  TextInputProps & { isLabel?: boolean; isRtl?: boolean }
 >((props, ref) => {
   const {
     bgColor,
@@ -27,6 +27,7 @@ const Input = forwardRef<
     className,
     ...rest
   } = props;
+
   return (
     <input
       ref={ref}
