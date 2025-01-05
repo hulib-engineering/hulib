@@ -1,3 +1,10 @@
+## [1.8.3](https://github.com/HumanLibrary/hulib/compare/v1.8.2...v1.8.3) (2025-01-05)
+
+
+### Bug Fixes
+
+* **Next Auth:** refactored api folder and logged info for debugging ([cc66e6f](https://github.com/HumanLibrary/hulib/commit/cc66e6faf8102f803f24c7b0a55c3c5f68ae163d))
+
 ## [1.8.2](https://github.com/HumanLibrary/hulib/compare/v1.8.1...v1.8.2) (2025-01-05)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "hulib",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "scripts": {
     "dev:spotlight": "spotlight-sidecar",
     "dev:next": "next dev",
