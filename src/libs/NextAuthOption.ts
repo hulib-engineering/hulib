@@ -58,7 +58,6 @@ export const authOptions = {
     }) {
       if (account && user) {
         if (account?.provider === 'google') {
-          console.log('Endpoint', AppConfig.api.endpoint);
           const res = await fetch(
             `${AppConfig.api.endpoint}/${AppConfig.api.version}/auth/google/login`,
             {
@@ -67,9 +66,7 @@ export const authOptions = {
               body: JSON.stringify({ idToken: account?.id_token }),
             },
           );
-          console.log('Result', res);
           const resParsed = await res.json();
-          console.log('Stringtified Result', resParsed);
           // eslint-disable-next-line no-param-reassign
           token = { ...token, accessToken: resParsed.token };
         }
