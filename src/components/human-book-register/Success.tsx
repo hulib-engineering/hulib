@@ -6,7 +6,7 @@ import React from 'react';
 import Button from '../button/Button';
 
 const Success = () => {
-  const t = useTranslations('MentorRegister');
+  const t = useTranslations('HumanBookRegister');
   const router = useRouter();
   const handleBackToHome = () => {
     router.push('/');

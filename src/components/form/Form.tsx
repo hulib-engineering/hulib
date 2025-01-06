@@ -65,10 +65,10 @@ FormRoot.displayName = 'FormRoot';
 const Label = (props: LabelProps) => {
   const { children, required } = props;
   return (
-    <span className="text-base font-normal leading-4 text-neutral-10">
+    <span className="text-sm font-normal leading-4 text-neutral-10">
       {children}
       {required && (
-        <span className="text-base font-normal leading-4 text-red-50">*</span>
+        <span className="text-sm font-normal leading-4 text-red-50">*</span>
       )}
     </span>
   );

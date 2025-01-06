@@ -16,7 +16,7 @@ interface Props {
 const FileUpload = (props: Props) => {
   const { maxSize = 100 * 1024 * 1024, value, onChange } = props;
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
-  const t = useTranslations('MentorRegister');
+  const t = useTranslations('HumanBookRegister');
 
   const validateFile = (file: File) => {
     if (file.size > maxSize) {
@@ -74,7 +74,7 @@ const FileUpload = (props: Props) => {
       <button
         type="button"
         onClick={onOpen}
-        className="mt-6 rounded-full bg-primary-90 px-7 py-2 font-medium text-primary-40"
+        className="mt-6 rounded-full bg-primary-90 px-7 py-2 text-sm font-medium text-primary-40"
       >
         {t('choose_file')}
       </button>
