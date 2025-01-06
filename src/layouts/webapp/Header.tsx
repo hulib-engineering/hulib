@@ -1,12 +1,24 @@
 'use client';
 
-import { Bell, CaretDown, MessengerLogo } from '@phosphor-icons/react';
+import {
+  Bell,
+  CaretDown,
+  Gear,
+  MessengerLogo,
+  Pencil,
+  SignOut,
+  UserCircle,
+} from '@phosphor-icons/react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 import React from 'react';
 
 import Button from '@/components/button/Button';
 import IconButton from '@/components/iconButton/IconButton';
 import { Logo } from '@/components/Logo';
+import MenuItem from '@/components/menuItem/MenuItem';
+import Popover from '@/components/popover/Popover';
 import type { WithChildren } from '@/components/private/types';
 import SearchEverything from '@/components/SearchEverything';
 import { useAppSelector } from '@/libs/hooks';
@@ -21,6 +33,69 @@ const ButtonWithChip = ({
     </div>
     {children}
   </div>
+);
+
+const AvatarPopoverMenuItems = [
+  {
+    label: 'My profile',
+    icon: <UserCircle size={20} color="primary-20" />,
+    href: '/profile',
+  },
+  {
+    label: 'Change password',
+    icon: <Gear size={20} color="primary-20" />,
+    href: '/change-password',
+  },
+  {
+    label: 'Register to become human book',
+    icon: <Pencil size={20} color="primary-20" />,
+    href: '/mentor-register',
+  },
+  {
+    label: 'Sign out',
+    icon: <SignOut size={20} color="primary-20" />,
+    onClick: () => signOut({ callbackUrl: '/auth/login' }),
+  },
+];
+
+const AvatarPopoverContent: FCC<RenderProps> = ({ open, close }) => {
+  const handleClick = (item) => {
+    if (open) {
+      close();
+    }
+    item.onClick();
+  };
+
+  return (
+    <div data-testid="popover-content">
+      {AvatarPopoverMenuItems.map((item, index) =>
+        item.href ? (
+          <Link href={item.href} key={index} onClick={close}>
+            <MenuItem>
+              {item.icon}
+              <MenuItem.Title>{item.label}</MenuItem.Title>
+            </MenuItem>
+          </Link>
+        ) : (
+          <MenuItem key={index} onClick={() => handleClick(item)}>
+            {item.icon}
+            <MenuItem.Title>{item.label}</MenuItem.Title>
+          </MenuItem>
+        ),
+      )}
+    </div>
+  );
+};
+
+const AvatarPopover = ({ children }: WithChildren<{}>) => (
+  <Popover position="bottom-end">
+    <Popover.Trigger data-testid="popover-trigger-arrow">
+      {children}
+    </Popover.Trigger>
+    <Popover.Panel className="flex flex-col gap-1 p-2">
+      {({ open, close }) => <AvatarPopoverContent close={close} open={open} />}
+    </Popover.Panel>
+  </Popover>
 );
 
 const Header = () => {
@@ -57,18 +132,20 @@ const Header = () => {
                 />
               </ButtonWithChip>
               <div className="relative ml-2">
-                <Image
-                  alt="Avatar Icon"
-                  width={44}
-                  height={44}
-                  loading="lazy"
-                  src={
-                    !user || !user.photo || !user.photo.path
-                      ? '/assets/images/icons/avatar.svg'
-                      : user.photo.path
-                  }
-                  className="h-11 w-11 object-contain"
-                />
+                <AvatarPopover>
+                  <Image
+                    alt="Avatar Icon"
+                    width={44}
+                    height={44}
+                    loading="lazy"
+                    src={
+                      !user || !user.photo || !user.photo.path
+                        ? '/assets/images/icons/avatar.svg'
+                        : user.photo.path
+                    }
+                    className="h-11 w-11 object-contain"
+                  />
+                </AvatarPopover>
                 <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
                   <CaretDown size={12} />
                 </div>
@@ -139,17 +216,19 @@ const Header = () => {
               />
             </ButtonWithChip>
             <div className="relative ml-2 h-11 w-11">
-              <Image
-                alt="Avatar Icon"
-                layout="fill"
-                className="h-11 w-11 object-contain"
-                loading="lazy"
-                src={
-                  !user || !user.photo || !user.photo.path
-                    ? '/assets/images/icons/avatar.svg'
-                    : user.photo.path
-                }
-              />
+              <AvatarPopover>
+                <Image
+                  alt="Avatar Icon"
+                  layout="fill"
+                  className="h-11 w-11 object-contain"
+                  loading="lazy"
+                  src={
+                    !user || !user.photo || !user.photo.path
+                      ? '/assets/images/icons/avatar.svg'
+                      : user.photo.path
+                  }
+                />
+              </AvatarPopover>
               <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
                 <CaretDown size={12} />
               </div>
