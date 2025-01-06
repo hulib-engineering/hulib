@@ -3,7 +3,6 @@
 
 'use client';
 
-import { CaretLeft } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -17,9 +16,9 @@ interface Props {
   onRegisterPress: (file: File | null) => void;
 }
 
-const MentorRegisterStep2 = (props: Props) => {
+const HumanBookRegisterStep2 = (props: Props) => {
   const { onGoBackPress, onRegisterPress } = props;
-  const t = useTranslations('MentorRegister');
+  const t = useTranslations('HumanBookRegister');
   const [file, setFile] = React.useState<File | null>(null);
 
   return (
@@ -41,17 +40,13 @@ const MentorRegisterStep2 = (props: Props) => {
       <p className="text-base font-normal leading-5 opacity-80">
         <u>{t('footer_description_underline')}</u> {t('footer_description')}
       </p>
-      <div className="mt-4 flex flex-row items-center gap-3">
-        <Button
-          onClick={onGoBackPress}
-          variant="outline"
-          iconLeft={<CaretLeft />}
-        >
+      <div className="mt-[7px] flex flex-row items-center gap-3">
+        <Button onClick={onGoBackPress} variant="outline">
           {t('Back')}
         </Button>
         <Button
           type="button"
-          form="mentor-register-form"
+          form="human-book-register-form"
           className="flex-[1px]"
           onClick={() => onRegisterPress(file)}
         >
@@ -62,4 +57,4 @@ const MentorRegisterStep2 = (props: Props) => {
   );
 };
 
-export default MentorRegisterStep2;
+export default HumanBookRegisterStep2;
