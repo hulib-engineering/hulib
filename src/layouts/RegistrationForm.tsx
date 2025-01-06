@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CheckFat, Eye, X } from '@phosphor-icons/react';
+import { CheckFat, X } from '@phosphor-icons/react';
 import { omit } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -100,7 +100,6 @@ const Step1Form = ({
           id="password"
           type="password"
           label={t('password')}
-          showPasswordText={<Eye />}
           {...register('password')}
         />
       </Form.Item>
@@ -109,7 +108,6 @@ const Step1Form = ({
           id="confirmPassword"
           type="password"
           label={t('confirm_password')}
-          showPasswordText={<Eye />}
           {...register('confirmPassword')}
         />
       </Form.Item>
