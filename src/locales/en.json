@@ -323,13 +323,13 @@
     "upload": "upload photo",
     "delete_ava": "delete avatar"
   },
-  "MentorRegister": {
+  "HumanBookRegister": {
     "register_as_a_human_book": "Register as a Human Book",
     "error_form_no_video": "Please select a valid video file!!!",
     "About": "About",
     "placeholder_about": "Tell us about yourself...",
-    "Sessions": "Sessions",
-    "placeholder_session": "Search Sessions",
+    "Session": "Session",
+    "placeholder_session": "Search Session",
     "Education": "Education",
     "placeholder_education": "Placeholder",
     "From": "From",
@@ -348,6 +348,12 @@
     "maxSize": "Maximum at 100MB",
     "delete_selected_video": "Delete",
     "success_submit_form": "Application has been submitted",
-    "back_to_home": "Back to Home"
+    "back_to_home": "Back to Home",
+    "searchSession": "Search Session",
+    "validation": {
+      "required": "Required",
+      "invalidYear": "Invalid Year",
+      "invalidYearRange": "Invalid Year Range"
+    }
   }
 }

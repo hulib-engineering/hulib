@@ -332,12 +332,12 @@
     "upload": "tải ảnh đại diện",
     "delete_ava": "xoá ảnh đại diện"
   },
-  "MentorRegister": {
+  "HumanBookRegister": {
     "register_as_a_human_book": "Đăng ký làm Người Sách",
     "error_form_no_video": "Vui lòng chọn một file video hợp lệ!!!",
     "About": "Giới thiệu",
     "placeholder_about": "Hãy kể về bản thân bạn...",
-    "Sessions": "Phiên",
+    "Session": "Phiên",
     "placeholder_session": "Tìm kiếm phiên",
     "Education": "Học vấn",
     "placeholder_education": "Placeholder",
@@ -357,6 +357,11 @@
     "maxSize": "Tối đa 100MB",
     "delete_selected_video": "Xoá",
     "success_submit_form": "Đơn đăng ký đã được gửi thành công",
-    "back_to_home": "Trở về Trang chủ"
+    "back_to_home": "Trở về Trang chủ",
+    "searchSession": "Nhập từ khóa tìm kiếm",
+    "validation": {
+      "required": "Bắt buộc",
+      "invalidYear": "Năm không hợp lệ"
+    }
   }
 }

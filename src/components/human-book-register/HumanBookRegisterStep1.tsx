@@ -8,13 +8,14 @@ import type { z } from 'zod';
 import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
 import TextInput from '@/components/textInput/TextInput';
-import type { MentorRegisterValidation } from '@/validations/MentorRegisterValidation';
+
+import SearchSession from './SearchSession';
 
 interface Props {
   methods: UseFormReturn<
     {
       about: string;
-      sections: string;
+      section: string[];
       education: string;
       from: number;
       to: number;
@@ -22,10 +23,10 @@ interface Props {
     any,
     undefined
   >;
-  onNextPress: (data: z.infer<typeof MentorRegisterValidation>) => void;
+  onNextPress: (data: z.infer<any>) => void;
 }
 
-const MentorRegisterStep1 = (props: Props) => {
+const HumanBookRegisterStep1 = (props: Props) => {
   const {
     methods: {
       register,
@@ -34,7 +35,7 @@ const MentorRegisterStep1 = (props: Props) => {
     },
     onNextPress,
   } = props;
-  const t = useTranslations('MentorRegister');
+  const t = useTranslations('HumanBookRegister');
 
   return (
     <Form
@@ -51,20 +52,14 @@ const MentorRegisterStep1 = (props: Props) => {
           {...register('about')}
           isError={!!errors.about}
           hintText={errors.about?.message}
-          className="h-[162px] px-3 py-0"
+          className="h-[162px] p-3 text-sm text-[#5C6063]"
         />
       </Form.Item>
-      <Form.Item>
-        <TextInput
-          id="sections"
-          type="text"
-          label={<Form.Label required>{t('Sessions')}</Form.Label>}
-          placeholder={t('placeholder_session')}
-          {...register('sections')}
-          isError={!!errors.sections}
-          hintText={errors.sections?.message}
-        />
-      </Form.Item>
+      <SearchSession
+        methods={props.methods}
+        label={t('Session')}
+        placeholder={t('searchSession')}
+      />
 
       <div className="flex flex-row gap-6">
         <Form.Item>
@@ -76,6 +71,7 @@ const MentorRegisterStep1 = (props: Props) => {
             {...register('education')}
             isError={!!errors.education}
             hintText={errors.education?.message}
+            className="text-sm text-[#5C6063]"
           />
         </Form.Item>
 
@@ -89,6 +85,7 @@ const MentorRegisterStep1 = (props: Props) => {
               {...register('from', { valueAsNumber: true })}
               isError={!!errors.from}
               hintText={errors.from?.message}
+              className="text-sm text-[#5C6063]"
             />
           </Form.Item>
           <Form.Item>
@@ -100,19 +97,20 @@ const MentorRegisterStep1 = (props: Props) => {
               {...register('to', { valueAsNumber: true })}
               isError={!!errors.to}
               hintText={errors.to?.message}
+              className="text-sm text-[#5C6063]"
             />
           </Form.Item>
         </div>
       </div>
 
-      <p className="text-base font-normal leading-5 opacity-80">
+      <p className="text-sm font-normal leading-5 opacity-80">
         <u>{t('footer_description_underline')}</u> {t('footer_description')}
       </p>
-      <Button type="submit" form="next-step" className="mt-[17px]">
+      <Button type="submit" form="next-step" className="mt-[7px]">
         {t('Next')}
       </Button>
     </Form>
   );
 };
 
-export default MentorRegisterStep1;
+export default HumanBookRegisterStep1;
