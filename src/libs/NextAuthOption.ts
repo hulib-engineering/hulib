@@ -8,6 +8,7 @@ import { AppConfig } from '@/utils/AppConfig';
 export const authOptions = {
   // Configure one or more authentication providers
   debug: true,
+  strategy: 'jwt',
   // secret: Env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({

@@ -3,7 +3,7 @@ const getLabelSize = (size?: string) => {
     case 'sm':
       return 'text-xs';
     default:
-      return 'text-sm';
+      return 'text-sm leading-4';
   }
 };
 

@@ -34,7 +34,7 @@ const TextInputPassword = forwardRef<HTMLInputElement, TextInputProps>(
     const [passwordShown, setPasswordShown] = useState(false);
 
     const togglePasswordVisibility = () => {
-      setPasswordShown(!passwordShown);
+      setPasswordShown((prevState) => !prevState);
     };
 
     const inputProps = {
@@ -61,14 +61,13 @@ const TextInputPassword = forwardRef<HTMLInputElement, TextInputProps>(
             )}
           >
             <Input
+              {...inputProps}
               inputSize={inputSize}
-              type={passwordShown ? 'text' : 'password'}
               isError={isError}
               ref={ref}
               id={id}
               isLabel={!!label}
-              isPassword
-              {...inputProps}
+              type={passwordShown ? 'text' : 'password'}
             />
             <label
               htmlFor={id}
@@ -88,6 +87,7 @@ const TextInputPassword = forwardRef<HTMLInputElement, TextInputProps>(
         </Container>
       );
     }
+
     return (
       <Container disabled={disabled}>
         {label && (
@@ -95,7 +95,7 @@ const TextInputPassword = forwardRef<HTMLInputElement, TextInputProps>(
             dir={dir}
             htmlFor={id}
             className={mergeClassnames(
-              'block text-bulma pb-2',
+              'block text-neutral-10 pb-2',
               getLabelSize(inputSize),
             )}
           >
@@ -109,14 +109,13 @@ const TextInputPassword = forwardRef<HTMLInputElement, TextInputProps>(
           )}
         >
           <Input
+            {...inputProps}
             inputSize={inputSize}
-            type={passwordShown ? 'text' : 'password'}
             isError={isError}
             ref={ref}
             id={id}
             bgColor={bgColor}
-            isPassword
-            {...inputProps}
+            type={passwordShown ? 'text' : 'password'}
           />
           <IconButton
             onClick={togglePasswordVisibility}
@@ -131,6 +130,6 @@ const TextInputPassword = forwardRef<HTMLInputElement, TextInputProps>(
     );
   },
 );
-TextInputPassword.displayName = 'TextInputPassword';
+TextInputPassword.displayName = 'TextInputPasswordV1';
 
 export default TextInputPassword;
