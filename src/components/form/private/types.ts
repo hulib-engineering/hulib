@@ -7,7 +7,7 @@ interface FormProps
   > {
   size?: Size;
   className?: string;
-  onSubmit?: () => void;
+  onSubmit?: (event: React.FormEvent) => void;
 }
 
 type FormState = {

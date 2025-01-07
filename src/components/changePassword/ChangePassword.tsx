@@ -10,9 +10,9 @@ import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
+import ConfirmUpdatePopup from '@/components/confirmUpdatePopup/ConfirmUpdatePopup';
 import Form from '@/components/form/Form';
 import TextInput from '@/components/textInput/TextInput';
-import ConfirmChangePassword from '@/layouts/ConfirmChangePassword';
 import { useChangePasswordMutation } from '@/libs/services/modules/auth';
 import { ChangePasswordValidation } from '@/validations/ChangePasswordValidation';
 
@@ -127,10 +127,14 @@ const ChangePassword = () => {
           </a>
         </Form>
       </div>
-      <ConfirmChangePassword
+      <ConfirmUpdatePopup
         open={isOpen}
         onClose={() => setIsOpen(!isOpen)}
         onSuccess={onHandleSubmit}
+        title="Change Your Password"
+        description="Are you sure you want to change your password?"
+        titleOfDiscardBtn="Cancel"
+        titleOfConfirmBtn="Change"
       />
     </div>
   );

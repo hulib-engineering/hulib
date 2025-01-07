@@ -2,11 +2,12 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
+import ConfirmUpdatePopup from '@/components/confirmUpdatePopup/ConfirmUpdatePopup';
 import { pushError } from '@/components/CustomToastifyContainer';
 import Form from '@/components/form/Form';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
@@ -35,7 +36,7 @@ export const ProfileForm = () => {
     reset,
     watch,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<z.infer<typeof ProfileValidation>>({
     resolver: zodResolver(ProfileValidation),
     defaultValues: {
@@ -50,6 +51,14 @@ export const ProfileForm = () => {
     },
   });
   const router = useRouter();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onHandleClickUpdateBtn = handleSubmit(() => {
+    if (isValid) {
+      setIsOpen(!isOpen);
+    }
+  });
 
   useEffect(() => {
     reset({
@@ -90,91 +99,105 @@ export const ProfileForm = () => {
   }
 
   return (
-    <Form className="flex w-full flex-col gap-6" onSubmit={handleUpdate}>
-      <Form.Item className="flex gap-2">
-        <fieldset className="w-full">
-          <TextInput
-            id="fullname"
-            type="text"
-            label="Name"
-            {...register('fullname')}
-            isError={!!errors.fullname}
-            hintText={errors.fullname?.message}
-          />
-        </fieldset>
-        <fieldset className="w-full">
-          <TextInput
-            type="date"
-            label="Date of birth"
-            {...register('birthday')}
-            isError={!!errors.birthday}
-            hintText={errors.birthday?.message}
-          />
-        </fieldset>
-      </Form.Item>
-      <Form.Item className="z-10 flex gap-2">
-        <fieldset className="w-full">
-          <TextInput
-            id="email"
-            type="email"
-            label="Email"
-            disabled
-            {...register('email')}
-            isError={!!errors.email}
-            hintText={errors.email?.message}
-          />
-        </fieldset>
-        <fieldset className="w-full">
-          <ControlledSelect
-            name="gender"
-            control={control}
-            label="Gender"
-            options={genders}
-          />
-        </fieldset>
-      </Form.Item>
-      <Form.Item className="flex gap-2">
-        <fieldset className="w-full">
-          {watch('isUnderGuard') ? (
+    <>
+      <Form
+        className="flex w-full flex-col gap-6"
+        onSubmit={onHandleClickUpdateBtn}
+      >
+        <Form.Item className="flex gap-2">
+          <fieldset className="w-full">
             <TextInput
-              id="parentPhoneNumber"
-              type="tel"
-              label="Parent Phone Number"
-              placeholder="+xxxxxxxxxxx"
-              {...register('parentPhoneNumber')}
-              isError={!!errors.parentPhoneNumber}
-              // @ts-ignore
-              hintText={errors.parentPhoneNumber?.message}
-            />
-          ) : (
-            <TextInput
+              id="fullname"
               type="text"
-              label="Phone Number"
-              {...register('phoneNumber')}
+              label="Name"
+              {...register('fullname')}
+              isError={!!errors.fullname}
+              hintText={errors.fullname?.message}
             />
-          )}
-        </fieldset>
-        <fieldset className="w-full">
-          <TextInput type="text" label="Address" {...register('address')} />
-        </fieldset>
-      </Form.Item>
-      <p>
-        <b>Note:</b> Human book will contact you via the above phone number in
-        case of emergencies during the process of connecting with a mentor. For
-        example, the advisor/recipient forgets to confirm the appointment or
-        does not show up for the appointment...
-      </p>
-      <Form.Item className="py-4">
-        <Button
-          type="submit"
-          value="Submit"
-          className="w-full"
-          disabled={isSubmitting}
-          animation={isSubmitting && 'progress'}
-        >
-          Update
-        </Button>
-      </Form.Item>
-    </Form>
+          </fieldset>
+          <fieldset className="w-full">
+            <TextInput
+              type="date"
+              label="Date of birth"
+              {...register('birthday')}
+              isError={!!errors.birthday}
+              hintText={errors.birthday?.message}
+            />
+          </fieldset>
+        </Form.Item>
+        <Form.Item className="z-10 flex gap-2">
+          <fieldset className="w-full">
+            <TextInput
+              id="email"
+              type="email"
+              label="Email"
+              disabled
+              {...register('email')}
+              isError={!!errors.email}
+              hintText={errors.email?.message}
+            />
+          </fieldset>
+          <fieldset className="w-full">
+            <ControlledSelect
+              name="gender"
+              control={control}
+              label="Gender"
+              options={genders}
+            />
+          </fieldset>
+        </Form.Item>
+        <Form.Item className="flex gap-2">
+          <fieldset className="w-full">
+            {watch('isUnderGuard') ? (
+              <TextInput
+                id="parentPhoneNumber"
+                type="tel"
+                label="Parent Phone Number"
+                placeholder="+xxxxxxxxxxx"
+                {...register('parentPhoneNumber')}
+                isError={!!errors.parentPhoneNumber}
+                // @ts-ignore
+                hintText={errors.parentPhoneNumber?.message}
+              />
+            ) : (
+              <TextInput
+                type="text"
+                label="Phone Number"
+                {...register('phoneNumber')}
+              />
+            )}
+          </fieldset>
+          <fieldset className="w-full">
+            <TextInput type="text" label="Address" {...register('address')} />
+          </fieldset>
+        </Form.Item>
+        <p>
+          <b>Note:</b> Human book will contact you via the above phone number in
+          case of emergencies during the process of connecting with a mentor.
+          For example, the advisor/recipient forgets to confirm the appointment
+          or does not show up for the appointment...
+        </p>
+        <Form.Item className="py-4">
+          <Button
+            type="submit"
+            value="Submit"
+            className="w-full"
+            disabled={isSubmitting}
+            animation={isSubmitting && 'progress'}
+          >
+            Update
+          </Button>
+        </Form.Item>
+      </Form>
+      <ConfirmUpdatePopup
+        open={isOpen}
+        onClose={() => setIsOpen(!isOpen)}
+        onSuccess={handleUpdate}
+        title="Update Personal Information"
+        description="Are you sure you want to change your personal information?"
+        titleOfDiscardBtn="Cancel"
+        titleOfConfirmBtn="Update"
+      />
+    </>
   );
 };
