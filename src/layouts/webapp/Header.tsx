@@ -103,8 +103,13 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
 };
 
 const AvatarPopover = ({ children }: WithChildren<{}>) => (
-  <Popover position="bottom-end">
-    <Popover.Trigger data-testid="popover-trigger-arrow">
+  <Popover position="bottom-end" className="h-full">
+    <Popover.Trigger
+      data-testid="popover-trigger-arrow"
+      {...{
+        className: 'h-full',
+      }}
+    >
       {children}
     </Popover.Trigger>
     <Popover.Panel className="flex flex-col gap-1 p-2">
