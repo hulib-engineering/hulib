@@ -27,6 +27,11 @@ const SocialLinks = [
     link: 'https://www.tiktok.com/@hulibvn?is_from_webapp=1&sender_device=pc',
     name: 'Tiktok',
   },
+  {
+    iconUrl: '/assets/images/icons/threads-icon.svg',
+    link: 'https://www.threads.net/@hulibofficial?is_from_webapp=1&sender_device=pc',
+    name: 'Threads',
+  },
 ];
 
 const Footer = () => {
