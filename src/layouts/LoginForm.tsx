@@ -150,7 +150,7 @@ const LoginForm = () => {
         </SocialButton>
       </div>
       <div className="inline-flex items-center justify-center gap-4 py-3">
-        <div className="tracking-tight text-neutral-30">New to Hulib?</div>
+        <div className="tracking-tight text-neutral-30">New to HuLib?</div>
         <Link href="register" className="font-medium text-primary-50 underline">
           Create an account
         </Link>
