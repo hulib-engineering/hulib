@@ -49,7 +49,7 @@ const AvatarPopoverMenuItems = [
   {
     label: 'Register to become human book',
     icon: <Pencil size={20} color="primary-20" />,
-    href: '/mentor-register',
+    href: '/human-book-register',
   },
   {
     label: 'Sign out',

@@ -122,6 +122,7 @@ const LoginForm = () => {
             value="Submit"
             className="w-full"
             disabled={isSubmitting}
+            animation={isSubmitting && 'progress'}
           >
             Login
           </Button>
