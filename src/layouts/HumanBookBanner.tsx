@@ -13,10 +13,10 @@ const HumanBookBanner = () => {
 
   return (
     // eslint-disable-next-line tailwindcss/no-contradicting-classname
-    <div className="relative mt-[18px] flex animate-flashing items-center justify-center bg-[linear-gradient(120deg,_#0442bf_30%,_#0858fa80_38%,_#0858fa80_40%,_#0442bf_48%)] bg-[length:200%_100%] bg-right-top px-12 sm:px-[1.875rem] lg:px-12 2xl:px-28">
+    <div className="relative mt-[18px] flex animate-flashing items-center justify-center bg-[linear-gradient(120deg,_#0442bf_30%,_#0858fa80_38%,_#0858fa80_40%,_#0442bf_48%)] bg-[length:200%_100%] bg-right-top px-4 sm:px-[1.875rem] lg:px-12 2xl:px-28">
       <div
         className={mergeClassnames(
-          'mx-auto flex w-full flex-col items-center justify-between px-3 sm:w-3/4 lg:max-w-7xl gap-6',
+          'mx-auto flex w-full flex-col items-center justify-between px-3 sm:w-3/4 lg:max-w-7xl gap-6 my-4 lg:my-0',
           'lg:flex-row lg:gap-0',
         )}
       >
@@ -29,14 +29,16 @@ const HumanBookBanner = () => {
           </Link>
           <ArrowRight size={20} color="#fff" />
         </div>
-        <Image
-          src="/assets/images/banner.png"
-          alt="banner"
-          width={404}
-          height={64}
-          className="shrink-0"
-        />
-        <div className="flex flex-row gap-4">
+        <div className="hidden shrink-0 lg:block">
+          <Image
+            src="/assets/images/banner.png"
+            alt="banner"
+            width={404}
+            height={64}
+          />
+        </div>
+
+        <div className="flex w-full max-w-[288px] flex-row-reverse gap-4 md:flex-row">
           <Link
             href={publicRoutes.LOGIN}
             className="flex cursor-pointer items-center justify-center whitespace-nowrap rounded-full bg-transparent px-4 py-2 text-center text-xs font-medium leading-4 text-white underline hover:opacity-70"
@@ -45,7 +47,7 @@ const HumanBookBanner = () => {
           </Link>
           <Link
             href={publicRoutes.REGISTER}
-            className="flex cursor-pointer items-center justify-center whitespace-nowrap rounded-full bg-white px-4 py-2 text-xs font-medium leading-4 text-primary-60 hover:opacity-70"
+            className="flex-1 cursor-pointer items-center justify-center whitespace-nowrap rounded-full bg-white px-4 py-2 text-center text-xs font-medium leading-4 text-primary-60 hover:opacity-70"
           >
             {t('sign_up')}
           </Link>
