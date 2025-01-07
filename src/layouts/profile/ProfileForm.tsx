@@ -54,11 +54,11 @@ export const ProfileForm = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const onHandleClickUpdateBtn = () => {
+  const onHandleClickUpdateBtn = handleSubmit(() => {
     if (isValid) {
       setIsOpen(!isOpen);
     }
-  };
+  });
 
   useEffect(() => {
     reset({
