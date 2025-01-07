@@ -77,9 +77,12 @@ const PopoverRoot = ({
     <PopoverContext.Provider value={values}>
       <HeadlessPopover className={mergeClassnames('relative', className)}>
         {({ open }) =>
-          typeof children === 'function'
-            ? callableChildren && callableChildren({ open })
-            : childArray.map((ch) => ch)
+          typeof children === 'function' ? (
+            // eslint-disable-next-line react/jsx-no-useless-fragment
+            <>{callableChildren ? callableChildren({ open }) : null}</>
+          ) : (
+            <>{childArray.map((ch) => ch)}</>
+          )
         }
       </HeadlessPopover>
     </PopoverContext.Provider>
@@ -131,9 +134,12 @@ const Panel = ({ children, className, isStatic }: PanelProps) => {
       static={isStatic}
     >
       {({ open, close }) =>
-        typeof children === 'function'
-          ? callableChildren && callableChildren({ open, close })
-          : childArray.map((ch) => ch)
+        typeof children === 'function' ? (
+          // eslint-disable-next-line react/jsx-no-useless-fragment
+          <>{callableChildren ? callableChildren({ open, close }) : null}</>
+        ) : (
+          <>{childArray.map((ch) => ch)}</>
+        )
       }
     </HeadlessPopover.Panel>
   );
