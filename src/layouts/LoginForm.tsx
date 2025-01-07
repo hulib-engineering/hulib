@@ -73,7 +73,7 @@ const LoginForm = () => {
         <h2 className="text-4xl font-medium leading-[44px] tracking-[-2%]">
           Welcome Back
         </h2>
-        <p className="tracking-[0.5%]">Login to your Hulib account</p>
+        <p className="tracking-[0.5%]">Login to your HuLib account</p>
       </div>
       <Form
         className="flex w-full flex-col gap-4"

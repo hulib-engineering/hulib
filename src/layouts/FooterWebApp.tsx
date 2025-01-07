@@ -25,6 +25,11 @@ const socialLinks = [
     link: 'https://www.tiktok.com/@hulibvn?is_from_webapp=1&sender_device=pc',
     name: 'Tiktok',
   },
+  {
+    iconUrl: '/assets/images/icons/threads-icon.svg',
+    link: 'https://www.threads.net/@hulibofficial?is_from_webapp=1&sender_device=pc',
+    name: 'Threads',
+  },
 ];
 
 type FooterSection = {
@@ -152,7 +157,7 @@ const FooterWebApp = () => {
         </div>
 
         <p className="border-t-[1px] border-solid border-neutral-90 bg-white py-5 text-center text-sm leading-4 text-neutral-30">
-          Copyright © 2024 HuLib Website. All rights reserved.
+          Copyright © 2025 HuLib Website. All rights reserved.
         </p>
       </footer>
     );

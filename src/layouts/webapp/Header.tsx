@@ -58,12 +58,27 @@ const AvatarPopoverMenuItems = [
   },
 ];
 
-const AvatarPopoverContent: FCC<RenderProps> = ({ open, close }) => {
-  const handleClick = (item) => {
+interface AvatarPopoverMenuItem {
+  label: string;
+  icon: React.ReactNode;
+  href?: string;
+  onClick?: () => void;
+}
+
+interface RenderProps {
+  open: boolean;
+  close: () => void;
+}
+
+const AvatarPopoverContent: React.FC<RenderProps> = ({
+  open,
+  close,
+}: RenderProps) => {
+  const handleClick = (item: AvatarPopoverMenuItem) => {
     if (open) {
       close();
     }
-    item.onClick();
+    item.onClick?.();
   };
 
   return (
@@ -93,7 +108,9 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
       {children}
     </Popover.Trigger>
     <Popover.Panel className="flex flex-col gap-1 p-2">
-      {({ open, close }) => <AvatarPopoverContent close={close} open={open} />}
+      {({ open = false, close }) => (
+        <AvatarPopoverContent close={close} open={open} />
+      )}
     </Popover.Panel>
   </Popover>
 );
