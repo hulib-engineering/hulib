@@ -25,7 +25,7 @@ const TestimonialItems = [
   },
   {
     content:
-      "Theo mình Hulib là một dự án với mission mới toanh ở miền Trung nói riêng và Việt Nam nói chung. Kết nối những người có kinh nghiệm 'thực chiến' dày dặn trong lĩnh vực của họ với các bạn mentees chắc chắn sẽ là tạo ra ảnh hưởng lớn đến với các bạn trong tương lai. Mình mong dự án sẽ bay cao bay xa trong trong thời gian tới. Chúc toàn bộ team luôn giữ được nhiệt huyết ạ~",
+      "Theo mình HuLib là một dự án với mission mới toanh ở miền Trung nói riêng và Việt Nam nói chung. Kết nối những người có kinh nghiệm 'thực chiến' dày dặn trong lĩnh vực của họ với các bạn mentees chắc chắn sẽ là tạo ra ảnh hưởng lớn đến với các bạn trong tương lai. Mình mong dự án sẽ bay cao bay xa trong trong thời gian tới. Chúc toàn bộ team luôn giữ được nhiệt huyết ạ~",
     name: 'Quỳnh Lê',
     avatarUrl: '/assets/images/avatars/pf_member_2.jpeg',
     position: 'Team PF',
@@ -46,7 +46,7 @@ const TestimonialItems = [
   },
   {
     content:
-      'Tham gia dự Hulib từ những buổi đầu đến bây giờ đã được hơn 3 tháng rồi. Đây có lẽ là điều mình tự hào nhất, vui nhất nhưng cũng vô cùng thách thức với mình. Mình vui vì được học hỏi thật nhiều điều từ các anh chị vô cùng giỏi, và cũng thật khó khăn vì mình còn thật nhiều chưa biết, chưa làm được. Nhưng mình sẽ cố gắng hơn và trải nghiệm thật nhiều thứ hơn ở dự án ý nghĩa này. 🌷',
+      'Tham gia dự HuLib từ những buổi đầu đến bây giờ đã được hơn 3 tháng rồi. Đây có lẽ là điều mình tự hào nhất, vui nhất nhưng cũng vô cùng thách thức với mình. Mình vui vì được học hỏi thật nhiều điều từ các anh chị vô cùng giỏi, và cũng thật khó khăn vì mình còn thật nhiều chưa biết, chưa làm được. Nhưng mình sẽ cố gắng hơn và trải nghiệm thật nhiều thứ hơn ở dự án ý nghĩa này. 🌷',
     name: 'Lê Thị Quỳnh Nga ',
     avatarUrl: '/assets/images/avatars/po_member_2.jpg',
     position: 'Team PO',
@@ -67,7 +67,7 @@ const TestimonialItems = [
   },
   {
     content:
-      'Hulib là một dự án thật sự ý nghĩa. HuLib chúng tôi phần nào có thể đóng góp theo cách nào đó để hỗ trợ hạnh phúc của giới trẻ. Tôi tin rằng mỗi chúng ta đều có những câu chuyện cần được chia sẻ. Tôi rất vui khi được đồng hành cùng những đồng nghiệp, bạn bè giàu kinh nghiệm trong việc phát triển Hulib để hoàn thành sứ mệnh của mình.',
+      'HuLib là một dự án thật sự ý nghĩa. HuLib chúng tôi phần nào có thể đóng góp theo cách nào đó để hỗ trợ hạnh phúc của giới trẻ. Tôi tin rằng mỗi chúng ta đều có những câu chuyện cần được chia sẻ. Tôi rất vui khi được đồng hành cùng những đồng nghiệp, bạn bè giàu kinh nghiệm trong việc phát triển HuLib để hoàn thành sứ mệnh của mình.',
     name: 'Nguyễn Đỗ Phương Uyên',
     avatarUrl: '/assets/images/avatars/mc_member_2.jpg',
     position: 'Team MC',
