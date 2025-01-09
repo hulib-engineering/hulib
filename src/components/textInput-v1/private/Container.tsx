@@ -6,15 +6,13 @@ import { mergeClassnames } from '@/components/private/utils';
 import { getBorderRadius } from './utils';
 
 type IContainerProps = WithChildren<{
-  disabled?: boolean;
   inputSize?: string;
 }>;
 
-const Container = ({ children, disabled, inputSize }: IContainerProps) => (
+const Container = ({ children, inputSize }: IContainerProps) => (
   <div
     className={mergeClassnames(
       'w-full max-w-full relative z-0',
-      disabled && 'opacity-60 cursor-not-allowed',
       getBorderRadius(inputSize),
     )}
   >

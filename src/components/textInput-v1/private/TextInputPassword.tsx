@@ -52,7 +52,7 @@ const TextInputPassword = forwardRef<HTMLInputElement, TextInputProps>(
 
     if (inputSize === 'xl') {
       return (
-        <Container disabled={disabled}>
+        <Container>
           <div
             className={mergeClassnames(
               'w-full max-w-full relative',
@@ -89,7 +89,7 @@ const TextInputPassword = forwardRef<HTMLInputElement, TextInputProps>(
     }
 
     return (
-      <Container disabled={disabled}>
+      <Container>
         {label && (
           <label
             dir={dir}

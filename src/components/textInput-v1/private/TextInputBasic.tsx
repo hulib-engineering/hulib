@@ -43,7 +43,7 @@ const TextInputBasic = forwardRef<HTMLInputElement, TextInputProps>(
       ...rest,
     };
     return (
-      <Container disabled={disabled}>
+      <Container>
         {label && (
           <label
             dir={dir}
@@ -51,7 +51,6 @@ const TextInputBasic = forwardRef<HTMLInputElement, TextInputProps>(
             className={mergeClassnames(
               'w-full block pb-2 text-neutral-10 leading-4',
               getLabelSize(inputSize),
-              disabled && 'opacity-60 cursor-not-allowed',
             )}
           >
             {label}

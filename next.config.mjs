@@ -38,7 +38,7 @@ export default withSentryConfig(
           {
             protocol: 'http',
             hostname: 'localhost',
-            port: '3001',
+            port: '3000',
             pathname: '/api/v1/files/**',
             search: '',
           },
