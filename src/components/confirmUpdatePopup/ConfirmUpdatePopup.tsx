@@ -18,12 +18,12 @@ const ConfirmUpdatePopup = (props: Props) => {
   return (
     <Modal open={props.open} onClose={() => {}}>
       <Modal.Backdrop />
-      <Modal.Panel className="!w-fit p-10">
+      <Modal.Panel className="w-full p-4 sm:!w-fit lg:p-10">
         <div className="flex !w-fit flex-col items-center justify-center gap-5 rounded-lg bg-white">
-          <h4 className="text-[28px] font-medium capitalize text-slate-1000">
+          <h4 className="text-center text-2xl font-medium capitalize text-[#000000] lg:text-[28px]">
             {props.title}
           </h4>
-          <p className="text-base font-normal text-slate-1000">
+          <p className="text-center text-base font-normal text-slate-1000">
             {props.description}
           </p>
           <div className="flex items-center gap-3">
