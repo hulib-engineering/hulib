@@ -43,7 +43,7 @@ const TextInputInnerLabel = forwardRef<HTMLInputElement, TextInputProps>(
       ...rest,
     };
     return (
-      <Container disabled={disabled} inputSize={inputSize}>
+      <Container inputSize={inputSize}>
         <div
           className={mergeClassnames(
             'w-full max-w-full relative',

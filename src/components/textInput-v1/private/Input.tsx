@@ -42,7 +42,7 @@ const Input = forwardRef<
         getSizeStyles(inputSize as string),
         'before:box-border after:box-border',
         'placeholder:text-neutral-40 placeholder:opacity-100 placeholder:transition-opacity placeholder:delay-75',
-        'read-only:outline-0 read-only:border-none read-only:cursor-not-allowed read-only:hover:input-def read-only:focus:input-def',
+        'read-only:bg-neutral-90 read-only:text-neutral-40 read-only:border-none read-only:cursor-not-allowed read-only:hover:input-def read-only:focus:input-def',
         type === 'number' && 'input-number-clear',
         type === 'date' && 'input-d',
         type === 'date' && isRtl && 'input-d-rtl',
