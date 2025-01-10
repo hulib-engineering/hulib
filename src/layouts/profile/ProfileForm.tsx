@@ -104,7 +104,7 @@ export const ProfileForm = () => {
         className="flex w-full flex-col gap-6"
         onSubmit={onHandleClickUpdateBtn}
       >
-        <Form.Item className="flex gap-2">
+        <Form.Item className="flex flex-col gap-2 lg:flex-row">
           <fieldset className="w-full">
             <TextInput
               id="fullname"
@@ -125,7 +125,7 @@ export const ProfileForm = () => {
             />
           </fieldset>
         </Form.Item>
-        <Form.Item className="z-10 flex gap-2">
+        <Form.Item className="z-10 flex flex-col gap-2 lg:flex-row">
           <fieldset className="w-full">
             <TextInput
               id="email"
@@ -146,7 +146,7 @@ export const ProfileForm = () => {
             />
           </fieldset>
         </Form.Item>
-        <Form.Item className="flex gap-2">
+        <Form.Item className="flex flex-col gap-2 lg:flex-row">
           <fieldset className="w-full">
             {watch('isUnderGuard') ? (
               <TextInput
@@ -171,11 +171,12 @@ export const ProfileForm = () => {
             <TextInput type="text" label="Address" {...register('address')} />
           </fieldset>
         </Form.Item>
-        <p>
-          <b>Note:</b> Human book will contact you via the above phone number in
-          case of emergencies during the process of connecting with a mentor.
-          For example, the advisor/recipient forgets to confirm the appointment
-          or does not show up for the appointment...
+        <p className="text-sm leading-5 text-[#171819] opacity-80">
+          <span className="font-medium underline !opacity-100">Note:</span>
+          &nbsp; Human book will contact you via the above phone number in case
+          of emergencies during the process of connecting with a mentor. For
+          example, the advisor/recipient forgets to confirm the appointment or
+          does not show up for the appointment...
         </p>
         <Form.Item className="py-4">
           <Button
