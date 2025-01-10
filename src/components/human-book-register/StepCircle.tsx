@@ -12,10 +12,10 @@ const StepCircle = (props: Props) => {
     <div
       className={`flex items-center justify-center rounded-full text-base font-medium ${
         isDoneStep
-          ? 'size-6 bg-primary-60 leading-6 text-white'
+          ? 'size-6 min-h-6 min-w-6 bg-primary-60 leading-6 text-white'
           : active
-            ? 'size-10 bg-primary-60 leading-10 text-white'
-            : 'size-6 border-[1px] border-solid border-primary-80 bg-white leading-6 text-primary-80'
+            ? 'size-10 min-h-10 min-w-10 bg-primary-60 leading-10 text-white'
+            : 'size-6 min-h-6 min-w-6 border-[1px] border-solid border-primary-80 bg-white leading-6 text-primary-80'
       }`}
     >{`${value + 1}`}</div>
   );

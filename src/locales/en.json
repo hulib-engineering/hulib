@@ -325,6 +325,7 @@
   },
   "HumanBookRegister": {
     "register_as_a_human_book": "Register as a Human Book",
+    "register_confirm_message": "Are you sure you to register as a Human Book?",
     "error_form_no_video": "Please select a valid video file!!!",
     "About": "About",
     "placeholder_about": "Tell us about yourself...",
@@ -347,13 +348,18 @@
     "choose_file": "Choose File",
     "maxSize": "Maximum at 100MB",
     "delete_selected_video": "Delete",
-    "success_submit_form": "Application has been submitted",
+    "success_submit_form_header": "Successful Submission",
+    "success_submit_form_description": "Submitted successfully! Your application will be processed within 7-10 business days.",
     "back_to_home": "Back to Home",
     "searchSession": "Search Session",
+    "insert_url": "Insert URL",
+    "supporting_text": "Supporting Text",
+    "Submit": "Submit",
     "validation": {
       "required": "Required",
       "invalidYear": "Invalid Year",
-      "invalidYearRange": "Invalid Year Range"
+      "invalidYearRange": "Invalid Year Range",
+      "invalid_url": "Invalid URL link. Check link and try again"
     }
   }
 }
