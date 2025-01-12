@@ -9,38 +9,47 @@ import React from 'react';
 import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
 
-import FileUpload from './Upload';
+import TextInput from '../textInput/TextInput';
 
 interface Props {
+  urlError: boolean;
   onGoBackPress: () => void;
-  onRegisterPress: (file: File | null) => void;
+  onRegisterPress: (url: string) => void;
 }
 
 const HumanBookRegisterStep2 = (props: Props) => {
-  const { onGoBackPress, onRegisterPress } = props;
+  const { urlError, onGoBackPress, onRegisterPress } = props;
+
+  const [url, setURL] = React.useState<string>('');
   const t = useTranslations('HumanBookRegister');
-  const [file, setFile] = React.useState<File | null>(null);
 
   return (
-    <div className="flex flex-col gap-[33px]">
+    <div className="flex flex-col gap-[24px]">
       <div className="flex flex-col gap-2.5">
-        <div className="flex flex-row items-center justify-between">
+        <div className="flex flex-col items-start justify-between">
           <Form.Label required>{t('introduction_video')}</Form.Label>
-          {file && (
-            <p
-              className="cursor-pointer text-red-50 underline"
-              onClick={() => setFile(null)}
-            >
-              {t('delete_selected_video')}
-            </p>
-          )}
+          <span className="mb-2 mt-6 text-base font-medium leading-5">
+            {t('insert_url')}
+          </span>
+          <TextInput
+            id="url"
+            type="text"
+            label={null}
+            placeholder="https://"
+            isError={urlError}
+            hintText={t('validation.invalid_url')}
+            onChange={(e) => setURL(e.target.value)}
+            className="text-sm text-[#5C6063]"
+          />
+          <span className="mt-2 text-xs font-normal text-neutral-60">
+            {t('supporting_text')}
+          </span>
         </div>
-        <FileUpload onChange={(value) => setFile(value)} value={file} />
       </div>
       <p className="text-base font-normal leading-5 opacity-80">
         <u>{t('footer_description_underline')}</u> {t('footer_description')}
       </p>
-      <div className="mt-[7px] flex flex-row items-center gap-3">
+      <div className="mt-2 flex flex-row items-center gap-3">
         <Button onClick={onGoBackPress} variant="outline">
           {t('Back')}
         </Button>
@@ -48,7 +57,7 @@ const HumanBookRegisterStep2 = (props: Props) => {
           type="button"
           form="human-book-register-form"
           className="flex-[1px]"
-          onClick={() => onRegisterPress(file)}
+          onClick={() => onRegisterPress(url)}
         >
           {t('Register')}
         </Button>

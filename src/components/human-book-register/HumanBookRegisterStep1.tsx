@@ -9,6 +9,7 @@ import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
 import TextInput from '@/components/textInput/TextInput';
 
+import { mergeClassnames } from '../private/utils';
 import SearchSession from './SearchSession';
 
 interface Props {
@@ -39,7 +40,7 @@ const HumanBookRegisterStep1 = (props: Props) => {
 
   return (
     <Form
-      className="flex flex-col gap-[33px]"
+      className={mergeClassnames('flex flex-col gap-5', 'sm:gap-[33px]')}
       onSubmit={handleSubmit(onNextPress)}
       id="next-step"
     >
@@ -61,7 +62,12 @@ const HumanBookRegisterStep1 = (props: Props) => {
         placeholder={t('searchSession')}
       />
 
-      <div className="flex flex-row gap-6">
+      <div
+        className={mergeClassnames(
+          'flex flex-col gap-5',
+          'sm:flex-row sm:gap-6',
+        )}
+      >
         <Form.Item>
           <TextInput
             id="education"
