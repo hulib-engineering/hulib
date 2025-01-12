@@ -334,6 +334,7 @@
   },
   "HumanBookRegister": {
     "register_as_a_human_book": "Đăng ký làm Người Sách",
+    "register_confirm_message": "Bạn có chắc chắn đăng ký làm Human Book không?",
     "error_form_no_video": "Vui lòng chọn một file video hợp lệ!!!",
     "About": "Giới thiệu",
     "placeholder_about": "Hãy kể về bản thân bạn...",
@@ -356,12 +357,17 @@
     "choose_file": "Chọn file",
     "maxSize": "Tối đa 100MB",
     "delete_selected_video": "Xoá",
-    "success_submit_form": "Đơn đăng ký đã được gửi thành công",
+    "success_submit_form_header": "Gửi thành công",
+    "success_submit_form_description": "Đã gửi thành công! Đơn đăng ký của bạn sẽ được xử lý trong vòng 7-10 ngày làm việc.",
     "back_to_home": "Trở về Trang chủ",
     "searchSession": "Nhập từ khóa tìm kiếm",
+    "insert_url": "Thêm đường dẫn",
+    "supporting_text": "Văn bản hỗ trợ",
+    "Submit": "Nộp",
     "validation": {
       "required": "Bắt buộc",
-      "invalidYear": "Năm không hợp lệ"
+      "invalidYear": "Năm không hợp lệ",
+      "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại"
     }
   }
 }

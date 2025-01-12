@@ -6,6 +6,8 @@ import { Controller, type UseFormReturn } from 'react-hook-form';
 
 import Form from '@/components/form/Form';
 
+import { mergeClassnames } from '../private/utils';
+
 interface Props {
   methods: UseFormReturn<
     {
@@ -94,7 +96,12 @@ const SearchSections = (props: Props) => {
                 className="flex flex-row gap-1 rounded-full bg-primary-50 px-3 py-2"
                 key={index}
               >
-                <span className="text-sm font-medium leading-4 text-white">
+                <span
+                  className={mergeClassnames(
+                    'text-xs font-medium leading-4 text-[#F0F5FF] flex items-center justify-center',
+                    'sm:text-sm leading-[14px]',
+                  )}
+                >
                   {item}
                 </span>
                 <X
@@ -116,9 +123,12 @@ const SearchSections = (props: Props) => {
           {placeholder}
         </div>
         <div
-          className={`absolute z-10 flex w-1/2 flex-col items-start gap-1 rounded-lg bg-white p-2 shadow-lg ${
-            !searchSuggestion && 'hidden'
-          }`}
+          className={mergeClassnames(
+            `absolute z-10 flex w-2/3 flex-col items-start gap-1 rounded-lg bg-white p-2 shadow-lg ${
+              !searchSuggestion && 'hidden'
+            }`,
+            'sm:w-1/2',
+          )}
           ref={suggestionRef}
         >
           <input
