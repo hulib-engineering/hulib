@@ -33,9 +33,9 @@ const About = () => {
   return (
     <section
       data-testid="about-section"
-      className="mx-auto mt-8 px-4 py-3 sm:w-3/4 sm:px-0 lg:py-[6.25rem]"
+      className="mx-auto mt-8 max-w-container-sm p-spacing-md lg:py-[6.25rem] xl:max-w-container-xl"
     >
-      <div className="mb-6 text-center lg:mb-[5.625rem]">
+      <div className="mb-6 text-center lg:mb-[5.625rem] xl:px-[240px]">
         <div className="text-xs font-semibold uppercase text-primary-10 sm:text-lg">
           {t('about_title')}
         </div>
@@ -43,7 +43,7 @@ const About = () => {
           {t('about_description')}
         </div>
       </div>
-      <div className="mx-auto flex flex-col gap-6 lg:gap-[6.25rem] lg:px-12 2xl:px-[5.625rem]">
+      <div className="flex flex-col gap-6 lg:gap-[6.25rem] xl:px-[90px]">
         {InfoList.map((info, index) => (
           <InfoContainer
             key={index}

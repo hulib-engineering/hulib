@@ -12,10 +12,15 @@ const Header = () => {
     <header
       className={mergeClassnames(
         'fixed top-0 z-[999] w-full bg-[#f1f4f9bf] px-2 py-0.5 backdrop-blur-[50px]',
-        'sm:px-[1.875rem] sm:py-6 lg:px-12 2xl:px-28 w-screen',
+        'sm:py-6 w-screen',
       )}
     >
-      <div className="mx-auto flex items-center justify-between sm:w-3/4">
+      <div
+        className={mergeClassnames(
+          'max-w-container-sm mx-auto p-spacing-md flex w-full items-center justify-between gap-6',
+          'lg:flex-row lg:gap-0 xl:px-[90px] xl:max-w-container-xl xl:py-0',
+        )}
+      >
         <div className="relative hidden flex-1 grow items-start pb-[0.26788rem] pt-[0.3125rem] sm:flex">
           <Link href="/">
             <Logo />
