@@ -73,8 +73,8 @@ const AvatarUploader = () => {
         />
         <Button
           size="lg"
-          iconRight={<UploadSimple />}
-          className="capitalize"
+          iconLeft={<UploadSimple />}
+          className="border border-solid border-[#C2C6CF] bg-white capitalize text-primary-40 ring-0"
           onClick={() =>
             billUploader &&
             billUploader?.current &&
@@ -85,9 +85,9 @@ const AvatarUploader = () => {
         </Button>
         <Button
           size="sm"
-          iconRight={<Trash />}
+          iconLeft={<Trash />}
           variant="ghost"
-          className="capitalize"
+          className="capitalize text-neutral-40"
           onClick={handleRemovingAvatar}
         >
           {t('delete_ava')}
