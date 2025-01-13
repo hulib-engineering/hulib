@@ -16,7 +16,7 @@ interface Props {
   methods: UseFormReturn<
     {
       about: string;
-      section: string[];
+      section: number[];
       education: string;
       from: number;
       to: number;
@@ -27,7 +27,7 @@ interface Props {
   onNextPress: (data: z.infer<any>) => void;
 }
 
-const HumanBookRegisterStep1 = (props: Props) => {
+const Step1 = (props: Props) => {
   const {
     methods: {
       register,
@@ -119,4 +119,4 @@ const HumanBookRegisterStep1 = (props: Props) => {
   );
 };
 
-export default HumanBookRegisterStep1;
+export default Step1;
