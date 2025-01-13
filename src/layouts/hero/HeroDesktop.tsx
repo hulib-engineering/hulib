@@ -26,8 +26,8 @@ const HeroDesktop = (props: HeroProps) => {
   return (
     <section
       className={mergeClassnames(
-        'mx-auto flex w-full flex-col items-start justify-center px-2 py-0.5 gap-4 relative',
-        'sm:px-[1.875rem] sm:py-6 lg:px-12 2xl:px-28 w-5/6',
+        'max-w-container-xl px-[90px] mx-auto flex w-full flex-col items-start justify-center py-0.5 gap-4 relative',
+        'sm:py-6',
       )}
       data-testid="hero-section"
     >
@@ -142,7 +142,7 @@ const HeroDesktop = (props: HeroProps) => {
             </HighlightContentBox>
             <div
               className={mergeClassnames(
-                'flex flex-col justify-center absolute right-0 2xl:right-[10%] bottom-2 rounded-lg px-2 px-5 py-3',
+                'flex flex-col justify-center absolute right-0 2xl:right-[10%] bottom-2 rounded-lg px-2 py-3',
                 'bg-white/30 lg:bg-gray-150 lg:bg-opacity-50 shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[35.63px] lg:backdrop-blur-[5px]',
               )}
             >

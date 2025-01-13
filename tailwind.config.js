@@ -55,6 +55,13 @@ module.exports = {
       green: colors.green,
     },
     extend: {
+      maxWidth: {
+        'container-sm': '320px',
+        'container-xl': '1440px',
+      },
+      padding: {
+        'spacing-md': '16px',
+      },
       colors: {
         gray: {
           100: '#c8c8c8',
