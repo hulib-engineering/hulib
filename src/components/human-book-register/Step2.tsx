@@ -17,7 +17,7 @@ interface Props {
   onRegisterPress: (url: string) => void;
 }
 
-const HumanBookRegisterStep2 = (props: Props) => {
+const Step2 = (props: Props) => {
   const { urlError, onGoBackPress, onRegisterPress } = props;
 
   const [url, setURL] = React.useState<string>('');
@@ -66,4 +66,4 @@ const HumanBookRegisterStep2 = (props: Props) => {
   );
 };
 
-export default HumanBookRegisterStep2;
+export default Step2;
