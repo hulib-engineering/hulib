@@ -9,11 +9,12 @@ import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
 import { pushError } from '@/components/CustomToastifyContainer';
-import HumanBookRegisterStep1 from '@/components/human-book-register/HumanBookRegisterStep1';
-import HumanBookRegisterStep2 from '@/components/human-book-register/HumanBookRegisterStep2';
 import Popup from '@/components/human-book-register/Popup';
+import Step1 from '@/components/human-book-register/Step1';
+import Step2 from '@/components/human-book-register/Step2';
 import StepCircle from '@/components/human-book-register/StepCircle';
 import { mergeClassnames } from '@/components/private/utils';
+import { useRegisterHumanBookMutation } from '@/libs/services/modules/topics';
 import { HumanBookValidation } from '@/validations/HumanBookValidation';
 
 const defaultValues = {
@@ -33,11 +34,11 @@ const Index = () => {
   const tempUrl = useRef<string>('');
   const validationSchema = HumanBookValidation(t);
   const router = useRouter();
-
   const methods = useForm<z.infer<typeof validationSchema>>({
     resolver: zodResolver(validationSchema),
     defaultValues,
   });
+  const [registerHumanBook, { isLoading }] = useRegisterHumanBookMutation();
 
   const isValid = React.useCallback(
     (data: z.infer<typeof validationSchema>) => {
@@ -90,12 +91,10 @@ const Index = () => {
   const renderCurrentStepSection = React.useCallback(() => {
     switch (currentStep) {
       case 0:
-        return (
-          <HumanBookRegisterStep1 methods={methods} onNextPress={onNextPress} />
-        );
+        return <Step1 methods={methods} onNextPress={onNextPress} />;
       case 1:
         return (
-          <HumanBookRegisterStep2
+          <Step2
             onGoBackPress={onGoBackPress}
             onRegisterPress={onRegisterPress}
             urlError={urlError}
@@ -118,19 +117,36 @@ const Index = () => {
     router.refresh();
   };
 
-  const onSubmitPress = () => {
+  const formatDateWithSelectedYear = (year: number) => {
+    const currentDate = new Date();
+    currentDate.setFullYear(year);
+
+    return currentDate.toISOString();
+  };
+
+  const onSubmitPress = async () => {
     const data = methods.getValues();
     const form = {
-      ...data,
-      url: tempUrl.current,
+      bio: data?.about,
+      videoUrl: tempUrl.current,
+      education: data?.education,
+      topics: data?.section,
+      educationStart: formatDateWithSelectedYear(data?.from),
+      educationEnd: formatDateWithSelectedYear(data?.to),
     };
 
     console.log(form);
 
+    try {
+      await registerHumanBook(form);
+      setTimeout(() => {
+        setSuccessModal(true);
+      }, 200);
+    } catch (error) {
+      console.log(error);
+      pushError('Register Human Book fail!!!');
+    }
     setConfirmModal(false);
-    setTimeout(() => {
-      setSuccessModal(true);
-    }, 200);
   };
 
   return (
@@ -192,7 +208,13 @@ const Index = () => {
             <Button onClick={() => setConfirmModal(false)} variant="outline">
               {t('Back')}
             </Button>
-            <Button onClick={onSubmitPress}>{t('Submit')}</Button>
+            <Button
+              onClick={onSubmitPress}
+              disabled={isLoading}
+              animation={isLoading && 'progress'}
+            >
+              {t('Submit')}
+            </Button>
           </div>
         }
       />

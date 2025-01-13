@@ -4,7 +4,7 @@ export const HumanBookValidation = (t: any) => {
   return z
     .object({
       about: z.string().trim().min(1, t('validation.required')),
-      section: z.array(z.string()).min(1, t('validation.required')),
+      section: z.array(z.number()).min(1, t('validation.required')),
       education: z.string().trim().min(1, t('validation.required')),
       from: z
         .number()
