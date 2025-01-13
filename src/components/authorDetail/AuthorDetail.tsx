@@ -8,13 +8,37 @@ import { ReviewPanel } from '@/components/authorDetail/ReviewPanel';
 import type { ProfileMenuItem } from '@/components/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/NavBar/NavBar';
 
+import { EditButton } from './EditButton';
+import EditIntroductionPopup from './EditIntroductionPopup';
+import EditProfilePopup from './EditProfilePopup';
+
+export const EditIcon = () => {
+  return (
+    <div className="flex size-8 items-center justify-center rounded-full border-[2px] border-solid border-white bg-primary-90">
+      <Image
+        src="/assets/icons/pencil-simple.svg"
+        alt="Caret Down Icon"
+        width={16}
+        height={16}
+        loading="lazy"
+        color="#033599"
+      />
+    </div>
+  );
+};
+
 const AuthorDetail = () => {
   const [selectedMenuItem, setSelectedMenuItem] = React.useState<
     ProfileMenuItem | undefined
   >();
+  const [openEditIntroductionPopup, setOpenEditIntroductionPopup] =
+    React.useState(false);
+  const [openEditProfilePopup, setOpenEditProfilePopup] = React.useState(false);
   const handleChangeSelectedMenu = (item: ProfileMenuItem | undefined) => {
     setSelectedMenuItem(item);
   };
+
+  const listSkill = ['Life', 'Study', 'Career'];
 
   const tabsRender: ProfileMenuItem[] = React.useMemo(() => {
     return [
@@ -94,8 +118,8 @@ const AuthorDetail = () => {
             />
           </div>
         </div>
-        <div className="relative flex h-[164px] w-full items-center bg-[#FFFFFF]">
-          <div className="absolute -top-6 left-4">
+        <div className="relative flex w-full flex-col items-center bg-[#FFFFFF] lg:h-[164px] lg:flex-row">
+          <div className="relative -top-6 left-4 lg:absolute">
             <Image
               alt="Avatar Icon"
               width={160}
@@ -105,41 +129,28 @@ const AuthorDetail = () => {
             />
 
             <div className="absolute bottom-0 right-2">
-              <div className="flex size-8 items-center justify-center rounded-full border-[2px] border-solid border-white bg-primary-90">
-                <Image
-                  src="/assets/icons/pencil-simple.svg"
-                  alt="Caret Down Icon"
-                  width={16}
-                  height={16}
-                  loading="lazy"
-                  color="#033599"
-                />
-              </div>
+              <EditIcon />
             </div>
           </div>
-          <div className="mb-5 ml-[210px] mr-5 flex w-full items-center justify-between">
+          <div className="mb-5 flex w-full flex-col items-center justify-between gap-2 lg:ml-[210px] lg:mr-5 lg:flex-row">
             <div className="flex-col gap-y-2">
-              <p>Ngo Thanh Nhan</p>
-              <div className="flex items-center gap-x-10">
+              <p className="text-3xl font-medium text-[#000000]">
+                Ngo Thanh Nhan
+              </p>
+              <div className="flex items-center gap-x-10 text-sm text-neutral-20">
                 <span>Address</span>
                 <span>Address</span>
                 <span>Address</span>
               </div>
             </div>
-            <div className="flex size-8 items-center justify-center rounded-full border-[2px] border-solid border-white bg-primary-90">
-              <Image
-                src="/assets/icons/pencil-simple.svg"
-                alt="Caret Down Icon"
-                width={16}
-                height={16}
-                loading="lazy"
-                color="#033599"
-              />
-            </div>
+            <EditButton
+              title="Edit"
+              onClick={() => setOpenEditProfilePopup(true)}
+            />
           </div>
         </div>
       </div>
-      <div className="mt-8 flex w-full items-start justify-between gap-x-8">
+      <div className="mt-8 flex w-full flex-col items-start justify-between gap-8 lg:flex-row">
         <div className="flex-1 bg-[#FFFFFF] p-5">
           <NavBar
             handleChangeSelectedMenu={handleChangeSelectedMenu}
@@ -149,54 +160,50 @@ const AuthorDetail = () => {
             {tabsRender?.[selectedItemIndex]?.component}
           </div>
         </div>
-        <div className="flex w-[280px] flex-col gap-y-8 bg-[#FFFFFF] p-5">
+        <div className="flex w-full flex-col gap-y-8 bg-[#FFFFFF] p-5 lg:w-[280px]">
           <div className="flex flex-col gap-y-5">
             <div className="flex items-center justify-between gap-x-2.5">
               <h6 className="text-xl font-medium text-[#000000] ">Expertise</h6>
-              <div className="flex size-8 items-center justify-center rounded-full border-[2px] border-solid border-white bg-primary-90">
-                <Image
-                  src="/assets/icons/pencil-simple.svg"
-                  alt="Caret Down Icon"
-                  width={16}
-                  height={16}
-                  loading="lazy"
-                  color="#033599"
-                />
-              </div>
             </div>
-            <div className="flex items-center gap-x-2">
-              <span className="w-fit rounded-full border border-[#FFC9E3] bg-[#FFE4F1] px-3 py-2 text-[#2E3032]">
-                Life
-              </span>
-              <span className="w-fit rounded-full border border-[#FFC9E3] bg-[#FFE4F1] px-3 py-2 text-[#2E3032]">
-                Social
-              </span>
-              <span className="w-fit rounded-full border border-[#FFC9E3] bg-[#FFE4F1] px-3 py-2 text-[#2E3032]">
-                Hobbit
-              </span>
+            <div className="flex flex-wrap items-center gap-2 text-xs text-[#2E3032]">
+              {listSkill.map((skill, index) => {
+                return (
+                  <span
+                    key={index}
+                    className="w-fit rounded-full border border-[#FFC9E3] bg-[#FFE4F1] px-3 py-2 "
+                  >
+                    {skill}
+                  </span>
+                );
+              })}
             </div>
           </div>
           <div className="flex flex-col gap-y-5 border-t-[0.5px] border-neutral-90 pt-8">
             <div className="flex items-center justify-between gap-x-2.5">
               <h6 className="text-xl font-medium text-[#000000] ">Languages</h6>
-              <div className="flex size-8 items-center justify-center rounded-full border-[2px] border-solid border-white bg-primary-90">
-                <Image
-                  src="/assets/icons/pencil-simple.svg"
-                  alt="Caret Down Icon"
-                  width={16}
-                  height={16}
-                  loading="lazy"
-                  color="#033599"
-                />
-              </div>
             </div>
-            <div className="flex flex-col gap-y-1">
+            <div className="flex flex-col gap-y-1 text-sm text-neutral-20">
               <p>English:&nbsp;Native or Bilingual</p>
               <p>Vietnamese:&nbsp;Native or Bilingual</p>
             </div>
           </div>
+          <EditButton
+            title="Edit introduction"
+            onClick={() => setOpenEditIntroductionPopup(true)}
+          />
         </div>
       </div>
+      <EditProfilePopup
+        open={openEditProfilePopup}
+        onClose={() => setOpenEditProfilePopup(false)}
+        onSuccess={() => setOpenEditProfilePopup(false)}
+      />
+      <EditIntroductionPopup
+        open={openEditIntroductionPopup}
+        listSkill={listSkill}
+        onClose={() => setOpenEditIntroductionPopup(false)}
+        onSuccess={() => setOpenEditIntroductionPopup(false)}
+      />
     </div>
   );
 };

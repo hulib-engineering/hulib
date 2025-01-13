@@ -1,8 +1,10 @@
 'use client';
 
 import { X } from '@phosphor-icons/react';
-import Image from 'next/image';
 import * as React from 'react';
+
+import { EditButton } from './EditButton';
+import EditDetailPopup from './EditDetailPopup';
 
 export const AboutPanel = () => {
   const listSkill = [
@@ -11,21 +13,14 @@ export const AboutPanel = () => {
     'User Interface Design',
     'Typography',
   ];
+
+  const [openEditDetailPopup, setOpenEditDetailPopup] = React.useState(false);
+
   return (
     <>
       <div className="flex flex-col gap-y-5 border-b-[0.5px] border-neutral-90 py-8">
         <div className="flex items-center justify-between gap-x-2.5">
           <h6 className="text-xl font-medium text-[#000000] ">About</h6>
-          <div className="flex size-8 items-center justify-center rounded-full border-[2px] border-solid border-white bg-primary-90">
-            <Image
-              src="/assets/icons/pencil-simple.svg"
-              alt="Caret Down Icon"
-              width={16}
-              height={16}
-              loading="lazy"
-              color="#033599"
-            />
-          </div>
         </div>
         <p className="text-sm font-normal text-[#000000CC]">
           Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar
@@ -37,18 +32,8 @@ export const AboutPanel = () => {
       <div className="flex flex-col gap-y-5 border-b-[0.5px] border-neutral-90 py-8">
         <div className="flex items-center justify-between gap-x-2.5">
           <h6 className="text-xl font-medium text-[#000000] ">Skills</h6>
-          <div className="flex size-8 items-center justify-center rounded-full border-[2px] border-solid border-white bg-primary-90">
-            <Image
-              src="/assets/icons/pencil-simple.svg"
-              alt="Caret Down Icon"
-              width={16}
-              height={16}
-              loading="lazy"
-              color="#033599"
-            />
-          </div>
         </div>
-        <div className="flex items-center gap-x-2.5">
+        <div className="flex flex-wrap items-center gap-2">
           {listSkill.map((skill, index) => {
             return (
               <div
@@ -65,21 +50,21 @@ export const AboutPanel = () => {
       <div className="flex flex-col gap-y-5 py-8">
         <div className="flex items-center justify-between gap-x-2.5">
           <h6 className="text-xl font-medium text-[#000000] ">Education</h6>
-          <div className="flex size-8 items-center justify-center rounded-full border-[2px] border-solid border-white bg-primary-90">
-            <Image
-              src="/assets/icons/pencil-simple.svg"
-              alt="Caret Down Icon"
-              width={16}
-              height={16}
-              loading="lazy"
-              color="#033599"
-            />
-          </div>
         </div>
         <p className="text-sm font-normal text-[#000000CC]">
           FPT university (2020-2024)
         </p>
       </div>
+      <EditButton
+        title="Edit details"
+        onClick={() => setOpenEditDetailPopup(true)}
+      />
+      <EditDetailPopup
+        open={openEditDetailPopup}
+        listSkill={listSkill}
+        onClose={() => setOpenEditDetailPopup(false)}
+        onSuccess={() => setOpenEditDetailPopup(false)}
+      />
     </>
   );
 };
