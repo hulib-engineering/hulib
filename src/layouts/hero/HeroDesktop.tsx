@@ -26,13 +26,13 @@ const HeroDesktop = (props: HeroProps) => {
   return (
     <section
       className={mergeClassnames(
-        'mx-auto flex w-full flex-col items-start justify-center px-2 py-0.5 gap-4 relative',
-        'sm:px-[1.875rem] sm:py-6 lg:px-12 2xl:px-28 w-5/6',
+        'max-w-screen-xxl px-[90px] mx-auto flex w-full flex-col items-start justify-center py-0.5 gap-4 relative',
+        'sm:py-6',
       )}
       data-testid="hero-section"
     >
       <div className="flex w-[575px]">
-        <h1 className="text-start text-[1.75rem] font-semibold capitalize text-slate-1000 sm:text-[5rem]">
+        <h1 className="text-start text-[1.75rem] font-semibold capitalize leading-[98px] text-slate-1000 sm:text-[5rem]">
           <p className="text-xs font-medium uppercase text-primary-10 lg:text-lg">
             {t('hero_title')}
           </p>
@@ -63,7 +63,7 @@ const HeroDesktop = (props: HeroProps) => {
             </Button>
           </div>
         </div>
-        <div className="absolute right-28 top-48 mt-8 w-[40%]">
+        <div className="absolute right-28 top-24 mt-8 w-[40%]">
           <div className=" flex flex-col items-center justify-center">
             <p className="absolute left-2 top-20 h-12 max-w-64 px-2 text-center text-sm font-normal text-slate-1000 lg:px-0 lg:text-left xl:top-12">
               {t.rich('hero_message_1', {
@@ -142,7 +142,7 @@ const HeroDesktop = (props: HeroProps) => {
             </HighlightContentBox>
             <div
               className={mergeClassnames(
-                'flex flex-col justify-center absolute right-0 2xl:right-[10%] bottom-2 rounded-lg px-2 px-5 py-3',
+                'flex flex-col justify-center absolute right-0 2xl:right-[10%] bottom-2 rounded-lg px-2 py-3',
                 'bg-white/30 lg:bg-gray-150 lg:bg-opacity-50 shadow-[0_8px_24px_0_rgba(0,0,0,0.08)] backdrop-blur-[35.63px] lg:backdrop-blur-[5px]',
               )}
             >

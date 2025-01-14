@@ -26,8 +26,7 @@ const HeroMobile = (props: HeroProps) => {
   return (
     <section
       className={mergeClassnames(
-        'mx-auto flex w-full flex-col items-center justify-center py-8',
-        'sm:w-3/4 sm:px-8 sm:gap-4 lg:max-w-7xl lg:px-10 2xl:gap-32 2xl:px-[5.625rem]',
+        'max-w-xs p-4 gap-4 mx-auto flex w-full flex-col items-center justify-center py-8',
       )}
       data-testid="hero-section"
     >
