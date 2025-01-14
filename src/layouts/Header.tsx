@@ -11,22 +11,22 @@ const Header = () => {
   return (
     <header
       className={mergeClassnames(
-        'fixed top-0 z-[999] w-full bg-[#f1f4f9bf] px-2 py-0.5 backdrop-blur-[50px]',
-        'sm:py-6 w-screen',
+        'fixed top-0 z-[999] w-full bg-[#f1f4f9bf] backdrop-blur-[50px]',
+        'w-screen h-[96px]',
       )}
     >
       <div
         className={mergeClassnames(
-          'max-w-container-sm mx-auto p-spacing-md flex w-full items-center justify-between gap-6',
-          'lg:flex-row lg:gap-0 xl:px-[90px] xl:max-w-container-xl xl:py-0',
+          'max-w-xs mx-auto p-4 flex w-full items-center justify-between gap-6',
+          'lg:flex-row lg:gap-0 lg:px-[90px] md:max-w-screen-xxl xl:py-0 h-full',
         )}
       >
-        <div className="relative hidden flex-1 grow items-start pb-[0.26788rem] pt-[0.3125rem] sm:flex">
+        <div className="relative hidden flex-1 grow items-start sm:flex">
           <Link href="/">
             <Logo />
           </Link>
         </div>
-        <div className="relative flex flex-1 grow items-start pb-[0.26788rem] pt-[0.3125rem] sm:hidden">
+        <div className="relative flex flex-1 grow items-start sm:hidden">
           <Link href="/">
             <Logo size="small" />
           </Link>

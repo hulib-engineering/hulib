@@ -26,13 +26,13 @@ const HeroDesktop = (props: HeroProps) => {
   return (
     <section
       className={mergeClassnames(
-        'max-w-container-xl px-[90px] mx-auto flex w-full flex-col items-start justify-center py-0.5 gap-4 relative',
+        'max-w-screen-xxl px-[90px] mx-auto flex w-full flex-col items-start justify-center py-0.5 gap-4 relative',
         'sm:py-6',
       )}
       data-testid="hero-section"
     >
       <div className="flex w-[575px]">
-        <h1 className="text-start text-[1.75rem] font-semibold capitalize text-slate-1000 sm:text-[5rem]">
+        <h1 className="text-start text-[1.75rem] font-semibold capitalize leading-[98px] text-slate-1000 sm:text-[5rem]">
           <p className="text-xs font-medium uppercase text-primary-10 lg:text-lg">
             {t('hero_title')}
           </p>
@@ -63,7 +63,7 @@ const HeroDesktop = (props: HeroProps) => {
             </Button>
           </div>
         </div>
-        <div className="absolute right-28 top-48 mt-8 w-[40%]">
+        <div className="absolute right-28 top-24 mt-8 w-[40%]">
           <div className=" flex flex-col items-center justify-center">
             <p className="absolute left-2 top-20 h-12 max-w-64 px-2 text-center text-sm font-normal text-slate-1000 lg:px-0 lg:text-left xl:top-12">
               {t.rich('hero_message_1', {

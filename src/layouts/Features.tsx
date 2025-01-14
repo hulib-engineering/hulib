@@ -28,7 +28,7 @@ const Features = () => {
   const t = useTranslations('Index');
 
   return (
-    <section className="mx-auto mt-8 w-full max-w-container-sm flex-col items-center justify-center p-spacing-md py-6 sm:mt-0 lg:py-12 xl:max-w-container-xl xl:px-[90px]">
+    <section className="mx-auto mt-8 w-full max-w-xs flex-col items-center justify-center p-4 py-6 sm:mt-0 md:max-w-screen-xxl lg:px-[90px] lg:py-12">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:gap-6">
         {FeatureList.map((feature) => (
           <FeatureCard
