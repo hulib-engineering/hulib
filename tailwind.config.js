@@ -56,11 +56,7 @@ module.exports = {
     },
     extend: {
       maxWidth: {
-        'container-sm': '320px',
-        'container-xl': '1440px',
-      },
-      padding: {
-        'spacing-md': '16px',
+        'screen-xxl': '1440px',
       },
       colors: {
         gray: {
