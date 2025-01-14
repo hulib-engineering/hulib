@@ -2,9 +2,12 @@
 
 import { Plus, X } from '@phosphor-icons/react';
 import * as React from 'react';
+import { useState } from 'react';
 
 import Button from '@/components/button/Button';
 import Modal from '@/components/Modal';
+
+import Input from '../input/Input';
 
 type Props = {
   open: boolean;
@@ -25,6 +28,8 @@ const AddButton = ({ title }: { title: string }) => {
 };
 
 const EditIntroductionPopup = (props: Props) => {
+  const [videoUrl, setVideoUrl] = useState<string>('');
+
   return (
     <Modal open={props.open} onClose={() => {}}>
       <Modal.Backdrop />
@@ -56,6 +61,28 @@ const EditIntroductionPopup = (props: Props) => {
                 })}
                 <AddButton title="Add" />
               </div>
+            </div>
+
+            <div className="flex flex-col gap-y-2">
+              <div className="flex items-center justify-between gap-x-2.5">
+                <h6 className="text-2xl font-medium text-neutral-10">
+                  Video introduction
+                </h6>
+              </div>
+              <video
+                className="h-full w-full object-cover"
+                controls
+                src={videoUrl}
+              >
+                <track kind="captions" srcLang="en" label="English" default />
+              </video>
+              <p className="text-xl text-neutral-10">Import from URL Link</p>
+              <Input
+                value={videoUrl}
+                onChange={(e) => setVideoUrl(e.target.value)}
+                placeholder="Paste file URL"
+              />
+              <p className="text-sm text-neutral-60">Supporting text</p>
             </div>
 
             <div className="flex flex-col gap-y-2">
