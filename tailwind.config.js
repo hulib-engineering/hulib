@@ -55,6 +55,9 @@ module.exports = {
       green: colors.green,
     },
     extend: {
+      maxWidth: {
+        'screen-xxl': '1440px',
+      },
       colors: {
         gray: {
           100: '#c8c8c8',

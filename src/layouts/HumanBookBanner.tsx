@@ -13,11 +13,11 @@ const HumanBookBanner = () => {
 
   return (
     // eslint-disable-next-line tailwindcss/no-contradicting-classname
-    <div className="relative mt-[18px] flex animate-flashing items-center justify-center bg-[linear-gradient(120deg,_#0442bf_30%,_#0858fa80_38%,_#0858fa80_40%,_#0442bf_48%)] bg-[length:200%_100%] bg-right-top px-4 sm:px-[1.875rem] lg:px-12 2xl:px-28">
+    <div className="relative animate-flashing bg-[linear-gradient(120deg,_#0442bf_30%,_#0858fa80_38%,_#0858fa80_40%,_#0442bf_48%)] bg-[length:200%_100%] bg-right-top">
       <div
         className={mergeClassnames(
-          'mx-auto flex w-full flex-col items-center justify-between px-3 sm:w-3/4 lg:max-w-7xl gap-6 my-4 lg:my-0',
-          'lg:flex-row lg:gap-0',
+          'max-w-xs mx-auto flex w-full flex-col items-center justify-between gap-6 py-2',
+          'lg:flex-row lg:gap-0 lg:px-[90px] lg:max-w-screen-xxl lg:py-0',
         )}
       >
         <div className="flex flex-row items-center gap-3">

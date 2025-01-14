@@ -37,7 +37,7 @@ export default function Layout({
       {children}
       <Modal open={guessedIds.length === 12} onClose={() => {}}>
         <Modal.Backdrop />
-        <Modal.Panel className="max-w-80">
+        <Modal.Panel className="max-w-xs">
           <div className="flex h-48 w-full flex-col items-center justify-center gap-4 rounded-lg bg-white p-4">
             <h1 className="text-[28px] font-semibold capitalize text-slate-1000">
               happy year of dragon
