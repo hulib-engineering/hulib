@@ -61,15 +61,24 @@ export const ProfileForm = () => {
   });
 
   useEffect(() => {
+    // Calculate the age of user based on the birthday
+    const calculateAge = (birthday: string) => {
+      const dob = new Date(birthday);
+      const diffMs = Date.now() - dob.getTime();
+      const ageDt = new Date(diffMs);
+
+      return Math.abs(ageDt.getUTCFullYear() - 1970);
+    };
+
     reset({
-      isUnderGuard: false,
+      isUnderGuard: Boolean(calculateAge(data?.birthday) < 18) ?? false,
       fullname: data?.fullName ?? '',
       birthday: data?.birthday ?? '',
       email: data?.email ?? '',
       gender: (data?.gender && data?.gender?.id) || 3,
       phoneNumber: data?.phoneNumber ?? '',
       address: data?.address ?? '',
-      parentPhoneNumber: data?.parentPhoneNumber ?? '',
+      parentPhoneNumber: data?.parentPhoneNumber ?? null,
     });
     dispatch(setAvatarUrl(data?.photo ?? {}));
   }, [data]);
@@ -87,6 +96,8 @@ export const ProfileForm = () => {
         return pushError(`Error: ${error?.data?.message}`);
       }
       return pushError(`Error: ${error?.message}`);
+    } finally {
+      setIsOpen(false);
     }
   });
 
