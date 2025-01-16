@@ -41,7 +41,7 @@ export const ProfileForm = () => {
     resolver: zodResolver(ProfileValidation),
     defaultValues: {
       isUnderGuard: false,
-      fullname: '',
+      fullName: '',
       birthday: '',
       email: '',
       gender: 3,
@@ -72,7 +72,7 @@ export const ProfileForm = () => {
 
     reset({
       isUnderGuard: Boolean(calculateAge(data?.birthday) < 18) ?? false,
-      fullname: data?.fullName ?? '',
+      fullName: data?.fullName ?? '',
       birthday: data?.birthday ?? '',
       email: data?.email ?? '',
       gender: (data?.gender && data?.gender?.id) || 3,
@@ -118,12 +118,12 @@ export const ProfileForm = () => {
         <Form.Item className="flex flex-col gap-2 lg:flex-row">
           <fieldset className="w-full">
             <TextInput
-              id="fullname"
+              id="fullName"
               type="text"
               label="Name"
-              {...register('fullname')}
-              isError={!!errors.fullname}
-              hintText={errors.fullname?.message}
+              {...register('fullName')}
+              isError={!!errors.fullName}
+              hintText={errors.fullName?.message}
             />
           </fieldset>
           <fieldset className="w-full">
@@ -166,6 +166,7 @@ export const ProfileForm = () => {
                 label="Parent Phone Number"
                 placeholder="+xxxxxxxxxxx"
                 {...register('parentPhoneNumber')}
+                disabled
                 isError={!!errors.parentPhoneNumber}
                 // @ts-ignore
                 hintText={errors.parentPhoneNumber?.message}
