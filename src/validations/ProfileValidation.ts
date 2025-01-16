@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const ProfileValidation = z
   .object({
-    fullname: z.string().trim().min(1),
+    fullName: z.string().trim().min(1),
     birthday: z.string().trim().min(1),
     email: z.string().trim().min(1).email(),
     gender: z.number().min(1).max(3).default(3),

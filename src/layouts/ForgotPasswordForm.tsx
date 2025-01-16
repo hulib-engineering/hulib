@@ -75,7 +75,7 @@ const ForgotPasswordForm = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<z.infer<typeof ForgotPasswordValidation>>({
     resolver: zodResolver(ForgotPasswordValidation),
     defaultValues: {
@@ -132,6 +132,7 @@ const ForgotPasswordForm = () => {
             value="Submit"
             className="w-full"
             onClick={onHandleSubmit}
+            animation={isSubmitting && 'progress'}
           >
             Send link to email
           </Button>
