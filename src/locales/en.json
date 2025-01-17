@@ -355,6 +355,7 @@
     "insert_url": "Insert URL",
     "supporting_text": "Supporting Text",
     "Submit": "Submit",
+    "humanBookRegistered": "You have registered to become a Human Book. Wait for Admin approval!",
     "validation": {
       "required": "Required",
       "invalidYear": "Invalid Year",
