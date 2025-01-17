@@ -364,6 +364,7 @@
     "insert_url": "Thêm đường dẫn",
     "supporting_text": "Văn bản hỗ trợ",
     "Submit": "Nộp",
+    "humanBookRegistered": "Bạn đã đăng ký trở thành Human Book. Vui lòng chờ Admin phê duyệt!",
     "validation": {
       "required": "Bắt buộc",
       "invalidYear": "Năm không hợp lệ",
