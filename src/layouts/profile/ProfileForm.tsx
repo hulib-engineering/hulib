@@ -131,6 +131,7 @@ export const ProfileForm = () => {
               type="date"
               label="Date of birth"
               {...register('birthday')}
+              disabled
               isError={!!errors.birthday}
               hintText={errors.birthday?.message}
             />
