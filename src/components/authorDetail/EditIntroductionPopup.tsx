@@ -1,34 +1,26 @@
 'use client';
 
-import { Plus, X } from '@phosphor-icons/react';
 import * as React from 'react';
 import { useState } from 'react';
 
 import Button from '@/components/button/Button';
 import Modal from '@/components/Modal';
+import type { Author } from '@/libs/services/modules/user';
 
 import Input from '../input/Input';
 
 type Props = {
   open: boolean;
-  listSkill: string[];
+  authorDetail: Author;
   onClose: () => void;
   onSuccess: () => void;
 };
 
-const AddButton = ({ title }: { title: string }) => {
-  return (
-    <div className="flex w-fit items-center gap-x-2 text-sm font-medium text-[#4E74BF]">
-      <div className="rounded-full bg-primary-90 p-2">
-        <Plus size={16} color="#033599" />
-      </div>
-      <span>{title}</span>
-    </div>
-  );
-};
-
 const EditIntroductionPopup = (props: Props) => {
-  const [videoUrl, setVideoUrl] = useState<string>('');
+  const { authorDetail } = props;
+  const [videoUrl, setVideoUrl] = useState<string | null>(
+    authorDetail?.videoUrl ?? '',
+  );
 
   return (
     <Modal open={props.open} onClose={() => {}}>
@@ -44,58 +36,23 @@ const EditIntroductionPopup = (props: Props) => {
             <div className="flex flex-col gap-y-2">
               <div className="flex items-center justify-between gap-x-2.5">
                 <h6 className="text-2xl font-medium text-neutral-10">
-                  Expertise
-                </h6>
-              </div>
-              <div className="flex flex-wrap items-center gap-2">
-                {props.listSkill.map((skill, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="flex w-fit items-center gap-x-2 rounded-full bg-primary-90 px-3 py-2 text-sm font-medium text-primary-40"
-                    >
-                      <span>{skill}</span>
-                      <X size={16} color="#033599" />
-                    </div>
-                  );
-                })}
-                <AddButton title="Add" />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-y-2">
-              <div className="flex items-center justify-between gap-x-2.5">
-                <h6 className="text-2xl font-medium text-neutral-10">
                   Video introduction
                 </h6>
               </div>
               <video
                 className="h-full w-full object-cover"
                 controls
-                src={videoUrl}
+                src={videoUrl ?? ''}
               >
                 <track kind="captions" srcLang="en" label="English" default />
               </video>
               <p className="text-xl text-neutral-10">Import from URL Link</p>
               <Input
-                value={videoUrl}
+                value={videoUrl ?? ''}
                 onChange={(e) => setVideoUrl(e.target.value)}
                 placeholder="Paste file URL"
               />
               <p className="text-sm text-neutral-60">Supporting text</p>
-            </div>
-
-            <div className="flex flex-col gap-y-2">
-              <div className="flex items-center justify-between gap-x-2.5">
-                <h6 className="text-2xl font-medium text-neutral-10">
-                  Languages
-                </h6>
-              </div>
-              <div className="flex flex-col gap-y-1 text-sm text-neutral-20">
-                <p>English:&nbsp;Native or Bilingual</p>
-                <p>Vietnamese:&nbsp;Native or Bilingual</p>
-              </div>
-              <AddButton title="Add" />
             </div>
           </div>
           <div className="flex items-center gap-3">

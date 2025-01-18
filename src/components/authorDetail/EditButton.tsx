@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { NotePencil } from '@phosphor-icons/react';
 import * as React from 'react';
 
 type EditButtonProps = {
@@ -15,13 +15,7 @@ export const EditButton = ({ title, onClick }: EditButtonProps) => {
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && onClick()}
     >
-      <Image
-        src="/assets/icons/note-pencil.svg"
-        alt="Caret Down Icon"
-        width={20}
-        height={20}
-        loading="lazy"
-      />
+      <NotePencil size={20} color="white" />
       <span className="text-sm font-medium text-primary-98">{title}</span>
     </div>
   );
