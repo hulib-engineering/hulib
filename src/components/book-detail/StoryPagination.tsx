@@ -32,12 +32,10 @@ const StoryPagination: React.FC<PaginationProps> = ({
         {currentPage + 1} / {totalPages}
       </span>
       <IconButton
-        onClick={() =>
-          onPageChange(currentPage === 0 ? currentPage + 1 : currentPage + 2)
-        }
+        onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage + 1 === totalPages}
         className={`flex h-8 w-8 items-center justify-center rounded-full border border-blue-500 ${
-          currentPage + 1 === totalPages
+          currentPage + 1 >= totalPages
             ? 'cursor-not-allowed opacity-50'
             : 'hover:bg-blue-100'
         }`}
