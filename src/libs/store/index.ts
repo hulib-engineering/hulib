@@ -4,6 +4,7 @@ import { api } from '../services/api';
 import auth from './authentication';
 import menuItem from './menuItem';
 import minigame from './minigame';
+import storiesReducer from './stories';
 import uiState from './uiState';
 
 const reducers = combineReducers({
@@ -12,6 +13,7 @@ const reducers = combineReducers({
   minigame,
   auth,
   api: api.reducer,
+  stories: storiesReducer,
 });
 
 export const makeStore = () => {
