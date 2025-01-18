@@ -1,11 +1,10 @@
 'use client';
 
-import { X } from '@phosphor-icons/react';
 import * as React from 'react';
 
 import Button from '@/components/button/Button';
 import Modal from '@/components/Modal';
-import type { Author } from '@/libs/services/modules/auth';
+import type { Author } from '@/libs/services/modules/user';
 
 import { AddButton } from './AddButton';
 import { EditIcon } from './EditIcon';
@@ -19,12 +18,7 @@ type Props = {
 
 const EditDetailPopup = (props: Props) => {
   const { authorDetail } = props;
-  const listSkill = [
-    'Front-end Development',
-    'User Experience Design',
-    'User Interface Design',
-    'Typography',
-  ];
+
   return (
     <Modal open={props.open} onClose={() => {}}>
       <Modal.Backdrop />
@@ -44,25 +38,6 @@ const EditDetailPopup = (props: Props) => {
               <p className="text-sm font-normal text-neutral-20">
                 {authorDetail?.bio ?? 'No information'}
               </p>
-            </div>
-            <div className="flex flex-col gap-y-2">
-              <div className="flex items-center justify-between gap-x-2.5">
-                <h6 className="text-2xl font-medium text-neutral-10">Skills</h6>
-              </div>
-              <div className="flex flex-wrap items-center gap-1.5">
-                {listSkill.map((skill, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="flex w-fit items-center gap-x-2 rounded-full bg-primary-90 px-3 py-2 text-sm font-medium text-primary-40"
-                    >
-                      <span>{skill}</span>
-                      <X size={16} color="#033599" />
-                    </div>
-                  );
-                })}
-              </div>
-              <AddButton title="Add skill" />
             </div>
             <div className="flex flex-col gap-y-2">
               <div className="flex items-center justify-between gap-x-2.5">
