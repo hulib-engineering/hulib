@@ -1,12 +1,11 @@
 'use client';
 
-import { Plus, X } from '@phosphor-icons/react';
 import * as React from 'react';
 import { useState } from 'react';
 
 import Button from '@/components/button/Button';
 import Modal from '@/components/Modal';
-import type { Author } from '@/libs/services/modules/auth';
+import type { Author } from '@/libs/services/modules/user';
 
 import Input from '../input/Input';
 
@@ -17,24 +16,11 @@ type Props = {
   onSuccess: () => void;
 };
 
-const AddButton = ({ title }: { title: string }) => {
-  return (
-    <div className="flex w-fit items-center gap-x-2 text-sm font-medium text-[#4E74BF]">
-      <div className="rounded-full bg-primary-90 p-2">
-        <Plus size={16} color="#033599" />
-      </div>
-      <span>{title}</span>
-    </div>
-  );
-};
-
 const EditIntroductionPopup = (props: Props) => {
+  const { authorDetail } = props;
   const [videoUrl, setVideoUrl] = useState<string | null>(
-    props.authorDetail.videoUrl,
+    authorDetail?.videoUrl ?? '',
   );
-
-  // TODO: missing field skills
-  const listSkill = ['Life', 'Study', 'Career'];
 
   return (
     <Modal open={props.open} onClose={() => {}}>
@@ -47,28 +33,6 @@ const EditIntroductionPopup = (props: Props) => {
             </h4>
           </div>
           <div className="flex w-full flex-col gap-y-5 border-y border-neutral-90 py-5">
-            <div className="flex flex-col gap-y-2">
-              <div className="flex items-center justify-between gap-x-2.5">
-                <h6 className="text-2xl font-medium text-neutral-10">
-                  Expertise
-                </h6>
-              </div>
-              <div className="flex flex-wrap items-center gap-2">
-                {listSkill.map((skill, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="flex w-fit items-center gap-x-2 rounded-full bg-primary-90 px-3 py-2 text-sm font-medium text-primary-40"
-                    >
-                      <span>{skill}</span>
-                      <X size={16} color="#033599" />
-                    </div>
-                  );
-                })}
-                <AddButton title="Add" />
-              </div>
-            </div>
-
             <div className="flex flex-col gap-y-2">
               <div className="flex items-center justify-between gap-x-2.5">
                 <h6 className="text-2xl font-medium text-neutral-10">

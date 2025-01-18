@@ -1,6 +1,8 @@
 'use client';
 
+import { MapPin, Star, Users } from '@phosphor-icons/react';
 import Image from 'next/image';
+import type { ReactNode } from 'react';
 import * as React from 'react';
 
 import { AboutPanel } from '@/components/authorDetail/AboutPanel';
@@ -8,7 +10,7 @@ import { ReviewPanel } from '@/components/authorDetail/ReviewPanel';
 import type { ProfileMenuItem } from '@/components/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/NavBar/NavBar';
 import { useAppSelector } from '@/libs/hooks';
-import { useGetAuthorDetailQuery } from '@/libs/services/modules/auth';
+import { useGetAuthorDetailQuery } from '@/libs/services/modules/user';
 
 import { LoadingSkeleton } from '../LoadingSkeleton';
 import { EditButton } from './EditButton';
@@ -18,13 +20,13 @@ import EditProfilePopup from './EditProfilePopup';
 
 type Props = {
   label: string;
-  icon: string;
+  icon: ReactNode;
 };
 
 const LabelWithLeftIcon = ({ label, icon }: Props) => {
   return (
     <div className="flex items-center gap-x-2">
-      <Image src={icon} alt="icon" width={20} height={20} />
+      {icon}
       <span>{label}</span>
     </div>
   );
@@ -120,17 +122,17 @@ const AuthorDetail = () => {
     );
   }
 
-  // TODO: missing menteeCount field
+  // WIP: missing menteeCount field
   const menteeCount = 0;
 
-  // TODO: missing rating field
+  // WIP: missing rating field
   const rating = '5/5';
 
   return (
     <div className="h-full w-full bg-[#F9F9F9] px-[10%]">
-      <div className="w-full">
+      <div className="h-full w-full">
         <div className="relative flex h-[200px] justify-end justify-items-end bg-[#A6D4FF]">
-          <div className="absolute right-[10%] h-[200px] w-[200px]">
+          <div className="relative h-[200px] w-full ">
             <Image
               src="/my-profile-banner.png"
               className="object-cover"
@@ -142,7 +144,7 @@ const AuthorDetail = () => {
           </div>
         </div>
         <div className="relative flex w-full flex-col items-center bg-[#FFFFFF] lg:h-[164px] lg:flex-row">
-          <div className="relative -top-6 left-4 lg:absolute">
+          <div className="relative lg:absolute lg:-top-6 lg:left-4">
             <Image
               alt="Avatar Icon"
               width={160}
@@ -158,20 +160,20 @@ const AuthorDetail = () => {
           <div className="mb-5 flex w-full flex-col items-center justify-between gap-2 lg:ml-[210px] lg:mr-5 lg:flex-row">
             <div className="flex-col gap-y-2">
               <p className="text-3xl font-medium text-[#000000]">
-                {authorDetail?.fullName}
+                {authorDetail?.fullName ?? 'Author Full name'}
               </p>
               <div className="flex items-center gap-x-10 text-sm text-neutral-20">
                 <LabelWithLeftIcon
-                  label={authorDetail?.address}
-                  icon="/assets/icons/LocationPin-icon.svg"
+                  label={authorDetail?.address ?? 'Location'}
+                  icon={<MapPin size={20} />}
                 />
                 <LabelWithLeftIcon
                   label={`${menteeCount} mentees`}
-                  icon="/assets/icons/Users-icon.svg"
+                  icon={<Users size={20} />}
                 />
                 <LabelWithLeftIcon
                   label={`${rating} rating`}
-                  icon="/assets/icons/RateStar-icon.svg"
+                  icon={<Star size={20} />}
                 />
               </div>
             </div>
