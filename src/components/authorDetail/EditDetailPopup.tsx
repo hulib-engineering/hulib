@@ -5,18 +5,26 @@ import * as React from 'react';
 
 import Button from '@/components/button/Button';
 import Modal from '@/components/Modal';
+import type { Author } from '@/libs/services/modules/auth';
 
 import { AddButton } from './AddButton';
 import { EditIcon } from './EditIcon';
 
 type Props = {
   open: boolean;
-  listSkill: string[];
+  authorDetail: Author;
   onClose: () => void;
   onSuccess: () => void;
 };
 
 const EditDetailPopup = (props: Props) => {
+  const { authorDetail } = props;
+  const listSkill = [
+    'Front-end Development',
+    'User Experience Design',
+    'User Interface Design',
+    'Typography',
+  ];
   return (
     <Modal open={props.open} onClose={() => {}}>
       <Modal.Backdrop />
@@ -34,10 +42,7 @@ const EditDetailPopup = (props: Props) => {
                 <EditIcon />
               </div>
               <p className="text-sm font-normal text-neutral-20">
-                Lorem ipsum dolor sit amet consectetur. Eget magna vel platea
-                pulvinar tempor dui massa ut. Egestas nunc mi tristique ornare
-                commodo vitae dignissim commodo. Pellentesque nulla nam ante
-                turpis velit amet cras ac aliquam. Ut amet nulla lobortis amet.
+                {authorDetail?.bio ?? 'No information'}
               </p>
             </div>
             <div className="flex flex-col gap-y-2">
@@ -45,7 +50,7 @@ const EditDetailPopup = (props: Props) => {
                 <h6 className="text-2xl font-medium text-neutral-10">Skills</h6>
               </div>
               <div className="flex flex-wrap items-center gap-1.5">
-                {props.listSkill.map((skill, index) => {
+                {listSkill.map((skill, index) => {
                   return (
                     <div
                       key={index}
@@ -66,7 +71,10 @@ const EditDetailPopup = (props: Props) => {
                 </h6>
               </div>
               <p className="text-sm font-normal text-neutral-20">
-                FPT university (2020-2024)
+                {authorDetail?.education ?? 'FPT University'}
+                {authorDetail?.educationStart &&
+                  authorDetail?.educationEnd &&
+                  `(${authorDetail?.educationStart} - ${authorDetail?.educationEnd})`}
               </p>
               <AddButton title="Add education" />
             </div>

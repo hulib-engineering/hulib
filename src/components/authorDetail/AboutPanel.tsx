@@ -3,10 +3,16 @@
 import { X } from '@phosphor-icons/react';
 import * as React from 'react';
 
+import type { Author } from '@/libs/services/modules/auth';
+
 import { EditButton } from './EditButton';
 import EditDetailPopup from './EditDetailPopup';
 
-export const AboutPanel = () => {
+type Props = {
+  authorDetail: Author;
+};
+
+export const AboutPanel = ({ authorDetail }: Props) => {
   const listSkill = [
     'Front-end Development',
     'User Experience Design',
@@ -14,7 +20,7 @@ export const AboutPanel = () => {
     'Typography',
   ];
 
-  const [openEditDetailPopup, setOpenEditDetailPopup] = React.useState(false);
+  const [openEditPopup, setOpenEditPopup] = React.useState(false);
 
   return (
     <>
@@ -23,10 +29,7 @@ export const AboutPanel = () => {
           <h6 className="text-xl font-medium text-[#000000] ">About</h6>
         </div>
         <p className="text-sm font-normal text-[#000000CC]">
-          Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar
-          tempor dui massa ut. Egestas nunc mi tristique ornare commodo vitae
-          dignissim commodo. Pellentesque nulla nam ante turpis velit amet cras
-          ac aliquam. Ut amet nulla lobortis amet.
+          {authorDetail?.bio ?? 'No information'}
         </p>
       </div>
       <div className="flex flex-col gap-y-5 border-b-[0.5px] border-neutral-90 py-8">
@@ -52,18 +55,18 @@ export const AboutPanel = () => {
           <h6 className="text-xl font-medium text-[#000000] ">Education</h6>
         </div>
         <p className="text-sm font-normal text-[#000000CC]">
-          FPT university (2020-2024)
+          {authorDetail?.education ?? 'FPT University'}
+          {authorDetail?.educationStart &&
+            authorDetail?.educationEnd &&
+            `(${authorDetail?.educationStart} - ${authorDetail?.educationEnd})`}
         </p>
       </div>
-      <EditButton
-        title="Edit details"
-        onClick={() => setOpenEditDetailPopup(true)}
-      />
+      <EditButton title="Edit details" onClick={() => setOpenEditPopup(true)} />
       <EditDetailPopup
-        open={openEditDetailPopup}
-        listSkill={listSkill}
-        onClose={() => setOpenEditDetailPopup(false)}
-        onSuccess={() => setOpenEditDetailPopup(false)}
+        open={openEditPopup}
+        authorDetail={authorDetail}
+        onClose={() => setOpenEditPopup(false)}
+        onSuccess={() => setOpenEditPopup(false)}
       />
     </>
   );
