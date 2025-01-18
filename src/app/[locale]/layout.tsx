@@ -4,7 +4,6 @@ import 'swiper/css/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import '@/styles/global.css';
 
-import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
@@ -16,8 +15,6 @@ import { ToastContainer } from 'react-toastify';
 import StoreProvider from '@/app/StoreProvider';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import { AppConfig } from '@/utils/AppConfig';
-
-import Loading from './loading';
 
 export const metadata: Metadata = {
   icons: [
@@ -82,12 +79,11 @@ export default function RootLayout({
             <GoogleAnalytics measurementId={gaMeasurementId} />
           </>
         )}
-        <Suspense key={Date.now()} fallback={<Loading />}>
+        <Suspense key={Date.now()}>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <StoreProvider>{children}</StoreProvider>
             <ToastContainer />
           </NextIntlClientProvider>
-          <Analytics />
         </Suspense>
       </body>
     </html>
