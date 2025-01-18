@@ -7,7 +7,7 @@ import IconButton from '../iconButton/IconButton';
 
 const HumanBookInfo = () => {
   return (
-    <div className="w-full overflow-hidden rounded bg-white shadow-lg">
+    <div className="h-full w-full overflow-hidden rounded bg-white shadow-lg">
       <div className="px-6 py-4">
         <div className="flex w-full flex-col items-center gap-2">
           <IconButton
@@ -32,7 +32,7 @@ const HumanBookInfo = () => {
             <p>20 Sessions</p>
           </div>
           <div className="flex items-center gap-1 py-2 text-sm">
-            <span className="text-yellow-100">⭐️ 4.2</span>
+            <span>⭐️ 4.2</span>
             <span className="ml-1 text-gray-500">(404 ratings)</span>
           </div>
           <div>
