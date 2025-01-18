@@ -9,12 +9,14 @@ import React, { useRef } from 'react';
 import Button from '@/components/button/Button';
 import { pushError } from '@/components/CustomToastifyContainer';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { useUploadMutation } from '@/libs/services/modules/files';
 import { setAvatarUrl } from '@/libs/store/authentication';
 import FormDataBuilder from '@/utils/FormDataBuilder';
 
 const AvatarUploader = () => {
   const [upload] = useUploadMutation();
+  const [updateProfile] = useUpdateProfileMutation();
 
   const avatarUrl = useAppSelector((state) => state.auth.avatarUrl);
 
@@ -41,6 +43,13 @@ const AvatarUploader = () => {
           dispatch(
             setAvatarUrl({ id: result?.file?.id, path: result?.file?.path }),
           );
+
+          await updateProfile({
+            photo: {
+              id: result?.file?.id,
+              path: result?.file?.path,
+            },
+          }).unwrap();
         }
       } catch (error: any) {
         pushError(`Error: ${error.message}`);

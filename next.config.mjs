@@ -44,7 +44,7 @@ export default withSentryConfig(
           },
           {
             protocol: 'https',
-            hostname: 'https://hulib-services.onrender.com',
+            hostname: 'hulib-services.onrender.com',
             pathname: '/api/v1/files/**',
             search: '',
           },
