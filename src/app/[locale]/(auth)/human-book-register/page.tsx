@@ -9,12 +9,16 @@ import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
 import { pushError } from '@/components/CustomToastifyContainer';
+import { FormSkeletonLoading } from '@/components/human-book-register/FormSkeletonLoading';
 import Popup from '@/components/human-book-register/Popup';
 import Step1 from '@/components/human-book-register/Step1';
 import Step2 from '@/components/human-book-register/Step2';
 import StepCircle from '@/components/human-book-register/StepCircle';
 import { mergeClassnames } from '@/components/private/utils';
-import { useRegisterHumanBookMutation } from '@/libs/services/modules/topics';
+import {
+  useCheckRegisterHumanBookMutation,
+  useRegisterHumanBookMutation,
+} from '@/libs/services/modules/auth';
 import { HumanBookValidation } from '@/validations/HumanBookValidation';
 
 const defaultValues = {
@@ -39,6 +43,13 @@ const Index = () => {
     defaultValues,
   });
   const [registerHumanBook, { isLoading }] = useRegisterHumanBookMutation();
+  const [
+    checkRegisterHumanBook,
+    { isLoading: isCheckRegisterHumanBookLoading },
+  ] = useCheckRegisterHumanBookMutation();
+  const [isRegisterHumanBook, setIsRegisterHumanbook] = React.useState<
+    boolean | null
+  >(null);
 
   const isValid = React.useCallback(
     (data: z.infer<typeof validationSchema>) => {
@@ -149,77 +160,111 @@ const Index = () => {
     setConfirmModal(false);
   };
 
-  return (
-    <div
-      className={mergeClassnames(
-        `flex min-h-screen flex-col items-center justify-center bg-neutral-98 pb-4 ${
-          currentStep === 0 ? 'mt-[-5rem]' : 'mt-[-10rem]'
-        }`,
-      )}
-    >
+  React.useEffect(() => {
+    const checkResponse = async () => {
+      try {
+        const result = await checkRegisterHumanBook().unwrap();
+        if (result) {
+          setIsRegisterHumanbook(true);
+        } else {
+          setIsRegisterHumanbook(false);
+        }
+      } catch (error) {
+        setIsRegisterHumanbook(false);
+      }
+    };
+    checkResponse();
+  }, [checkRegisterHumanBook, router, setIsRegisterHumanbook]);
+
+  if (
+    !isCheckRegisterHumanBookLoading &&
+    !isLoading &&
+    isRegisterHumanBook === false
+  ) {
+    return (
       <div
         className={mergeClassnames(
-          'flex flex-col gap-8 pt-[3.25rem] w-screen',
-          'sm:w-[600px] sm:min-w-[600px] sm:gap-12',
+          `flex min-h-screen flex-col items-center justify-center bg-neutral-98 pb-4 ${
+            currentStep === 0 ? 'mt-[-5rem]' : 'mt-[-10rem]'
+          }`,
         )}
       >
-        <div className="flex flex-row items-center justify-between px-10">
-          <StepCircle
-            value={0}
-            active={currentStep === 0}
-            isDoneStep={currentStep === 1}
-          />
-          <div
-            className={`h-[1px] w-[424px] border-[1px] border-primary-80 ${
-              currentStep === 0 ? 'border-dashed' : 'border-solid'
-            }`}
-          />
-          <StepCircle value={1} active={currentStep === 1} />
-        </div>
-        <div className={mergeClassnames('rounded-lg bg-white p-4', 'sm:p-5')}>
-          <p
-            className={mergeClassnames(
-              'mb-5 text-2xl font-medium leading-[44px] text-black',
-              'sm:text-4xl sm:mb-10',
-            )}
-          >
-            {t('register_as_a_human_book')}
-          </p>
-          {renderCurrentStepSection()}
-        </div>
-      </div>
-      <Popup
-        onClose={handleBackToHome}
-        open={successModal}
-        description={t('success_submit_form_description')}
-        title={t('success_submit_form_header')}
-        actions={
-          <Button onClick={handleBackToHome}>{t('back_to_home')}</Button>
-        }
-      />
-
-      <Popup
-        open={confirmModal}
-        onClose={() => setConfirmModal(false)}
-        description={t('register_as_a_human_book')}
-        title={t('register_confirm_message')}
-        actions={
-          <div className="flex flex-row gap-3">
-            <Button onClick={() => setConfirmModal(false)} variant="outline">
-              {t('Back')}
-            </Button>
-            <Button
-              onClick={onSubmitPress}
-              disabled={isLoading}
-              animation={isLoading && 'progress'}
-            >
-              {t('Submit')}
-            </Button>
+        <div
+          className={mergeClassnames(
+            'flex flex-col gap-8 pt-[3.25rem] w-screen relative',
+            'sm:w-[600px] sm:min-w-[600px] sm:gap-12',
+          )}
+        >
+          <div className="flex flex-row items-center justify-between px-10">
+            <StepCircle
+              value={0}
+              active={currentStep === 0}
+              isDoneStep={currentStep === 1}
+            />
+            <div
+              className={`h-[1px] w-[424px] border-[1px] border-primary-80 ${
+                currentStep === 0 ? 'border-dashed' : 'border-solid'
+              }`}
+            />
+            <StepCircle value={1} active={currentStep === 1} />
           </div>
-        }
-      />
-    </div>
-  );
+          <div className={mergeClassnames('rounded-lg bg-white p-4', 'sm:p-5')}>
+            <p
+              className={mergeClassnames(
+                'mb-5 text-2xl font-medium leading-[44px] text-black',
+                'sm:text-4xl sm:mb-10',
+              )}
+            >
+              {t('register_as_a_human_book')}
+            </p>
+            {renderCurrentStepSection()}
+          </div>
+        </div>
+        <Popup
+          onClose={handleBackToHome}
+          open={successModal}
+          description={t('success_submit_form_description')}
+          title={t('success_submit_form_header')}
+          actions={
+            <Button onClick={handleBackToHome}>{t('back_to_home')}</Button>
+          }
+        />
+
+        <Popup
+          open={confirmModal}
+          onClose={() => setConfirmModal(false)}
+          description={t('register_as_a_human_book')}
+          title={t('register_confirm_message')}
+          actions={
+            <div className="flex flex-row gap-3">
+              <Button onClick={() => setConfirmModal(false)} variant="outline">
+                {t('Back')}
+              </Button>
+              <Button
+                onClick={onSubmitPress}
+                disabled={isLoading}
+                animation={isLoading && 'progress'}
+              >
+                {t('Submit')}
+              </Button>
+            </div>
+          }
+        />
+      </div>
+    );
+  }
+
+  console.log(isRegisterHumanBook);
+
+  if (isRegisterHumanBook) {
+    return (
+      <p className="flex items-center justify-center text-center text-sm">
+        {t('humanBookRegistered')}
+      </p>
+    );
+  }
+
+  return <FormSkeletonLoading />;
 };
 
 export default Index;

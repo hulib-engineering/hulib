@@ -1,6 +1,7 @@
 import { api } from '../../api';
 import changePassword from './changePassword';
 import checkEmail from './checkEmail';
+import checkRegisterHumanBook from './checkRegisterHumanBook';
 import confirmEmail from './confirmEmail';
 import forgotPassword from './forgotPassword';
 import getAuthorDetail from './getAuthorDetail';
@@ -9,6 +10,7 @@ import loginAsAdmin from './loginAsAdmin';
 import loginAsUser from './loginAsUser';
 import refresh from './refresh';
 import register from './register';
+import registerHumanBook from './registerHumanBook';
 import resendOTP from './resendOTP';
 import resetPassword from './resetPassword';
 import updateProfile from './updateProfile';
@@ -93,6 +95,8 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
     changePassword: changePassword(build),
     updateProfile: updateProfile(build),
     getAuthorDetail: getAuthorDetail(build),
+    registerHumanBook: registerHumanBook(build),
+    checkRegisterHumanBook: checkRegisterHumanBook(build),
   }),
   overrideExisting: false,
 });
@@ -109,4 +113,6 @@ export const {
   useChangePasswordMutation,
   useUpdateProfileMutation,
   useGetAuthorDetailQuery,
+  useRegisterHumanBookMutation,
+  useCheckRegisterHumanBookMutation,
 }: any = authApi;
