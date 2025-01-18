@@ -37,7 +37,7 @@ function paginateText(
         ? pageText.slice(0, lastSpaceIndex)
         : pageText;
 
-    pages.push(finalText);
+    pages.push({ abstract: finalText });
 
     // If the text is cut, adjust the pointer "i"
     i += finalText.length - pageText.length;
@@ -53,6 +53,7 @@ const Story: React.FC<StoryProps> = ({ abstract, title, cover }) => {
   const [pages, setPages] = React.useState<any[]>([]);
   const [currentPage, setCurrentPage] = React.useState(0);
   const [totalPages, setTotalPages] = React.useState(0);
+  const [numberOfPageDisplayed, setNumberOfPageDisplayed] = React.useState(2);
 
   const onPageChange = (page: number) => {
     setCurrentPage(page);
@@ -67,46 +68,71 @@ const Story: React.FC<StoryProps> = ({ abstract, title, cover }) => {
       );
       if (paginatedResult.length > 0) {
         setPages(paginatedResult);
-        setTotalPages(Math.ceil(paginatedResult.length / 2) + 1);
+        setTotalPages(
+          Math.ceil(paginatedResult.length / numberOfPageDisplayed) + 1,
+        );
       } else {
         setPages([]);
         setTotalPages(1);
       }
     }
-  }, [abstract, containerHeight, containerWidth]);
+  }, [abstract, containerHeight, containerWidth, numberOfPageDisplayed]);
 
   useEffect(() => {
     if (storyRef.current) {
       setContainerWidth(storyRef.current.getBoundingClientRect().width / 2);
       setContainerHeight(storyRef.current.getBoundingClientRect().height);
     }
+
+    // Determines the number of pages to display based on the window width
+    const handleResize = () => {
+      const isMobile = window.innerWidth <= 768; // Adjust the width as needed for mobile detection
+      setNumberOfPageDisplayed(isMobile ? 1 : 2);
+    };
+
+    handleResize(); // Set initial value
+    window.addEventListener('resize', handleResize); // Update on resize
+
+    return () => {
+      window.removeEventListener('resize', handleResize); // Cleanup on unmount
+    };
   }, []);
 
   return (
     <div className="flex h-[80vh] flex-col gap-2" ref={storyRef}>
       <div className="flex h-full w-full overflow-hidden rounded-lg bg-white shadow-lg">
-        <div className="relative flex-1 px-7 py-8 before:absolute before:inset-y-0 before:right-0 before:h-full before:w-[36px] before:bg-gradient-to-r before:from-transparent before:to-[#C7C9CB] before:opacity-30 before:content-['']">
-          {currentPage === 0 ? (
-            <div className="flex flex-col gap-2">
-              <h2 className="text-[36px] font-bold">{title}</h2>
-              <Image
-                src={cover.path ?? '/assets/images/user-avatar.jpeg'}
-                height={532}
-                width={100}
-                alt="Book cover"
-                className="w-full object-cover"
-              />
-            </div>
-          ) : (
-            <p className="text-base text-[#45484A]">{pages[currentPage]}</p>
-          )}
-        </div>
-        <div className="relative flex-1 px-7 py-8 before:absolute before:inset-y-0 before:left-0 before:h-full before:w-[16px] before:bg-gradient-to-r before:from-[#C7C9CB] before:to-transparent before:opacity-30 before:content-['']">
-          {currentPage === 0 ? <h6 className="font-bold">Abstract</h6> : null}
-          <p className="pt-4 text-base text-[#45484A]">
-            {currentPage === 0 ? pages[currentPage] : pages[currentPage + 1]}
-          </p>
-        </div>
+        {[{ title, cover }, ...pages]
+          .slice(currentPage, currentPage + numberOfPageDisplayed)
+          .map((page, index) => {
+            return (
+              <div
+                key={index}
+                className="relative flex-1 px-7 py-8 before:absolute before:inset-y-0 before:right-0 before:h-full before:w-[36px] before:bg-gradient-to-r before:from-transparent before:to-[#C7C9CB] before:opacity-30 before:content-['']"
+              >
+                {page?.title ? (
+                  <div className="flex flex-col gap-2">
+                    <h2 className="text-[36px] font-bold">{page?.title}</h2>
+                    <Image
+                      src={
+                        page?.cover?.path ?? '/assets/images/user-avatar.jpeg'
+                      }
+                      height={532}
+                      width={100}
+                      alt="Book cover"
+                      className="w-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <>
+                    {currentPage === 0 && <h6>Abstract</h6>}
+                    <p className="pt-4 text-base text-[#45484A]">
+                      {page?.abstract ?? ''}
+                    </p>
+                  </>
+                )}
+              </div>
+            );
+          })}
       </div>
       <StoryPagination
         currentPage={currentPage}
