@@ -68,7 +68,7 @@ const LoginForm = () => {
   };
 
   return (
-    <SessionProvider>
+    <>
       <div className="text-center text-neutral-10">
         <h2 className="text-4xl font-medium leading-[44px] tracking-[-2%]">
           Welcome Back
@@ -155,7 +155,7 @@ const LoginForm = () => {
           Create an account
         </Link>
       </div>
-    </SessionProvider>
+    </>
   );
 };
 
