@@ -3,6 +3,7 @@ import changePassword from './changePassword';
 import checkEmail from './checkEmail';
 import confirmEmail from './confirmEmail';
 import forgotPassword from './forgotPassword';
+import getAuthorDetail from './getAuthorDetail';
 import getPersonalInfo from './getPersonalInfo';
 import loginAsAdmin from './loginAsAdmin';
 import loginAsUser from './loginAsUser';
@@ -34,6 +35,38 @@ export interface User {
   deletedAt?: Date;
 }
 
+export interface Author {
+  id: number;
+  fullName: string | null;
+  birthday: string | null;
+  gender: {
+    id: number;
+    name: string;
+    __entity: string;
+  };
+  role: {
+    id: number;
+    name: string;
+    __entity: string;
+  };
+  status: {
+    id: number;
+    name: string;
+    __entity: string;
+  };
+  createdAt: string | null;
+  updatedAt: string | null;
+  deletedAt: string | null;
+  address: string | null;
+  phoneNumber: string | null;
+  parentPhoneNumber: string | null;
+  bio: string | null;
+  videoUrl: string | null;
+  education: string | null;
+  educationStart: string | null;
+  educationEnd: string | null;
+}
+
 export type EmailLoginResponse = {
   refreshToken: string;
   token: string;
@@ -59,6 +92,7 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
     resetPassword: resetPassword(build),
     changePassword: changePassword(build),
     updateProfile: updateProfile(build),
+    getAuthorDetail: getAuthorDetail(build),
   }),
   overrideExisting: false,
 });
@@ -74,4 +108,5 @@ export const {
   useResetPasswordMutation,
   useChangePasswordMutation,
   useUpdateProfileMutation,
+  useGetAuthorDetailQuery,
 }: any = authApi;

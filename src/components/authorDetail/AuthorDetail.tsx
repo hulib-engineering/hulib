@@ -7,33 +7,42 @@ import { AboutPanel } from '@/components/authorDetail/AboutPanel';
 import { ReviewPanel } from '@/components/authorDetail/ReviewPanel';
 import type { ProfileMenuItem } from '@/components/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/NavBar/NavBar';
+import { useAppSelector } from '@/libs/hooks';
+import { useGetAuthorDetailQuery } from '@/libs/services/modules/auth';
 
+import { LoadingSkeleton } from '../LoadingSkeleton';
 import { EditButton } from './EditButton';
+import { EditIcon } from './EditIcon';
 import EditIntroductionPopup from './EditIntroductionPopup';
 import EditProfilePopup from './EditProfilePopup';
 
-export const EditIcon = () => {
+type Props = {
+  label: string;
+  icon: string;
+};
+
+const LabelWithLeftIcon = ({ label, icon }: Props) => {
   return (
-    <div className="flex size-8 items-center justify-center rounded-full border-[2px] border-solid border-white bg-primary-90">
-      <Image
-        src="/assets/icons/pencil-simple.svg"
-        alt="Caret Down Icon"
-        width={16}
-        height={16}
-        loading="lazy"
-        color="#033599"
-      />
+    <div className="flex items-center gap-x-2">
+      <Image src={icon} alt="icon" width={20} height={20} />
+      <span>{label}</span>
     </div>
   );
 };
 
 const AuthorDetail = () => {
+  const user = useAppSelector((state) => state.auth.userInfo);
+  const { data: authorDetail, isLoading } = useGetAuthorDetailQuery(user?.id);
+
   const [selectedMenuItem, setSelectedMenuItem] = React.useState<
     ProfileMenuItem | undefined
   >();
+
   const [openEditIntroductionPopup, setOpenEditIntroductionPopup] =
     React.useState(false);
+
   const [openEditProfilePopup, setOpenEditProfilePopup] = React.useState(false);
+
   const handleChangeSelectedMenu = (item: ProfileMenuItem | undefined) => {
     setSelectedMenuItem(item);
   };
@@ -59,7 +68,7 @@ const AuthorDetail = () => {
         ),
         component: (
           <div>
-            <AboutPanel />
+            <AboutPanel authorDetail={authorDetail} />
           </div>
         ),
       },
@@ -85,7 +94,7 @@ const AuthorDetail = () => {
         ),
       },
     ];
-  }, [selectedMenuItem?.type]);
+  }, [authorDetail, selectedMenuItem?.type]);
 
   const getActiveMenuItemIndex = React.useCallback(
     (type: MyProfilePanelIndex | undefined) => {
@@ -102,6 +111,20 @@ const AuthorDetail = () => {
   React.useEffect(() => {
     return setSelectedMenuItem(tabsRender?.[selectedItemIndex]);
   }, [selectedItemIndex, tabsRender]);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-full w-full justify-center px-[10%]">
+        <LoadingSkeleton />
+      </div>
+    );
+  }
+
+  // TODO: missing menteeCount field
+  const menteeCount = 0;
+
+  // TODO: missing rating field
+  const rating = '5/5';
 
   return (
     <div className="h-full w-full bg-[#F9F9F9] px-[10%]">
@@ -135,12 +158,21 @@ const AuthorDetail = () => {
           <div className="mb-5 flex w-full flex-col items-center justify-between gap-2 lg:ml-[210px] lg:mr-5 lg:flex-row">
             <div className="flex-col gap-y-2">
               <p className="text-3xl font-medium text-[#000000]">
-                Ngo Thanh Nhan
+                {authorDetail?.fullName}
               </p>
               <div className="flex items-center gap-x-10 text-sm text-neutral-20">
-                <span>Address</span>
-                <span>Address</span>
-                <span>Address</span>
+                <LabelWithLeftIcon
+                  label={authorDetail?.address}
+                  icon="/assets/icons/LocationPin-icon.svg"
+                />
+                <LabelWithLeftIcon
+                  label={`${menteeCount} mentees`}
+                  icon="/assets/icons/Users-icon.svg"
+                />
+                <LabelWithLeftIcon
+                  label={`${rating} rating`}
+                  icon="/assets/icons/RateStar-icon.svg"
+                />
               </div>
             </div>
             <EditButton
@@ -180,11 +212,18 @@ const AuthorDetail = () => {
           </div>
           <div className="flex flex-col gap-y-5 border-t-[0.5px] border-neutral-90 pt-8">
             <div className="flex items-center justify-between gap-x-2.5">
-              <h6 className="text-xl font-medium text-[#000000] ">Languages</h6>
+              <h6 className="text-xl font-medium text-[#000000] ">
+                Video Introduction
+              </h6>
             </div>
             <div className="flex flex-col gap-y-1 text-sm text-neutral-20">
-              <p>English:&nbsp;Native or Bilingual</p>
-              <p>Vietnamese:&nbsp;Native or Bilingual</p>
+              <video
+                className="h-full w-full object-cover"
+                controls
+                src={authorDetail?.videoUrl ?? ''}
+              >
+                <track kind="captions" srcLang="en" label="English" default />
+              </video>
             </div>
           </div>
           <EditButton
@@ -200,7 +239,7 @@ const AuthorDetail = () => {
       />
       <EditIntroductionPopup
         open={openEditIntroductionPopup}
-        listSkill={listSkill}
+        authorDetail={authorDetail}
         onClose={() => setOpenEditIntroductionPopup(false)}
         onSuccess={() => setOpenEditIntroductionPopup(false)}
       />
