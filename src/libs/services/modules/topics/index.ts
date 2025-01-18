@@ -1,6 +1,5 @@
 import { api } from '../../api';
 import getTopics from './getTopics';
-import registerHumanBook from './registerHumanBook';
 
 export interface Topic {
   id?: number | undefined;
@@ -27,9 +26,8 @@ const apiWithTag = api.enhanceEndpoints?.({
 export const authApi = apiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
     getTopics: getTopics(build),
-    registerHumanBook: registerHumanBook(build),
   }),
   overrideExisting: false,
 });
 
-export const { useGetTopicsQuery, useRegisterHumanBookMutation }: any = authApi;
+export const { useGetTopicsQuery }: any = authApi;
