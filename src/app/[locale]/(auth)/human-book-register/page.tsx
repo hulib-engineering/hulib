@@ -146,15 +146,12 @@ const Index = () => {
       educationEnd: formatDateWithSelectedYear(data?.to),
     };
 
-    console.log(form);
-
     try {
       await registerHumanBook(form);
       setTimeout(() => {
         setSuccessModal(true);
       }, 200);
     } catch (error) {
-      console.log(error);
       pushError('Register Human Book fail!!!');
     }
     setConfirmModal(false);
@@ -253,8 +250,6 @@ const Index = () => {
       </div>
     );
   }
-
-  console.log(isRegisterHumanBook);
 
   if (isRegisterHumanBook) {
     return (
