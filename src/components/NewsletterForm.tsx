@@ -85,7 +85,7 @@ const NewsletterForm = () => {
               src="/assets/images/icons/arrow-right-2.svg"
             />
           }
-          className="bg-primary-10 p-0"
+          className="bg-lp-primary-blue p-0"
         />
       </div>
     </form>

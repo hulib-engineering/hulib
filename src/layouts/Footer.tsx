@@ -54,7 +54,7 @@ const Footer = () => {
     <>
       <footer
         className={mergeClassnames(
-          'mx-auto w-full px-4 pt-8 pb-6 text-primary-10',
+          'mx-auto w-full px-4 pt-8 pb-6 text-lp-primary-blue',
           'lg:w-3/4 lg:px-8 2xl:px-[5.625rem] 2xl:pt-[5.625rem] 2xl:pb-10',
         )}
       >

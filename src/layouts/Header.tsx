@@ -36,11 +36,11 @@ const Header = () => {
           <Link
             href="#newsletter"
             className={mergeClassnames(
-              'md:flex items-center justify-center !flex-[0_0_auto] gap-1 rounded-full border-2 border-primary-10 px-8 py-3 hidden',
+              'md:flex items-center justify-center !flex-[0_0_auto] gap-1 rounded-full border-2 border-lp-primary-blue px-8 py-3 hidden',
               'hover:bg-light',
             )}
           >
-            <p className="text-base font-medium uppercase leading-normal text-primary-10">
+            <p className="text-base font-medium uppercase leading-normal text-lp-primary-blue">
               {t('contact_us')}
             </p>
           </Link>
