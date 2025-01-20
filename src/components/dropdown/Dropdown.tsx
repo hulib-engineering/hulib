@@ -148,14 +148,14 @@ const Select = ({
   return (
     <>
       {label && (
-        <SelectButton.Label idDisabled={disabled}>{label}</SelectButton.Label>
+        <SelectButton.Label isDisabled={disabled}>{label}</SelectButton.Label>
       )}
       <Listbox.Button as={Fragment}>
         <SelectButton
           size={size}
           open={open}
           isError={isError}
-          idDisabled={disabled}
+          isDisabled={disabled}
           ref={popper?.setAnchor}
           {...rest}
         >
