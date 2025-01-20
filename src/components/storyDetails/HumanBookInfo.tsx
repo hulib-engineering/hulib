@@ -1,6 +1,7 @@
 'use client';
 
 import { Book, BookmarkSimple, Brain } from '@phosphor-icons/react';
+import Image from 'next/image';
 import React from 'react';
 
 import IconButton from '../iconButton/IconButton';
@@ -17,9 +18,10 @@ interface Props {
     bio: string;
   };
   title: string;
+  coverPath: string;
 }
 
-const HumanBookInfo = ({ humanBook, title }: Props) => {
+const HumanBookInfo = ({ humanBook, title, coverPath }: Props) => {
   return (
     <div className="h-full w-full overflow-hidden rounded bg-white shadow-lg">
       <div className="px-6 py-4">
@@ -40,6 +42,13 @@ const HumanBookInfo = ({ humanBook, title }: Props) => {
         <div className="flex flex-col items-start justify-between px-3 py-1">
           <h2 className="mb-2 text-xl font-bold">{title}</h2>
           <div className="flex items-center justify-between gap-2 text-sm">
+            <Image
+              alt="Avatr Human Book"
+              src={coverPath || '/assets/images/Avatar.png'}
+              width={24}
+              height={24}
+              className="size-6 rounded-full"
+            />
             <div>
               <p>{humanBook?.fullName || ''}</p>
             </div>
@@ -56,7 +65,7 @@ const HumanBookInfo = ({ humanBook, title }: Props) => {
               <IconButton
                 key={topic?.id}
                 icon={<Brain size={12} />}
-                className="w-full bg-[#F9F9F9] px-4 text-xs text-gray-400"
+                className="w-full bg-neutral-98 px-4 text-xs text-gray-400"
               >
                 {topic?.name}
               </IconButton>
