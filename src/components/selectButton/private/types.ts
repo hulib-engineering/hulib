@@ -7,7 +7,7 @@ type InputProps = {
 };
 
 type LabelProps = {
-  idDisabled?: boolean;
+  isDisabled?: boolean;
   children?: React.ReactNode;
 };
 
@@ -15,7 +15,7 @@ type SelectButtonProps = {
   size?: 'sm' | 'md' | 'lg' | string;
   isError?: boolean;
   open?: boolean;
-  idDisabled?: boolean;
+  isDisabled?: boolean;
   label?: React.JSX.Element | string;
   placeholder?: React.JSX.Element | string;
   children?: ReactNode;
@@ -26,7 +26,7 @@ type SelectButtonState = {
   open?: boolean;
   size?: 'sm' | 'md' | 'lg' | string;
   isError?: boolean;
-  idDisabled?: boolean;
+  isDisabled?: boolean;
   isUppercase?: boolean;
 };
 

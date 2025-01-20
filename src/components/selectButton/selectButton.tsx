@@ -21,7 +21,7 @@ const SelectButtonRoot = forwardRef(
     {
       size = 'md',
       isError,
-      idDisabled,
+      isDisabled,
       open,
       children,
       ...rest
@@ -33,10 +33,10 @@ const SelectButtonRoot = forwardRef(
         open,
         size,
         isError,
-        idDisabled,
+        isDisabled,
         ...rest,
       }),
-      [open, size, isError, idDisabled, rest],
+      [open, size, isError, isDisabled, rest],
     );
     return (
       <div className="relative" ref={ref}>
@@ -51,7 +51,6 @@ SelectButtonRoot.displayName = 'SelectButtonRoot';
 
 const Control = () => {
   const { open, size } = useSelectButtonContext('SelectButton.Control');
-
   return (
     <CaretDown
       size={size === 'sm' ? 16 : 24}
@@ -64,7 +63,7 @@ const Control = () => {
 };
 
 const Input = ({ children, className }: InputProps) => {
-  const { size, isError, idDisabled, ...rest } =
+  const { size, isError, isDisabled, ...rest } =
     useSelectButtonContext('SelectButton.Input');
 
   return (
@@ -78,7 +77,8 @@ const Input = ({ children, className }: InputProps) => {
         getSelectSize(size),
         isError &&
           'shadow-input-err hover:shadow-input-err focus:shadow-input-err',
-        idDisabled && 'opacity-60 cursor-not-allowed hover:shadow-input',
+        isDisabled &&
+          'bg-neutral-90 text-neutral-40 cursor-not-allowed hover:shadow-input',
         className && className,
       )}
       type="button"
@@ -98,7 +98,7 @@ const Value = ({ children }: { children?: ReactNode }) => {
     <span
       className={mergeClassnames(
         // size === 'sm' ? 'text-moon-14' : 'text-moon-16',
-        'w-full font-medium text-sm leading-4 text-neutral-10 truncate',
+        'w-full font-medium text-sm leading-4 text-neutral-10 read-only:text-neutral-40 truncate',
       )}
     >
       {children}
@@ -106,11 +106,11 @@ const Value = ({ children }: { children?: ReactNode }) => {
   );
 };
 
-const Label = ({ children, idDisabled }: LabelProps) => (
+const Label = ({ children, isDisabled }: LabelProps) => (
   <Listbox.Label
     className={mergeClassnames(
       'block text-neutral-10 text-sm leading-4 pb-2',
-      idDisabled && 'opacity-60 cursor-not-allowed',
+      isDisabled && 'opacity-60 cursor-not-allowed',
     )}
   >
     {children}
@@ -124,7 +124,7 @@ const Placeholder = ({ children }: { children?: ReactNode }) => {
     <span
       className={mergeClassnames(
         // size === 'sm' ? 'text-moon-14' : 'text-moon-16',
-        'w-full text-sm leading-4 text-neutral-40 text-start truncate',
+        'w-full text-sm leading-4 text-neutral-40  text-start truncate',
       )}
     >
       {children}
