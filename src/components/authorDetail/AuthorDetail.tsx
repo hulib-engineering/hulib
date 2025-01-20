@@ -129,7 +129,7 @@ const AuthorDetail = () => {
   const rating = '5/5';
 
   return (
-    <div className="h-full w-full bg-[#F9F9F9] px-[10%]">
+    <div className="h-full w-full bg-neutral-98 px-[10%]">
       <div className="h-full w-full">
         <div className="relative flex h-[200px] justify-end justify-items-end bg-[#A6D4FF]">
           <div className="relative h-[200px] w-full ">

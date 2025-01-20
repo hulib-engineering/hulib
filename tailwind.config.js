@@ -109,9 +109,6 @@ module.exports = {
           90: '#E3E4E5',
           98: '#F9F9F9',
         },
-        neutralVariant: {
-          90: '#E3E5EB',
-        },
         primary: {
           10: '#010D26',
           20: '#021A4C',

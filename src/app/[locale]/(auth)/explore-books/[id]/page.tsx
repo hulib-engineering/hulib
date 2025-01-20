@@ -3,18 +3,19 @@
 import { useParams } from 'next/navigation';
 import * as React from 'react';
 
-import HumanBookInfo from '@/components/book-detail/HumanBookInfo';
-import Story from '@/components/book-detail/Story';
+import HumanBookInfo from '@/components/storyDetails/HumanBookInfo';
+import Story from '@/components/storyDetails/Story';
+import StoryDetailsSkeleton from '@/components/storyDetails/StoryDetailsSkeleton';
 import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
 
 export default function Index() {
   const { id } = useParams();
-  const { data } = useGetStoryDetailQuery({
+  const { data, isLoading } = useGetStoryDetailQuery({
     id: Number(id),
   });
 
-  if (!data) {
-    return null;
+  if (isLoading) {
+    return <StoryDetailsSkeleton />;
   }
 
   return (
@@ -35,7 +36,8 @@ export default function Index() {
             <div className="w-full lg:w-[268px]">
               <HumanBookInfo
                 humanBook={data?.humanBook}
-                title={data?.title || ''}
+                title={data?.title}
+                coverPath={data?.cover?.path}
               />
             </div>
           </div>
