@@ -14,6 +14,7 @@ interface Props {
     fullName: string;
     topics: Topic[];
     rating: number;
+    bio: string;
   };
   title: string;
 }
@@ -61,7 +62,7 @@ const HumanBookInfo = ({ humanBook, title }: Props) => {
               </IconButton>
             ))}
           </div>
-          <p className="text-sm text-gray-700">WIP</p>
+          <p className="text-sm text-gray-700">{humanBook?.bio || ''}</p>
         </div>
       </div>
     </div>
