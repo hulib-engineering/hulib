@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 
 import StoryPagination from './StoryPagination';
 
@@ -78,6 +78,20 @@ const Story: React.FC<StoryProps> = ({ abstract, title, cover }) => {
     }
   }, [abstract, containerHeight, containerWidth, numberOfPageDisplayed]);
 
+  const pagesRender = useMemo(() => {
+    const newPages = [{ title, cover }, ...pages].slice(
+      currentPage,
+      currentPage + numberOfPageDisplayed,
+    );
+
+    if (newPages.length % 2 !== 0 && numberOfPageDisplayed === 2) {
+      newPages.push({
+        abstract: '',
+      });
+    }
+    return newPages;
+  }, [pages, title, cover, numberOfPageDisplayed, currentPage]);
+
   useEffect(() => {
     if (storyRef.current) {
       setContainerWidth(storyRef.current.getBoundingClientRect().width / 2);
@@ -101,38 +115,34 @@ const Story: React.FC<StoryProps> = ({ abstract, title, cover }) => {
   return (
     <div className="flex h-[80vh] flex-col gap-2" ref={storyRef}>
       <div className="flex h-full w-full overflow-hidden rounded-lg bg-white shadow-lg">
-        {[{ title, cover }, ...pages]
-          .slice(currentPage, currentPage + numberOfPageDisplayed)
-          .map((page, index) => {
-            return (
-              <div
-                key={index}
-                className="relative flex-1 px-7 py-8 before:absolute before:inset-y-0 before:right-0 before:h-full before:w-[36px] before:bg-gradient-to-r before:from-transparent before:to-[#C7C9CB] before:opacity-30 before:content-['']"
-              >
-                {page?.title ? (
-                  <div className="flex flex-col gap-2">
-                    <h2 className="text-[36px] font-bold">{page?.title}</h2>
-                    <Image
-                      src={
-                        page?.cover?.path ?? '/assets/images/user-avatar.jpeg'
-                      }
-                      height={532}
-                      width={100}
-                      alt="Book cover"
-                      className="w-full object-cover"
-                    />
-                  </div>
-                ) : (
-                  <>
-                    {currentPage === 0 && <h6>Abstract</h6>}
-                    <p className="pt-4 text-base text-[#45484A]">
-                      {page?.abstract ?? ''}
-                    </p>
-                  </>
-                )}
-              </div>
-            );
-          })}
+        {pagesRender.map((page, index) => {
+          return (
+            <div
+              key={page.title ? page.title : `abstract-${index}`}
+              className="relative flex-1 px-7 py-8 before:absolute before:inset-y-0 before:right-0 before:h-full before:w-[36px] before:bg-gradient-to-r before:from-transparent before:to-[#C7C9CB] before:opacity-30 before:content-['']"
+            >
+              {page?.title ? (
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-[36px] font-bold">{page?.title}</h2>
+                  <Image
+                    src={page?.cover?.path ?? '/assets/images/user-avatar.jpeg'}
+                    height={532}
+                    width={100}
+                    alt="Book cover"
+                    className="w-full object-cover"
+                  />
+                </div>
+              ) : (
+                <>
+                  {currentPage === 0 && <h6>Abstract</h6>}
+                  <p className="pt-4 text-base text-[#45484A]">
+                    {page?.abstract ?? ''}
+                  </p>
+                </>
+              )}
+            </div>
+          );
+        })}
       </div>
       <StoryPagination
         currentPage={currentPage}
