@@ -8,11 +8,13 @@ import MenuItem from '@/components/menuItem/MenuItem';
 type IControlledSelectProps = {
   label: string;
   className?: string;
+  disabled?: boolean;
 };
 
 function ControlledSelect<T extends FieldValues>({
   label,
   options,
+  disabled,
   ...controllerProps
 }: UseControllerProps<T> &
   IControlledSelectProps & {
@@ -24,7 +26,13 @@ function ControlledSelect<T extends FieldValues>({
   } = useController(controllerProps);
 
   return (
-    <Dropdown id={name} value={value} onChange={onChange} isError={!!error}>
+    <Dropdown
+      id={name}
+      value={value}
+      onChange={onChange}
+      isError={!!error}
+      disabled={disabled}
+    >
       {({ open }) => (
         <>
           <Dropdown.Select open={open} label={label}>

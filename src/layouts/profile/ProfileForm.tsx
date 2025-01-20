@@ -24,6 +24,7 @@ import { ProfileValidation } from '@/validations/ProfileValidation';
 
 export const ProfileForm = () => {
   const { data, isLoading } = useGetPersonalInfoQuery();
+  const [isEditMode, setIsEditMode] = useState(false);
   const [updateProfile] = useUpdateProfileMutation();
 
   const avatarId = useAppSelector((state) => state.auth.avatarId);
@@ -55,7 +56,11 @@ export const ProfileForm = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onHandleClickUpdateBtn = handleSubmit(() => {
-    if (isValid) {
+    if (!isEditMode) {
+      setIsEditMode(true);
+    }
+
+    if (isEditMode && isValid) {
       setIsOpen(!isOpen);
     }
   });
@@ -124,6 +129,7 @@ export const ProfileForm = () => {
               {...register('fullName')}
               isError={!!errors.fullName}
               hintText={errors.fullName?.message}
+              disabled={!isEditMode}
             />
           </fieldset>
           <fieldset className="w-full">
@@ -155,17 +161,27 @@ export const ProfileForm = () => {
               control={control}
               label="Gender"
               options={genders}
+              disabled={!isEditMode}
             />
           </fieldset>
         </Form.Item>
         <Form.Item className="flex flex-col gap-2 lg:flex-row">
           <fieldset className="w-full">
+            <TextInput
+              type="text"
+              label="Address"
+              placeholder="Enter your address"
+              {...register('address')}
+              disabled={!isEditMode}
+            />
+          </fieldset>
+          <fieldset className="w-full">
             {watch('isUnderGuard') ? (
               <TextInput
                 id="parentPhoneNumber"
                 type="tel"
-                label="Parent Phone Number"
-                placeholder="+xxxxxxxxxxx"
+                label="Your Guardian Phone Number"
+                placeholder="Ex: 012 345 678"
                 {...register('parentPhoneNumber')}
                 disabled
                 isError={!!errors.parentPhoneNumber}
@@ -174,14 +190,13 @@ export const ProfileForm = () => {
               />
             ) : (
               <TextInput
-                type="text"
+                type="tel"
                 label="Phone Number"
+                placeholder="Ex: 012 345 678"
                 {...register('phoneNumber')}
+                disabled={!isEditMode}
               />
             )}
-          </fieldset>
-          <fieldset className="w-full">
-            <TextInput type="text" label="Address" {...register('address')} />
           </fieldset>
         </Form.Item>
         <p className="text-sm leading-5 text-[#171819] opacity-80">
@@ -195,11 +210,11 @@ export const ProfileForm = () => {
           <Button
             type="submit"
             value="Submit"
-            className="w-full"
+            className="w-full lg:w-[240px]"
             disabled={isSubmitting}
             animation={isSubmitting && 'progress'}
           >
-            Update
+            {isEditMode ? 'Update' : 'Edit'}
           </Button>
         </Form.Item>
       </Form>
