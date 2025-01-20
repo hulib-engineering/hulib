@@ -115,7 +115,7 @@ const FooterWebApp = () => {
                 className="mt-16 flex w-fit flex-col gap-5 lg:mt-0"
                 key={section.title}
               >
-                <h4 className="text-xl font-medium leading-7 text-primary-10">
+                <h4 className="text-xl font-medium leading-7 text-lp-primary-blue">
                   {section.title.toUpperCase()}
                 </h4>
                 <div className="flex flex-col gap-6">
@@ -177,7 +177,7 @@ const FooterWebApp = () => {
             <Fragment key={section.title}>
               {index === footerSections.length - 1 && (
                 <div className="mt-16 flex w-fit flex-col gap-4 lg:mt-0">
-                  <h4 className="text-xl font-medium leading-7 text-primary-10">
+                  <h4 className="text-xl font-medium leading-7 text-lp-primary-blue">
                     {t('join_our_social_community')}
                   </h4>
                   <div className="flex flex-row gap-5">
@@ -205,7 +205,7 @@ const FooterWebApp = () => {
                 className="mt-16 flex w-fit flex-col gap-5 lg:mt-0"
                 key={section.title}
               >
-                <h4 className="text-xl font-medium leading-7 text-primary-10">
+                <h4 className="text-xl font-medium leading-7 text-lp-primary-blue">
                   {section.title.toUpperCase()}
                 </h4>
                 <div className="flex flex-col gap-6">
