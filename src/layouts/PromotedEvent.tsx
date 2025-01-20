@@ -55,7 +55,7 @@ const PromotedEvent = () => {
       >
         <div className="pb-1 lg:w-full lg:max-w-screen-lg">
           <div className="flex w-full flex-col items-center justify-start px-4 text-center sm:px-0">
-            <p className="mb-4 text-xs font-medium uppercase text-primary-10 lg:text-lg">
+            <p className="mb-4 text-xs font-medium uppercase text-lp-primary-blue lg:text-lg">
               {t('event_title')}
             </p>
           </div>

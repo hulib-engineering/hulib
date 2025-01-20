@@ -33,7 +33,7 @@ const HeroDesktop = (props: HeroProps) => {
     >
       <div className="flex w-[575px]">
         <h1 className="text-start text-[1.75rem] font-semibold capitalize leading-[98px] text-slate-1000 sm:text-[5rem]">
-          <p className="text-xs font-medium uppercase text-primary-10 lg:text-lg">
+          <p className="text-xs font-medium uppercase text-lp-primary-blue lg:text-lg">
             {t('hero_title')}
           </p>
           {t('hero_motto')}

@@ -36,7 +36,7 @@ const About = () => {
       className="mx-auto mt-8 max-w-xs p-4 md:max-w-screen-xxl lg:py-[6.25rem]"
     >
       <div className="mb-6 text-center lg:mb-[5.625rem] xl:px-[240px]">
-        <div className="text-xs font-semibold uppercase text-primary-10 sm:text-lg">
+        <div className="text-xs font-semibold uppercase text-lp-primary-blue sm:text-lg">
           {t('about_title')}
         </div>
         <div className="text-[28px] font-semibold capitalize text-slate-1000 sm:text-[56px]">

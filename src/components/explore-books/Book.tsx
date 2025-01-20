@@ -14,7 +14,7 @@ const Book = () => {
         className="h-full w-1/2 rounded-lg"
       />
       <div className="flex w-1/2 flex-col">
-        <div className="text-[2rem] font-medium text-[#010D26]">
+        <div className="text-[2rem] font-medium text-primary-10">
           Story of my life
         </div>
         <div className="flex flex-row items-center gap-3">
@@ -61,7 +61,7 @@ const Book = () => {
           Add to favorite
         </Button>
         <div className="mt-4 gap-2 ">
-          <h3 className="text-base font-medium text-[#010D26]">Abstract</h3>
+          <h3 className="text-base font-medium text-primary-10">Abstract</h3>
           <p className="line-clamp-5 text-base leading-6 text-neutral-30">
             pEmbark on an exciting and immersive journey through the captivating
             pages of Chronicles of My Life, where every chapter unfolds new
