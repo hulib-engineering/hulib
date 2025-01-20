@@ -113,7 +113,7 @@ module.exports = {
           90: '#E3E5EB',
         },
         primary: {
-          10: '#0061EF',
+          10: '#010D26',
           20: '#021A4C',
           40: '#033599',
           50: '#0442BF',
@@ -131,6 +131,10 @@ module.exports = {
         green: {
           50: '#46D51B',
           98: '#FBFEFA',
+        },
+        // lp: only for Landing Page
+        lp: {
+          'primary-blue': '#0061EF',
         },
       },
       rotate: {

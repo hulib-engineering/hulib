@@ -27,7 +27,7 @@ export const highlightMessage = (
     return (
       <span
         className={mergeClassnames(
-          textColor === 'primary' ? 'text-primary-10' : 'text-secondary',
+          textColor === 'primary' ? 'text-lp-primary-blue' : 'text-secondary',
           isOutstanding && 'text-[5.625rem]',
         )}
       >
@@ -55,7 +55,7 @@ export const customInternalLink = (href: string): (() => ReactNode) => {
   // eslint-disable-next-line react/display-name
   return (...chunks: ReactNode[]): ReactNode => {
     return (
-      <Link href={href} className="text-primary-10">
+      <Link href={href} className="text-lp-primary-blue">
         {chunks}
       </Link>
     );
@@ -68,7 +68,7 @@ export const customExternalLink = (href: string): (() => ReactNode) => {
     return (
       <Link
         href={href}
-        className="text-primary-10"
+        className="text-lp-primary-blue"
         target="_blank"
         rel="noreferrer"
       >

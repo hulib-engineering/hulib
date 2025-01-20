@@ -17,7 +17,7 @@ const Newsletter = () => {
     >
       <div className="w-full rounded-3xl border-4 border-solid border-white bg-white/50 py-6 backdrop-blur-[100px] sm:max-w-7xl lg:py-[5.625rem]">
         <div className="mx-auto mb-3 w-full px-4 text-center sm:mb-8 2xl:max-w-3xl">
-          <p className="mb-3 text-[0.75rem] font-semibold uppercase text-primary-10 sm:mb-6 sm:text-lg">
+          <p className="mb-3 text-[0.75rem] font-semibold uppercase text-lp-primary-blue sm:mb-6 sm:text-lg">
             {t('newsletter_title')}
           </p>
           <h1 className="text-[1.75rem] font-semibold capitalize sm:text-5xl sm:font-bold">
