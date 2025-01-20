@@ -201,9 +201,11 @@ const Header = () => {
                 My schedule
               </Button>
             )}
-            <Button variant="ghost" size="lg" className="text-neutral-10">
-              Books
-            </Button>
+            <Link href="/explore-books">
+              <Button variant="ghost" size="lg" className="text-neutral-10">
+                Books
+              </Button>
+            </Link>
             <Button variant="ghost" size="lg" className="text-neutral-10">
               Mentors
             </Button>
