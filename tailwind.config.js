@@ -108,6 +108,9 @@ module.exports = {
           80: '#C7C9CB',
           90: '#E3E4E5',
           98: '#F9F9F9',
+          variant: {
+            98: '#F3F4F6',
+          },
         },
         primary: {
           10: '#010D26',
