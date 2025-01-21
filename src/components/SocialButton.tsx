@@ -27,7 +27,7 @@ const SocialButton = (props: ISocialButtonProps) => (
     icon={<SocialIcon iconUrl={props.iconUrl} />}
     className={mergeClassnames(
       'h-11 border border-solid border-[#E3E5EB] bg-white text-center text-neutral-10 text-sm',
-      'hover:border-[#E3E5EB] hover:bg-[#F3F4F6]',
+      'hover:border-[#E3E5EB] hover:bg-neutral-variant-98',
       props.className,
     )}
     onClick={props.onClick}
