@@ -452,7 +452,7 @@ const Step4Form = () => {
 
   return (
     <Modal open onClose={handleNavigateToLogin} className="z-50">
-      <Modal.Backdrop className="bg-neutral-variant-98 bg-opacity-100 bg-gradient-to-bl from-white/20 to-[#F9DA6C]/20 bg-blend-multiply" />
+      <Modal.Backdrop className="bg-neutral-variant-98 bg-opacity-100 bg-gradient-to-bl from-white/20 to-[#F9DA6C20] bg-blend-multiply" />
       <Modal.Panel className="flex max-w-xl flex-col items-center gap-12 bg-transparent p-8 shadow-none">
         <div className="flex flex-row items-center justify-center gap-4 py-2">
           <h2 className="text-right text-4xl font-medium leading-tight text-neutral-10">

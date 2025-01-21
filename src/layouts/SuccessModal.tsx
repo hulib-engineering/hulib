@@ -22,7 +22,7 @@ const SuccessFormModal = (props: ISuccessFormModalProps) => (
       <div
         className={mergeClassnames(
           'flex w-full flex-col items-center justify-center rounded-[20px]',
-          'bg-neutral-variant-98 bg-gradient-to-bl from-white/20 to-[#F9DA6C]/20 bg-blend-multiple',
+          'bg-neutral-variant-98 bg-gradient-to-bl from-white/20 to-[#F9DA6C20] bg-blend-multiple',
         )}
       >
         <div className="flex min-h-[25.5rem] w-5/6 flex-col items-center justify-start py-20 lg:w-2/3">
