@@ -172,7 +172,7 @@ const SearchSections = (props: Props) => {
           <input
             type="text"
             key="search-session"
-            className="h-9 w-full rounded-2xl bg-[#F3F4F6] pl-8 pr-2 text-sm font-medium leading-4 text-neutral-20 outline-none"
+            className="h-9 w-full rounded-2xl bg-neutral-variant-98 pl-8 pr-2 text-sm font-medium leading-4 text-neutral-20 outline-none"
             value={searchText}
             onChange={onChangeText}
             ref={(e) => e?.focus()}
