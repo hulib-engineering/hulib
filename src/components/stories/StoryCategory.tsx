@@ -10,10 +10,8 @@ interface Props {
   onClick?: () => void;
 }
 
-const BookCategory = (props: Props) => {
+const StoryCategory = (props: Props) => {
   const { iconName, name, isActive, onClick } = props;
-  console.log(isActive);
-
   const styles = React.useMemo(() => {
     if (isActive === null) {
       return {
@@ -50,7 +48,7 @@ const BookCategory = (props: Props) => {
       default:
         return <Brain size={24} color={iconColor} />;
     }
-  }, [styles, iconName, isActive]);
+  }, [styles, iconName]);
 
   return (
     <div
@@ -58,7 +56,7 @@ const BookCategory = (props: Props) => {
         'flex flex-row items-center justify-center p-2 rounded-[1.5rem] gap-1 cursor-pointer',
       )}
       style={{
-        color: styles.backgroundColor,
+        backgroundColor: styles.backgroundColor,
       }}
       aria-hidden="true"
       onClick={onClick}
@@ -76,4 +74,4 @@ const BookCategory = (props: Props) => {
   );
 };
 
-export default BookCategory;
+export default StoryCategory;

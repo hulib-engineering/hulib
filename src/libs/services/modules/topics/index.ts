@@ -8,11 +8,6 @@ export interface Topic {
   updatedAt?: string | undefined;
 }
 
-export interface PaginatedResponse<T> {
-  data: T[];
-  hasNextPage: boolean;
-}
-
 export interface GetTopicsParams {
   page?: number;
   limit?: number;

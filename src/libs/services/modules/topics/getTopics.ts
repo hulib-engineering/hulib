@@ -1,7 +1,8 @@
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinitions';
 
-import type { GetTopicsParams, PaginatedResponse, Topic } from './index';
+import type { PaginatedResponse } from '../../api';
+import type { GetTopicsParams, Topic } from './index';
 
 const getTopics = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query<PaginatedResponse<Topic>, GetTopicsParams>({
