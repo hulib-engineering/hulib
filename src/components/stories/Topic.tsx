@@ -10,7 +10,7 @@ interface Props {
   onClick?: () => void;
 }
 
-const StoryCategory = (props: Props) => {
+const Topic = (props: Props) => {
   const { iconName, name, isActive, onClick } = props;
   const styles = React.useMemo(() => {
     if (isActive === null) {
@@ -74,4 +74,4 @@ const StoryCategory = (props: Props) => {
   );
 };
 
-export default StoryCategory;
+export default Topic;
