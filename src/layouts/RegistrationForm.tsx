@@ -536,7 +536,11 @@ const RegistrationForm = () => {
   }
 
   if (step === 3) {
-    return <Step4Form />;
+    return (
+      <div className="fixed inset-0 h-full w-full bg-neutral-variant-98">
+        <Step4Form />
+      </div>
+    );
   }
 
   return (

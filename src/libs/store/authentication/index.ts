@@ -10,7 +10,7 @@ type SliceState = {
   userInfo: z.infer<typeof ProfileValidation> & {
     id: string;
     photo: { id: string; path: string };
-    role: { id: number };
+    role: { id: number; name: string };
   };
 };
 
