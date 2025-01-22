@@ -12,7 +12,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import Button from '@/components/button/Button';
 import IconButton from '@/components/iconButton/IconButton';
@@ -50,6 +50,7 @@ const AvatarPopoverMenuItems = [
     label: 'Register to become human book',
     icon: <Pencil size={20} color="primary-20" />,
     href: '/human-book-register',
+    roles: ['Reader'],
   },
   {
     label: 'Sign out',
@@ -74,6 +75,8 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
   open,
   close,
 }: RenderProps) => {
+  const { role } = useAppSelector((state) => state.auth.userInfo);
+
   const handleClick = (item: AvatarPopoverMenuItem) => {
     if (open) {
       close();
@@ -81,9 +84,20 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
     item.onClick?.();
   };
 
+  const menuItemsByRole = useMemo(() => {
+    return (
+      AvatarPopoverMenuItems.filter((item) => {
+        if (item?.roles) {
+          return item.roles.includes(role?.name);
+        }
+        return true;
+      }) || []
+    );
+  }, [role]);
+
   return (
     <div data-testid="popover-content">
-      {AvatarPopoverMenuItems.map((item, index) =>
+      {menuItemsByRole.map((item, index) =>
         item.href ? (
           <Link href={item.href} key={index} onClick={close}>
             <MenuItem>
