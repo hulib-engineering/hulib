@@ -362,5 +362,21 @@
       "invalidYearRange": "Invalid Year Range",
       "invalid_url": "Invalid URL link. Check link and try again"
     }
+  },
+  "ExporeBooks": {
+    "title": "Explore",
+    "description": "Discover and find your perfect book",
+    "view_more": "View More",
+    "topics": "Topics",
+    "ratings": "ratings",
+    "abstract": "Abstract",
+    "read_book": "Read Book",
+    "productivity": "Productivity",
+    "all": "All",
+    "health": "Health",
+    "emotional": "emotional",
+    "motivationAndInspiration": "Motivation & Inspiration",
+    "career": "Career",
+    "education": "Education"
   }
 }

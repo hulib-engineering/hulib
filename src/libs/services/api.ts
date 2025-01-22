@@ -87,3 +87,8 @@ export const api = createApi({
   tagTypes: ['User', 'OTP'],
   endpoints: () => ({}),
 });
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  hasNextPage: boolean;
+}
