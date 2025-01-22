@@ -1,4 +1,5 @@
 import { api } from '../../api';
+import getStories from './getStories';
 import getStoryDetail from './getStoryDetail';
 
 export interface StoriesParams {
@@ -33,11 +34,12 @@ const apiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['Story'],
 });
 
-export const storiesApi = apiWithTag.injectEndpoints({
+const storiesApi = apiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
     getStoryDetail: getStoryDetail(build),
+    getStories: getStories(build),
   }),
   overrideExisting: false,
 });
 
-export const { useGetStoryDetailQuery }: any = storiesApi;
+export const { useGetStoryDetailQuery, useGetStoriesQuery }: any = storiesApi;
