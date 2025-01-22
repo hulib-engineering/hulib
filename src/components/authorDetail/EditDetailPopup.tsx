@@ -4,14 +4,14 @@ import * as React from 'react';
 
 import Button from '@/components/button/Button';
 import Modal from '@/components/Modal';
-import type { Author } from '@/libs/services/modules/user';
+import type { User } from '@/libs/services/modules/user/userType';
 
 import { AddButton } from './AddButton';
 import { EditIcon } from './EditIcon';
 
 type Props = {
   open: boolean;
-  authorDetail: Author;
+  authorDetail: User;
   onClose: () => void;
   onSuccess: () => void;
 };

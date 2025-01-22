@@ -10,7 +10,7 @@ import ListTopics from '@/components/stories/ListTopics';
 import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
 import Story from '@/components/stories/Story';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
-import type { Story as StoryType } from '@/libs/services/modules/stories/getStories';
+import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
 const Page = () => {
   const t = useTranslations('ExporeBooks');

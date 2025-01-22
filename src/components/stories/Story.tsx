@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
-import type { Story as StoryType } from '@/libs/services/modules/stories/getStories';
+import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
 import Button from '../button/Button';
 import { mergeClassnames } from '../private/utils';

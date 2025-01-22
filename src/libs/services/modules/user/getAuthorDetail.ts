@@ -1,10 +1,12 @@
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinitions';
 
-import type { Author } from './index';
+import type { User } from './userType';
 
-export default (build: EndpointBuilder<BaseQueryFn, string, string>) =>
-  build.query<Author, void>({
+const getAuthorDetail = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
+  build.query<User, void>({
     query: (id) => `users/author/${id}`,
-    providesTags: [{ type: 'Author', id: 'AUTHOR' }],
+    providesTags: (result) => (result ? [{ type: 'User', id: result.id }] : []),
   });
+
+export default getAuthorDetail;
