@@ -6,97 +6,14 @@ import React from 'react';
 
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
+import ListTopics from '@/components/stories/ListTopics';
 import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
 import Story from '@/components/stories/Story';
-import StoryCategory from '@/components/stories/StoryCategory';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/getStories';
 
-const mockCategories = [
-  {
-    id: 0,
-    tId: 'all',
-    iconName: 'squares-four',
-  },
-  {
-    id: 1,
-    tId: 'health',
-    iconName: 'heart',
-  },
-  {
-    id: 2,
-    tId: 'emotional',
-    iconName: 'brain',
-  },
-  {
-    id: 3,
-    tId: 'motivationAndInspiration',
-    iconName: 'brain',
-  },
-  {
-    id: 4,
-    tId: 'productivity',
-    iconName: 'brain',
-  },
-  {
-    id: 5,
-    tId: 'career',
-    iconName: 'brain',
-  },
-  {
-    id: 6,
-    tId: 'education',
-    iconName: 'brain',
-  },
-  {
-    id: 7,
-    tId: 'productivity',
-    iconName: 'brain',
-  },
-  {
-    id: 8,
-    tId: 'career',
-    iconName: 'brain',
-  },
-  {
-    id: 10,
-    tId: 'productivity',
-    iconName: 'brain',
-  },
-  {
-    id: 11,
-    tId: 'career',
-    iconName: 'brain',
-  },
-  {
-    id: 12,
-    tId: 'education',
-    iconName: 'brain',
-  },
-  {
-    id: 13,
-    tId: 'career',
-    iconName: 'brain',
-  },
-  {
-    id: 9,
-    tId: 'motivationAndInspiration',
-    iconName: 'brain',
-  },
-];
-
 const Page = () => {
-  const [selectedCategories, setSelectedCategories] = React.useState<number[]>(
-    [],
-  );
   const t = useTranslations('ExporeBooks');
-
-  const categories = React.useMemo(() => {
-    return mockCategories?.map((category) => ({
-      ...category,
-      name: t(category.tId as any),
-    }));
-  }, [t]);
 
   const { data: storiesPages, isLoading } = useGetStoriesQuery({
     page: 1,
@@ -129,30 +46,7 @@ const Page = () => {
               {t('description')}
             </p>
           </div>
-          <div className="mt-6 flex flex-row flex-wrap gap-2">
-            {categories.map((category) => (
-              <StoryCategory
-                key={category.id}
-                name={category.name}
-                iconName={category.iconName as any}
-                isActive={
-                  category.tId === 'all'
-                    ? null
-                    : selectedCategories.includes(category.id)
-                }
-                onClick={() =>
-                  setSelectedCategories((prev) => {
-                    if (category.tId === 'all') return prev;
-
-                    if (prev.includes(category.id)) {
-                      return prev.filter((item: any) => item !== category.id);
-                    }
-                    return [...prev, category.id];
-                  })
-                }
-              />
-            ))}
-          </div>
+          <ListTopics />
           <div
             className={mergeClassnames(
               'mt-6 grid grid-cols-1 gap-8',
