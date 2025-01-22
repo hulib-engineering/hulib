@@ -6,8 +6,8 @@ import { Controller, type UseFormReturn } from 'react-hook-form';
 
 import Form from '@/components/form/Form';
 import { useDebounce } from '@/libs/hooks';
-import type { Topic } from '@/libs/services/modules/topics';
 import { useGetTopicsQuery } from '@/libs/services/modules/topics';
+import type { Topic } from '@/libs/services/modules/topics/topicType';
 
 import { mergeClassnames } from '../private/utils';
 import TopicSkeleton from './TopicsSkeleton';
@@ -72,7 +72,7 @@ const SearchSections = (props: Props) => {
 
   const handleAdd = (event: React.MouseEvent<HTMLDivElement>, value: Topic) => {
     const section = methods.getValues('section');
-    const isExisted = section.find((item) => item === value);
+    const isExisted = section.find((item) => item === value.id);
 
     if (!isExisted && value?.id) {
       methods.setValue('section', [...section, value?.id]);
@@ -186,12 +186,12 @@ const SearchSections = (props: Props) => {
             {isLoading || isFetching ? (
               <TopicSkeleton />
             ) : (
-              topicPages?.data?.map((item: Topic, index: number) => (
+              topicPages?.data?.map((item: Topic) => (
                 <div
                   className="flex w-full cursor-pointer p-2 text-sm font-medium leading-4 text-neutral-20 hover:bg-neutral-90"
                   aria-hidden="true"
                   onClick={(e) => handleAdd(e, item)}
-                  key={index}
+                  key={item.id}
                 >
                   {item?.name}
                 </div>

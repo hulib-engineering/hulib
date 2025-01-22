@@ -1,28 +1,15 @@
 import { api } from '../../api';
 import getTopics from './getTopics';
 
-export interface Topic {
-  id?: number | undefined;
-  name?: string | undefined;
-  createdAt?: string | undefined;
-  updatedAt?: string | undefined;
-}
-
-export interface GetTopicsParams {
-  page?: number;
-  limit?: number;
-  name?: string;
-}
-
 const apiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['Topics'],
 });
 
-export const authApi = apiWithTag.injectEndpoints({
+export const topicsApi = apiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
     getTopics: getTopics(build),
   }),
   overrideExisting: false,
 });
 
-export const { useGetTopicsQuery }: any = authApi;
+export const { useGetTopicsQuery }: any = topicsApi;

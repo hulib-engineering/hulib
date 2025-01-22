@@ -4,12 +4,10 @@ import { Book, BookmarkSimple, Brain } from '@phosphor-icons/react';
 import Image from 'next/image';
 import React from 'react';
 
+import type { Topic } from '@/libs/services/modules/topics/topicType';
+
 import IconButton from '../iconButton/IconButton';
 
-interface Topic {
-  id: number;
-  name: string;
-}
 interface Props {
   humanBook: {
     fullName: string;

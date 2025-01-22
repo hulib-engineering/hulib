@@ -1,36 +1,8 @@
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinitions';
 
-interface StoriesParams {
-  page: number;
-  limit: number;
-}
-
-interface FileType {
-  id: string;
-  path: string;
-}
-
-interface User {
-  id: number;
-  fullName: string;
-}
-
-export interface Story {
-  id: number;
-  abstract: string;
-  title: string;
-  cover: FileType;
-  humanBook: User;
-  createdAt?: string | undefined;
-  updatedAt?: string | undefined;
-  rating: number | null;
-}
-
-interface PaginatedResponse<T> {
-  data: T[];
-  hasNextPage: boolean;
-}
+import type { PaginatedResponse } from '../../type';
+import type { StoriesParams, Story } from './storiesType';
 
 const getStories = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query<PaginatedResponse<Story>, StoriesParams>({

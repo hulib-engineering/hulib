@@ -2,13 +2,13 @@
 
 import * as React from 'react';
 
-import type { Author } from '@/libs/services/modules/user';
+import type { User } from '@/libs/services/modules/user/userType';
 
 import { EditButton } from './EditButton';
 import EditDetailPopup from './EditDetailPopup';
 
 type Props = {
-  authorDetail: Author;
+  authorDetail: User;
 };
 
 export const AboutPanel = ({ authorDetail }: Props) => {
