@@ -10,7 +10,7 @@ const getTopics = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       url: 'topics',
       params: {
         page: params?.page || 1,
-        limit: params?.limit || 10,
+        limit: params?.limit,
         name: params?.name,
       },
     }),
