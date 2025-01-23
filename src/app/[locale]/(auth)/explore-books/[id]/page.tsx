@@ -13,7 +13,7 @@ import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
 export default function Index() {
   const { id } = useParams();
   const { data, isLoading } = useGetStoryDetailQuery({
-    id: Number(id),
+    id: Number(id), // id is a string, so we need to convert it to a number
   });
 
   if (isLoading) {
@@ -43,8 +43,8 @@ export default function Index() {
               />
             </div>
           </div>
-          <div className="flex w-full justify-between gap-x-5">
-            <ReaderReview />
+          <div className="my-4 flex w-full justify-between gap-x-5">
+            <ReaderReview id={Number(id)} />
             <RatingOverview />
           </div>
         </div>

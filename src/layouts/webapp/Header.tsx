@@ -199,7 +199,7 @@ const Header = () => {
             )}
             <Link href="/explore-books">
               <Button variant="ghost" size="lg" className="text-neutral-10">
-                Books
+                Stories
               </Button>
             </Link>
             <Button variant="ghost" size="lg" className="text-neutral-10">
@@ -219,7 +219,7 @@ const Header = () => {
             )}
             <Link href="/explore-books">
               <Button variant="ghost" size="lg" className="text-neutral-10">
-                Books
+                Stories
               </Button>
             </Link>
             <Button variant="ghost" size="lg" className="text-neutral-10">

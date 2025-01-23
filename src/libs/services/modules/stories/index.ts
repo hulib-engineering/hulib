@@ -1,4 +1,5 @@
 import { api } from '../../api';
+import getReviewsByStory from './getReviewsByStory';
 import getStories from './getStories';
 import getStoryDetails from './getStoryDetails';
 
@@ -10,8 +11,13 @@ const storiesApi = apiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
     getStoryDetail: getStoryDetails(build),
     getStories: getStories(build),
+    getReviewsByStory: getReviewsByStory(build),
   }),
   overrideExisting: false,
 });
 
-export const { useGetStoryDetailQuery, useGetStoriesQuery }: any = storiesApi;
+export const {
+  useGetStoryDetailQuery,
+  useGetStoriesQuery,
+  useGetReviewsByStoryQuery,
+}: any = storiesApi;
