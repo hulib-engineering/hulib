@@ -20,3 +20,25 @@ export interface Story {
   createdAt?: string | undefined;
   updatedAt?: string | undefined;
 }
+
+export interface StoryReview {
+  id: number;
+  rating: number;
+  title: string;
+  comment: string;
+  user: User;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface Histogram {
+  rating: number;
+  numberOfReviews: number;
+}
+
+export interface StoryReviewOverview {
+  rating: number;
+  numberOfReviews: number;
+  histogram: Histogram[];
+  outstanding: StoryReview;
+}

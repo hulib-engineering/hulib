@@ -5,7 +5,7 @@
   "HeaderWebApp": {
     "contact_us": "contact us",
     "my_schedule": "My schedule",
-    "books": "Books",
+    "books": "Stories",
     "mentors": "Mentors",
     "log_in": "Log in",
     "sign_up": "Sign up"
@@ -30,7 +30,7 @@
     "cookie_settings": "Cookie settings",
     "site": "Site",
     "my_schedule": "My Schedule",
-    "books": "Books",
+    "books": "Stories",
     "profile": "Profile",
     "help": "Help",
     "contact": "Contact",
@@ -363,14 +363,14 @@
       "invalid_url": "Invalid URL link. Check link and try again"
     }
   },
-  "ExporeBooks": {
+  "ExporeStory": {
     "title": "Explore",
-    "description": "Discover and find your perfect book",
+    "description": "Discover and find your perfect story",
     "view_more": "View More",
     "topics": "Topics",
     "ratings": "ratings",
     "abstract": "Abstract",
-    "read_book": "Read Book",
+    "read_story": "Read Story",
     "productivity": "Productivity",
     "all": "All",
     "health": "Health",

@@ -13,7 +13,7 @@ import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
 const Page = () => {
-  const t = useTranslations('ExporeBooks');
+  const t = useTranslations('ExporeStory');
 
   const { data: storiesPages, isLoading } = useGetStoriesQuery({
     page: 1,
