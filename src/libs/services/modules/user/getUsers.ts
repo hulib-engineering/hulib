@@ -2,20 +2,21 @@ import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinitions';
 
 import type { PaginatedResponse } from '../../type';
-import type { GetTopicsParams, Topic } from './topicType';
+import type { GetUsersParams, User } from './userType';
 
-const getTopics = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
-  build.query<PaginatedResponse<Topic>, GetTopicsParams>({
+const getUsers = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
+  build.query<PaginatedResponse<User>, GetUsersParams>({
     query: (params) => ({
-      url: 'topics',
+      url: 'users',
       params: {
         page: params?.page || 1,
         limit: params?.limit,
-        name: params?.name,
+        filter: params?.filter || '',
+        sort: params?.sort || '',
       },
     }),
     serializeQueryArgs: ({ endpointName, queryArgs }) => {
-      return `${endpointName}(${queryArgs?.name})`;
+      return `${endpointName}(${queryArgs?.filter})`;
     },
     merge: (currentCache, newItems, { arg }) => {
       if (arg?.page === 1) {
@@ -29,16 +30,15 @@ const getTopics = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
     forceRefetch: ({ currentArg, previousArg }) => {
       return (
         currentArg?.page !== previousArg?.page ||
-        currentArg?.name !== previousArg?.name
+        currentArg?.filter !== previousArg?.filter
       );
     },
     providesTags: (result) =>
       result
         ? [
-            ...result.data.map(({ id }) => ({ type: 'Topics' as const, id })),
-            { type: 'Topics' as const, id: 'LIST' },
+            ...result.data.map(({ id }) => ({ type: 'Users' as const, id })),
+            { type: 'Users' as const, id: 'LIST' },
           ]
-        : [{ type: 'Topics' as const, id: 'LIST' }],
+        : [{ type: 'Users' as const, id: 'LIST' }],
   });
-
-export default getTopics;
+export default getUsers;

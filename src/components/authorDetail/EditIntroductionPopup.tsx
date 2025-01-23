@@ -5,13 +5,13 @@ import { useState } from 'react';
 
 import Button from '@/components/button/Button';
 import Modal from '@/components/Modal';
-import type { Author } from '@/libs/services/modules/user';
+import type { User } from '@/libs/services/modules/user/userType';
 
 import Input from '../input/Input';
 
 type Props = {
   open: boolean;
-  authorDetail: Author;
+  authorDetail: User;
   onClose: () => void;
   onSuccess: () => void;
 };

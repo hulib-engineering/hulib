@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
-import type { Story as StoryType } from '@/libs/services/modules/stories/getStories';
+import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
 import Button from '../button/Button';
 import { mergeClassnames } from '../private/utils';
@@ -26,7 +26,7 @@ const Story = (props: Props) => {
         )}
       >
         <Image
-          src="/assets/images/image-test.jfif"
+          src="/assets/images/image-test.png"
           alt="book-image"
           width={275}
           height={368}
