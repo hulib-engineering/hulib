@@ -14,7 +14,7 @@ interface Props {
 
 const Story = (props: Props) => {
   const { data } = props;
-  const t = useTranslations('ExporeBooks');
+  const t = useTranslations('ExporeStory');
   const router = useRouter();
 
   return (
@@ -152,9 +152,9 @@ const Story = (props: Props) => {
               'text-sm h-8 max-h-8 flex-none w-full',
               'md:h-11 md:max-h-11 md:flex-[1]',
             )}
-            onClick={() => router.push(`/explore-books/${data?.id}`)}
+            onClick={() => router.push(`/explore-story/${data?.id}`)}
           >
-            {t('read_book')}
+            {t('read_story')}
           </Button>
           <Button
             variant="outline"
