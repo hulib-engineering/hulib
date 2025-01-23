@@ -20,3 +20,13 @@ export interface Story {
   createdAt?: string | undefined;
   updatedAt?: string | undefined;
 }
+
+export interface StoryReview {
+  id: number;
+  rating: number;
+  title: string;
+  comment: string;
+  user: User;
+  createdAt?: string;
+  updatedAt?: string;
+}
