@@ -33,11 +33,16 @@ const ReviewItem = (params: StoryReview) => {
             </p>
             <div className="flex items-center gap-x-2">
               <div className="flex items-center gap-x-0.5">
-                <Heart size={16} color="#F3C00C" weight="fill" />
-                <Heart size={16} color="#F3C00C" weight="fill" />
-                <Heart size={16} color="#F3C00C" weight="fill" />
-                <Heart size={16} color="#F3C00C" weight="fill" />
-                <Heart size={16} color="#F3C00C" weight="fill" />
+                {[...Array(5)].map((_, index) => (
+                  <Heart
+                    key={`heart-${params.id}-${index}`}
+                    size={16}
+                    color={
+                      index < Math.floor(params.rating) ? '#F3C00C' : '#E0E0E0'
+                    }
+                    weight="fill"
+                  />
+                ))}
               </div>
               <p className="text-xs text-[#00000080]">
                 {params?.createdAt
