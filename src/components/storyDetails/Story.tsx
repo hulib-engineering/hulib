@@ -5,15 +5,6 @@ import React, { useEffect, useMemo, useRef } from 'react';
 
 import StoryPagination from './StoryPagination';
 
-interface StoryProps {
-  abstract: string;
-  title: string;
-  cover: {
-    id: string;
-    path?: string;
-  };
-}
-
 function paginateText(
   longText: string,
   containerWidth: number,
@@ -44,6 +35,14 @@ function paginateText(
   }
 
   return pages;
+}
+interface StoryProps {
+  abstract: string;
+  title: string;
+  cover: {
+    id: string;
+    path?: string;
+  };
 }
 
 const Story: React.FC<StoryProps> = ({ abstract, title, cover }) => {
