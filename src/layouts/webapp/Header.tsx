@@ -197,7 +197,7 @@ const Header = () => {
                 My schedule
               </Button>
             )}
-            <Link href="/explore-books">
+            <Link href="/explore-story">
               <Button variant="ghost" size="lg" className="text-neutral-10">
                 Stories
               </Button>
@@ -217,7 +217,7 @@ const Header = () => {
                 My schedule
               </Button>
             )}
-            <Link href="/explore-books">
+            <Link href="/explore-story">
               <Button variant="ghost" size="lg" className="text-neutral-10">
                 Stories
               </Button>

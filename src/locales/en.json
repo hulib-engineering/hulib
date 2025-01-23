@@ -363,14 +363,14 @@
       "invalid_url": "Invalid URL link. Check link and try again"
     }
   },
-  "ExporeBooks": {
+  "ExporeStory": {
     "title": "Explore",
-    "description": "Discover and find your perfect book",
+    "description": "Discover and find your perfect story",
     "view_more": "View More",
     "topics": "Topics",
     "ratings": "ratings",
     "abstract": "Abstract",
-    "read_book": "Read Book",
+    "read_story": "Read Story",
     "productivity": "Productivity",
     "all": "All",
     "health": "Health",
