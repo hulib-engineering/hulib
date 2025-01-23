@@ -13,7 +13,7 @@ const ListTopics = () => {
   );
 
   const { data: topicsPages, isLoading } = useGetTopicsQuery();
-  const t = useTranslations('ExporeBooks');
+  const t = useTranslations('ExporeStory');
 
   const topics = React.useMemo(() => {
     const all = { id: uniqueId(), name: t('all'), iconName: 'squares-four' };

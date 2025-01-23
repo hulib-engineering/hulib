@@ -5,17 +5,18 @@ export interface User {
   gender: {
     id: number;
     name: string;
-    __entity: string;
   };
   role: {
     id: number;
     name: string;
-    __entity: string;
   };
   status: {
     id: number;
     name: string;
-    __entity: string;
+  };
+  photo: {
+    id: number;
+    path: string;
   };
   createdAt: string | null;
   updatedAt: string | null;
