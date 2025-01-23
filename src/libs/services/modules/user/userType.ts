@@ -29,3 +29,10 @@ export interface User {
   educationStart: string | null;
   educationEnd: string | null;
 }
+
+export interface GetUsersParams {
+  page?: number;
+  limit?: number;
+  filter?: string;
+  sort?: string;
+}
