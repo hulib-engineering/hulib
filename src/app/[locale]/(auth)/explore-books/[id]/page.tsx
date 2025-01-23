@@ -4,6 +4,8 @@ import { useParams } from 'next/navigation';
 import * as React from 'react';
 
 import HumanBookInfo from '@/components/storyDetails/HumanBookInfo';
+import RatingOverview from '@/components/storyDetails/RatingOverview';
+import ReaderReview from '@/components/storyDetails/ReaderReview';
 import Story from '@/components/storyDetails/Story';
 import StoryDetailsSkeleton from '@/components/storyDetails/StoryDetailsSkeleton';
 import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
@@ -40,6 +42,10 @@ export default function Index() {
                 coverPath={data?.cover?.path}
               />
             </div>
+          </div>
+          <div className="flex w-full justify-between gap-x-5">
+            <ReaderReview />
+            <RatingOverview />
           </div>
         </div>
       </div>
