@@ -26,7 +26,7 @@ const Story = (props: Props) => {
         )}
       >
         <Image
-          src="/assets/images/image-test.jfif"
+          src="/assets/images/image-test.png"
           alt="book-image"
           width={275}
           height={368}
