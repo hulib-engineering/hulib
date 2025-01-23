@@ -1,8 +1,11 @@
 'use client';
 
-import { Brain, DotsThreeVertical, Heart } from '@phosphor-icons/react';
-import Image from 'next/image';
+import { Heart } from '@phosphor-icons/react';
 import * as React from 'react';
+
+import { useGetReviewsOverviewQuery } from '@/libs/services/modules/stories';
+
+import ReviewItem from './ReviewItem';
 
 const RateScore = ({ score, reviews }: { score: string; reviews: number }) => {
   const scoreNumber = parseFloat(score);
@@ -40,70 +43,44 @@ const RateChartItem = ({
           style={{ width: `${percentage}%` }}
         />
       </div>
-      <p>{percentage}%</p>
+      <p className="text-sm">{percentage}%</p>
     </div>
   );
 };
 
-const RateChart = () => {
+const RateChart = ({ histogram }: any) => {
   return (
     <div className="flex flex-col gap-y-2">
-      <RateChartItem score={5} percentage={100} />
-      <RateChartItem score={4} percentage={90} />
-      <RateChartItem score={3} percentage={88} />
-      <RateChartItem score={2} percentage={20} />
-      <RateChartItem score={1} percentage={13} />
+      {histogram?.map((rate: any) => (
+        <RateChartItem
+          key={`${rate?.rating}-${rate?.numberOfReviews}`}
+          score={rate?.rating}
+          percentage={rate?.numberOfReviews}
+        />
+      ))}
     </div>
   );
 };
 
-const ReviewItem = () => {
-  return (
-    <div className="flex flex-col gap-y-4 p-4">
-      <div className="flex w-full justify-between">
-        <div className="flex items-center gap-x-2">
-          <Image
-            src="/assets/images/user-avatar.jpeg"
-            alt="Avatar"
-            width={44}
-            height={44}
-            priority
-            className="rounded-full border-4 border-neutral-98 object-contain object-center"
-          />
-          <div className="flex flex-col">
-            <p className="text-sm font-normal text-[#000000]">Ngo Thanh Nhan</p>
-            <div className="flex items-center gap-x-2">
-              <div className="flex items-center gap-x-0.5">
-                <Heart size={16} color="#F3C00C" weight="fill" />
-                <Heart size={16} color="#F3C00C" weight="fill" />
-                <Heart size={16} color="#F3C00C" weight="fill" />
-                <Heart size={16} color="#F3C00C" weight="fill" />
-                <Heart size={16} color="#F3C00C" weight="fill" />
-              </div>
-              <p className="text-xs text-[#00000080]">25/03/1999</p>
-            </div>
-          </div>
-        </div>
-        <DotsThreeVertical size={16} color="#00000080" />
-      </div>
-      <div className=" flex flex-col gap-y-2">
-        <p className="text-base font-normal text-[#000000]">Give it a read</p>
-        <p className="text-sm font-normal text-[#000000]">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-          quos.
-        </p>
-      </div>
-    </div>
-  );
-};
+export interface Props {
+  id: number;
+}
 
-const RatingOverview = () => {
+const RatingOverview = ({ id }: Props) => {
+  const { data, isLoading } = useGetReviewsOverviewQuery({
+    id,
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="flex w-fit flex-col gap-4 rounded-3xl border border-solid p-6 shadow-[0px_0px_4px_0px_#0F0F100F]">
       <h6 className="text-xl font-bold text-neutral-20">Rating overview</h6>
-      <RateScore score="4.2" reviews={125} />
-      <RateChart />
-      <div className="flex flex-col gap-y-2">
+      <RateScore score={data?.rating} reviews={data?.numberOfReviews} />
+      <RateChart histogram={data?.histogram} />
+      {/* <div className="flex flex-col gap-y-2">
         <p>Areas consulted</p>
         <div
           className="flex w-fit cursor-pointer items-center justify-center gap-x-2 rounded-full bg-primary-50 px-3 py-2"
@@ -115,10 +92,10 @@ const RatingOverview = () => {
             Productivity
           </span>
         </div>
-      </div>
+      </div> */}
       <div className="flex flex-col gap-y-2">
         <p>Outstanding review</p>
-        <ReviewItem />
+        <ReviewItem {...data?.outStanding} />
       </div>
     </div>
   );

@@ -40,12 +40,13 @@ export default function Index() {
                 humanBook={data?.humanBook}
                 title={data?.title}
                 coverPath={data?.cover?.path}
+                abstract={data?.abstract || ''}
               />
             </div>
           </div>
           <div className="my-4 flex w-full justify-between gap-x-5">
             <ReaderReview id={Number(id)} />
-            <RatingOverview />
+            <RatingOverview id={Number(id)} />
           </div>
         </div>
       </div>

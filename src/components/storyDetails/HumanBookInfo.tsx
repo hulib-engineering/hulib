@@ -7,6 +7,7 @@ import React from 'react';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 
 import IconButton from '../iconButton/IconButton';
+import { mergeClassnames } from '../private/utils';
 
 interface Props {
   humanBook: {
@@ -17,9 +18,10 @@ interface Props {
   };
   title: string;
   coverPath: string;
+  abstract: string;
 }
 
-const HumanBookInfo = ({ humanBook, title, coverPath }: Props) => {
+const HumanBookInfo = ({ humanBook, title, coverPath, abstract }: Props) => {
   return (
     <div className="h-full w-full overflow-hidden rounded bg-white shadow-lg">
       <div className="px-6 py-4">
@@ -69,7 +71,15 @@ const HumanBookInfo = ({ humanBook, title, coverPath }: Props) => {
               </IconButton>
             ))}
           </div>
-          <p className="text-sm text-gray-700">{humanBook?.bio || ''}</p>
+
+          <p
+            className={mergeClassnames(
+              'mt-2 line-clamp-3 text-sm font-normal leading-6 text-gray-700',
+              'md:text-base md:line-clamp-5',
+            )}
+          >
+            {abstract || ''}
+          </p>
         </div>
       </div>
     </div>

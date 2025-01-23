@@ -30,3 +30,15 @@ export interface StoryReview {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface Histogram {
+  rating: number;
+  numberOfReviews: number;
+}
+
+export interface StoryReviewOverview {
+  rating: number;
+  numberOfReviews: number;
+  histogram: Histogram[];
+  outstanding: StoryReview;
+}
