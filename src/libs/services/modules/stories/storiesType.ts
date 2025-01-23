@@ -6,6 +6,10 @@ export interface StoriesParams {
   limit: number;
 }
 
+export interface StoryDetailsParams {
+  id: number;
+}
+
 export interface Story {
   id: number;
   abstract: string;
