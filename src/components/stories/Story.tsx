@@ -1,11 +1,13 @@
-import { Bookmarks, BookOpen } from '@phosphor-icons/react/dist/ssr';
+import { Bookmarks, BookOpen } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
+import { useAddStoryToFavoritesMutation } from '@/libs/services/modules/fav-stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
 import Button from '../button/Button';
+import { pushError } from '../CustomToastifyContainer';
 import { mergeClassnames } from '../private/utils';
 
 interface Props {
@@ -16,6 +18,18 @@ const Story = (props: Props) => {
   const { data } = props;
   const t = useTranslations('ExporeStory');
   const router = useRouter();
+
+  const [addStoryToFavorites] = useAddStoryToFavoritesMutation();
+
+  const handleAddToFavorites = async (storyId: number) => {
+    try {
+      // Call the mutation to add the story to favorites
+      await addStoryToFavorites({ storyId: storyId.toString() }).unwrap();
+    } catch (err) {
+      // Handle the error if mutation fails
+      pushError('Error adding story to favorites');
+    }
+  };
 
   return (
     <div className={mergeClassnames('flex w-full flex-row', 'h-[23rem]')}>
@@ -174,6 +188,7 @@ const Story = (props: Props) => {
               'md:size-11 md:min-h-11 md:min-w-11',
             )}
             iconOnly
+            onClick={() => handleAddToFavorites(data?.id)}
           >
             <Bookmarks size={20} />
           </Button>
