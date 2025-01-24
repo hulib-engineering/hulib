@@ -130,29 +130,7 @@ export const ProfileForm = () => {
               isError={!!errors.fullName}
               hintText={errors.fullName?.message}
               disabled={!isEditMode}
-            />
-          </fieldset>
-          <fieldset className="w-full">
-            <TextInput
-              type="date"
-              label="Date of birth"
-              {...register('birthday')}
-              disabled
-              isError={!!errors.birthday}
-              hintText={errors.birthday?.message}
-            />
-          </fieldset>
-        </Form.Item>
-        <Form.Item className="z-10 flex flex-col gap-2 lg:flex-row">
-          <fieldset className="w-full">
-            <TextInput
-              id="email"
-              type="email"
-              label="Email"
-              disabled
-              {...register('email')}
-              isError={!!errors.email}
-              hintText={errors.email?.message}
+              required
             />
           </fieldset>
           <fieldset className="w-full">
@@ -162,6 +140,30 @@ export const ProfileForm = () => {
               label="Gender"
               options={genders}
               disabled={!isEditMode}
+            />
+          </fieldset>
+        </Form.Item>
+        <Form.Item className="z-10 flex flex-col gap-2 lg:flex-row">
+          <fieldset className="w-full">
+            <TextInput
+              type="date"
+              label="Date of birth"
+              {...register('birthday')}
+              disabled={!isEditMode}
+              isError={!!errors.birthday}
+              hintText={errors.birthday?.message}
+              required
+            />
+          </fieldset>
+          <fieldset className="w-full">
+            <TextInput
+              id="email"
+              type="email"
+              label="Email"
+              disabled
+              {...register('email')}
+              isError={!!errors.email}
+              hintText={errors.email?.message}
             />
           </fieldset>
         </Form.Item>
