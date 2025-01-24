@@ -32,8 +32,17 @@ const Story = (props: Props) => {
           height={368}
           className="h-full w-full rounded-2xl"
         />
-        <div className="absolute left-2 top-2 z-40 rounded-full bg-[#C9ECFF] p-2 text-xs font-normal text-neutral-20">
-          {t('productivity')}
+        <div className="absolute left-2 top-2 z-40 flex flex-wrap gap-2">
+          {data?.topics.map((topic) => {
+            return (
+              <div
+                key={topic?.id}
+                className="rounded-full bg-[#C9ECFF] p-2 text-xs font-normal text-neutral-20"
+              >
+                {topic?.name || ''}
+              </div>
+            );
+          })}
         </div>
       </div>
       <div
@@ -74,14 +83,16 @@ const Story = (props: Props) => {
                 {data?.humanBook?.fullName}
               </div>
               <div className="flex flex-row items-center justify-center gap-1">
-                <div
-                  className={mergeClassnames(
-                    'text-[0.625rem] font-medium text-[#2E3032]',
-                    'md:text-sm',
-                  )}
-                >
-                  20
-                </div>
+                {data?.topics.length > 0 && (
+                  <div
+                    className={mergeClassnames(
+                      'text-[0.625rem] font-medium text-[#2E3032]',
+                      'md:text-sm',
+                    )}
+                  >
+                    {data?.topics.length}
+                  </div>
+                )}
                 <div
                   className={mergeClassnames(
                     'text-[0.625rem] font-normal leading-[0.875rem] text-neutral-40',
@@ -108,7 +119,7 @@ const Story = (props: Props) => {
               'md:text-sm',
             )}
           >
-            {data?.rating || 0}
+            {data?.storyReview?.rating || 0}
           </p>
           <p
             className={mergeClassnames(
@@ -116,7 +127,7 @@ const Story = (props: Props) => {
               'md:text-xs',
             )}
           >
-            {`40 ${t('ratings')}`}
+            {`(${data?.storyReview?.numberOfReviews || 0} ${t('ratings')})`}
           </p>
         </div>
         <div className="mt-4 gap-2 ">
