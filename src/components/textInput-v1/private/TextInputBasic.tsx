@@ -27,6 +27,7 @@ const TextInputBasic = forwardRef<HTMLInputElement, TextInputProps>(
       isTopBottomBorderHidden,
       isSideBorderHidden,
       bgColor = 'bg-goku',
+      required = false,
       ...rest
     } = props;
     const inputProps = {
@@ -40,6 +41,7 @@ const TextInputBasic = forwardRef<HTMLInputElement, TextInputProps>(
       isSharpBottomSide,
       isTopBottomBorderHidden,
       isSideBorderHidden,
+      required,
       ...rest,
     };
     return (
@@ -54,6 +56,7 @@ const TextInputBasic = forwardRef<HTMLInputElement, TextInputProps>(
             )}
           >
             {label}
+            {required && <span className="text-red-50">*</span>}
           </label>
         )}
         <Input
