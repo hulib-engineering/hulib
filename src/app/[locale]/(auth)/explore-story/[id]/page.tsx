@@ -41,6 +41,7 @@ export default function Index() {
                 title={data?.title}
                 coverPath={data?.cover?.path}
                 abstract={data?.abstract || ''}
+                storyReview={data?.storyReview}
               />
             </div>
           </div>
