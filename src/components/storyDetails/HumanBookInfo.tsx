@@ -19,9 +19,19 @@ interface Props {
   title: string;
   coverPath: string;
   abstract: string;
+  storyReview: {
+    rating: number;
+    numberOfReviews: number;
+  };
 }
 
-const HumanBookInfo = ({ humanBook, title, coverPath, abstract }: Props) => {
+const HumanBookInfo = ({
+  humanBook,
+  title,
+  coverPath,
+  abstract,
+  storyReview,
+}: Props) => {
   return (
     <div className="h-full w-full overflow-hidden rounded bg-white shadow-lg">
       <div className="px-6 py-4">
@@ -36,7 +46,7 @@ const HumanBookInfo = ({ humanBook, title, coverPath, abstract }: Props) => {
             icon={<BookmarkSimple size={16} />}
             className="bg-transparent text-base text-primary-50"
           >
-            Save for later
+            Save to Later
           </IconButton>
         </div>
         <div className="flex flex-col items-start justify-between px-3 py-1">
@@ -57,8 +67,10 @@ const HumanBookInfo = ({ humanBook, title, coverPath, abstract }: Props) => {
             )}
           </div>
           <div className="flex items-center gap-1 py-2 text-sm">
-            <span>⭐️ {humanBook?.rating || 0}</span>
-            <span className="ml-1 text-gray-500">(WIP)</span>
+            <span>⭐️ {storyReview?.rating || 0}</span>
+            <span className="ml-1 text-base text-gray-500">{`(${
+              storyReview?.numberOfReviews || 0
+            } reviews)`}</span>
           </div>
           <div>
             {humanBook?.topics?.map((topic) => (

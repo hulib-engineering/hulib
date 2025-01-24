@@ -11,14 +11,15 @@ const getStories = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       params: {
         page: params?.page || 1,
         limit: params?.limit || 10,
+        topicIds: params?.topicIds,
       },
     }),
-    serializeQueryArgs: ({ endpointName }) => {
-      return `${endpointName}`;
+    serializeQueryArgs: ({ endpointName, queryArgs }) => {
+      return `${endpointName}(${JSON.stringify(queryArgs?.topicIds)})`;
     },
     merge: (currentCache, newItems, { arg }) => {
       if (arg?.page === 1) {
-        return newItems;
+        return newItems; // Nếu topicIds thay đổi hoặc là trang đầu tiên, làm mới toàn bộ
       }
       return {
         ...newItems,
@@ -26,7 +27,12 @@ const getStories = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       };
     },
     forceRefetch: ({ currentArg, previousArg }) => {
-      return currentArg?.page !== previousArg?.page;
+      // Trigger lại fetch khi topicIds hoặc page thay đổi
+      return (
+        currentArg?.page !== previousArg?.page ||
+        JSON.stringify(currentArg?.topicIds) !==
+          JSON.stringify(previousArg?.topicIds)
+      );
     },
     providesTags: (result) =>
       result

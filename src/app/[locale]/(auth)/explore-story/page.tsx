@@ -1,8 +1,9 @@
 'use client';
 
 import { CaretCircleDown } from '@phosphor-icons/react/dist/ssr';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
@@ -14,11 +15,25 @@ import type { Story as StoryType } from '@/libs/services/modules/stories/stories
 
 const Page = () => {
   const t = useTranslations('ExporeStory');
+  const searchParams = useSearchParams();
 
-  const { data: storiesPages, isLoading } = useGetStoriesQuery({
+  const topicIds = searchParams.get('topicIds'); // Get topicIds from the URL query string
+
+  const {
+    data: storiesPages,
+    isLoading,
+    refetch,
+  } = useGetStoriesQuery({
     page: 1,
     limit: 5,
+    topicIds: topicIds ? topicIds.split(',').map(Number) : undefined,
   });
+
+  useEffect(() => {
+    if (topicIds) {
+      refetch();
+    }
+  }, [topicIds]);
 
   return (
     <div

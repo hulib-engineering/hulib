@@ -34,6 +34,7 @@ export default withSentryConfig(
         return config;
       },
       images: {
+        domains: ['example.com'],
         remotePatterns: [
           {
             protocol: 'http',
