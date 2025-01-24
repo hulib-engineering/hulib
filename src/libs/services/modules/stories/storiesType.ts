@@ -1,9 +1,11 @@
 import type { FileType } from '../files/fileType';
+import type { Topic } from '../topics/topicType';
 import type { User } from '../user/userType';
 
 export interface StoriesParams {
   page: number;
   limit: number;
+  topicIds?: string[] | undefined;
 }
 
 export interface StoryDetailsParams {
@@ -17,6 +19,8 @@ export interface Story {
   cover: FileType;
   humanBook: User;
   rating: number;
+  topics: Topic[];
+  storyReview: StoryReview;
   createdAt?: string | undefined;
   updatedAt?: string | undefined;
 }
@@ -24,6 +28,7 @@ export interface Story {
 export interface StoryReview {
   id: number;
   rating: number;
+  numberOfReviews: number;
   title: string;
   comment: string;
   user: User;
