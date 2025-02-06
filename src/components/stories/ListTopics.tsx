@@ -52,7 +52,7 @@ const ListTopics = () => {
       {isLoading ? (
         <TopicsSkeleton />
       ) : (
-        topics.map((topic) => (
+        (topics || []).map((topic) => (
           <Topic
             key={topic?.name}
             name={topic?.name}
