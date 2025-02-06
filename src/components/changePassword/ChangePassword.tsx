@@ -22,6 +22,7 @@ const ChangePassword = () => {
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors, isValid },
   } = useForm<z.infer<typeof ChangePasswordValidation>>({
     resolver: zodResolver(ChangePasswordValidation),
@@ -44,10 +45,18 @@ const ChangePassword = () => {
         confirmPassword: data.confirmPassword,
       });
       if (!isEmpty(rs.error)) {
+        setError('oldPassword', {
+          type: 'custom',
+          message: 'Incorrect password, please try again.',
+        });
         return pushError(`Error: Change password failed.`);
       }
       return pushSuccess('Change password successfully');
     } catch (error: any) {
+      setError('oldPassword', {
+        type: 'custom',
+        message: 'Incorrect password, please try again.',
+      });
       return pushError(`Error: Change password failed.`);
     }
   });
