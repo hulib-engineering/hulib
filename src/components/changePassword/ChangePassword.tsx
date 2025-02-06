@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye } from '@phosphor-icons/react';
+import { isEmpty } from 'lodash';
 import * as React from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -37,11 +38,14 @@ const ChangePassword = () => {
   const onHandleSubmit = handleSubmit(async (data) => {
     setIsOpen(!isOpen);
     try {
-      await changePassword({
+      const rs = await changePassword({
         currentPassword: data.oldPassword,
         newPassword: data.newPassword,
         confirmPassword: data.confirmPassword,
       });
+      if (!isEmpty(rs.error)) {
+        return pushError(`Error: Change password failed.`);
+      }
       return pushSuccess('Change password successfully');
     } catch (error: any) {
       return pushError(`Error: Change password failed.`);
