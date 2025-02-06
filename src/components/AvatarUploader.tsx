@@ -1,6 +1,6 @@
 'use client';
 
-import { Trash, UploadSimple } from '@phosphor-icons/react';
+import { UploadSimple } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import type { ChangeEvent } from 'react';
@@ -56,9 +56,11 @@ const AvatarUploader = () => {
       }
     }
   };
-  const handleRemovingAvatar = () => {
-    dispatch(setAvatarUrl({ id: '', path: '' }));
-  };
+
+  // TODO: Hide delete avatar button
+  // const handleRemovingAvatar = () => {
+  //   dispatch(setAvatarUrl({ id: '', path: '' }));
+  // };
 
   return (
     <div className="flex w-full flex-col items-center gap-5">
@@ -92,15 +94,16 @@ const AvatarUploader = () => {
         >
           {t('upload')}
         </Button>
-        <Button
-          size="sm"
-          iconLeft={<Trash />}
-          variant="ghost"
-          className="capitalize text-neutral-40"
-          onClick={handleRemovingAvatar}
-        >
-          {t('delete_ava')}
-        </Button>
+        {/* TODO: Hide delete avatar button */}
+        {/* <Button */}
+        {/*  size="sm" */}
+        {/*  iconLeft={<Trash />} */}
+        {/*  variant="ghost" */}
+        {/*  className="capitalize text-neutral-40" */}
+        {/*  onClick={handleRemovingAvatar} */}
+        {/* > */}
+        {/*  {t('delete_ava')} */}
+        {/* </Button> */}
       </div>
     </div>
   );

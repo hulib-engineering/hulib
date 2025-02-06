@@ -191,7 +191,7 @@ const Header = () => {
         </div>
         <div className="flex flex-col gap-2">
           <SearchEverything />
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-x-2">
             {user && user?.id && (
               <Button variant="ghost" size="lg" className="text-neutral-10">
                 My schedule
@@ -211,7 +211,7 @@ const Header = () => {
       <header className="hidden w-full items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
         <div className="flex items-center gap-6">
           <Logo size="small" />
-          <div className="flex items-center">
+          <div className="flex items-center gap-x-2">
             {user && user?.id && (
               <Button variant="ghost" size="lg" className="text-neutral-10">
                 My schedule
