@@ -47,7 +47,7 @@ const Story = (props: Props) => {
           className="h-full w-full rounded-2xl"
         />
         <div className="absolute left-2 top-2 z-40 flex flex-wrap gap-2">
-          {data?.topics.map((topic) => {
+          {data?.topics?.map((topic) => {
             return (
               <div
                 key={topic?.id}
@@ -97,14 +97,14 @@ const Story = (props: Props) => {
                 {data?.humanBook?.fullName}
               </div>
               <div className="flex flex-row items-center justify-center gap-1">
-                {data?.topics.length > 0 && (
+                {data?.topics?.length > 0 && (
                   <div
                     className={mergeClassnames(
                       'text-[0.625rem] font-medium text-[#2E3032]',
                       'md:text-sm',
                     )}
                   >
-                    {data?.topics.length}
+                    {data?.topics?.length || 0}
                   </div>
                 )}
                 <div
