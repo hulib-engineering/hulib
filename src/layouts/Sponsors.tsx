@@ -128,6 +128,21 @@ const SponsorList = [
     tooltipKey: 'technology_sponsor',
     refUrl: 'https://www.kip.pro',
   },
+  {
+    name: 'UNESCO',
+    logoUrl: '/assets/images/sponsors/UNESCO.png',
+    type: 'diamond-sponsor',
+    tooltipKey: 'diamond_sponsor',
+    refUrl:
+      'https://www.unesco.org/en/articles/unesco-and-seventeen-award-grants-100-youth-led-projects-around-world?hub=701',
+  },
+  {
+    name: 'YOUTHXYOUTH',
+    logoUrl: '/assets/images/sponsors/YOUTHXYOUTH.png',
+    type: 'gold-sponsor',
+    tooltipKey: 'gold_sponsor',
+    refUrl: 'https://www.youthxyouth.com/',
+  },
 ] as const;
 
 const Sponsors = () => {
