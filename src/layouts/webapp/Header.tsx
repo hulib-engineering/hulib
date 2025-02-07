@@ -203,7 +203,7 @@ const Header = () => {
               </Button>
             </Link>
             <Button variant="ghost" size="lg" className="text-neutral-10">
-              Mentors
+              Hubers
             </Button>
           </div>
         </div>
@@ -223,7 +223,7 @@ const Header = () => {
               </Button>
             </Link>
             <Button variant="ghost" size="lg" className="text-neutral-10">
-              Mentors
+              Hubers
             </Button>
           </div>
         </div>
