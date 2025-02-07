@@ -181,7 +181,8 @@ export const ProfileForm = () => {
             {watch('isUnderGuard') ? (
               <TextInput
                 id="parentPhoneNumber"
-                type="tel"
+                type="number"
+                pattern="^[0-9-+\s()]*$"
                 label="Your Guardian Phone Number"
                 placeholder="Ex: 012 345 678"
                 {...register('parentPhoneNumber')}
@@ -192,7 +193,8 @@ export const ProfileForm = () => {
               />
             ) : (
               <TextInput
-                type="tel"
+                type="number"
+                pattern="^[0-9-+\s()]*$"
                 label="Phone Number"
                 placeholder="Ex: 012 345 678"
                 {...register('phoneNumber')}

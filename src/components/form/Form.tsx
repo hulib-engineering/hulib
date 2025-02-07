@@ -50,7 +50,7 @@ const Item = ({
     <ItemContext.Provider value={state}>
       <div
         className={mergeClassnames(
-          'w-full max-w-full relative z-0',
+          'w-full max-w-full relative',
           disabled && 'opacity-60 cursor-not-allowed',
           className && className,
         )}
