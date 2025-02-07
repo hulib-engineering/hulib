@@ -138,7 +138,7 @@ const SponsorList = [
   },
   {
     name: 'YOUTHXYOUTH',
-    logoUrl: '/assets/images/sponsors/YOUTHXYOUTH.png',
+    logoUrl: '/assets/images/sponsors/YOUTHXYOUTH.PNG',
     type: 'gold-sponsor',
     tooltipKey: 'gold_sponsor',
     refUrl: 'https://www.youthxyouth.com/',
