@@ -111,8 +111,8 @@ const Options = ({
       {...popper?.attributes?.popper}
       className={mergeClassnames(
         menuWidth || 'w-full min-w-[7.25rem]',
-        'z-[999] mt-1 p-2 rounded-2xl box-border bg-white shadow-lg',
-        'flex flex-col gap-1',
+        'z-[999] p-2 rounded-2xl box-border bg-white shadow-2xl',
+        'flex flex-col gap-1 !my-3',
         className && className,
       )}
       {...rest}
