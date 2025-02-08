@@ -1,7 +1,7 @@
 import { DotsThreeVertical, Heart } from '@phosphor-icons/react';
 import Image from 'next/image';
 
-import type { StoryReview } from '@/libs/services/modules/stories/storiesType';
+import type { StoryReview } from '@/libs/services/modules/story-reviews/storyReviewsType';
 
 const ReviewItem = (params: StoryReview) => {
   return (
@@ -24,7 +24,7 @@ const ReviewItem = (params: StoryReview) => {
               <div className="flex items-center gap-x-0.5">
                 {[...Array(5)].map((_, index) => (
                   <Heart
-                    key={`heart-${params?.id}-${index}`}
+                    key={`heart-${params?.id}`}
                     size={16}
                     color={
                       index < Math.floor(params?.rating ?? 0)

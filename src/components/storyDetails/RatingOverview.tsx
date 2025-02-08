@@ -11,7 +11,7 @@ const RateScore = ({ score, reviews }: { score: string; reviews: number }) => {
   const scoreNumber = parseFloat(score);
   return (
     <div className="flex items-center gap-x-2 py-4">
-      <h6>{scoreNumber.toFixed(1)}</h6>
+      {scoreNumber > 0 && <h6>{scoreNumber.toFixed(1)}</h6>}
       <div className="flex items-center gap-x-0.5">
         <Heart size={24} color="#F3C00C" weight="fill" />
         <Heart size={24} color="#F3C00C" weight="fill" />
@@ -67,16 +67,14 @@ export interface Props {
 }
 
 const RatingOverview = ({ id }: Props) => {
-  const { data, isLoading } = useGetReviewsOverviewQuery({
-    id,
-  });
+  const { data, isLoading } = useGetReviewsOverviewQuery(id);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="flex w-fit flex-col gap-4 rounded-3xl border border-solid p-6 shadow-[0px_0px_4px_0px_#0F0F100F]">
+    <div className="flex w-full flex-col gap-4 rounded-3xl border border-solid p-6 shadow-[0px_0px_4px_0px_#0F0F100F] md:w-1/4">
       <h6 className="text-xl font-bold text-neutral-20">Rating overview</h6>
       <RateScore score={data?.rating} reviews={data?.numberOfReviews} />
       <RateChart histogram={data?.histogram} />
