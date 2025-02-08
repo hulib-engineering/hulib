@@ -1,4 +1,5 @@
 import type { FileType } from '../files/fileType';
+import type { StoryReview } from '../story-reviews/storyReviewsType';
 import type { Topic } from '../topics/topicType';
 import type { User } from '../user/userType';
 
@@ -26,23 +27,12 @@ export interface Story {
   updatedAt?: string | undefined;
 }
 
-export interface StoryReview {
-  id: number;
-  rating: number;
-  numberOfReviews: number;
-  title: string;
-  comment: string;
-  user: User;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
 export interface Histogram {
   rating: number;
   numberOfReviews: number;
 }
 
-export interface StoryReviewOverview {
+export interface StoryReviewsOverview {
   rating: number;
   numberOfReviews: number;
   histogram: Histogram[];
