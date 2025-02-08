@@ -45,8 +45,8 @@ export default function Index() {
               />
             </div>
           </div>
-          <div className="my-4 flex w-full justify-between gap-x-5">
-            <ReaderReview id={Number(id)} />
+          <div className="my-4 flex w-full flex-col justify-between gap-5 md:flex-row">
+            <ReaderReview storyId={Number(id)} />
             <RatingOverview id={Number(id)} />
           </div>
         </div>

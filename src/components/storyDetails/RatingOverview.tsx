@@ -74,7 +74,7 @@ const RatingOverview = ({ id }: Props) => {
   }
 
   return (
-    <div className="flex w-fit flex-col gap-4 rounded-3xl border border-solid p-6 shadow-[0px_0px_4px_0px_#0F0F100F]">
+    <div className="flex w-full flex-col gap-4 rounded-3xl border border-solid p-6 shadow-[0px_0px_4px_0px_#0F0F100F] md:w-1/4">
       <h6 className="text-xl font-bold text-neutral-20">Rating overview</h6>
       <RateScore score={data?.rating} reviews={data?.numberOfReviews} />
       <RateChart histogram={data?.histogram} />
