@@ -42,7 +42,7 @@ export interface Histogram {
   numberOfReviews: number;
 }
 
-export interface StoryReviewOverview {
+export interface StoryReviewsOverview {
   rating: number;
   numberOfReviews: number;
   histogram: Histogram[];

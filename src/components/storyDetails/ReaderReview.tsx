@@ -13,9 +13,7 @@ interface ReaderReviewProps {
 }
 
 const ReaderReview = ({ id }: ReaderReviewProps) => {
-  const { data, isLoading } = useGetReviewsByStoryQuery({
-    id,
-  });
+  const { data, isLoading } = useGetReviewsByStoryQuery(id);
 
   const [isExpanded, setIsExpanded] = React.useState(false);
   const REVIEWS_SHOW = 4;
