@@ -2,10 +2,17 @@ import type { FileType } from '../files/fileType';
 import type { Topic } from '../topics/topicType';
 import type { User } from '../user/userType';
 
+export interface SimilarStoriesParams {
+  page: number;
+  limit: number;
+  humanBookId?: string;
+  topicIds?: string[];
+}
+
 export interface StoriesParams {
   page: number;
   limit: number;
-  topicIds?: string[] | undefined;
+  topicIds?: string[];
 }
 
 export interface StoryDetailsParams {

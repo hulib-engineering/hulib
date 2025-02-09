@@ -1,27 +1,20 @@
 'use client';
 
-import { CaretCircleDown } from '@phosphor-icons/react/dist/ssr';
 import { useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react';
 
-import Button from '@/components/button/Button';
+import ExporeStory from '@/components/exploreStory/ExploreStory';
 import { mergeClassnames } from '@/components/private/utils';
-import ListTopics from '@/components/stories/ListTopics';
-import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
-import Story from '@/components/stories/Story';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
-import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
 const Page = () => {
-  const t = useTranslations('ExporeStory');
   const searchParams = useSearchParams();
 
   const topicIds = searchParams.get('topicIds'); // Get topicIds from the URL query string
 
   const {
     data: storiesPages,
-    isLoading,
+    isLoading: loadingStories,
     refetch,
   } = useGetStoriesQuery({
     page: 1,
@@ -47,45 +40,10 @@ const Page = () => {
           'md:px-28',
         )}
       >
-        <div
-          className={mergeClassnames(
-            'h-full w-full rounded-lg bg-white px-2 py-5',
-            'md:px-5 md:py-5',
-          )}
-        >
-          <div>
-            <h3 className="text-[2.5rem] font-bold leading-[3rem] text-neutral-20">
-              {t('title')}
-            </h3>
-            <p className="text-lg font-normal text-[#2E3032]">
-              {t('description')}
-            </p>
-          </div>
-          <ListTopics />
-          <div
-            className={mergeClassnames(
-              'mt-6 grid grid-cols-1 gap-8',
-              'md:grid-cols-2',
-            )}
-          >
-            {isLoading ? (
-              <StoriesSkeleton />
-            ) : (
-              storiesPages?.data?.map((story: StoryType) => (
-                <Story key={story?.id} data={story} />
-              ))
-            )}
-          </div>
-
-          <div className="mt-6 flex w-full items-center justify-center">
-            <Button
-              variant="outline"
-              iconLeft={<CaretCircleDown size={16} color="#0442BF" />}
-            >
-              {t('view_more')}
-            </Button>
-          </div>
-        </div>
+        <ExporeStory
+          storiesPages={storiesPages?.data}
+          isLoading={loadingStories}
+        />
       </div>
     </div>
   );
