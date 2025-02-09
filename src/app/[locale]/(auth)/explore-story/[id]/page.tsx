@@ -3,6 +3,7 @@
 import { useParams } from 'next/navigation';
 import * as React from 'react';
 
+import SimilarStory from '@/components/exploreStory/SimilarStory';
 import HumanBookInfo from '@/components/storyDetails/HumanBookInfo';
 import RatingOverview from '@/components/storyDetails/RatingOverview';
 import ReaderReview from '@/components/storyDetails/ReaderReview';
@@ -12,6 +13,7 @@ import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
 
 export default function Index() {
   const { id } = useParams();
+
   const { data, isLoading } = useGetStoryDetailQuery({
     id: Number(id), // id is a string, so we need to convert it to a number
   });
@@ -51,6 +53,7 @@ export default function Index() {
           </div>
         </div>
       </div>
+      {data?.humanBook?.id && <SimilarStory humanBookId={data.humanBook.id} />}
     </div>
   );
 }
