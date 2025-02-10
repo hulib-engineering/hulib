@@ -53,7 +53,16 @@ export default function Index() {
           </div>
         </div>
       </div>
-      {data?.humanBook?.id && <SimilarStory humanBookId={data.humanBook.id} />}
+      {data?.humanBook?.id && (
+        <SimilarStory
+          humanBookId={data.humanBook.id}
+          topicIds={
+            data?.topics?.length > 0
+              ? data?.topics?.map((topic: { id: number }) => topic.id)
+              : []
+          }
+        />
+      )}
     </div>
   );
 }

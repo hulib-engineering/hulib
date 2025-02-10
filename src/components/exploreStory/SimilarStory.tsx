@@ -1,7 +1,8 @@
 'use client';
 
-import { CaretCircleDown } from '@phosphor-icons/react';
+import { CaretCircleDown, CaretCircleUp } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
+import * as React from 'react';
 
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
@@ -12,17 +13,32 @@ import type { Story as StoryType } from '@/libs/services/modules/stories/stories
 
 type SimilarStoryProps = {
   humanBookId: string;
+  topicIds: string[] | number[];
 };
 
-const SimilarStory = ({ humanBookId }: SimilarStoryProps) => {
+const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
   const t = useTranslations('ExporeStory');
+
+  const [isExpandList, setIsExpandList] = React.useState(false);
 
   const { data: similarStoriesPages, isLoading: loadingSimilarStories } =
     useGetSimilarStoriesQuery({
       page: 1,
-      limit: 5,
+      limit: 0,
       humanBookId,
+      topicIds,
     });
+
+  const onClickSeeAll = () => {
+    setIsExpandList(!isExpandList);
+  };
+
+  const renderSimilarStory = (story: StoryType, index: number) => {
+    if (isExpandList || (!isExpandList && index <= 3)) {
+      return <Story key={story?.id} data={story} />;
+    }
+    return null;
+  };
 
   if (loadingSimilarStories) return <StoriesSkeleton />;
 
@@ -42,17 +58,24 @@ const SimilarStory = ({ humanBookId }: SimilarStoryProps) => {
           'md:grid-cols-2',
         )}
       >
-        {similarStoriesPages?.data?.map((story: StoryType) => (
-          <Story key={story?.id} data={story} />
-        ))}
+        {similarStoriesPages?.data?.map((story: StoryType, index: number) => {
+          return renderSimilarStory(story, index);
+        })}
       </div>
 
       <div className="mt-6 flex w-full items-center justify-center">
         <Button
           variant="outline"
-          iconLeft={<CaretCircleDown size={16} color="#0442BF" />}
+          iconLeft={
+            isExpandList ? (
+              <CaretCircleUp size={16} color="#0442BF" />
+            ) : (
+              <CaretCircleDown size={16} color="#0442BF" />
+            )
+          }
+          onClick={onClickSeeAll}
         >
-          {t('view_more')}
+          {t(isExpandList ? 'hide_all' : 'see_all')}
         </Button>
       </div>
     </div>

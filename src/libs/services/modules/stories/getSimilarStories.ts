@@ -15,14 +15,18 @@ const getSimilarStories = (
         limit: params?.limit || 10,
         humanBookId: params?.humanBookId,
         topicIds: params?.topicIds,
+        'sort[orderBy]': 'title',
+        'sort[order]': 'ASC',
       },
     }),
     serializeQueryArgs: ({ endpointName, queryArgs }) => {
-      return `${endpointName}(${JSON.stringify(queryArgs?.topicIds)})`;
+      return `${endpointName}?humanBookId=${queryArgs?.humanBookId}&topicIds=${JSON.stringify(
+        queryArgs?.topicIds,
+      )}&sort[orderBy]=title&sort[order]=ASC`;
     },
     merge: (currentCache, newItems, { arg }) => {
       if (arg?.page === 1) {
-        return newItems; // Nếu topicIds thay đổi hoặc là trang đầu tiên, làm mới toàn bộ
+        return newItems; // Nếu page là trang đầu tiên làm mới toàn bộ
       }
       return {
         ...newItems,
@@ -30,13 +34,8 @@ const getSimilarStories = (
       };
     },
     forceRefetch: ({ currentArg, previousArg }) => {
-      // Trigger lại fetch khi topicIds hoặc page, humanBookId thay đổi
-      return (
-        currentArg?.page !== previousArg?.page ||
-        JSON.stringify(currentArg?.topicIds) !==
-          JSON.stringify(previousArg?.topicIds) ||
-        currentArg?.humanBookId !== previousArg?.humanBookId
-      );
+      // Trigger lại fetch khi page thay đổi
+      return currentArg?.page !== previousArg?.page;
     },
     providesTags: (result) =>
       result
