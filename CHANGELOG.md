@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/HumanLibrary/hulib/compare/v1.8.3...v1.9.0) (2025-02-10)
+
+
+### Features
+
+* **sponsors:** add UNESCO logo image ([3ac0f71](https://github.com/HumanLibrary/hulib/commit/3ac0f714fcabbcfd190ec758c29ec034c7844dda))
+
 ## [1.8.3](https://github.com/HumanLibrary/hulib/compare/v1.8.2...v1.8.3) (2025-01-05)
 
 
