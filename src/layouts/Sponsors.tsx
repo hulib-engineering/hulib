@@ -114,19 +114,34 @@ const SponsorList = [
     tooltipKey: 'scholarship_sponsor',
     refUrl: 'https://ieltsonlinetests.com',
   },
-  {
-    name: 'JCI',
-    logoUrl: '/assets/images/sponsors/JCI.png',
-    type: 'media-sponsor',
-    tooltipKey: 'media_support',
-    refUrl: 'https://jci.vn/category/chapters/jci-danang',
-  },
+  // {
+  //   name: 'JCI',
+  //   logoUrl: '/assets/images/sponsors/JCI.png',
+  //   type: 'media-sponsor',
+  //   tooltipKey: 'media_support',
+  //   refUrl: 'https://jci.vn/category/chapters/jci-danang',
+  // },
   {
     name: 'KIP',
     logoUrl: '/assets/images/sponsors/KIP.png',
     type: 'technology-sponsor',
     tooltipKey: 'technology_sponsor',
     refUrl: 'https://www.kip.pro',
+  },
+  {
+    name: 'UNESCO',
+    logoUrl: '/assets/images/sponsors/UNESCO.png',
+    type: 'diamond-sponsor',
+    tooltipKey: 'diamond_sponsor',
+    refUrl:
+      'https://www.unesco.org/en/articles/unesco-and-seventeen-award-grants-100-youth-led-projects-around-world?hub=701',
+  },
+  {
+    name: 'YOUTHXYOUTH',
+    logoUrl: '/assets/images/sponsors/YOUTHXYOUTH.png',
+    type: 'gold-sponsor',
+    tooltipKey: 'gold_sponsor',
+    refUrl: 'https://www.youthxyouth.com/',
   },
 ] as const;
 
