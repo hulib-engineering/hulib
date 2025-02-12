@@ -12,7 +12,7 @@ const getSimilarStories = (
       url: 'stories',
       params: {
         page: params?.page || 1,
-        limit: params?.limit || 10,
+        limit: params?.limit,
         humanBookId: params?.humanBookId,
         topicIds: params?.topicIds,
         'sort[orderBy]': 'title',
@@ -22,20 +22,10 @@ const getSimilarStories = (
     serializeQueryArgs: ({ endpointName, queryArgs }) => {
       return `${endpointName}?humanBookId=${queryArgs?.humanBookId}&topicIds=${JSON.stringify(
         queryArgs?.topicIds,
-      )}&sort[orderBy]=title&sort[order]=ASC`;
-    },
-    merge: (currentCache, newItems, { arg }) => {
-      if (arg?.page === 1) {
-        return newItems; // Nếu page là trang đầu tiên làm mới toàn bộ
-      }
-      return {
-        ...newItems,
-        data: [...currentCache.data, ...newItems.data],
-      };
+      )}&limit=${queryArgs?.limit}&sort[orderBy]=title&sort[order]=ASC`;
     },
     forceRefetch: ({ currentArg, previousArg }) => {
-      // Trigger lại fetch khi page thay đổi
-      return currentArg?.page !== previousArg?.page;
+      return currentArg?.limit !== previousArg?.limit;
     },
     providesTags: (result) =>
       result

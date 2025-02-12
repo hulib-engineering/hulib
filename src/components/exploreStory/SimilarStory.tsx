@@ -20,27 +20,29 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
   const t = useTranslations('ExporeStory');
 
   const [isExpandList, setIsExpandList] = React.useState(false);
+  const [limit, setLimit] = React.useState(4);
 
-  const { data: similarStoriesPages, isLoading: loadingSimilarStories } =
-    useGetSimilarStoriesQuery({
-      page: 1,
-      limit: 0,
-      humanBookId,
-      topicIds,
-    });
+  // Fetch 4 stories initially, fetch all when expanded
+  const { data: similarStoriesPages, isLoading } = useGetSimilarStoriesQuery({
+    page: 1,
+    limit,
+    humanBookId,
+    topicIds,
+  });
 
   const onClickSeeAll = () => {
-    setIsExpandList(!isExpandList);
+    setIsExpandList((prev) => !prev);
   };
 
-  const renderSimilarStory = (story: StoryType, index: number) => {
-    if (isExpandList || (!isExpandList && index <= 3)) {
-      return <Story key={story?.id} data={story} />;
+  React.useEffect(() => {
+    if (isExpandList) {
+      setLimit(0);
+    } else {
+      setLimit(4);
     }
-    return null;
-  };
+  }, [isExpandList]);
 
-  if (loadingSimilarStories) return <StoriesSkeleton />;
+  if (isLoading) return <StoriesSkeleton />;
 
   return (
     <div
@@ -58,26 +60,29 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
           'md:grid-cols-2',
         )}
       >
-        {similarStoriesPages?.data?.map((story: StoryType, index: number) => {
-          return renderSimilarStory(story, index);
-        })}
+        {similarStoriesPages?.data?.map((story: StoryType) => (
+          <Story key={story?.id} data={story} />
+        ))}
       </div>
 
-      <div className="mt-6 flex w-full items-center justify-center">
-        <Button
-          variant="outline"
-          iconLeft={
-            isExpandList ? (
-              <CaretCircleUp size={16} color="#0442BF" />
-            ) : (
-              <CaretCircleDown size={16} color="#0442BF" />
-            )
-          }
-          onClick={onClickSeeAll}
-        >
-          {t(isExpandList ? 'hide_all' : 'see_all')}
-        </Button>
-      </div>
+      {(limit === 4 && similarStoriesPages?.hasNextPage) ||
+      (limit === 0 && !similarStoriesPages?.hasNextPage) ? (
+        <div className="mt-6 flex w-full items-center justify-center">
+          <Button
+            variant="outline"
+            iconLeft={
+              limit === 0 ? (
+                <CaretCircleUp size={16} color="#0442BF" />
+              ) : (
+                <CaretCircleDown size={16} color="#0442BF" />
+              )
+            }
+            onClick={onClickSeeAll}
+          >
+            {limit === 0 ? t('hide_all') : t('see_all')}
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 };
