@@ -7,7 +7,7 @@ export interface SimilarStoriesParams {
   page: number;
   limit: number;
   humanBookId?: string;
-  topicIds?: string[];
+  topicIds?: string[] | number[];
 }
 
 export interface StoriesParams {
