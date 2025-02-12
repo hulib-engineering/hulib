@@ -1,7 +1,8 @@
 'use client';
 
-import { CaretCircleDown } from '@phosphor-icons/react';
+import { CaretCircleDown, CaretCircleUp } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
+import * as React from 'react';
 
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
@@ -12,19 +13,36 @@ import type { Story as StoryType } from '@/libs/services/modules/stories/stories
 
 type SimilarStoryProps = {
   humanBookId: string;
+  topicIds: string[] | number[];
 };
 
-const SimilarStory = ({ humanBookId }: SimilarStoryProps) => {
+const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
   const t = useTranslations('ExporeStory');
 
-  const { data: similarStoriesPages, isLoading: loadingSimilarStories } =
-    useGetSimilarStoriesQuery({
-      page: 1,
-      limit: 5,
-      humanBookId,
-    });
+  const [isExpandList, setIsExpandList] = React.useState(false);
+  const [limit, setLimit] = React.useState(4);
 
-  if (loadingSimilarStories) return <StoriesSkeleton />;
+  // Fetch 4 stories initially, fetch all when expanded
+  const { data: similarStoriesPages, isLoading } = useGetSimilarStoriesQuery({
+    page: 1,
+    limit,
+    humanBookId,
+    topicIds,
+  });
+
+  const onClickSeeAll = () => {
+    setIsExpandList((prev) => !prev);
+  };
+
+  React.useEffect(() => {
+    if (isExpandList) {
+      setLimit(0);
+    } else {
+      setLimit(4);
+    }
+  }, [isExpandList]);
+
+  if (isLoading) return <StoriesSkeleton />;
 
   return (
     <div
@@ -47,14 +65,24 @@ const SimilarStory = ({ humanBookId }: SimilarStoryProps) => {
         ))}
       </div>
 
-      <div className="mt-6 flex w-full items-center justify-center">
-        <Button
-          variant="outline"
-          iconLeft={<CaretCircleDown size={16} color="#0442BF" />}
-        >
-          {t('view_more')}
-        </Button>
-      </div>
+      {(limit === 4 && similarStoriesPages?.hasNextPage) ||
+      (limit === 0 && !similarStoriesPages?.hasNextPage) ? (
+        <div className="mt-6 flex w-full items-center justify-center">
+          <Button
+            variant="outline"
+            iconLeft={
+              limit === 0 ? (
+                <CaretCircleUp size={16} color="#0442BF" />
+              ) : (
+                <CaretCircleDown size={16} color="#0442BF" />
+              )
+            }
+            onClick={onClickSeeAll}
+          >
+            {limit === 0 ? t('hide_all') : t('see_all')}
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 };
