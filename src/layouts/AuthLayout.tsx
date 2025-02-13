@@ -32,7 +32,7 @@ const AuthLayout = (props: IAuthLayoutProps) => {
           height={1024}
         />
       </div>
-      <div className="h-full w-full bg-white p-12 sm:h-5/6 sm:w-3/4 sm:rounded-[26px] md:w-7/12 xl:h-full xl:p-0">
+      <div className="h-full w-full bg-white p-12 sm:h-fit sm:w-3/4 sm:rounded-[26px] md:w-7/12 xl:h-full xl:p-0">
         <div className="m-auto flex h-full w-full flex-col items-center justify-center gap-8 sm:w-5/6 xl:w-7/12">
           <Logo />
           {props.children}
