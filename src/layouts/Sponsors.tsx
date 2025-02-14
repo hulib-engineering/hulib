@@ -114,13 +114,13 @@ const SponsorList = [
     tooltipKey: 'scholarship_sponsor',
     refUrl: 'https://ieltsonlinetests.com',
   },
-  {
-    name: 'JCI',
-    logoUrl: '/assets/images/sponsors/JCI.png',
-    type: 'media-sponsor',
-    tooltipKey: 'media_support',
-    refUrl: 'https://jci.vn/category/chapters/jci-danang',
-  },
+  // {
+  //   name: 'JCI',
+  //   logoUrl: '/assets/images/sponsors/JCI.png',
+  //   type: 'media-sponsor',
+  //   tooltipKey: 'media_support',
+  //   refUrl: 'https://jci.vn/category/chapters/jci-danang',
+  // },
   {
     name: 'KIP',
     logoUrl: '/assets/images/sponsors/KIP.png',
