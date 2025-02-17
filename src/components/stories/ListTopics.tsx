@@ -10,7 +10,12 @@ import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import Topic from './Topic';
 import TopicsSkeleton from './TopicsSkeleton';
 
-const ListTopics = () => {
+interface Props {
+  currentPathName?: 'explore-story' | 'home';
+}
+
+const ListTopics = (props: Props) => {
+  const { currentPathName = 'explore-story' } = props;
   const router = useRouter();
   const { topicIds } = useParams();
   const [selectedCategories, setSelectedCategories] = React.useState<number[]>(
@@ -41,9 +46,11 @@ const ListTopics = () => {
 
   useEffect(() => {
     if (selectedCategories.length === 0) {
-      router.push('/explore-story');
+      router.push(currentPathName);
     } else {
-      router.push(`/explore-story?topicIds=${selectedCategories.join(',')}`);
+      router.push(
+        `/${currentPathName}?topicIds=${selectedCategories.join(',')}`,
+      );
     }
   }, [selectedCategories]);
 
