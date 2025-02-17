@@ -12,6 +12,7 @@ const getStories = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
         page: params?.page || 1,
         limit: params?.limit || 10,
         topicIds: params?.topicIds,
+        sortBy: params?.sortBy,
       },
     }),
     serializeQueryArgs: ({ endpointName, queryArgs }) => {

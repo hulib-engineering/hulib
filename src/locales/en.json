@@ -381,5 +381,33 @@
     "similar_stories": "Similar Stories",
     "see_all": "See All",
     "hide_all": "Hide All"
+  },
+  "Home": {
+    "banner": {
+      "title": "Hi!",
+      "sub_title": "Welcome to the platform that connects beautiful souls"
+    },
+    "newest_stories": {
+      "title": "Newest Stories",
+      "btn1": "See all"
+    },
+    "recommended_hubers": {
+      "title": "Recommended Hubers"
+    },
+    "explore_stories": {
+      "title": "Explore",
+      "btn1": "See all",
+      "btn2": "View more",
+      "btn3": " Explore all Human books",
+      "card": {
+        "text1": "Topics",
+        "text2": "Ratings"
+      }
+    },
+    "short_descriptions": {
+      "title": "Become our Huber",
+      "description": "Short Description",
+      "btn": "Join as Huber"
+    }
   }
 }
