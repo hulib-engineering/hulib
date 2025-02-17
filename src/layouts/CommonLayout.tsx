@@ -14,7 +14,7 @@ const CommonLayout = (props: Props) => {
 
   return (
     <section className="w-full">
-      <div className="w-full justify-between rounded-md bg-white px-4 -py-8 md:px-28 md:py-12 lg:flex-row">
+      <div className="-py-8 w-full justify-between rounded-md bg-white px-4 md:px-28 md:py-12 lg:flex-row">
         {renderChildren()}
       </div>
     </section>
