@@ -13,7 +13,7 @@ const Banner = () => {
         width={0}
         height={0}
         sizes="100vw"
-        className="h-[8rem] md:h-full w-full rounded-lg object-cover"
+        className="h-[8rem] w-full rounded-lg object-cover md:h-full"
         alt="Home Banner"
       />
 
@@ -22,7 +22,7 @@ const Banner = () => {
           <h3 className="text-base font-medium leading-[1.6rem] text-primary-30 md:text-[2.5rem] md:leading-[3rem]">
             {t('banner.title')}
           </h3>
-          <p className="w-[16rem] md:w-[27.5rem] text-sm font-medium leading-6 text-primary-30 md:text-2xl md:leading-8">
+          <p className="w-[16rem] text-sm font-medium leading-6 text-primary-30 md:w-[27.5rem] md:text-2xl md:leading-8">
             {t('banner.sub_title')}
           </p>
         </div>
