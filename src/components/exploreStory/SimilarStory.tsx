@@ -23,7 +23,11 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
   const [limit, setLimit] = React.useState(4);
 
   // Fetch 4 stories initially, fetch all when expanded
-  const { data: similarStoriesPages, isLoading } = useGetSimilarStoriesQuery({
+  const {
+    data: similarStoriesPages,
+    isLoading,
+    isFetching,
+  } = useGetSimilarStoriesQuery({
     page: 1,
     limit,
     humanBookId,
@@ -42,7 +46,7 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
     }
   }, [isExpandList]);
 
-  if (isLoading) return <StoriesSkeleton />;
+  if (isLoading || isFetching) return <StoriesSkeleton />;
 
   return (
     <div
