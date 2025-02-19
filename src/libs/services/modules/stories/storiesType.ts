@@ -14,6 +14,7 @@ export interface StoriesParams {
   page: number;
   limit: number;
   topicIds?: string[];
+  sortBy?: string;
 }
 
 export interface StoryDetailsParams {
