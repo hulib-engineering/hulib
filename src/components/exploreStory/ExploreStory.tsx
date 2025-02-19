@@ -1,24 +1,49 @@
 'use client';
 
-import { CaretCircleDown } from '@phosphor-icons/react';
+import { CaretCircleDown, CaretCircleUp } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
+import React from 'react';
 
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
 import ListTopics from '@/components/stories/ListTopics';
 import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
 import Story from '@/components/stories/Story';
+import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
 type ExporeStoryProps = {
-  storiesPages?: StoryType[];
-  isLoading: boolean;
+  topicIds: string | null;
 };
 
-const ExporeStory = ({ storiesPages, isLoading }: ExporeStoryProps) => {
+const ExporeStory = ({ topicIds }: ExporeStoryProps) => {
   const t = useTranslations('ExporeStory');
 
-  if (isLoading) return <StoriesSkeleton />;
+  const [isExpandList, setIsExpandList] = React.useState(false);
+  const [limit, setLimit] = React.useState(5);
+
+  const {
+    data: storiesPages,
+    isLoading,
+    isFetching,
+  } = useGetStoriesQuery({
+    page: 1,
+    limit,
+    topicIds: topicIds ? topicIds.split(',').map(Number) : undefined,
+  });
+  const onClickSeeAll = () => {
+    setIsExpandList((prev) => !prev);
+  };
+
+  React.useEffect(() => {
+    if (isExpandList) {
+      setLimit(0);
+    } else {
+      setLimit(5);
+    }
+  }, [isExpandList]);
+
+  if (isLoading || isFetching) return <StoriesSkeleton />;
 
   return (
     <div
@@ -40,19 +65,29 @@ const ExporeStory = ({ storiesPages, isLoading }: ExporeStoryProps) => {
           'md:grid-cols-2',
         )}
       >
-        {storiesPages?.map((story: StoryType) => (
+        {storiesPages?.data?.map((story: StoryType) => (
           <Story key={story?.id} data={story} />
         ))}
       </div>
 
-      <div className="mt-6 flex w-full items-center justify-center">
-        <Button
-          variant="outline"
-          iconLeft={<CaretCircleDown size={16} color="#0442BF" />}
-        >
-          {t('view_more')}
-        </Button>
-      </div>
+      {(limit === 5 && storiesPages?.hasNextPage) ||
+      (limit === 0 && !storiesPages?.hasNextPage) ? (
+        <div className="mt-6 flex w-full items-center justify-center">
+          <Button
+            variant="outline"
+            iconLeft={
+              limit === 0 ? (
+                <CaretCircleUp size={16} color="#0442BF" />
+              ) : (
+                <CaretCircleDown size={16} color="#0442BF" />
+              )
+            }
+            onClick={onClickSeeAll}
+          >
+            {limit === 0 ? t('hide_all') : t('view_more')}
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 };
