@@ -361,5 +361,52 @@
       "invalidYear": "Năm không hợp lệ",
       "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại"
     }
+  },
+  "ExporeStory": {
+    "title": "Khám phá",
+    "description": "Khám phá và tìm câu chuyện hoàn hảo của bạn",
+    "view_more": "Xem thêm",
+    "topics": "Chủ đề",
+    "ratings": "Đánh giá",
+    "abstract": "Tóm tắt",
+    "read_story": "Đọc câu chuyện",
+    "productivity": "Năng suất",
+    "all": "Tất cả",
+    "health": "Sức khỏe",
+    "emotional": "Cảm xúc",
+    "motivationAndInspiration": "Động lực & Cảm hứng",
+    "career": "Sự nghiệp",
+    "education": "Giáo dục",
+    "similar_stories": "Những câu chuyện tương tự",
+    "see_all": "Xem tất cả",
+    "hide_all": "Ẩn tất cả"
+  },
+  "Home": {
+    "banner": {
+      "title": "Xin chào!",
+      "sub_title": "Chào mừng bạn đến với nền tảng kết nối những tâm hồn đẹp"
+    },
+    "newest_stories": {
+      "title": "Câu chuyện mới nhất",
+      "btn1": "Xem tất cả"
+    },
+    "recommended_hubers": {
+      "title": "Những Hubers được đề xuất"
+    },
+    "explore_stories": {
+      "title": "Khám phá",
+      "btn1": "Xem tất cả",
+      "btn2": "Xem thêm",
+      "btn3": "Khám phá tất cả sách về con người",
+      "card": {
+        "text1": "Chủ đề",
+        "text2": "Đánh giá"
+      }
+    },
+    "short_descriptions": {
+      "title": "Trở thành Huber của chúng tôi",
+      "description": "Mô tả ngắn",
+      "btn": "Tham gia với tư cách Huber"
+    }
   }
 }
