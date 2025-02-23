@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import * as React from 'react';
 
 import { AboutPanel } from '@/components/authorDetail/AboutPanel';
+import { MyBookPanel } from '@/components/authorDetail/MyBookPanel';
 import { ReviewPanel } from '@/components/authorDetail/ReviewPanel';
 import type { ProfileMenuItem } from '@/components/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/NavBar/NavBar';
@@ -94,6 +95,23 @@ const AuthorDetail = () => {
             <ReviewPanel />
           </div>
         ),
+      },
+      {
+        type: MyProfilePanelIndex.MY_BOOK,
+        label: (
+          <div>
+            <p
+              className={
+                selectedMenuItem?.type === MyProfilePanelIndex.MY_BOOK
+                  ? 'border-b-2 border-primary-50 py-2 text-sm font-medium text-primary-50'
+                  : 'py-2 text-sm font-medium text-neutral-40'
+              }
+            >
+              My Book
+            </p>
+          </div>
+        ),
+        component: <MyBookPanel />,
       },
     ];
   }, [authorDetail, selectedMenuItem?.type]);
@@ -190,49 +208,54 @@ const AuthorDetail = () => {
             handleChangeSelectedMenu={handleChangeSelectedMenu}
             tabsRender={tabsRender}
           />
-          <div className="mt-2 h-full w-full bg-[##FFFFFF]">
+          <div className="h-full w-full bg-[##FFFFFF]">
             {tabsRender?.[selectedItemIndex]?.component}
           </div>
         </div>
-        <div className="flex w-full flex-col gap-y-8 bg-[#FFFFFF] p-5 lg:w-[280px]">
-          <div className="flex flex-col gap-y-5">
-            <div className="flex items-center justify-between gap-x-2.5">
-              <h6 className="text-xl font-medium text-[#000000] ">Expertise</h6>
+        {selectedItemIndex !==
+          getActiveMenuItemIndex(MyProfilePanelIndex.MY_BOOK) && (
+          <div className="flex w-full flex-col gap-y-8 bg-[#FFFFFF] p-5 lg:w-[280px]">
+            <div className="flex flex-col gap-y-5">
+              <div className="flex items-center justify-between gap-x-2.5">
+                <h6 className="text-xl font-medium text-[#000000] ">
+                  Expertise
+                </h6>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 text-xs text-[#2E3032]">
+                {listSkill.map((skill, index) => {
+                  return (
+                    <span
+                      key={index}
+                      className="w-fit rounded-full border border-[#FFC9E3] bg-[#FFE4F1] px-3 py-2 "
+                    >
+                      {skill}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
-            <div className="flex flex-wrap items-center gap-2 text-xs text-[#2E3032]">
-              {listSkill.map((skill, index) => {
-                return (
-                  <span
-                    key={index}
-                    className="w-fit rounded-full border border-[#FFC9E3] bg-[#FFE4F1] px-3 py-2 "
-                  >
-                    {skill}
-                  </span>
-                );
-              })}
+            <div className="flex flex-col gap-y-5 border-t-[0.5px] border-neutral-90 pt-8">
+              <div className="flex items-center justify-between gap-x-2.5">
+                <h6 className="text-xl font-medium text-[#000000] ">
+                  Video Introduction
+                </h6>
+              </div>
+              <div className="flex flex-col gap-y-1 text-sm text-neutral-20">
+                <video
+                  className="h-full w-full object-cover"
+                  controls
+                  src={authorDetail?.videoUrl ?? ''}
+                >
+                  <track kind="captions" srcLang="en" label="English" default />
+                </video>
+              </div>
             </div>
+            <EditButton
+              title="Edit introduction"
+              onClick={() => setOpenEditIntroductionPopup(true)}
+            />
           </div>
-          <div className="flex flex-col gap-y-5 border-t-[0.5px] border-neutral-90 pt-8">
-            <div className="flex items-center justify-between gap-x-2.5">
-              <h6 className="text-xl font-medium text-[#000000] ">
-                Video Introduction
-              </h6>
-            </div>
-            <div className="flex flex-col gap-y-1 text-sm text-neutral-20">
-              <video
-                className="h-full w-full object-cover"
-                controls
-                src={authorDetail?.videoUrl ?? ''}
-              >
-                <track kind="captions" srcLang="en" label="English" default />
-              </video>
-            </div>
-          </div>
-          <EditButton
-            title="Edit introduction"
-            onClick={() => setOpenEditIntroductionPopup(true)}
-          />
-        </div>
+        )}
       </div>
       <EditProfilePopup
         open={openEditProfilePopup}
