@@ -5,6 +5,7 @@ import * as React from 'react';
 export enum MyProfilePanelIndex {
   ABOUT = 'About',
   WHAT_MENTEE_SAYS = 'WhatMenteeSays',
+  MY_BOOK = 'MyBook',
 }
 
 export type ProfileMenuItem = {

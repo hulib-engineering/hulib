@@ -1,0 +1,13 @@
+.gap-book {
+  box-sizing: border-box;
+
+  width: 36px;
+
+  background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgba(164, 170, 183, 0.4) 100%);
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  z-index: 1;
+}

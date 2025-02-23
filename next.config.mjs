@@ -49,6 +49,9 @@ export default withSentryConfig(
             pathname: '/api/v1/files/**',
             search: '',
           },
+          {
+            hostname: '**.googleapis.com',
+          },
         ],
       },
     }),
