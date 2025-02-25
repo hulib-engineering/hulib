@@ -54,11 +54,12 @@ export const CreateStep1 = (props: Props) => {
   };
 
   const onHandleSubmit = handleSubmit((data) => {
-    console.log('handleSubmit', data);
+    console.log('data', data);
     if (isValid) {
       onNextPress();
     }
   });
+
   return (
     <Form id="next-step" onSubmit={onHandleSubmit}>
       <div className="flex flex-col gap-y-8">
@@ -128,6 +129,7 @@ export const CreateStep1 = (props: Props) => {
           type="submit"
           form="next-step"
           className="w-fit rounded-full capitalize shadow-[0px_8px_24px_#1979ff40] transition-all duration-300 hover:shadow-none hover:translate-y-0.5"
+          onClick={onHandleSubmit}
         >
           View as preview
         </Button>
