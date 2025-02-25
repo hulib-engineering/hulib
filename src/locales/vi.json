@@ -8,7 +8,10 @@
     "books": "Sách",
     "mentors": "Cố vấn",
     "log_in": "Đăng nhập",
-    "sign_up": "Đăng kí"
+    "sign_up": "Đăng kí",
+    "clear": "Xoá",
+    "recent_searches": "Tìm kiếm gần đây:",
+    "search_by_keyword": "Tìm kiếm bởi từ khoá"
   },
   "HumanBookBanner": {
     "explore_now": "Khám phá tủ sách Human Book ngay",
@@ -388,6 +391,10 @@
     },
     "newest_stories": {
       "title": "Câu chuyện mới nhất",
+      "btn1": "Xem tất cả"
+    },
+    "newest_books": {
+      "title": "Sách mới nhất",
       "btn1": "Xem tất cả"
     },
     "recommended_hubers": {

@@ -1,3 +1,61 @@
+# [1.10.0](https://github.com/HumanLibrary/hulib/compare/v1.9.0...v1.10.0) (2025-02-14)
+
+
+### Bug Fixes
+
+* correct field name from 'fullname' to 'fullName' in profile forms and validations ([ad840da](https://github.com/HumanLibrary/hulib/commit/ad840dabcd14e3907f0511697aefc0bd56e33722))
+* fetching story details error param ([51528cf](https://github.com/HumanLibrary/hulib/commit/51528cfc98c576ee5e73177de53b2d1e68e67473))
+* handle undefined topics in ListTopics component ([406d070](https://github.com/HumanLibrary/hulib/commit/406d0707c074757b46eb037891ba91658da29810))
+* **Header:** adjust Popover component for full height styling ([b5fca79](https://github.com/HumanLibrary/hulib/commit/b5fca791e36c2423300bd70956410ce5573709a9))
+* improve layout and spacing on mentor register page ([239f721](https://github.com/HumanLibrary/hulib/commit/239f721ec3934c7345140afbcd32c397dd17dd99))
+* login page fail responsive ([244e0c4](https://github.com/HumanLibrary/hulib/commit/244e0c435440351e2bba856b982f0cc0f52bcf0b))
+* **LoginForm, Testimonial:** correct spelling of 'HuLib' in multiple locations ([f788cf9](https://github.com/HumanLibrary/hulib/commit/f788cf94b767c6ae2d058a02beb0da920c7adb07))
+* not display error toast when change password api return error ([32b85c5](https://github.com/HumanLibrary/hulib/commit/32b85c56467ad11a6029766b9aeb22fa0fb7e1fe))
+* **ProfileForm:** update onSubmit type and refactor update button handler ([8f73981](https://github.com/HumanLibrary/hulib/commit/8f739819a9e57437ee2c62d45adb96594c71e2ba))
+* **review item:** update import path for StoryReview type ([15a4e85](https://github.com/HumanLibrary/hulib/commit/15a4e8566866a3ded861fc1622d1aba0e05718a8))
+* **reviews overviews:** refactor review query hooks and update type naming for clarity ([367ddcf](https://github.com/HumanLibrary/hulib/commit/367ddcff98a695eaeacb9c89d90a1a0e540c8f14))
+* set error message when current password incorrect ([4a53fd0](https://github.com/HumanLibrary/hulib/commit/4a53fd063b7669b1ffe373979519d01550b7e360))
+* **Text Input:** fixed core component ([8e60289](https://github.com/HumanLibrary/hulib/commit/8e6028981ef810cdc14e4a957e44913d7772f37a))
+* ui defects in explore and my profile page drop down ([dab025d](https://github.com/HumanLibrary/hulib/commit/dab025d8a293efc4bec0fde4d48973dd7e922e40))
+* update gradient color in modals for consistency ([8895658](https://github.com/HumanLibrary/hulib/commit/889565893798238d2d73ea652a11a2136829489e))
+* update image format for story component ([98b34e4](https://github.com/HumanLibrary/hulib/commit/98b34e4a1133fd099246c6a1695e18bedb060789))
+* update topics mapping and handle undefined cases; rename 'Mentors' to 'Hubers' ([7935a79](https://github.com/HumanLibrary/hulib/commit/7935a797dab916d80c514cae96cd22bafdebef63))
+* update ui profile form match with figma ([6945b9c](https://github.com/HumanLibrary/hulib/commit/6945b9cc9041d984100a3e6da321654c43276afb))
+* update ui profile form match with figma ([660c501](https://github.com/HumanLibrary/hulib/commit/660c50135872007dc8a425f1738ff29ce88fc1e4))
+
+
+### Features
+
+* add bio display to HumanBookInfo and update Header to link to explore books ([54497d0](https://github.com/HumanLibrary/hulib/commit/54497d06ea4f2c656ce5b2aa8a5f5876f10e7508))
+* add create story form and user fetching API ([f16da74](https://github.com/HumanLibrary/hulib/commit/f16da74f5e944b4de08ee7a53e1ff5f57da71b8c))
+* add HumanBookInfo component and book detail page ([38233e9](https://github.com/HumanLibrary/hulib/commit/38233e9700c2845ce614d05dc5da4f50ddd59baf))
+* add reader reviews and ratings functionality ([8c982b8](https://github.com/HumanLibrary/hulib/commit/8c982b825b4007f27fb0c2d8e7df61add776a7c9))
+* add story review overview and implement review item component ([0d6a014](https://github.com/HumanLibrary/hulib/commit/0d6a014868a4d961d5b346084c6714c9e3a8e3c7))
+* add video introduction input and display ([257ecba](https://github.com/HumanLibrary/hulib/commit/257ecbac7245d81ed769475d124a1773c6fb84fb))
+* calculate user age and update form reset logic ([fb02e2d](https://github.com/HumanLibrary/hulib/commit/fb02e2d765002ef95c491ca8f0015e07a78f58c4))
+* create similar stories section ([2ff2d7d](https://github.com/HumanLibrary/hulib/commit/2ff2d7da81441811da037002240f3fcefb3a3881))
+* create update author detail popups ([09253df](https://github.com/HumanLibrary/hulib/commit/09253df1339d2c617f5d994d14d1b6a011f685d5))
+* create update personal information popup ([e7e6acc](https://github.com/HumanLibrary/hulib/commit/e7e6acc71491107ff51911eba32a972c5b9fb6f0))
+* enhance registration form layout and update header role-based menu items ([9ba546f](https://github.com/HumanLibrary/hulib/commit/9ba546f78eb09d4757cb96bbd3c91a7286f5cc9e))
+* enhance similar stories section to load more stories on expansion ([7b40e21](https://github.com/HumanLibrary/hulib/commit/7b40e2136fff581f27ee52d4e9d4a2e490983c55))
+* enhance story exploration with topic filtering and review display ([1bebf45](https://github.com/HumanLibrary/hulib/commit/1bebf4580c0c0649e053ddd8d92dbfedfc1c0091))
+* fix comment ([6a6a387](https://github.com/HumanLibrary/hulib/commit/6a6a387273d843f0726315fbee07a5f0a6be3232))
+* **Footer:** add Threads social link and update copyright year to 2025 ([8ca567f](https://github.com/HumanLibrary/hulib/commit/8ca567f241c7afd9be69d23df5e09dcea3ae911e))
+* implement add to favorites functionality for stories ([f88e494](https://github.com/HumanLibrary/hulib/commit/f88e49410b1c6ca614256b43a5856aeb371772a8))
+* implement api get author detail info ([1120547](https://github.com/HumanLibrary/hulib/commit/112054716a85c6d0890bb95e985b26cd58749e6a))
+* implement reader review and rating overview ([df716c7](https://github.com/HumanLibrary/hulib/commit/df716c78529bc5da7be86fa022d6c7a0063fddae))
+* implement responsive mobile my profile screen ([dc6b953](https://github.com/HumanLibrary/hulib/commit/dc6b9530c3954f65697da73a3e72e1453e3ce098))
+* implement stories management with Redux and validation ([64ee8be](https://github.com/HumanLibrary/hulib/commit/64ee8bee95ba538f8dc1989dac92a16742b836aa))
+* implement Story component and pagination for book details ([9509c6c](https://github.com/HumanLibrary/hulib/commit/9509c6c2e9094558121348b7637ab62e2484ac46))
+* implement story detail retrieval and update HumanBookInfo component ([00f1221](https://github.com/HumanLibrary/hulib/commit/00f1221d9d9c113fe77246c9eb3972fae30f11d9))
+* **Popover:** added Popover core component and implemented in Avatar dropdown ([cb9ab76](https://github.com/HumanLibrary/hulib/commit/cb9ab76fdd74096dc8966715dc9273eb2afc2aaa))
+* refactor heart rating display to use dynamic rendering based on rating value ([dd406f3](https://github.com/HumanLibrary/hulib/commit/dd406f3f5875e1822816bf4581cd3530195f1153))
+* refactor story details components and add loading skeleton ([868ae06](https://github.com/HumanLibrary/hulib/commit/868ae067099639632e2852005139e37cd234483b))
+* rename explore-books to explore-story and update translations accordingly ([8a3c260](https://github.com/HumanLibrary/hulib/commit/8a3c26071d0d85079cdec6e11388eeed3509e7a0))
+* **sponsors:** add UNESCO logo image ([a43c23c](https://github.com/HumanLibrary/hulib/commit/a43c23cec30359aba3a7f4ac51d9c3d9ec619947))
+* update avatar upload logic to include profile photo update ([f777711](https://github.com/HumanLibrary/hulib/commit/f7777114c8d5d00322a8edb06ff089a10a35b97f))
+* update color scheme and add navigation type reference ([efa8e28](https://github.com/HumanLibrary/hulib/commit/efa8e28f5110615a7adedefbbe7efcfaec213ad8))
+
 # [1.9.0](https://github.com/HumanLibrary/hulib/compare/v1.8.3...v1.9.0) (2025-02-10)
 
 

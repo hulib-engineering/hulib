@@ -20,7 +20,7 @@ import { Logo } from '@/components/Logo';
 import MenuItem from '@/components/menuItem/MenuItem';
 import Popover from '@/components/popover/Popover';
 import type { WithChildren } from '@/components/private/types';
-import SearchEverything from '@/components/SearchEverything';
+import SearchInput from '@/components/SearchInput';
 import { useAppSelector } from '@/libs/hooks';
 
 const ButtonWithChip = ({
@@ -190,7 +190,7 @@ const Header = () => {
           )}
         </div>
         <div className="flex flex-col gap-2">
-          <SearchEverything />
+          {/* <SearchEverything /> */}
           <div className="flex items-center justify-between gap-x-2">
             {user && user?.id && (
               <Button variant="ghost" size="lg" className="text-neutral-10">
@@ -228,7 +228,7 @@ const Header = () => {
           </div>
         </div>
         <div className="w-[300px]">
-          <SearchEverything />
+          <SearchInput />
         </div>
         {!user || !user?.id ? (
           <div className="flex gap-3">
