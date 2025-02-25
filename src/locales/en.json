@@ -8,7 +8,10 @@
     "books": "Stories",
     "mentors": "Hubers",
     "log_in": "Log in",
-    "sign_up": "Sign up"
+    "sign_up": "Sign up",
+    "clear": "Clear",
+    "recent_searches": "Recent Searches:",
+    "search_by_keyword": "Search by keyword"
   },
   "HumanBookBanner": {
     "explore_now": "Explore the Human Book bookshelf now",
@@ -389,6 +392,10 @@
     },
     "newest_stories": {
       "title": "Newest Stories",
+      "btn1": "See all"
+    },
+    "newest_books": {
+      "title": "Newest Books",
       "btn1": "See all"
     },
     "recommended_hubers": {

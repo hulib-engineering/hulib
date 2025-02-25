@@ -122,13 +122,6 @@ const SponsorList = [
   //   refUrl: 'https://jci.vn/category/chapters/jci-danang',
   // },
   {
-    name: 'KIP',
-    logoUrl: '/assets/images/sponsors/KIP.png',
-    type: 'technology-sponsor',
-    tooltipKey: 'technology_sponsor',
-    refUrl: 'https://www.kip.pro',
-  },
-  {
     name: 'UNESCO',
     logoUrl: '/assets/images/sponsors/UNESCO.png',
     type: 'diamond-sponsor',
