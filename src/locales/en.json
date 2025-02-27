@@ -415,6 +415,7 @@
       "title": "Become our Huber",
       "description": "Short Description",
       "btn": "Join as Huber"
-    }
+    },
+    "no_data": "No Data"
   }
 }
