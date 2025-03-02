@@ -32,23 +32,32 @@ const ExporeStories = () => {
         {t('explore_stories.title')}
       </h3>
       <ListTopics currentPathName="home" />
-      <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {loadingStories ? (
+      {loadingStories ? (
+        <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-2">
           <StoriesSkeleton />
-        ) : (
-          storiesPages?.data?.map((item: StoryType) => (
+        </div>
+      ) : storiesPages?.data?.length > 0 ? (
+        <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-2">
+          {storiesPages?.data?.map((item: StoryType) => (
             <Story key={item.id} data={item} />
-          ))
-        )}
-      </div>
-      <div className="mt-8 flex w-full items-center justify-center">
-        <Button variant="outline" onClick={() => router.push('explore-story')}>
-          <CaretCircleRight />
-          <p className="text-base font-medium leading-5 text-primary-50">
-            {t('newest_stories.btn1')}
-          </p>
-        </Button>
-      </div>
+          ))}
+        </div>
+      ) : (
+        <p className="w-full text-center">{t('no_data')}</p>
+      )}
+      {storiesPages?.data?.length > 0 && (
+        <div className="mt-8 flex w-full items-center justify-center">
+          <Button
+            variant="outline"
+            onClick={() => router.push('explore-story')}
+          >
+            <CaretCircleRight />
+            <p className="text-base font-medium leading-5 text-primary-50">
+              {t('newest_stories.btn1')}
+            </p>
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
