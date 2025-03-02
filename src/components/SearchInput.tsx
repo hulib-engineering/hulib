@@ -21,7 +21,7 @@ const SearchInput = () => {
   }, []);
 
   const handleSearch = () => {
-    if (searchText.trim() === '') return;
+    // if (searchText.trim() === '') return;
 
     const updatedHistory = [...searchHistory, searchText];
 
@@ -47,6 +47,7 @@ const SearchInput = () => {
   const handleSelectHistory = (search: string) => {
     setSearchText(search);
     setShowHistory(false);
+    router.push(`/research?keyword=${search}`);
   };
 
   const handleClickOutside = () => {
@@ -55,7 +56,9 @@ const SearchInput = () => {
 
   const handleClear = () => {
     setSearchHistory([]);
+    setSearchText('');
     localStorage.removeItem('searchHistory');
+    router.push(`/research?keyword=`);
   };
 
   const handleDeleteSearch = (
@@ -69,6 +72,11 @@ const SearchInput = () => {
     );
 
     setSearchHistory(updatedHistory);
+
+    if (searchText === searchToDelete) {
+      router.push(`/research?keyword=`);
+      setSearchText('');
+    }
 
     if (updatedHistory.length > 0) {
       localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
