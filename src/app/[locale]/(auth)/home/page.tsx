@@ -1,5 +1,5 @@
 import Banner from '@/components/home/Banner';
-import ExporeStories from '@/components/home/ExporeStories';
+import ExploreStories from '@/components/home/ExploreStories';
 import NewestStories from '@/components/home/NewestStories';
 import RecommendedHubers from '@/components/home/RecommendedHubers';
 import ShortDescription from '@/components/home/ShortDescription';
@@ -11,7 +11,7 @@ const Page = () => {
       <Banner />
       <NewestStories />
       <RecommendedHubers />
-      <ExporeStories />
+      <ExploreStories />
       <ShortDescription />
     </CommonLayout>
   );
