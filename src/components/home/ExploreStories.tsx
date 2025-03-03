@@ -5,15 +5,15 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
+import { FlipCard } from '@/components/flipCard/FlipCard';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
 import Button from '../button/Button';
 import ListTopics from '../stories/ListTopics';
 import StoriesSkeleton from '../stories/StoriesSkeleton';
-import Story from '../stories/Story';
 
-const ExporeStories = () => {
+const ExploreStories = () => {
   const t = useTranslations('Home');
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -33,13 +33,13 @@ const ExporeStories = () => {
       </h3>
       <ListTopics currentPathName="home" />
       {loadingStories ? (
-        <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="relative mt-4 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           <StoriesSkeleton />
         </div>
       ) : storiesPages?.data?.length > 0 ? (
-        <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="relative mt-4 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {storiesPages?.data?.map((item: StoryType) => (
-            <Story key={item.id} data={item} />
+            <FlipCard key={item.id} data={item} />
           ))}
         </div>
       ) : (
@@ -62,4 +62,4 @@ const ExporeStories = () => {
   );
 };
 
-export default ExporeStories;
+export default ExploreStories;
