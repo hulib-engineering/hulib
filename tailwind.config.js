@@ -18,6 +18,9 @@ const backfaceVisibility = plugin(function ({ addUtilities }) {
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    screens: {
+      xxl: '1280px',
+    },
     data: {
       checked: 'ui~="checked"',
     },
