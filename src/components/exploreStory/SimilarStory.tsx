@@ -5,9 +5,9 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 
 import Button from '@/components/button/Button';
+import { FlipBook } from '@/components/flipBook/FlipBook';
 import { mergeClassnames } from '@/components/private/utils';
 import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
-import Story from '@/components/stories/Story';
 import { useGetSimilarStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
@@ -65,7 +65,7 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
         )}
       >
         {similarStoriesPages?.data?.map((story: StoryType) => (
-          <Story key={story?.id} data={story} />
+          <FlipBook key={story?.id} data={story} />
         ))}
       </div>
 

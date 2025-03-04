@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
+import { FlipBook } from '@/components/flipBook/FlipBook';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
 import Button from '../button/Button';
 import StoriesSkeleton from '../stories/StoriesSkeleton';
-import Story from '../stories/Story';
 
 const NewestStories = () => {
   const t = useTranslations('Home');
@@ -33,7 +33,7 @@ const NewestStories = () => {
       ) : storiesPages?.data?.length > 0 ? (
         <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-2">
           {storiesPages?.data?.map((item: StoryType) => (
-            <Story key={item.id} data={item} />
+            <FlipBook key={item.id} data={item} />
           ))}
         </div>
       ) : (
