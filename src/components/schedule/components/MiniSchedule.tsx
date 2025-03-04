@@ -9,7 +9,7 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import type { PickersCalendarHeaderProps } from '@mui/x-date-pickers/PickersCalendarHeader';
 import type { Dayjs } from 'dayjs';
-import * as React from 'react';
+import { useCallback } from 'react';
 
 const CustomCalendarHeaderRoot = styled('div')({
   display: 'flex',
@@ -21,7 +21,7 @@ const CustomCalendarHeaderRoot = styled('div')({
 function CustomCalendarHeader(props: PickersCalendarHeaderProps<Dayjs>) {
   const { currentMonth, onMonthChange } = props;
 
-  const handleMonthChange = React.useCallback(
+  const handleMonthChange = useCallback(
     (amount: number, unit: 'month' | 'year', direction: 'left' | 'right') => {
       if (onMonthChange) {
         onMonthChange(currentMonth.add(amount, unit), direction);

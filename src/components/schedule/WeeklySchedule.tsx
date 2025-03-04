@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import BigSchedule from './components/BigSchedule';
+import BigSchedule from './components/BigSchedule/BigSchedule';
 import MiniSchedule from './components/MiniSchedule';
 import TimeSlot from './components/TimeSlot';
 import UpComingEvent from './components/UpComingEvent';
@@ -20,7 +20,7 @@ const WeeklySchedule = () => {
         <MiniSchedule />
         <TimeSlot />
       </div>
-      <div className="ml-[20px] h-full">
+      <div className="mx-[20px] h-full w-[70%]">
         <BigSchedule />
       </div>
     </div>
