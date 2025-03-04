@@ -1,0 +1,26 @@
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: #fff;
+}
+td {
+  background-color: #fff;
+}
+
+table table tbody tr:nth-child(1) {
+  display: none !important;
+}
+
+.fc-timegrid-divider.fc-cell-shaded {
+  display: none !important;
+}
+
+/* .fc-timegrid-axis .timegrid {
+  content: "GMT+7" !important;
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+} */
+
+table thead tr {
+  border: none;
+}
