@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { FlipCard } from '@/components/flipCard/FlipCard';
+import { FlipBook } from '@/components/flipBook/FlipBook';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
@@ -39,7 +39,7 @@ const ExploreStories = () => {
       ) : storiesPages?.data?.length > 0 ? (
         <div className="relative mt-4 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {storiesPages?.data?.map((item: StoryType) => (
-            <FlipCard key={item.id} data={item} />
+            <FlipBook key={item.id} data={item} />
           ))}
         </div>
       ) : (
