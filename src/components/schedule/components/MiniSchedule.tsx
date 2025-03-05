@@ -65,18 +65,18 @@ export default function MiniSchedule() {
             day: {
               sx: {
                 '&.MuiPickersDay-root': {
-                  borderRadius: '4px', // Tất cả ngày hình vuông
+                  borderRadius: '4px',
                 },
                 '&.MuiPickersDay-today': {
                   borderRadius: '4px',
                 },
                 '&.Mui-selected': {
-                  backgroundColor: '#007bff', // Màu nền khi chọn
-                  color: 'white', // Màu chữ
+                  backgroundColor: '#007bff',
+                  color: 'white',
                   borderRadius: '4px',
                 },
                 '&.Mui-selected:hover': {
-                  backgroundColor: '#0056b3', // Màu khi hover
+                  backgroundColor: '#0056b3',
                   borderRadius: '4px',
                 },
               },

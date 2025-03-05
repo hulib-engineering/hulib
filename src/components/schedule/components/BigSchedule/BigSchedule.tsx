@@ -6,7 +6,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import React from 'react';
 
 const slotLabelContent = (arg: any) => {
-  const hour24 = arg.date.getHours().toString().padStart(2, '0');
+  const hour24 = arg.date.getHours();
   return <span className="font-semibold text-black">{hour24}h00</span>;
 };
 
