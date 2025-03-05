@@ -1,0 +1,135 @@
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: #fff;
+}
+td {
+  background-color: #fff;
+}
+
+.fc-timegrid-divider.fc-cell-shaded {
+  display: none !important;
+}
+
+table {
+  border-collapse: collapse;
+}
+.fc-scrollgrid-sync-inner,
+.fc-day-today {
+  background-color: #F3F4F6 ; 
+}
+table table thead tr {
+  background-color: #F3F4F6 !important; 
+}
+
+table table thead tr th {
+  border-top: none !important;
+}
+
+table table thead tr th.fc-timegrid-axis {
+  border: none;
+}
+table table thead tr th span {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  min-height: 32px;
+}
+
+table tbody tr.fc-scrollgrid-section.fc-scrollgrid-section-body:nth-child(1)  {
+  display: none;
+}
+.fc-scrollgrid-sync-inner,
+.fc .fc-col-header-cell-cushion span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fc .fc-col-header-cell-cushion span {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0%;
+}
+
+.fc-day-today .fc-scrollgrid-sync-inner span {
+  background-color: #dbeafe ;
+  border-radius: 100px;
+  overflow: hidden;
+  z-index: 2;
+  padding: 2px 15px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #0442BF;
+  min-height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fc-daygrid-day, 
+.fc-timegrid-col {
+  border-radius: 8px !important; 
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.fc-col-header-cell {
+  border-radius: 8px 8px 0 0 !important;
+  background-color: #f8fafc;
+  border: none !important;
+}
+table table thead tr th:first-child(1) {
+  border: none;
+ }
+
+ /* border of big table */
+ .fc-theme-standard .fc-scrollgrid {
+  border: none;
+ }
+
+.fc .fc-timegrid-slot-minor {
+  border-top: none;
+}
+
+.fc-timegrid-slot-label-frame.fc-scrollgrid-shrink-frame {
+  text-align: left;
+}
+
+.fc .fc-timegrid-axis-cushion, .fc .fc-timegrid-slot-label-cushion span {
+  font-weight: 400 !important;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0%;
+}
+
+.fc-theme-standard td:nth-child(1) {
+  border: none !important;
+}
+table table thead th.fc-timegrid-axis {
+  background-color: #000;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+} 
+
+.fc-timegrid-axis-frame::before {
+  display: block;
+  content: "GMT+7";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #fff;
+}
+
+table > thead tr th:last-child {
+  border-right: none;
+}
+
+table table tbody tr {
+  border-right: 1px solid #ddd !important;
+}
