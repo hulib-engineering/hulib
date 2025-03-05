@@ -2,7 +2,6 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye } from '@phosphor-icons/react';
-import { isEmpty } from 'lodash';
 import * as React from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -43,8 +42,9 @@ const ChangePassword = () => {
         newPassword: data.newPassword,
         confirmPassword: data.confirmPassword,
       });
-      if (!isEmpty(rs.error)) {
-        return pushError(`Error: Change password failed.`);
+
+      if (rs.error.status === 422) {
+        return pushError(`Error: Current Password not match.`);
       }
       return pushSuccess('Change password successfully');
     } catch (error: any) {
