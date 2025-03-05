@@ -34,7 +34,7 @@ export default function BigCalendar() {
 
   return (
     <div className="bg-white p-4">
-      <h2 className="mb-4 rounded-md bg-white p-2 text-[28px] font-[500] leading-[36px] text-[#010D26]">
+      <h2 className="rounded-md bg-white p-2 text-[28px] font-[500] leading-[36px] text-[#010D26]">
         Appointment schedule {currentMonthYear}
       </h2>
       <div className="w-full">

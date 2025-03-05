@@ -11,7 +11,7 @@ const WeeklySchedule = () => {
   // const t = useTranslations('Home');
 
   return (
-    <div className="flex h-max flex-row p-[20px] pt-0">
+    <div className="flex h-max flex-row pl-[20px] pt-0">
       {/* <h3 className="">s
         {t('explore_stories.title')}
       </h3> */}
