@@ -11,6 +11,7 @@ import {
 } from '@phosphor-icons/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import React, { useMemo } from 'react';
 
@@ -136,6 +137,11 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
 
 const Header = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
+  const router = useRouter();
+
+  const handleNavigateToSchedule = () => {
+    router.push('/schedule/weekly-schedule');
+  };
 
   return (
     <>
@@ -213,7 +219,12 @@ const Header = () => {
           <Logo size="small" />
           <div className="flex items-center gap-x-2">
             {user && user?.id && (
-              <Button variant="ghost" size="lg" className="text-neutral-10">
+              <Button
+                variant="ghost"
+                size="lg"
+                className="text-neutral-10"
+                onClick={handleNavigateToSchedule}
+              >
                 My schedule
               </Button>
             )}
