@@ -363,7 +363,15 @@
       "required": "Bắt buộc",
       "invalidYear": "Năm không hợp lệ",
       "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại"
-    }
+    },
+    "bio": { "text": "Tiểu sử", "placeholder": "Chỗ để điền" },
+    "intro_video": { "text": "Video giới thiệu", "placeholder": "https://" },
+    "read_community": "Đọc hướng dẫn cộng đồng",
+    "confirm": "Tôi xác nhận rằng tôi đã đọc và hiểu các điều khoản và điều kiện của Hulib, và tôi đồng ý tuân theo chúng.",
+    "cancel": "Hủy",
+    "next": "Tiếp theo",
+    "step_1_title": "Dăng ký Huber",
+    "general": "General"
   },
   "ExporeStory": {
     "title": "Khám phá",
