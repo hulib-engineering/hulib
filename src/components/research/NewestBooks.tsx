@@ -52,7 +52,7 @@ const NewestBooks = () => {
   }, [searchParams.get('keyword')]);
 
   return (
-    <div className="mt-8 items-center justify-center rounded-lg bg-white p-5">
+    <div className="sm:p-5 mt-8 items-center justify-center rounded-lg bg-white ">
       <h3
         className="text-[2.375rem] font-medium leading-[2.75rem] text-primary-10"
         id="books-title"
@@ -60,11 +60,11 @@ const NewestBooks = () => {
         {t('newest_books.title')}
       </h3>
       {loadingStories ? (
-        <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="lg:grid-cols-2 2xl:grid-cols-3 mt-4 grid grid-cols-1 gap-8">
           <StoriesSkeleton />
         </div>
       ) : data?.length > 0 ? (
-        <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="2xl:gap-12 relative mt-4 flex flex-wrap items-center justify-center gap-8 xxl:justify-start">
           {data?.map((item: StoryType) => (
             <FlipBook key={item.id} data={item} />
           ))}
