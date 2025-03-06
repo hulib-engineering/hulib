@@ -364,7 +364,15 @@
       "invalidYear": "Invalid Year",
       "invalidYearRange": "Invalid Year Range",
       "invalid_url": "Invalid URL link. Check link and try again"
-    }
+    },
+    "bio": { "text": "Bio", "placeholder": "Placeholder" },
+    "intro_video": { "text": "Introduction Video", "placeholder": "https://" },
+    "read_community": "Read community guildeline",
+    "confirm": "I confirm that I have read and understood the terms and conditions of Hulib, and I agree to be bound by them.",
+    "cancel": "Cancel",
+    "next": "Next",
+    "step_1_title": "Register as a Huber",
+    "general": "General"
   },
   "ExporeStory": {
     "title": "Explore",

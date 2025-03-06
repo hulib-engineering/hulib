@@ -3,19 +3,18 @@ import React from 'react';
 
 interface Props {
   children: React.ReactNode;
+  className?: string;
 }
 
 const CommonLayout = (props: Props) => {
-  const { children } = props;
-
-  const renderChildren = React.useCallback(() => {
-    return children;
-  }, []);
+  const { children, className } = props;
 
   return (
     <section className="w-full">
-      <div className="-py-8 w-full justify-between rounded-md bg-white px-4 md:px-28 md:py-12 lg:flex-row">
-        {renderChildren()}
+      <div
+        className={`w-full justify-between rounded-md px-4 py-[-2rem] md:px-28 md:py-12 lg:flex-row ${className}`}
+      >
+        {children}
       </div>
     </section>
   );
