@@ -60,7 +60,7 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
       </h3>
       <div
         className={mergeClassnames(
-          'mt-6 xxl:justify-start relative flex flex-wrap items-center justify-center gap-8 2xl:gap-12',
+          'mt-6 xl:justify-start relative flex flex-wrap items-center justify-center gap-8 2xl:gap-12',
         )}
       >
         {similarStoriesPages?.data?.map((story: StoryType) => (
