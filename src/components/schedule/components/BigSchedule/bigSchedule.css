@@ -82,7 +82,6 @@ table table thead tr th:first-child(1) {
   border: none;
  }
 
- /* border of big table */
  .fc-theme-standard .fc-scrollgrid {
   border: none;
  }
@@ -132,4 +131,8 @@ table > thead tr th:last-child {
 
 table table tbody tr {
   border-right: 1px solid #ddd !important;
+}
+
+.fc-event {
+  overflow: hidden;
 }
