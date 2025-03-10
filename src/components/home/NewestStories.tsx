@@ -22,16 +22,16 @@ const NewestStories = () => {
     sortBy: 'createdAt',
   });
   return (
-    <div className="md:p-5 mt-8 items-center justify-center rounded-lg bg-white">
+    <div className="mt-8 items-center justify-center rounded-lg bg-white md:p-5">
       <h3 className="text-[2.375rem] font-medium leading-[2.75rem] text-primary-10">
         {t('newest_stories.title')}
       </h3>
       {loadingStories ? (
-        <div className="lg:grid-cols-2 2xl:grid-cols-3 mt-4 grid grid-cols-1 gap-8">
+        <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-2 2xl:grid-cols-3">
           <StoriesSkeleton />
         </div>
       ) : storiesPages?.data?.length > 0 ? (
-        <div className="2xl:gap-12 relative mt-4 flex flex-wrap items-center justify-center gap-8 xxl:justify-start">
+        <div className="relative mt-4 flex flex-wrap items-center justify-center gap-8 xl:justify-start 2xl:gap-12">
           {storiesPages?.data?.map((item: StoryType) => (
             <FlipBook key={item.id} data={item} />
           ))}
