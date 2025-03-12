@@ -1,28 +1,12 @@
+import { useAppSelector } from '@/libs/hooks';
 import './bigSchedule.css';
 
 import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import React, { useEffect, useState } from 'react';
-
-// const listData = [
-//   {
-//     title: "Meeting with John",
-//     start: "2025-03-06T10:00:00", // Thời gian bắt đầu (ISO format)
-//     end: "2025-03-06T11:00:00",   // Thời gian kết thúc
-//     backgroundColor: "#3b82f6",   // Màu nền (tùy chỉnh)
-//     borderColor: "#1e40af",       // Màu viền (tùy chỉnh)
-//     textColor: "#ffffff"          // Màu chữ (tùy chỉnh)
-//   },
-//   {
-//     title: "Lunch Break",
-//     start: "2025-03-06T12:00:00",
-//     end: "2025-03-06T13:00:00",
-//     backgroundColor: "#f59e0b",
-//     borderColor: "#b45309",
-//     textColor: "#ffffff"
-//   }
-// ]
+import { useGetAuthorDetailQuery } from '@/libs/services/modules/user';
+import Image from 'next/image';
 
 const slotLabelContent = (arg: any) => {
   const hour24 = arg.date.getHours();
@@ -46,12 +30,13 @@ const dayHeaderContent = (arg: any) => {
 };
 
 export default function BigCalendar() {
+  const user = useAppSelector((state) => state.auth.userInfo);
   const [list, setList] = useState([]);
   const currentMonthYear = new Date().toLocaleString('en-US', {
     month: 'long',
     year: 'numeric',
   });
-
+    const { data: authorDetail, isLoading } = useGetAuthorDetailQuery(user?.id);
   function convertToYYYYMMDD(isoString: string) {
     const date = new Date(isoString);
     if (isNaN(date.getTime())) {
@@ -69,15 +54,13 @@ export default function BigCalendar() {
 
 const formatData = (data: any) => {
   return data?.map((item: any) => {
-
     return {
-      title: item.title,
-      partnerName: item.partnerName,
-      myRole: item.myRole,
-      partnerRole: item.partnerRole,
-      followers: 56,
-      start: item.from,  // Phải có start
-      end: item.to,      // Phải có end
+      title: `${item.humanBook?.fullName || "Unknown"} - ${item.userLiber?.fullName || "Unknown"}`, // Thêm tiêu đề
+      start: item.startedAt,
+      end: item.endedAt,
+      extendedProps: {
+        ...item,
+      },
       backgroundColor: item.backgroundColor || "#3b82f6",  // Nếu rỗng thì dùng màu mặc định
       borderColor: item.borderColor || "#1e40af",
       textColor: item.textColor || "#ffffff",
@@ -88,19 +71,10 @@ const formatData = (data: any) => {
 
 const getData = async () => {
   try {
-    const response = await fetch('https://aws-seven-self.vercel.app/api/all');
+    const response = await fetch('https://hulib-services.onrender.com/api/schedules');
     const result = await response.json();
-
-    if (!result || !result.data) {
-      console.error('Không có dữ liệu từ API');
-      return;
-    }
-
-    console.log('Raw Data:', result.data); // Debug dữ liệu API trả về
-
-    const dataFormat = formatData(result.data);
-    console.log('Formatted Data:', dataFormat); // Debug dữ liệu sau khi format
-
+    const dataFormat = await formatData(result?.data);
+    console.log("dataFormat", dataFormat);
     setList(dataFormat);
   } catch (error) {
     console.error('Lỗi khi lấy dữ liệu:', error);
@@ -121,7 +95,7 @@ useEffect(() => {
 //   }
 // }, [list])
 
-
+  console.log("id", user?.id);
   return (
     <div className="bg-white p-4">
       <h2 className="rounded-md bg-white p-2 text-[28px] font-[500] leading-[36px] text-[#010D26]">
@@ -148,7 +122,7 @@ useEffect(() => {
           slotMaxTime="24:00:00"
           dayHeaderContent={dayHeaderContent}
           events={list}
-          eventContent={renderEventContent}
+          eventContent={(eventInfo, user) => renderEventContent(eventInfo, user)}
           />
       }
       </div>
@@ -156,12 +130,43 @@ useEffect(() => {
   );
 }
 
-function renderEventContent(eventInfo: any) {
-  console.log("eventInfo", eventInfo);
+function renderEventContent(eventInfo: any, user: any) {
+  console.log("eventInfo:", eventInfo.event.extendedProps);
   return (
-    <div className="bg-blue-500 text-white p-2 rounded-md overflow-hidden">
-      <b>{eventInfo.event.extendedProps.partnerName}</b>
-      <p>{eventInfo.event.extendedProps.partnerRole}</p>
+    <div>
+    {user.id === eventInfo.event.extendedProps.humanBookId ? (
+      <div className="bg-[#CDDDFE] p-[2px] rounded-md flex flex-col justify-start relative overflow-visible">
+      <p className="-top-[18px] -left-[20px] flex justify-center items-center absolute bg-[#FFC745] text-[#000] font-[500] text-[14px] leading-[16px] p-[7px] w-[82px] h-[24px] rounded-[100px] z-[10]">Pending...</p>
+      <p className={`-top-[10px] -left-[20px] flex justify-center items-center absolute bg-[#FFC745] text-[#000] font-[500] text-[14px] leading-[16px] p-[7px] w-[82px] h-[24px] rounded-[100px] z-[10] ${eventInfo.event.extendedProps.humanBook.approval === "Approved"? "hidden" : "block"}`}>{eventInfo.event.extendedProps.humanBook.approval === "Approved"? "" : "Pedding...."}</p>
+      <div className="flex items-center">
+          <Image
+            alt="avatar"
+            src={eventInfo.event.extendedProps.humanBook.videoUrl ? eventInfo.event.extendedProps.humanBook.videoUrl : "/assets/images/icons/avatar.svg"}
+            width={14}
+            height={14}
+            loading="lazy"
+            className="border border-[#fff] rounded-full mr-[2px]"
+          /> 
+      <p className="overflow-hidden whitespace-nowrap text-ellipsis w-[80px] h-[20px] text-[#171819]">{eventInfo.event.extendedProps.humanBook.fullName}</p>
+      </div>
+      <p className="text-[#0442BF]">Huber</p>
+    </div>) :
+    (<div className="bg-[#FFE3CC] p-[2px] rounded-md flex flex-col justify-start relative overflow-visible">
+      <p className="-top-[18px] -left-[20px] flex justify-center items-center absolute bg-[#FFC745] text-[#000] font-[500] text-[14px] leading-[16px] p-[7px] w-[82px] h-[24px] rounded-[100px] z-[10]">Pending...</p>
+      <p className={`-top-[10px] -left-[20px] flex justify-center items-center absolute bg-[#FFC745] text-[#000] font-[500] text-[14px] leading-[16px] p-[7px] w-[82px] h-[24px] rounded-[100px] z-[10] ${eventInfo.event.extendedProps.humanBook.approval === "Approved"? "hidden" : "block"}`}>{eventInfo.event.extendedProps.humanBook.approval === "Approved"? "" : "Pedding..."}</p>
+      <div className="flex items-center">
+          <Image
+            alt="avatar"
+            src={eventInfo.event.extendedProps.userLiber.videoUrl ? eventInfo.event.extendedProps.userLiber.videoUrl : "/assets/images/icons/avatar.svg"}
+            width={14}
+            height={14}
+            loading="lazy"
+            className="border border-[#fff] rounded-full mr-[2px]"
+          />        
+          <p className="overflow-hidden whitespace-nowrap text-ellipsis w-[70px] h-[20px] text-[#171819]">{eventInfo.event.extendedProps.userLiber.fullName}</p>
+      </div>
+      <p className="text-[#FF7301]">Liber</p>
+    </div>)}
     </div>
   );
 }

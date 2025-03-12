@@ -50,7 +50,7 @@ table tbody tr.fc-scrollgrid-section.fc-scrollgrid-section-body:nth-child(1)  {
   letter-spacing: 0%;
 }
 
-.fc-day-today .fc-scrollgrid-sync-inner span {
+/* .fc-day-today .fc-scrollgrid-sync-inner span {
   background-color: #dbeafe ;
   border-radius: 100px;
   overflow: hidden;
@@ -64,7 +64,7 @@ table tbody tr.fc-scrollgrid-section.fc-scrollgrid-section-body:nth-child(1)  {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .fc-daygrid-day, 
 .fc-timegrid-col {
@@ -133,6 +133,11 @@ table table tbody tr {
   border-right: 1px solid #ddd !important;
 }
 
-.fc-event {
-  overflow: hidden;
+.fc-v-event {
+  background-color: transparent !important;
+  border: none;
+}
+
+.fc-day.fc-timegrid-col {
+  overflow: visible;
 }
