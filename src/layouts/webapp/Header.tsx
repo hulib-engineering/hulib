@@ -24,6 +24,7 @@ import type { WithChildren } from '@/components/private/types';
 import SearchInput from '@/components/SearchInput';
 import { useAppSelector } from '@/libs/hooks';
 
+
 const ButtonWithChip = ({
   children,
   value,
@@ -199,7 +200,9 @@ const Header = () => {
           {/* <SearchEverything /> */}
           <div className="flex items-center justify-between gap-x-2">
             {user && user?.id && (
-              <Button variant="ghost" size="lg" className="text-neutral-10">
+              <Button variant="ghost" size="lg" className="text-neutral-10"
+              onClick={handleNavigateToSchedule}
+              >
                 My schedule
               </Button>
             )}
