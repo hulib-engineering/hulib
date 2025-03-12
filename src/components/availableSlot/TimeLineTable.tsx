@@ -64,7 +64,7 @@ export const TimeLineTable = ({ onChange, initialSelectedTime }: Props) => {
       return null;
     }
     return (
-      <div className="md:grid-cols-6 grid w-full grid-cols-5 items-center gap-2 rounded-lg bg-[#F9F9F9] p-3">
+      <div className="grid w-full grid-cols-5 items-center gap-2 rounded-lg bg-[#F9F9F9] p-3 md:grid-cols-6">
         {list.map((item) => (
           <>{timeItem(item)}</>
         ))}

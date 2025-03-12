@@ -108,9 +108,9 @@ export const AvailableSlot = () => {
   }, [selectedIndex]);
 
   return (
-    <div className="md:p-5 flex flex-col gap-y-6 rounded-xl bg-[#FFFFFF]">
+    <div className="flex flex-col gap-y-6 rounded-xl bg-[#FFFFFF] md:p-5">
       <h2 className="text-4xl font-medium">Register as a Huber</h2>
-      <div className="md:px-[60px] mx-auto flex w-fit flex-col gap-y-2 px-2 py-5 shadow-[0px_4px_5px_0px_#1C1E211A]">
+      <div className="mx-auto flex w-fit flex-col gap-y-2 px-2 py-5 shadow-[0px_4px_5px_0px_#1C1E211A] md:px-[60px]">
         <p className="text-lg font-medium">My available slots</p>
         <p className="text-sm font-medium">
           Hãy chọn những khung giờ bạn có thể dành cho Liber
