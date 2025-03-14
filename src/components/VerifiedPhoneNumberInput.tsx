@@ -109,7 +109,7 @@ const VerifiedPhoneNumberInput = ({
 
   const handleSendCode = async () => {
     try {
-      setupRecaptcha(); // 🔹 Gọi trước khi gửi OTP
+      setupRecaptcha(); // Setup Recaptcha
       const phoneNumber = watch('parentPhoneNumber').trim();
       if (!phoneNumber) throw new Error('Phone number is required');
 
