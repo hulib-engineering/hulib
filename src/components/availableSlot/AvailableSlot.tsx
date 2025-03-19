@@ -36,7 +36,7 @@ export const DAY_DISPLAY_NAMES: Record<number, string> = {
   [TabIndex.Sunday]: 'Chủ Nhật',
 };
 
-type SelectedTimeModel = {
+export type SelectedTimeModel = {
   day: string;
   time: string[];
 };
