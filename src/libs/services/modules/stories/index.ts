@@ -1,4 +1,5 @@
 import { api } from '../../api';
+import createStory from './createStory';
 import getReviewsOverview from './getReviewsOverview';
 import getSearchByKeyword from './getSearchByKeyword';
 import getSimilarStories from './getSimilarStories';
@@ -16,6 +17,7 @@ const storiesApi = apiWithTag.injectEndpoints({
     getReviewsOverview: getReviewsOverview(build),
     getSimilarStories: getSimilarStories(build),
     getSearchByKeyword: getSearchByKeyword(build),
+    createStory: createStory(build),
   }),
   overrideExisting: false,
 });
@@ -26,4 +28,5 @@ export const {
   useGetReviewsOverviewQuery,
   useGetSimilarStoriesQuery,
   useGetSearchByKeywordQuery,
+  useCreateStoryMutation,
 }: any = storiesApi;

@@ -6,22 +6,28 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import Form from '@/components/form/Form';
 import TextArea from '@/components/textArea/TextArea';
+import TextInput from '@/components/textInput/TextInput';
+import { useAppSelector } from '@/libs/hooks';
+import { useCreateStoryMutation } from '@/libs/services/modules/stories';
 import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import { StoriesValidation } from '@/validations/StoriesValidation';
 
-import TextInput from '../textInput/TextInput';
+import CustomCoverBox from './CustomCoverBox';
 
 interface Topic {
-  id: string;
+  id: number;
   name: string;
 }
 
 const Step3 = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
   const { data: topicsPages, isLoading } = useGetTopicsQuery();
+  const [createStory] = useCreateStoryMutation();
 
   const methods = useForm<z.infer<typeof StoriesValidation>>({
     resolver: zodResolver(StoriesValidation),
@@ -37,12 +43,12 @@ const Step3 = () => {
     watch,
     setValue,
     handleSubmit,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isSubmitting },
   } = methods;
 
   const selectedTopics = watch('topics') || [];
 
-  const handleTopicToggle = (topicId: string) => {
+  const handleTopicToggle = (topicId: number) => {
     const currentTopics = selectedTopics || [];
     if (currentTopics.includes(topicId)) {
       setValue(
@@ -54,15 +60,28 @@ const Step3 = () => {
     }
   };
 
-  const handleTopicRemove = (topicId: string) => {
+  const handleTopicRemove = (topicId: number) => {
     setValue(
       'topics',
       selectedTopics.filter((id) => id !== topicId),
     );
   };
 
-  const onSubmit = (data: z.infer<typeof StoriesValidation>) => {
-    console.log(data);
+  const onSubmit = async (formValues: z.infer<typeof StoriesValidation>) => {
+    try {
+      const response = await createStory({
+        ...formValues,
+        humanBook: userInfo?.id,
+      });
+
+      if (response?.error && response?.error?.status === 422) {
+        pushError('Failed to create story');
+      } else {
+        pushSuccess('Story created successfully');
+      }
+    } catch (error) {
+      pushError('Failed to create story');
+    }
   };
 
   useEffect(() => {
@@ -149,10 +168,10 @@ const Step3 = () => {
                                       <button
                                         key={topic.id}
                                         type="button"
-                                        className={`cursor-pointer rounded px-3 py-2 text-sm transition-colors ${
+                                        className={`mb-1 w-full cursor-pointer rounded px-3 py-2 text-left text-sm transition-colors ${
                                           selectedTopics.includes(topic.id)
                                             ? 'bg-primary-90 text-primary-50'
-                                            : 'text-gray-700 hover:bg-neutral-10'
+                                            : 'text-gray-700 hover:bg-primary-90'
                                         }`}
                                         onClick={() =>
                                           handleTopicToggle(topic.id)
@@ -213,6 +232,7 @@ const Step3 = () => {
                           <>
                             <TextArea
                               {...field}
+                              rows={7}
                               error={!!errors.abstract}
                               placeholder="Please enter your story"
                               className="text-sm"
@@ -229,7 +249,9 @@ const Step3 = () => {
                   </Form.Item>
                 </div>
               </div>
-              <div className="flex-1">cover</div>
+              <div className="flex-1">
+                <CustomCoverBox setValue={setValue} />
+              </div>
             </div>
             <div className="flex w-full justify-between gap-4 text-left lg:w-1/2">
               <button
@@ -241,7 +263,7 @@ const Step3 = () => {
               <button
                 type="submit"
                 className="flex-1 rounded-full bg-primary-50 px-6 py-2 text-center text-white transition-colors hover:bg-blue-700"
-                disabled={!isValid || isSubmitting}
+                disabled={isSubmitting}
               >
                 Submit
               </button>
