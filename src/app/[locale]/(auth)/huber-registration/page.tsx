@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 
 import CommonLayout from '@/layouts/CommonLayout';
 import Step1 from '@/layouts/huber-registration/Step1';
+import Step3 from '@/layouts/huber-registration/Step3';
 
 const steps = [
   { no: '01', value: 'Info', num: 1 },
@@ -45,6 +46,10 @@ const Page = () => {
 
     return undefined;
   };
+
+  if (currentStep === 3) {
+    return <Step3 />;
+  }
 
   return (
     <CommonLayout className="flex w-full !flex-col items-center justify-center !bg-[#F9F9F9]">

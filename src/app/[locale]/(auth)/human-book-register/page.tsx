@@ -13,7 +13,6 @@ import { FormSkeletonLoading } from '@/components/human-book-register/FormSkelet
 import Popup from '@/components/human-book-register/Popup';
 import Step1 from '@/components/human-book-register/Step1';
 import Step2 from '@/components/human-book-register/Step2';
-import Step3 from '@/components/human-book-register/Step3';
 import StepCircle from '@/components/human-book-register/StepCircle';
 import { mergeClassnames } from '@/components/private/utils';
 import { useRegisterHumanBookMutation } from '@/libs/services/modules/auth';
@@ -150,8 +149,6 @@ const Index = () => {
   };
 
   if (isLoading) return <FormSkeletonLoading />;
-
-  if (currentStep === 2) return <Step3 />;
 
   return (
     <div
