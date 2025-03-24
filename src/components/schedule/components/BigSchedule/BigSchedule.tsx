@@ -7,10 +7,12 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/libs/hooks';
+import DetailEventHuber from '../DetailEventHuber';
+import DetailEventLiber from '../DetailEventLiber';
 
 const slotLabelContent = (arg: any) => {
   const hour24 = arg.date.getHours();
-  return <span className="font-semibold text-black">{hour24}h00</span>;
+  return <span className="font-semibold text-black align-top">{hour24}h00</span>;
 };
 
 const dayHeaderContent = (arg: any) => {
@@ -32,78 +34,89 @@ const dayHeaderContent = (arg: any) => {
 function renderEventContent(eventInfo: any, user: any) {
   console.log('eventInfo:', eventInfo.event.extendedProps);
   return (
-    <div>
-      {user.id === eventInfo.event.extendedProps.humanBookId ? (
-        <div className="relative flex flex-col justify-start overflow-visible rounded-md bg-[#CDDDFE] p-[2px]">
-          <p className="absolute -left-[20px] -top-[18px] z-[10] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
-            Pending...
-          </p>
-          <p
-            className={`absolute -left-[20px] -top-[10px] z-[10] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000] ${
-              eventInfo.event.extendedProps.humanBook.approval === 'Approved'
-                ? 'hidden'
-                : 'block'
-            }`}
-          >
-            {eventInfo.event.extendedProps.humanBook.approval === 'Approved'
-              ? ''
-              : 'Pedding....'}
-          </p>
-          <div className="flex items-center">
-            <Image
-              alt="avatar"
-              src={
-                eventInfo.event.extendedProps.humanBook.videoUrl
-                  ? eventInfo.event.extendedProps.humanBook.videoUrl
-                  : '/assets/images/icons/avatar.svg'
-              }
-              width={14}
-              height={14}
-              loading="lazy"
-              className="mr-[2px] rounded-full border border-[#fff]"
-            />
-            <p className="h-[20px] w-[80px] truncate text-[#171819]">
-              {eventInfo.event.extendedProps.humanBook.fullName}
+    <div className="relative group z-[5]">
+      <div className="relative">
+        {/* {user?.id === eventInfo.event.extendedProps.humanBookId ? 
+        ( */}
+          <div className="relative flex flex-col justify-start overflow-visible rounded-md bg-[#CDDDFE] p-[2px]">
+            <p className="clip-auto z-10 absolute -left-[20px] -top-[18px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
+              Pending...
             </p>
-          </div>
-          <p className="text-[#0442BF]">Huber</p>
-        </div>
-      ) : (
-        <div className="relative flex flex-col justify-start overflow-visible rounded-md bg-[#FFE3CC] p-[2px]">
-          <p className="absolute -left-[20px] -top-[18px] z-[10] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
-            Pending...
-          </p>
-          <p
-            className={`absolute -left-[20px] -top-[10px] z-[10] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000] ${
-              eventInfo.event.extendedProps.humanBook.approval === 'Approved'
-                ? 'hidden'
-                : 'block'
-            }`}
-          >
-            {eventInfo.event.extendedProps.humanBook.approval === 'Approved'
-              ? ''
-              : 'Pedding...'}
-          </p>
-          <div className="flex items-center">
-            <Image
-              alt="avatar"
-              src={
-                eventInfo.event.extendedProps.userLiber.videoUrl
-                  ? eventInfo.event.extendedProps.userLiber.videoUrl
-                  : '/assets/images/icons/avatar.svg'
-              }
-              width={14}
-              height={14}
-              loading="lazy"
-              className="mr-[2px] rounded-full border border-[#fff]"
-            />
-            <p className="h-[20px] w-[70px] truncate text-[#171819]">
-              {eventInfo.event.extendedProps.userLiber.fullName}
+            <p
+              className={`absolute -left-[20px] -top-[10px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000] ${
+                eventInfo.event.extendedProps.humanBook.approval === 'Approved'
+                  ? 'hidden'
+                  : 'block'
+              }`}
+            >
+              {eventInfo.event.extendedProps.humanBook.approval === 'Approved'
+                ? ''
+                : 'Pending....'}
             </p>
+            <div className="flex items-center">
+              <Image
+                alt="avatar"
+                // src={
+                //   eventInfo.event.extendedProps.humanBook.videoUrl
+                //     ? eventInfo.event.extendedProps.humanBook.videoUrl
+                //     : '/assets/images/icons/avatar.svg'
+                // }
+                src="/assets/images/icons/avatar.svg"         
+                width={14}
+                height={14}
+                loading="lazy"
+                className="mr-[2px] rounded-full border border-[#fff]"
+              />
+              <p className="h-[20px] w-[80px] truncate text-[#171819]">
+                {eventInfo.event.extendedProps.humanBook.fullName}
+              </p>
+            </div>
+            <p className="text-[#0442BF]">Huber</p>
           </div>
-          <p className="text-[#FF7301]">Liber</p>
-        </div>
-      )}
+        {/* ) : (
+
+          <div className="relative flex flex-col justify-start overflow-visible rounded-md bg-[#FFE3CC] p-[2px]">
+            <p className="absolute -left-[20px] -top-[18px] z-[9] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
+              Pending...
+            </p>
+            <p
+              className={`absolute -left-[20px] -top-[10px] z-[9] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000] ${
+                eventInfo.event.extendedProps.humanBook.approval === 'Approved'
+                  ? 'hidden'
+                  : 'block'
+              }`}
+            >
+              {eventInfo.event.extendedProps.humanBook.approval === 'Approved'
+                ? ''
+                : 'Pedding...'}
+            </p>
+            <div className="flex items-center">
+              <Image
+                alt="avatar"
+                src={
+                  eventInfo.event.extendedProps.userLiber.videoUrl
+                    ? eventInfo.event.extendedProps.userLiber.videoUrl
+                    : '/assets/images/icons/avatar.svg'
+                }
+                width={14}
+                height={14}
+                loading="lazy"
+                className="mr-[2px] rounded-full border border-[#fff]"
+              />
+              <p className="h-[20px] w-[70px] truncate text-[#171819]">
+                {eventInfo.event.extendedProps.userLiber.fullName}
+              </p>
+            </div>
+            <p className="text-[#FF7301]">Liber</p>
+          </div>
+          )} */}    
+      </div>
+      <div className="absolute -top-[100px] -left-[100px] hidden group-hover:block z-50">
+        {/* {user?.id === eventInfo.event.extendedProps.humanBookId ? 
+        (<DetailEventHuber />) : ( */}
+          <DetailEventLiber />
+          {/* ) } */}      
+      </div>
     </div>
   );
 }
