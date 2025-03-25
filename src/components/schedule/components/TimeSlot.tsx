@@ -94,6 +94,8 @@ function TimeSlot() {
   const [listMorning, setListMorning] = useState<string[]>([]);
   const [listAfternoon, setListAfternoon] = useState<string[]>([]);
   const [listEvening, setListEvening] = useState<string[]>([]);
+  const [list, setList] = useState([]);
+  
   const morning: string[] = [];
   const afternoon: string[] = [];
   const evening: string[] = [];
@@ -197,6 +199,22 @@ function TimeSlot() {
   useEffect(() => {
     getWeekDays();
   }, []);
+
+  const getData = async () => {
+      try {
+        const response = await fetch(
+          'https://hulib-services.onrender.com/api/v1/time-slots',
+        );
+        const result = await response.json();
+        setList(result);
+        console.log("time slot", result);
+      } catch (error) {
+        console.error('Lỗi khi lấy dữ liệu:', error);
+      }
+    };
+    useEffect(() => {
+      getData();
+    }, []);
   return (
     <div className="mb-[20px] flex flex-col justify-center rounded-[12px] bg-[#fff] p-[16px] drop-shadow-md">
       <div className="my-[10px]">
