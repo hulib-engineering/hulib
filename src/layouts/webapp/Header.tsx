@@ -24,7 +24,6 @@ import type { WithChildren } from '@/components/private/types';
 import SearchInput from '@/components/SearchInput';
 import { useAppSelector } from '@/libs/hooks';
 
-
 const ButtonWithChip = ({
   children,
   value,
@@ -51,7 +50,7 @@ const AvatarPopoverMenuItems = [
   {
     label: 'Register to become human book',
     icon: <Pencil size={20} color="primary-20" />,
-    href: '/human-book-register',
+    href: '/huber-registration',
     roles: ['Reader'],
   },
   {
@@ -200,8 +199,11 @@ const Header = () => {
           {/* <SearchEverything /> */}
           <div className="flex items-center justify-between gap-x-2">
             {user && user?.id && (
-              <Button variant="ghost" size="lg" className="text-neutral-10"
-              onClick={handleNavigateToSchedule}
+              <Button
+                variant="ghost"
+                size="lg"
+                className="text-neutral-10"
+                onClick={handleNavigateToSchedule}
               >
                 My schedule
               </Button>
