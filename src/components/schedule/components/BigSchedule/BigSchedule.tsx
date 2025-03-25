@@ -38,7 +38,7 @@ function renderEventContent(eventInfo: any, user: any) {
       <div className="relative">
         {/* {user?.id === eventInfo.event.extendedProps.humanBookId ? 
         ( */}
-          <div className="relative flex flex-col justify-start overflow-visible rounded-md bg-[#CDDDFE] p-[2px]">
+          {/* <div className="relative flex flex-col justify-start overflow-visible rounded-md bg-[#CDDDFE] p-[2px]">
             <p className="clip-auto z-10 absolute -left-[20px] -top-[18px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
               Pending...
             </p>
@@ -73,8 +73,11 @@ function renderEventContent(eventInfo: any, user: any) {
             </div>
             <p className="text-[#0442BF]">Huber</p>
           </div>
-        {/* ) : (
-
+          <div className="absolute -top-[100px] -left-[100px] hidden group-hover:block z-50">
+            <DetailEventHuber />   
+          </div>
+        { */}
+         {/* ) : ( */}
           <div className="relative flex flex-col justify-start overflow-visible rounded-md bg-[#FFE3CC] p-[2px]">
             <p className="absolute -left-[20px] -top-[18px] z-[9] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
               Pending...
@@ -109,13 +112,10 @@ function renderEventContent(eventInfo: any, user: any) {
             </div>
             <p className="text-[#FF7301]">Liber</p>
           </div>
-          )} */}    
-      </div>
-      <div className="absolute -top-[100px] -left-[100px] hidden group-hover:block z-50">
-        {/* {user?.id === eventInfo.event.extendedProps.humanBookId ? 
-        (<DetailEventHuber />) : ( */}
-          <DetailEventLiber />
-          {/* ) } */}      
+          <div className="absolute -top-[100px] -left-[100px] hidden group-hover:block z-50">
+            <DetailEventLiber />
+          </div>
+          {/* )}    */}
       </div>
     </div>
   );
