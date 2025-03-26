@@ -8,8 +8,8 @@ import Button from '@/components/button/Button';
 
 export const ScheduleSuccess = () => {
   return (
-    <div className="flex w-full flex-col items-center justify-between rounded-3xl bg-white p-8">
-      <div className="flex w-[480px] flex-col items-center gap-y-4">
+    <div className="flex w-full flex-col items-center justify-between rounded-3xl bg-white p-4 md:p-8">
+      <div className="flex w-full flex-col items-center gap-y-4 md:w-[480px]">
         <Image src={imageSuccess} alt="success" width={480} height={420} />
         <h4 className="text-[28px] font-medium">Congratulation!</h4>
         <p className="text-sm text-neutral-30">
