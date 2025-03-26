@@ -11,7 +11,7 @@ import {
   MORNING_TIME_START,
   WEEK_STRING,
   YEAR_STRING,
-} from '../../../libs/constants/date';
+} from '@/libs/constants/date';
 
 const times = [
   // "2025-02-21 06:30",
@@ -95,7 +95,7 @@ function TimeSlot() {
   const [listAfternoon, setListAfternoon] = useState<string[]>([]);
   const [listEvening, setListEvening] = useState<string[]>([]);
   const [list, setList] = useState([]);
-  
+  console.log('list', list);
   const morning: string[] = [];
   const afternoon: string[] = [];
   const evening: string[] = [];
@@ -201,20 +201,20 @@ function TimeSlot() {
   }, []);
 
   const getData = async () => {
-      try {
-        const response = await fetch(
-          'https://hulib-services.onrender.com/api/v1/time-slots',
-        );
-        const result = await response.json();
-        setList(result);
-        console.log("time slot", result);
-      } catch (error) {
-        console.error('Lỗi khi lấy dữ liệu:', error);
-      }
-    };
-    useEffect(() => {
-      getData();
-    }, []);
+    try {
+      const response = await fetch(
+        'https://hulib-services.onrender.com/api/v1/time-slots',
+      );
+      const result = await response.json();
+      setList(result);
+      console.log('time slot', result);
+    } catch (error) {
+      console.error('Lỗi khi lấy dữ liệu:', error);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <div className="mb-[20px] flex flex-col justify-center rounded-[12px] bg-[#fff] p-[16px] drop-shadow-md">
       <div className="my-[10px]">

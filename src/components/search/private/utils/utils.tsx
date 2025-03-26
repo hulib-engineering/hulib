@@ -39,8 +39,8 @@ function doesChildMatchSearch(search: string, children?: ReactNode) {
 function doesKeywordsMatchSearch(search: string, keywords: string[]) {
   return keywords.includes('*')
     ? true
-    : keywords.some((keyword) =>
-        keyword?.toLowerCase().includes(search?.toLowerCase()),
+    : keywords.some(
+        (keyword) => keyword?.toLowerCase().includes(search?.toLowerCase()),
       );
 }
 
