@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 function DetailEventHuber() {
   return (
-    <div className="z-50 bg-[#F0F5FF] py-[16px] px-[20px] rounded-[16px] w-[396px] min-h-[360px] drop-shadow-sm shadow-[#1C1E211A] overflow-hidden">
+    <div className=" bg-[#F0F5FF] py-[16px] px-[20px] rounded-[16px] w-[396px] min-h-[360px] drop-shadow-sm shadow-[#1C1E211A] overflow-hidden">
       <div className="flex items-center">
         <h3 className="text-[20px] leading-[32px] text-[#171819] flex-1">Session with Liber</h3>
         <p className="mx-[8px] rounded-[100px] w-[107px] h-[32px] py-[2px] px-[10px] bg-[#FFC745] align-middle text-center text-[#000000]">Pending...</p>
@@ -38,7 +38,7 @@ function DetailEventHuber() {
       </div>
       <div className="flex items-center mt-[16px]">
         <button type="button" className="w-[141px] h-[44px] rounded-full border bg-[#fff] border-[#C2C6CF] text-[#0442BF] font-[500] text-[16px] leading-[20px]">Reject</button>
-        <button type="button" className="z-[50] ml-auto min-w-[205px] h-[44px] rounded-full text-[#fff] font-[500] text-[16px] leading-[20px] bg-[#0442BF]">Aprove</button>
+        <button type="button" className="ml-auto min-w-[205px] h-[44px] rounded-full text-[#fff] font-[500] text-[16px] leading-[20px] bg-[#0442BF]">Aprove</button>
       </div>
     </div>
   );

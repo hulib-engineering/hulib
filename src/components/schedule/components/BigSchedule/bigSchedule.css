@@ -11,7 +11,19 @@ td {
 
 table {
   border-collapse: collapse;
+  overflow: visible;
 }
+
+table,
+table tbody,
+.fc-timegrid-cols,
+.fc-timegrid-body,
+.fc-scroller,
+.fc-scroller-harness,
+.fc-scrollgrid-section {
+  overflow: visible !important;
+}
+
 .fc-scrollgrid-sync-inner,
 .fc-day-today {
   background-color: #F3F4F6 ; 
@@ -167,4 +179,8 @@ table table td:first-child .fc-timegrid-col-frame {
 
 .fc .fc-timegrid-col-events {
   z-index: 2;
+}
+
+.fc-scroller-harness {
+  overflow: visible;
 }
