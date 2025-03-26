@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 function DetailEventLiber() {
   return (
-    <div className="z-50 bg-[#FFF9F5] py-[16px] pb-[32px] px-[20px] rounded-[16px] w-[396px] max-h-[206px] drop-shadow-sm shadow-[#1C1E211A] overflow-hidden">
+    <div className="bg-[#FFF9F5] py-[16px] pb-[32px] px-[20px] rounded-[16px] w-[396px] max-h-[206px] drop-shadow-sm shadow-[#1C1E211A] overflow-hidden">
       <div className="flex items-center">
         <h3 className="text-[20px] leading-[32px] text-[#171819] flex-1">Session with Huber</h3>
         <p className="mx-[8px] rounded-[100px] w-[107px] h-[32px] py-[2px] px-[10px] bg-[#FFC745] align-middle text-center text-[#000000]">Pending...</p>

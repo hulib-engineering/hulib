@@ -34,11 +34,11 @@ const dayHeaderContent = (arg: any) => {
 function renderEventContent(eventInfo: any, user: any) {
   console.log('eventInfo:', eventInfo.event.extendedProps);
   return (
-    <div className="relative group z-[5]">
-      <div className="relative">
+    <div className="relative group overflow-visible cursor-pointer z-[50]">
+      <div className="relative overflow-visible min-w-[60px]">
         {/* {user?.id === eventInfo.event.extendedProps.humanBookId ? 
         ( */}
-          {/* <div className="relative flex flex-col justify-start overflow-visible rounded-md bg-[#CDDDFE] p-[2px]">
+          {/* <div className="border border-[#fff] relative flex flex-col justify-start overflow-visible rounded-md bg-[#CDDDFE] p-[2px]">
             <p className="clip-auto z-10 absolute -left-[20px] -top-[18px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
               Pending...
             </p>
@@ -78,12 +78,12 @@ function renderEventContent(eventInfo: any, user: any) {
           </div>
         { */}
          {/* ) : ( */}
-          <div className="relative flex flex-col justify-start overflow-visible rounded-md bg-[#FFE3CC] p-[2px]">
-            <p className="absolute -left-[20px] -top-[18px] z-[9] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
+          <div className="border border-[#fff] relative flex flex-col justify-start overflow-visible rounded-md bg-[#FFE3CC] p-[2px]">
+            <p className="absolute -left-[20px] -top-[18px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
               Pending...
             </p>
             <p
-              className={`absolute -left-[20px] -top-[10px] z-[9] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000] ${
+              className={`absolute -left-[20px] -top-[10px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000] ${
                 eventInfo.event.extendedProps.humanBook.approval === 'Approved'
                   ? 'hidden'
                   : 'block'
@@ -110,9 +110,9 @@ function renderEventContent(eventInfo: any, user: any) {
                 {eventInfo.event.extendedProps.userLiber.fullName}
               </p>
             </div>
-            <p className="text-[#FF7301]">Liber</p>
+            <p className="text-[#FF7301] overflow-hidden">Liber</p>
           </div>
-          <div className="absolute -top-[100px] -left-[100px] hidden group-hover:block z-50">
+          <div className="absolute top-[5px] -left-[396px] hidden group-hover:block z-[9999] overflow-visible">
             <DetailEventLiber />
           </div>
           {/* )}    */}
