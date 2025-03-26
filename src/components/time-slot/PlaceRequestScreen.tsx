@@ -13,7 +13,8 @@ import Image from 'next/image';
 import * as React from 'react';
 
 import Button from '@/components/button/Button';
-import type { IAttendee } from '@/components/schedule-meeting/MainScreen';
+import type { IAttendee } from '@/components/time-slot/MainScreen';
+import { useAddTimeSlotsMutation } from '@/libs/services/modules/schedule-meeting';
 
 type Props = {
   attendees: {
@@ -24,6 +25,7 @@ type Props = {
   endTime: string;
   duration: string;
   timeZone: string;
+  dateTime: string;
   nextStep: () => void;
   backStep: () => void;
 };
@@ -33,12 +35,15 @@ export const PlaceRequestScreen = ({
   endTime,
   timeZone,
   duration,
+  dateTime,
   nextStep,
   backStep,
 }: Props) => {
   const { liber, huber } = attendees;
   const { icon: liberIcon, role: roleLiber, fullName: liberName } = liber;
   const { icon: huberIcon, role: roleHuber, fullName: huberName } = huber;
+
+  const [placeRequest] = useAddTimeSlotsMutation();
 
   const renderRoleTag = (role: string) => {
     switch (role.trim().toLowerCase()) {
@@ -69,6 +74,41 @@ export const PlaceRequestScreen = ({
         <span className="text-sm font-medium text-neutral-10">{name}</span>
       </div>
     );
+  };
+
+  function convertTo24HourFormat(time: string): string {
+    // Parse the input time (e.g., "03:45 PM" or "11:30 AM")
+    const [timeStr, period] = time.split(' ');
+    const [hours, minutes] = timeStr?.split(':') || ['00', '00'];
+
+    let hour = parseInt(hours || '00', 10);
+
+    // Convert to 24-hour format
+    if (period === 'PM' && hour !== 12) {
+      hour += 12;
+    } else if (period === 'AM' && hour === 12) {
+      hour = 0;
+    }
+
+    // Format with leading zeros
+    const formattedHour = hour.toString().padStart(2, '0');
+
+    return `${formattedHour}:${minutes}`;
+  }
+
+  const onPlaceRequest = async () => {
+    try {
+      const result = await placeRequest({
+        dayOfWeek: dateTime,
+        startTime: convertTo24HourFormat(startTime),
+      });
+      console.log('result', result);
+      if (result) {
+        nextStep();
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   return (
@@ -102,7 +142,7 @@ export const PlaceRequestScreen = ({
             <span className="w-full text-right">{endTime}</span>
           </div>
           <div className="grid grid-cols-2 items-center justify-between gap-x-2 text-base font-normal text-primary-50">
-            <span>Tuesday, February 18</span>
+            <span>{dateTime}</span>
             <span className="text-right">{timeZone}</span>
           </div>
         </div>
@@ -138,7 +178,7 @@ export const PlaceRequestScreen = ({
           <Button variant="outline" className="w-full" onClick={backStep}>
             Back
           </Button>
-          <Button variant="primary" className="w-full" onClick={nextStep}>
+          <Button variant="primary" className="w-full" onClick={onPlaceRequest}>
             Place request
           </Button>
         </div>
