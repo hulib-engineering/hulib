@@ -55,11 +55,19 @@ function CustomCalendarHeader(props: PickersCalendarHeaderProps<Dayjs>) {
   );
 }
 
-export default function MiniSchedule() {
+type Props = {
+  selectedDate?: Dayjs | null;
+  setSelectedDate?: (value: Dayjs) => void;
+};
+
+export default function MiniSchedule({ selectedDate, setSelectedDate }: Props) {
   return (
     <div className="my-[20px] rounded-[12px] bg-[#fff] drop-shadow-md">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar
+          disablePast
+          value={selectedDate}
+          onChange={setSelectedDate}
           slots={{ calendarHeader: CustomCalendarHeader }}
           slotProps={{
             day: {

@@ -9,11 +9,14 @@ import {
   Timer,
   Users,
 } from '@phosphor-icons/react';
+import type { Dayjs } from 'dayjs';
+import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import * as React from 'react';
 
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
+import MiniSchedule from '@/components/schedule/components/MiniSchedule';
 
 export interface IAttendee {
   icon: string;
@@ -32,9 +35,12 @@ type Props = {
   };
   duration: string;
   timeZone: string;
-  initialSelectedTime: string[];
-  onChange: (value: string[]) => void;
+  setSelectedDay: (day: Dayjs) => void;
+  setSelectedTime: (time: string) => void;
+  setNextSelectedTime: (nextTime: string) => void;
   nextStep: () => void;
+  selectedDay: Dayjs | null;
+  selectedTime: string;
 };
 export const MainScreen = (props: Props) => {
   const {
@@ -45,16 +51,19 @@ export const MainScreen = (props: Props) => {
     attendees,
     duration = '30',
     timeZone,
-    initialSelectedTime,
-    onChange,
+    setSelectedDay,
+    setSelectedTime,
+    setNextSelectedTime,
+    selectedDay,
+    selectedTime,
     nextStep,
   } = props;
   const { liber, huber } = attendees;
   const { icon: liberIcon, role: roleLiber, fullName: liberName } = liber;
   const { icon: huberIcon, role: roleHuber, fullName: huberName } = huber;
 
-  const [selectedTime, setSelectedTime] =
-    React.useState<string[]>(initialSelectedTime);
+  const [selectDate, setSelectDate] = React.useState<Dayjs | null>(selectedDay);
+  const [selectTime, setSelectTime] = React.useState<string>(selectedTime);
 
   const items = [];
   for (let hour = 8; hour < 22; hour += 1) {
@@ -87,16 +96,21 @@ export const MainScreen = (props: Props) => {
     return convertToAmPm(time24); // convert to "2:00 PM", "2:30 PM", etc.
   });
 
-  const onClickTime = (time: string) => {
-    if (selectedTime?.includes(time)) {
-      const newSelectedTime = selectedTime.filter((item) => item !== time);
-      setSelectedTime(newSelectedTime);
-      onChange(newSelectedTime);
+  const onClickDate = (day: Dayjs) => {
+    if (selectDate === day) {
       return;
     }
-    const newVal: string[] = [...selectedTime, time];
-    setSelectedTime(newVal);
-    onChange(newVal);
+    setSelectDate(day);
+    setSelectedDay(day);
+  };
+
+  const onClickTime = (time: string, index: number, list: string[]) => {
+    if (selectTime === time) {
+      return;
+    }
+    setSelectTime(time);
+    setSelectedTime(time);
+    setNextSelectedTime(list[index + 1] ?? time);
   };
 
   const renderRoleTag = (role: string) => {
@@ -130,31 +144,26 @@ export const MainScreen = (props: Props) => {
     );
   };
 
-  const timeItem = (value: string) => {
-    return (
-      <button
-        type="button"
-        className={mergeClassnames(
-          'rounded-full  px-3 py-1 text-sm font-medium border hover:opacity-70',
-          selectedTime?.includes(value)
-            ? 'bg-primary-50 border-primary-50 text-white'
-            : 'bg-white border-neutral-90 text-neutral-10',
-        )}
-        onClick={() => onClickTime(value)}
-      >
-        {value}
-      </button>
-    );
-  };
-
   const timeBlock = (list: string[]) => {
     if (list.length === 0) {
       return null;
     }
     return (
       <div className="grid w-full grid-cols-5 items-center gap-2 p-3 md:grid-cols-6">
-        {list.map((item) => (
-          <>{timeItem(item)}</>
+        {list.map((item, index) => (
+          <button
+            key={index}
+            type="button"
+            className={mergeClassnames(
+              'rounded-full  px-3 py-1 text-sm font-medium border hover:opacity-70',
+              selectTime?.includes(item)
+                ? 'bg-primary-50 border-primary-50 text-white'
+                : 'bg-white border-neutral-90 text-neutral-10',
+            )}
+            onClick={() => onClickTime(item, index, list)}
+          >
+            {item}
+          </button>
         ))}
       </div>
     );
@@ -265,37 +274,52 @@ export const MainScreen = (props: Props) => {
           <Globe size={16} color="#009BEE" weight="fill" />
           {timeZone}
         </div>
-        <div className="flex flex-col gap-y-2 rounded-3xl bg-white p-4 shadow-lg">
-          <p className="text-sm font-medium text-neutral-10">
-            Tuesday, February 18
+        <div className="flex flex-col">
+          <MiniSchedule
+            selectedDate={selectDate}
+            setSelectedDate={onClickDate}
+          />
+
+          <p className="text-xs font-normal text-neutral-60">
+            Please choose a time
           </p>
-          <div className="flex flex-col gap-y-2">
-            <div className="grid grid-cols-[100px_auto] items-center gap-x-4 gap-y-2">
-              <span className="text-base font-normal text-neutral-40">
-                Morning
-              </span>
-              {timeBlock(range.slice(1, 8))}
-            </div>
-            <div className="grid grid-cols-[100px_auto] items-center gap-x-4 gap-y-2">
-              <span className="text-base font-normal text-neutral-40">
-                Afternoon
-              </span>
-              {timeBlock(range.slice(10, 18))}
-            </div>
-            <div className="grid grid-cols-[100px_auto] items-center gap-x-4 gap-y-2">
-              <span className="text-base font-normal text-neutral-40">
-                Night
-              </span>
-              {timeBlock(range.slice(19))}
-            </div>
-          </div>
         </div>
-        <p className="text-xs font-normal text-neutral-60">
-          Please choose a time
-        </p>
+        {!isEmpty(selectDate) && (
+          <>
+            <div className="flex flex-col gap-y-2 rounded-3xl bg-white p-4 shadow-lg">
+              <p className="text-sm font-medium text-neutral-10">
+                {selectDate?.format('dddd, MMMM D') ?? ''}
+              </p>
+              <div className="flex flex-col gap-y-2">
+                <div className="grid grid-cols-[100px_auto] items-center gap-x-4 gap-y-2">
+                  <span className="text-base font-normal text-neutral-40">
+                    Morning
+                  </span>
+                  {timeBlock(range.slice(1, 8))}
+                </div>
+                <div className="grid grid-cols-[100px_auto] items-center gap-x-4 gap-y-2">
+                  <span className="text-base font-normal text-neutral-40">
+                    Afternoon
+                  </span>
+                  {timeBlock(range.slice(10, 18))}
+                </div>
+                <div className="grid grid-cols-[100px_auto] items-center gap-x-4 gap-y-2">
+                  <span className="text-base font-normal text-neutral-40">
+                    Night
+                  </span>
+                  {timeBlock(range.slice(19))}
+                </div>
+              </div>
+            </div>
+            <p className="text-xs font-normal text-neutral-60">
+              Please choose a time
+            </p>
+          </>
+        )}
         <Button
           variant="primary"
           className="w-[300px] text-base font-medium text-white"
+          disabled={isEmpty(selectDate) || isEmpty(selectTime)}
           onClick={nextStep}
         >
           Next
