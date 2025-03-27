@@ -3,7 +3,6 @@ import './bigSchedule.css';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import console from 'console';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
