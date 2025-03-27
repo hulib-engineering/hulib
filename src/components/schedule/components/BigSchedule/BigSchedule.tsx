@@ -6,8 +6,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
-// import DetailEventHuber from '../DetailEventHuber';
-import DetailEventLiber from '../DetailEventLiber';
+import DetailEventLiber from '@/components/schedule/components/DetailEventLiber';
 
 const slotLabelContent = (arg: any) => {
   const hour24 = arg.date.getHours();
@@ -31,7 +30,7 @@ const dayHeaderContent = (arg: any) => {
     </div>
   );
 };
-// function renderEventContent(eventInfo: any, user: any)
+
 function renderEventContent(eventInfo: any) {
   console.log('eventInfo:', eventInfo.event.extendedProps);
   return (
@@ -123,7 +122,6 @@ function renderEventContent(eventInfo: any) {
 }
 
 export default function BigCalendar() {
-  // const currentUser = useAppSelector((state) => state.auth.userInfo);
   const [list, setList] = useState([]);
   const currentMonthYear = new Date().toLocaleString('en-US', {
     month: 'long',
@@ -205,10 +203,7 @@ export default function BigCalendar() {
             slotMaxTime="24:00:00"
             dayHeaderContent={dayHeaderContent}
             events={list}
-            eventContent={
-              (eventInfo) => renderEventContent(eventInfo)
-              // renderEventContent(eventInfo, currentUser)
-            }
+            eventContent={(eventInfo) => renderEventContent(eventInfo)}
           />
         )}
       </div>
