@@ -25,7 +25,7 @@ function TimeSlot() {
   const [listDay, setListDay] = useState<Record<string, TimeSlots>>({});
   const router = useRouter() || null;
   const handleUpdateTimeSlot: () => void = () => {
-    router.push('/schedule/time-slot');
+    router.push('/schedule-meeting/time-slot');
   };
 
   const getCurrentDay = () => {

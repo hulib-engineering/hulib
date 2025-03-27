@@ -140,7 +140,7 @@ const Header = () => {
   const router = useRouter();
 
   const handleNavigateToSchedule = () => {
-    router.push('/schedule/weekly-schedule');
+    router.push('/schedule-meeting/weekly-schedule');
   };
 
   return (
