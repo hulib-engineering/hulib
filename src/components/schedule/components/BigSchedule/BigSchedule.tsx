@@ -6,13 +6,14 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
-import { useAppSelector } from '@/libs/hooks';
-import DetailEventHuber from '../DetailEventHuber';
+// import DetailEventHuber from '../DetailEventHuber';
 import DetailEventLiber from '../DetailEventLiber';
 
 const slotLabelContent = (arg: any) => {
   const hour24 = arg.date.getHours();
-  return <span className="font-semibold text-black align-top">{hour24}h00</span>;
+  return (
+    <span className="align-top font-semibold text-black">{hour24}h00</span>
+  );
 };
 
 const dayHeaderContent = (arg: any) => {
@@ -30,15 +31,15 @@ const dayHeaderContent = (arg: any) => {
     </div>
   );
 };
-
-function renderEventContent(eventInfo: any, user: any) {
+// function renderEventContent(eventInfo: any, user: any)
+function renderEventContent(eventInfo: any) {
   console.log('eventInfo:', eventInfo.event.extendedProps);
   return (
-    <div className="relative group z-[5]">
-      <div className="relative">
+    <div className="group relative z-[50] cursor-pointer overflow-visible">
+      <div className="relative min-w-[60px] overflow-visible">
         {/* {user?.id === eventInfo.event.extendedProps.humanBookId ? 
         ( */}
-          {/* <div className="relative flex flex-col justify-start overflow-visible rounded-md bg-[#CDDDFE] p-[2px]">
+        {/* <div className="border border-[#fff] relative flex flex-col justify-start overflow-visible rounded-md bg-[#CDDDFE] p-[2px]">
             <p className="clip-auto z-10 absolute -left-[20px] -top-[18px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
               Pending...
             </p>
@@ -77,52 +78,52 @@ function renderEventContent(eventInfo: any, user: any) {
             <DetailEventHuber />   
           </div>
         { */}
-         {/* ) : ( */}
-          <div className="relative flex flex-col justify-start overflow-visible rounded-md bg-[#FFE3CC] p-[2px]">
-            <p className="absolute -left-[20px] -top-[18px] z-[9] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
-              Pending...
+        {/* ) : ( */}
+        <div className="relative flex flex-col justify-start overflow-visible rounded-md border border-[#fff] bg-[#FFE3CC] p-[2px]">
+          <p className="absolute -left-[20px] -top-[18px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
+            Pending...
+          </p>
+          <p
+            className={`absolute -left-[20px] -top-[10px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000] ${
+              eventInfo.event.extendedProps.humanBook.approval === 'Approved'
+                ? 'hidden'
+                : 'block'
+            }`}
+          >
+            {eventInfo.event.extendedProps.humanBook.approval === 'Approved'
+              ? ''
+              : 'Pedding...'}
+          </p>
+          <div className="flex items-center">
+            <Image
+              alt="avatar"
+              src={
+                eventInfo.event.extendedProps.userLiber.videoUrl
+                  ? eventInfo.event.extendedProps.userLiber.videoUrl
+                  : '/assets/images/icons/avatar.svg'
+              }
+              width={14}
+              height={14}
+              loading="lazy"
+              className="mr-[2px] rounded-full border border-[#fff]"
+            />
+            <p className="h-[20px] w-[70px] truncate text-[#171819]">
+              {eventInfo.event.extendedProps.userLiber.fullName}
             </p>
-            <p
-              className={`absolute -left-[20px] -top-[10px] z-[9] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000] ${
-                eventInfo.event.extendedProps.humanBook.approval === 'Approved'
-                  ? 'hidden'
-                  : 'block'
-              }`}
-            >
-              {eventInfo.event.extendedProps.humanBook.approval === 'Approved'
-                ? ''
-                : 'Pedding...'}
-            </p>
-            <div className="flex items-center">
-              <Image
-                alt="avatar"
-                src={
-                  eventInfo.event.extendedProps.userLiber.videoUrl
-                    ? eventInfo.event.extendedProps.userLiber.videoUrl
-                    : '/assets/images/icons/avatar.svg'
-                }
-                width={14}
-                height={14}
-                loading="lazy"
-                className="mr-[2px] rounded-full border border-[#fff]"
-              />
-              <p className="h-[20px] w-[70px] truncate text-[#171819]">
-                {eventInfo.event.extendedProps.userLiber.fullName}
-              </p>
-            </div>
-            <p className="text-[#FF7301]">Liber</p>
           </div>
-          <div className="absolute -top-[100px] -left-[100px] hidden group-hover:block z-50">
-            <DetailEventLiber />
-          </div>
-          {/* )}    */}
+          <p className="overflow-hidden text-[#FF7301]">Liber</p>
+        </div>
+        <div className="absolute -left-[396px] top-[5px] z-[9999] hidden overflow-visible group-hover:block">
+          <DetailEventLiber />
+        </div>
+        {/* )}    */}
       </div>
     </div>
   );
 }
 
 export default function BigCalendar() {
-  const currentUser = useAppSelector((state) => state.auth.userInfo);
+  // const currentUser = useAppSelector((state) => state.auth.userInfo);
   const [list, setList] = useState([]);
   const currentMonthYear = new Date().toLocaleString('en-US', {
     month: 'long',
@@ -177,7 +178,6 @@ export default function BigCalendar() {
     getData();
   }, []);
 
-  console.log('id', currentUser?.id);
   return (
     <div className="bg-white p-4">
       <h2 className="rounded-md bg-white p-2 text-[28px] font-[500] leading-[36px] text-[#010D26]">
@@ -205,8 +205,9 @@ export default function BigCalendar() {
             slotMaxTime="24:00:00"
             dayHeaderContent={dayHeaderContent}
             events={list}
-            eventContent={(eventInfo) =>
-              renderEventContent(eventInfo, currentUser)
+            eventContent={
+              (eventInfo) => renderEventContent(eventInfo)
+              // renderEventContent(eventInfo, currentUser)
             }
           />
         )}
