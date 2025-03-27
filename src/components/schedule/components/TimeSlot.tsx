@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import {
@@ -13,96 +14,22 @@ import {
   YEAR_STRING,
 } from '../../../libs/constants/date';
 
-const times = [
-  // "2025-02-21 06:30",
-  // "2025-02-21 07:30",
-  // "2025-02-21 08:30",
-  // "2025-02-21 09:30",
-  // "2025-02-21 10:30",
-  // "2025-02-21 11:00",
-  // "2025-02-21 11:30",
-  // "2025-02-21 12:30",
-  // "2025-02-21 13:30",
-  // "2025-02-21 14:30",
-  // "2025-02-21 15:30",
-  // "2025-02-21 16:30",
-  // "2025-02-21 17:30",
-  // "2025-02-21 19:30",
-  // "2025-02-21 20:30",
-  // "2025-02-21 21:30",
-  // "2025-02-21 22:30",
-  // "2025-02-21 23:30",
-  // "2025-02-28 06:30",
-  // "2025-02-28 07:30",
-  // "2025-02-28 08:30",
-  // "2025-02-28 09:30",
-  // "2025-02-28 10:30",
-  // "2025-02-28 11:00",
-  // "2025-02-28 11:30",
-  // "2025-02-28 12:30",
-  // "2025-02-28 13:30",
-  // "2025-02-28 14:30",
-  // "2025-02-28 15:30",
-  // "2025-02-28 16:30",
-  // "2025-02-28 17:30",
-  // "2025-02-28 19:30",
-  // "2025-02-28 20:30",
-  // "2025-02-28 21:30",
-  // "2025-02-28 22:30",
-  // "2025-02-28 23:30",
-  '2025-03-01 06:30',
-  '2025-03-01 07:30',
-  '2025-03-01 08:30',
-  '2025-03-01 09:30',
-  '2025-03-01 10:30',
-  '2025-03-01 11:00',
-  '2025-03-01 11:30',
-  '2025-03-01 12:30',
-  '2025-03-01 13:30',
-  '2025-03-01 14:30',
-  '2025-03-01 15:30',
-  '2025-03-01 16:30',
-  '2025-03-01 17:30',
-  '2025-03-01 19:30',
-  '2025-03-01 20:30',
-  '2025-03-01 21:30',
-  '2025-03-01 22:30',
-  '2025-03-01 23:30',
-  // "2025-03-02 06:30",
-  // "2025-03-02 07:30",
-  // "2025-03-02 08:30",
-  // "2025-03-02 09:30",
-  // "2025-03-02 10:30",
-  // "2025-03-02 11:00",
-  // "2025-03-02 11:30",
-  // "2025-03-02 12:30",
-  // "2025-03-02 13:30",
-  // "2025-03-02 14:30",
-  // "2025-03-02 15:30",
-  // "2025-03-02 16:30",
-  // "2025-03-02 17:30",
-  // "2025-03-02 19:30",
-  // "2025-03-02 20:30",
-  // "2025-03-02 21:30",
-  // "2025-03-02 22:30",
-  // "2025-03-02 23:30",
-];
-
+interface TimeSlots {
+  morning: any[];
+  afternoon: any[];
+  evening: any[];
+}
 function TimeSlot() {
   const [currentDate, setCurrentDate] = useState<any>('');
   const listTime: string[] = [];
-  const [listMorning, setListMorning] = useState<string[]>([]);
-  const [listAfternoon, setListAfternoon] = useState<string[]>([]);
-  const [listEvening, setListEvening] = useState<string[]>([]);
-  const [list, setList] = useState([]);
-  
-  const morning: string[] = [];
-  const afternoon: string[] = [];
-  const evening: string[] = [];
-  const handleUpdateTimeSlot = () => {};
+  const [listDay, setListDay] = useState<Record<string, TimeSlots>>({});
+  const router = useRouter() || null;
+  const handleUpdateTimeSlot: () => void = () => {
+    router.push('/schedule/time-slot');
+  };
 
   const getCurrentDay = () => {
-    const today = new Date().getDay(); // today value from 1 - 7
+    const today = new Date().getDay();
     console.log('today', today);
     console.log('WEEK_STRING[today]', WEEK_STRING[today]);
     setCurrentDate(WEEK_STRING[today]);
@@ -117,21 +44,21 @@ function TimeSlot() {
     setCurrentDate(day);
   };
 
-  useEffect(() => {
-    times.forEach((time) => {
-      const date = new Date(time.replace(' ', 'T'));
-      const hour = date.getHours();
-      const min = date.getMinutes();
-      const result = `${hour} : ${min}`;
-      if (hour >= MORNING_TIME_START && hour < AFTERNOON_TIME_START) {
-        morning.push(result);
-      } else if (hour >= AFTERNOON_TIME_START && hour < EVENING_TIME_START) {
-        afternoon.push(result);
-      } else {
-        evening.push(result);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   times.forEach((time) => {
+  //   const date = new Date(time.replace(' ', 'T'));
+  //   const hour = date.getHours();
+  //   const min = date.getMinutes();
+  //   const result = `${hour} : ${min}`;
+  //   if (hour >= MORNING_TIME_START && hour < AFTERNOON_TIME_START) {
+  //     morning.push(result);
+  //   } else if (hour >= AFTERNOON_TIME_START && hour < EVENING_TIME_START) {
+  //     afternoon.push(result);
+  //   } else {
+  //     evening.push(result);
+  //   }
+  // });
+  // }, []);
 
   useEffect(() => {
     if (listTime.length > 0) {
@@ -150,21 +77,21 @@ function TimeSlot() {
     }
   }, []);
 
-  useEffect(() => {
-    if (morning.length > 0) {
-      setListMorning(morning);
-    }
-  }, [morning.length]);
-  useEffect(() => {
-    if (afternoon.length > 0) {
-      setListAfternoon(afternoon);
-    }
-  }, [afternoon.length]);
-  useEffect(() => {
-    if (evening.length > 0) {
-      setListEvening(evening);
-    }
-  }, [evening.length]);
+  // useEffect(() => {
+  //   if (morning.length > 0) {
+  //     setListMorning(morning);
+  //   }
+  // }, [morning.length]);
+  // useEffect(() => {
+  //   if (afternoon.length > 0) {
+  //     setListAfternoon(afternoon);
+  //   }
+  // }, [afternoon.length]);
+  // useEffect(() => {
+  //   if (evening.length > 0) {
+  //     setListEvening(evening);
+  //   }
+  // }, [evening.length]);
 
   // handle get this week
   // const getCurrentWeek = () => {
@@ -199,22 +126,187 @@ function TimeSlot() {
   useEffect(() => {
     getWeekDays();
   }, []);
-
-  const getData = async () => {
-      try {
-        const response = await fetch(
-          'https://hulib-services.onrender.com/api/v1/time-slots',
-        );
-        const result = await response.json();
-        setList(result);
-        console.log("time slot", result);
-      } catch (error) {
-        console.error('Lỗi khi lấy dữ liệu:', error);
-      }
+  const formatData = (result: any) => {
+    const MON: any = {
+      morning: [],
+      afternoon: [],
+      evening: [],
     };
-    useEffect(() => {
-      getData();
-    }, []);
+    const TUE: any = {
+      morning: [],
+      afternoon: [],
+      evening: [],
+    };
+    const WED: any = {
+      morning: [],
+      afternoon: [],
+      evening: [],
+    };
+    const THU: any = {
+      morning: [],
+      afternoon: [],
+      evening: [],
+    };
+    const FRI: any = {
+      morning: [],
+      afternoon: [],
+      evening: [],
+    };
+    const SAT: any = {
+      morning: [],
+      afternoon: [],
+      evening: [],
+    };
+    const SUN: any = {
+      morning: [],
+      afternoon: [],
+      evening: [],
+    };
+
+    result.forEach((element: any) => {
+      const startTime = element?.startTime ?? 0;
+      switch (element.dayOfWeek) {
+        case 1:
+          if (
+            startTime >= MORNING_TIME_START &&
+            startTime < AFTERNOON_TIME_START
+          ) {
+            MON.morning.push(element);
+          } else if (
+            startTime >= AFTERNOON_TIME_START &&
+            startTime < EVENING_TIME_START
+          ) {
+            MON.afternoon.push(element);
+          } else {
+            MON.evening.push(element);
+          }
+          break;
+        case 2:
+          if (
+            startTime >= MORNING_TIME_START &&
+            startTime < AFTERNOON_TIME_START
+          ) {
+            TUE.morning.push(element);
+          } else if (
+            startTime >= AFTERNOON_TIME_START &&
+            startTime < EVENING_TIME_START
+          ) {
+            TUE.afternoon.push(element);
+          } else {
+            TUE.evening.push(element);
+          }
+          break;
+        case 3:
+          if (
+            startTime >= MORNING_TIME_START &&
+            startTime < AFTERNOON_TIME_START
+          ) {
+            WED.morning.push(element);
+          } else if (
+            startTime >= AFTERNOON_TIME_START &&
+            startTime < EVENING_TIME_START
+          ) {
+            WED.afternoon.push(element);
+          } else {
+            WED.evening.push(element);
+          }
+          break;
+        case 4:
+          if (
+            startTime >= MORNING_TIME_START &&
+            startTime < AFTERNOON_TIME_START
+          ) {
+            THU.morning.push(element);
+          } else if (
+            startTime >= AFTERNOON_TIME_START &&
+            startTime < EVENING_TIME_START
+          ) {
+            THU.afternoon.push(element);
+          } else {
+            THU.evening.push(element);
+          }
+          break;
+        case 5:
+          if (
+            startTime >= MORNING_TIME_START &&
+            startTime < AFTERNOON_TIME_START
+          ) {
+            FRI.morning.push(element);
+          } else if (
+            startTime >= AFTERNOON_TIME_START &&
+            startTime < EVENING_TIME_START
+          ) {
+            FRI.afternoon.push(element);
+          } else {
+            FRI.evening.push(element);
+          }
+          break;
+        case 6:
+          if (
+            startTime >= MORNING_TIME_START &&
+            startTime < AFTERNOON_TIME_START
+          ) {
+            SAT.morning.push(element);
+          } else if (
+            startTime >= AFTERNOON_TIME_START &&
+            startTime < EVENING_TIME_START
+          ) {
+            SAT.afternoon.push(element);
+          } else {
+            SAT.evening.push(element);
+          }
+          break;
+        case 7:
+          if (
+            startTime >= MORNING_TIME_START &&
+            startTime < AFTERNOON_TIME_START
+          ) {
+            SUN.morning.push(element);
+          } else if (
+            startTime >= AFTERNOON_TIME_START &&
+            startTime < EVENING_TIME_START
+          ) {
+            SUN.afternoon.push(element);
+          } else {
+            SUN.evening.push(element);
+          }
+          break;
+        default:
+      }
+    });
+    const list = {
+      ...listDay,
+      MON,
+      TUE,
+      WED,
+      THU,
+      FRI,
+      SAT,
+      SUN,
+    };
+    setListDay(list);
+  };
+  const getData = async () => {
+    try {
+      const response = await fetch(
+        'https://hulib-services.onrender.com/api/v1/time-slots',
+      );
+      const result = await response.json();
+      formatData(result);
+      console.log('time slot', result);
+    } catch (error) {
+      console.error('Lỗi khi lấy dữ liệu:', error);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+  const morningSlots =
+    (listDay[currentDate] as { morning: any[] })?.morning?.length || 0;
+  const afternoonSlots =
+    (listDay[currentDate] as { afternoon: any[] })?.afternoon?.length || 0;
+  const eveningSlots =
+    (listDay[currentDate] as { evening: any[] })?.evening?.length || 0;
   return (
     <div className="mb-[20px] flex flex-col justify-center rounded-[12px] bg-[#fff] p-[16px] drop-shadow-md">
       <div className="my-[10px]">
@@ -247,41 +339,77 @@ function TimeSlot() {
         ))}
       </div>
       <p className="my-[4px] text-center text-[12px] font-[400] leading-[14px] text-[#38AA16]">
-        Amazing!!! Bạn có thể gặp 10 Liber mọi thứ tư 💚
+        {`Amazing!!! Bạn có thể gặp ${
+          morningSlots + afternoonSlots + eveningSlots
+        } Liber vào hôm nay 💚`}
       </p>
       <div>
         <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-          {listMorning.length > 0 &&
-            listMorning.map((time, index) => (
+          {/* {listDay[currentDate].morning.length > 0 &&
+            listDay[currentDate].morning.map((time : any, index :any) => (
               <div
                 key={index}
                 className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
               >
-                {time}
+                {time.startTime}
               </div>
-            ))}
+            ))} */}
+          {(listDay[currentDate] as { morning: any[] })?.morning?.length > 0 &&
+            (listDay[currentDate] as { morning: any[] }).morning.map(
+              (time: any, index: any) => (
+                <div
+                  key={index}
+                  className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
+                >
+                  {time.startTime}:00
+                </div>
+              ),
+            )}
         </div>
         <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-          {listAfternoon.length > 0 &&
-            listMorning.map((time, index) => (
+          {/* {listDay[currentDate].afternoon.length > 0 &&
+            listDay[currentDate].afternoon.map((time : any, index : any) => (
               <div
                 key={index}
                 className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
               >
-                {time}
-              </div>
-            ))}
+                {time.startTime}
+                </div>
+            ))} */}
+          {(listDay[currentDate] as { afternoon: any[] })?.afternoon?.length >
+            0 &&
+            (listDay[currentDate] as { afternoon: any[] }).afternoon.map(
+              (time: any, index: any) => (
+                <div
+                  key={index}
+                  className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
+                >
+                  {time.startTime}:00
+                </div>
+              ),
+            )}
         </div>
         <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-          {listEvening.length > 0 &&
-            listMorning.map((time, index) => (
+          {/* {listDay[currentDate].evening.length > 0 &&
+            listDay[currentDate].evening.map((time : any, index : any) => (
               <div
                 key={index}
                 className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
               >
-                {time}
-              </div>
-            ))}
+                {time.startTime}
+                </div>
+            ))} */}
+          {(listDay[currentDate] as { evening: any[] })?.evening?.length > 0 &&
+            (listDay[currentDate] as { evening: any[] }).evening.map(
+              (time: any, index: any) => (
+                <div
+                  key={index}
+                  className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
+                >
+                  {time?.startTime}:00
+                </div>
+              ),
+            )}
         </div>
       </div>
       <div className="w-full">
