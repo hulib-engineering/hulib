@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 function DetailEventHuber() {
   return (
-    <div className="z-50 min-h-[360px] w-[396px] overflow-hidden rounded-[16px] bg-[#F0F5FF] px-[20px] py-[16px] shadow-[#1C1E211A] drop-shadow-sm">
+    <div className=" min-h-[360px] w-[396px] overflow-hidden rounded-[16px] bg-[#F0F5FF] px-[20px] py-[16px] shadow-[#1C1E211A] drop-shadow-sm">
       <div className="flex items-center">
         <h3 className="flex-1 text-[20px] leading-[32px] text-[#171819]">
           Session with Liber
@@ -35,7 +35,7 @@ function DetailEventHuber() {
             width={32}
             height={32}
           />
-          <p className="mx-[8px] flex h-[20px] w-[63] items-center justify-center rounded-[100px] bg-[#CDDDFE] px-[10px] py-[2px] text-[14px] font-[500] leading-[16px] text-[#0442BF]">
+          <p className="py[2px] mx-[8px] flex h-[20px] w-[63] items-center justify-center rounded-[100px] bg-[#CDDDFE] px-[10px] text-[14px] font-[500] leading-[16px] text-[#0442BF]">
             Huber
           </p>
           <p className="text-[14px] font-[500] leading-[16px] text-[#EE0038]">
@@ -52,13 +52,13 @@ function DetailEventHuber() {
             width={32}
             height={32}
           />
-          <p className="mx-[8px] flex h-[20px] w-[63] items-center justify-center rounded-[100px] bg-[#FFE3CC] px-[10px] py-[2px] text-[14px] font-[500] leading-[16px] text-[#FF7301]">
+          <p className="py[2px] mx-[8px] flex h-[20px] w-[63] items-center justify-center rounded-[100px] bg-[#FFE3CC] px-[10px] text-[14px] font-[500] leading-[16px] text-[#FF7301]">
             Liber
           </p>
           <p className="text-[14px] font-[500] leading-[16px] text-[#A978D6]">
             [Thần bùm]
           </p>
-          <p className="ml-[8px] text-[14px] font-[500] leading-[16px] text-[#171819]">
+          <p className="text-[Hari Won] ml-[8px] text-[14px] font-[500] leading-[16px] text-[#171819]">
             Harry won
           </p>
         </div>
@@ -79,7 +79,7 @@ function DetailEventHuber() {
         </button>
         <button
           type="button"
-          className="z-[50] ml-auto h-[44px] min-w-[205px] rounded-full bg-[#0442BF] text-[16px] font-[500] leading-[20px] text-[#fff]"
+          className="ml-auto h-[44px] min-w-[205px] rounded-full bg-[#0442BF] text-[16px] font-[500] leading-[20px] text-[#fff]"
         >
           Aprove
         </button>

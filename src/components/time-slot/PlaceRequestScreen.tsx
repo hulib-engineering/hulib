@@ -110,12 +110,17 @@ export const PlaceRequestScreen = ({
     }
   };
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="flex w-full flex-col items-center justify-between rounded-3xl bg-white p-4 md:p-8">
       <div className="flex w-full flex-col gap-y-4 md:w-[480px]">
         <button
           type="button"
           className="flex items-center gap-x-2 text-[#000000]"
+          onClick={backStep}
         >
           <ArrowLeft size={20} />
           Back
