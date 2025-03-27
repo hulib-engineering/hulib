@@ -13,7 +13,7 @@ export default function Index() {
   const [selectedDay, setSelectedDay] = React.useState<Dayjs | null>(null);
   const [selectedTime, setSelectedTime] = React.useState<string>('');
   const [selectedNextTime, setSelectedNextTime] = React.useState<string>('');
-  console.log('selectedDay', selectedDay?.format('dddd, MMMM D'));
+
   const nextStep = () => {
     setStep((prev) => prev + 1);
   };

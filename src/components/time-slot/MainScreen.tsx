@@ -12,6 +12,7 @@ import {
 import type { Dayjs } from 'dayjs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
 
 import Button from '@/components/button/Button';
@@ -43,6 +44,8 @@ type Props = {
   selectedTime: string;
 };
 export const MainScreen = (props: Props) => {
+  const router = useRouter();
+
   const {
     fullName = 'Tran Thanh Thao',
     title = 'Professor',
@@ -152,7 +155,7 @@ export const MainScreen = (props: Props) => {
       <div className="grid w-full grid-cols-3 items-center gap-2 xl:grid-cols-6 xl:p-3">
         {list.map((item, index) => (
           <button
-            key={index}
+            key={item}
             type="button"
             className={mergeClassnames(
               'rounded-full px-3 py-1 text-sm font-medium border hover:opacity-70',
@@ -168,12 +171,23 @@ export const MainScreen = (props: Props) => {
       </div>
     );
   };
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleBackToHome = () => {
+    router.push('/');
+    router.refresh();
+  };
+
   return (
     <div className="flex h-full w-full flex-col gap-6 bg-neutral-98 xl:flex-row">
       <div className="flex w-full flex-col gap-y-4 rounded-3xl bg-white p-4 xl:w-1/3 xl:p-8">
         <button
           type="button"
           className="flex items-center gap-x-2 text-[#000000]"
+          onClick={handleBackToHome}
         >
           <ArrowLeft size={20} />
           Back
@@ -318,7 +332,7 @@ export const MainScreen = (props: Props) => {
         )}
         <Button
           variant="primary"
-          className="w-[300px] text-base font-medium text-white"
+          className="w-full text-base font-medium text-white md:w-[300px]"
           disabled={isEmpty(selectDate) || isEmpty(selectTime)}
           onClick={nextStep}
         >

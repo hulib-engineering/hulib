@@ -37,7 +37,8 @@ const ExploreStories = () => {
           <StoriesSkeleton />
         </div>
       ) : storiesPages?.data?.length > 0 ? (
-        <div className="relative mt-4 flex flex-wrap items-center justify-center gap-8 xl:justify-start 2xl:gap-12">
+        // <div className="relative mt-4 flex flex-wrap items-center justify-center gap-8 xl:justify-start 2xl:gap-12">
+        <div className="relative mt-4 flex flex-wrap items-center justify-center gap-8 2xl:gap-12">
           {storiesPages?.data?.map((item: StoryType) => (
             <FlipBook key={item.id} data={item} />
           ))}
