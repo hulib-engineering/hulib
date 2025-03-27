@@ -1,39 +1,19 @@
 'use client';
 
+import type { Dayjs } from 'dayjs';
 import * as React from 'react';
 
-import type { SelectedTimeModel } from '@/components/availableSlot/AvailableSlot';
-import {
-  DAY_DISPLAY_NAMES,
-  TabIndex,
-} from '@/components/availableSlot/AvailableSlot';
-import { MainScreen } from '@/components/schedule-meeting/MainScreen';
-import { PlaceRequestScreen } from '@/components/schedule-meeting/PlaceRequestScreen';
-import { ScheduleSuccess } from '@/components/schedule-meeting/ScheduleSuccess';
+import { MainScreen } from '@/components/time-slot/MainScreen';
+import { PlaceRequestScreen } from '@/components/time-slot/PlaceRequestScreen';
+import { ScheduleSuccess } from '@/components/time-slot/ScheduleSuccess';
 
 export default function Index() {
   const [step, setStep] = React.useState<number>(0);
 
-  const selectedIndex = TabIndex.Monday;
-
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  const [selectedDateTime, setSelectedDateTime] = React.useState<
-    SelectedTimeModel[]
-  >([]);
-
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  const [selectedTime, setSelectedTime] = React.useState<string[]>();
-
-  const matchDateTimeData = React.useMemo(() => {
-    return selectedDateTime.filter(
-      (dateTime) => dateTime.day === DAY_DISPLAY_NAMES[selectedIndex],
-    );
-  }, [selectedDateTime, selectedIndex]);
-
-  const updateSelectedTime = (time: string[]) => {
-    setSelectedTime(time);
-  };
-
+  const [selectedDay, setSelectedDay] = React.useState<Dayjs | null>(null);
+  const [selectedTime, setSelectedTime] = React.useState<string>('');
+  const [selectedNextTime, setSelectedNextTime] = React.useState<string>('');
+  console.log('selectedDay', selectedDay?.format('dddd, MMMM D'));
   const nextStep = () => {
     setStep((prev) => prev + 1);
   };
@@ -41,30 +21,6 @@ export default function Index() {
   const backStep = () => {
     setStep((prev) => prev - 1);
   };
-
-  /* Update later */
-  // const updateSelectedDateTime = () => {
-  //   const index = findIndex(selectedDateTime, {
-  //     day: DAY_DISPLAY_NAMES[selectedIndex],
-  //   });
-  //   if (index !== -1) {
-  //     const newSelectedItems = [...selectedDateTime];
-  //     newSelectedItems[index] = {
-  //       day: DAY_DISPLAY_NAMES[selectedIndex] ?? '',
-  //       time: selectedTime ?? [],
-  //     };
-  //     setSelectedDateTime(newSelectedItems);
-  //     return;
-  //   }
-  //   const newSelectedItems = [
-  //     ...selectedDateTime,
-  //     {
-  //       day: DAY_DISPLAY_NAMES[selectedIndex] ?? '',
-  //       time: selectedTime ?? [],
-  //     },
-  //   ];
-  //   setSelectedDateTime(newSelectedItems);
-  // };
 
   const renderStep = React.useMemo(() => {
     switch (step) {
@@ -89,8 +45,11 @@ export default function Index() {
               },
             }}
             timeZone="ICT | GMT-7"
-            initialSelectedTime={matchDateTimeData?.[0]?.time ?? []}
-            onChange={updateSelectedTime}
+            setSelectedDay={setSelectedDay}
+            setSelectedTime={setSelectedTime}
+            setNextSelectedTime={setSelectedNextTime}
+            selectedDay={selectedDay}
+            selectedTime={selectedTime}
             nextStep={nextStep}
           />
         );
@@ -110,10 +69,11 @@ export default function Index() {
                 fullName: 'Ngo Thanh Bao',
               },
             }}
-            startTime="9:00 AM"
-            endTime="10:00 AM"
+            startTime={selectedTime}
+            endTime={selectedNextTime}
             timeZone="ICT | GMT-7"
             duration="30"
+            dateTime={selectedDay?.format('dddd, MMMM D') ?? ''}
             backStep={backStep}
             nextStep={nextStep}
           />
