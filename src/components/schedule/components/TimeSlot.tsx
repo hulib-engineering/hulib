@@ -12,7 +12,7 @@ import {
   MORNING_TIME_START,
   WEEK_STRING,
   YEAR_STRING,
-} from '../../../libs/constants/date';
+} from '@/libs/constants/date';
 
 interface TimeSlots {
   morning: any[];

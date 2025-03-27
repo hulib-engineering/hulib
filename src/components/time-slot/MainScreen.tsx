@@ -12,6 +12,7 @@ import {
 import type { Dayjs } from 'dayjs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
 
 import Button from '@/components/button/Button';
@@ -43,6 +44,8 @@ type Props = {
   selectedTime: string;
 };
 export const MainScreen = (props: Props) => {
+  const router = useRouter();
+
   const {
     fullName = 'Tran Thanh Thao',
     title = 'Professor',
@@ -149,13 +152,13 @@ export const MainScreen = (props: Props) => {
       return null;
     }
     return (
-      <div className="grid w-full grid-cols-5 items-center gap-2 p-3 md:grid-cols-6">
+      <div className="grid w-full grid-cols-3 items-center gap-2 xl:grid-cols-6 xl:p-3">
         {list.map((item, index) => (
           <button
-            key={index}
+            key={item}
             type="button"
             className={mergeClassnames(
-              'rounded-full  px-3 py-1 text-sm font-medium border hover:opacity-70',
+              'rounded-full px-3 py-1 text-sm font-medium border hover:opacity-70',
               selectTime?.includes(item)
                 ? 'bg-primary-50 border-primary-50 text-white'
                 : 'bg-white border-neutral-90 text-neutral-10',
@@ -168,12 +171,23 @@ export const MainScreen = (props: Props) => {
       </div>
     );
   };
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleBackToHome = () => {
+    router.push('/');
+    router.refresh();
+  };
+
   return (
-    <div className="flex h-full w-full gap-x-6 bg-neutral-98">
-      <div className="flex w-1/3 flex-col gap-y-4 rounded-3xl bg-white p-8">
+    <div className="flex h-full w-full flex-col gap-6 bg-neutral-98 xl:flex-row">
+      <div className="flex w-full flex-col gap-y-4 rounded-3xl bg-white p-4 xl:w-1/3 xl:p-8">
         <button
           type="button"
           className="flex items-center gap-x-2 text-[#000000]"
+          onClick={handleBackToHome}
         >
           <ArrowLeft size={20} />
           Back
@@ -262,7 +276,7 @@ export const MainScreen = (props: Props) => {
           </div>
         </div>
       </div>
-      <div className="flex w-2/3 flex-col gap-y-4 rounded-3xl bg-white p-8">
+      <div className="flex w-full flex-col gap-y-4 rounded-3xl bg-white p-4 xl:w-2/3 xl:p-8">
         <h4 className="text-[28px] font-medium">Schedule your meeting</h4>
         <p className="text-[18px] font-normal text-neutral-20">
           Choose your meeting time
@@ -291,19 +305,19 @@ export const MainScreen = (props: Props) => {
                 {selectDate?.format('dddd, MMMM D') ?? ''}
               </p>
               <div className="flex flex-col gap-y-2">
-                <div className="grid grid-cols-[100px_auto] items-center gap-x-4 gap-y-2">
+                <div className="flex grid-cols-[100px_auto] flex-col items-center gap-x-4 gap-y-2 md:grid">
                   <span className="text-base font-normal text-neutral-40">
                     Morning
                   </span>
                   {timeBlock(range.slice(1, 8))}
                 </div>
-                <div className="grid grid-cols-[100px_auto] items-center gap-x-4 gap-y-2">
+                <div className="flex grid-cols-[100px_auto] flex-col items-center gap-x-4 gap-y-2 md:grid">
                   <span className="text-base font-normal text-neutral-40">
                     Afternoon
                   </span>
                   {timeBlock(range.slice(10, 18))}
                 </div>
-                <div className="grid grid-cols-[100px_auto] items-center gap-x-4 gap-y-2">
+                <div className="flex grid-cols-[100px_auto] flex-col items-center gap-x-4 gap-y-2 md:grid">
                   <span className="text-base font-normal text-neutral-40">
                     Night
                   </span>
@@ -318,7 +332,7 @@ export const MainScreen = (props: Props) => {
         )}
         <Button
           variant="primary"
-          className="w-[300px] text-base font-medium text-white"
+          className="w-full text-base font-medium text-white md:w-[300px]"
           disabled={isEmpty(selectDate) || isEmpty(selectTime)}
           onClick={nextStep}
         >

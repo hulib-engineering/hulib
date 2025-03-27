@@ -102,7 +102,6 @@ export const PlaceRequestScreen = ({
         dayOfWeek: dateTime,
         startTime: convertTo24HourFormat(startTime),
       });
-      console.log('result', result);
       if (result) {
         nextStep();
       }
@@ -111,12 +110,17 @@ export const PlaceRequestScreen = ({
     }
   };
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div className="flex w-full flex-col items-center justify-between rounded-3xl bg-white p-8">
-      <div className="flex w-[480px] flex-col gap-y-4">
+    <div className="flex w-full flex-col items-center justify-between rounded-3xl bg-white p-4 md:p-8">
+      <div className="flex w-full flex-col gap-y-4 md:w-[480px]">
         <button
           type="button"
           className="flex items-center gap-x-2 text-[#000000]"
+          onClick={backStep}
         >
           <ArrowLeft size={20} />
           Back
@@ -138,7 +142,9 @@ export const PlaceRequestScreen = ({
           </div>
           <div className="grid grid-cols-3 items-center justify-items-center gap-x-2 text-base font-normal text-primary-50">
             <span className="w-full text-left">{startTime}</span>
-            <ArrowRight size={16} />
+            <div className="flex w-full justify-end">
+              <ArrowRight size={16} />
+            </div>
             <span className="w-full text-right">{endTime}</span>
           </div>
           <div className="grid grid-cols-2 items-center justify-between gap-x-2 text-base font-normal text-primary-50">
