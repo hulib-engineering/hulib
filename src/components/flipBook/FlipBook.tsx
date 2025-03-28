@@ -134,10 +134,8 @@ export const FlipBook = ({ data }: BookCommonProps) => {
           >
             <button type="button" onClick={isMobile ? handleFlip : undefined}>
               <div className="page-left">
-                <h6 className="break-words text-xl font-medium text-primary-10">
-                  {title}
-                </h6>
-                <p className="h-full w-full pl-2 pr-1 text-left text-sm text-neutral-30">
+                <h6 className="book-title">{title}</h6>
+                <p className="h-[220px] w-full text-left text-sm text-neutral-30">
                   {abstract?.substring(0, 200) ?? ''}
                 </p>
               </div>
