@@ -152,7 +152,7 @@ export const MainScreen = (props: Props) => {
       return null;
     }
     return (
-      <div className="grid w-full grid-cols-3 items-center gap-2 xl:grid-cols-6 xl:p-3">
+      <div className="grid w-full grid-cols-3 items-center gap-2 xl:grid-cols-5 xl:p-3 2xl:grid-cols-6">
         {list.map((item, index) => (
           <button
             key={item}
@@ -177,7 +177,7 @@ export const MainScreen = (props: Props) => {
   }, []);
 
   const handleBackToHome = () => {
-    router.push('/');
+    router.push('/schedule-meeting/weekly-schedule');
     router.refresh();
   };
 
