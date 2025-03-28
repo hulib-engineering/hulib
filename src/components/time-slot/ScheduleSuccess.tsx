@@ -15,7 +15,7 @@ export const ScheduleSuccess = () => {
   }, []);
 
   const handleBackToHome = () => {
-    router.push('/');
+    router.push('/home');
     router.refresh();
   };
 
