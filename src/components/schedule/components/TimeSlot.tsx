@@ -13,7 +13,6 @@ import {
   WEEK_STRING,
   YEAR_STRING,
 } from '@/libs/constants/date';
-import OneWeek from './OneWeek';
 
 interface TimeSlots {
   morning: any[];
@@ -309,124 +308,123 @@ function TimeSlot() {
   const eveningSlots =
     (listDay[currentDate] as { evening: any[] })?.evening?.length || 0;
   return (
-    // <div className="mb-[20px] flex flex-col justify-center rounded-[12px] bg-[#fff] p-[16px] drop-shadow-md">
-    //   <div className="my-[10px]">
-    //     <p className="text-[18px] font-[500] leading-[28px] text-[#03191C]">
-    //       My available slots
-    //     </p>
-    //     <p className="text-[12px] font-[500] leading-[16px] text-[#03191C]">
-    //       Những khung giờ trong tuần mà bạn đã dành cho Liber
-    //     </p>
-    //   </div>
-    //   <div className="m-[4px] grid h-[32px] grid-cols-7 rounded-[16px] bg-[#F3F4F6]">
-    //     {FORMAT_WEEK_STRING.map((day: string) => (
-    //       <button
-    //         type="button"
-    //         onClick={() => handleSelectDay(day)}
-    //         key={day}
-    //         onKeyDown={(e) => {
-    //           if (e.key === 'Enter' || e.key === ' ') {
-    //             handleSelectDay(day);
-    //           }
-    //         }}
-    //         className={`flex cursor-pointer items-center justify-center rounded-[16px] p-[4px] text-[14px] font-[400] leading-[16px] hover:bg-[#CDDDFE] hover:text-[#0442BF] ${
-    //           currentDate === day
-    //             ? 'bg-[#CDDDFE] text-[#0442BF]'
-    //             : 'text-[#000000]'
-    //         }`}
-    //       >
-    //         {day}
-    //       </button>
-    //     ))}
-    //   </div>
-    //   <p className="my-[4px] text-center text-[12px] font-[400] leading-[14px] text-[#38AA16]">
-    //     {`Amazing!!! Bạn có thể gặp ${
-    //       morningSlots + afternoonSlots + eveningSlots
-    //     } Liber vào hôm nay 💚`}
-    //   </p>
-    //   <div>
-    //     <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-    //       {/* {listDay[currentDate].morning.length > 0 &&
-    //         listDay[currentDate].morning.map((time : any, index :any) => (
-    //           <div
-    //             key={index}
-    //             className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
-    //           >
-    //             {time.startTime}
-    //           </div>
-    //         ))} */}
-    //       {(listDay[currentDate] as { morning: any[] })?.morning?.length > 0 &&
-    //         (listDay[currentDate] as { morning: any[] }).morning.map(
-    //           (time: any, index: any) => (
-    //             <div
-    //               key={index}
-    //               className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
-    //             >
-    //               {time.startTime}:00
-    //             </div>
-    //           ),
-    //         )}
-    //     </div>
-    //     <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-    //       {/* {listDay[currentDate].afternoon.length > 0 &&
-    //         listDay[currentDate].afternoon.map((time : any, index : any) => (
-    //           <div
-    //             key={index}
-    //             className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
-    //           >
-    //             {time.startTime}
-    //             </div>
-    //         ))} */}
-    //       {(listDay[currentDate] as { afternoon: any[] })?.afternoon?.length >
-    //         0 &&
-    //         (listDay[currentDate] as { afternoon: any[] }).afternoon.map(
-    //           (time: any, index: any) => (
-    //             <div
-    //               key={index}
-    //               className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
-    //             >
-    //               {time.startTime}:00
-    //             </div>
-    //           ),
-    //         )}
-    //     </div>
-    //     <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-    //       {/* {listDay[currentDate].evening.length > 0 &&
-    //         listDay[currentDate].evening.map((time : any, index : any) => (
-    //           <div
-    //             key={index}
-    //             className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
-    //           >
-    //             {time.startTime}
-    //             </div>
-    //         ))} */}
-    //       {(listDay[currentDate] as { evening: any[] })?.evening?.length > 0 &&
-    //         (listDay[currentDate] as { evening: any[] }).evening.map(
-    //           (time: any, index: any) => (
-    //             <div
-    //               key={index}
-    //               className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
-    //             >
-    //               {time?.startTime}:00
-    //             </div>
-    //           ),
-    //         )}
-    //     </div>
-    //   </div>
-    //   <div className="w-full">
-    //     <button
-    //       type="button"
-    //       onClick={handleUpdateTimeSlot}
-    //       className="hove:opacity-[0.9] mb-[10px] flex min-h-[30px] w-full items-center justify-center rounded-[20px] bg-[#0442BF] p-[8px]"
-    //     >
-    //       {/* <CalendarPlus size={16} color="#ffffff" className="inline-block mt-[-4px]"/> */}
-    //       <span className="ml-[6px] inline-block text-[14px] font-[500] leading-[20px] text-white">
-    //         Update My Slots
-    //       </span>
-    //     </button>
-    //   </div>
-    // </div>
-    <OneWeek/>
+    <div className="mb-[20px] flex flex-col justify-center rounded-[12px] bg-[#fff] p-[16px] drop-shadow-md">
+      <div className="my-[10px]">
+        <p className="text-[18px] font-[500] leading-[28px] text-[#03191C]">
+          My available slots
+        </p>
+        <p className="text-[12px] font-[500] leading-[16px] text-[#03191C]">
+          Những khung giờ trong tuần mà bạn đã dành cho Liber
+        </p>
+      </div>
+      <div className="m-[4px] grid h-[32px] grid-cols-7 rounded-[16px] bg-[#F3F4F6]">
+        {FORMAT_WEEK_STRING.map((day: string) => (
+          <button
+            type="button"
+            onClick={() => handleSelectDay(day)}
+            key={day}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                handleSelectDay(day);
+              }
+            }}
+            className={`flex cursor-pointer items-center justify-center rounded-[16px] p-[4px] text-[14px] font-[400] leading-[16px] hover:bg-[#CDDDFE] hover:text-[#0442BF] ${
+              currentDate === day
+                ? 'bg-[#CDDDFE] text-[#0442BF]'
+                : 'text-[#000000]'
+            }`}
+          >
+            {day}
+          </button>
+        ))}
+      </div>
+      <p className="my-[4px] text-center text-[12px] font-[400] leading-[14px] text-[#38AA16]">
+        {`Amazing!!! Bạn có thể gặp ${
+          morningSlots + afternoonSlots + eveningSlots
+        } Liber vào hôm nay 💚`}
+      </p>
+      <div>
+        <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
+          {/* {listDay[currentDate].morning.length > 0 &&
+            listDay[currentDate].morning.map((time : any, index :any) => (
+              <div
+                key={index}
+                className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
+              >
+                {time.startTime}
+              </div>
+            ))} */}
+          {(listDay[currentDate] as { morning: any[] })?.morning?.length > 0 &&
+            (listDay[currentDate] as { morning: any[] }).morning.map(
+              (time: any, index: any) => (
+                <div
+                  key={index}
+                  className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
+                >
+                  {time.startTime}
+                </div>
+              ),
+            )}
+        </div>
+        <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
+          {/* {listDay[currentDate].afternoon.length > 0 &&
+            listDay[currentDate].afternoon.map((time : any, index : any) => (
+              <div
+                key={index}
+                className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
+              >
+                {time.startTime}
+                </div>
+            ))} */}
+          {(listDay[currentDate] as { afternoon: any[] })?.afternoon?.length >
+            0 &&
+            (listDay[currentDate] as { afternoon: any[] }).afternoon.map(
+              (time: any, index: any) => (
+                <div
+                  key={index}
+                  className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
+                >
+                  {time.startTime}:00
+                </div>
+              ),
+            )}
+        </div>
+        <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
+          {/* {listDay[currentDate].evening.length > 0 &&
+            listDay[currentDate].evening.map((time : any, index : any) => (
+              <div
+                key={index}
+                className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
+              >
+                {time.startTime}
+                </div>
+            ))} */}
+          {(listDay[currentDate] as { evening: any[] })?.evening?.length > 0 &&
+            (listDay[currentDate] as { evening: any[] }).evening.map(
+              (time: any, index: any) => (
+                <div
+                  key={index}
+                  className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
+                >
+                  {time?.startTime}:00
+                </div>
+              ),
+            )}
+        </div>
+      </div>
+      <div className="w-full">
+        <button
+          type="button"
+          onClick={handleUpdateTimeSlot}
+          className="hove:opacity-[0.9] mb-[10px] flex min-h-[30px] w-full items-center justify-center rounded-[20px] bg-[#0442BF] p-[8px]"
+        >
+          {/* <CalendarPlus size={16} color="#ffffff" className="inline-block mt-[-4px]"/> */}
+          <span className="ml-[6px] inline-block text-[14px] font-[500] leading-[20px] text-white">
+            Update My Slots
+          </span>
+        </button>
+      </div>
+    </div>
   );
 }
 
