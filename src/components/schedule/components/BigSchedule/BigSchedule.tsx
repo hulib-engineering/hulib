@@ -182,7 +182,7 @@ export default function BigCalendar() {
       <h2 className="rounded-md bg-white p-2 text-[28px] font-[500] leading-[36px] text-[#010D26]">
         Appointment schedule {currentMonthYear}
       </h2>
-      {/* <div className="w-full">
+      <div className="w-full">
         {list.length > 0 && (
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin]}
@@ -207,8 +207,7 @@ export default function BigCalendar() {
             eventContent={(eventInfo) => renderEventContent(eventInfo)}
           />
         )}
-      </div> */}
-      <OneWeek/>
+      </div>
     </div>
   );
 }
