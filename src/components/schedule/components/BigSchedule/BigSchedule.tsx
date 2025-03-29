@@ -7,6 +7,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 import DetailEventLiber from '@/components/schedule/components/DetailEventLiber';
+import OneWeek from '../OneWeek';
 
 const slotLabelContent = (arg: any) => {
   const hour24 = arg.date.getHours();
