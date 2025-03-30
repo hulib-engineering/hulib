@@ -164,7 +164,9 @@ function TimeSlot() {
     };
 
     result.forEach((element: any) => {
-      const startTime = element?.startTime ?? 0;
+      const stringDate = element?.startTime ?? 0;
+      const [hours, minutes] = stringDate.split(':').map(Number);
+      const startTime = hours + minutes / 60;
       switch (element.dayOfWeek) {
         case 1:
           if (
