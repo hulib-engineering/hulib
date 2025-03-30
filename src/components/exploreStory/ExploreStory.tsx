@@ -23,7 +23,7 @@ const ExporeStory = ({ storiesPages, isLoading }: ExporeStoryProps) => {
   return (
     <div
       className={mergeClassnames(
-        'h-full w-full rounded-lg bg-white px-2 py-5',
+        'h-full w-full rounded-lg px-2 py-5',
         'md:px-5 md:py-5',
       )}
     >
@@ -38,6 +38,7 @@ const ExporeStory = ({ storiesPages, isLoading }: ExporeStoryProps) => {
         className={mergeClassnames(
           'mt-6 grid grid-cols-1 gap-8',
           'md:grid-cols-2',
+          'xl:grid-cols-3',
         )}
       >
         {storiesPages?.map((story: StoryType) => (
