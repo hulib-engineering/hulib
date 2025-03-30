@@ -8,7 +8,10 @@
     "books": "Stories",
     "mentors": "Hubers",
     "log_in": "Log in",
-    "sign_up": "Sign up"
+    "sign_up": "Sign up",
+    "clear": "Clear",
+    "recent_searches": "Recent Searches:",
+    "search_by_keyword": "Search by keyword"
   },
   "HumanBookBanner": {
     "explore_now": "Explore the Human Book bookshelf now",
@@ -361,7 +364,15 @@
       "invalidYear": "Invalid Year",
       "invalidYearRange": "Invalid Year Range",
       "invalid_url": "Invalid URL link. Check link and try again"
-    }
+    },
+    "bio": { "text": "Bio", "placeholder": "Placeholder" },
+    "intro_video": { "text": "Introduction Video", "placeholder": "https://" },
+    "read_community": "Read community guildeline",
+    "confirm": "I confirm that I have read and understood the terms and conditions of Hulib, and I agree to be bound by them.",
+    "cancel": "Cancel",
+    "next": "Next",
+    "step_1_title": "Register as a Huber",
+    "general": "General"
   },
   "ExporeStory": {
     "title": "Explore",
@@ -381,5 +392,38 @@
     "similar_stories": "Similar Stories",
     "see_all": "See All",
     "hide_all": "Hide All"
+  },
+  "Home": {
+    "banner": {
+      "title": "Hi!",
+      "sub_title": "Welcome to the platform that connects beautiful souls"
+    },
+    "newest_stories": {
+      "title": "Newest Stories",
+      "btn1": "See all"
+    },
+    "newest_books": {
+      "title": "Newest Books",
+      "btn1": "See all"
+    },
+    "recommended_hubers": {
+      "title": "Recommended Hubers"
+    },
+    "explore_stories": {
+      "title": "Explore",
+      "btn1": "See all",
+      "btn2": "View more",
+      "btn3": " Explore all Human books",
+      "card": {
+        "text1": "Topics",
+        "text2": "Ratings"
+      }
+    },
+    "short_descriptions": {
+      "title": "Become our Huber",
+      "description": "Short Description",
+      "btn": "Join as Huber"
+    },
+    "no_data": "No Data"
   }
 }

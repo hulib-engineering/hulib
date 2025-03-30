@@ -5,9 +5,9 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 
 import Button from '@/components/button/Button';
+import { FlipBook } from '@/components/flipBook/FlipBook';
 import { mergeClassnames } from '@/components/private/utils';
 import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
-import Story from '@/components/stories/Story';
 import { useGetSimilarStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
@@ -23,7 +23,11 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
   const [limit, setLimit] = React.useState(4);
 
   // Fetch 4 stories initially, fetch all when expanded
-  const { data: similarStoriesPages, isLoading } = useGetSimilarStoriesQuery({
+  const {
+    data: similarStoriesPages,
+    isLoading,
+    isFetching,
+  } = useGetSimilarStoriesQuery({
     page: 1,
     limit,
     humanBookId,
@@ -42,7 +46,7 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
     }
   }, [isExpandList]);
 
-  if (isLoading) return <StoriesSkeleton />;
+  if (isLoading || isFetching) return <StoriesSkeleton />;
 
   return (
     <div
@@ -56,12 +60,11 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
       </h3>
       <div
         className={mergeClassnames(
-          'mt-6 grid grid-cols-1 gap-8',
-          'md:grid-cols-2',
+          'mt-6 xl:justify-start relative flex flex-wrap items-center justify-center gap-8 2xl:gap-12',
         )}
       >
         {similarStoriesPages?.data?.map((story: StoryType) => (
-          <Story key={story?.id} data={story} />
+          <FlipBook key={story?.id} data={story} />
         ))}
       </div>
 

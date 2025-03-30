@@ -55,7 +55,7 @@ const LoginForm = () => {
         await signIn('credentials', {
           id: result.user.id,
           accessToken: result.token,
-          callbackUrl: `${window.location.origin}/profile`,
+          callbackUrl: `${window.location.origin}/home`,
         });
       }
     } catch (error: any) {

@@ -7,6 +7,7 @@ import * as React from 'react';
 
 import { AboutPanel } from '@/components/authorDetail/AboutPanel';
 import { ReviewPanel } from '@/components/authorDetail/ReviewPanel';
+import { AvailableSlot } from '@/components/availableSlot/AvailableSlot';
 import type { ProfileMenuItem } from '@/components/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/NavBar/NavBar';
 import { useAppSelector } from '@/libs/hooks';
@@ -95,6 +96,27 @@ const AuthorDetail = () => {
           </div>
         ),
       },
+      {
+        type: MyProfilePanelIndex.AVAILABLE_SLOT,
+        label: (
+          <div>
+            <p
+              className={
+                selectedMenuItem?.type === MyProfilePanelIndex.AVAILABLE_SLOT
+                  ? 'border-b-2 border-primary-50 py-2 text-sm font-medium text-primary-50'
+                  : 'py-2 text-sm font-medium text-neutral-40'
+              }
+            >
+              Available Slot
+            </p>
+          </div>
+        ),
+        component: (
+          <div>
+            <AvailableSlot />
+          </div>
+        ),
+      },
     ];
   }, [authorDetail, selectedMenuItem?.type]);
 
@@ -129,7 +151,7 @@ const AuthorDetail = () => {
   const rating = '5/5';
 
   return (
-    <div className="h-full w-full bg-neutral-98 px-[10%]">
+    <div className="h-full w-full bg-neutral-98 md:px-[10%]">
       <div className="h-full w-full">
         <div className="relative flex h-[200px] justify-end justify-items-end bg-[#A6D4FF]">
           <div className="relative h-[200px] w-full ">
@@ -185,7 +207,7 @@ const AuthorDetail = () => {
         </div>
       </div>
       <div className="mt-8 flex w-full flex-col items-start justify-between gap-8 lg:flex-row">
-        <div className="flex-1 bg-[#FFFFFF] p-5">
+        <div className="w-full flex-1 bg-[#FFFFFF] p-5">
           <NavBar
             handleChangeSelectedMenu={handleChangeSelectedMenu}
             tabsRender={tabsRender}
