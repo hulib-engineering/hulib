@@ -11,6 +11,7 @@ import {
 } from '@phosphor-icons/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import React, { useMemo } from 'react';
 
@@ -20,7 +21,7 @@ import { Logo } from '@/components/Logo';
 import MenuItem from '@/components/menuItem/MenuItem';
 import Popover from '@/components/popover/Popover';
 import type { WithChildren } from '@/components/private/types';
-import SearchEverything from '@/components/SearchEverything';
+import SearchInput from '@/components/SearchInput';
 import { useAppSelector } from '@/libs/hooks';
 
 const ButtonWithChip = ({
@@ -49,7 +50,7 @@ const AvatarPopoverMenuItems = [
   {
     label: 'Register to become human book',
     icon: <Pencil size={20} color="primary-20" />,
-    href: '/human-book-register',
+    href: '/huber-registration',
     roles: ['Reader'],
   },
   {
@@ -136,6 +137,11 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
 
 const Header = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
+  const router = useRouter();
+
+  const handleNavigateToSchedule = () => {
+    router.push('/schedule-meeting/weekly-schedule');
+  };
 
   return (
     <>
@@ -190,10 +196,15 @@ const Header = () => {
           )}
         </div>
         <div className="flex flex-col gap-2">
-          <SearchEverything />
+          {/* <SearchEverything /> */}
           <div className="flex items-center justify-between gap-x-2">
             {user && user?.id && (
-              <Button variant="ghost" size="lg" className="text-neutral-10">
+              <Button
+                variant="ghost"
+                size="lg"
+                className="text-neutral-10"
+                onClick={handleNavigateToSchedule}
+              >
                 My schedule
               </Button>
             )}
@@ -213,7 +224,12 @@ const Header = () => {
           <Logo size="small" />
           <div className="flex items-center gap-x-2">
             {user && user?.id && (
-              <Button variant="ghost" size="lg" className="text-neutral-10">
+              <Button
+                variant="ghost"
+                size="lg"
+                className="text-neutral-10"
+                onClick={handleNavigateToSchedule}
+              >
                 My schedule
               </Button>
             )}
@@ -228,7 +244,7 @@ const Header = () => {
           </div>
         </div>
         <div className="w-[300px]">
-          <SearchEverything />
+          <SearchInput />
         </div>
         {!user || !user?.id ? (
           <div className="flex gap-3">

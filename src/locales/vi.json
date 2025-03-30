@@ -8,7 +8,10 @@
     "books": "Sách",
     "mentors": "Cố vấn",
     "log_in": "Đăng nhập",
-    "sign_up": "Đăng kí"
+    "sign_up": "Đăng kí",
+    "clear": "Xoá",
+    "recent_searches": "Tìm kiếm gần đây:",
+    "search_by_keyword": "Tìm kiếm bởi từ khoá"
   },
   "HumanBookBanner": {
     "explore_now": "Khám phá tủ sách Human Book ngay",
@@ -360,6 +363,66 @@
       "required": "Bắt buộc",
       "invalidYear": "Năm không hợp lệ",
       "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại"
-    }
+    },
+    "bio": { "text": "Tiểu sử", "placeholder": "Chỗ để điền" },
+    "intro_video": { "text": "Video giới thiệu", "placeholder": "https://" },
+    "read_community": "Đọc hướng dẫn cộng đồng",
+    "confirm": "Tôi xác nhận rằng tôi đã đọc và hiểu các điều khoản và điều kiện của Hulib, và tôi đồng ý tuân theo chúng.",
+    "cancel": "Hủy",
+    "next": "Tiếp theo",
+    "step_1_title": "Dăng ký Huber",
+    "general": "General"
+  },
+  "ExporeStory": {
+    "title": "Khám phá",
+    "description": "Khám phá và tìm câu chuyện hoàn hảo của bạn",
+    "view_more": "Xem thêm",
+    "topics": "Chủ đề",
+    "ratings": "Đánh giá",
+    "abstract": "Tóm tắt",
+    "read_story": "Đọc câu chuyện",
+    "productivity": "Năng suất",
+    "all": "Tất cả",
+    "health": "Sức khỏe",
+    "emotional": "Cảm xúc",
+    "motivationAndInspiration": "Động lực & Cảm hứng",
+    "career": "Sự nghiệp",
+    "education": "Giáo dục",
+    "similar_stories": "Những câu chuyện tương tự",
+    "see_all": "Xem tất cả",
+    "hide_all": "Ẩn tất cả"
+  },
+  "Home": {
+    "banner": {
+      "title": "Xin chào!",
+      "sub_title": "Chào mừng bạn đến với nền tảng kết nối những tâm hồn đẹp"
+    },
+    "newest_stories": {
+      "title": "Câu chuyện mới nhất",
+      "btn1": "Xem tất cả"
+    },
+    "newest_books": {
+      "title": "Sách mới nhất",
+      "btn1": "Xem tất cả"
+    },
+    "recommended_hubers": {
+      "title": "Những Hubers được đề xuất"
+    },
+    "explore_stories": {
+      "title": "Khám phá",
+      "btn1": "Xem tất cả",
+      "btn2": "Xem thêm",
+      "btn3": "Khám phá tất cả sách về con người",
+      "card": {
+        "text1": "Chủ đề",
+        "text2": "Đánh giá"
+      }
+    },
+    "short_descriptions": {
+      "title": "Trở thành Huber của chúng tôi",
+      "description": "Mô tả ngắn",
+      "btn": "Tham gia với tư cách Huber"
+    },
+    "no_data": "Không có dữ liệu"
   }
 }

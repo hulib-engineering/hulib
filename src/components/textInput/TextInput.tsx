@@ -39,6 +39,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   if (inputSize === Size.LARGE) {
     return <TextInputInnerLabel {...props} ref={ref} />;
   }
+
   // render rest sizes
   return <TextInputBasic {...props} ref={ref} />;
 });
