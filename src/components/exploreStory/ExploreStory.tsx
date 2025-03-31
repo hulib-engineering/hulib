@@ -5,10 +5,10 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import Button from '@/components/button/Button';
-import { FlipBook } from '@/components/flipBook/FlipBook';
 import { mergeClassnames } from '@/components/private/utils';
 import ListTopics from '@/components/stories/ListTopics';
 import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
+import Story from '@/components/stories/Story';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
@@ -67,7 +67,7 @@ const ExporeStory = ({ topicIds }: ExporeStoryProps) => {
         )}
       >
         {storiesPages?.data?.map((story: StoryType) => (
-          <FlipBook key={story?.id} data={story} />
+          <Story key={story?.id} data={story} />
         ))}
       </div>
 

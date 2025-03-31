@@ -46,12 +46,10 @@ const Story = (props: Props) => {
         'relative flex w-full flex-row bg-pink-100 p-4 rounded-xl shadow-sm',
         'h-[300px] md:h-[300px]',
       )}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <div
         className={mergeClassnames(
-          'absolute inset-0 flex flex-row transition-transform duration-500 transform-gpu',
+          'absolute inset-0 flex flex-row bg-white p-3 rounded-2xl transition-transform duration-500 transform-gpu',
           'md:[transform-style:preserve-3d] md:[backface-visibility:hidden]',
           isHovered ? 'md:rotate-y-180' : 'md:rotate-y-0',
         )}
@@ -173,6 +171,8 @@ const Story = (props: Props) => {
         </div>
 
         <div
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
           className={mergeClassnames(
             'h-full w-1/2 rounded-2xl relative',
             'md:h-full',
@@ -197,7 +197,11 @@ const Story = (props: Props) => {
           isHovered ? 'md:rotate-y-0' : 'md:rotate-y-180',
         )}
       >
-        <OpenStory content={data?.abstract || ''} title={data?.title || ''} />
+        <OpenStory
+          content={data?.abstract || ''}
+          title={data?.title || ''}
+          router={router}
+        />
       </div>
     </div>
   );
