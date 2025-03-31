@@ -1,13 +1,26 @@
 'use client';
 
-import { useState } from 'react';
-import { format, startOfWeek, addDays, isToday } from 'date-fns';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { addDays, format, isToday, startOfWeek } from 'date-fns';
+import { useState } from 'react';
 
-export default function OneWeek() {
+type Props = {
+  selectDate?: Date;
+  setSelectDate?: (date: Date) => void;
+};
+
+export default function OneWeek({
+  selectDate = new Date(),
+  setSelectDate,
+}: Props) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const startOfCurrentWeek = startOfWeek(currentDate, { weekStartsOn: 0 });
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(selectDate);
+
+  const onClickDateItem = (item: Date) => {
+    setSelectedDate(item);
+    setSelectDate?.(item);
+  };
 
   const getWeekDays = () => {
     return Array.from({ length: 7 }, (_, i) => addDays(startOfCurrentWeek, i));
@@ -20,28 +33,37 @@ export default function OneWeek() {
   const handleNextWeek = () => {
     setCurrentDate(addDays(currentDate, 7));
   };
-  
+
   return (
-    <div className="p-4 w-full max-w-[772px] max-h-[150px] mx-auto bg-white shadow-lg rounded-lg">
-      <div className="flex justify-between items-center mb-2">
-        <button onClick={handlePrevWeek}>
-          <CaretLeft className="w-5 h-5 text-[#0442BF]" />
+    <div className="mx-auto w-full rounded-lg bg-white p-4 shadow-lg">
+      <div className="mb-2 flex items-center justify-between">
+        <button type="button" onClick={handlePrevWeek}>
+          <CaretLeft className="h-5 w-5 text-gray-500" />
         </button>
-        <span className="font-[500] text-[14px] leading-[16px] text-center text-[#171819]">This week</span>
-        <button onClick={handleNextWeek}>
-          <CaretRight className="w-5 h-5 text-[#0442BF]" />
+        <span className="font-semibold">This week</span>
+        <button type="button" onClick={handleNextWeek}>
+          <CaretRight className="h-5 w-5 text-gray-500" />
         </button>
       </div>
       <div className="grid grid-cols-7 gap-2 text-center">
         {getWeekDays().map((day, index) => (
-          <div key={index} className="flex flex-col items-center">
-            <span className="font-[400] text-[14px] leading-[16px] text-center text-[#5C6063] my-[10px]">{format(day, 'E')}</span>
+          <div key={index} className="flex w-full flex-col items-center">
+            <span className="text-sm text-gray-500">{format(day, 'E')}</span>
             <button
-              onClick={() => setSelectedDate(day)}
-              className={`w-[100px] font-[400] text-[14px] leading-[14px] h-[64px] flex items-center justify-center rounded-lg text-[#171819] transition-all
-                ${isToday(day) ? 'border border-[#C2C6CF] [#171819]' : ''}
-                ${selectedDate?.toDateString() === day.toDateString() ? 'bg-[#0442BF] text-white' : 'hover:bg-gray-200'}
-                `}            >
+              type="button"
+              onClick={() => onClickDateItem(day)}
+              className={`flex h-10 w-full items-center justify-center rounded-lg border transition-all
+                ${
+                  isToday(day)
+                    ? 'border-blue-500 text-blue-500'
+                    : 'border-gray-300'
+                }
+                ${
+                  selectedDate.toDateString() === day.toDateString()
+                    ? 'bg-blue-600 text-white'
+                    : 'hover:bg-gray-200'
+                }`}
+            >
               {format(day, 'd')}
             </button>
           </div>
