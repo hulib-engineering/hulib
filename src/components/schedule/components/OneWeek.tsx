@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import { format, startOfWeek, addDays, isToday } from 'date-fns';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { addDays, format, isToday, startOfWeek } from 'date-fns';
+import { useState } from 'react';
 
 export default function OneWeek() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -20,28 +20,38 @@ export default function OneWeek() {
   const handleNextWeek = () => {
     setCurrentDate(addDays(currentDate, 7));
   };
-  
+
   return (
-    <div className="p-4 w-full max-w-[772px] max-h-[150px] mx-auto bg-white shadow-lg rounded-lg">
-      <div className="flex justify-between items-center mb-2">
-        <button onClick={handlePrevWeek}>
-          <CaretLeft className="w-5 h-5 text-[#0442BF]" />
+    <div className="mx-auto max-h-[150px] w-full max-w-[772px] rounded-lg bg-white p-4 shadow-lg">
+      <div className="mb-2 flex items-center justify-between">
+        <button type="button" onClick={handlePrevWeek}>
+          <CaretLeft className="h-5 w-5 text-[#0442BF]" />
         </button>
-        <span className="font-[500] text-[14px] leading-[16px] text-center text-[#171819]">This week</span>
-        <button onClick={handleNextWeek}>
-          <CaretRight className="w-5 h-5 text-[#0442BF]" />
+        <span className="text-center text-[14px] font-[500] leading-[16px] text-[#171819]">
+          This week
+        </span>
+        <button type="button" onClick={handleNextWeek}>
+          <CaretRight className="h-5 w-5 text-[#0442BF]" />
         </button>
       </div>
       <div className="grid grid-cols-7 gap-2 text-center">
         {getWeekDays().map((day, index) => (
           <div key={index} className="flex flex-col items-center">
-            <span className="font-[400] text-[14px] leading-[16px] text-center text-[#5C6063] my-[10px]">{format(day, 'E')}</span>
+            <span className="my-[10px] text-center text-[14px] font-[400] leading-[16px] text-[#5C6063]">
+              {format(day, 'E')}
+            </span>
             <button
+              type="button"
               onClick={() => setSelectedDate(day)}
-              className={`w-[100px] font-[400] text-[14px] leading-[14px] h-[64px] flex items-center justify-center rounded-lg text-[#171819] transition-all
-                ${isToday(day) ? 'border border-[#C2C6CF] [#171819]' : ''}
-                ${selectedDate?.toDateString() === day.toDateString() ? 'bg-[#0442BF] text-white' : 'hover:bg-gray-200'}
-                `}            >
+              className={`flex h-[64px] w-[100px] items-center justify-center rounded-lg text-[14px] font-[400] leading-[14px] text-[#171819] transition-all
+                ${isToday(day) ? '[#171819] border border-[#C2C6CF]' : ''}
+                ${
+                  selectedDate?.toDateString() === day.toDateString()
+                    ? 'bg-[#0442BF] text-white'
+                    : 'hover:bg-gray-200'
+                }
+                `}
+            >
               {format(day, 'd')}
             </button>
           </div>
