@@ -11,10 +11,12 @@ import { AppConfig } from '@/utils/AppConfig';
 //   updatedAt: string;
 // };
 
-const getMeeting = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
+const getReadingSessions = (
+  build: EndpointBuilder<BaseQueryFn, string, string>,
+) =>
   build.query<any, void>({
-    query: () => `${AppConfig.api.endpoint}/schedules`,
-    providesTags: [{ type: 'getMeeting' }],
+    query: () => `${AppConfig.api.endpoint}/reading-sessions`,
+    providesTags: [{ type: 'getReadingSessions' }],
   });
 
-export default getMeeting;
+export default getReadingSessions;

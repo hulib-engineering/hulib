@@ -1,6 +1,6 @@
 import { api } from '../../api';
 import addTimeSlots from './addTimeSlots';
-import getMeeting from './getMeeting';
+import getReadingSessions from './getReadingSessions';
 import getTimeSlots from './getTimeSlot';
 import getTimeSlotsById from './getTimeSlotById';
 
@@ -13,7 +13,7 @@ const timeSlotsApi = apiWithTag.injectEndpoints({
     getTimeSlots: getTimeSlots(build),
     getTimeSlotsById: getTimeSlotsById(build),
     addTimeSlots: addTimeSlots(build),
-    getMeeting: getMeeting(build),
+    getReadingSessions: getReadingSessions(build),
   }),
   overrideExisting: false,
 });
@@ -22,5 +22,5 @@ export const {
   useGetTimeSlotsQuery,
   useGetTimeSlotsByIdQuery,
   useAddTimeSlotsMutation,
-  useGetMeetingQuery,
+  useGetReadingSessions,
 }: any = timeSlotsApi;
