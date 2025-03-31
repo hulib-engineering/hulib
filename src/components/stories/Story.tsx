@@ -46,6 +46,7 @@ const Story = (props: Props) => {
         'relative flex w-full flex-row bg-pink-100 p-4 rounded-xl shadow-sm',
         'h-[300px] md:h-[300px]',
       )}
+      onMouseLeave={handleMouseLeave}
     >
       <div
         className={mergeClassnames(
@@ -172,7 +173,6 @@ const Story = (props: Props) => {
 
         <div
           onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
           className={mergeClassnames(
             'h-full w-1/2 rounded-2xl relative',
             'md:h-full',
