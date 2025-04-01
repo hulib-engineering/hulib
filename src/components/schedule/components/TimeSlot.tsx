@@ -30,7 +30,6 @@ function TimeSlot() {
 
   const getCurrentDay = () => {
     const today = new Date().getDay();
-    console.log('today', today);
     console.log('WEEK_STRING[today]', WEEK_STRING[today]);
     setCurrentDate(WEEK_STRING[today]);
   };
