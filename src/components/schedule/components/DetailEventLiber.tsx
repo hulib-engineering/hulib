@@ -3,7 +3,33 @@
 import { CaretDown, Clock, User } from '@phosphor-icons/react';
 import Image from 'next/image';
 
-function DetailEventLiber() {
+function DetailEventLiber({ data }: any) {
+  console.log('Data', data);
+  const { startedAt, endedAt, reader, humanBook } = data;
+  const { fullName: fullNameReader } = reader;
+  const { fullName: fullNameHumanBook } = humanBook;
+  function formatDateTimeRange(startIso: string, endIso: string) {
+    const startDate = new Date(startIso);
+    const endDate = new Date(endIso);
+
+    // Lấy thứ trong tuần (viết tắt: Mon, Tue, ...)
+    const dayOfWeek = startDate.toLocaleDateString('en-US', {
+      weekday: 'short',
+    });
+
+    const day = String(startDate.getUTCDate()).padStart(2, '0');
+    const month = String(startDate.getUTCMonth() + 1).padStart(2, '0');
+    const year = startDate.getUTCFullYear();
+
+    const startHours = String(startDate.getUTCHours()).padStart(2, '0');
+    const startMinutes = String(startDate.getUTCMinutes()).padStart(2, '0');
+
+    const endHours = String(endDate.getUTCHours()).padStart(2, '0');
+    const endMinutes = String(endDate.getUTCMinutes()).padStart(2, '0');
+
+    return `${dayOfWeek}, ${day}/${month}/${year} | ${startHours}:${startMinutes} - ${endHours}:${endMinutes}`;
+  }
+
   return (
     <div className="max-h-[206px] w-[396px] overflow-hidden rounded-[16px] bg-[#FFF9F5] px-[20px] py-[16px] pb-[32px] shadow-[#1C1E211A] drop-shadow-sm">
       <div className="flex items-center">
@@ -16,13 +42,13 @@ function DetailEventLiber() {
         <CaretDown size={24} color="#000" />
       </div>
       <div className="mt-[16px] flex items-center">
-        <Clock size={16} color="#000" />
+        <Clock size={16} color="#000" className="-mt-[4px]" />
         <p className="ml-[4px] text-[14px] font-[500] leading-[16px] text-[#2E3032]">
-          Tue, 02/02/2025 | 14:00 - 14:30
+          {formatDateTimeRange(startedAt, endedAt)}
         </p>
       </div>
       <div className="mt-[16px] flex items-center">
-        <User size={16} color="#000" />
+        <User size={16} color="#000" className="-mt-[4px]" />
         <p className="ml-[8px] text-[14px] font-[500] leading-[16px] text-[#171819]">
           2 Attendees
         </p>
@@ -42,7 +68,7 @@ function DetailEventLiber() {
             [Flaky]
           </p>
           <p className="text-[Hari Won] ml-[8px] text-[14px] font-[500] leading-[16px] text-[#171819]">
-            Persephonee (You)
+            {fullNameHumanBook} (You)
           </p>
         </div>
         <div className="mt-[8px] flex items-center">
@@ -59,7 +85,7 @@ function DetailEventLiber() {
             [Solid]
           </p>
           <p className="ml-[8px] text-[14px] font-[500] leading-[16px] text-[#171819]">
-            Hades
+            {fullNameReader}
           </p>
         </div>
       </div>
