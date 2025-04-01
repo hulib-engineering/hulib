@@ -2,7 +2,12 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { ConfirmationResult } from 'firebase/auth';
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import {
+  PhoneAuthProvider,
+  RecaptchaVerifier,
+  signInWithCredential,
+  signInWithPhoneNumber,
+} from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
@@ -58,16 +63,25 @@ const VerifiedPhoneNumberInput = ({
   useEffect(() => {
     const handleOtp = async (otp: string) => {
       try {
-        await confirmationResponse?.confirm(otp);
-        setValue('isVerified', true);
+        if (!confirmationResponse) {
+          throw new Error('No confirmation response available.');
+        }
+        const credential = PhoneAuthProvider.credential(
+          confirmationResponse.verificationId,
+          otp,
+        );
+        await signInWithCredential(auth, credential);
         setVerifiedNumber(watch('parentPhoneNumber'));
+        setValue('isVerified', true);
       } catch (error) {
+        console.error('OTP Verification Error:', error);
         setError('verificationCode', {
           type: 'unverified',
-          message: 'The verification code is not correct, please re - enter',
+          message: 'Invalid OTP. Please try again.',
         });
       }
     };
+
     if (watch('verificationCode').length === 6) {
       handleOtp(watch('verificationCode'));
     }
@@ -79,20 +93,39 @@ const VerifiedPhoneNumberInput = ({
     }
   }, [verifiedNumber]);
 
-  const handleSendCode = async () => {
-    try {
-      const recaptchaVerifier = new RecaptchaVerifier(auth, 'verify-button', {
+  const setupRecaptcha = () => {
+    // @ts-ignore
+    if (!window.recaptchaVerifier) {
+      // @ts-ignore
+
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'verify-button', {
         size: 'invisible',
       });
+      // @ts-ignore
 
-      const result = await signInWithPhoneNumber(
+      window.recaptchaVerifier.render();
+    }
+  };
+
+  const handleSendCode = async () => {
+    try {
+      setupRecaptcha(); // Setup Recaptcha
+      const phoneNumber = watch('parentPhoneNumber').trim();
+      if (!phoneNumber) throw new Error('Phone number is required');
+
+      const confirmationResult = await signInWithPhoneNumber(
         auth,
-        watch('parentPhoneNumber'),
-        recaptchaVerifier,
+        phoneNumber,
+
+        // @ts-ignore
+        window.recaptchaVerifier,
       );
-      setConfirmationResponse(result);
-    } catch (e) {
-      console.log(e);
+
+      setConfirmationResponse(confirmationResult);
+      console.log('🔥 OTP sent:', confirmationResult);
+    } catch (error: any) {
+      console.error('🚨 Firebase Error:', error.message);
+      alert(`Firebase Error: ${error.message}`);
     }
   };
 
