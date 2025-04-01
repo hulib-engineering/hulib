@@ -1,3 +1,11 @@
+## [1.11.1](https://github.com/hulib-engineering/hulib/compare/v1.11.0...v1.11.1) (2025-04-01)
+
+
+### Bug Fixes
+
+* deploy vercel 2 ([c21b411](https://github.com/hulib-engineering/hulib/commit/c21b4113e1c0709f2c36f7a622d1c76b41b39323))
+* time slots ([4209c91](https://github.com/hulib-engineering/hulib/commit/4209c910a64bdef89a1a1c908bab4476dce8b630))
+
 # [1.11.0](https://github.com/hulib-engineering/hulib/compare/v1.10.0...v1.11.0) (2025-04-01)
 
 
