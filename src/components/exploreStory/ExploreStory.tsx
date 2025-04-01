@@ -5,10 +5,10 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import Button from '@/components/button/Button';
-import { FlipBook } from '@/components/flipBook/FlipBook';
 import { mergeClassnames } from '@/components/private/utils';
 import ListTopics from '@/components/stories/ListTopics';
 import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
+import Story from '@/components/stories/Story';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
@@ -48,7 +48,7 @@ const ExporeStory = ({ topicIds }: ExporeStoryProps) => {
   return (
     <div
       className={mergeClassnames(
-        'h-full w-full rounded-lg bg-white px-2 py-5',
+        'h-full w-full rounded-lg px-2 py-5',
         'md:px-5 md:py-5',
       )}
     >
@@ -61,11 +61,13 @@ const ExporeStory = ({ topicIds }: ExporeStoryProps) => {
       <ListTopics />
       <div
         className={mergeClassnames(
-          'mt-6 xl:justify-start relative flex flex-wrap items-center justify-center gap-8 2xl:gap-12',
+          'mt-6 grid grid-cols-1 gap-8',
+          'md:grid-cols-2',
+          'xl:grid-cols-3',
         )}
       >
         {storiesPages?.data?.map((story: StoryType) => (
-          <FlipBook key={story?.id} data={story} />
+          <Story key={story?.id} data={story} />
         ))}
       </div>
 

@@ -1,6 +1,5 @@
 'use client';
 
-import type { Dayjs } from 'dayjs';
 import * as React from 'react';
 
 import { MainScreen } from '@/components/time-slot/MainScreen';
@@ -10,9 +9,9 @@ import { ScheduleSuccess } from '@/components/time-slot/ScheduleSuccess';
 export default function Index() {
   const [step, setStep] = React.useState<number>(0);
 
-  const [selectedDay, setSelectedDay] = React.useState<Dayjs | null>(null);
+  const [selectedDay, setSelectedDay] = React.useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = React.useState<string>('');
-  const [selectedNextTime, setSelectedNextTime] = React.useState<string>('');
+  const [note, setNote] = React.useState<string>('');
 
   const nextStep = () => {
     setStep((prev) => prev + 1);
@@ -47,10 +46,11 @@ export default function Index() {
             timeZone="ICT | GMT-7"
             setSelectedDay={setSelectedDay}
             setSelectedTime={setSelectedTime}
-            setNextSelectedTime={setSelectedNextTime}
             selectedDay={selectedDay}
             selectedTime={selectedTime}
             nextStep={nextStep}
+            note={note}
+            setNote={setNote}
           />
         );
       }
@@ -70,10 +70,16 @@ export default function Index() {
               },
             }}
             startTime={selectedTime}
-            endTime={selectedNextTime}
             timeZone="ICT | GMT-7"
             duration="30"
-            dateTime={selectedDay?.format('dddd, MMMM D') ?? ''}
+            dateTime={
+              selectedDay?.toLocaleDateString('en-GB', {
+                weekday: 'short',
+                day: '2-digit',
+                month: 'short',
+              }) ?? ''
+            }
+            note={note}
             backStep={backStep}
             nextStep={nextStep}
           />

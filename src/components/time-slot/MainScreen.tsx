@@ -9,7 +9,6 @@ import {
   Timer,
   Users,
 } from '@phosphor-icons/react';
-import type { Dayjs } from 'dayjs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -17,7 +16,15 @@ import * as React from 'react';
 
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
-import MiniSchedule from '@/components/schedule/components/MiniSchedule';
+import {
+  AFTERNOON_TIME_START,
+  EVENING_TIME_START,
+  MORNING_TIME_START,
+} from '@/libs/constants/date';
+import { useGetAllTimeSlotsQuery } from '@/libs/services/modules/time-slots';
+import type { TimeSlot } from '@/libs/services/modules/time-slots/getAllTimeSlots';
+
+import OneWeek from '../schedule/components/OneWeek';
 
 export interface IAttendee {
   icon: string;
@@ -36,15 +43,18 @@ type Props = {
   };
   duration: string;
   timeZone: string;
-  setSelectedDay: (day: Dayjs) => void;
+  setSelectedDay: (day: Date) => void;
   setSelectedTime: (time: string) => void;
-  setNextSelectedTime: (nextTime: string) => void;
   nextStep: () => void;
-  selectedDay: Dayjs | null;
+  selectedDay: Date;
   selectedTime: string;
+  note: string;
+  setNote: (note: string) => void;
 };
 export const MainScreen = (props: Props) => {
   const router = useRouter();
+
+  const { data: timeSlots } = useGetAllTimeSlotsQuery();
 
   const {
     fullName = 'Tran Thanh Thao',
@@ -56,30 +66,27 @@ export const MainScreen = (props: Props) => {
     timeZone,
     setSelectedDay,
     setSelectedTime,
-    setNextSelectedTime,
     selectedDay,
     selectedTime,
     nextStep,
+    note,
+    setNote,
   } = props;
   const { liber, huber } = attendees;
   const { icon: liberIcon, role: roleLiber, fullName: liberName } = liber;
   const { icon: huberIcon, role: roleHuber, fullName: huberName } = huber;
 
-  const [selectDate, setSelectDate] = React.useState<Dayjs | null>(selectedDay);
+  const [selectDate, setSelectDate] = React.useState<Date>(selectedDay);
   const [selectTime, setSelectTime] = React.useState<string>(selectedTime);
+  const [message, setMessage] = React.useState<string>(note);
 
-  const items = [];
-  for (let hour = 8; hour < 22; hour += 1) {
-    items.push([hour, 0]);
-    items.push([hour, 30]);
-  }
-
-  const date = new Date();
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: false,
-  });
+  const filterTimeSlots: TimeSlot[] = React.useMemo(() => {
+    return (
+      timeSlots?.filter(
+        (timeSlot: TimeSlot) => timeSlot.dayOfWeek === selectDate.getDay(),
+      ) ?? []
+    );
+  }, [selectDate, timeSlots]);
 
   const convertToAmPm = (time24hr: string): string => {
     const [hour24, minute] = time24hr.split(':').map(Number);
@@ -90,16 +97,38 @@ export const MainScreen = (props: Props) => {
     return `${hour12}:${minute?.toString().padStart(2, '0')} ${period}`;
   };
 
-  const range = items.map((time) => {
-    const [hour, minute] = time;
-    date.setHours(hour ?? 6);
-    date.setMinutes(minute ?? 0);
+  const morningTimeSlot = React.useMemo(() => {
+    const times = filterTimeSlots
+      .filter(
+        (time) =>
+          Number(time.startTime.slice(0, 2)) >= MORNING_TIME_START &&
+          Number(time.startTime.slice(0, 2)) < AFTERNOON_TIME_START,
+      )
+      .map((item) => item.startTime);
+    return times.map((it) => convertToAmPm(it));
+  }, [filterTimeSlots]);
 
-    const time24 = formatter.format(date); // this currently outputs "14:00", "14:30", etc.
-    return convertToAmPm(time24); // convert to "2:00 PM", "2:30 PM", etc.
-  });
+  const afterNoonTimeSlot = React.useMemo(() => {
+    const times = filterTimeSlots
+      .filter(
+        (time) =>
+          Number(time.startTime.slice(0, 2)) >= AFTERNOON_TIME_START &&
+          Number(time.startTime.slice(0, 2)) < EVENING_TIME_START,
+      )
+      .map((item) => item.startTime);
+    return times.map((it) => convertToAmPm(it));
+  }, [filterTimeSlots]);
 
-  const onClickDate = (day: Dayjs) => {
+  const eveningTimeSlot = React.useMemo(() => {
+    const times = filterTimeSlots
+      .filter(
+        (time) => Number(time.startTime.slice(0, 2)) >= EVENING_TIME_START,
+      )
+      .map((item) => item.startTime);
+    return times.map((it) => convertToAmPm(it));
+  }, [filterTimeSlots]);
+
+  const onClickDate = (day: Date) => {
     if (selectDate === day) {
       return;
     }
@@ -107,13 +136,12 @@ export const MainScreen = (props: Props) => {
     setSelectedDay(day);
   };
 
-  const onClickTime = (time: string, index: number, list: string[]) => {
+  const onClickTime = (time: string) => {
     if (selectTime === time) {
       return;
     }
     setSelectTime(time);
     setSelectedTime(time);
-    setNextSelectedTime(list[index + 1] ?? time);
   };
 
   const renderRoleTag = (role: string) => {
@@ -153,7 +181,7 @@ export const MainScreen = (props: Props) => {
     }
     return (
       <div className="grid w-full grid-cols-3 items-center gap-2 xl:grid-cols-5 xl:p-3 2xl:grid-cols-6">
-        {list.map((item, index) => (
+        {list.map((item) => (
           <button
             key={item}
             type="button"
@@ -163,7 +191,7 @@ export const MainScreen = (props: Props) => {
                 ? 'bg-primary-50 border-primary-50 text-white'
                 : 'bg-white border-neutral-90 text-neutral-10',
             )}
-            onClick={() => onClickTime(item, index, list)}
+            onClick={() => onClickTime(item)}
           >
             {item}
           </button>
@@ -179,6 +207,12 @@ export const MainScreen = (props: Props) => {
   const handleBackToHome = () => {
     router.push('/schedule-meeting/weekly-schedule');
     router.refresh();
+  };
+
+  const handleInputMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = e.target;
+    setMessage(value);
+    setNote(value);
   };
 
   return (
@@ -250,6 +284,8 @@ export const MainScreen = (props: Props) => {
               aria-multiline
               className="h-[120px] w-full resize-none rounded-3xl border border-neutral-90 bg-neutral-98 p-3"
               placeholder="Enter meeting notes..."
+              value={message}
+              onChange={(e) => handleInputMessage(e)}
             />
           </div>
           <div className="flex flex-col gap-y-1">
@@ -289,51 +325,53 @@ export const MainScreen = (props: Props) => {
           {timeZone}
         </div>
         <div className="flex flex-col">
-          <MiniSchedule
-            selectedDate={selectDate}
-            setSelectedDate={onClickDate}
+          <OneWeek
+            selectDate={selectDate ?? new Date()}
+            setSelectDate={onClickDate}
           />
 
           <p className="text-xs font-normal text-neutral-60">
             Please choose a time
           </p>
         </div>
-        {!isEmpty(selectDate) && (
-          <>
-            <div className="flex flex-col gap-y-2 rounded-3xl bg-white p-4 shadow-lg">
-              <p className="text-sm font-medium text-neutral-10">
-                {selectDate?.format('dddd, MMMM D') ?? ''}
-              </p>
-              <div className="flex flex-col gap-y-2">
-                <div className="flex grid-cols-[100px_auto] flex-col items-center gap-x-4 gap-y-2 md:grid">
-                  <span className="text-base font-normal text-neutral-40">
-                    Morning
-                  </span>
-                  {timeBlock(range.slice(1, 8))}
-                </div>
-                <div className="flex grid-cols-[100px_auto] flex-col items-center gap-x-4 gap-y-2 md:grid">
-                  <span className="text-base font-normal text-neutral-40">
-                    Afternoon
-                  </span>
-                  {timeBlock(range.slice(10, 18))}
-                </div>
-                <div className="flex grid-cols-[100px_auto] flex-col items-center gap-x-4 gap-y-2 md:grid">
-                  <span className="text-base font-normal text-neutral-40">
-                    Night
-                  </span>
-                  {timeBlock(range.slice(19))}
-                </div>
-              </div>
+
+        <div className="flex flex-col gap-y-2 rounded-3xl bg-white p-4 shadow-lg">
+          <p className="text-sm font-medium text-neutral-10">
+            {selectDate.toLocaleDateString('en-US', {
+              weekday: 'long',
+              month: 'long',
+              day: '2-digit',
+            })}
+          </p>
+          <div className="flex flex-col gap-y-2">
+            <div className="flex grid-cols-[100px_auto] flex-col items-center gap-x-4 gap-y-2 md:grid">
+              <span className="text-base font-normal text-neutral-40">
+                Morning
+              </span>
+              {morningTimeSlot.length > 0 && timeBlock(morningTimeSlot)}
             </div>
-            <p className="text-xs font-normal text-neutral-60">
-              Please choose a time
-            </p>
-          </>
-        )}
+            <div className="flex grid-cols-[100px_auto] flex-col items-center gap-x-4 gap-y-2 md:grid">
+              <span className="text-base font-normal text-neutral-40">
+                Afternoon
+              </span>
+              {afterNoonTimeSlot.length > 0 && timeBlock(afterNoonTimeSlot)}
+            </div>
+            <div className="flex grid-cols-[100px_auto] flex-col items-center gap-x-4 gap-y-2 md:grid">
+              <span className="text-base font-normal text-neutral-40">
+                Night
+              </span>
+              {eveningTimeSlot.length > 0 && timeBlock(eveningTimeSlot)}
+            </div>
+          </div>
+        </div>
+        <p className="text-xs font-normal text-neutral-60">
+          Please choose a time
+        </p>
+
         <Button
           variant="primary"
           className="w-full text-base font-medium text-white md:w-[300px]"
-          disabled={isEmpty(selectDate) || isEmpty(selectTime)}
+          disabled={!selectDate || isEmpty(selectTime)}
           onClick={nextStep}
         >
           Next
