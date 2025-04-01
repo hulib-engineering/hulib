@@ -359,7 +359,27 @@
     "validation": {
       "required": "Bắt buộc",
       "invalidYear": "Năm không hợp lệ",
+      "invalidYearRange": "Invalid Year Range",
       "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại"
     }
+  },
+  "ExporeStory": {
+    "title": "Explore",
+    "description": "Discover and find your perfect story",
+    "view_more": "View More",
+    "topics": "Topics",
+    "ratings": "ratings",
+    "abstract": "Abstract",
+    "read_story": "Read Story",
+    "productivity": "Productivity",
+    "all": "All",
+    "health": "Health",
+    "emotional": "emotional",
+    "motivationAndInspiration": "Motivation & Inspiration",
+    "career": "Career",
+    "education": "Education",
+    "similar_stories": "Similar Stories",
+    "see_all": "See All",
+    "hide_all": "Hide All"
   }
 }
