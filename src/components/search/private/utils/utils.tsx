@@ -32,15 +32,15 @@ function doesChildMatchSearch(search: string, children?: ReactNode) {
   return children
     ? getLabelFromChildren(children)
         .toLowerCase()
-        .includes(search.toLowerCase())
+        .includes(search?.toLowerCase())
     : false;
 }
 
 function doesKeywordsMatchSearch(search: string, keywords: string[]) {
   return keywords.includes('*')
     ? true
-    : keywords.some((keyword) =>
-        keyword.toLowerCase().includes(search.toLowerCase()),
+    : keywords.some(
+        (keyword) => keyword?.toLowerCase().includes(search?.toLowerCase()),
       );
 }
 
