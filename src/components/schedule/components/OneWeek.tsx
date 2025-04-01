@@ -4,10 +4,23 @@ import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { addDays, format, isToday, startOfWeek } from 'date-fns';
 import { useState } from 'react';
 
-export default function OneWeek() {
+type Props = {
+  selectDate?: Date;
+  setSelectDate?: (date: Date) => void;
+};
+
+export default function OneWeek({
+  selectDate = new Date(),
+  setSelectDate,
+}: Props) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const startOfCurrentWeek = startOfWeek(currentDate, { weekStartsOn: 0 });
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(selectDate);
+
+  const onClickDateItem = (item: Date) => {
+    setSelectedDate(item);
+    setSelectDate?.(item);
+  };
 
   const getWeekDays = () => {
     return Array.from({ length: 7 }, (_, i) => addDays(startOfCurrentWeek, i));
@@ -22,35 +35,34 @@ export default function OneWeek() {
   };
 
   return (
-    <div className="mx-auto max-h-[150px] w-full max-w-[772px] rounded-lg bg-white p-4 shadow-lg">
+    <div className="mx-auto w-full rounded-lg bg-white p-4 shadow-lg">
       <div className="mb-2 flex items-center justify-between">
         <button type="button" onClick={handlePrevWeek}>
-          <CaretLeft className="h-5 w-5 text-[#0442BF]" />
+          <CaretLeft className="h-5 w-5 text-gray-500" />
         </button>
-        <span className="text-center text-[14px] font-[500] leading-[16px] text-[#171819]">
-          This week
-        </span>
+        <span className="font-semibold">This week</span>
         <button type="button" onClick={handleNextWeek}>
-          <CaretRight className="h-5 w-5 text-[#0442BF]" />
+          <CaretRight className="h-5 w-5 text-gray-500" />
         </button>
       </div>
       <div className="grid grid-cols-7 gap-2 text-center">
         {getWeekDays().map((day, index) => (
-          <div key={index} className="flex flex-col items-center">
-            <span className="my-[10px] text-center text-[14px] font-[400] leading-[16px] text-[#5C6063]">
-              {format(day, 'E')}
-            </span>
+          <div key={index} className="flex w-full flex-col items-center">
+            <span className="text-sm text-gray-500">{format(day, 'E')}</span>
             <button
               type="button"
-              onClick={() => setSelectedDate(day)}
-              className={`flex h-[64px] w-[100px] items-center justify-center rounded-lg text-[14px] font-[400] leading-[14px] text-[#171819] transition-all
-                ${isToday(day) ? '[#171819] border border-[#C2C6CF]' : ''}
+              onClick={() => onClickDateItem(day)}
+              className={`flex h-10 w-full items-center justify-center rounded-lg border transition-all
                 ${
-                  selectedDate?.toDateString() === day.toDateString()
-                    ? 'bg-[#0442BF] text-white'
-                    : 'hover:bg-gray-200'
+                  isToday(day)
+                    ? 'border-blue-500 text-blue-500'
+                    : 'border-gray-300'
                 }
-                `}
+                ${
+                  selectedDate.toDateString() === day.toDateString()
+                    ? 'bg-blue-600 text-white'
+                    : 'hover:bg-gray-200'
+                }`}
             >
               {format(day, 'd')}
             </button>

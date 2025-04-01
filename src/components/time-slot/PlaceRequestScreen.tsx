@@ -14,7 +14,8 @@ import * as React from 'react';
 
 import Button from '@/components/button/Button';
 import type { IAttendee } from '@/components/time-slot/MainScreen';
-import { useAddTimeSlotsMutation } from '@/libs/services/modules/schedule-meeting';
+import { useAppSelector } from '@/libs/hooks';
+import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
 
 type Props = {
   attendees: {
@@ -22,28 +23,29 @@ type Props = {
     huber: IAttendee;
   };
   startTime: string;
-  endTime: string;
   duration: string;
   timeZone: string;
   dateTime: string;
+  note: string;
   nextStep: () => void;
   backStep: () => void;
 };
 export const PlaceRequestScreen = ({
   attendees,
   startTime,
-  endTime,
   timeZone,
   duration,
   dateTime,
+  note,
   nextStep,
   backStep,
 }: Props) => {
   const { liber, huber } = attendees;
   const { icon: liberIcon, role: roleLiber, fullName: liberName } = liber;
   const { icon: huberIcon, role: roleHuber, fullName: huberName } = huber;
+  const user = useAppSelector((state) => state.auth.userInfo);
 
-  const [placeRequest] = useAddTimeSlotsMutation();
+  const [placeRequest] = useCreateNewReadingSessionMutation();
 
   const renderRoleTag = (role: string) => {
     switch (role.trim().toLowerCase()) {
@@ -96,11 +98,59 @@ export const PlaceRequestScreen = ({
     return `${formattedHour}:${minutes}`;
   }
 
+  function add30Minutes(time: string): string {
+    const [timeStr, period] = time.split(' ');
+    const [hours, minutes] = timeStr?.split(':') || ['00', '00'];
+
+    let hour = parseInt(hours || '00', 10);
+    let minute = parseInt(minutes || '00', 10);
+
+    // Convert to 24-hour format
+    if (period === 'PM' && hour !== 12) {
+      hour += 12;
+    } else if (period === 'AM' && hour === 12) {
+      hour = 0;
+    }
+
+    // Add 30 minutes
+    minute += 30;
+    if (minute >= 60) {
+      hour += 1;
+      minute -= 60;
+    }
+    if (hour >= 24) {
+      hour -= 24;
+    }
+
+    // Format with leading zeros
+    const formattedHour = hour.toString().padStart(2, '0');
+    const formattedMinute = minute.toString().padStart(2, '0');
+
+    return `${formattedHour}:${formattedMinute}`;
+  }
+
+  const convertToAmPm = (time24hr: string): string => {
+    const [hour24, minute] = time24hr.split(':').map(Number);
+    const safeHour24 = hour24 ?? 0;
+    const period = safeHour24 >= 12 ? 'PM' : 'AM';
+    const hour12 = safeHour24 % 12 === 0 ? 12 : safeHour24 % 12;
+
+    return `${hour12}:${minute?.toString().padStart(2, '0')} ${period}`;
+  };
+
+  const endTime = add30Minutes(startTime);
   const onPlaceRequest = async () => {
+    const today = new Date().toISOString();
     try {
       const result = await placeRequest({
-        dayOfWeek: dateTime,
+        humanBookId: 0,
+        readerId: user?.id ?? 0,
+        storyId: 0,
         startTime: convertTo24HourFormat(startTime),
+        endTime,
+        startedAt: today,
+        endedAt: today,
+        note,
       });
       if (result) {
         nextStep();
@@ -145,7 +195,7 @@ export const PlaceRequestScreen = ({
             <div className="flex w-full justify-end">
               <ArrowRight size={16} />
             </div>
-            <span className="w-full text-right">{endTime}</span>
+            <span className="w-full text-right">{convertToAmPm(endTime)}</span>
           </div>
           <div className="grid grid-cols-2 items-center justify-between gap-x-2 text-base font-normal text-primary-50">
             <span>{dateTime}</span>
@@ -175,10 +225,7 @@ export const PlaceRequestScreen = ({
             <Note size={16} />
             Message
           </div>
-          <span className="text-base font-normal text-neutral-20">
-            Embark on a journey through the vivid tapestry of my life story,
-            where each chapter unfolds with a unique blend of triumphs
-          </span>
+          <span className="text-base font-normal text-neutral-20">{note}</span>
         </div>
         <div className="grid grid-cols-2 items-center  justify-items-center gap-x-4">
           <Button variant="outline" className="w-full" onClick={backStep}>

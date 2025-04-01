@@ -19,7 +19,7 @@ const Page = () => {
       <div
         className={mergeClassnames(
           'flex flex-col gap-8 pt-[3rem] w-screen relative px-2',
-          'md:px-28',
+          'xl:px-28',
         )}
       >
         <ExporeStory topicIds={topicIds} />

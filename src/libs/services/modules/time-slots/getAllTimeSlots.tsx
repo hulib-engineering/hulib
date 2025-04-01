@@ -1,18 +1,20 @@
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinitions';
 
+import type { PaginatedResponse } from '../../type';
+
 export type TimeSlot = {
-  id: string;
-  dayOfWeek: string;
+  id: number;
+  dayOfWeek: number;
   startTime: string;
   createdAt: string;
   updatedAt: string;
 };
 
-const getTimeSlots = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
-  build.query<TimeSlot[], void>({
+const getAllTimeSlots = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
+  build.query<PaginatedResponse<TimeSlot[]>, void>({
     query: () => `time-slots`,
     providesTags: [{ type: 'TimeSlot' }],
   });
 
-export default getTimeSlots;
+export default getAllTimeSlots;
