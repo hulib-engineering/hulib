@@ -8,7 +8,6 @@ import React, { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/libs/hooks';
 
-// import { useGetReadingSessions } from '@/libs/services/modules/schedule-meeting';
 // import StoriesSkeleton from '../../../stories/StoriesSkeleton';
 import DetailEventHuber from '../DetailEventHuber';
 import DetailEventLiber from '../DetailEventLiber';
