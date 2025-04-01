@@ -104,6 +104,7 @@
     "@types/nodemailer": "^6.4.14",
     "@types/react": "^18.2.45",
     "@types/react-slick": "^0.23.13",
+    "@types/wavesurfer.js": "^6.0.12",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.16.0",
     "autoprefixer": "^10.4.16",
