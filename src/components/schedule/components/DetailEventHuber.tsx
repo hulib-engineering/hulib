@@ -67,7 +67,7 @@ function DetailEventHuber({ data, callblack }: any) {
         </p>
       </div>
       <div className="mt-[16px] flex items-center">
-        <User size={16} color="#000" />
+        <User size={16} color="#000" className="-mt-[4px]"/>
         <p className="ml-[8px] text-[14px] font-[500] leading-[16px] text-[#171819]">
           2 Attendees
         </p>
