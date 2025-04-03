@@ -1,3 +1,15 @@
+# [1.12.0](https://github.com/hulib-engineering/hulib/compare/v1.11.1...v1.12.0) (2025-04-03)
+
+
+### Bug Fixes
+
+* eslint ([50876a8](https://github.com/hulib-engineering/hulib/commit/50876a85207907c6840b0ea604af48609d191a25))
+
+
+### Features
+
+* add api patch ([226aec7](https://github.com/hulib-engineering/hulib/commit/226aec709ac0558df71d669fa0f29e8e411c7618))
+
 ## [1.11.1](https://github.com/hulib-engineering/hulib/compare/v1.11.0...v1.11.1) (2025-04-01)
 
 
