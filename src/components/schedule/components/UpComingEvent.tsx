@@ -14,7 +14,7 @@ function formatTimeRange(time1: string, time2: string) {
     console.log("isoString", isoString);
       if (!isoString) return "Invalid"; // Kiểm tra giá trị null hoặc undefined
       const date = new Date(isoString);
-      if (isNaN(date.getTime())) return "Invalid"; // Kiểm tra nếu ngày không hợp lệ
+      if (Number.isNaN(date.getTime())) return "Invalid"; // Thay isNaN bằng Number.isNaN
       return date.toISOString().substring(11, 16);
   };
 
@@ -37,7 +37,7 @@ const getData = async () => {
     getData();
   }, []);
   return (
-    <>
+    <div>
       {data && (<div className="flex flex-col justify-start rounded-[12px] bg-[#fff] px-[16px] pb-[6px] pt-[16px] drop-shadow-md">
       {/* <div className="font-500 text-[20px]">Upcoming event</div>  */}
       <div className="my-[10px] flex flex-row">
@@ -79,7 +79,7 @@ const getData = async () => {
         </div>
       </div>
     </div>)}
-    </>
+    </div>
   );
 }
 
