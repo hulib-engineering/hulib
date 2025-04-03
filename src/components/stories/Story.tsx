@@ -21,7 +21,7 @@ const Story = (props: Props) => {
   const t = useTranslations('ExporeStory');
   const router = useRouter();
   const [addStoryToFavorites] = useAddStoryToFavoritesMutation();
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(true);
   const handleAddToFavorites = async (storyId: number) => {
     try {
       // Call the mutation to add the story to favorites
@@ -46,6 +46,7 @@ const Story = (props: Props) => {
         'relative flex w-full flex-row bg-pink-100 p-4 rounded-xl shadow-sm',
         'h-[300px] md:h-[300px]',
       )}
+      onMouseLeave={handleMouseLeave}
     >
       <div
         className={mergeClassnames(
@@ -63,11 +64,11 @@ const Story = (props: Props) => {
           <div className={mergeClassnames('flex flex-col gap-2')}>
             <h2
               className={mergeClassnames(
-                'text-base font-medium leading-6 text-primary-10 line-clamp-3',
+                'text-base font-medium leading-6 text-primary-10 line-clamp-3 capitalize',
                 'md:text-[18px] md:leading-7 md:h-[100px]',
               )}
             >
-              {data?.title}
+              {data?.title.toLowerCase()}
             </h2>
             <div
               className={mergeClassnames('flex flex-row items-center gap-2')}
@@ -172,7 +173,6 @@ const Story = (props: Props) => {
 
         <div
           onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
           className={mergeClassnames(
             'h-full w-1/2 rounded-2xl relative',
             'md:h-full',
@@ -192,7 +192,7 @@ const Story = (props: Props) => {
 
       <div
         className={mergeClassnames(
-          'absolute inset-0 hidden md:block transition-transform duration-500 transform-gpu',
+          'absolute inset-0 hidden md:block transition-transform duration-500 transform-gpu ',
           'md:[transform-style:preserve-3d] md:[backface-visibility:hidden]',
           isHovered ? 'md:rotate-y-0' : 'md:rotate-y-180',
         )}
