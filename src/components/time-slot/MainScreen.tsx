@@ -79,7 +79,6 @@ export const MainScreen = (props: Props) => {
   const [selectDate, setSelectDate] = React.useState<Date>(selectedDay);
   const [selectTime, setSelectTime] = React.useState<string>(selectedTime);
   const [message, setMessage] = React.useState<string>(note);
-
   const filterTimeSlots: TimeSlot[] = React.useMemo(() => {
     return (
       timeSlots?.filter(
@@ -187,7 +186,7 @@ export const MainScreen = (props: Props) => {
             type="button"
             className={mergeClassnames(
               'rounded-full px-3 py-1 text-sm font-medium border hover:opacity-70',
-              selectTime?.includes(item)
+              selectTime === item
                 ? 'bg-primary-50 border-primary-50 text-white'
                 : 'bg-white border-neutral-90 text-neutral-10',
             )}
