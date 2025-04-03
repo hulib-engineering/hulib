@@ -67,7 +67,7 @@ function DetailEventLiber({ data }: any) {
           <p className="text-[14px] font-[500] leading-[16px] text-[#EE0038]">
             [Flaky]
           </p>
-          <p className="text-[Hari Won] ml-[8px] text-[14px] font-[500] leading-[16px] text-[#171819]">
+          <p className="ml-[8px] text-[14px] font-[500] leading-[16px] text-[#171819]">
             {fullNameHumanBook} (You)
           </p>
         </div>
