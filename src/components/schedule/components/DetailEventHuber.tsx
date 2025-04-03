@@ -5,9 +5,10 @@ import Image from 'next/image';
 
 function DetailEventHuber({ data }: any) {
   console.log('Data', data);
-  const { startedAt, endedAt, reader, humanBook } = data;
+  const { startedAt, endedAt, reader, humanBook,id, story } = data;
   const { fullName: fullNameReader } = reader;
   const { fullName: fullNameHumanBook } = humanBook;
+  const {abstract} = story;
   function formatDateTimeRange(startIso: string, endIso: string) {
     const startDate = new Date(startIso);
     const endDate = new Date(endIso);
@@ -28,6 +29,21 @@ function DetailEventHuber({ data }: any) {
     const endMinutes = String(endDate.getUTCMinutes()).padStart(2, '0');
 
     return `${dayOfWeek}, ${day}/${month}/${year} | ${startHours}:${startMinutes} - ${endHours}:${endMinutes}`;
+  }
+
+  const changeStatus = async () => {
+    fetch(`https://hulib-services.onrender.com/api/v1/reading-sessions/${id}`, {
+      method: 'PATCH',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        sessionStatus: 'Approved',
+      })
+  })
+  .then(response => response.json())
+  .then(data => console.log('Success:', data))
+  .catch(error => console.error('Error:', error));
   }
   return (
     <div className=" min-h-[360px] w-[396px] overflow-hidden rounded-[16px] bg-[#F0F5FF] px-[20px] py-[16px] shadow-[#1C1E211A] drop-shadow-sm">
@@ -90,9 +106,8 @@ function DetailEventHuber({ data }: any) {
       </div>
       <div className="mt-[16px] flex items-start">
         <Note size={40} color="#000" />
-        <p className="ml-[8px] text-[14px] font-[400] leading-[20px] text-[#2E3032]">
-          Embark on a journey through the vivid tapestry of my life story, where
-          each chapter unfolds with a unique blend of triumphs
+        <p className="ml-[8px] text-[14px] font-[400] leading-[20px] text-[#2E3032] line-clamp-2">
+          {abstract}
         </p>
       </div>
       <div className="mt-[16px] flex items-center">
@@ -104,9 +119,10 @@ function DetailEventHuber({ data }: any) {
         </button>
         <button
           type="button"
+          onClick={() => changeStatus()}
           className="ml-auto h-[44px] min-w-[205px] rounded-full bg-[#0442BF] text-[16px] font-[500] leading-[20px] text-[#fff]"
         >
-          Aprove
+          Approve
         </button>
       </div>
     </div>

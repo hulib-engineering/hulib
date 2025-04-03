@@ -405,5 +405,6 @@ module.exports = {
     require('tailwindcss-3d')({ legacy: true }),
     // eslint-disable-next-line global-require,import/no-extraneous-dependencies
     require('tailwindcss-animation-delay'),
+    require('@tailwindcss/line-clamp'),
   ],
 };
