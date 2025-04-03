@@ -362,7 +362,7 @@ function TimeSlot() {
                   key={index}
                   className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
                 >
-                  {time.startTime}:00
+                  {time.startTime}
                 </div>
               ),
             )}
@@ -385,7 +385,7 @@ function TimeSlot() {
                   key={index}
                   className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
                 >
-                  {time.startTime}:00
+                  {time.startTime}
                 </div>
               ),
             )}
@@ -407,7 +407,7 @@ function TimeSlot() {
                   key={index}
                   className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
                 >
-                  {time?.startTime}:00
+                  {time?.startTime}
                 </div>
               ),
             )}
