@@ -43,7 +43,9 @@ function DetailEventHuber({ data,callblack }: any) {
 
   })
   .then(response => response.json())
-  .then(data => callblack = true)
+  .then(data => {
+    console.log("data",data)
+    callblack(true)})
   .catch(error => console.error('Error:', error));
   }
   return (
@@ -52,9 +54,9 @@ function DetailEventHuber({ data,callblack }: any) {
         <h3 className="flex-1 text-[20px] leading-[32px] text-[#171819]">
           Session with Liber
         </h3>
-        {data.sessionStatus == "pending" ? (
+        {data.sessionStatus === "pending" ? (
          <p className="mx-[8px] h-[32px] w-[107px] rounded-[100px] bg-[#FFC745] px-[10px] py-[2px] text-center align-middle text-[#000000]">
-         {data.sessionStatus == "pending" ? "Pending..." : ""}
+         {data.sessionStatus === "pending" ? "Pending..." : ""}
         </p>)
          : null}     
         <CaretUp size={24} color="#000" className="-mt-[4px]" />
@@ -113,7 +115,7 @@ function DetailEventHuber({ data,callblack }: any) {
           {abstract}
         </p>
       </div>
-      {data.sessionStatus == "pending" && (<div className="mt-[16px] flex items-center">
+      {data.sessionStatus === "pending" && (<div className="mt-[16px] flex items-center">
         <button
           type="button"
           onClick={() => changeStatus("canceled")}
