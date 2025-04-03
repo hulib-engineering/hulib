@@ -28,7 +28,7 @@ function UpComingEvent() {
       </div>
       <div className="flex items-center">
         <div className="mr-[4px]">
-          <CalendarDot size={13} color="#292D37" />
+          <CalendarDot size={13} color="#292D37" className="-mt-[4px]"/>
         </div>
         <div className="text-[14px] font-[400] leading-[16px]">
           Today <span>13:00 -&gt; 13:30</span>
@@ -36,7 +36,7 @@ function UpComingEvent() {
       </div>
       <div className="flex items-center">
         <div className="mr-[4px]">
-          <MapPinArea size={13} color="#292D37" />
+          <MapPinArea size={13} color="#292D37"  className="-mt-[4px]"/>
         </div>
         <div className="text-[#4682FB]">
           <Link
