@@ -35,9 +35,6 @@ const dayHeaderContent = (arg: any) => {
   );
 };
 
-
-
-
 export default function BigCalendar() {
   const [list, setList] = useState([]);
   const userInfor = useAppSelector((state) => state.auth.userInfo);
@@ -45,6 +42,25 @@ export default function BigCalendar() {
     month: 'long',
     year: 'numeric',
   });
+
+  const formatData = (data: any) => {
+    return data?.map((item: any) => {
+      return {
+        title: `${item.humanBook?.fullName || 'Unknown'} - ${
+          item.reader?.fullName || 'Unknown'
+        }`,
+        start: item.startedAt,
+        end: item.endedAt,
+        extendedProps: {
+          ...item,
+        },
+        backgroundColor: item.backgroundColor || '#3b82f6',
+        borderColor: item.borderColor || '#1e40af',
+        textColor: item.textColor || '#ffffff',
+      };
+    });
+  };
+
   //   function convertToYYYYMMDD(isoString: string) {
   //     const date = new Date(isoString);
   //     if (isNaN(date.getTime())) {
@@ -73,13 +89,13 @@ export default function BigCalendar() {
     }
   };
   const getAllData = (data: boolean) => {
-    if(data) {
+    if (data) {
       getData();
     }
-  }
+  };
   function renderEventContent(eventInfo: any, user: any) {
     console.log('extendedProps:', eventInfo.event.extendedProps);
-    
+
     return (
       <div className="group relative z-[50] cursor-pointer overflow-visible">
         <div className="relative min-w-[60px] overflow-visible">
@@ -90,9 +106,8 @@ export default function BigCalendar() {
                 Pending...
               </p> */}
                 <p
-                  className={`absolute -left-[20px] -top-[20px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] border-l-[#fff] text-[#000] ${
-                    eventInfo.event.extendedProps.sessionStatus ===
-                    'approved'
+                  className={`absolute -left-[20px] -top-[20px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] border-l-[#fff] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000] ${
+                    eventInfo.event.extendedProps.sessionStatus === 'approved'
                       ? 'hidden'
                       : 'block'
                   }`}
@@ -122,7 +137,10 @@ export default function BigCalendar() {
                 <p className="text-[#0442BF]">Huber</p>
               </div>
               <div className="absolute -left-[396px] top-[5px] z-50 hidden group-hover:block">
-                <DetailEventHuber data={eventInfo.event.extendedProps} callblack={(data: boolean) => getAllData(data)}/>
+                <DetailEventHuber
+                  data={eventInfo.event.extendedProps}
+                  callblack={(data: boolean) => getAllData(data)}
+                />
               </div>
             </>
           ) : (
@@ -132,14 +150,13 @@ export default function BigCalendar() {
               Pending...
             </p> */}
                 <p
-                  className={`absolute -left-[20px] -top-[20px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] border-l-[#fff] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000] ${
-                    eventInfo.event.extendedProps.sessionStatus ===
-                    'approved'
+                  className={`absolute -left-[20px] -top-[20px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] border-l-[#fff] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000] ${
+                    eventInfo.event.extendedProps.sessionStatus === 'approved'
                       ? 'hidden'
                       : 'block'
                   }`}
                 >
-                  {eventInfo.event.extendedProps.sessionStatus === "approved"
+                  {eventInfo.event.extendedProps.sessionStatus === 'approved'
                     ? ''
                     : 'Pending...'}
                 </p>
@@ -171,25 +188,7 @@ export default function BigCalendar() {
       </div>
     );
   }
-  const formatData = (data: any) => {
-    return data?.map((item: any) => {
-      return {
-        title: `${item.humanBook?.fullName || 'Unknown'} - ${
-          item.reader?.fullName || 'Unknown'
-        }`,
-        start: item.startedAt,
-        end: item.endedAt,
-        extendedProps: {
-          ...item,
-        },
-        backgroundColor: item.backgroundColor || '#3b82f6',
-        borderColor: item.borderColor || '#1e40af',
-        textColor: item.textColor || '#ffffff',
-      };
-    });
-  };
 
-  
   useEffect(() => {
     getData();
   }, []);
