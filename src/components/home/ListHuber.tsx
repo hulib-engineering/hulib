@@ -4,7 +4,7 @@
 
 import { CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
-import router from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -40,6 +40,7 @@ const hubers = [...baseHubers, ...baseHubers, ...baseHubers];
 
 const ListHubers = () => {
   const t = useTranslations('Home');
+  const router = useRouter();
   const scrollContainerRef = React.useRef<any>(null);
 
   const smoothScroll = (
@@ -157,7 +158,7 @@ const ListHubers = () => {
       <div className="mt-5 w-full">
         <Button
           variant="secondary"
-          onClick={() => router.push('explore-book')}
+          onClick={() => router.push('/explore-huber')}
           className="w-full"
           shouldHover={false}
         >
