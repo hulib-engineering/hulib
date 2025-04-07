@@ -4,9 +4,10 @@ import { Check } from '@phosphor-icons/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+import Step1 from '@/components/huber-registration/Step1';
+import Step2 from '@/components/huber-registration/Step2';
+import Step3 from '@/components/huber-registration/Step3';
 import CommonLayout from '@/layouts/CommonLayout';
-import Step1 from '@/layouts/huber-registration/Step1';
-import Step3 from '@/layouts/huber-registration/Step3';
 
 const steps = [
   { no: '01', value: 'Info', num: 1 },
@@ -42,6 +43,10 @@ const Page = () => {
           next={() => setCurrentStep((prev) => prev + 1)}
         />
       );
+    }
+
+    if (currentStep === 2) {
+      return <Step2 />;
     }
 
     return undefined;

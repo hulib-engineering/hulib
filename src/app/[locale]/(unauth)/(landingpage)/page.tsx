@@ -1,13 +1,40 @@
+import dynamic from 'next/dynamic';
 import { getTranslations } from 'next-intl/server';
 
-import About from '@/layouts/About';
-import FAQs from '@/layouts/FAQs';
-import Features from '@/layouts/Features';
+// Import các component cần thiết ngay lập tức
 import Hero from '@/layouts/hero/index';
 import HumanBookBanner from '@/layouts/HumanBookBanner';
-import Newsletter from '@/layouts/Newsletter';
-import Sponsors from '@/layouts/Sponsors';
-import Testimonial from '@/layouts/Testimonial';
+
+// Dynamic imports cho các component không cần thiết ngay lập tức
+const Features = dynamic(() => import('@/layouts/Features'), {
+  loading: () => <div>Loading...</div>,
+  ssr: false,
+});
+
+const About = dynamic(() => import('@/layouts/About'), {
+  loading: () => <div>Loading...</div>,
+  ssr: false,
+});
+
+const Testimonial = dynamic(() => import('@/layouts/Testimonial'), {
+  loading: () => <div>Loading...</div>,
+  ssr: false,
+});
+
+const Sponsors = dynamic(() => import('@/layouts/Sponsors'), {
+  loading: () => <div>Loading...</div>,
+  ssr: false,
+});
+
+const FAQs = dynamic(() => import('@/layouts/FAQs'), {
+  loading: () => <div>Loading...</div>,
+  ssr: false,
+});
+
+const Newsletter = dynamic(() => import('@/layouts/Newsletter'), {
+  loading: () => <div>Loading...</div>,
+  ssr: false,
+});
 
 export async function generateMetadata({
   params: { locale },

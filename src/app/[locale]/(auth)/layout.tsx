@@ -7,11 +7,5 @@ export default function Layout({
 }: {
   children: ReactNode;
 }) {
-  return (
-    <MainTemplate>
-      <div className="w-screen pb-8 pt-16 text-xl sm:pt-20 [&_ul]:my-6">
-        {children}
-      </div>
-    </MainTemplate>
-  );
+  return <MainTemplate>{children}</MainTemplate>;
 }
