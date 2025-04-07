@@ -3,5 +3,9 @@ import * as React from 'react';
 import ModifyTimeSlot from '@/components/schedule/WeeklySchedule';
 
 export default function Index() {
-  return <ModifyTimeSlot />;
+  return (
+    <div className="p-8">
+      <ModifyTimeSlot />;
+    </div>
+  );
 }
