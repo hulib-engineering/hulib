@@ -17,7 +17,7 @@ type ExporeStoryProps = {
   topicIds: string | null;
 };
 
-const ExporeStory = ({ topicIds }: ExporeStoryProps) => {
+const ExploreStory = ({ topicIds }: ExporeStoryProps) => {
   const t = useTranslations('ExporeStory');
 
   const [isExpandList, setIsExpandList] = React.useState(false);
@@ -47,12 +47,7 @@ const ExporeStory = ({ topicIds }: ExporeStoryProps) => {
   if (isLoading || isFetching) return <StoriesSkeleton />;
 
   return (
-    <div
-      className={mergeClassnames(
-        'h-full w-full rounded-lg px-2 py-5',
-        'md:px-5 md:py-5',
-      )}
-    >
+    <div className="mx-auto h-full w-full max-w-[1216px] rounded-lg">
       <div>
         <h3 className="text-[2.5rem] font-bold leading-[3rem] text-neutral-20">
           {t('title')}
@@ -95,4 +90,4 @@ const ExporeStory = ({ topicIds }: ExporeStoryProps) => {
   );
 };
 
-export default ExporeStory;
+export default ExploreStory;
