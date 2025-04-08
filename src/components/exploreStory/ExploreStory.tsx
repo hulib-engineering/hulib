@@ -8,9 +8,10 @@ import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
 import ListTopics from '@/components/stories/ListTopics';
 import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
-import Story from '@/components/stories/Story';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
+
+import { FlipBook } from '../flipBook/FlipBook';
 
 type ExporeStoryProps = {
   topicIds: string | null;
@@ -67,7 +68,8 @@ const ExporeStory = ({ topicIds }: ExporeStoryProps) => {
         )}
       >
         {storiesPages?.data?.map((story: StoryType) => (
-          <Story key={story?.id} data={story} />
+          // <Story key={story?.id} data={story} />
+          <FlipBook key={story?.id} data={story} />
         ))}
       </div>
 

@@ -1,9 +1,8 @@
-import './FlipBook.css';
-
-import { Bookmarks, BookOpen, Heart } from '@phosphor-icons/react';
+import { Bookmarks } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Button from '@/components/button/Button';
 import { pushError } from '@/components/CustomToastifyContainer';
@@ -17,15 +16,13 @@ export type BookCommonProps = {
 export const FlipBook = ({ data }: BookCommonProps) => {
   const {
     title,
-    cover,
-    topics,
-    storyReview,
-    humanBook,
     abstract = 'Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar tempor dui massa ut. Egestas nunc mi tristique ornare commodo vitae dignissim commodo. Pellentesque nulla nam ante turpis velit amet cras ac aliquam. Ut amet nulla lobortis amet. Varius aliquam commodo mauris.Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar tempor dui massa ut. Egestas nunc mi tristique ornare commodo vitae dignissim commodo. Pellentesque nulla nam ante turpis velit amet cras ac aliquam. Ut amet nulla lobortis amet. Varius aliquam commodo mauris.Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar',
   } = data;
   const [isFlipped, setIsFlipped] = useState(false);
+  const [maxCharsPageLeft, setmaxCharsPageLeft] = useState(200);
+  const pageLeftRef = useRef<HTMLParagraphElement>(null);
   const router = useRouter();
-
+  const t = useTranslations('ExporeStory');
   const [addStoryToFavorites] = useAddStoryToFavoritesMutation();
 
   const handleAddToFavorites = async (storyId: number) => {
@@ -52,106 +49,253 @@ export const FlipBook = ({ data }: BookCommonProps) => {
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
   };
+  useEffect(() => {
+    const calculateMaxChars = () => {
+      const pElement = pageLeftRef.current;
+      if (!pElement) return;
+
+      const tempElement = document.createElement('p');
+      tempElement.style.width = `${pElement.offsetWidth}px`;
+      tempElement.style.fontSize = window.getComputedStyle(pElement).fontSize;
+      tempElement.style.lineHeight =
+        window.getComputedStyle(pElement).lineHeight;
+      tempElement.style.padding = window.getComputedStyle(pElement).padding;
+      tempElement.style.visibility = 'hidden';
+      tempElement.style.position = 'absolute';
+      document.body.appendChild(tempElement);
+
+      let charCount = 0;
+      for (let i = 0; i < abstract.length; i += 1) {
+        tempElement.textContent = abstract.substring(0, i + 1);
+        if (tempElement.scrollHeight > pElement.clientHeight) {
+          charCount = i;
+          break;
+        }
+      }
+
+      document.body.removeChild(tempElement);
+      if (charCount > 0) {
+        const lastSpaceChar = abstract.lastIndexOf(' ', charCount);
+        setmaxCharsPageLeft(lastSpaceChar);
+      }
+    };
+
+    calculateMaxChars();
+    window.addEventListener('resize', calculateMaxChars);
+    return () => window.removeEventListener('resize', calculateMaxChars);
+  }, [abstract]);
 
   return (
-    <div className="flip-card-container">
-      <div className={`flip-card ${isFlipped ? 'flipped' : ''}`}>
-        <div className="flip-card-front">
-          <div className="grid h-full w-full grid-cols-2 gap-x-4 rounded-2xl bg-[#FFFFFF] p-4 shadow-[3px_4px_5px_3px_#1C1E211A]">
-            <div className="relative flex h-full w-full flex-col gap-y-2 py-2">
-              <h6 className="book-title">{title}</h6>
-              <div className="flex items-center gap-x-2">
-                {topics?.map((topic) => (
-                  <p
-                    key={topic.id}
-                    className="rounded-lg bg-[#C9ECFF] px-2 py-1 text-xs text-neutral-20"
-                  >
-                    {topic?.name}
-                  </p>
-                ))}
-              </div>
-              <div className="flex items-center gap-x-2">
+    <div
+      className={mergeClassnames(
+        'relative flex w-full flex-row bg-pink-100 p-4 rounded-xl shadow-sm',
+        'h-[300px] md:h-[300px]',
+      )}
+      onMouseLeave={!isMobile ? handleFlip : undefined}
+    >
+      {/* Front-Card */}
+      <div
+        className={mergeClassnames(
+          'absolute inset-0 flex flex-row bg-white p-3 rounded-2xl transition-transform duration-500 transform-gpu',
+          'md:[transform-style:preserve-3d] md:[backface-visibility:hidden]',
+          isFlipped ? 'md:rotate-y-180' : 'md:rotate-y-0',
+        )}
+      >
+        <div
+          className={mergeClassnames(
+            'flex w-1/2 flex-col pt-3 relative',
+            'md:h-full',
+          )}
+        >
+          <div className={mergeClassnames('flex flex-col gap-2')}>
+            <h2
+              className={mergeClassnames(
+                'text-base font-medium leading-6 text-primary-10 line-clamp-3 capitalize',
+                'md:text-[18px] md:leading-7 md:h-[100px]',
+              )}
+            >
+              {data?.title.toLowerCase()}
+            </h2>
+            <div
+              className={mergeClassnames('flex flex-row items-center gap-2')}
+            >
+              <div className="flex flex-row items-center gap-1">
                 <Image
-                  src={humanBook?.photo?.path ?? '/assets/images/Avatar.png'}
-                  alt="avatar author"
-                  width={18}
-                  height={18}
+                  alt="author-avatar"
+                  src="/assets/images/Avatar.png"
+                  width={24}
+                  height={24}
+                  className="size-6 rounded-full"
                 />
-                <p className="text-xs font-medium text-[#73787C]">
-                  {humanBook?.fullName ?? 'Developer'}
-                </p>
-              </div>
-              <div className="flex items-center gap-x-2">
-                <Heart size={16} color="#F3C00C" weight="fill" />
-                <p className="text-sm font-medium text-neutral-20">
-                  {storyReview?.rating ?? 0}
-                </p>
-                <p className="text-xs text-neutral-40 ">
-                  {storyReview?.numberOfReviews ?? 0} rating
-                </p>
-              </div>
-              <div className={mergeClassnames('flex items-center gap-2 mt-4')}>
-                <Button
-                  variant="primary"
-                  iconLeft={<BookOpen size={20} weight="bold" />}
-                  className={mergeClassnames('text-sm font-medium py-3 px-6')}
-                  onClick={() => router.push(`/explore-story/${data?.id}`)}
-                >
-                  Read all
-                </Button>
-                <Button
-                  variant="outline"
-                  className={mergeClassnames('p-3')}
-                  iconOnly
-                  onClick={() => handleAddToFavorites(data?.id)}
-                >
-                  <Bookmarks size={20} color="#0442BF" weight="bold" />
-                </Button>
+                <div className="flex flex-col items-start justify-center">
+                  <span
+                    className={mergeClassnames(
+                      'text-xs font-medium leading-4 text-[#73787C] line-clamp-1',
+                      'md:text-sm',
+                    )}
+                  >
+                    {data?.humanBook?.fullName}
+                  </span>
+                </div>
               </div>
             </div>
-            <div className="relative flex h-full w-full items-center justify-center">
-              <button
-                type="button"
-                onClick={isMobile ? handleFlip : undefined}
-                onMouseEnter={!isMobile ? handleFlip : undefined}
+
+            <div className="mt-2 flex flex-row items-center gap-1">
+              <Image
+                src="/assets/images/icons/heart-yellow.svg"
+                width={16}
+                height={16}
+                className="size-4"
+                alt="heart-icon"
+              />
+              <p
+                className={mergeClassnames(
+                  'text-xs font-medium leading-4 text-neutral-20',
+                  'md:text-sm',
+                )}
               >
-                <Image
-                  src={cover?.path ?? '/assets/images/image-test.png'}
-                  alt="book cover"
-                  priority
-                  quality={100}
-                  width={180}
-                  height={255}
-                />
-              </button>
+                {data?.storyReview?.rating || 0}
+              </p>
+              <p
+                className={mergeClassnames(
+                  'text-[0.625rem] font-normal text-neutral-40',
+                  'md:text-xs',
+                )}
+              >
+                {`(${data?.storyReview?.numberOfReviews || 0} ${t('ratings')})`}
+              </p>
+            </div>
+
+            <div className={mergeClassnames('mt-3 gap-2 block md:hidden')}>
+              <h3
+                className={mergeClassnames(
+                  'text-sm font-medium leading-5 mb text-primary-10',
+                  'md:text-base',
+                )}
+              >
+                {t('abstract')}
+              </h3>
+              <p
+                className={mergeClassnames(
+                  'mt-1 line-clamp-3 text-sm font-normal mb-3 leading-6 text-[#45484A]',
+                  'md:text-base md:line-clamp-5',
+                )}
+                style={{ letterSpacing: '0.005rem' }}
+              >
+                {data?.abstract}
+              </p>
+            </div>
+
+            <div
+              className={mergeClassnames(
+                'flex w-full items-center gap-2 justify-self-end mt-3 absolute bottom-[10px]',
+                'md:flex-row md:mt-2 md:px-3 md:pl-0',
+              )}
+            >
+              <Button
+                variant="primary"
+                className={mergeClassnames(
+                  'text-base h-8 max-h-8 w-[120px] flex-none rounded-full px-[12px] py-[12px]',
+                  'md:h-[44px] md:max-h-[44px] md:w-[105px]',
+                )}
+                onClick={() => router.push(`/explore-story/${data?.id}`)}
+              >
+                {t('read_story')}
+              </Button>
+              <Button
+                variant="outline"
+                className={mergeClassnames(
+                  'w-full h-8',
+                  'md:size-10 md:min-h-10 md:min-w-10',
+                )}
+                iconOnly
+                onClick={() => handleAddToFavorites(data?.id)}
+              >
+                <Bookmarks size={20} />
+              </Button>
             </div>
           </div>
         </div>
-        <div className="flip-card-back">
-          <div
-            className="grid h-full w-full grid-cols-2 rounded-2xl bg-[#FFFFFF] p-4 shadow-[3px_4px_5px_3px_#1C1E211A]"
-            onMouseLeave={!isMobile ? handleFlip : undefined}
-          >
-            <button type="button" onClick={isMobile ? handleFlip : undefined}>
-              <div className="page-left">
-                <h6 className="book-title">{title}</h6>
-                <p className="h-[220px] w-full text-left text-sm text-neutral-30">
-                  {abstract?.substring(0, 200) ?? ''}
+        <div
+          className={mergeClassnames(
+            'h-full w-1/2 rounded-2xl relative',
+            'md:h-full',
+          )}
+        >
+          <div className="absolute inset-0">
+            <Image
+              src="/assets/images/cover-test.png"
+              alt="book-image"
+              width={175}
+              height={180}
+              className="h-full w-full rounded-2xl"
+              onMouseEnter={!isMobile ? handleFlip : undefined}
+            />
+          </div>
+        </div>
+      </div>
+      {/* Back-Card */}
+      <div
+        className={mergeClassnames(
+          'absolute inset-0 hidden md:block transition-transform duration-500 transform-gpu ',
+          'md:[transform-style:preserve-3d] md:[backface-visibility:hidden]',
+          isFlipped ? 'md:rotate-y-0' : 'md:rotate-y-180',
+        )}
+      >
+        <div className="flip-card-back h-full rounded-2xl">
+          <div className="grid h-full w-full grid-cols-2 rounded-2xl bg-[#FFFFFF] p-4 shadow-[3px_4px_5px_3px_#1C1E211A]">
+            <div className="page-left relative h-full rounded-md  bg-[#f5f5f5] before:absolute before:inset-y-0 before:right-0 before:h-full before:w-[36px] before:rounded-lg before:bg-gradient-to-r before:from-transparent before:to-[#C7C9CB] before:content-['']">
+              <div>
+                <h6
+                  className={mergeClassnames(
+                    'book-title h-[56px] text-left text-base font-medium leading-6 text-gray-800',
+                    'md:text-[18px] md:leading-7',
+                  )}
+                  style={{
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 2,
+                    overflow: 'hidden',
+                    textTransform: 'capitalize',
+                  }}
+                >
+                  {title.toLowerCase()}
+                </h6>
+                <p
+                  ref={pageLeftRef}
+                  className="w-full overflow-hidden text-left text-sm text-neutral-600"
+                  style={{
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 10,
+                  }}
+                >
+                  {abstract.substring(0, maxCharsPageLeft) || ''}
                 </p>
               </div>
-            </button>
-            <div className="page-right">
-              <p className="mt-1 h-full w-full pl-2 pr-1 text-left text-sm text-neutral-30">
-                {abstract?.substring(200, 380) ?? ''}
+            </div>
+
+            <div className="page-right relative flex h-full flex-col justify-between rounded-l-[8px] bg-[#f5f5f5] before:absolute before:inset-y-0 before:right-0 before:h-full before:w-[36px] before:rounded-md before:bg-gradient-to-r before:from-transparent before:to-[#C7C9CB] before:opacity-30 before:content-['']">
+              <p
+                className="mt-1 w-full  overflow-hidden  pl-2 pr-1 text-left text-sm font-normal text-neutral-600"
+                style={{
+                  display: '-webkit-box',
+                  WebkitBoxOrient: 'vertical',
+                  WebkitLineClamp: 10,
+                }}
+              >
+                {abstract.substring(maxCharsPageLeft) || ''}
               </p>
               <div className="mb-2 flex justify-center">
                 <Button
                   variant="primary"
-                  iconLeft={<BookOpen size={20} weight="bold" />}
-                  className="w-fit px-4 py-2 text-sm font-medium"
+                  className={mergeClassnames(
+                    'text-sm h-8 max-h-8 flex-none',
+                    'md:h-10 md:max-h-10',
+                  )}
                   onClick={() => router.push(`/explore-story/${data?.id}`)}
                 >
-                  Read all
+                  {t('read_story')}
                 </Button>
               </div>
             </div>
