@@ -45,9 +45,12 @@ export const FlipBook = ({ data }: BookCommonProps) => {
     return deviceType === 'Mobile';
   }, []);
 
-  // Function to toggle the card flip
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
+  const handleMouseLeave = () => {
+    setIsFlipped(false);
+  };
+
+  const handleMouseEnter = () => {
+    setIsFlipped(true);
   };
   useEffect(() => {
     const calculateMaxChars = () => {
@@ -91,7 +94,7 @@ export const FlipBook = ({ data }: BookCommonProps) => {
         'relative flex w-full flex-row bg-pink-100 p-4 rounded-xl shadow-sm',
         'h-[300px] md:h-[300px]',
       )}
-      onMouseLeave={!isMobile ? handleFlip : undefined}
+      onMouseLeave={!isMobile ? handleMouseLeave : undefined}
     >
       {/* Front-Card */}
       <div
@@ -221,6 +224,7 @@ export const FlipBook = ({ data }: BookCommonProps) => {
             'h-full w-1/2 rounded-2xl relative',
             'md:h-full',
           )}
+          onMouseEnter={!isMobile ? handleMouseEnter : undefined}
         >
           <div className="absolute inset-0">
             <Image
@@ -229,7 +233,6 @@ export const FlipBook = ({ data }: BookCommonProps) => {
               width={175}
               height={180}
               className="h-full w-full rounded-2xl"
-              onMouseEnter={!isMobile ? handleFlip : undefined}
             />
           </div>
         </div>

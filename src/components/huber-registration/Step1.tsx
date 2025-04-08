@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 
 import Button from '@/components/button/Button';
 import { pushError } from '@/components/CustomToastifyContainer';
-import TermAndCondition from '@/layouts/huber-registration/TermAndCondition';
+import TermAndCondition from '@/components/huber-registration/TermAndCondition';
 
 interface Props {
   register: any;
