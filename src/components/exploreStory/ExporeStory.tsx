@@ -8,15 +8,16 @@ import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
 import ListTopics from '@/components/stories/ListTopics';
 import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
-import Story from '@/components/stories/Story';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
-type ExploreStoryProps = {
+import { FlipBook } from '../flipBook/FlipBook';
+
+type ExporeStoryProps = {
   topicIds: string | null;
 };
 
-const ExploreStory = ({ topicIds }: ExploreStoryProps) => {
+const ExploreStory = ({ topicIds }: ExporeStoryProps) => {
   const t = useTranslations('ExporeStory');
 
   const [isExpandList, setIsExpandList] = React.useState(false);
@@ -62,7 +63,8 @@ const ExploreStory = ({ topicIds }: ExploreStoryProps) => {
         )}
       >
         {storiesPages?.data?.map((story: StoryType) => (
-          <Story key={story?.id} data={story} />
+          // <Story key={story?.id} data={story} />
+          <FlipBook key={story?.id} data={story} />
         ))}
       </div>
 
