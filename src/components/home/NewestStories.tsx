@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { FlipBook } from '@/components/flipBook/FlipBook';
+import { mergeClassnames } from '@/components/private/utils';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
@@ -31,7 +32,14 @@ const NewestStories = () => {
           <StoriesSkeleton />
         </div>
       ) : storiesPages?.data?.length > 0 ? (
-        <div className="relative mt-4 flex flex-wrap items-center justify-center gap-8 xl:justify-start 2xl:gap-12">
+        <div
+          className={mergeClassnames(
+            'mt-6 grid grid-cols-1 gap-8 rounded-lg bg-white',
+            'md:grid-cols-2 md:p-5',
+            'xl:grid-cols-3',
+          )}
+        >
+          {/* <div className="relative mt-4 flex flex-wrap items-center justify-center gap-8 xl:justify-start 2xl:gap-12"> */}
           {storiesPages?.data?.map((item: StoryType) => (
             <FlipBook key={item.id} data={item} />
           ))}
@@ -39,7 +47,7 @@ const NewestStories = () => {
       ) : (
         <p className="w-full text-center">{t('no_data')}</p>
       )}
-      {storiesPages?.data?.length > 0 && (
+      {storiesPages?.data?.length > 6 && (
         <div className="mt-8 flex w-full items-center justify-center">
           <Button variant="outline" onClick={() => router.push('explore-book')}>
             <CaretCircleRight />
