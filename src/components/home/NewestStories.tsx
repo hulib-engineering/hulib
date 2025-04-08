@@ -19,19 +19,18 @@ const NewestStories = () => {
 
   const { data: storiesPages, isLoading: loadingStories } = useGetStoriesQuery({
     page: 1,
-    limit: 4,
+    limit: 6,
     sortBy: 'createdAt',
   });
+
+  if (loadingStories) return <StoriesSkeleton />;
+
   return (
     <div className="mt-8 items-center justify-center rounded-lg bg-white md:p-5">
       <h3 className="text-[2.375rem] font-medium leading-[2.75rem] text-primary-10">
         {t('newest_stories.title')}
       </h3>
-      {loadingStories ? (
-        <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-2 2xl:grid-cols-3">
-          <StoriesSkeleton />
-        </div>
-      ) : storiesPages?.data?.length > 0 ? (
+      {storiesPages?.data?.length > 0 ? (
         <div
           className={mergeClassnames(
             'mt-6 grid grid-cols-1 gap-8 rounded-lg bg-white',
@@ -47,9 +46,12 @@ const NewestStories = () => {
       ) : (
         <p className="w-full text-center">{t('no_data')}</p>
       )}
-      {storiesPages?.data?.length > 6 && (
+      {storiesPages?.hasNextPage && (
         <div className="mt-8 flex w-full items-center justify-center">
-          <Button variant="outline" onClick={() => router.push('explore-book')}>
+          <Button
+            variant="outline"
+            onClick={() => router.push('explore-story')}
+          >
             <CaretCircleRight />
             <p className="text-base font-medium leading-5 text-primary-50">
               {t('newest_stories.btn1')}

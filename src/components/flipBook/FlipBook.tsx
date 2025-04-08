@@ -14,10 +14,7 @@ export type BookCommonProps = {
   data: StoryType;
 };
 export const FlipBook = ({ data }: BookCommonProps) => {
-  const {
-    title,
-    abstract = 'Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar tempor dui massa ut. Egestas nunc mi tristique ornare commodo vitae dignissim commodo. Pellentesque nulla nam ante turpis velit amet cras ac aliquam. Ut amet nulla lobortis amet. Varius aliquam commodo mauris.Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar tempor dui massa ut. Egestas nunc mi tristique ornare commodo vitae dignissim commodo. Pellentesque nulla nam ante turpis velit amet cras ac aliquam. Ut amet nulla lobortis amet. Varius aliquam commodo mauris.Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar',
-  } = data;
+  const { title, abstract = '' } = data;
   const [isFlipped, setIsFlipped] = useState(false);
   const [maxCharsPageLeft, setmaxCharsPageLeft] = useState(200);
   const pageLeftRef = useRef<HTMLParagraphElement>(null);
@@ -92,7 +89,7 @@ export const FlipBook = ({ data }: BookCommonProps) => {
     <div
       className={mergeClassnames(
         'relative flex w-full flex-row bg-pink-100 p-4 rounded-xl shadow-sm',
-        'h-[300px] md:h-[300px]',
+        'h-[300px] md:h-[300px] w-[392px]',
       )}
       onMouseLeave={!isMobile ? handleMouseLeave : undefined}
     >
