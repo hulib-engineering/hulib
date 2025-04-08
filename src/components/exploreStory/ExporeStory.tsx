@@ -21,7 +21,7 @@ const ExploreStory = ({ topicIds }: ExporeStoryProps) => {
   const t = useTranslations('ExporeStory');
 
   const [isExpandList, setIsExpandList] = React.useState(false);
-  const [limit, setLimit] = React.useState(5);
+  const [limit, setLimit] = React.useState(6);
 
   const {
     data: storiesPages,
@@ -40,7 +40,7 @@ const ExploreStory = ({ topicIds }: ExporeStoryProps) => {
     if (isExpandList) {
       setLimit(0);
     } else {
-      setLimit(5);
+      setLimit(6);
     }
   }, [isExpandList]);
 
@@ -68,7 +68,7 @@ const ExploreStory = ({ topicIds }: ExporeStoryProps) => {
         ))}
       </div>
 
-      {(limit === 5 && storiesPages?.hasNextPage) ||
+      {(limit === 6 && storiesPages?.hasNextPage) ||
       (limit === 0 && !storiesPages?.hasNextPage) ? (
         <div className="mt-6 flex w-full items-center justify-center">
           <Button
