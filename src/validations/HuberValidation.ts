@@ -8,4 +8,4 @@ export const HuberStep1Validation = (t: any) => {
       message: t('validation.terms_required'),
     }),
   });
-}; 
+};

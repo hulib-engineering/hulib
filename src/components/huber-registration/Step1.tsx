@@ -4,14 +4,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { z } from 'zod';
+import { Controller, useForm } from 'react-hook-form';
+import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
 import { pushError } from '@/components/CustomToastifyContainer';
 import TermAndCondition from '@/components/huber-registration/TermAndCondition';
-import { HuberStep1Validation } from '@/validations/HuberValidation';
 import { useRegisterHuberMutation } from '@/libs/services/modules/auth';
+import { HuberStep1Validation } from '@/validations/HuberValidation';
 
 interface Props {
   next: any;
@@ -50,28 +50,31 @@ const Step1 = (props: Props) => {
     }
   }, [errors]);
 
-  const onSubmit = async(formData: FormData) => {
+  const onSubmit = async (formData: FormData) => {
     try {
       const res = await registerHuber(formData);
 
       if (res?.error?.status === 422) {
-        pushError("An error occurred, please contact admin for support!");
+        pushError('An error occurred, please contact admin for support!');
       } else {
         next();
       }
     } catch (error: any) {
-      pushError(error?.message || "");
+      pushError(error?.message || '');
     }
   };
 
   const getInputClassName = (fieldName: keyof FormData) => {
-    const baseClass = "rounded-lg border border-solid p-3 text-sm leading-4 text-neutral-40 outline-none";
-    const errorClass = errors[fieldName] ? "border-red-500" : "border-neutral-90";
-    const disabledClass = isLoading ? "opacity-50 cursor-not-allowed" : "";
+    const baseClass =
+      'rounded-lg border border-solid p-3 text-sm leading-4 text-neutral-40 outline-none';
+    const errorClass = errors[fieldName]
+      ? 'border-red-500'
+      : 'border-neutral-90';
+    const disabledClass = isLoading ? 'opacity-50 cursor-not-allowed' : '';
     return `${baseClass} ${errorClass} ${disabledClass}`;
   };
 
-  const isFormDisabled = isLoading || isSubmitting;	
+  const isFormDisabled = isLoading || isSubmitting;
 
   return (
     <form
@@ -94,7 +97,9 @@ const Step1 = (props: Props) => {
               <textarea
                 id="bio"
                 placeholder={t('bio.placeholder')}
-                className={`h-[8.5rem] resize-none bg-neutral-98 ${getInputClassName('bio')}`}
+                className={`h-[8.5rem] resize-none bg-neutral-98 ${getInputClassName(
+                  'bio',
+                )}`}
                 disabled={isFormDisabled}
                 {...field}
               />
@@ -118,13 +123,17 @@ const Step1 = (props: Props) => {
               <input
                 id="videoUrl"
                 placeholder={t('intro_video.placeholder')}
-                className={`h-10 bg-neutral-98 ${getInputClassName('videoUrl')}`}
+                className={`h-10 bg-neutral-98 ${getInputClassName(
+                  'videoUrl',
+                )}`}
                 disabled={isFormDisabled}
                 {...field}
               />
               {error && (
                 <span className="text-sm text-red-500">
-                  {error.type === 'url' ? t('validation.invalid_url') : error.message}
+                  {error.type === 'url'
+                    ? t('validation.invalid_url')
+                    : error.message}
                 </span>
               )}
             </>
@@ -132,7 +141,7 @@ const Step1 = (props: Props) => {
         />
       </label>
 
-      <div className="mt-6 flex w-full flex-col gap-2 bg-neutral-98 p-5 rounded-lg">
+      <div className="mt-6 flex w-full flex-col gap-2 rounded-lg bg-neutral-98 p-5">
         <span className="text-sm leading-4 text-neutral-10">
           {`${t('read_community')} `}
           <span className="text-red-50">*</span>
@@ -143,30 +152,34 @@ const Step1 = (props: Props) => {
           </span>
           <TermAndCondition />
         </div>
-				<Controller
-					name="isConfirmed"
-					control={control}
-					render={({ field, fieldState: { error } }) => (
-						<>
-							<div className={`mt-3 flex flex-row items-start gap-2 ${errors.isConfirmed ? 'border border-red-500 rounded-lg' : ''}`}>
-								<input
-									id="isConfirmed"
-									type="checkbox"
-									checked={field.value}
-									onChange={(e) => field.onChange(e.target.checked)}
-									className="w-4 border border-solid border-neutral-40"
-									disabled={isFormDisabled}
-								/>
-									<span className="text-xs leading-5 text-neutral-10">
-										{t('confirm')}
-									</span>
-							</div>
-							{error && (
-								<span className="text-sm text-red-500">{error.message}</span>
-							)}
-						</>
-					)}
-				/>				
+        <Controller
+          name="isConfirmed"
+          control={control}
+          render={({ field, fieldState: { error } }) => (
+            <>
+              <div
+                className={`mt-3 flex flex-row items-start gap-2 ${
+                  errors.isConfirmed ? 'rounded-lg border border-red-500' : ''
+                }`}
+              >
+                <input
+                  id="isConfirmed"
+                  type="checkbox"
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e.target.checked)}
+                  className="w-4 border border-solid border-neutral-40"
+                  disabled={isFormDisabled}
+                />
+                <span className="text-xs leading-5 text-neutral-10">
+                  {t('confirm')}
+                </span>
+              </div>
+              {error && (
+                <span className="text-sm text-red-500">{error.message}</span>
+              )}
+            </>
+          )}
+        />
       </div>
       <div className="flex w-full items-center gap-3">
         <Button
@@ -177,9 +190,9 @@ const Step1 = (props: Props) => {
         >
           {t('cancel')}
         </Button>
-        <Button 
-          className="w-full" 
-          type="submit" 
+        <Button
+          className="w-full"
+          type="submit"
           animation={isFormDisabled ? 'progress' : undefined}
           disabled={isFormDisabled}
         >
