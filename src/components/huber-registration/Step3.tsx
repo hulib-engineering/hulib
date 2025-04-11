@@ -67,11 +67,15 @@ const Step3 = () => {
     );
   };
 
-  const onSubmit = async (formValues: z.infer<typeof StoriesValidation>) => {
+  const onSubmit = async (formValues: z.infer<typeof StoriesValidation> & { cover?: { id: string; path: string } }) => {		
     try {
       const response = await createStory({
         ...formValues,
         humanBook: userInfo?.id,
+        cover: formValues.cover || {
+          id: '6b02fe49-101c-4567-d2f9-6b02fe49101c',
+          path: 'https://hulib-services.onrender.com/api/v1/files/6b02fe49101c24567d2f9.png',
+        },
       });
 
       if (response?.error && response?.error?.status === 422) {

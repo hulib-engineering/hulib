@@ -1,43 +1,83 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { z } from 'zod';
 
 import Button from '@/components/button/Button';
 import { pushError } from '@/components/CustomToastifyContainer';
 import TermAndCondition from '@/components/huber-registration/TermAndCondition';
+import { HuberStep1Validation } from '@/validations/HuberValidation';
+import { useRegisterHuberMutation } from '@/libs/services/modules/auth';
 
 interface Props {
-  register: any;
-  getValues: any;
   next: any;
 }
 
+type FormData = z.infer<ReturnType<typeof HuberStep1Validation>>;
+
 const Step1 = (props: Props) => {
-  const { getValues, register, next } = props;
+  const { next } = props;
   const t = useTranslations('HumanBookRegister');
   const router = useRouter();
+  const [registerHuber, { isLoading }] = useRegisterHuberMutation();
 
-  const onNextStep = () => {
-    const data = getValues();
-    console.log(data);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({
+    resolver: zodResolver(HuberStep1Validation(t)),
+    mode: 'onChange',
+    defaultValues: {
+      bio: '',
+      videoUrl: '',
+      isConfirmed: false,
+    },
+  });
 
-    if (!data?.isConfirmed) {
-      pushError('Please accept our terms and conditions before continuing.');
-      return;
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      const firstError = Object.keys(errors)[0] as keyof FormData;
+      const element = document.getElementById(firstError);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        element.focus();
+      }
     }
+  }, [errors]);
 
-    if (data?.bio?.length === 0) {
-      pushError('Please input bio');
+  const onSubmit = async(formData: FormData) => {
+    try {
+      const res = await registerHuber(formData);
+
+      if (res?.error?.status === 422) {
+        pushError("An error occurred, please contact admin for support!");
+      } else {
+        next();
+      }
+    } catch (error: any) {
+      pushError(error?.message || "");
     }
-
-    next();
   };
+
+  const getInputClassName = (fieldName: keyof FormData) => {
+    const baseClass = "rounded-lg border border-solid p-3 text-sm leading-4 text-neutral-40 outline-none";
+    const errorClass = errors[fieldName] ? "border-red-500" : "border-neutral-90";
+    const disabledClass = isLoading ? "opacity-50 cursor-not-allowed" : "";
+    return `${baseClass} ${errorClass} ${disabledClass}`;
+  };
+
+  const isFormDisabled = isLoading || isSubmitting;	
 
   return (
     <form
       id="step-1"
       className="flex flex-col items-center justify-center rounded-3xl bg-white p-5"
+      onSubmit={handleSubmit(onSubmit)}
     >
       <p className="self-start text-xl font-medium leading-[2.75rem] text-neutral-10 md:text-[2.25rem]">
         {t('step_1_title')}
@@ -46,28 +86,53 @@ const Step1 = (props: Props) => {
         <span className="text-sm leading-4 text-neutral-10">
           {t('bio.text')} <span className="text-red-50">*</span>
         </span>
-        <textarea
-          id="bio"
-          placeholder={t('bio.placeholder')}
-          className="h-[8.5rem] resize-none rounded-lg border border-solid border-neutral-90 p-3 text-sm leading-4 text-[#5C6063] outline-none"
-          required
-          {...register('bio')}
+        <Controller
+          name="bio"
+          control={control}
+          render={({ field, fieldState: { error } }) => (
+            <>
+              <textarea
+                id="bio"
+                placeholder={t('bio.placeholder')}
+                className={`h-[8.5rem] resize-none bg-neutral-98 ${getInputClassName('bio')}`}
+                disabled={isFormDisabled}
+                {...field}
+              />
+              {error && (
+                <span className="text-sm text-red-500">{error.message}</span>
+              )}
+            </>
+          )}
         />
       </label>
 
-      <label className="mt-6 flex w-full flex-col gap-2" htmlFor="bio">
+      <label className="mt-6 flex w-full flex-col gap-2" htmlFor="videoUrl">
         <span className="text-sm leading-4 text-neutral-10">
-          {t('intro_video.text')}
+          {t('intro_video.text')} <span className="text-red-50">*</span>
         </span>
-        <input
-          id="introVideo"
-          placeholder={t('intro_video.placeholder')}
-          className="h-10 rounded-lg border border-solid border-neutral-90 p-3 text-sm leading-4 text-[#5C6063] outline-none"
-          {...register('video')}
+        <Controller
+          name="videoUrl"
+          control={control}
+          render={({ field, fieldState: { error } }) => (
+            <>
+              <input
+                id="videoUrl"
+                placeholder={t('intro_video.placeholder')}
+                className={`h-10 bg-neutral-98 ${getInputClassName('videoUrl')}`}
+                disabled={isFormDisabled}
+                {...field}
+              />
+              {error && (
+                <span className="text-sm text-red-500">
+                  {error.type === 'url' ? t('validation.invalid_url') : error.message}
+                </span>
+              )}
+            </>
+          )}
         />
       </label>
 
-      <div className="mt-6 flex w-full flex-col gap-2 p-5">
+      <div className="mt-6 flex w-full flex-col gap-2 bg-neutral-98 p-5 rounded-lg">
         <span className="text-sm leading-4 text-neutral-10">
           {`${t('read_community')} `}
           <span className="text-red-50">*</span>
@@ -78,26 +143,46 @@ const Step1 = (props: Props) => {
           </span>
           <TermAndCondition />
         </div>
-        <div className="mt-3 flex flex-row items-start gap-2">
-          <input
-            type="checkbox"
-            className="w-4 border border-solid border-neutral-40"
-            {...register('isConfirmed')}
-          />
-          <span className="text-xs leading-5 text-neutral-10">
-            {t('confirm')}
-          </span>
-        </div>
+				<Controller
+					name="isConfirmed"
+					control={control}
+					render={({ field, fieldState: { error } }) => (
+						<>
+							<div className={`mt-3 flex flex-row items-start gap-2 ${errors.isConfirmed ? 'border border-red-500 rounded-lg' : ''}`}>
+								<input
+									id="isConfirmed"
+									type="checkbox"
+									checked={field.value}
+									onChange={(e) => field.onChange(e.target.checked)}
+									className="w-4 border border-solid border-neutral-40"
+									disabled={isFormDisabled}
+								/>
+									<span className="text-xs leading-5 text-neutral-10">
+										{t('confirm')}
+									</span>
+							</div>
+							{error && (
+								<span className="text-sm text-red-500">{error.message}</span>
+							)}
+						</>
+					)}
+				/>				
       </div>
       <div className="flex w-full items-center gap-3">
         <Button
           className="w-full"
           variant="outline"
           onClick={() => router.push('/')}
+          disabled={isFormDisabled}
         >
           {t('cancel')}
         </Button>
-        <Button className="w-full" form="step-1" onClick={onNextStep}>
+        <Button 
+          className="w-full" 
+          type="submit" 
+          animation={isFormDisabled ? 'progress' : undefined}
+          disabled={isFormDisabled}
+        >
           {t('next')}
         </Button>
       </div>
