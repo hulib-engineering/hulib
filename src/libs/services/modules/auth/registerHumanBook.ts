@@ -1,7 +1,7 @@
 import type { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 
-const registerHumanBook = (
+const registerHuber = (
   build: EndpointBuilder<BaseQueryFn, string, string>,
 ) =>
   build.mutation<any, any>({
@@ -13,4 +13,4 @@ const registerHumanBook = (
     invalidatesTags: [{ type: 'Admin' }],
   });
 
-export default registerHumanBook;
+export default registerHuber;

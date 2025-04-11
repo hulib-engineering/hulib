@@ -9,14 +9,14 @@ const CustomCoverBox = ({ setValue }: any) => {
       path: 'https://hulib-services.onrender.com/api/v1/files/9892921ed769ba0f94b6f.png',
       id: '51f3590b-4bc3-4c7a-bd8f-73f44dd7a9eb',
     },
-    {
-      path: 'https://hulib-services.onrender.com/api/v1/files/921ed769ba0f94b6f5439.png',
-      id: '8d23a2c8-4bc4-49d5-bb99-c03f10813efd',
-    },
-    {
-      path: 'https://hulib-services.onrender.com/api/v1/files/21ed769ba0f94b6f54396.png',
-      id: '6390ae14-2209-4d53-897a-0f65918780fd',
-    },
+    // {
+    //   path: 'https://hulib-services.onrender.com/api/v1/files/921ed769ba0f94b6f5439.png',
+    //   id: '8d23a2c8-4bc4-49d5-bb99-c03f10813efd',
+    // },
+    // {
+    //   path: 'https://hulib-services.onrender.com/api/v1/files/21ed769ba0f94b6f54396.png',
+    //   id: '6390ae14-2209-4d53-897a-0f65918780fd',
+    // },
   ]);
 
   const [selectedCoverImage, setSelectedCoverImage] = useState<number>(0);
