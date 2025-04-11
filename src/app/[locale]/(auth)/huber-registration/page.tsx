@@ -2,7 +2,6 @@
 
 import { Check } from '@phosphor-icons/react';
 import React from 'react';
-import { useForm } from 'react-hook-form';
 
 import Step1 from '@/components/huber-registration/Step1';
 import Step2 from '@/components/huber-registration/Step2';
@@ -21,25 +20,13 @@ interface Form {
   isConfirmed: boolean;
 }
 
-const defaultValues: Form = {
-  bio: '',
-  video: '',
-  isConfirmed: false,
-};
-
 const Page = () => {
   const [currentStep, setCurrentStep] = React.useState(1);
-
-  const { register, getValues } = useForm<Form>({
-    defaultValues,
-  });
 
   const renderStep = () => {
     if (currentStep === 1) {
       return (
         <Step1
-          register={register}
-          getValues={getValues}
           next={() => setCurrentStep((prev) => prev + 1)}
         />
       );
