@@ -67,7 +67,11 @@ const Step3 = () => {
     );
   };
 
-  const onSubmit = async (formValues: z.infer<typeof StoriesValidation> & { cover?: { id: string; path: string } }) => {		
+  const onSubmit = async (
+    formValues: z.infer<typeof StoriesValidation> & {
+      cover?: { id: string; path: string };
+    },
+  ) => {
     try {
       const response = await createStory({
         ...formValues,

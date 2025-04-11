@@ -40,37 +40,46 @@ const TermAndCondition = () => {
     <div className="flex h-[10rem] flex-col overflow-auto text-sm leading-5 text-neutral-40">
       <Section>
         <BulletPoint>
-          Once you have signed up with HuLib, it is important to recognize what we are and what we are not. This enables us to manage our expectations and deliver on our responsibilities.
+          Once you have signed up with HuLib, it is important to recognize what
+          we are and what we are not. This enables us to manage our expectations
+          and deliver on our responsibilities.
         </BulletPoint>
         <BulletPoint>
-          We are not an emergency service or crisis helpline. Hubers & HuLib staff are not available for support 24/7.
+          We are not an emergency service or crisis helpline. Hubers & HuLib
+          staff are not available for support 24/7.
         </BulletPoint>
         <BulletPoint>
-          If we have concerns about your well-being and safety, we might need to contact a crisis service to support you.
+          If we have concerns about your well-being and safety, we might need to
+          contact a crisis service to support you.
         </BulletPoint>
         <BulletPoint>
-          We provide Hubers to listen, inspire, and support you through your personal challenges.
+          We provide Hubers to listen, inspire, and support you through your
+          personal challenges.
         </BulletPoint>
         <BulletPoint>
-          Hubers share relatable stories and appropriate knowledge but do not provide professional or specialist advice.
+          Hubers share relatable stories and appropriate knowledge but do not
+          provide professional or specialist advice.
         </BulletPoint>
         <BulletPoint>
           Our platform bridges the gap between silence and storytellers.
         </BulletPoint>
         <BulletPoint>
-          All conversations are confidential but monitored by our Board of Directors to ensure the right support is provided.
+          All conversations are confidential but monitored by our Board of
+          Directors to ensure the right support is provided.
         </BulletPoint>
         <BulletPoint>
           If a safety concern arises, emergency services may be contacted.
         </BulletPoint>
         <BulletPoint>
-          Prohibited discussions include unhealthy personal relationships, unlawful activities, and inappropriate topics.
+          Prohibited discussions include unhealthy personal relationships,
+          unlawful activities, and inappropriate topics.
         </BulletPoint>
       </Section>
 
       <Section title="ENFORCEMENT">
         <BulletPoint>
-          We are not a crisis helpline – crisis service contacts are available on the app and website.
+          We are not a crisis helpline – crisis service contacts are available
+          on the app and website.
         </BulletPoint>
         <BulletPoint>
           No harassment, hate speech, bullying, or targeted attacks.
@@ -81,19 +90,27 @@ const TermAndCondition = () => {
         <BulletPoint>
           HuLib is not responsible for misinformation provided by users.
         </BulletPoint>
-        <BulletPoint>HuLib content cannot be used for commercial purposes.</BulletPoint>
+        <BulletPoint>
+          HuLib content cannot be used for commercial purposes.
+        </BulletPoint>
       </Section>
 
       <Section title="FOR HUBERS">
         <SubSection title="A. Before Signing Up">
-          <BulletPoint>All communication must take place on the app.</BulletPoint>
-          <BulletPoint>Do not communicate with a Liber outside of HuLib.</BulletPoint>
-          <BulletPoint>Report any life-threatening situations.</BulletPoint>
           <BulletPoint>
-            Meeting schedules should be followed, and changes should be communicated in advance.
+            All communication must take place on the app.
           </BulletPoint>
           <BulletPoint>
-            Protect your mental health and well-being. You can withdraw from conversations if needed.
+            Do not communicate with a Liber outside of HuLib.
+          </BulletPoint>
+          <BulletPoint>Report any life-threatening situations.</BulletPoint>
+          <BulletPoint>
+            Meeting schedules should be followed, and changes should be
+            communicated in advance.
+          </BulletPoint>
+          <BulletPoint>
+            Protect your mental health and well-being. You can withdraw from
+            conversations if needed.
           </BulletPoint>
         </SubSection>
 
@@ -105,9 +122,12 @@ const TermAndCondition = () => {
             Protect confidentiality and avoid sharing harmful content.
           </BulletPoint>
           <BulletPoint>Engage with purpose and uphold integrity.</BulletPoint>
-          <BulletPoint>Share responsibly and avoid spreading misinformation.</BulletPoint>
           <BulletPoint>
-            Participation is entirely voluntary. Both Hubers and Libers can pause or end a conversation at any time.
+            Share responsibly and avoid spreading misinformation.
+          </BulletPoint>
+          <BulletPoint>
+            Participation is entirely voluntary. Both Hubers and Libers can
+            pause or end a conversation at any time.
           </BulletPoint>
         </SubSection>
 
@@ -118,17 +138,20 @@ const TermAndCondition = () => {
             Repeated or serious violations: Permanent removal from HuLib.
           </BulletPoint>
           <BulletPoint>
-            If you believe a decision was made in error, you may communicate with our team.
+            If you believe a decision was made in error, you may communicate
+            with our team.
           </BulletPoint>
         </SubSection>
       </Section>
 
       <Section title="ACKNOWLEDGMENT">
         <BulletPoint>
-          By being part of HuLib, you agree to abide by these guidelines and contribute to our shared mission.
+          By being part of HuLib, you agree to abide by these guidelines and
+          contribute to our shared mission.
         </BulletPoint>
         <BulletPoint>
-          All sessions are voluntary, and both Hubers and Libers have the right to pause or end a conversation immediately.
+          All sessions are voluntary, and both Hubers and Libers have the right
+          to pause or end a conversation immediately.
         </BulletPoint>
         <p className="mt-2">{"Let's "} build something amazing together!</p>
       </Section>
