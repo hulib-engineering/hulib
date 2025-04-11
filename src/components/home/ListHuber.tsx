@@ -16,7 +16,7 @@ const baseHubers = [
     role: 'Professor',
     topics: 20,
     rating: 4.2,
-    image: '/assets/images/recommended-huber.jfif',
+    image: '/assets/images/huber/cover-huber.png',
     id: 0,
   },
   {
@@ -24,7 +24,7 @@ const baseHubers = [
     role: 'CEO of Company',
     topics: 20,
     rating: 4.2,
-    image: '/assets/images/recommended-huber.jfif',
+    image: '/assets/images/huber/cover-huber.png',
     id: 1,
   },
   {
@@ -32,7 +32,7 @@ const baseHubers = [
     role: 'Marketer',
     topics: 20,
     rating: 4.2,
-    image: '/assets/images/recommended-huber.jfif',
+    image: '/assets/images/huber/cover-huber.png',
     id: 2,
   },
 ];
