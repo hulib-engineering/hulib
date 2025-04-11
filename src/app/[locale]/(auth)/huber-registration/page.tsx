@@ -14,22 +14,12 @@ const steps = [
   { no: '03', value: 'Fist Story', num: 3 },
 ];
 
-interface Form {
-  bio: string;
-  video?: string | undefined;
-  isConfirmed: boolean;
-}
-
 const Page = () => {
   const [currentStep, setCurrentStep] = React.useState(1);
 
   const renderStep = () => {
     if (currentStep === 1) {
-      return (
-        <Step1
-          next={() => setCurrentStep((prev) => prev + 1)}
-        />
-      );
+      return <Step1 next={() => setCurrentStep((prev) => prev + 1)} />;
     }
 
     if (currentStep === 2) {
