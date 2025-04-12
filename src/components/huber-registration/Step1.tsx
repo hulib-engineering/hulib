@@ -8,7 +8,7 @@ import { Controller, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
-import { pushError } from '@/components/CustomToastifyContainer';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import TermAndCondition from '@/components/huber-registration/TermAndCondition';
 import { useRegisterHuberMutation } from '@/libs/services/modules/auth';
 import { HuberStep1Validation } from '@/validations/HuberValidation';
@@ -57,6 +57,8 @@ const Step1 = (props: Props) => {
       if (res?.error?.status === 422) {
         pushError('An error occurred, please contact admin for support!');
       } else {
+        localStorage.setItem('huber_registration_step', '2');
+        pushSuccess('Registration successful!');
         next();
       }
     } catch (error: any) {

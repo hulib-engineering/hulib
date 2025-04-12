@@ -1,24 +1,49 @@
 'use client';
 
 import { Box, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 interface Props {
-  selectedDay: string;
-  onClickDay: any;
+  dayOfWeek: any;
 }
 
-export default function HeadSlots({ selectedDay = 'MON', onClickDay }: Props) {
-  const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+const days = {
+  0: {
+    title: 'MON',
+    text: 'Hey, are you really that busy on Monday? 😊',
+  },
+  1: {
+    title: 'TUE',
+    text: 'Is setting aside just 30 minutes really that hard? 😢',
+  },
+  2: {
+    title: 'WED',
+    text: 'Come on, is 30 minutes that tough to spare? 😢',
+  },
+  3: {
+    title: 'THU',
+    text: 'Is setting aside just 30 minutes really that hard? 😢',
+  },
+  4: {
+    title: 'FRI',
+    text: 'Come on, is 30 minutes that tough to spare? 😢',
+  },
+  5: {
+    title: 'SAT',
+    text: 'Hey, are you really that busy on Saturday? �',
+  },
+  6: {
+    title: 'SUN',
+    text: "Wait, you're working on Sunday too? 😆",
+  },
+};
 
-  const textBySelectedDay = {
-    MON: 'Hey, are you really that busy on Monday? 😊',
-    TUE: 'Is setting aside just 30 minutes really that hard? 😢',
-    WED: 'Come on, is 30 minutes that tough to spare? 😢',
-    THU: 'Is setting aside just 30 minutes really that hard? 😢',
-    FRI: 'Come on, is 30 minutes that tough to spare? 😢',
-    SAT: 'Hey, are you really that busy on Saturday? 😀',
-    SUN: "Wait, you're working on Sunday too? 😆",
-  };
+export default function HeadSlots({ dayOfWeek = 0 }: Props) {
+  const [selectedDay, setSelectedDay] = useState<keyof typeof days>(dayOfWeek);
+
+  useEffect(() => {
+    setSelectedDay(dayOfWeek);
+  }, [dayOfWeek]);
 
   return (
     <Box className="mt-4">
@@ -29,15 +54,14 @@ export default function HeadSlots({ selectedDay = 'MON', onClickDay }: Props) {
           borderRadius: '9999px',
         }}
       >
-        {days.map((day) => (
+        {Object.entries(days).map(([key, day]) => (
           <Box
-            key={day}
-            className={`flex cursor-pointer items-center justify-center rounded-full px-4 py-2 font-medium transition-colors ${
-              day === selectedDay ? 'bg-primary-90' : ''
+            key={key}
+            className={`flex items-center justify-center rounded-full px-4 py-2 font-medium transition-colors ${
+              Number(key) === selectedDay ? 'bg-primary-90' : ''
             }`}
-            onClick={() => onClickDay(day)}
           >
-            {day}
+            {day.title}
           </Box>
         ))}
       </Box>
@@ -47,7 +71,7 @@ export default function HeadSlots({ selectedDay = 'MON', onClickDay }: Props) {
         className="mt-3 text-center"
         sx={{ color: '#e83e8c', fontSize: '1.1rem' }}
       >
-        {textBySelectedDay[selectedDay as keyof typeof textBySelectedDay]}
+        {days[selectedDay].text || ''}
       </Typography>
     </Box>
   );
