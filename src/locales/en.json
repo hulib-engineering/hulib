@@ -358,6 +358,17 @@
     "supporting_text": "Supporting Text",
     "Submit": "Submit",
     "humanBookRegistered": "You have registered to become a Human Book. Wait for Admin approval!",
+    "Step2": {
+      "title": "Register as a Huber",
+      "available_slots": "My available slots",
+      "available_slots_description": "When can you make time for Liber?",
+      "error_contact_admin": "An error occurred, please contact admin for support!",
+      "success_time_slots": "Time slots created successfully!",
+      "success_time_slots_description": "You have successfully created your time slots",
+      "validation": {
+        "error_select_at_least_one_time_slot": "Please select at least one time slot"
+      }
+    },
     "validation": {
       "required": "Required",
       "invalidYear": "Invalid Year",
@@ -425,6 +436,7 @@
       "description": "Short Description",
       "btn": "Join as Huber"
     },
-    "no_data": "No Data"
+    "no_data": "No Data",
+    "error_contact_admin": "An error occurred, please contact admin for support!"
   }
 }
