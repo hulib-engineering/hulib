@@ -24,21 +24,27 @@ export interface IAttendee {
   fullName: string;
 }
 
-type Props = {
-  nextStep?: () => void;
-};
-
-export const MainScreen = ({ nextStep }: Props) => {
+export const MainScreen = ({
+  attendees,
+  selectDate,
+  selectTime,
+  onSelectDay,
+  onSelectTime,
+  nextStep,
+}: {
+  attendees: { liber: IAttendee; huber: any };
+  selectDate: Date;
+  selectTime: string;
+  onSelectDay: (day: Date) => void;
+  onSelectTime: (time: string) => void;
+  nextStep: () => void;
+}) => {
   const { huberId } = useParams();
-  const [selectedDay, setSelectedDay] = React.useState<Date>(new Date());
-  const [selectedTime, setSelectedTime] = React.useState<string>('');
 
   const { data: timeSlots } = useGetTimeSlotsHuberQuery({
     id: Number(huberId),
   });
 
-  const [selectDate, setSelectDate] = React.useState<Date>(selectedDay);
-  const [selectTime, setSelectTime] = React.useState<string>(selectedTime);
   const filterTimeSlots: TimeSlot[] = React.useMemo(() => {
     return (
       timeSlots?.filter(
@@ -91,16 +97,14 @@ export const MainScreen = ({ nextStep }: Props) => {
     if (selectDate === day) {
       return;
     }
-    setSelectDate(day);
-    setSelectedDay(day);
+    onSelectDay(day);
   };
 
   const onClickTime = (time: string) => {
     if (selectTime === time) {
       return;
     }
-    setSelectTime(time);
-    setSelectedTime(time);
+    onSelectTime(time);
   };
 
   const timeBlock = (list: string[]) => {
@@ -134,7 +138,7 @@ export const MainScreen = ({ nextStep }: Props) => {
 
   return (
     <div className="flex h-full w-full flex-col gap-6 bg-neutral-98 xl:flex-row">
-      <ScheduleBasicInfo />
+      <ScheduleBasicInfo attendees={attendees} />
       <div className="flex w-full flex-col gap-y-4 rounded-3xl bg-white p-4 xl:w-2/3 xl:p-8">
         <h4 className="text-[28px] font-medium">Schedule your meeting</h4>
         <p className="text-[18px] font-normal text-neutral-20">
