@@ -9,9 +9,9 @@ import { ScheduleSuccess } from '@/components/time-slot/ScheduleSuccess';
 export default function Index() {
   const [step, setStep] = React.useState<number>(0);
 
-  const [selectedDay, setSelectedDay] = React.useState<Date>(new Date());
-  const [selectedTime, setSelectedTime] = React.useState<string>('');
-  const [note, setNote] = React.useState<string>('');
+  const [selectedDay] = React.useState<Date>(new Date());
+  const [selectedTime] = React.useState<string>('');
+  const [note] = React.useState<string>('');
 
   const nextStep = () => {
     setStep((prev) => prev + 1);
@@ -24,35 +24,7 @@ export default function Index() {
   const renderStep = React.useMemo(() => {
     switch (step) {
       case 0: {
-        return (
-          <MainScreen
-            fullName="Tran Thanh Thao"
-            title="Professor"
-            topics="20"
-            rating="4.5"
-            duration="30"
-            attendees={{
-              liber: {
-                icon: '/assets/images/Avatar.png',
-                role: 'Liber',
-                fullName: 'Ngo Thanh Nhan',
-              },
-              huber: {
-                icon: '/assets/images/Avatar.png',
-                role: 'Huber',
-                fullName: 'Ngo Thanh Bao',
-              },
-            }}
-            timeZone="ICT | GMT-7"
-            setSelectedDay={setSelectedDay}
-            setSelectedTime={setSelectedTime}
-            selectedDay={selectedDay}
-            selectedTime={selectedTime}
-            nextStep={nextStep}
-            note={note}
-            setNote={setNote}
-          />
-        );
+        return <MainScreen nextStep={nextStep} />;
       }
       case 1: {
         return (
