@@ -5,7 +5,7 @@ import ModifyTimeSlot from '@/components/schedule/WeeklySchedule';
 export default function Index() {
   return (
     <div className="p-8">
-      <ModifyTimeSlot />;
+      <ModifyTimeSlot />
     </div>
   );
 }
