@@ -2,7 +2,7 @@
 
 import { Book, BookmarkSimple, Brain } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 import type { Topic } from '@/libs/services/modules/topics/topicType';
@@ -35,7 +35,6 @@ const HumanBookInfo = ({
   storyReview,
 }: Props) => {
   const [imgError, setImgError] = useState(false);
-  const router = useRouter();
   const handleImageError = () => {
     setImgError(true);
   };
@@ -44,15 +43,14 @@ const HumanBookInfo = ({
     <div className="h-full w-full overflow-hidden rounded bg-white shadow-lg">
       <div className="px-6 py-4">
         <div className="flex w-full flex-col items-center gap-2">
-          <IconButton
-            icon={<Book size={16} />}
-            className="w-full px-4 text-base text-white"
-            onClick={() => {
-              router.push(`/schedule-meeting/${humanBook?.id}`);
-            }}
-          >
-            Schedule a Meeting
-          </IconButton>
+          <Link href={`/schedule-meeting/${humanBook?.id}`}>
+            <IconButton
+              icon={<Book size={16} />}
+              className="w-full px-4 text-base text-white"
+            >
+              Schedule a Meeting
+            </IconButton>
+          </Link>
           <IconButton
             icon={<BookmarkSimple size={16} />}
             className="bg-transparent text-base text-primary-50"

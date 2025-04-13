@@ -1,27 +1,26 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import imageSuccess from 'public/assets/images/schedule-success.svg';
 import * as React from 'react';
 
 import Button from '@/components/button/Button';
 
-export const ScheduleSuccess = () => {
+export const SuccessScreen = ({
+  notification,
+  nameButton,
+  linkButton,
+}: {
+  notification: string;
+  nameButton: string;
+  linkButton: string;
+}) => {
   const router = useRouter();
-
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const handleBackToHome = () => {
     router.push('/home');
-    router.refresh();
-  };
-
-  const handleMoveToMySchedule = () => {
-    router.push('/schedule-meeting/weekly-schedule');
-    router.refresh();
+    // router.refresh();
   };
 
   const isMobile = window.innerWidth < 480;
@@ -36,17 +35,13 @@ export const ScheduleSuccess = () => {
           height={isMobile ? 350 : 420}
         />
         <h4 className="text-[28px] font-medium">Congratulation!</h4>
-        <p className="text-sm text-neutral-30">
-          You have successfully sent a meeting request to Huber
-        </p>
+        <p className="text-sm text-neutral-30">{notification}</p>
         <div className="grid grid-cols-2 items-center justify-items-center gap-x-2 md:gap-x-4">
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={handleMoveToMySchedule}
-          >
-            Your schedule
-          </Button>
+          <Link href={linkButton}>
+            <Button variant="outline" className="w-full">
+              {nameButton}
+            </Button>
+          </Link>
           <Button
             variant="primary"
             className="w-full"
