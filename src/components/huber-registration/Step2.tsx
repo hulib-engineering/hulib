@@ -168,7 +168,10 @@ const Step2 = ({ next }: { next: () => void }) => {
             render={({ field }) => {
               return (
                 <>
-                  <HeadSlots dayOfWeek={currentDay} />
+                  <HeadSlots
+                    dayOfWeek={currentDay}
+                    onChangeDayOfWeek={setCurrentDay}
+                  />
 
                   {Object.entries(timeSlotsForWeek).map(([period, slots]) => {
                     const filteredSlots = slots.filter(

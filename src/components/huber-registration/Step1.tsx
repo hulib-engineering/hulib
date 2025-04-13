@@ -159,20 +159,16 @@ const Step1 = (props: Props) => {
           control={control}
           render={({ field, fieldState: { error } }) => (
             <>
-              <div
-                className={`mt-3 flex flex-row items-start gap-2 ${
-                  errors.isConfirmed ? 'rounded-lg border border-red-500' : ''
-                }`}
-              >
+              <div className="mt-3 flex flex-row items-start gap-2">
                 <input
                   id="isConfirmed"
                   type="checkbox"
                   checked={field.value}
                   onChange={(e) => field.onChange(e.target.checked)}
-                  className="w-4 border border-solid border-neutral-40"
+                  className="mt-0.5 h-4 w-4 cursor-pointer border border-solid border-neutral-40"
                   disabled={isFormDisabled}
                 />
-                <span className="text-xs leading-5 text-neutral-10">
+                <span className="text-sm leading-5 text-neutral-10">
                   {t('confirm')}
                 </span>
               </div>
