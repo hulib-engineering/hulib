@@ -18,7 +18,7 @@ const Huber = ({
     commodo vitae dignissim commodo. Pellentesque...`,
     image: '/assets/images/huber/cover-huber.png',
     id: 0,
-    tags: ['Self-taught', 'Study', 'Career'],
+    tags: ['Self-taught', 'Study', 'Career Huber'],
   },
 }) => {
   const router = useRouter();
@@ -69,8 +69,8 @@ const Huber = ({
           `}
         >
           <p className="text-[12px] font-normal">
-            {huber.abtract.length > 100
-              ? `${huber.abtract.slice(0, 250)}...`
+            {huber.abtract.length > 150
+              ? `${huber.abtract.slice(0, 150)}...`
               : huber.abtract}
           </p>
         </div>

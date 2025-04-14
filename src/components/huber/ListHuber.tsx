@@ -57,7 +57,7 @@ const hubersData = [
 
 const ListHuber = ({ hubers = hubersData }) => {
   return (
-    <div className="w-full px-4 py-6 md:px-8">
+    <div className="w-full py-6">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
         {hubers.map((huber) => (
           <div key={huber.id} className="w-full">
