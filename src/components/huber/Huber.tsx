@@ -25,12 +25,8 @@ const Huber = ({
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="w-full ">
-      <div
-        className="relative overflow-hidden rounded-lg"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+    <div className="w-full">
+      <div className="relative overflow-hidden rounded-lg">
         <Image
           src={huber.image}
           alt={huber.name}
@@ -41,27 +37,47 @@ const Huber = ({
         />
 
         <div
-          className={`absolute left-4 top-5 flex flex-wrap gap-2 transition-opacity duration-300 md:opacity-0 ${
+          className={`absolute left-[10%] top-[10%] flex flex-wrap gap-2 transition-opacity duration-300 md:opacity-0 ${
             isHovered ? 'md:opacity-100' : ''
           }`}
         >
-          {huber.tags.map((tag, index) => (
-            <span
-              key={index}
-              className="rounded-full px-3 py-1 text-xs font-medium"
-              style={{
-                backgroundColor: `hsl(${Math.random() * 360}, 70%, 80%)`,
-                color: `hsl(${Math.random() * 360}, 70%, 30%)`,
-              }}
-            >
-              {tag}
-            </span>
-          ))}
+          {huber.tags.map((tag, index) => {
+            const colors = [
+              {
+                backgroundColor: 'rgba(217, 249, 207, 1)',
+                borderColor: ' rgba(178, 243, 159, 1)',
+              },
+              {
+                backgroundColor: ' rgba(255, 228, 241, 1)',
+                borderColor: 'rgba(255, 201, 227, 1)',
+              },
+              {
+                backgroundColor: ' rgba(205, 221, 254, 1)',
+                borderColor: ' rgba(132, 172, 252, 1)',
+              },
+            ];
+
+            const colorIndex = index % colors.length;
+            const tagColor = colors[colorIndex];
+
+            return (
+              <span
+                key={index}
+                className="rounded-full px-3 py-1 text-xs font-medium"
+                style={{
+                  backgroundColor: tagColor?.backgroundColor,
+                  border: `1px solid ${tagColor?.borderColor}`,
+                }}
+              >
+                {tag}
+              </span>
+            );
+          })}
         </div>
 
         <div
           className={`
-        absolute inset-x-0 bottom-0 top-1/2 hidden
+        absolute inset-x-0 bottom-0 top-1/2 hidden max-h-[35%]
         px-4 text-white opacity-0
         transition-all duration-300 ease-in-out
         md:block md:opacity-0 md:translate-y-8
@@ -113,7 +129,9 @@ const Huber = ({
           <Button
             variant="primary"
             className="flex w-full items-center justify-center gap-2 py-2.5"
-            onClick={() => router.push(`/huber/${huber.id}`)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onClick={() => router.push(`/profile/${huber.id}`)}
           >
             <CaretCircleRight size={20} />
             <p>Visit Profile</p>
@@ -125,7 +143,7 @@ const Huber = ({
           <Button
             variant="primary"
             className="flex w-full items-center justify-center gap-2 rounded-full py-2 text-sm"
-            onClick={() => router.push(`/huber/${huber.id}`)}
+            onClick={() => router.push(`/profile/${huber.id}`)}
           >
             <p>Visit Profile</p>
           </Button>
