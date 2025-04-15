@@ -6,11 +6,11 @@ const ExploreHuber = () => {
   return (
     <div
       className={mergeClassnames(
-        'mx-auto h-full w-full  py-12 rounded-lg',
+        'mx-auto h-full w-full  px-5 py-12 rounded-lg',
         'md:px-28 ',
       )}
     >
-      <div className="mx-auto h-full w-full max-w-[1216px] rounded-lg text-[40px] font-bold">
+      <div className="h-full w-full max-w-[1216px] rounded-lg text-[40px] font-bold">
         Explore our Hubers
       </div>
       <div className="text-lg font-normal">
