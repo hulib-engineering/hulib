@@ -25,7 +25,11 @@ const Huber = ({
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="w-full">
+    <div
+      className="w-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="relative overflow-hidden rounded-lg">
         <Image
           src={huber.image}
@@ -129,8 +133,6 @@ const Huber = ({
           <Button
             variant="primary"
             className="flex w-full items-center justify-center gap-2 py-2.5"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
             onClick={() => router.push(`/profile/${huber.id}`)}
           >
             <CaretCircleRight size={20} />
