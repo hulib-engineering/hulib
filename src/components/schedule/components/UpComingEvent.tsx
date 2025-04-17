@@ -1,40 +1,38 @@
 'use client';
 
 import { CalendarDot, MapPinArea, VideoCamera } from '@phosphor-icons/react';
+import { format } from 'date-fns';
+import { isNaN } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+
+import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 // import avatar from './assets/images/icons/avatar.svg'
 
-function UpComingEvent() {
-  const [data, setData] = useState<any>({});
-  function formatTimeRange(time1: string, time2: string) {
-    const formatTime = (isoString: string) => {
-      console.log('isoString', isoString);
-      if (!isoString) return 'Invalid'; // Kiểm tra giá trị null hoặc undefined
-      const date = new Date(isoString);
-      if (Number.isNaN(date.getTime())) return 'Invalid'; // Thay isNaN bằng Number.isNaN
-      return date.toISOString().substring(11, 16);
-    };
-
-    return `${formatTime(time1)} -> ${formatTime(time2)}`;
-  }
-
-  const getData = async () => {
-    try {
-      const response = await fetch(
-        'https://hulib-services.onrender.com/api/v1/reading-sessions',
-      );
-      const result = await response.json();
-      console.log('result[0]', result[5]);
-      setData(result[0]);
-    } catch (error) {
-      console.error('Lỗi khi lấy dữ liệu:', error);
+const formatTime = (isoString: string): string => {
+  try {
+    const date = new Date(isoString);
+    if (isNaN(date.getTime())) {
+      return '00:00';
     }
-  };
+    return format(date, 'h:mm');
+  } catch (error) {
+    return 'Invalid date';
+  }
+};
+
+function UpComingEvent() {
+  const { data: readingSessions, isLoading: isLoadingReadingSessions } =
+    useGetReadingSessionsQuery({ type: 'upcoming' });
+  const [data, setData] = useState<any>({});
+
   useEffect(() => {
-    getData();
-  }, []);
+    if (readingSessions && !isLoadingReadingSessions) {
+      setData(readingSessions[0]);
+    }
+  }, [readingSessions, isLoadingReadingSessions]);
+
   return (
     <div>
       {data && (
@@ -62,7 +60,10 @@ function UpComingEvent() {
               <CalendarDot size={13} color="#292D37" className="-mt-[4px]" />
             </div>
             <div className="text-[14px] font-[400] leading-[16px]">
-              Today <span>{formatTimeRange(data.startedAt, data.endedAt)}</span>
+              Today{' '}
+              <span>{`${formatTime(data.startedAt)} -> ${formatTime(
+                data.endedAt,
+              )}`}</span>
             </div>
           </div>
           <div className="flex items-center">

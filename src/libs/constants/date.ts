@@ -7,15 +7,6 @@ export const WEEK_STRING: string[] = [
   'FRI',
   'SAT',
 ];
-export const FORMAT_WEEK_STRING: string[] = [
-  'MON',
-  'TUE',
-  'WED',
-  'THU',
-  'FRI',
-  'SAT',
-  'SUN',
-];
 export const WEEK_DAY_MAP: { [key: string]: number } = {
   SUN: 0,
   MON: 1,

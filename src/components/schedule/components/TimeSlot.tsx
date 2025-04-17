@@ -12,7 +12,6 @@ import {
   AFTERNOON_TIME_START,
   DAY_STRING,
   EVENING_TIME_START,
-  FORMAT_WEEK_STRING,
   MONTH_STRING,
   MORNING_TIME_START,
   WEEK_DAY_MAP,
@@ -25,17 +24,11 @@ import type {
   TimeSlots,
 } from '@/libs/services/modules/time-slots/timeSlotsType';
 
-const dayMap = {
-  0: 'SUN',
-  1: 'MON',
-  2: 'TUE',
-  3: 'WED',
-  4: 'THU',
-  5: 'FRI',
-  6: 'SAT',
-};
+type TimeSlotType = 'morning' | 'afternoon' | 'evening';
+type DayTimeSlots = Record<TimeSlotType, any[]>;
+type WeekTimeSlots = Record<string, DayTimeSlots>;
 
-function TimeSlot() {
+function TimeSlot({ timeSlots }: { timeSlots: any }) {
   const [currentDate, setCurrentDate] = useState<any>('');
   const listTime: string[] = [];
   const [listDay, setListDay] = useState<Record<string, TimeSlots>>({});
@@ -45,11 +38,9 @@ function TimeSlot() {
 
   const handleUpdateTimeSlot: () => void = () => {
     setIsModalOpen(true);
-    // WIP
   };
 
   const submitUpdateSlots = async () => {
-    // WIP
     try {
       const sanitizedListDay = Object.entries(listDay).flatMap(([_, slots]) =>
         (['morning', 'afternoon', 'evening'] as const).flatMap((timeSlot) =>
@@ -76,8 +67,6 @@ function TimeSlot() {
     }
   };
 
-  // get current day
-
   const getCurrentDay = () => {
     const today = new Date().getDay();
     setCurrentDate(WEEK_STRING[today]);
@@ -92,27 +81,11 @@ function TimeSlot() {
     if (typeof day === 'number') {
       // Convert numeric day to string format ('MON', 'TUE', etc.)
 
-      setCurrentDate(dayMap[day as keyof typeof dayMap]);
+      setCurrentDate(WEEK_STRING[day as keyof typeof WEEK_STRING]);
     } else {
       setCurrentDate(day);
     }
   };
-
-  // useEffect(() => {
-  //   times.forEach((time) => {
-  //   const date = new Date(time.replace(' ', 'T'));
-  //   const hour = date.getHours();
-  //   const min = date.getMinutes();
-  //   const result = `${hour} : ${min}`;
-  //   if (hour >= MORNING_TIME_START && hour < AFTERNOON_TIME_START) {
-  //     morning.push(result);
-  //   } else if (hour >= AFTERNOON_TIME_START && hour < EVENING_TIME_START) {
-  //     afternoon.push(result);
-  //   } else {
-  //     evening.push(result);
-  //   }
-  // });
-  // }, []);
 
   useEffect(() => {
     if (listTime.length > 0) {
@@ -131,52 +104,6 @@ function TimeSlot() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (morning.length > 0) {
-  //     setListMorning(morning);
-  //   }
-  // }, [morning.length]);
-  // useEffect(() => {
-  //   if (afternoon.length > 0) {
-  //     setListAfternoon(afternoon);
-  //   }
-  // }, [afternoon.length]);
-  // useEffect(() => {
-  //   if (evening.length > 0) {
-  //     setListEvening(evening);
-  //   }
-  // }, [evening.length]);
-
-  // handle get this week
-  // const getCurrentWeek = () => {
-  //   const today = new Date();
-  //   const firstDayOfWeek = new Date(today);
-  //   firstDayOfWeek.setDate(today.getDate() - today.getDay());
-
-  //   const lastDayOfWeek = new Date(today);
-  //   lastDayOfWeek.setDate(today.getDate() + (6 - today.getDay()));
-
-  //   return {
-  //     startOfWeek: firstDayOfWeek.toISOString().split("T")[0],
-  //     endOfWeek: lastDayOfWeek.toISOString().split("T")[0]
-  //   };
-  // };
-
-  // handle get all day in this week
-  const getWeekDays = () => {
-    const today = new Date();
-    const firstDayOfWeek = new Date(today);
-    firstDayOfWeek.setDate(
-      today.getDate() - (today.getDay() === 0 ? 6 : today.getDay() - 1),
-    );
-
-    return Array.from({ length: 7 }, (_, i) => {
-      const date = new Date(firstDayOfWeek);
-      date.setDate(firstDayOfWeek.getDate() + i);
-      return date.toISOString().split('T')[0];
-    });
-  };
-
   const updateSelectedTime = (time: string, day: number) => {
     const [hours, minutes] = time.split(':').map(Number);
     const startTime = (hours ?? 0) + (minutes ?? 0) / 60;
@@ -189,7 +116,7 @@ function TimeSlot() {
     }
 
     setListDay((prev) => {
-      const updatedDay = dayMap[day as keyof typeof dayMap];
+      const updatedDay = WEEK_STRING[day] as string;
       const existingTimeSlot = prev[updatedDay]?.[timeSlotType]?.find(
         (slot) => slot.startTime === time,
       );
@@ -214,192 +141,66 @@ function TimeSlot() {
       };
     });
   };
-  useEffect(() => {
-    getWeekDays();
-  }, []);
+
+  const getTimeSlotType = (startTime: number): TimeSlotType => {
+    if (startTime >= MORNING_TIME_START && startTime < AFTERNOON_TIME_START) {
+      return 'morning';
+    }
+    if (startTime >= AFTERNOON_TIME_START && startTime < EVENING_TIME_START) {
+      return 'afternoon';
+    }
+    return 'evening';
+  };
+
   const formatData = (result: any) => {
-    const MON: any = {
-      morning: [],
-      afternoon: [],
-      evening: [],
+    // Initialize empty time slots for each day
+    const weekTimeSlots: WeekTimeSlots = {
+      MON: { morning: [], afternoon: [], evening: [] },
+      TUE: { morning: [], afternoon: [], evening: [] },
+      WED: { morning: [], afternoon: [], evening: [] },
+      THU: { morning: [], afternoon: [], evening: [] },
+      FRI: { morning: [], afternoon: [], evening: [] },
+      SAT: { morning: [], afternoon: [], evening: [] },
+      SUN: { morning: [], afternoon: [], evening: [] },
     };
-    const TUE: any = {
-      morning: [],
-      afternoon: [],
-      evening: [],
-    };
-    const WED: any = {
-      morning: [],
-      afternoon: [],
-      evening: [],
-    };
-    const THU: any = {
-      morning: [],
-      afternoon: [],
-      evening: [],
-    };
-    const FRI: any = {
-      morning: [],
-      afternoon: [],
-      evening: [],
-    };
-    const SAT: any = {
-      morning: [],
-      afternoon: [],
-      evening: [],
-    };
-    const SUN: any = {
-      morning: [],
-      afternoon: [],
-      evening: [],
+
+    // Map day numbers to day strings
+    const dayMap: Record<number, string> = {
+      1: 'MON',
+      2: 'TUE',
+      3: 'WED',
+      4: 'THU',
+      5: 'FRI',
+      6: 'SAT',
+      7: 'SUN',
     };
 
     result.forEach((element: any) => {
       const stringDate = element?.startTime ?? 0;
       const [hours, minutes] = stringDate.split(':').map(Number);
       const startTime = (hours ?? 0) + (minutes ?? 0) / 60;
-      switch (element.dayOfWeek) {
-        case 1:
-          if (
-            startTime >= MORNING_TIME_START &&
-            startTime < AFTERNOON_TIME_START
-          ) {
-            MON.morning.push(element);
-          } else if (
-            startTime >= AFTERNOON_TIME_START &&
-            startTime < EVENING_TIME_START
-          ) {
-            MON.afternoon.push(element);
-          } else {
-            MON.evening.push(element);
-          }
-          break;
-        case 2:
-          if (
-            startTime >= MORNING_TIME_START &&
-            startTime < AFTERNOON_TIME_START
-          ) {
-            TUE.morning.push(element);
-          } else if (
-            startTime >= AFTERNOON_TIME_START &&
-            startTime < EVENING_TIME_START
-          ) {
-            TUE.afternoon.push(element);
-          } else {
-            TUE.evening.push(element);
-          }
-          break;
-        case 3:
-          if (
-            startTime >= MORNING_TIME_START &&
-            startTime < AFTERNOON_TIME_START
-          ) {
-            WED.morning.push(element);
-          } else if (
-            startTime >= AFTERNOON_TIME_START &&
-            startTime < EVENING_TIME_START
-          ) {
-            WED.afternoon.push(element);
-          } else {
-            WED.evening.push(element);
-          }
-          break;
-        case 4:
-          if (
-            startTime >= MORNING_TIME_START &&
-            startTime < AFTERNOON_TIME_START
-          ) {
-            THU.morning.push(element);
-          } else if (
-            startTime >= AFTERNOON_TIME_START &&
-            startTime < EVENING_TIME_START
-          ) {
-            THU.afternoon.push(element);
-          } else {
-            THU.evening.push(element);
-          }
-          break;
-        case 5:
-          if (
-            startTime >= MORNING_TIME_START &&
-            startTime < AFTERNOON_TIME_START
-          ) {
-            FRI.morning.push(element);
-          } else if (
-            startTime >= AFTERNOON_TIME_START &&
-            startTime < EVENING_TIME_START
-          ) {
-            FRI.afternoon.push(element);
-          } else {
-            FRI.evening.push(element);
-          }
-          break;
-        case 6:
-          if (
-            startTime >= MORNING_TIME_START &&
-            startTime < AFTERNOON_TIME_START
-          ) {
-            SAT.morning.push(element);
-          } else if (
-            startTime >= AFTERNOON_TIME_START &&
-            startTime < EVENING_TIME_START
-          ) {
-            SAT.afternoon.push(element);
-          } else {
-            SAT.evening.push(element);
-          }
-          break;
-        case 7:
-          if (
-            startTime >= MORNING_TIME_START &&
-            startTime < AFTERNOON_TIME_START
-          ) {
-            SUN.morning.push(element);
-          } else if (
-            startTime >= AFTERNOON_TIME_START &&
-            startTime < EVENING_TIME_START
-          ) {
-            SUN.afternoon.push(element);
-          } else {
-            SUN.evening.push(element);
-          }
-          break;
-        default:
+
+      const { dayOfWeek } = element;
+      const dayString = dayMap[dayOfWeek];
+
+      if (dayString && weekTimeSlots[dayString]) {
+        const timeSlotType = getTimeSlotType(startTime);
+        weekTimeSlots[dayString][timeSlotType].push(element);
       }
     });
-    const list = {
-      ...listDay,
-      MON,
-      TUE,
-      WED,
-      THU,
-      FRI,
-      SAT,
-      SUN,
-    };
 
-    setListDay(list);
+    setListDay({
+      ...listDay,
+      ...weekTimeSlots,
+    });
   };
-  const getData = async () => {
-    try {
-      const response = await fetch(
-        'https://hulib-services.onrender.com/api/v1/time-slots',
-      );
-      const result = await response.json();
-      formatData(result);
-    } catch (error) {
-      console.error('Lỗi khi lấy dữ liệu:', error);
-    }
-  };
+
   useEffect(() => {
-    getData();
-  }, []);
-  const morningSlots =
-    (listDay[currentDate] as { morning: any[] })?.morning?.length || 0;
-  const afternoonSlots =
-    (listDay[currentDate] as { afternoon: any[] })?.afternoon?.length || 0;
-  const eveningSlots =
-    (listDay[currentDate] as { evening: any[] })?.evening?.length || 0;
+    if (timeSlots) {
+      formatData(timeSlots);
+    }
+  }, [timeSlots]);
+
   return (
     <div className="mb-[20px] flex flex-col justify-center rounded-[12px] bg-[#fff] p-[16px] drop-shadow-md">
       <div className="my-[10px]">
@@ -410,43 +211,19 @@ function TimeSlot() {
           Những khung giờ trong tuần mà bạn đã dành cho Liber
         </p>
       </div>
-      <div className="m-[4px] grid h-[32px] grid-cols-7 rounded-[16px] bg-[#F3F4F6]">
-        {FORMAT_WEEK_STRING.map((day: string) => (
-          <button
-            type="button"
-            onClick={() => handleSelectDay(day)}
-            key={day}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                handleSelectDay(day);
-              }
-            }}
-            className={`flex cursor-pointer items-center justify-center rounded-[16px] p-[4px] text-[14px] font-[400] leading-[16px] hover:bg-[#CDDDFE] hover:text-[#0442BF] ${
-              currentDate === day
-                ? 'bg-[#CDDDFE] text-[#0442BF]'
-                : 'text-[#000000]'
-            }`}
-          >
-            {day}
-          </button>
-        ))}
-      </div>
-      <p className="my-[4px] text-center text-[12px] font-[400] leading-[14px] text-[#38AA16]">
-        {`Amazing!!! Bạn có thể gặp ${
-          morningSlots + afternoonSlots + eveningSlots
-        } Liber vào hôm nay 💚`}
-      </p>
+      {currentDate}
+      <HeadSlots
+        dayOfWeek={WEEK_DAY_MAP[currentDate]}
+        onChangeDayOfWeek={(day: number) => handleSelectDay(day)}
+        selectedTimes={
+          listDay[currentDate]?.morning.concat(
+            listDay[currentDate]?.afternoon,
+            listDay[currentDate]?.evening,
+          ) || []
+        }
+      />
       <div>
         <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-          {/* {listDay[currentDate].morning.length > 0 &&
-            listDay[currentDate].morning.map((time : any, index :any) => (
-              <div
-                key={index}
-                className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
-              >
-                {time.startTime}
-              </div>
-            ))} */}
           {(listDay[currentDate] as { morning: any[] })?.morning?.length > 0 &&
             (listDay[currentDate] as { morning: any[] }).morning.map(
               (time: any, index: any) => (
@@ -460,15 +237,6 @@ function TimeSlot() {
             )}
         </div>
         <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-          {/* {listDay[currentDate].afternoon.length > 0 &&
-            listDay[currentDate].afternoon.map((time : any, index : any) => (
-              <div
-                key={index}
-                className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
-              >
-                {time.startTime}
-                </div>
-            ))} */}
           {(listDay[currentDate] as { afternoon: any[] })?.afternoon?.length >
             0 &&
             (listDay[currentDate] as { afternoon: any[] }).afternoon.map(
@@ -483,15 +251,6 @@ function TimeSlot() {
             )}
         </div>
         <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-          {/* {listDay[currentDate].evening.length > 0 &&
-            listDay[currentDate].evening.map((time : any, index : any) => (
-              <div
-                key={index}
-                className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
-              >
-                {time.startTime}
-                </div>
-            ))} */}
           {(listDay[currentDate] as { evening: any[] })?.evening?.length > 0 &&
             (listDay[currentDate] as { evening: any[] }).evening.map(
               (time: any, index: any) => (
