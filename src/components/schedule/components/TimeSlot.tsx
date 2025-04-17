@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from 'react';
 
+import Button from '@/components/button/Button';
+import AvailableSchedule from '@/components/common/AvailableSchedule';
+import HeadSlots from '@/components/common/HeadSlots';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import Modal from '@/components/Modal';
 import {
   AFTERNOON_TIME_START,
   DAY_STRING,
@@ -9,25 +14,76 @@ import {
   FORMAT_WEEK_STRING,
   MONTH_STRING,
   MORNING_TIME_START,
+  WEEK_DAY_MAP,
   WEEK_STRING,
   YEAR_STRING,
 } from '@/libs/constants/date';
+import { useCreateTimeSlotsMutation } from '@/libs/services/modules/time-slots';
+import type {
+  TimeSlotItem,
+  TimeSlots,
+} from '@/libs/services/modules/time-slots/timeSlotsType';
 
-interface TimeSlots {
-  morning: any[];
-  afternoon: any[];
-  evening: any[];
-}
+const dayMap = {
+  0: 'SUN',
+  1: 'MON',
+  2: 'TUE',
+  3: 'WED',
+  4: 'THU',
+  5: 'FRI',
+  6: 'SAT',
+};
+
 function TimeSlot() {
   const [currentDate, setCurrentDate] = useState<any>('');
   const listTime: string[] = [];
   const [listDay, setListDay] = useState<Record<string, TimeSlots>>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [createTimeSlots, { isLoading }] = useCreateTimeSlotsMutation();
   const handleUpdateTimeSlot: () => void = () => {
+    setIsModalOpen(true);
     // WIP
   };
 
+  const submitUpdateSlots = async () => {
+    // WIP
+    try {
+      const sanitizedListDay = Object.entries(listDay).flatMap(([_, slots]) =>
+        (['morning', 'afternoon', 'evening'] as const).flatMap((timeSlot) =>
+          (slots[timeSlot as keyof TimeSlots] || []).map(
+            ({ startTime, dayOfWeek }: TimeSlotItem) => ({
+              dayOfWeek,
+              startTime,
+            }),
+          ),
+        ),
+      );
+
+      const response = await createTimeSlots({ timeSlots: sanitizedListDay });
+
+      if (response?.error?.status === 422) {
+        pushError(
+          'An error has occurred. Please check your time slots and try again.',
+        );
+      } else {
+        pushSuccess('You have successfully updated your time slots.');
+      }
+    } catch (error) {
+      pushError('An error has occurred.');
+    } finally {
+      setIsModalOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    console.log('listDay', listDay);
+  }, [listDay]);
+
+  // get current day
+
   const getCurrentDay = () => {
     const today = new Date().getDay();
+    console.log('today', today);
     console.log('WEEK_STRING[today]', WEEK_STRING[today]);
     setCurrentDate(WEEK_STRING[today]);
   };
@@ -37,8 +93,14 @@ function TimeSlot() {
   }, []);
 
   // display time slot depend on day was choosed
-  const handleSelectDay = (day: string) => {
-    setCurrentDate(day);
+  const handleSelectDay = (day: number | string) => {
+    if (typeof day === 'number') {
+      // Convert numeric day to string format ('MON', 'TUE', etc.)
+
+      setCurrentDate(dayMap[day as keyof typeof dayMap]);
+    } else {
+      setCurrentDate(day);
+    }
   };
 
   // useEffect(() => {
@@ -120,6 +182,50 @@ function TimeSlot() {
     });
   };
 
+  const updateSelectedTime = (time: string, day: number) => {
+    console.log('time', time);
+    console.log('day', day);
+
+    if (day) {
+      console.log('updatedDay', day);
+      const [hours, minutes] = time.split(':').map(Number);
+      const startTime = (hours ?? 0) + (minutes ?? 0) / 60;
+
+      let timeSlotType: keyof TimeSlots = 'morning';
+      if (startTime >= AFTERNOON_TIME_START && startTime < EVENING_TIME_START) {
+        timeSlotType = 'afternoon';
+      } else if (startTime >= EVENING_TIME_START) {
+        timeSlotType = 'evening';
+      }
+
+      setListDay((prev) => {
+        const updatedDay = dayMap[day as keyof typeof dayMap];
+        const existingTimeSlot = prev[updatedDay]?.[timeSlotType]?.find(
+          (slot) => slot.startTime === time,
+        );
+
+        const updatedTimeSlot = existingTimeSlot
+          ? prev[updatedDay]?.[timeSlotType]?.filter(
+              (slot) => slot.startTime !== time,
+            )
+          : [
+              ...(prev[updatedDay]?.[timeSlotType] || []),
+              { startTime: time, dayOfWeek: day },
+            ];
+
+        return {
+          ...prev,
+          [updatedDay]: {
+            morning: prev[updatedDay]?.morning || [],
+            afternoon: prev[updatedDay]?.afternoon || [],
+            evening: prev[updatedDay]?.evening || [],
+            [timeSlotType]: updatedTimeSlot,
+          },
+        };
+      });
+      console.log('Updated listDay:', listDay);
+    }
+  };
   useEffect(() => {
     getWeekDays();
   }, []);
@@ -163,7 +269,7 @@ function TimeSlot() {
     result.forEach((element: any) => {
       const stringDate = element?.startTime ?? 0;
       const [hours, minutes] = stringDate.split(':').map(Number);
-      const startTime = hours + minutes / 60;
+      const startTime = (hours ?? 0) + (minutes ?? 0) / 60;
       switch (element.dayOfWeek) {
         case 1:
           if (
@@ -283,6 +389,7 @@ function TimeSlot() {
       SAT,
       SUN,
     };
+
     setListDay(list);
   };
   const getData = async () => {
@@ -423,6 +530,51 @@ function TimeSlot() {
           </span>
         </button>
       </div>
+      {isModalOpen && (
+        <Modal
+          onClose={() => setIsModalOpen(false)}
+          open={isModalOpen}
+          disableClosingTrigger={false}
+        >
+          <Modal.Panel className="inset-0 flex w-[550px] items-center justify-center ">
+            <div className="rounded-lg bg-white p-6 shadow-lg">
+              <Modal.Title>My available slots</Modal.Title>
+              <span>Select the times you’re available for Liber!</span>
+              <HeadSlots
+                dayOfWeek={WEEK_DAY_MAP[currentDate]}
+                onChangeDayOfWeek={(day: number) => handleSelectDay(day)}
+                selectedTimes={
+                  listDay[currentDate]?.morning.concat(
+                    listDay[currentDate]?.afternoon,
+                    listDay[currentDate]?.evening,
+                  ) || []
+                }
+              />
+              <AvailableSchedule
+                onSelectTime={(time: string, day: number) =>
+                  updateSelectedTime(time, day)
+                }
+                selectedTimes={
+                  listDay[currentDate]?.morning.concat(
+                    listDay[currentDate]?.afternoon,
+                    listDay[currentDate]?.evening,
+                  ) || []
+                }
+                currentDay={WEEK_DAY_MAP[currentDate] || 0}
+              />
+              <div className="mt-6 flex justify-end">
+                <Button
+                  onClick={submitUpdateSlots}
+                  className=" w-full"
+                  animation={isLoading ? 'progress' : undefined}
+                >
+                  Update My Slots
+                </Button>
+              </div>
+            </div>
+          </Modal.Panel>
+        </Modal>
+      )}
     </div>
   );
 }

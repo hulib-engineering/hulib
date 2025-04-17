@@ -16,6 +16,16 @@ export const FORMAT_WEEK_STRING: string[] = [
   'SAT',
   'SUN',
 ];
+export const WEEK_DAY_MAP: { [key: string]: number } = {
+  SUN: 0,
+  MON: 1,
+  TUE: 2,
+  WED: 3,
+  THU: 4,
+  FRI: 5,
+  SAT: 6,
+};
+
 export const DAY_STRING = 'day';
 export const MONTH_STRING = 'month';
 export const YEAR_STRING = 'year';
