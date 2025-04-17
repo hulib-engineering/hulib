@@ -1,5 +1,6 @@
 'use client';
 
+import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
 import { SuccessScreen } from '@/components/common/SuccessScreen';
@@ -9,6 +10,8 @@ import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 
 export default function Index() {
   const { data: currentUser } = useGetPersonalInfoQuery();
+  const { huberId } = useParams();
+
   const huberInfo = {
     fullName: 'Tran Thanh Thao',
     role: 'Huber',
@@ -22,6 +25,11 @@ export default function Index() {
   >('select-time');
   const [selectedDay, setSelectedDay] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState<string>('');
+
+  const onSelectDay = (day: Date) => {
+    setSelectedDay(day);
+    setSelectedTime('');
+  };
 
   if (!currentStep) {
     return <div>Loading...</div>;
@@ -37,7 +45,8 @@ export default function Index() {
           }}
           selectDate={selectedDay}
           selectTime={selectedTime}
-          onSelectDay={setSelectedDay}
+          huberId={Number(huberId)}
+          onSelectDay={onSelectDay}
           onSelectTime={setSelectedTime}
           nextStep={() => setCurrentStep('confirm')}
         />
@@ -56,6 +65,7 @@ export default function Index() {
               month: 'short',
             }) ?? ''
           }
+          humanBookId={Number(huberId)}
           backStep={() => setCurrentStep('select-time')}
           nextStep={() => setCurrentStep('success')}
         />

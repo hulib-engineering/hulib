@@ -2,7 +2,6 @@
 
 import { Globe } from '@phosphor-icons/react';
 import { isEmpty } from 'lodash';
-import { useParams } from 'next/navigation';
 import * as React from 'react';
 
 import Button from '@/components/button/Button';
@@ -28,6 +27,7 @@ export const MainScreen = ({
   attendees,
   selectDate,
   selectTime,
+  huberId,
   onSelectDay,
   onSelectTime,
   nextStep,
@@ -35,12 +35,11 @@ export const MainScreen = ({
   attendees: { liber: IAttendee; huber: any };
   selectDate: Date;
   selectTime: string;
+  huberId: number;
   onSelectDay: (day: Date) => void;
   onSelectTime: (time: string) => void;
   nextStep: () => void;
 }) => {
-  const { huberId } = useParams();
-
   const { data: timeSlots } = useGetTimeSlotsHuberQuery({
     id: Number(huberId),
   });
@@ -48,7 +47,7 @@ export const MainScreen = ({
   const filterTimeSlots: TimeSlot[] = React.useMemo(() => {
     return (
       timeSlots?.filter(
-        (timeSlot: TimeSlot) => timeSlot.dayOfWeek === selectDate.getDay(),
+        (timeSlot: TimeSlot) => timeSlot.dayOfWeek === selectDate?.getDay(),
       ) ?? []
     );
   }, [selectDate, timeSlots]);
@@ -112,7 +111,7 @@ export const MainScreen = ({
       return null;
     }
     return (
-      <div className="grid w-full grid-cols-3 items-center gap-2 xl:grid-cols-5 xl:p-3 2xl:grid-cols-6">
+      <div className="flex w-full flex-wrap items-center gap-x-1 gap-y-2 xl:p-3">
         {list.map((item) => (
           <button
             key={item}
@@ -136,6 +135,9 @@ export const MainScreen = ({
     window.scrollTo(0, 0);
   }, []);
 
+  const timeLineClass =
+    'flex grid-cols-[100px_auto] min-h-[60px] flex-col items-center gap-x-4 gap-y-2 md:grid';
+
   return (
     <div className="flex h-full w-full flex-col gap-6 bg-neutral-98 xl:flex-row">
       <ScheduleBasicInfo attendees={attendees} />
@@ -153,8 +155,10 @@ export const MainScreen = ({
         </div>
         <div className="flex flex-col">
           <OneWeek
-            selectDate={selectDate ?? new Date()}
+            selectDate={selectDate}
             setSelectDate={onClickDate}
+            todayClass="border border-neutral-80"
+            selectedClass="border border-primary-500 bg-primary-50 text-white"
           />
 
           <p className="text-xs font-normal text-neutral-60">
@@ -164,26 +168,26 @@ export const MainScreen = ({
 
         <div className="flex flex-col gap-y-2 rounded-3xl bg-white p-4 shadow-lg">
           <p className="text-sm font-medium text-neutral-10">
-            {selectDate.toLocaleDateString('en-US', {
+            {selectDate?.toLocaleDateString('en-US', {
               weekday: 'long',
               month: 'long',
               day: '2-digit',
             })}
           </p>
           <div className="flex flex-col gap-y-2">
-            <div className="flex grid-cols-[100px_auto] flex-col items-center gap-x-4 gap-y-2 md:grid">
+            <div className={timeLineClass}>
               <span className="text-base font-normal text-neutral-40">
                 Morning
               </span>
               {morningTimeSlot.length > 0 && timeBlock(morningTimeSlot)}
             </div>
-            <div className="flex grid-cols-[100px_auto] flex-col items-center gap-x-4 gap-y-2 md:grid">
+            <div className={timeLineClass}>
               <span className="text-base font-normal text-neutral-40">
                 Afternoon
               </span>
               {afterNoonTimeSlot.length > 0 && timeBlock(afterNoonTimeSlot)}
             </div>
-            <div className="flex grid-cols-[100px_auto] flex-col items-center gap-x-4 gap-y-2 md:grid">
+            <div className={timeLineClass}>
               <span className="text-base font-normal text-neutral-40">
                 Night
               </span>
