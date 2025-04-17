@@ -7,6 +7,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/libs/hooks';
+import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 
 // import StoriesSkeleton from '../../../stories/StoriesSkeleton';
 import DetailEventHuber from '../DetailEventHuber';
@@ -36,6 +37,8 @@ const dayHeaderContent = (arg: any) => {
 };
 
 export default function BigCalendar() {
+  const { data: readingSessions, isLoading: isLoadingReadingSessions } =
+    useGetReadingSessionsQuery();
   const [list, setList] = useState([]);
   const userInfor = useAppSelector((state) => state.auth.userInfo);
   const currentMonthYear = new Date().toLocaleString('en-US', {
@@ -61,41 +64,13 @@ export default function BigCalendar() {
     });
   };
 
-  //   function convertToYYYYMMDD(isoString: string) {
-  //     const date = new Date(isoString);
-  //     if (isNaN(date.getTime())) {
-  //         console.error("Lỗi chuyển đổi ngày:", isoString);
-  //         return "Invalid Date";
-  //     }
-
-  //     const year = date.getFullYear();
-  //     const month = String(date.getMonth() + 1).padStart(2, '0');
-  //     const day = String(date.getDate()).padStart(2, '0');
-
-  //     return `${year}-${month}-${day}`;
-  // }
-  const getData = async () => {
-    try {
-      const response = await fetch(
-        'https://hulib-services.onrender.com/api/v1/reading-sessions',
-      );
-      const result = await response.json();
-      console.log('Response', result);
-      const dataFormat = await formatData(result);
-      console.log('dataFormat', dataFormat);
-      setList(dataFormat);
-    } catch (error) {
-      console.error('Lỗi khi lấy dữ liệu:', error);
+  useEffect(() => {
+    if (readingSessions && !isLoadingReadingSessions) {
+      setList(formatData(readingSessions));
     }
-  };
-  const getAllData = (data: boolean) => {
-    if (data) {
-      getData();
-    }
-  };
+  }, [readingSessions, isLoadingReadingSessions]);
+
   function renderEventContent(eventInfo: any, user: any) {
-    console.log('extendedProps:', eventInfo.event.extendedProps);
-
     return (
       <div className="group relative z-[50] cursor-pointer overflow-visible">
         <div className="relative min-w-[60px] overflow-visible">
@@ -139,7 +114,7 @@ export default function BigCalendar() {
               <div className="absolute -left-[396px] top-[5px] z-50 hidden group-hover:block">
                 <DetailEventHuber
                   data={eventInfo.event.extendedProps}
-                  callblack={(data: boolean) => getAllData(data)}
+                  // callblack={(data: boolean) => getAllData(data)}
                 />
               </div>
             </>
@@ -163,11 +138,6 @@ export default function BigCalendar() {
                 <div className="flex items-center">
                   <Image
                     alt="avatar"
-                    // src={
-                    //   eventInfo?.event?.extendedProps?.reader?.videoUrl
-                    //     ? eventInfo?.event?.extendedProps?.reader?.videoUrl
-                    //     : '/assets/images/icons/avatar.svg'
-                    // }
                     src="/assets/images/icons/avatar.svg"
                     width={14}
                     height={14}
@@ -190,9 +160,6 @@ export default function BigCalendar() {
     );
   }
 
-  useEffect(() => {
-    getData();
-  }, []);
   return (
     <div className="bg-white p-4">
       <h2 className="rounded-md bg-white p-2 text-[28px] font-[500] leading-[36px] text-[#010D26]">
