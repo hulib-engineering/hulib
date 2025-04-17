@@ -2,38 +2,36 @@
 
 import { CaretCircleDown, CaretCircleUp } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
-import * as React from 'react';
+import React from 'react';
 
 import Button from '@/components/button/Button';
-import { FlipBook } from '@/components/flipBook/FlipBook';
 import { mergeClassnames } from '@/components/private/utils';
+import ListTopics from '@/components/stories/ListTopics';
 import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
-import { useGetSimilarStoriesQuery } from '@/libs/services/modules/stories';
+import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
-type SimilarStoryProps = {
-  humanBookId: string;
-  topicIds: string[] | number[];
+import { FlipBook } from '../flipBook/FlipBook';
+
+type ExporeStoryProps = {
+  topicIds: string | null;
 };
 
-const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
+const ExploreStory = ({ topicIds }: ExporeStoryProps) => {
   const t = useTranslations('ExporeStory');
 
   const [isExpandList, setIsExpandList] = React.useState(false);
   const [limit, setLimit] = React.useState(6);
 
-  // Fetch 6 stories initially, fetch all when expanded
   const {
-    data: similarStoriesPages,
+    data: storiesPages,
     isLoading,
     isFetching,
-  } = useGetSimilarStoriesQuery({
+  } = useGetStoriesQuery({
     page: 1,
     limit,
-    humanBookId,
-    topicIds,
+    topicIds: topicIds ? topicIds.split(',').map(Number) : undefined,
   });
-
   const onClickSeeAll = () => {
     setIsExpandList((prev) => !prev);
   };
@@ -49,40 +47,42 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
   if (isLoading || isFetching) return <StoriesSkeleton />;
 
   return (
-    <div
-      className={mergeClassnames(
-        'h-full w-full rounded-lg bg-white px-2 py-5',
-        'md:px-5 md:py-5',
-      )}
-    >
-      <h3 className="text-[2.5rem] font-bold leading-[3rem] text-neutral-20">
-        {t('similar_stories')}
-      </h3>
+    <div className="mx-auto h-full w-full max-w-[1216px] rounded-lg">
+      <div>
+        <h3 className="text-[2.5rem] font-bold leading-[3rem] text-neutral-20">
+          {t('title')}
+        </h3>
+        <p className="text-lg font-normal text-[#2E3032]">{t('description')}</p>
+      </div>
+      <ListTopics />
       <div
         className={mergeClassnames(
-          'mt-6 xl:justify-start relative flex flex-wrap items-center justify-center gap-8 2xl:gap-12',
+          'mt-6 grid grid-cols-1 gap-8',
+          'md:grid-cols-2',
+          'xl:grid-cols-3',
         )}
       >
-        {similarStoriesPages?.data?.map((story: StoryType) => (
+        {storiesPages?.data?.map((story: StoryType) => (
+          // <Story key={story?.id} data={story} />
           <FlipBook key={story?.id} data={story} />
         ))}
       </div>
 
-      {(limit === 6 && similarStoriesPages?.hasNextPage) ||
-      (limit === 0 && !similarStoriesPages?.hasNextPage) ? (
+      {(limit === 6 && storiesPages?.hasNextPage) ||
+      (limit === 0 && !storiesPages?.hasNextPage) ? (
         <div className="mt-6 flex w-full items-center justify-center">
           <Button
             variant="outline"
             iconLeft={
               limit === 0 ? (
-                <CaretCircleUp size={16} color="#0662BF" />
+                <CaretCircleUp size={16} color="#0442BF" />
               ) : (
-                <CaretCircleDown size={16} color="#0662BF" />
+                <CaretCircleDown size={16} color="#0442BF" />
               )
             }
             onClick={onClickSeeAll}
           >
-            {limit === 0 ? t('hide_all') : t('see_all')}
+            {limit === 0 ? t('hide_all') : t('view_more')}
           </Button>
         </div>
       ) : null}
@@ -90,4 +90,4 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
   );
 };
 
-export default SimilarStory;
+export default ExploreStory;

@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import {
@@ -23,9 +22,8 @@ function TimeSlot() {
   const [currentDate, setCurrentDate] = useState<any>('');
   const listTime: string[] = [];
   const [listDay, setListDay] = useState<Record<string, TimeSlots>>({});
-  const router = useRouter() || null;
   const handleUpdateTimeSlot: () => void = () => {
-    router.push('/schedule-meeting/time-slot');
+    // WIP
   };
 
   const getCurrentDay = () => {

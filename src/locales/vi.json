@@ -329,7 +329,6 @@
   "HumanBookRegister": {
     "register_as_a_human_book": "Đăng ký làm Người Sách",
     "register_confirm_message": "Bạn có chắc chắn đăng ký làm Human Book không?",
-    "error_form_no_video": "Vui lòng chọn một file video hợp lệ!!!",
     "About": "Giới thiệu",
     "placeholder_about": "Hãy kể về bản thân bạn...",
     "Session": "Phiên",
