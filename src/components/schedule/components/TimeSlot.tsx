@@ -186,45 +186,42 @@ function TimeSlot() {
     console.log('time', time);
     console.log('day', day);
 
-    if (day) {
-      console.log('updatedDay', day);
-      const [hours, minutes] = time.split(':').map(Number);
-      const startTime = (hours ?? 0) + (minutes ?? 0) / 60;
+    const [hours, minutes] = time.split(':').map(Number);
+    const startTime = (hours ?? 0) + (minutes ?? 0) / 60;
 
-      let timeSlotType: keyof TimeSlots = 'morning';
-      if (startTime >= AFTERNOON_TIME_START && startTime < EVENING_TIME_START) {
-        timeSlotType = 'afternoon';
-      } else if (startTime >= EVENING_TIME_START) {
-        timeSlotType = 'evening';
-      }
-
-      setListDay((prev) => {
-        const updatedDay = dayMap[day as keyof typeof dayMap];
-        const existingTimeSlot = prev[updatedDay]?.[timeSlotType]?.find(
-          (slot) => slot.startTime === time,
-        );
-
-        const updatedTimeSlot = existingTimeSlot
-          ? prev[updatedDay]?.[timeSlotType]?.filter(
-              (slot) => slot.startTime !== time,
-            )
-          : [
-              ...(prev[updatedDay]?.[timeSlotType] || []),
-              { startTime: time, dayOfWeek: day },
-            ];
-
-        return {
-          ...prev,
-          [updatedDay]: {
-            morning: prev[updatedDay]?.morning || [],
-            afternoon: prev[updatedDay]?.afternoon || [],
-            evening: prev[updatedDay]?.evening || [],
-            [timeSlotType]: updatedTimeSlot,
-          },
-        };
-      });
-      console.log('Updated listDay:', listDay);
+    let timeSlotType: keyof TimeSlots = 'morning';
+    if (startTime >= AFTERNOON_TIME_START && startTime < EVENING_TIME_START) {
+      timeSlotType = 'afternoon';
+    } else if (startTime >= EVENING_TIME_START) {
+      timeSlotType = 'evening';
     }
+
+    setListDay((prev) => {
+      const updatedDay = dayMap[day as keyof typeof dayMap];
+      const existingTimeSlot = prev[updatedDay]?.[timeSlotType]?.find(
+        (slot) => slot.startTime === time,
+      );
+
+      const updatedTimeSlot = existingTimeSlot
+        ? prev[updatedDay]?.[timeSlotType]?.filter(
+            (slot) => slot.startTime !== time,
+          )
+        : [
+            ...(prev[updatedDay]?.[timeSlotType] || []),
+            { startTime: time, dayOfWeek: day },
+          ];
+
+      return {
+        ...prev,
+        [updatedDay]: {
+          morning: prev[updatedDay]?.morning || [],
+          afternoon: prev[updatedDay]?.afternoon || [],
+          evening: prev[updatedDay]?.evening || [],
+          [timeSlotType]: updatedTimeSlot,
+        },
+      };
+    });
+    console.log('Updated listDay:', listDay);
   };
   useEffect(() => {
     getWeekDays();
