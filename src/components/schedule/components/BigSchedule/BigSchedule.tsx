@@ -163,11 +163,12 @@ export default function BigCalendar() {
                 <div className="flex items-center">
                   <Image
                     alt="avatar"
-                    src={
-                      eventInfo?.event?.extendedProps?.reader?.videoUrl
-                        ? eventInfo?.event?.extendedProps?.reader?.videoUrl
-                        : '/assets/images/icons/avatar.svg'
-                    }
+                    // src={
+                    //   eventInfo?.event?.extendedProps?.reader?.videoUrl
+                    //     ? eventInfo?.event?.extendedProps?.reader?.videoUrl
+                    //     : '/assets/images/icons/avatar.svg'
+                    // }
+                    src="/assets/images/icons/avatar.svg"
                     width={14}
                     height={14}
                     loading="lazy"

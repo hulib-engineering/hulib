@@ -4,6 +4,7 @@ import { Check } from '@phosphor-icons/react';
 import clsx from 'clsx';
 import React, { useEffect } from 'react';
 
+import { SuccessScreen } from '@/components/common/SuccessScreen';
 import Step1 from '@/components/huber-registration/Step1';
 import Step2 from '@/components/huber-registration/Step2';
 import Step3 from '@/components/huber-registration/Step3';
@@ -104,7 +105,16 @@ const StepContent = ({
     case 2:
       return <Step2 next={onNext} />;
     case 3:
-      return <Step3 />;
+      return <Step3 next={onNext} />;
+    case 4:
+      return (
+        <SuccessScreen
+          title="Summited"
+          notification="Thanks for your story! HuLib will keep you informed when our process completes. We look forward to your participation as a Huber!"
+          nameButton="Go to Scheduling"
+          linkButton="/schedule-meeting/weekly-schedule"
+        />
+      );
     default:
       return null;
   }
@@ -114,9 +124,16 @@ const Page = () => {
   const { currentStep, handleNextStep } = useStepManagement();
 
   return (
-    <CommonLayout className="flex w-full !flex-col items-center justify-center !bg-neutral-98">
-      <div className="md:w-[37.5rem]">
+    <CommonLayout
+      className={clsx(
+        'flex w-full !flex-col justify-center !bg-neutral-98',
+        currentStep !== 3 && 'items-center',
+      )}
+    >
+      <div className="w-[37.5rem]">
         <ProgressBar currentStep={currentStep} />
+      </div>
+      <div className={clsx(currentStep !== 3 ? 'w-[37.5rem]' : 'w-full')}>
         <StepContent currentStep={currentStep} onNext={handleNextStep} />
       </div>
     </CommonLayout>

@@ -33,6 +33,15 @@ const baseQueryWithInterceptor = async (
 ) => {
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock();
+
+  // Check if it's a POST request
+  if (typeof args !== 'string' && args.method === 'POST') {
+    if (!args.headers) {
+      args.headers = new Headers();
+    }
+    (args.headers as Headers).set('Content-Type', 'application/json');
+  }
+
   const result = await baseQuery(args, api, extraOptions);
   if (
     api.endpoint !== 'loginAsAdmin' &&

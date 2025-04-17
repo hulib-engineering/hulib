@@ -6,18 +6,23 @@ import type { Story } from './storiesType';
 export interface CreateStoryRequest {
   title: string;
   abstract: string;
-  topics: number[];
+  topicIds: number[];
   cover: {
     id: string;
   };
+  humanBook: {
+    id: number;
+  };
 }
 
+export interface CreateStoryResponse extends Story {}
+
 const createStory = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
-  build.mutation<Story, CreateStoryRequest>({
+  build.mutation<CreateStoryResponse, CreateStoryRequest>({
     query: (body) => ({
       url: 'stories',
       method: 'POST',
-      body: JSON.stringify(body),
+      body,
     }),
     invalidatesTags: [{ type: 'Stories', id: 'LIST' }],
   });
