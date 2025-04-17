@@ -34,7 +34,7 @@ module.exports = {
       '6xl': '4rem',
     },
     colors: {
-      primary: '#0061EF',
+      // primary: '#0061EF',
       'primary-hover': '#0057D7',
       secondary: '#FFC745',
       light: '#B0CEFA',
@@ -130,7 +130,9 @@ module.exports = {
           90: '#FFE4F1',
         },
         green: {
+          30: '#2A8010',
           50: '#46D51B',
+          90: '#D9F9CF',
           98: '#FBFEFA',
         },
         // lp: only for Landing Page

@@ -4,7 +4,7 @@
 
 import { CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
-import router from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -16,7 +16,7 @@ const baseHubers = [
     role: 'Professor',
     topics: 20,
     rating: 4.2,
-    image: '/assets/images/recommended-huber.jfif',
+    image: '/assets/images/huber/cover-huber.png',
     id: 0,
   },
   {
@@ -24,7 +24,7 @@ const baseHubers = [
     role: 'CEO of Company',
     topics: 20,
     rating: 4.2,
-    image: '/assets/images/recommended-huber.jfif',
+    image: '/assets/images/huber/cover-huber.png',
     id: 1,
   },
   {
@@ -32,7 +32,7 @@ const baseHubers = [
     role: 'Marketer',
     topics: 20,
     rating: 4.2,
-    image: '/assets/images/recommended-huber.jfif',
+    image: '/assets/images/huber/cover-huber.png',
     id: 2,
   },
 ];
@@ -40,6 +40,7 @@ const hubers = [...baseHubers, ...baseHubers, ...baseHubers];
 
 const ListHubers = () => {
   const t = useTranslations('Home');
+  const router = useRouter();
   const scrollContainerRef = React.useRef<any>(null);
 
   const smoothScroll = (
@@ -157,7 +158,7 @@ const ListHubers = () => {
       <div className="mt-5 w-full">
         <Button
           variant="secondary"
-          onClick={() => router.push('explore-book')}
+          onClick={() => router.push('/explore-huber')}
           className="w-full"
           shouldHover={false}
         >

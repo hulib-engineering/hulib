@@ -11,7 +11,6 @@ import {
 } from '@phosphor-icons/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import React, { useMemo } from 'react';
 
@@ -137,10 +136,29 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
 
 const Header = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
-  const router = useRouter();
 
-  const handleNavigateToSchedule = () => {
-    router.push('/schedule-meeting/weekly-schedule');
+  const renderNavbar = () => {
+    return (
+      <div className="flex items-center justify-between gap-x-2">
+        {user && user?.id && (
+          <Link href="/schedule-meeting/weekly-schedule">
+            <Button variant="ghost" size="lg" className="text-neutral-10">
+              My schedule
+            </Button>
+          </Link>
+        )}
+        <Link href="/explore-story">
+          <Button variant="ghost" size="lg" className="text-neutral-10">
+            Stories
+          </Button>
+        </Link>
+        <Link href="/explore-huber">
+          <Button variant="ghost" size="lg" className="text-neutral-10">
+            Hubers
+          </Button>
+        </Link>
+      </div>
+    );
   };
 
   return (
@@ -197,51 +215,13 @@ const Header = () => {
         </div>
         <div className="flex flex-col gap-2">
           {/* <SearchEverything /> */}
-          <div className="flex items-center justify-between gap-x-2">
-            {user && user?.id && (
-              <Button
-                variant="ghost"
-                size="lg"
-                className="text-neutral-10"
-                onClick={handleNavigateToSchedule}
-              >
-                My schedule
-              </Button>
-            )}
-            <Link href="/explore-story">
-              <Button variant="ghost" size="lg" className="text-neutral-10">
-                Stories
-              </Button>
-            </Link>
-            <Button variant="ghost" size="lg" className="text-neutral-10">
-              Hubers
-            </Button>
-          </div>
+          {renderNavbar()}
         </div>
       </header>
       <header className="hidden w-full items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
         <div className="flex items-center gap-6">
           <Logo size="small" />
-          <div className="flex items-center gap-x-2">
-            {user && user?.id && (
-              <Button
-                variant="ghost"
-                size="lg"
-                className="text-neutral-10"
-                onClick={handleNavigateToSchedule}
-              >
-                My schedule
-              </Button>
-            )}
-            <Link href="/explore-story">
-              <Button variant="ghost" size="lg" className="text-neutral-10">
-                Stories
-              </Button>
-            </Link>
-            <Button variant="ghost" size="lg" className="text-neutral-10">
-              Hubers
-            </Button>
-          </div>
+          {renderNavbar()}
         </div>
         <div className="w-[300px]">
           <SearchInput />
