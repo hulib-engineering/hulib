@@ -405,6 +405,17 @@
     "see_all": "See All",
     "hide_all": "Hide All"
   },
+  "Time_slots": {
+    "title": "Time Slots",
+    "description": "Select your available time slots",
+    "time_slots": "Time Slots",
+    "available_time_slots": "My available slots",
+    "select_time_slots": "Select the times you’re available for Liber!",
+    "update_time_slots": "Update My Slots",
+    "select_time_slots_description": "Select the time slots you are available for the session",
+    "error_time_slots": "An error has occurred. Please check your time slots and try again.",
+    "success_time_slots_description": "You have successfully created your time slots"
+  },
   "Home": {
     "banner": {
       "title": "Hi!",

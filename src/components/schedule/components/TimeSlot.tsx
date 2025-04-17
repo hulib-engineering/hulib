@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 import Button from '@/components/button/Button';
@@ -40,6 +41,8 @@ function TimeSlot() {
   const [listDay, setListDay] = useState<Record<string, TimeSlots>>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [createTimeSlots, { isLoading }] = useCreateTimeSlotsMutation();
+  const t = useTranslations('Time_slots');
+
   const handleUpdateTimeSlot: () => void = () => {
     setIsModalOpen(true);
     // WIP
@@ -62,11 +65,9 @@ function TimeSlot() {
       const response = await createTimeSlots({ timeSlots: sanitizedListDay });
 
       if (response?.error?.status === 422) {
-        pushError(
-          'An error has occurred. Please check your time slots and try again.',
-        );
+        pushError(t('error_time_slots'));
       } else {
-        pushSuccess('You have successfully updated your time slots.');
+        pushSuccess(t('success_time_slots_description'));
       }
     } catch (error) {
       pushError('An error has occurred.');
@@ -75,16 +76,10 @@ function TimeSlot() {
     }
   };
 
-  useEffect(() => {
-    console.log('listDay', listDay);
-  }, [listDay]);
-
   // get current day
 
   const getCurrentDay = () => {
     const today = new Date().getDay();
-    console.log('today', today);
-    console.log('WEEK_STRING[today]', WEEK_STRING[today]);
     setCurrentDate(WEEK_STRING[today]);
   };
 
@@ -183,9 +178,6 @@ function TimeSlot() {
   };
 
   const updateSelectedTime = (time: string, day: number) => {
-    console.log('time', time);
-    console.log('day', day);
-
     const [hours, minutes] = time.split(':').map(Number);
     const startTime = (hours ?? 0) + (minutes ?? 0) / 60;
 
@@ -221,7 +213,6 @@ function TimeSlot() {
         },
       };
     });
-    console.log('Updated listDay:', listDay);
   };
   useEffect(() => {
     getWeekDays();
@@ -396,7 +387,6 @@ function TimeSlot() {
       );
       const result = await response.json();
       formatData(result);
-      console.log('time slot', result);
     } catch (error) {
       console.error('Lỗi khi lấy dữ liệu:', error);
     }
@@ -414,7 +404,7 @@ function TimeSlot() {
     <div className="mb-[20px] flex flex-col justify-center rounded-[12px] bg-[#fff] p-[16px] drop-shadow-md">
       <div className="my-[10px]">
         <p className="text-[18px] font-[500] leading-[28px] text-[#03191C]">
-          My available slots
+          {t('available_time_slots')}
         </p>
         <p className="text-[12px] font-[500] leading-[16px] text-[#03191C]">
           Những khung giờ trong tuần mà bạn đã dành cho Liber
@@ -523,7 +513,7 @@ function TimeSlot() {
         >
           {/* <CalendarPlus size={16} color="#ffffff" className="inline-block mt-[-4px]"/> */}
           <span className="ml-[6px] inline-block text-[14px] font-[500] leading-[20px] text-white">
-            Update My Slots
+            {t('update_time_slots')}
           </span>
         </button>
       </div>
@@ -535,8 +525,8 @@ function TimeSlot() {
         >
           <Modal.Panel className="inset-0 flex w-[550px] items-center justify-center ">
             <div className="rounded-lg bg-white p-6 shadow-lg">
-              <Modal.Title>My available slots</Modal.Title>
-              <span>Select the times you’re available for Liber!</span>
+              <Modal.Title>{t('available_time_slots')} </Modal.Title>
+              <span>{t('select_time_slots')}</span>
               <HeadSlots
                 dayOfWeek={WEEK_DAY_MAP[currentDate]}
                 onChangeDayOfWeek={(day: number) => handleSelectDay(day)}
@@ -565,7 +555,7 @@ function TimeSlot() {
                   className=" w-full"
                   animation={isLoading ? 'progress' : undefined}
                 >
-                  Update My Slots
+                  {t('update_time_slots')}
                 </Button>
               </div>
             </div>
