@@ -1,8 +1,16 @@
+'use client';
+
+import { useSearchParams } from 'next/navigation';
+
 import ListHuber from '@/components/huber/ListHuber';
 import { mergeClassnames } from '@/components/private/utils';
 import ListTopics from '@/components/stories/ListTopics';
+import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 
 const ExploreHuber = () => {
+  const searchParams = useSearchParams();
+  const { data: topicsPages, isLoading } = useGetTopicsQuery();
+  const topicId = searchParams.get('topicIds'); // Get topicIds from the URL query string
   return (
     <div
       className={mergeClassnames(
@@ -17,7 +25,9 @@ const ExploreHuber = () => {
         Discover and find your suitable huber
       </div>
       <ListTopics currentPathName="explore-huber" />
-      <ListHuber />
+      {!isLoading && (
+        <ListHuber topicId={topicId} topics={topicsPages?.data || []} />
+      )}
     </div>
   );
 };
