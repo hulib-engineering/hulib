@@ -27,6 +27,7 @@ type Props = {
   startTime: string;
   dateTime: string;
   humanBookId: number;
+  storyId: number;
   nextStep: () => void;
   backStep: () => void;
 };
@@ -36,6 +37,7 @@ export const PlaceRequestScreen = ({
   startTime,
   dateTime,
   humanBookId,
+  storyId,
   nextStep,
   backStep,
 }: Props) => {
@@ -111,7 +113,7 @@ export const PlaceRequestScreen = ({
       const result = await placeRequest({
         humanBookId,
         readerId: user?.id ?? 0,
-        storyId: 0,
+        storyId,
         startTime: convertTo24HourFormat(startTime),
         endTime,
         startedAt: today,
