@@ -44,6 +44,7 @@ export default function Index() {
                 coverPath={data?.cover?.path}
                 abstract={data?.abstract || ''}
                 storyReview={data?.storyReview}
+                storyId={Number(id)}
               />
             </div>
           </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import { SuccessScreen } from '@/components/common/SuccessScreen';
@@ -11,6 +11,9 @@ import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 export default function Index() {
   const { data: currentUser } = useGetPersonalInfoQuery();
   const { huberId } = useParams();
+
+  const searchParams = useSearchParams();
+  const storyId = searchParams.get('storyId');
 
   const huberInfo = {
     fullName: 'Tran Thanh Thao',
@@ -66,6 +69,7 @@ export default function Index() {
             }) ?? ''
           }
           humanBookId={Number(huberId)}
+          storyId={Number(storyId)}
           backStep={() => setCurrentStep('select-time')}
           nextStep={() => setCurrentStep('success')}
         />
