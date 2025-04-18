@@ -5,17 +5,21 @@ import { addDays, format, isToday, startOfWeek } from 'date-fns';
 import { useState } from 'react';
 
 type Props = {
-  selectDate?: Date;
+  selectDate: Date | null;
   setSelectDate?: (date: Date) => void;
+  todayClass?: string;
+  selectedClass?: string;
 };
 
 export default function OneWeek({
-  selectDate = new Date(),
+  selectDate,
   setSelectDate,
+  todayClass = 'border border-blue-500 text-blue-500',
+  selectedClass = 'border bg-blue-600 text-white',
 }: Props) {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const startOfCurrentWeek = startOfWeek(currentDate, { weekStartsOn: 0 });
-  const [selectedDate, setSelectedDate] = useState(selectDate);
+  const startOfCurrentWeek = startOfWeek(new Date(), { weekStartsOn: 0 });
+  const [selectedDate, setSelectedDate] = useState<Date | null>(selectDate);
 
   const onClickDateItem = (item: Date) => {
     setSelectedDate(item);
@@ -52,15 +56,11 @@ export default function OneWeek({
             <button
               type="button"
               onClick={() => onClickDateItem(day)}
-              className={`flex h-10 w-full items-center justify-center rounded-lg border transition-all
+              className={`flex h-16 w-full items-center justify-center rounded-md transition-all
+                ${isToday(day) ? todayClass : 'border-gray-300'}
                 ${
-                  isToday(day)
-                    ? 'border-blue-500 text-blue-500'
-                    : 'border-gray-300'
-                }
-                ${
-                  selectedDate.toDateString() === day.toDateString()
-                    ? 'bg-blue-600 text-white'
+                  selectedDate?.toDateString() === day.toDateString()
+                    ? selectedClass
                     : 'hover:bg-gray-200'
                 }`}
             >
