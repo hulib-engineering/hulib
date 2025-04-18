@@ -1,3 +1,75 @@
+# [1.12.0](https://github.com/hulib-engineering/hulib/compare/v1.11.1...v1.12.0) (2025-04-03)
+
+
+### Bug Fixes
+
+* eslint ([50876a8](https://github.com/hulib-engineering/hulib/commit/50876a85207907c6840b0ea604af48609d191a25))
+
+
+### Features
+
+* add api patch ([226aec7](https://github.com/hulib-engineering/hulib/commit/226aec709ac0558df71d669fa0f29e8e411c7618))
+
+## [1.11.1](https://github.com/hulib-engineering/hulib/compare/v1.11.0...v1.11.1) (2025-04-01)
+
+
+### Bug Fixes
+
+* deploy vercel 2 ([c21b411](https://github.com/hulib-engineering/hulib/commit/c21b4113e1c0709f2c36f7a622d1c76b41b39323))
+* time slots ([4209c91](https://github.com/hulib-engineering/hulib/commit/4209c910a64bdef89a1a1c908bab4476dce8b630))
+
+# [1.11.0](https://github.com/hulib-engineering/hulib/compare/v1.10.0...v1.11.0) (2025-04-01)
+
+
+### Bug Fixes
+
+* add library ([8113300](https://github.com/hulib-engineering/hulib/commit/811330023f02343c0ddb09901ce884912a5e5c03))
+* build err ([5100b1b](https://github.com/hulib-engineering/hulib/commit/5100b1b0b8abdb20b2bfd5a55e886434816a6c17))
+* change file CIyml from v3 to v4 ([c91376c](https://github.com/hulib-engineering/hulib/commit/c91376cddd373126e09adfba3cfd549fedaba336))
+* change format time slot ([e100917](https://github.com/hulib-engineering/hulib/commit/e10091776683e1e5c8e26cb8e4d90d344000168e))
+* change router ([72c8a3e](https://github.com/hulib-engineering/hulib/commit/72c8a3e94ffcc4eb5e2121821550d8d616883af1))
+* deploy vercel ([179bff4](https://github.com/hulib-engineering/hulib/commit/179bff4791bd2bfd79e8ac6b3690b8d9f11857c8))
+* deploy vercel ([1d16c78](https://github.com/hulib-engineering/hulib/commit/1d16c7874a181223a7be27efca4b4a4764391987))
+* deploy vercel ([25a9870](https://github.com/hulib-engineering/hulib/commit/25a98700ff831c5d0c3e17631204bc1ecdc87dda))
+* deploy vercel 1 ([779f7e8](https://github.com/hulib-engineering/hulib/commit/779f7e84841b06cf61c8e6d511bec77a72640686))
+* display error msg when be return status 422 ([2045967](https://github.com/hulib-engineering/hulib/commit/20459676bf2b73e822b3fce93b0c9fb1738833f4))
+* eslint ([b69e2cf](https://github.com/hulib-engineering/hulib/commit/b69e2cf664427957fc6952087afa54e7c0884268))
+* eslint 2 ([3728606](https://github.com/hulib-engineering/hulib/commit/3728606e05b14a1487f8e6b3f086ee757db445c4))
+* fix bug verfired recaptcha ([52f5308](https://github.com/hulib-engineering/hulib/commit/52f5308a0c78289aab9a166014f934705f318ae0))
+* fix bug verfired recaptcha ([b067156](https://github.com/hulib-engineering/hulib/commit/b0671562c0f4942df388380b52c53cd2cc26d79d))
+* fix build err ([4652f00](https://github.com/hulib-engineering/hulib/commit/4652f003b4b22599ffbc17497a9f9d01c140cc6b))
+* format time slot ([659a027](https://github.com/hulib-engineering/hulib/commit/659a0274c0f9eb3d64be06efaf35d31224dd137d))
+* roll back CIym to v3 ([e891851](https://github.com/hulib-engineering/hulib/commit/e8918510bafc6a57dc782fe2402a423919c2b816))
+* roll back CIym v3 to v4 ([9f87246](https://github.com/hulib-engineering/hulib/commit/9f87246976a1a6577c04755242e9a4e7d5021cab))
+* ui bugs ([589849c](https://github.com/hulib-engineering/hulib/commit/589849c79463841ab4b9b0a4424d4bba86e9262b))
+* ui explore story ([403f82c](https://github.com/hulib-engineering/hulib/commit/403f82caf560595a4cf5d25db1e5133b635de6db))
+* ui explore story ([fe8d04d](https://github.com/hulib-engineering/hulib/commit/fe8d04d0841ed5d31887d47a23a4b2bd8344df42))
+* update calendar component ([689e687](https://github.com/hulib-engineering/hulib/commit/689e687644fc24f36705bdacabf75eb2928ba612))
+* view more button in explore story not working ([b09860e](https://github.com/hulib-engineering/hulib/commit/b09860ec49ddf8d82756b83853a87d903ad79102))
+* view more button in explore story not working ([9260af4](https://github.com/hulib-engineering/hulib/commit/9260af4e269171836292be2808130f7feab959ee))
+* weekly schedule ([d8d9788](https://github.com/hulib-engineering/hulib/commit/d8d9788aab427d74215fab2428311bcc25ee856c))
+
+
+### Features
+
+* change field ([7ac79a7](https://github.com/hulib-engineering/hulib/commit/7ac79a7ca50fa749dfc07b3cad65129d8067e27e))
+* change type button ([62f69a9](https://github.com/hulib-engineering/hulib/commit/62f69a98a6856a4907aa9e2fb857b7c0e2163176))
+* create component available slot ([d096907](https://github.com/hulib-engineering/hulib/commit/d096907e860a66b5b4af7772f06f02dda19c8fb7))
+* create component book common ([1195d91](https://github.com/hulib-engineering/hulib/commit/1195d910277ea7a6393e1ffbf172ba9ba8c5b98f))
+* create component book common ([dad30cd](https://github.com/hulib-engineering/hulib/commit/dad30cd136b6b615432ec176d7e90207a620b971))
+* create component book common ([0f0f697](https://github.com/hulib-engineering/hulib/commit/0f0f697b34a03612f6d8286aae6bef3e6c78e520))
+* create schedule screens ([274c465](https://github.com/hulib-engineering/hulib/commit/274c465007ceda22331ffdf22e661d6e72fd1772))
+* fix build error ([d3a61db](https://github.com/hulib-engineering/hulib/commit/d3a61dbbdaeee69df72254f2e35be2f244afca24))
+* fix eslint 2 ([d0f5a60](https://github.com/hulib-engineering/hulib/commit/d0f5a600587c73523674a595bd994c376d140d68))
+* **huber-registration:** add custom cover selection and update registration flow ([cd3d6cf](https://github.com/hulib-engineering/hulib/commit/cd3d6cfa237af299a637e7559a2e6498120c988f))
+* integrate api ([6005c6c](https://github.com/hulib-engineering/hulib/commit/6005c6c5c879d4171f0a454974436a268a1a7d36))
+* integrate api part1 ([edb23a9](https://github.com/hulib-engineering/hulib/commit/edb23a9ba4506f21ec9e7fd01c34d7ea4f243c53))
+* responsive ui ([38e72a3](https://github.com/hulib-engineering/hulib/commit/38e72a357176308621366299a775ca4d14c5756e))
+* **search:** search title story and author ([8ff634d](https://github.com/hulib-engineering/hulib/commit/8ff634dbac9574f2e854119cfd2ac714e0eeccac))
+* **story:** add Step3 component and integrate it into the human book registration flow ([8734011](https://github.com/hulib-engineering/hulib/commit/8734011df402bd5271c9cbbba00984ce4156f1a7))
+* ui weekly schedule ([0e429f5](https://github.com/hulib-engineering/hulib/commit/0e429f5c527f4ecd82d6519d02ce2c8388d20c89))
+* weekly schedule ([a09b8b7](https://github.com/hulib-engineering/hulib/commit/a09b8b7cc49dfaea1fa87a4c9aaa44afa75617ff))
+
 # [1.10.0](https://github.com/HumanLibrary/hulib/compare/v1.9.0...v1.10.0) (2025-02-14)
 
 

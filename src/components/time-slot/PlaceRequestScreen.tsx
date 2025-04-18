@@ -9,6 +9,7 @@ import {
   Users,
   Warning,
 } from '@phosphor-icons/react';
+import { isEmpty } from 'lodash';
 import * as React from 'react';
 
 import Button from '@/components/button/Button';
@@ -25,6 +26,7 @@ type Props = {
   };
   startTime: string;
   dateTime: string;
+  humanBookId: number;
   nextStep: () => void;
   backStep: () => void;
 };
@@ -33,6 +35,7 @@ export const PlaceRequestScreen = ({
   attendees: { liber, huber },
   startTime,
   dateTime,
+  humanBookId,
   nextStep,
   backStep,
 }: Props) => {
@@ -106,7 +109,7 @@ export const PlaceRequestScreen = ({
     const today = new Date().toISOString();
     try {
       const result = await placeRequest({
-        humanBookId: 0,
+        humanBookId,
         readerId: user?.id ?? 0,
         storyId: 0,
         startTime: convertTo24HourFormat(startTime),
@@ -115,7 +118,8 @@ export const PlaceRequestScreen = ({
         endedAt: today,
         note,
       });
-      if (result?.error?.status === 422) {
+
+      if (!isEmpty(result?.error)) {
         pushError('Something went wrong');
       } else {
         nextStep();
@@ -201,6 +205,7 @@ export const PlaceRequestScreen = ({
           </span>
           <textarea
             aria-multiline
+            required
             className="h-[120px] w-full resize-none rounded-3xl border border-neutral-90 bg-neutral-98 p-3"
             placeholder="Enter meeting notes..."
             value={note}
@@ -211,7 +216,12 @@ export const PlaceRequestScreen = ({
           <Button variant="outline" className="w-full" onClick={backStep}>
             Back
           </Button>
-          <Button variant="primary" className="w-full" onClick={onPlaceRequest}>
+          <Button
+            variant="primary"
+            className="w-full"
+            disabled={isEmpty(note)}
+            onClick={onPlaceRequest}
+          >
             Place request
           </Button>
         </div>
