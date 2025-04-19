@@ -10,7 +10,12 @@ import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 const ExploreHuber = () => {
   const searchParams = useSearchParams();
   const { data: topicsPages, isLoading } = useGetTopicsQuery();
-  const topicId = searchParams.get('topicIds'); // Get topicIds from the URL query string
+  const topicId = searchParams.get('topicIds')?.split(',') || []; // Convert topicIds to an array
+  console.log(
+    'topicId',
+    topicId,
+    Array.isArray(topicId) ? 'array' : typeof topicId,
+  );
   return (
     <div
       className={mergeClassnames(
