@@ -18,8 +18,8 @@ type ListHuberProps = {
 };
 
 const ListHuber = ({ topicId, topics }: ListHuberProps) => {
-  const [limit, setLimit] = React.useState(6);
-  const [isExpandList, setIsExpandList] = React.useState(false);
+  const [limit, setLimit] = React.useState(12);
+  const [isExpanded, setIsExpanded] = React.useState(false);
   const t = useTranslations('ExporeStory');
 
   const {
@@ -33,21 +33,20 @@ const ListHuber = ({ topicId, topics }: ListHuberProps) => {
   });
 
   const onClickSeeAll = () => {
-    setIsExpandList((prev) => !prev);
+    if (!isExpanded) {
+      setLimit((prevLimit) => prevLimit + 12);
+      setIsExpanded(true);
+    } else {
+      setLimit(12);
+      setIsExpanded(false);
+    }
   };
 
-  React.useEffect(() => {
-    if (isExpandList) {
-      setLimit(hubersData?.meta?.totalItems || 100);
-    } else {
-      setLimit(6);
-    }
-  }, [isExpandList, hubersData?.meta?.totalItems]);
-
   if (isLoading || isFetching) return <StoriesSkeleton />;
+  const totalItems = hubersData?.meta?.totalItems || 0;
+  const hasMoreData = limit < totalItems;
 
-  const hasMoreData =
-    hubersData?.meta?.currentPage < hubersData?.meta?.totalPages;
+  const isFullyExpanded = limit >= totalItems;
 
   return (
     <div className="w-full py-6">
@@ -58,13 +57,12 @@ const ListHuber = ({ topicId, topics }: ListHuberProps) => {
           </div>
         ))}
       </div>
-      {(limit === 6 && hasMoreData) ||
-      (limit > 6 && hubersData?.data.length > 6) ? (
+      {hasMoreData || isExpanded ? (
         <div className="mt-6 flex w-full items-center justify-center">
           <Button
             variant="outline"
             iconLeft={
-              isExpandList ? (
+              isFullyExpanded ? (
                 <CaretCircleUp size={16} color="#0442BF" />
               ) : (
                 <CaretCircleDown size={16} color="#0442BF" />
@@ -72,7 +70,7 @@ const ListHuber = ({ topicId, topics }: ListHuberProps) => {
             }
             onClick={onClickSeeAll}
           >
-            {isExpandList ? t('hide_all') : t('view_more')}
+            {isFullyExpanded ? t('hide_all') : t('view_more')}
           </Button>
         </div>
       ) : null}
