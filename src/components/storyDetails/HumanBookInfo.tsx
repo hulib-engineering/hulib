@@ -25,6 +25,7 @@ interface Props {
     rating: number;
     numberOfReviews: number;
   };
+  storyId: number;
 }
 
 const HumanBookInfo = ({
@@ -33,6 +34,7 @@ const HumanBookInfo = ({
   coverPath,
   abstract,
   storyReview,
+  storyId,
 }: Props) => {
   const [imgError, setImgError] = useState(false);
   const handleImageError = () => {
@@ -43,7 +45,7 @@ const HumanBookInfo = ({
     <div className="h-full w-full overflow-hidden rounded bg-white shadow-lg">
       <div className="px-6 py-4">
         <div className="flex w-full flex-col items-center gap-2">
-          <Link href={`/schedule-meeting/${humanBook?.id}`}>
+          <Link href={`/schedule-meeting/${humanBook?.id}?storyId=${storyId}`}>
             <IconButton
               icon={<Book size={16} />}
               className="w-full px-4 text-base text-white"
