@@ -11,7 +11,7 @@ import Topic from './Topic';
 import TopicsSkeleton from './TopicsSkeleton';
 
 interface Props {
-  currentPathName?: 'explore-story' | 'home';
+  currentPathName?: 'explore-story' | 'home' | 'explore-huber';
 }
 
 const ListTopics = (props: Props) => {
