@@ -18,6 +18,7 @@ import Button from '@/components/button/Button';
 import IconButton from '@/components/iconButton/IconButton';
 import { Logo } from '@/components/Logo';
 import MenuItem from '@/components/menuItem/MenuItem';
+import { NotificationPopover } from '@/components/notification/NotificationPopover';
 import Popover from '@/components/popover/Popover';
 import type { WithChildren } from '@/components/private/types';
 import SearchInput from '@/components/SearchInput';
@@ -182,15 +183,16 @@ const Header = () => {
                   onClick={() => alert('click')}
                 />
               </ButtonWithChip>
-              <ButtonWithChip value="10">
-                <IconButton
-                  variant="ghost"
-                  icon={<Bell size={28} />}
-                  className="p-2"
-                  data-testid="button-notif"
-                  onClick={() => alert('click')}
-                />
-              </ButtonWithChip>
+              <NotificationPopover>
+                <ButtonWithChip value="10">
+                  <IconButton
+                    variant="ghost"
+                    icon={<Bell size={28} />}
+                    className="p-2"
+                    data-testid="button-notif"
+                  />
+                </ButtonWithChip>
+              </NotificationPopover>
               <div className="relative ml-2">
                 <AvatarPopover>
                   <Image
@@ -242,15 +244,16 @@ const Header = () => {
                 onClick={() => alert('click')}
               />
             </ButtonWithChip>
-            <ButtonWithChip value="10">
-              <IconButton
-                variant="ghost"
-                icon={<Bell size={28} />}
-                className="p-2"
-                data-testid="button-notif"
-                onClick={() => alert('click')}
-              />
-            </ButtonWithChip>
+            <NotificationPopover>
+              <ButtonWithChip value="10">
+                <IconButton
+                  variant="ghost"
+                  icon={<Bell size={28} />}
+                  className="p-2"
+                  data-testid="button-notif"
+                />
+              </ButtonWithChip>
+            </NotificationPopover>
             <div className="relative ml-2 h-11 w-11">
               <AvatarPopover>
                 <Image
