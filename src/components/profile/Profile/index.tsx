@@ -5,14 +5,14 @@ import Image from 'next/image';
 import type { ReactNode } from 'react';
 import * as React from 'react';
 
-import type { ProfileMenuItem } from '@/components/NavBar/NavBar';
-import { MyProfilePanelIndex, NavBar } from '@/components/NavBar/NavBar';
+import { EditIcon } from '@/components/authorDetail/EditIcon';
+import type { ProfileMenuItem } from '@/components/core/NavBar/NavBar';
+import { MyProfilePanelIndex, NavBar } from '@/components/core/NavBar/NavBar';
+import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetAuthorDetailQuery } from '@/libs/services/modules/user';
 
-import { EditIcon } from '../authorDetail/EditIcon';
-import { LoadingSkeleton } from '../LoadingSkeleton';
-import { AboutPanel } from './AboutPanel';
+import { AboutPanel } from '../AboutPanel';
 
 type Props = {
   label: string;
@@ -28,7 +28,7 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
   );
 };
 
-const LiberProfile = () => {
+const Profile = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
   const { data: liberDetail, isLoading } = useGetAuthorDetailQuery(user?.id);
 
@@ -185,4 +185,4 @@ const LiberProfile = () => {
     </div>
   );
 };
-export default LiberProfile;
+export default Profile;

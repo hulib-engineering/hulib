@@ -11,7 +11,7 @@ type Props = {
   liberDetail: User | undefined;
 };
 
-export const LiberOverviewSection = ({ liberDetail }: Props) => {
+const OverviewSection = ({ liberDetail }: Props) => {
   const [openEditPopup, setOpenEditPopup] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -90,4 +90,4 @@ export const LiberOverviewSection = ({ liberDetail }: Props) => {
   );
 };
 
-export default LiberOverviewSection;
+export default OverviewSection;

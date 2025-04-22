@@ -2,7 +2,7 @@
 
 import type { User } from '@/libs/services/modules/user/userType';
 
-export const WorkAndEducationSection = ({
+const WorkAndEducationSection = ({
   // eslint-disable-next-line unused-imports/no-unused-vars
   liberDetail,
 }: {
