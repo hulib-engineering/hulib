@@ -53,8 +53,8 @@ const ChangePassword = () => {
   });
 
   return (
-    <div className="h-full bg-neutral-98">
-      <div className="mx-auto mt-3 max-w-[600px] bg-white p-10">
+    <div className="p-6">
+      <div className="mx-auto max-w-[600px] bg-white p-10">
         <h2 className="text-[2rem] font-medium leading-[40px] tracking-[-2%]">
           Change Your Password
         </h2>
@@ -113,16 +113,16 @@ const ChangePassword = () => {
             Forgot Passwords?
           </a>
         </Form>
+        <ConfirmUpdatePopup
+          open={isOpen}
+          onClose={() => setIsOpen(!isOpen)}
+          onSuccess={onHandleSubmit}
+          title="Change Your Password"
+          description="Are you sure you want to change your password?"
+          titleOfDiscardBtn="Cancel"
+          titleOfConfirmBtn="Change"
+        />
       </div>
-      <ConfirmUpdatePopup
-        open={isOpen}
-        onClose={() => setIsOpen(!isOpen)}
-        onSuccess={onHandleSubmit}
-        title="Change Your Password"
-        description="Are you sure you want to change your password?"
-        titleOfDiscardBtn="Cancel"
-        titleOfConfirmBtn="Change"
-      />
     </div>
   );
 };

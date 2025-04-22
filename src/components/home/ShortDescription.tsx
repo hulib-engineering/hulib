@@ -31,7 +31,7 @@ const ShortDescription = () => {
           <Button
             className="h-11 w-[20.4375rem] text-base font-medium"
             iconLeft={<Book />}
-            onClick={() => router.push('human-book-register')}
+            onClick={() => router.push('huber-registration')}
           >
             {t('short_descriptions.btn')}
           </Button>

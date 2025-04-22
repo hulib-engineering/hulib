@@ -4,7 +4,6 @@ import { CaretDown, Clock, User } from '@phosphor-icons/react';
 import Image from 'next/image';
 
 function DetailEventLiber({ data }: any) {
-  console.log('Data', data);
   const { startedAt, endedAt, reader, humanBook } = data;
   const { fullName: fullNameReader } = reader;
   const { fullName: fullNameHumanBook } = humanBook;

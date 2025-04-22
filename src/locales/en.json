@@ -329,7 +329,6 @@
   "HumanBookRegister": {
     "register_as_a_human_book": "Register as a Human Book",
     "register_confirm_message": "Are you sure you to register as a Human Book?",
-    "error_form_no_video": "Please select a valid video file!!!",
     "About": "About",
     "placeholder_about": "Tell us about yourself...",
     "Session": "Session",
@@ -359,11 +358,24 @@
     "supporting_text": "Supporting Text",
     "Submit": "Submit",
     "humanBookRegistered": "You have registered to become a Human Book. Wait for Admin approval!",
+    "Step2": {
+      "title": "Register as a Huber",
+      "available_slots": "My available slots",
+      "available_slots_description": "When can you make time for Liber?",
+      "error_contact_admin": "An error occurred, please contact admin for support!",
+      "success_time_slots": "Time slots created successfully!",
+      "success_time_slots_description": "You have successfully created your time slots",
+      "validation": {
+        "error_select_at_least_one_time_slot": "Please select at least one time slot"
+      }
+    },
     "validation": {
       "required": "Required",
       "invalidYear": "Invalid Year",
       "invalidYearRange": "Invalid Year Range",
-      "invalid_url": "Invalid URL link. Check link and try again"
+      "invalid_url": "Invalid URL link. Check link and try again",
+      "bio_required": "Please enter your bio",
+      "terms_required": "Please accept the terms and conditions"
     },
     "bio": { "text": "Bio", "placeholder": "Placeholder" },
     "intro_video": { "text": "Introduction Video", "placeholder": "https://" },
@@ -381,7 +393,7 @@
     "topics": "Topics",
     "ratings": "ratings",
     "abstract": "Abstract",
-    "read_story": "Read All",
+    "read_story": "Read all",
     "productivity": "Productivity",
     "all": "All",
     "health": "Health",
@@ -392,6 +404,17 @@
     "similar_stories": "Similar Stories",
     "see_all": "See All",
     "hide_all": "Hide All"
+  },
+  "Time_slots": {
+    "title": "Time Slots",
+    "description": "Select your available time slots",
+    "time_slots": "Time Slots",
+    "available_time_slots": "My available slots",
+    "select_time_slots": "Select the times you’re available for Liber!",
+    "update_time_slots": "Update My Slots",
+    "select_time_slots_description": "Select the time slots you are available for the session",
+    "error_time_slots": "An error has occurred. Please check your time slots and try again.",
+    "success_time_slots_description": "You have successfully created your time slots"
   },
   "Home": {
     "banner": {
@@ -413,7 +436,7 @@
       "title": "Explore",
       "btn1": "See all",
       "btn2": "View more",
-      "btn3": " Explore all Human books",
+      "btn3": " Explore all Hubers",
       "card": {
         "text1": "Topics",
         "text2": "Ratings"
@@ -424,6 +447,7 @@
       "description": "Short Description",
       "btn": "Join as Huber"
     },
-    "no_data": "No Data"
+    "no_data": "No Data",
+    "error_contact_admin": "An error occurred, please contact admin for support!"
   }
 }
