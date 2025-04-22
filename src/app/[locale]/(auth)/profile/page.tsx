@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { getTranslations } from 'next-intl/server';
 import * as React from 'react';
 
-import LiberProfile from '@/components/liber/LiberProfile';
+import Profile from '@/components/profile/Profile';
 import { authOptions } from '@/libs/NextAuthOption';
 
 export async function generateMetadata({
@@ -26,7 +26,7 @@ export default async function Index() {
 
   return (
     <div className="mx-auto flex w-5/6 flex-1 flex-col gap-12 lg:gap-20">
-      <LiberProfile />
+      <Profile />
     </div>
   );
 }
