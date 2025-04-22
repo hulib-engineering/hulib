@@ -1,3 +1,40 @@
+# [1.13.0](https://github.com/hulib-engineering/hulib/compare/v1.12.0...v1.13.0) (2025-04-22)
+
+
+### Bug Fixes
+
+* api huber ([4f828fd](https://github.com/hulib-engineering/hulib/commit/4f828fd9f6bac9d8d2717a37a3a9288541da1bc0))
+* api huber ([eb5739a](https://github.com/hulib-engineering/hulib/commit/eb5739a97a53a047bd372c9c7bf7bfb7d75bb766))
+* book component ([d781015](https://github.com/hulib-engineering/hulib/commit/d781015120514455989d62eea4ece225a3726900))
+* **build:** format type error ([edb1304](https://github.com/hulib-engineering/hulib/commit/edb13040bf4be1f3419ae34ae4f361be9b7291f4))
+* choose Sun in timeslot ([01f363e](https://github.com/hulib-engineering/hulib/commit/01f363eceb160ae93704548ff5bbd539d90b6fb3))
+* component book ([7e0541f](https://github.com/hulib-engineering/hulib/commit/7e0541f73eea4db41dd68ac1a58f5784bda568a9))
+* component huber ([d156b6a](https://github.com/hulib-engineering/hulib/commit/d156b6ad111f8b8bf64741f4d240ee36d7e20b66))
+* fix expore story ([b71a47a](https://github.com/hulib-engineering/hulib/commit/b71a47a0c8c9b056fad98a909be6692a77fc4209))
+* fix ui bugs ([eb213d1](https://github.com/hulib-engineering/hulib/commit/eb213d18174a562b3d61415538a060639e0fa492))
+* hover full card huber ([e7b40cf](https://github.com/hulib-engineering/hulib/commit/e7b40cf6d9d0716fdc0a1336a72576ec143da6a2))
+* **huber-registration-step1:** update UI and bind api ([f150f92](https://github.com/hulib-engineering/hulib/commit/f150f92905912c453ff7441794347fbc2514942d))
+* **layout:** fix common layout ([0a82ca4](https://github.com/hulib-engineering/hulib/commit/0a82ca4996ac961876d404e836ff649c28cb0705))
+* update story limits in ExploreStory and SimilarStory components ([046a60c](https://github.com/hulib-engineering/hulib/commit/046a60ca819cede831cdd0c7dc112b77b1449c2b))
+
+
+### Features
+
+* add api for huber ([93b8ad7](https://github.com/hulib-engineering/hulib/commit/93b8ad78c1bf991fed139ce5d0662c65471ca6a1))
+* add pink heart ([b2900c9](https://github.com/hulib-engineering/hulib/commit/b2900c9e4c91425c4a554d5f90f94da8470c9f89))
+* add topic in explore huber ([acc9097](https://github.com/hulib-engineering/hulib/commit/acc9097449fc589c51a2c6d2e22cef65e1be2bde))
+* add translation ([691ed31](https://github.com/hulib-engineering/hulib/commit/691ed31a6f6c6e96ed1c99c8eb15e3be27ea1f3c))
+* anumation hover book ([f63c938](https://github.com/hulib-engineering/hulib/commit/f63c938c1540a3abd07c14bbae40c13157efd3f8))
+* huber component ([f87d321](https://github.com/hulib-engineering/hulib/commit/f87d321a6aa8f09ee75bee8fb5333a44e771c13b))
+* **huber-registration:** add SuccessScreen component and update Step3 to handle story submission ([d675468](https://github.com/hulib-engineering/hulib/commit/d675468db2c9f0b90e7a5d1f7c25167a60743f24))
+* **huber-registration:** create Huber registration step 2 UI ([a554c50](https://github.com/hulib-engineering/hulib/commit/a554c5074b4631d1e8d9346921bb30139c9424df))
+* **huber-registration:** implement time slot selection and validation in Step 2 ([836b97b](https://github.com/hulib-engineering/hulib/commit/836b97b443f52953934dfa7f3c449c34c930b718))
+* **schedule-meeting:** add MainScreen component and refactor time slot selection logic ([af3942b](https://github.com/hulib-engineering/hulib/commit/af3942b354454004fb31e9179a036889451db72f))
+* **schedule-meeting:** enhance scheduling flow with multi-step screens and attendee information ([fb379ff](https://github.com/hulib-engineering/hulib/commit/fb379fff5205298e159b9a18a131fcdc4f30003a))
+* **schedule-meeting:** implement AvailableSchedule component for time slot selection ([a0ade38](https://github.com/hulib-engineering/hulib/commit/a0ade38e69e79c41e306601438060cdec5c52bc6))
+* **schedule:** integrate reading sessions and enhance time slot handling ([fa758a2](https://github.com/hulib-engineering/hulib/commit/fa758a29b9496fec65ff8886dd3a27864319d707))
+* update timeslot ([dcfcc63](https://github.com/hulib-engineering/hulib/commit/dcfcc638532bfa2374443cb02574bab5e7244770))
+
 # [1.12.0](https://github.com/hulib-engineering/hulib/compare/v1.11.1...v1.12.0) (2025-04-03)
 
 
