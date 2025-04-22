@@ -93,17 +93,19 @@ const MainTemplate = (props: WithChildren) => {
     <div
       className={mergeClassnames(
         poppins.className,
-        'relative w-screen bg-neutral-98 antialiased overflow-hidden',
+        'relative antialiased h-screen flex flex-col',
       )}
     >
-      <div className="mx-auto flex max-w-full flex-col items-center justify-center">
+      <div className="flex h-full w-full flex-col">
         <Header />
+        <main className="flex-1 overflow-y-auto">
+          <div className="min-h-[calc(100vh-410px)] bg-neutral-98">
+            {props.children}
+          </div>
 
-        <main>{props.children}</main>
-
-        <FooterWebApp />
+          <FooterWebApp />
+        </main>
       </div>
-
       <CustomToastifyContainer />
     </div>
   );

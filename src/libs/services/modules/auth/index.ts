@@ -9,7 +9,7 @@ import loginAsAdmin from './loginAsAdmin';
 import loginAsUser from './loginAsUser';
 import refresh from './refresh';
 import register from './register';
-import registerHumanBook from './registerHumanBook';
+import registerHuber from './registerHumanBook';
 import resendOTP from './resendOTP';
 import resetPassword from './resetPassword';
 import updateProfile from './updateProfile';
@@ -61,7 +61,7 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
     resetPassword: resetPassword(build),
     changePassword: changePassword(build),
     updateProfile: updateProfile(build),
-    registerHumanBook: registerHumanBook(build),
+    registerHuber: registerHuber(build),
     checkRegisterHumanBook: checkRegisterHumanBook(build),
   }),
   overrideExisting: false,
@@ -78,6 +78,6 @@ export const {
   useResetPasswordMutation,
   useChangePasswordMutation,
   useUpdateProfileMutation,
-  useRegisterHumanBookMutation,
+  useRegisterHuberMutation,
   useCheckRegisterHumanBookMutation,
 }: any = authApi;

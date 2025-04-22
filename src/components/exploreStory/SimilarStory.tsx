@@ -20,9 +20,9 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
   const t = useTranslations('ExporeStory');
 
   const [isExpandList, setIsExpandList] = React.useState(false);
-  const [limit, setLimit] = React.useState(4);
+  const [limit, setLimit] = React.useState(6);
 
-  // Fetch 4 stories initially, fetch all when expanded
+  // Fetch 6 stories initially, fetch all when expanded
   const {
     data: similarStoriesPages,
     isLoading,
@@ -42,7 +42,7 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
     if (isExpandList) {
       setLimit(0);
     } else {
-      setLimit(4);
+      setLimit(6);
     }
   }, [isExpandList]);
 
@@ -68,16 +68,16 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
         ))}
       </div>
 
-      {(limit === 4 && similarStoriesPages?.hasNextPage) ||
+      {(limit === 6 && similarStoriesPages?.hasNextPage) ||
       (limit === 0 && !similarStoriesPages?.hasNextPage) ? (
         <div className="mt-6 flex w-full items-center justify-center">
           <Button
             variant="outline"
             iconLeft={
               limit === 0 ? (
-                <CaretCircleUp size={16} color="#0442BF" />
+                <CaretCircleUp size={16} color="#0662BF" />
               ) : (
-                <CaretCircleDown size={16} color="#0442BF" />
+                <CaretCircleDown size={16} color="#0662BF" />
               )
             }
             onClick={onClickSeeAll}

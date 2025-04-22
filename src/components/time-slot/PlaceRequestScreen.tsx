@@ -9,74 +9,42 @@ import {
   Users,
   Warning,
 } from '@phosphor-icons/react';
-import Image from 'next/image';
+import { isEmpty } from 'lodash';
 import * as React from 'react';
 
 import Button from '@/components/button/Button';
-import type { IAttendee } from '@/components/time-slot/MainScreen';
+import AttendeesInfo from '@/components/time-slot/AttendeesInfo';
 import { useAppSelector } from '@/libs/hooks';
 import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
 
+import { pushError } from '../CustomToastifyContainer';
+
 type Props = {
   attendees: {
-    liber: IAttendee;
-    huber: IAttendee;
+    liber: any;
+    huber: any;
   };
   startTime: string;
-  duration: string;
-  timeZone: string;
   dateTime: string;
-  note: string;
+  humanBookId: number;
+  storyId: number;
   nextStep: () => void;
   backStep: () => void;
 };
+
 export const PlaceRequestScreen = ({
-  attendees,
+  attendees: { liber, huber },
   startTime,
-  timeZone,
-  duration,
   dateTime,
-  note,
+  humanBookId,
+  storyId,
   nextStep,
   backStep,
 }: Props) => {
-  const { liber, huber } = attendees;
-  const { icon: liberIcon, role: roleLiber, fullName: liberName } = liber;
-  const { icon: huberIcon, role: roleHuber, fullName: huberName } = huber;
   const user = useAppSelector((state) => state.auth.userInfo);
 
   const [placeRequest] = useCreateNewReadingSessionMutation();
-
-  const renderRoleTag = (role: string) => {
-    switch (role.trim().toLowerCase()) {
-      case 'liber': {
-        return (
-          <span className="rounded-md bg-[#FFE3CC] px-2 py-0.5 text-sm font-medium text-[#FF7301]">
-            {role}
-          </span>
-        );
-      }
-      case 'huber': {
-        return (
-          <span className="rounded-md bg-primary-90 px-2 py-0.5 text-sm font-medium text-primary-50">
-            {role}
-          </span>
-        );
-      }
-      default:
-        return null;
-    }
-  };
-
-  const renderAttendeesInfo = (source: string, role: string, name: string) => {
-    return (
-      <div className="flex items-center gap-x-2">
-        <Image src={source} alt="avatar author" width={32} height={32} />
-        {renderRoleTag(role)}
-        <span className="text-sm font-medium text-neutral-10">{name}</span>
-      </div>
-    );
-  };
+  const [note, setNote] = React.useState('');
 
   function convertTo24HourFormat(time: string): string {
     // Parse the input time (e.g., "03:45 PM" or "11:30 AM")
@@ -143,20 +111,23 @@ export const PlaceRequestScreen = ({
     const today = new Date().toISOString();
     try {
       const result = await placeRequest({
-        humanBookId: 0,
+        humanBookId,
         readerId: user?.id ?? 0,
-        storyId: 0,
+        storyId,
         startTime: convertTo24HourFormat(startTime),
         endTime,
         startedAt: today,
         endedAt: today,
         note,
       });
-      if (result) {
+
+      if (!isEmpty(result?.error)) {
+        pushError('Something went wrong');
+      } else {
         nextStep();
       }
     } catch (error) {
-      console.log('error', error);
+      pushError('Something went wrong');
     }
   };
 
@@ -181,8 +152,16 @@ export const PlaceRequestScreen = ({
             <Users size={16} />
             Attendees
           </div>
-          {renderAttendeesInfo(liberIcon, roleLiber, liberName)}
-          {renderAttendeesInfo(huberIcon, roleHuber, huberName)}
+          <AttendeesInfo
+            source={liber?.avatar}
+            role={liber?.role?.name}
+            name={liber?.fullName}
+          />
+          <AttendeesInfo
+            source={huber?.avatar}
+            role={huber?.role}
+            name={huber?.fullName}
+          />
         </div>
 
         <div className="flex flex-col gap-y-1.5">
@@ -199,7 +178,7 @@ export const PlaceRequestScreen = ({
           </div>
           <div className="grid grid-cols-2 items-center justify-between gap-x-2 text-base font-normal text-primary-50">
             <span>{dateTime}</span>
-            <span className="text-right">{timeZone}</span>
+            <span className="text-right">ICT | GMT-7</span>
           </div>
         </div>
         <div className="flex flex-col gap-y-1.5 border-l border-[#BE002D] bg-[#FFF5F7] px-4 py-2 text-sm text-[#BE002D]">
@@ -214,24 +193,37 @@ export const PlaceRequestScreen = ({
         <div className="flex flex-col gap-y-1">
           <div className="flex items-center gap-x-2 text-sm font-medium text-neutral-10">
             <Timer size={16} />
-            Duration
+            Duration{' '}
+            <span className="text-sm font-medium text-neutral-40">30 mins</span>
           </div>
-          <span className="text-sm font-medium text-neutral-40">
-            {duration}mins
-          </span>
         </div>
         <div className="flex flex-col gap-y-1">
           <div className="flex items-center gap-x-2 text-sm font-medium text-neutral-10">
             <Note size={16} />
             Message
           </div>
-          <span className="text-base font-normal text-neutral-20">{note}</span>
+          <span className="text-base font-normal text-neutral-40">
+            Please share anything that will help prepare for the meeting.
+          </span>
+          <textarea
+            aria-multiline
+            required
+            className="h-[120px] w-full resize-none rounded-3xl border border-neutral-90 bg-neutral-98 p-3"
+            placeholder="Enter meeting notes..."
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+          />
         </div>
         <div className="grid grid-cols-2 items-center  justify-items-center gap-x-4">
           <Button variant="outline" className="w-full" onClick={backStep}>
             Back
           </Button>
-          <Button variant="primary" className="w-full" onClick={onPlaceRequest}>
+          <Button
+            variant="primary"
+            className="w-full"
+            disabled={isEmpty(note)}
+            onClick={onPlaceRequest}
+          >
             Place request
           </Button>
         </div>

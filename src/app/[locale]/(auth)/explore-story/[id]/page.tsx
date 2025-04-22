@@ -23,7 +23,7 @@ export default function Index() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-screen-sm px-4 lg:max-w-screen-2xl lg:px-28">
+    <div className="mx-auto w-full max-w-screen-sm px-4 py-8 lg:max-w-screen-2xl lg:px-28">
       <div className="rounded-[20px] bg-white">
         <div className="p-0 lg:p-5">
           <div className="flex flex-col justify-start gap-5 lg:flex-row">
@@ -44,6 +44,7 @@ export default function Index() {
                 coverPath={data?.cover?.path}
                 abstract={data?.abstract || ''}
                 storyReview={data?.storyReview}
+                storyId={Number(id)}
               />
             </div>
           </div>
