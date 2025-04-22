@@ -8,8 +8,8 @@ import * as React from 'react';
 import { AboutPanel } from '@/components/authorDetail/AboutPanel';
 import { ReviewPanel } from '@/components/authorDetail/ReviewPanel';
 import { AvailableSlot } from '@/components/availableSlot/AvailableSlot';
-import type { ProfileMenuItem } from '@/components/NavBar/NavBar';
-import { MyProfilePanelIndex, NavBar } from '@/components/NavBar/NavBar';
+import type { ProfileMenuItem } from '@/components/core/NavBar/NavBar';
+import { MyProfilePanelIndex, NavBar } from '@/components/core/NavBar/NavBar';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetAuthorDetailQuery } from '@/libs/services/modules/user';
 
