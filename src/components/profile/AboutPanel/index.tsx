@@ -9,11 +9,11 @@ import {
 } from '@phosphor-icons/react';
 import * as React from 'react';
 
-import { LiberOverviewSection } from '@/components/liber/LiberOverviewSection';
-import { WorkAndEducationSection } from '@/components/liber/WorkAndEducationSection';
 import type { User } from '@/libs/services/modules/user/userType';
 
-import { ContactInformationSection } from './ContactInformationSection';
+import { ContactInformationSection } from '../ContactInformationSection';
+import OverviewSection from '../OverviewSection';
+import WorkAndEducationSection from '../WorkAndEducationSection';
 
 type Props = {
   liberDetail?: User;
@@ -33,7 +33,7 @@ export const AboutPanel = ({ liberDetail }: Props) => {
       type: 'liberOverview',
       label: 'Liber Overview',
       icon: <Books size={20} />,
-      component: <LiberOverviewSection liberDetail={liberDetail} />,
+      component: <OverviewSection liberDetail={liberDetail} />,
     },
     {
       type: 'workAndEducation',
