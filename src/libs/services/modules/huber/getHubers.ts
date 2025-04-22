@@ -11,11 +11,11 @@ const getStories = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       params: {
         page: params?.page || 1,
         limit: params?.limit,
-        topicId: params?.topicId,
+        topicIds: params?.topicIds,
       },
     }),
     serializeQueryArgs: ({ endpointName, queryArgs }) => {
-      return `${endpointName}(${JSON.stringify(queryArgs?.topicId)})`;
+      return `${endpointName}(${JSON.stringify(queryArgs?.topicIds)})`;
     },
     forceRefetch: ({ currentArg, previousArg }) => {
       return currentArg?.limit !== previousArg?.limit;

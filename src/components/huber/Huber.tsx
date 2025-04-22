@@ -104,11 +104,11 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
                 textOverflow: 'ellipsis',
               }}
             >
-              {huber.abtract
-                ? huber.abtract.length > 150
-                  ? `${huber.abtract.slice(0, 150)}...`
-                  : huber.abtract
-                : 'This is a placeholder abstract text for demonstration purposes. This is a placeholder abstract text for demonstration purposes. This is a placeholder abstract text for demonstration purposes. This is a placeholder abstract text for demonstration purposes.'}
+              {huber.bio
+                ? huber.bio.length > 150
+                  ? `${huber.bio.slice(0, 150)}...`
+                  : huber.bio
+                : `Tôi tên là ${huber.fullName}, tôi là một người yêu thích đọc sách và chia sẻ kiến thức. Tôi đã đọc rất nhiều sách và muốn chia sẻ những gì tôi đã học được với mọi người.`}
             </p>
           </div>
         </div>
