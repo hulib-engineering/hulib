@@ -24,7 +24,7 @@ const formatTime = (isoString: string): string => {
 
 function UpComingEvent() {
   const { data: readingSessions, isLoading: isLoadingReadingSessions } =
-    useGetReadingSessionsQuery({ type: 'upcoming' });
+    useGetReadingSessionsQuery({ upcoming: true });
   const [data, setData] = useState<any>({});
 
   useEffect(() => {
