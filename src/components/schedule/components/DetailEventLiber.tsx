@@ -1,10 +1,16 @@
 'use client';
 
-import { CaretDown, Clock, User } from '@phosphor-icons/react';
+import { CaretDown, Clock, Note, User } from '@phosphor-icons/react';
+import clsx from 'clsx';
 import Image from 'next/image';
 
+import Button from '@/components/button/Button';
+import { useUpdateStatusReadingSessionMutation } from '@/libs/services/modules/reading-session';
+
 function DetailEventLiber({ data }: any) {
-  const { startedAt, endedAt, reader, humanBook } = data;
+  const [updateStatusReadingSession] = useUpdateStatusReadingSessionMutation();
+  const { startedAt, endedAt, reader, humanBook, sessionStatus, note } = data;
+
   const { fullName: fullNameReader } = reader;
   const { fullName: fullNameHumanBook } = humanBook;
   function formatDateTimeRange(startIso: string, endIso: string) {
@@ -29,16 +35,46 @@ function DetailEventLiber({ data }: any) {
     return `${dayOfWeek}, ${day}/${month}/${year} | ${startHours}:${startMinutes} - ${endHours}:${endMinutes}`;
   }
 
+  const handleCancelSession = async () => {
+    try {
+      await updateStatusReadingSession({
+        id: data?.id,
+        sessionStatus: 'canceled',
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="max-h-[206px] w-[396px] overflow-hidden rounded-[16px] bg-[#FFF9F5] px-[20px] py-[16px] pb-[32px] shadow-[#1C1E211A] drop-shadow-sm">
+    <div className="w-[396px] overflow-hidden rounded-[16px] bg-[#FFF9F5] px-[20px] py-[16px] pb-[32px] shadow-[#1C1E211A] drop-shadow-sm">
       <div className="flex items-center">
         <h3 className="flex-1 text-[20px] leading-[32px] text-[#171819]">
           Session with Huber
         </h3>
-        <p className="mx-[8px] h-[32px] w-[107px] rounded-[100px] bg-[#FFC745] px-[10px] py-[2px] text-center align-middle text-[#000000]">
-          Pending...
-        </p>
         <CaretDown size={24} color="#000" />
+      </div>
+      <div
+        className={clsx(
+          sessionStatus === 'pending'
+            ? 'bg-[#FFE3CC] text-[#FF7301]'
+            : sessionStatus === 'canceled'
+              ? 'bg-red-500'
+              : 'bg-green-90 text-[#38AA16]',
+          'w-fit rounded-[100px] px-[10px] py-[2px] text-center align-middle text-[14px] font-[500] leading-[16px]',
+        )}
+      >
+        <p>
+          {sessionStatus === 'pending'
+            ? 'Waiting for approving'
+            : sessionStatus === 'canceled'
+              ? 'Canceled'
+              : 'Done'}
+        </p>
+      </div>
+      <div className="mt-[16px] flex items-center">
+        <span className="text-black">From: </span>{' '}
+        <span className="text-primary-60">{data?.story?.title}</span>
       </div>
       <div className="mt-[16px] flex items-center">
         <Clock size={16} color="#000" className="-mt-[4px]" />
@@ -63,9 +99,6 @@ function DetailEventLiber({ data }: any) {
           <p className="py[2px] mx-[8px] flex h-[20px] w-[63] items-center justify-center rounded-[100px] bg-[#FFE3CC] px-[10px] text-[14px] font-[500] leading-[16px] text-[#FF7301]">
             Liber
           </p>
-          <p className="text-[14px] font-[500] leading-[16px] text-[#EE0038]">
-            [Flaky]
-          </p>
           <p className="ml-[8px] text-[14px] font-[500] leading-[16px] text-[#171819]">
             {fullNameHumanBook} (You)
           </p>
@@ -80,13 +113,28 @@ function DetailEventLiber({ data }: any) {
           <p className="py[2px] mx-[8px] flex h-[20px] w-[63] items-center justify-center rounded-[100px] bg-[#CDDDFE] px-[10px] text-[14px] font-[500] leading-[16px] text-[#0442BF]">
             Huber
           </p>
-          <p className="text-[14px] font-[500] leading-[16px] text-[#38AA16]">
-            [Solid]
-          </p>
           <p className="ml-[8px] text-[14px] font-[500] leading-[16px] text-[#171819]">
             {fullNameReader}
           </p>
         </div>
+        <div className="mt-[16px] flex items-center">
+          <Note size={16} color="#000" className="-mt-[4px]" />
+          <p className="ml-[8px] text-[14px] font-[500] leading-[16px] text-[#171819]">
+            {note}
+          </p>
+        </div>
+      </div>
+      <div className="mt-[16px] flex items-center">
+        {sessionStatus === 'pending' && (
+          <Button
+            className="w-full bg-red-500"
+            onClick={() => {
+              handleCancelSession();
+            }}
+          >
+            Cancel
+          </Button>
+        )}
       </div>
     </div>
   );
