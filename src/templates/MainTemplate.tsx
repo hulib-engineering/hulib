@@ -98,7 +98,7 @@ const MainTemplate = (props: WithChildren) => {
     >
       <div className="flex h-full w-full flex-col">
         <Header />
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto bg-neutral-98">
           <div className="min-h-[calc(100vh-410px)] bg-neutral-98">
             {props.children}
           </div>
