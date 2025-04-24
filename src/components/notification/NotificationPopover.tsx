@@ -1,8 +1,9 @@
 // NotificationPopover.tsx
 import { Popover } from '@headlessui/react';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import Button from '../button/Button';
 import type { NotificationProps } from './NotificationItem';
@@ -15,6 +16,7 @@ interface NotificationPopoverProps {
 export const NotificationPopover: React.FC<NotificationPopoverProps> = ({
   children,
 }) => {
+  const router = useRouter();
   const [notifications, setNotifications] = useState<NotificationProps[]>([
     {
       id: '1',
@@ -62,6 +64,22 @@ export const NotificationPopover: React.FC<NotificationPopoverProps> = ({
     },
   ]);
 
+  // Sort notifications to prioritize meeting requests
+  const sortedNotifications = useMemo(() => {
+    return [...notifications].sort((a, b) => {
+      // First priority: meeting requests
+      if (a.type === 'meeting' && b.type !== 'meeting') return -1;
+      if (a.type !== 'meeting' && b.type === 'meeting') return 1;
+
+      // Second priority: unread notifications
+      if (!a.read && b.read) return -1;
+      if (a.read && !b.read) return 1;
+
+      // Third priority: timestamp (newer first)
+      return b.timestamp.getTime() - a.timestamp.getTime();
+    });
+  }, [notifications]);
+
   const handleMarkAsRead = (id: string) => {
     setNotifications((prev) =>
       prev.map((notification) =>
@@ -79,11 +97,6 @@ export const NotificationPopover: React.FC<NotificationPopoverProps> = ({
     setNotifications((prev) =>
       prev.filter((notification) => notification.id !== id),
     );
-  };
-
-  const handleViewAllNotifications = () => {
-    // Navigate to all notifications page or load more
-    console.log('View all notifications');
   };
 
   return (
@@ -108,7 +121,7 @@ export const NotificationPopover: React.FC<NotificationPopoverProps> = ({
               <h2 className="text-lg font-medium">Notification</h2>
             </div>
             <div className="max-h-96 overflow-y-auto">
-              {notifications.map((notification) => (
+              {sortedNotifications.map((notification) => (
                 <NotificationItem
                   key={notification.id}
                   notification={notification}
@@ -119,10 +132,10 @@ export const NotificationPopover: React.FC<NotificationPopoverProps> = ({
             </div>
             <div className="p-2">
               <Button
-                className="w-full border-2 border-gray-400 !bg-white py-2 text-center text-sm   text-blue-500"
-                onClick={handleViewAllNotifications}
+                className="w-full border-2 border-gray-400 !bg-white py-2 text-center text-sm text-blue-500"
+                onClick={() => router.push('/notification')}
               >
-                See previous notifications
+                See all
               </Button>
             </div>
           </Popover.Panel>
