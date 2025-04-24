@@ -58,7 +58,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     >
       <div className="flex items-start gap-2">
         {notification.type === 'meeting' && (
-          <div className="shrink-0">
+          <div className="relative shrink-0">
             <Image
               src={
                 notification.users[0]?.avatar ??
@@ -68,6 +68,13 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
               className="rounded-full"
               width={56}
               height={56}
+            />
+            <Image
+              src="/assets/images/meeting-icon.png"
+              alt="meeting-icon.png"
+              className="absolute bottom-0 right-0 rounded-sm"
+              width={24}
+              height={24}
             />
           </div>
         )}
@@ -89,41 +96,45 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           {notification.title && (
             <p className="font-medium text-blue-600">{notification.title}</p>
           )}
+          <div className="flex items-center justify-between ">
+            <div className="text-sm">
+              {notification.type === 'meeting' && (
+                <p>
+                  <span className="font-bold">
+                    {notification.users[0]?.name ?? 'Unknown User'}
+                  </span>{' '}
+                  would love to have a meeting...
+                </p>
+              )}
 
-          <div className="text-sm">
+              {notification.type === 'review' && (
+                <p>
+                  <span className="font-bold">
+                    {notification.users.map((u) => u.name).join(' and ')}
+                  </span>{' '}
+                  have also reviewed your story{' '}
+                  {notification.storyTitle && (
+                    <span className="font-medium text-blue-600">
+                      {notification.storyTitle}
+                    </span>
+                  )}
+                </p>
+              )}
+
+              {notification.type === 'publish' && (
+                <p>
+                  Your book{' '}
+                  {notification.storyTitle && (
+                    <span className="font-bold text-blue-600">
+                      {notification.storyTitle}
+                    </span>
+                  )}{' '}
+                  has been successfully published.
+                </p>
+              )}
+            </div>
             {notification.type === 'meeting' && (
-              <p>
-                <span className="font-medium">
-                  {notification.users[0]?.name ?? 'Unknown User'}
-                </span>{' '}
-                would love to have a meeting...
-              </p>
-            )}
-
-            {notification.type === 'review' && (
-              <p>
-                <span className="font-medium">
-                  {notification.users.map((u) => u.name).join(' and ')}
-                </span>{' '}
-                have also reviewed your story{' '}
-                {notification.storyTitle && (
-                  <span className="font-medium text-blue-600">
-                    {notification.storyTitle}
-                  </span>
-                )}
-              </p>
-            )}
-
-            {notification.type === 'publish' && (
-              <p>
-                Your book{' '}
-                {notification.storyTitle && (
-                  <span className="font-medium text-blue-600">
-                    {notification.storyTitle}
-                  </span>
-                )}{' '}
-                has been successfully published.
-              </p>
+              <span className="text-sm text-blue-500">See detail </span>
             )}
           </div>
 
@@ -176,9 +187,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           )}
         </div>
 
-        {notification.type !== 'meeting' && !notification.read && (
+        {/* {notification.type !== 'meeting' && !notification.read && (
           <div className="mt-2 h-2 w-2 rounded-full bg-green-500" />
-        )}
+        )} */}
       </div>
     </div>
   );
