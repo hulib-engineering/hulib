@@ -71,6 +71,10 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
               const colorIndex = index % colors.length;
               const tagColor = colors[colorIndex];
 
+              if (huber.humanBookTopic.length === 0) {
+                return null;
+              }
+
               return (
                 <span
                   key={index}
