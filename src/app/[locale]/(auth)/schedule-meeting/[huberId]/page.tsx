@@ -7,22 +7,16 @@ import { SuccessScreen } from '@/components/common/SuccessScreen';
 import { MainScreen } from '@/components/time-slot/MainScreen';
 import { PlaceRequestScreen } from '@/components/time-slot/PlaceRequestScreen';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
+import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 
 export default function Index() {
-  const { data: currentUser } = useGetPersonalInfoQuery();
   const { huberId } = useParams();
+  const { data: currentUser } = useGetPersonalInfoQuery();
+  const { data: huberInfo } = useGetUsersByIdQuery(huberId as string);
 
   const searchParams = useSearchParams();
   const storyId = searchParams.get('storyId');
 
-  const huberInfo = {
-    fullName: 'Tran Thanh Thao',
-    role: 'Huber',
-    avatar: '/assets/images/Avatar.png',
-    title: 'Professor',
-    rating: '4.5',
-    topics: '20',
-  };
   const [currentStep, setCurrentStep] = useState<
     'select-time' | 'confirm' | 'success'
   >('select-time');
@@ -44,7 +38,14 @@ export default function Index() {
         <MainScreen
           attendees={{
             liber: currentUser,
-            huber: huberInfo,
+            huber: {
+              fullName: huberInfo?.fullName,
+              role: huberInfo?.role?.name,
+              avatar: huberInfo?.photo?.path,
+              title: huberInfo?.education,
+              rating: huberInfo?.rating,
+              topics: huberInfo?.topics?.length || 0,
+            },
           }}
           selectDate={selectedDay}
           selectTime={selectedTime}
@@ -58,7 +59,14 @@ export default function Index() {
         <PlaceRequestScreen
           attendees={{
             liber: currentUser,
-            huber: huberInfo,
+            huber: {
+              fullName: huberInfo?.fullName,
+              role: huberInfo?.role?.name,
+              avatar: huberInfo?.photo?.path,
+              title: huberInfo?.education,
+              rating: huberInfo?.rating,
+              topics: huberInfo?.topics?.length || 0,
+            },
           }}
           startTime={selectedTime}
           dateTime={
