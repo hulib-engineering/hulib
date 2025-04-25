@@ -39,7 +39,7 @@ export default function Index() {
   }
 
   return (
-    <div className="px-28 py-8">
+    <div className="py-8 sm:px-28">
       {currentStep === 'select-time' && (
         <MainScreen
           attendees={{
