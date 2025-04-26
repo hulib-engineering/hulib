@@ -15,8 +15,6 @@ const baseQuery = fetchBaseQuery({
 
     const session: any = await getSession();
 
-    console.log('Current session', session);
-
     if (session) {
       headers.set('Authorization', `Bearer ${session.accessToken}`);
     }
