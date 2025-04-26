@@ -89,9 +89,11 @@ export const authOptions = {
         }
       }
 
+      console.log('JWT Token', token);
       return token;
     },
     async session({ session, token }: { session: any; token: any }) {
+      console.log('Token', token);
       session.accessToken = token.accessToken;
 
       return session;
