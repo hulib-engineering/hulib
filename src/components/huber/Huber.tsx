@@ -3,6 +3,7 @@
 import { Bookmarks, CaretCircleRight } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import React, { useMemo, useState } from 'react';
 
 import type { Huber as HuberType } from '@/libs/services/modules/huber/huberType';
@@ -17,6 +18,7 @@ export type HuberCommonProps = {
 const Huber = ({ data: huber, topics }: HuberCommonProps) => {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
+  const t = useTranslations('Huber.card');
   // Tạo topicMap để tra cứu topicName từ topicId
   const topicMap = useMemo(() => {
     const map = new Map<number, string>();
@@ -112,7 +114,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
                 ? huber.bio.length > 150
                   ? `${huber.bio.slice(0, 150)}...`
                   : huber.bio
-                : `Tôi tên là ${huber.fullName}, tôi là một người yêu thích đọc sách và chia sẻ kiến thức. Tôi đã đọc rất nhiều sách và muốn chia sẻ những gì tôi đã học được với mọi người.`}
+                : t('introduce', { fullName: huber.fullName })}
             </p>
           </div>
         </div>
