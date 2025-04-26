@@ -137,14 +137,14 @@ const LoginForm = () => {
         <SocialButton
           iconUrl={GoogleIcon}
           className="w-full"
-          onClick={() => signIn('google', { callbackUrl: '/profile' })}
+          onClick={() => signIn('google', { callbackUrl: '/home' })}
         >
           Log in with Google
         </SocialButton>
         <SocialButton
           iconUrl={FacebookIcon}
           className="w-full"
-          onClick={() => signIn('facebook', { callbackUrl: '/profile' })}
+          onClick={() => signIn('facebook', { callbackUrl: '/home' })}
         >
           Log in with Facebook
         </SocialButton>
