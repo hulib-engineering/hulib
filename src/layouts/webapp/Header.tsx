@@ -16,6 +16,7 @@ import React, { useMemo } from 'react';
 
 import Button from '@/components/button/Button';
 import IconButton from '@/components/iconButton/IconButton';
+import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import MenuItem from '@/components/menuItem/MenuItem';
 import Popover from '@/components/popover/Popover';
@@ -117,7 +118,7 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
 };
 
 const AvatarPopover = ({ children }: WithChildren<{}>) => (
-  <Popover position="bottom-end" className="h-full">
+  <Popover position="bottom-end" className="h-full w-11">
     <Popover.Trigger
       data-testid="popover-trigger-arrow"
       {...{
@@ -210,6 +211,7 @@ const Header = () => {
                   <CaretDown size={12} />
                 </div>
               </div>
+              <LocaleSwitcher className="shrink" />
             </div>
           )}
         </div>
@@ -269,6 +271,7 @@ const Header = () => {
                 <CaretDown size={12} />
               </div>
             </div>
+            <LocaleSwitcher className="shrink" />
           </div>
         )}
       </header>
