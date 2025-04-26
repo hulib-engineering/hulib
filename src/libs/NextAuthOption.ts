@@ -56,6 +56,7 @@ export const authOptions = {
       token: any;
       user: any;
     }) {
+      let tokenParsed = token;
       if (account && user) {
         if (account?.provider === 'google') {
           const res = await fetch(
@@ -67,8 +68,7 @@ export const authOptions = {
             },
           );
           const resParsed = await res.json();
-          // eslint-disable-next-line no-param-reassign
-          token = { ...token, accessToken: resParsed.token };
+          tokenParsed = { ...tokenParsed, accessToken: resParsed.token };
         }
         if (account?.provider === 'facebook') {
           const res = await fetch(
@@ -80,17 +80,15 @@ export const authOptions = {
             },
           );
           const resParsed = await res.json();
-          // eslint-disable-next-line no-param-reassign
-          token = { ...token, accessToken: resParsed.token };
+          tokenParsed = { ...tokenParsed, accessToken: resParsed.token };
         }
         if (account?.provider === 'credentials') {
-          // eslint-disable-next-line no-param-reassign
-          token = { ...token, accessToken: user.accessToken };
+          tokenParsed = { ...tokenParsed, accessToken: user.accessToken };
         }
       }
 
-      console.log('JWT Token', token);
-      return token;
+      console.log('JWT Token', tokenParsed);
+      return tokenParsed;
     },
     async session({ session, token }: { session: any; token: any }) {
       console.log('Token', token);
