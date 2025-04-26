@@ -566,11 +566,11 @@ const RegistrationForm = () => {
       <div className="flex items-center justify-center gap-2">
         <SocialButton
           iconUrl={FacebookIcon}
-          onClick={() => signIn('facebook', { callbackUrl: '/profile' })}
+          onClick={() => signIn('facebook', { callbackUrl: '/home' })}
         />
         <SocialButton
           iconUrl={GoogleIcon}
-          onClick={() => signIn('google', { callbackUrl: '/profile' })}
+          onClick={() => signIn('google', { callbackUrl: '/home' })}
         />
       </div>
       <div className="inline-flex items-center justify-center gap-4 py-3">
