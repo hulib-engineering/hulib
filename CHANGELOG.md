@@ -1,3 +1,11 @@
+## [1.13.1](https://github.com/hulib-engineering/hulib/compare/v1.13.0...v1.13.1) (2025-04-26)
+
+
+### Bug Fixes
+
+* **Auth:** fixed facebook & google oauth callback url ([0a88533](https://github.com/hulib-engineering/hulib/commit/0a885332d1fcd859d72da0d182841fd72a6d91d2))
+* **Auth:** fixed facebook & google oauth callback url ([f5ce3ab](https://github.com/hulib-engineering/hulib/commit/f5ce3abdca2866388816cfc7100e26df37e34267))
+
 # [1.13.0](https://github.com/hulib-engineering/hulib/compare/v1.12.0...v1.13.0) (2025-04-22)
 
 
