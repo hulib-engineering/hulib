@@ -14,6 +14,9 @@ const baseQuery = fetchBaseQuery({
     headers.set('hulib-service-key', 'hlb-93td6qrktpz6xrm4jj6dejgmffm4ya_pk');
 
     const session: any = await getSession();
+
+    console.log('Current session', session);
+
     if (session) {
       headers.set('Authorization', `Bearer ${session.accessToken}`);
     }
