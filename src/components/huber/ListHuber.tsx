@@ -21,7 +21,6 @@ const ListHuber = ({ topicIds, topics }: ListHuberProps) => {
   const [limit, setLimit] = React.useState(12);
   const [isExpanded, setIsExpanded] = React.useState(false);
   const t = useTranslations('ExporeStory');
-
   const {
     data: hubersData,
     isLoading,

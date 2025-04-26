@@ -4,16 +4,22 @@ import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinit
 import type { PaginatedResponse } from '../../type';
 import type { Huber, HuberlistParams } from './huberType';
 
-const getStories = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
+const getHubers = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query<PaginatedResponse<Huber>, HuberlistParams>({
-    query: (params) => ({
-      url: 'hubers',
-      params: {
-        page: params?.page || 1,
-        limit: params?.limit,
-        topicIds: params?.topicIds,
-      },
-    }),
+    query: (params) => {
+      const searchParams = new URLSearchParams();
+      searchParams.set('page', params?.page?.toString() || '1');
+      searchParams.set('limit', params?.limit?.toString() || '12');
+      if (params?.topicIds) {
+        params.topicIds.forEach((id) => {
+          searchParams.append('topicIds', id.toString());
+        });
+      }
+      const finalUrl = `hubers?${searchParams.toString()}`;
+      return {
+        url: finalUrl,
+      };
+    },
     serializeQueryArgs: ({ endpointName, queryArgs }) => {
       return `${endpointName}(${JSON.stringify(queryArgs?.topicIds)})`;
     },
@@ -29,4 +35,4 @@ const getStories = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
         : [{ type: 'Hubers' as const, id: 'LIST' }],
   });
 
-export default getStories;
+export default getHubers;

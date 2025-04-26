@@ -11,6 +11,7 @@ const ExploreHuber = () => {
   const searchParams = useSearchParams();
   const { data: topicsPages, isLoading } = useGetTopicsQuery();
   const topicIds = searchParams.get('topicIds')?.split(',') || []; // Convert topicIds to an array
+
   return (
     <div
       className={mergeClassnames(
