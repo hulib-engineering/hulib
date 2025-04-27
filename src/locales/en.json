@@ -405,6 +405,17 @@
     "see_all": "See All",
     "hide_all": "Hide All"
   },
+  "Huber": {
+    "title": "Hubers",
+    "btn1": "See all",
+    "btn2": "View more",
+    "btn3": " Explore all Hubers",
+    "card": {
+      "introduce": "My name is {fullName}, I am a book lover and enjoy sharing knowledge. I have read many books and want to share what I have learned with everyone.",
+      "text1": "Topics",
+      "text2": "Ratings"
+    }
+  },
   "Time_slots": {
     "title": "Time Slots",
     "description": "Select your available time slots",
