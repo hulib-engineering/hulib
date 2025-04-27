@@ -10,6 +10,12 @@ type IBaseTemplateProps = {
   children: ReactNode;
 };
 
+export const svnRio = localFont({
+  src: '../styles/fonts/SVN-Rio-2016.otf',
+  weight: '400',
+  style: 'normal',
+});
+
 export const poppins = localFont({
   src: [
     {
