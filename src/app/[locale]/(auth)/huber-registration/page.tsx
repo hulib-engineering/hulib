@@ -111,8 +111,8 @@ const StepContent = ({
         <SuccessScreen
           title="Summited"
           notification="Thanks for your story! HuLib will keep you informed when our process completes. We look forward to your participation as a Huber!"
-          nameButton="Go to Scheduling"
-          linkButton="/schedule-meeting/weekly-schedule"
+          nameButton="Explore"
+          linkButton="/explore-story"
         />
       );
     default:

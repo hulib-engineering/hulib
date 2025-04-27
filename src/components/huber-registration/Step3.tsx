@@ -47,6 +47,7 @@ const Step3 = ({ next }: { next: () => void }) => {
   } = methods;
 
   const selectedTopics = watch('topicIds') || [];
+  const title = watch('title') || '';
 
   const handleTopicToggle = (topicId: number) => {
     const currentTopics = selectedTopics || [];
@@ -80,9 +81,8 @@ const Step3 = ({ next }: { next: () => void }) => {
         humanBook: {
           id: userInfo?.id,
         },
-        cover: formValues.cover || {
-          id: '6b02fe49-101c-4567-d2f9-6b02fe49101c',
-        },
+        cover: formValues.cover,
+        publishStatus: 'draft',
       });
 
       if (response?.error && response?.error?.status === 422) {
@@ -222,6 +222,7 @@ const Step3 = ({ next }: { next: () => void }) => {
                             </p>
                           }
                           isError={!!errors.title}
+                          maxLength={32}
                           hintText={
                             errors.title?.message ||
                             (errors.title && 'Required')
@@ -261,7 +262,10 @@ const Step3 = ({ next }: { next: () => void }) => {
               </div>
             </div>
             <div className="flex-1">
-              <CustomCoverBox setValue={setValue} />
+              <CustomCoverBox
+                titleStory={title}
+                authorName={userInfo?.fullName}
+              />
             </div>
           </div>
           <div className="flex w-full justify-between gap-4 text-left lg:w-1/2">

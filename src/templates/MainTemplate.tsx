@@ -77,7 +77,6 @@ export const poppins = localFont({
     },
   ],
 });
-
 const MainTemplate = (props: WithChildren) => {
   const { data, error } = useGetPersonalInfoQuery();
 
