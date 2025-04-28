@@ -1,6 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import ListHuber from '@/components/huber/ListHuber';
 import { mergeClassnames } from '@/components/private/utils';
@@ -11,7 +12,7 @@ const ExploreHuber = () => {
   const searchParams = useSearchParams();
   const { data: topicsPages, isLoading } = useGetTopicsQuery();
   const topicIds = searchParams.get('topicIds')?.split(',') || []; // Convert topicIds to an array
-
+  const t = useTranslations('Huber');
   return (
     <div
       className={mergeClassnames(
@@ -20,11 +21,9 @@ const ExploreHuber = () => {
       )}
     >
       <div className="h-full w-full max-w-[1216px] rounded-lg text-[40px] font-bold">
-        Explore our Hubers
+        {t('title')}
       </div>
-      <div className="text-lg font-normal">
-        Discover and find your suitable huber
-      </div>
+      <div className="text-lg font-normal">{t('description')}</div>
       <ListTopics currentPathName="explore-huber" />
       {!isLoading && (
         <ListHuber topicIds={topicIds} topics={topicsPages?.data || []} />
