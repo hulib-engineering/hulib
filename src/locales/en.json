@@ -408,13 +408,13 @@
   "Huber": {
     "title": "Explore our Hubers",
     "description": "Discover and find your suitable huber",
-    "btn1": "See all",
-    "btn2": "View more",
-    "btn3": " Explore all Hubers",
+    "huber_btn_all": "See all",
+    "huber_view_more": "View more",
+    "explore_all_huber": " Explore all Hubers",
     "card": {
       "introduce": "My name is {fullName}, I am a book lover and enjoy sharing knowledge. I have read many books and want to share what I have learned with everyone.",
-      "text1": "Topics",
-      "text2": "Ratings",
+      "topics": "Topics",
+      "ratings": "Ratings",
       "visit_profile": "Visit Profile"
     }
   },

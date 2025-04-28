@@ -133,7 +133,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
             {/* {`${huber.topics}`}{' '} */}
             {huber.humanBookTopic.length}
             <span className="text-[0.625rem] leading-3 text-neutral-40">
-              {t('text1')}
+              {t('topics')}
             </span>
           </span>
           <span className="ml-3 flex flex-row items-center justify-center gap-1">
@@ -147,7 +147,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
               {huber.rating || 0}
             </span>
             <span className="text-[0.625rem] leading-3 text-neutral-40">
-              {t('text2')}
+              {t('ratings')}
             </span>
           </span>
         </div>
