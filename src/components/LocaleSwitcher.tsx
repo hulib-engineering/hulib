@@ -84,7 +84,7 @@ const LocaleSwitcher = ({ className }: { className?: string }) => {
     >
       {({ open }) => (
         <>
-          <Dropdown.Trigger className="rounded-full bg-white px-4 py-3">
+          <Dropdown.Trigger className="rounded-full bg-white">
             <Chip
               iconLeft={option.flag}
               iconRight={
