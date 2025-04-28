@@ -208,7 +208,7 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
           {t('available_time_slots')}
         </p>
         <p className="text-[12px] font-[500] leading-[16px] text-[#03191C]">
-          Những khung giờ trong tuần mà bạn đã dành cho Liber
+          {t('available_time_slots_description')}
         </p>
       </div>
       {/* {currentDate} */}
