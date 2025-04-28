@@ -77,8 +77,8 @@ const Notification = () => {
   };
 
   return (
-    <div>
-      <div className="border-b p-3">
+    <div className="max-w-[100vw]">
+      <div className="border-b p-1">
         <h2 className="text-[28px] font-bold">Notification</h2>
       </div>
       <div className="overflow-y-auto">

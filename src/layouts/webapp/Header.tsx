@@ -165,7 +165,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="flex w-full flex-col gap-5 bg-white px-4 pb-2 pt-4 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:hidden">
+      <header className="flex w-screen flex-col gap-5 bg-white px-4 pb-2 pt-4 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:hidden">
         <div className="flex items-center justify-between">
           <Logo size="small" />
           {!user || !user?.id ? (
@@ -222,7 +222,7 @@ const Header = () => {
           {renderNavbar()}
         </div>
       </header>
-      <header className="hidden w-full items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
+      <header className="hidden w-[100vw] items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
         <div className="flex items-center gap-6">
           <Logo size="small" />
           {renderNavbar()}

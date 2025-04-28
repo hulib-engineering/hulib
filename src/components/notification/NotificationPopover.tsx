@@ -113,7 +113,7 @@ export const NotificationPopover: React.FC<NotificationPopoverProps> = ({
           <Popover.Panel
             className={clsx(
               'absolute z-10 mt-2 origin-top-right rounded-md bg-white shadow-lg focus:outline-none',
-              'right-[-70px] h-[100vh] w-[100vw]',
+              'right-[-150px] h-[100vh] w-[100vw]',
               'md:right-0 md:h-auto md:w-80',
             )}
           >

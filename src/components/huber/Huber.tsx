@@ -133,7 +133,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
             {/* {`${huber.topics}`}{' '} */}
             {huber.humanBookTopic.length}
             <span className="text-[0.625rem] leading-3 text-neutral-40">
-              Topics
+              {t('topics')}
             </span>
           </span>
           <span className="ml-3 flex flex-row items-center justify-center gap-1">
@@ -147,7 +147,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
               {huber.rating || 0}
             </span>
             <span className="text-[0.625rem] leading-3 text-neutral-40">
-              Hearts
+              {t('ratings')}
             </span>
           </span>
         </div>
@@ -162,7 +162,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
             onClick={() => router.push(`/profile/${huber.id}`)}
           >
             <CaretCircleRight size={20} />
-            <p>Visit Profile</p>
+            <p>{t('visit_profile')}</p>
           </Button>
         </div>
 
