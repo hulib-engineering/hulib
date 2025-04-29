@@ -115,7 +115,7 @@ const Step1 = (props: Props) => {
 
       <label className="mt-6 flex w-full flex-col gap-2" htmlFor="videoUrl">
         <span className="text-sm leading-4 text-neutral-10">
-          {t('intro_video.text')} <span className="text-red-50">*</span>
+          {t('intro_video.text')}
         </span>
         <Controller
           name="videoUrl"
