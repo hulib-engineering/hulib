@@ -2,12 +2,25 @@
 
 'use client';
 
+import { FormControl, IconButton, MenuItem, Select } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { PencilSimple } from '@phosphor-icons/react';
+import dayjs from 'dayjs';
 import * as React from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 
-import { EditIcon } from '@/components/authorDetail/EditIcon';
+import Form from '@/components/form/Form';
+import TextInput from '@/components/textInput/TextInput';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import type { User } from '@/libs/services/modules/user/userType';
+
+const genderOptions = [
+  { name: 'Male', id: 1 },
+  { name: 'Female', id: 2 },
+  { name: 'Other', id: 3 },
+];
 
 export const ContactInformationSection = ({
   liberDetail,
@@ -15,17 +28,17 @@ export const ContactInformationSection = ({
   liberDetail: User | undefined;
 }) => {
   const [editMode, setEditMode] = React.useState(false);
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [error, setError] = React.useState<string | null>(null);
   const [updateProfile, { isLoading: isSubmitting }] =
     useUpdateProfileMutation();
-
   const defaultValues = React.useMemo(
     () => ({
       fullName: liberDetail?.fullName || '',
-      gender: liberDetail?.gender?.name || '',
+      gender: liberDetail?.gender || { name: '', id: 0 },
       birthday: liberDetail?.birthday || '',
       address: liberDetail?.address || '',
-      email: '', // Placeholder as email is not in User
+      email: liberDetail?.email || '',
       phoneNumber: liberDetail?.phoneNumber || '',
     }),
     [liberDetail],
@@ -33,16 +46,18 @@ export const ContactInformationSection = ({
 
   type ContactInfoFormData = {
     fullName: string;
-    gender: string;
+    gender: {
+      name: string;
+      id: number;
+    };
     birthday: string;
     address: string;
     email: string;
     phoneNumber: string;
   };
 
-  const { register, handleSubmit, reset, watch } = useForm<ContactInfoFormData>(
-    { defaultValues },
-  );
+  const methods = useForm<ContactInfoFormData>({ defaultValues });
+  const { handleSubmit, reset, control, watch } = methods;
 
   React.useEffect(() => {
     reset(defaultValues);
@@ -59,7 +74,7 @@ export const ContactInformationSection = ({
     try {
       await updateProfile({
         fullName: data.fullName,
-        gender: data.gender,
+        gender: { id: Number(data.gender.id) },
         birthday: data.birthday,
         address: data.address,
         phoneNumber: data.phoneNumber,
@@ -78,138 +93,214 @@ export const ContactInformationSection = ({
 
   return (
     <div className="flex flex-col gap-y-2 py-5">
-      <div className="flex flex-row items-center justify-between">
+      <div className="flex flex-row items-center justify-between py-2">
         <span>Contact Information</span>
-        {!editMode && <EditIcon onClick={() => setEditMode(true)} />}
+        {!editMode && (
+          <IconButton onClick={() => setEditMode(true)}>
+            <PencilSimple size={20} />
+          </IconButton>
+        )}
       </div>
-      <div className="bg-white p-5">
-        {editMode ? (
+      {editMode ? (
+        <FormProvider {...methods}>
           <form
             className="flex flex-col gap-y-4"
             onSubmit={handleSubmit(onSubmit)}
           >
-            {error && (
-              <div className="mb-2 rounded bg-red-100 p-2 text-sm text-red-600">
-                {error}
-              </div>
-            )}
-            <div>
-              <label
-                htmlFor="ci-fullName"
-                className="block text-sm font-medium"
-              >
-                Full Name
-              </label>
-              <input
-                id="ci-fullName"
-                {...register('fullName')}
-                className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
+            <Form.Item>
+              <Controller
+                name="fullName"
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                    {...field}
+                    type="text"
+                    id="ci-fullName"
+                    className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
+                    label="Full Name"
+                    // isError={!!errors.fullName}
+                    // hintText={errors.fullName?.message || (errors.fullName && 'Required')}
+                  />
+                )}
               />
-            </div>
-            <div>
-              <label htmlFor="ci-gender" className="block text-sm font-medium">
-                Gender
-              </label>
-              <input
-                id="ci-gender"
-                {...register('gender')}
-                className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
+            </Form.Item>
+            <Form.Item className="flex flex-row gap-2 lg:flex-row">
+              <fieldset className="w-1/2">
+                <Controller
+                  name="gender"
+                  control={control}
+                  render={({ field }) => (
+                    <FormControl fullWidth>
+                      <p id="gender-label" className="text-sm text-neutral-10">
+                        Gender
+                      </p>
+                      <Select
+                        labelId="gender-select-label"
+                        id="gender-select"
+                        value={field?.value?.id || ''}
+                        onChange={(e) => {
+                          const selectedOption = genderOptions.find(
+                            (option) => option.id === e.target.value,
+                          );
+                          field.onChange(selectedOption || null);
+                        }}
+                        sx={{
+                          // borderRadius: '20px',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          '& .MuiOutlinedInput-notchedOutline': {
+                            height: '50px',
+                          },
+                        }}
+                      >
+                        {genderOptions.map((option) => (
+                          <MenuItem key={option.id} value={option.id}>
+                            {option.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  )}
+                />
+              </fieldset>
+              <fieldset className="w-1/2">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <Controller
+                    name="birthday"
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <p
+                          id="birthday-label"
+                          className="text-sm text-neutral-10"
+                        >
+                          Birthday
+                        </p>
+                        <DatePicker
+                          value={field.value ? dayjs(field.value) : null}
+                          onChange={(date) =>
+                            field.onChange(
+                              date ? date.format('YYYY-MM-DD') : '',
+                            )
+                          }
+                          slotProps={{
+                            textField: {
+                              fullWidth: true,
+                              sx: {
+                                borderRadius: '100px',
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                  height: '50px',
+                                },
+                              },
+                            },
+                          }}
+                        />
+                      </>
+                    )}
+                  />
+                </LocalizationProvider>
+              </fieldset>
+            </Form.Item>
+            <Form.Item>
+              <Controller
+                name="address"
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                    {...field}
+                    id="ci-address"
+                    type="text"
+                    className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
+                    label="Address"
+                    // isError={!!errors.address}
+                    // hintText={errors.address?.message || (errors.address && 'Required')}
+                  />
+                )}
               />
-            </div>
-            <div>
-              <label
-                htmlFor="ci-birthday"
-                className="block text-sm font-medium"
-              >
-                Birthday
-              </label>
-              <input
-                id="ci-birthday"
-                {...register('birthday')}
-                type="date"
-                className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
+            </Form.Item>
+            <Form.Item>
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                    {...field}
+                    id="ci-email"
+                    type="email"
+                    value={field.value || ''}
+                    className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
+                    label="Email"
+                    placeholder=""
+                    disabled
+                    // isError={!!errors.email}
+                    // hintText={errors.email?.message || (errors.email && 'Required')}
+                  />
+                )}
               />
-            </div>
-            <div>
-              <label htmlFor="ci-address" className="block text-sm font-medium">
-                Address
-              </label>
-              <input
-                id="ci-address"
-                {...register('address')}
-                className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
+            </Form.Item>
+            <Form.Item>
+              <Controller
+                name="phoneNumber"
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                    {...field}
+                    id="ci-phoneNumber"
+                    type="tel"
+                    className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
+                    label="Phone Number"
+                    // isError={!!errors.phoneNumber}
+                    // hintText={errors.phoneNumber?.message || (errors.phoneNumber && 'Required')}
+                  />
+                )}
               />
-            </div>
-            <div>
-              <label htmlFor="ci-email" className="block text-sm font-medium">
-                Email
-              </label>
-              <input
-                id="ci-email"
-                {...register('email')}
-                className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
-                placeholder="Not available"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="ci-phoneNumber"
-                className="block text-sm font-medium"
-              >
-                Phone Number
-              </label>
-              <input
-                id="ci-phoneNumber"
-                {...register('phoneNumber')}
-                className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
-              />
-            </div>
+            </Form.Item>
             <div className="flex flex-row justify-end gap-x-2">
               <button
                 type="button"
-                className="rounded bg-neutral-90 px-4 py-2 text-sm text-neutral-40"
+                className="rounded-[100px] bg-neutral-90 px-4 py-2 text-sm text-neutral-40"
                 onClick={handleCancel}
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="rounded bg-primary-50 px-4 py-2 text-sm text-white disabled:bg-neutral-60"
+                className="rounded-[100px] bg-primary-50 px-4 py-2 text-sm text-white disabled:bg-neutral-60"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? 'Saving...' : 'Save'}
               </button>
             </div>
           </form>
-        ) : (
-          <div className="flex flex-col gap-y-2">
-            <div>
-              <span className="font-medium">Full Name: </span>
-              <span>{values.fullName || 'Not provided'}</span>
-            </div>
-            <div>
-              <span className="font-medium">Gender: </span>
-              <span>{values.gender || 'Not provided'}</span>
-            </div>
-            <div>
-              <span className="font-medium">Birthday: </span>
-              <span>{values.birthday || 'Not provided'}</span>
-            </div>
-            <div>
-              <span className="font-medium">Address: </span>
-              <span>{values.address || 'Not provided'}</span>
-            </div>
-            <div>
-              <span className="font-medium">Email: </span>
-              <span>{values.email || 'Not available'}</span>
-            </div>
-            <div>
-              <span className="font-medium">Phone Number: </span>
-              <span>{values.phoneNumber || 'Not provided'}</span>
-            </div>
+        </FormProvider>
+      ) : (
+        <div className="flex flex-col gap-y-3">
+          <div>
+            <p className="font-medium">Full Name </p>
+            <p className="font-light">{values.fullName || 'Not provided'}</p>
           </div>
-        )}
-      </div>
+          <div>
+            <p className="font-medium">Gender </p>
+            <p className="font-light">{values.gender.name || 'Not provided'}</p>
+          </div>
+          <div>
+            <p className="font-medium">Birthday </p>
+            <p className="font-light">{values.birthday || 'Not provided'}</p>
+          </div>
+          <div>
+            <p className="font-medium">Address </p>
+            <p className="font-light">{values.address || 'Not provided'}</p>
+          </div>
+          <div>
+            <p className="font-medium">Email </p>
+            <p className="font-light">{values.email || 'Not available'}</p>
+          </div>
+          <div>
+            <p className="font-medium">Phone Number </p>
+            <p className="font-light">{values.phoneNumber || 'Not provided'}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
