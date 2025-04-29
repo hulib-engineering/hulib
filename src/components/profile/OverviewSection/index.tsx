@@ -9,9 +9,10 @@ import type { User } from '@/libs/services/modules/user/userType';
 
 type Props = {
   liberDetail: User | undefined;
+  onInvalidate?: () => void; // Called after successful update to refetch
 };
 
-const OverviewSection = ({ liberDetail }: Props) => {
+const OverviewSection = ({ liberDetail, onInvalidate }: Props) => {
   const [openEditPopup, setOpenEditPopup] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -23,7 +24,7 @@ const OverviewSection = ({ liberDetail }: Props) => {
   });
 
   return (
-    <div className="mb-3 flex flex-col gap-y-2 border-b border-neutral-90/50 py-5">
+    <div className="mb-3 flex flex-col gap-y-2 border-b border-neutral-90/50 py-5 font-light">
       <div className="flex flex-row justify-between font-medium">
         <span>Bio</span>
         {!openEditPopup && (
@@ -44,6 +45,7 @@ const OverviewSection = ({ liberDetail }: Props) => {
             try {
               await updateProfile({ bio: data.bio }).unwrap();
               setOpenEditPopup(false);
+              if (onInvalidate) onInvalidate();
             } catch (err) {
               setError(
                 err instanceof Error ? err.message : 'Failed to update bio',
@@ -52,7 +54,7 @@ const OverviewSection = ({ liberDetail }: Props) => {
           })}
         >
           <textarea
-            className="w-full rounded-lg border border-[#C2C6CF] p-2"
+            className="w-full rounded-lg border border-[#C2C6CF] p-2 font-light"
             rows={4}
             {...register('bio')}
           />
@@ -71,7 +73,7 @@ const OverviewSection = ({ liberDetail }: Props) => {
             </button>
             <button
               type="button"
-              className="rounded-full border-[#C2C6CF] bg-neutral-90 px-7 py-3"
+              className="rounded-[100px] bg-neutral-90 px-4 py-2 text-sm text-neutral-40"
               onClick={() => {
                 reset({ bio: liberDetail?.bio || '' });
                 setOpenEditPopup(false);
@@ -82,7 +84,7 @@ const OverviewSection = ({ liberDetail }: Props) => {
           </div>
         </form>
       ) : (
-        <div className="  ">
+        <div className="font-light ">
           <p className="leading-[20px] tracking-wide">{liberDetail?.bio}</p>
         </div>
       )}
