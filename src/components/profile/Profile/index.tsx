@@ -1,15 +1,17 @@
 'use client';
 
-import { MapPin, Star, Users } from '@phosphor-icons/react';
+import { IconButton } from '@mui/material';
+import { MapPin, PencilSimple, Star, Users } from '@phosphor-icons/react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 import * as React from 'react';
 
-import { EditIcon } from '@/components/authorDetail/EditIcon';
 import type { ProfileMenuItem } from '@/components/core/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/core/NavBar/NavBar';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 import { useAppSelector } from '@/libs/hooks';
+import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import { useGetAuthorDetailQuery } from '@/libs/services/modules/user';
 
 import { AboutPanel } from '../AboutPanel';
@@ -30,7 +32,25 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 
 const Profile = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
-  const { data: liberDetail, isLoading } = useGetAuthorDetailQuery(user?.id);
+  const path = usePathname().split('/').filter(Boolean);
+  const isMyProfilePage = path[1] === 'profile' && path.length === 2;
+  const {
+    data: authorData,
+    isLoading: authorLoading,
+    refetch: authorRefetch,
+  } = useGetAuthorDetailQuery(user?.id, {
+    skip: isMyProfilePage || !user?.id,
+  });
+  const {
+    data: personalData,
+    isLoading: personalLoading,
+    refetch: personalRefetch,
+  } = useGetPersonalInfoQuery();
+
+  const userDetail = isMyProfilePage ? personalData : authorData;
+  const isLoading = isMyProfilePage ? personalLoading : authorLoading;
+  const refetch = isMyProfilePage ? personalRefetch : authorRefetch;
+  const isLiber = userDetail?.role?.name === 'Reader';
 
   const [selectedMenuItem, setSelectedMenuItem] = React.useState<
     ProfileMenuItem | undefined
@@ -59,7 +79,9 @@ const Profile = () => {
             </p>
           </div>
         ),
-        component: <AboutPanel liberDetail={liberDetail} />,
+        component: (
+          <AboutPanel liberDetail={userDetail} onInvalidate={refetch} />
+        ),
       },
       {
         type: MyProfilePanelIndex.MY_FAVORITE,
@@ -79,7 +101,7 @@ const Profile = () => {
         component: <div>TBD</div>,
       },
     ];
-  }, [liberDetail, selectedMenuItem?.type]);
+  }, [userDetail, selectedMenuItem?.type]);
 
   const getActiveMenuItemIndex = React.useCallback(
     (type: MyProfilePanelIndex | undefined) => {
@@ -112,7 +134,7 @@ const Profile = () => {
   const rating = '5/5';
 
   return (
-    <div className="h-full w-full bg-neutral-98 shadow-[0_2px_4px_0px_rgba(0,0,0,0.1)] md:px-[10%]">
+    <div className="h-full w-full bg-neutral-98 shadow-[0_2px_4px_0px_rgba(0,0,0,0.1)]">
       <div className="h-full w-full">
         <div className="relative flex h-[99.99px] justify-end justify-items-end bg-[#A6D4FF] lg:h-[200px]">
           <div className="relative h-[99.99px] w-full lg:h-[200px]">
@@ -124,9 +146,9 @@ const Profile = () => {
               alt="banner"
               loading="lazy"
             />
-            <div className="absolute right-2 top-8">
+            {/* <div className="absolute right-2 top-8">
               <EditIcon />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="flex w-full flex-row gap-y-2 bg-[#FFFFFF]">
@@ -142,28 +164,41 @@ const Profile = () => {
               />
 
               <div className="absolute bottom-0 left-20 opacity-0 transition-opacity duration-200 group-hover:opacity-100 lg:left-28 ">
-                <EditIcon />
+                <IconButton
+                  sx={{
+                    backgroundColor: '#CDDDFE',
+                    border: '1px solid white',
+                  }}
+                  onClick={() => {}}
+                  title="Edit"
+                >
+                  <PencilSimple size={16} color="#033599" className="p-0.5" />
+                </IconButton>
               </div>
             </div>
 
             <div className="relative left-4 mb-10 flex w-full flex-row items-center justify-between gap-2 lg:left-0 lg:ml-[210px] lg:mr-5">
               <div className="flex-col gap-y-1 lg:gap-y-1">
                 <p className="text-3xl font-medium text-[#000000]">
-                  {liberDetail?.fullName ?? 'Author Full name'}
+                  {userDetail?.fullName ?? 'Author Full name'}
                 </p>
                 <div className="flex items-center gap-x-10 text-sm text-neutral-20">
                   <LabelWithLeftIcon
-                    label={liberDetail?.address ?? 'Location'}
+                    label={userDetail?.address ?? 'Location'}
                     icon={<MapPin size={20} />}
                   />
-                  <LabelWithLeftIcon
-                    label={`${menteeCount} mentees`}
-                    icon={<Users size={20} />}
-                  />
-                  <LabelWithLeftIcon
-                    label={`${rating} rating`}
-                    icon={<Star size={20} />}
-                  />
+                  {!isLiber && (
+                    <LabelWithLeftIcon
+                      label={`${menteeCount} mentees`}
+                      icon={<Users size={20} />}
+                    />
+                  )}
+                  {!isLiber && (
+                    <LabelWithLeftIcon
+                      label={`${rating} rating`}
+                      icon={<Star size={20} />}
+                    />
+                  )}
                 </div>
               </div>
             </div>
