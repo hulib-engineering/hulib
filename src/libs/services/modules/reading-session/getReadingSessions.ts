@@ -4,9 +4,11 @@ import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinit
 const getReadingSessions = (
   build: EndpointBuilder<BaseQueryFn, string, string>,
 ) =>
-  build.query<any, { type?: string }>({
+  build.query<any, { upcoming?: boolean }>({
     query: (params) =>
-      `reading-sessions?${params?.type ? `type=${params?.type}` : ''}`,
+      `reading-sessions?${
+        params?.upcoming ? `upcoming=${params?.upcoming}` : ''
+      }`,
     providesTags: [{ type: 'ReadingSession' }],
   });
 

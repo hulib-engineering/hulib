@@ -379,7 +379,7 @@
     "topics": "Chủ đề",
     "ratings": "Đánh giá",
     "abstract": "Tóm tắt",
-    "read_story": "Đọc câu chuyện",
+    "read_story": "Đọc truyện",
     "productivity": "Năng suất",
     "all": "Tất cả",
     "health": "Sức khỏe",
@@ -390,6 +390,31 @@
     "similar_stories": "Những câu chuyện tương tự",
     "see_all": "Xem tất cả",
     "hide_all": "Ẩn tất cả"
+  },
+  "Huber": {
+    "title": "Xem danh sách Huber",
+    "description": "Tìm hiểu và chọn Huber phù hợp với bạn",
+    "huber_btn_all": "Xem tất cả",
+    "huber_view_more": "Xem thêm",
+    "explore_all_huber": "Khám phá tất cả Hubers",
+    "card": {
+      "introduce": "Tên tôi là {fullName}, tôi là một người yêu sách và thích chia sẻ kiến thức. Tôi đã đọc rất nhiều sách và muốn chia sẻ những gì tôi đã học được với mọi người.",
+      "topics": "Chủ đề",
+      "ratings": "Yêu thích",
+      "visit_profile": "Xem hồ sơ"
+    }
+  },
+  "Time_slots": {
+    "title": "Khung giờ",
+    "description": "Chọn khung giờ bạn có sẵn",
+    "time_slots": "Khung giờ",
+    "available_time_slots": "Lịch trống của mình",
+    "available_time_slots_description": "Dưới đây là khung giờ trống của bạn",
+    "select_time_slots": "Chọn thời gian bạn có sẵn cho Liber!",
+    "update_time_slots": "Cập nhật khung giờ",
+    "select_time_slots_description": "Chọn khung giờ bạn có sẵn cho phiên làm việc",
+    "error_time_slots": "Đã xảy ra lỗi. Vui lòng kiểm tra khung giờ của bạn và thử lại.",
+    "success_time_slots_description": "Bạn đã tạo khung giờ thành công"
   },
   "Home": {
     "banner": {

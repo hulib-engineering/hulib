@@ -33,5 +33,5 @@ export interface Huber {
 export interface HuberlistParams {
   page: number;
   limit: number;
-  topicId: number;
+  topicIds: string[];
 }

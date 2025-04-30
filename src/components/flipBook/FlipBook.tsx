@@ -10,6 +10,8 @@ import { mergeClassnames } from '@/components/private/utils';
 import { useAddStoryToFavoritesMutation } from '@/libs/services/modules/fav-stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
+import CustomCoverBook from '../common/CustomCoverBook';
+
 export type BookCommonProps = {
   data: StoryType;
 };
@@ -223,15 +225,11 @@ export const FlipBook = ({ data }: BookCommonProps) => {
           )}
           onMouseEnter={!isMobile ? handleMouseEnter : undefined}
         >
-          <div className="absolute inset-0">
-            <Image
-              src="/assets/images/cover-test.png"
-              alt="book-image"
-              width={175}
-              height={180}
-              className="h-full w-full rounded-2xl"
-            />
-          </div>
+          <CustomCoverBook
+            titleStory={title}
+            authorName={data?.humanBook?.fullName || ''}
+            srcImage={data?.cover?.path}
+          />
         </div>
       </div>
       {/* Back-Card */}

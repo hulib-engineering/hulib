@@ -71,7 +71,8 @@
         "unused-imports/no-unused-vars": [
           "error",
           { "argsIgnorePattern": "^_" }
-        ]
+        ],
+				"react-hooks/exhaustive-deps": "off"
       }
     },
     // Configuration for testing

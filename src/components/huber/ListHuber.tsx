@@ -2,7 +2,7 @@
 
 import { CaretCircleDown, CaretCircleUp } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Button from '@/components/button/Button';
 import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
@@ -13,24 +13,28 @@ import type { Topic } from '@/libs/services/modules/topics/topicType';
 import Huber from './Huber';
 
 type ListHuberProps = {
-  topicId: String[] | null;
+  topicIds: String[] | null;
   topics: Topic[];
 };
 
-const ListHuber = ({ topicId, topics }: ListHuberProps) => {
+const ListHuber = ({ topicIds, topics }: ListHuberProps) => {
   const [limit, setLimit] = React.useState(12);
   const [isExpanded, setIsExpanded] = React.useState(false);
   const t = useTranslations('ExporeStory');
-
   const {
     data: hubersData,
     isLoading,
     isFetching,
+    refetch,
   } = useGetHubersQuery({
     page: 1,
     limit,
-    topicId: topicId || undefined,
+    topicIds: topicIds || undefined,
   });
+
+  useEffect(() => {
+    refetch();
+  }, [topicIds, refetch]);
 
   const onClickSeeAll = () => {
     if (!isExpanded) {

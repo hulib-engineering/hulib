@@ -63,7 +63,6 @@ const ListTopics = (props: Props) => {
           <Topic
             key={topic?.name}
             name={topic?.name}
-            iconName={topic.iconName || 'brain'}
             isActive={
               topic?.name === 'All'
                 ? null
