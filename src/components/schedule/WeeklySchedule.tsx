@@ -15,22 +15,22 @@ const WeeklySchedule = () => {
   const isHuber = user?.role?.name === 'Human Book';
   const { data: timeSlotHuber, isLoading: isLoadingTimeSlots } =
     useGetTimeSlotsHuberQuery(
-      { id: user?.id },
+      { id: 23 },
       {
         skip: !user?.id || !isHuber,
       },
     );
 
   return (
-    <div className="flex h-max flex-row pl-[20px] pt-0">
-      <div className="w-[30%]">
+    <div className="flex h-max flex-col pt-0 lg:flex-row lg:pl-[20px]">
+      <div className="w-full lg:w-[344px]">
         <UpComingEvent />
         <MiniSchedule />
         {isHuber && !isLoadingTimeSlots && (
           <TimeSlot timeSlots={timeSlotHuber} />
         )}
       </div>
-      <div className="mx-[20px] h-full w-[70%]">
+      <div className="h-full w-full lg:mx-[20px] lg:flex-1">
         <BigSchedule />
       </div>
     </div>

@@ -6,7 +6,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
-import { pushError } from '@/components/CustomToastifyContainer';
 import Form from '@/components/form/Form';
 import TextArea from '@/components/textArea/TextArea';
 import TextInput from '@/components/textInput/TextInput';
@@ -15,7 +14,8 @@ import { useCreateStoryMutation } from '@/libs/services/modules/stories';
 import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import { StoriesValidation } from '@/validations/StoriesValidation';
 
-import CustomCoverBox from './CustomCoverBox';
+import CustomCoverBook from '../common/CustomCoverBook';
+import { pushError, pushSuccess } from '../CustomToastifyContainer';
 
 interface Topic {
   id: number;
@@ -28,6 +28,12 @@ const Step3 = ({ next }: { next: () => void }) => {
   const userInfo = useAppSelector((state) => state.auth.userInfo);
   const { data: topicsPages, isLoading } = useGetTopicsQuery();
   const [createStory] = useCreateStoryMutation();
+  const [coverImages] = useState<any[]>([
+    {
+      path: 'https://hulib-services.onrender.com/api/v1/files/3a453887a11688d76b8ef.png',
+      id: 'dadcbf14-0596-4a5a-8681-f6234cea30b6',
+    },
+  ]);
 
   const methods = useForm<z.infer<typeof StoriesValidation>>({
     resolver: zodResolver(StoriesValidation),
@@ -35,6 +41,7 @@ const Step3 = ({ next }: { next: () => void }) => {
       title: '',
       abstract: '',
       topicIds: [],
+      cover: coverImages[0],
     },
   });
 
@@ -47,6 +54,7 @@ const Step3 = ({ next }: { next: () => void }) => {
   } = methods;
 
   const selectedTopics = watch('topicIds') || [];
+  const title = watch('title') || '';
 
   const handleTopicToggle = (topicId: number) => {
     const currentTopics = selectedTopics || [];
@@ -67,11 +75,7 @@ const Step3 = ({ next }: { next: () => void }) => {
     );
   };
 
-  const onSubmit = async (
-    formValues: z.infer<typeof StoriesValidation> & {
-      cover?: { id: string; path: string };
-    },
-  ) => {
+  const onSubmit = async (formValues: z.infer<typeof StoriesValidation>) => {
     try {
       const response = await createStory({
         title: formValues.title,
@@ -80,15 +84,14 @@ const Step3 = ({ next }: { next: () => void }) => {
         humanBook: {
           id: userInfo?.id,
         },
-        cover: formValues.cover || {
-          id: '6b02fe49-101c-4567-d2f9-6b02fe49101c',
-        },
+        cover: formValues.cover,
+        publishStatus: 'draft',
       });
-
       if (response?.error && response?.error?.status === 422) {
         pushError('Failed to create story');
       } else {
         localStorage.setItem('huber_registration_step', '4');
+        pushSuccess('Story created successfully');
         next();
       }
     } catch (error) {
@@ -222,6 +225,7 @@ const Step3 = ({ next }: { next: () => void }) => {
                             </p>
                           }
                           isError={!!errors.title}
+                          maxLength={32}
                           hintText={
                             errors.title?.message ||
                             (errors.title && 'Required')
@@ -261,7 +265,31 @@ const Step3 = ({ next }: { next: () => void }) => {
               </div>
             </div>
             <div className="flex-1">
-              <CustomCoverBox setValue={setValue} />
+              <div className="flex flex-col gap-2">
+                <div className="text-sm font-medium text-black">
+                  Cover picture <span className="text-red-500">*</span>
+                  <div className="mt-2 flex justify-between gap-2 rounded-2xl bg-neutral-90 p-5">
+                    <div className="flex cursor-pointer flex-col gap-4">
+                      <CustomCoverBook
+                        titleStory={title}
+                        authorName={userInfo?.fullName}
+                        widthImage={180}
+                        heightImage={255}
+                        srcImage={coverImages[0].path}
+                      />
+
+                      {/* <Button
+                  onClick={() => handleSelectedCoverImage(indexCoverImage)}
+                  className={`${
+                    isSelected ? 'bg-primary-90' : 'border-neutral-80 bg-white'
+                  } text-primary-50 hover:text-white`}
+                >
+                  {isSelected ? 'Custom' : `Style ${indexCoverImage + 1}`}
+                </Button> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className="flex w-full justify-between gap-4 text-left lg:w-1/2">

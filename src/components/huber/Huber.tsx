@@ -3,6 +3,7 @@
 import { Bookmarks, CaretCircleRight } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import React, { useMemo, useState } from 'react';
 
 import type { Huber as HuberType } from '@/libs/services/modules/huber/huberType';
@@ -17,6 +18,7 @@ export type HuberCommonProps = {
 const Huber = ({ data: huber, topics }: HuberCommonProps) => {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
+  const t = useTranslations('Huber.card');
   // Tạo topicMap để tra cứu topicName từ topicId
   const topicMap = useMemo(() => {
     const map = new Map<number, string>();
@@ -71,6 +73,10 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
               const colorIndex = index % colors.length;
               const tagColor = colors[colorIndex];
 
+              if (huber.humanBookTopic.length === 0) {
+                return null;
+              }
+
               return (
                 <span
                   key={index}
@@ -104,11 +110,11 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
                 textOverflow: 'ellipsis',
               }}
             >
-              {huber.abtract
-                ? huber.abtract.length > 150
-                  ? `${huber.abtract.slice(0, 150)}...`
-                  : huber.abtract
-                : 'This is a placeholder abstract text for demonstration purposes. This is a placeholder abstract text for demonstration purposes. This is a placeholder abstract text for demonstration purposes. This is a placeholder abstract text for demonstration purposes.'}
+              {huber.bio
+                ? huber.bio.length > 150
+                  ? `${huber.bio.slice(0, 150)}...`
+                  : huber.bio
+                : t('introduce', { fullName: huber.fullName })}
             </p>
           </div>
         </div>
@@ -127,7 +133,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
             {/* {`${huber.topics}`}{' '} */}
             {huber.humanBookTopic.length}
             <span className="text-[0.625rem] leading-3 text-neutral-40">
-              Topics
+              {t('topics')}
             </span>
           </span>
           <span className="ml-3 flex flex-row items-center justify-center gap-1">
@@ -141,7 +147,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
               {huber.rating || 0}
             </span>
             <span className="text-[0.625rem] leading-3 text-neutral-40">
-              Hearts
+              {t('ratings')}
             </span>
           </span>
         </div>
@@ -153,10 +159,10 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
           <Button
             variant="primary"
             className="flex w-full items-center justify-center gap-2 py-2.5"
-            onClick={() => router.push(`/profile/${huber.id}`)}
+            onClick={() => router.push(`/profile?huberId=${huber.id}`)}
           >
             <CaretCircleRight size={20} />
-            <p>Visit Profile</p>
+            <p>{t('visit_profile')}</p>
           </Button>
         </div>
 
@@ -165,7 +171,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
           <Button
             variant="primary"
             className="flex w-full items-center justify-center gap-2 rounded-full py-2 text-sm"
-            onClick={() => router.push(`/profile/${huber.id}`)}
+            onClick={() => router.push(`/profile?huberId=${huber.id}`)}
           >
             <p>Visit Profile</p>
           </Button>

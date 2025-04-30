@@ -172,7 +172,7 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
       4: 'THU',
       5: 'FRI',
       6: 'SAT',
-      7: 'SUN',
+      0: 'SUN',
     };
 
     result.forEach((element: any) => {
@@ -208,10 +208,10 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
           {t('available_time_slots')}
         </p>
         <p className="text-[12px] font-[500] leading-[16px] text-[#03191C]">
-          Những khung giờ trong tuần mà bạn đã dành cho Liber
+          {t('available_time_slots_description')}
         </p>
       </div>
-      {currentDate}
+      {/* {currentDate} */}
       <HeadSlots
         dayOfWeek={WEEK_DAY_MAP[currentDate]}
         onChangeDayOfWeek={(day: number) => handleSelectDay(day)}

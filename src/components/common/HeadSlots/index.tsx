@@ -70,7 +70,7 @@ export default function HeadSlots({
     <Box className="mt-4">
       {/* Day Selector Row */}
       <Box
-        className="mb-1 flex justify-between rounded-full bg-neutral-98 p-1"
+        className="mb-1 flex justify-between overflow-x-auto rounded-full bg-neutral-98 p-1"
         sx={{
           borderRadius: '9999px',
         }}

@@ -16,8 +16,10 @@ import React, { useMemo } from 'react';
 
 import Button from '@/components/button/Button';
 import IconButton from '@/components/iconButton/IconButton';
+import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import MenuItem from '@/components/menuItem/MenuItem';
+import { NotificationPopover } from '@/components/notification/NotificationPopover';
 import Popover from '@/components/popover/Popover';
 import type { WithChildren } from '@/components/private/types';
 import SearchInput from '@/components/SearchInput';
@@ -117,7 +119,7 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
 };
 
 const AvatarPopover = ({ children }: WithChildren<{}>) => (
-  <Popover position="bottom-end" className="h-full">
+  <Popover position="bottom-end" className="h-full w-11">
     <Popover.Trigger
       data-testid="popover-trigger-arrow"
       {...{
@@ -163,7 +165,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="flex w-full flex-col gap-5 bg-white px-4 pb-2 pt-4 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:hidden">
+      <header className="flex w-screen flex-col gap-5 bg-white px-4 pb-2 pt-4 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:hidden">
         <div className="flex items-center justify-between">
           <Logo size="small" />
           {!user || !user?.id ? (
@@ -182,15 +184,16 @@ const Header = () => {
                   onClick={() => alert('click')}
                 />
               </ButtonWithChip>
-              <ButtonWithChip value="10">
-                <IconButton
-                  variant="ghost"
-                  icon={<Bell size={28} />}
-                  className="p-2"
-                  data-testid="button-notif"
-                  onClick={() => alert('click')}
-                />
-              </ButtonWithChip>
+              <NotificationPopover>
+                <ButtonWithChip value="10">
+                  <IconButton
+                    variant="ghost"
+                    icon={<Bell size={28} />}
+                    className="p-2"
+                    data-testid="button-notif"
+                  />
+                </ButtonWithChip>
+              </NotificationPopover>
               <div className="relative ml-2">
                 <AvatarPopover>
                   <Image
@@ -210,6 +213,7 @@ const Header = () => {
                   <CaretDown size={12} />
                 </div>
               </div>
+              <LocaleSwitcher className="shrink" />
             </div>
           )}
         </div>
@@ -218,7 +222,7 @@ const Header = () => {
           {renderNavbar()}
         </div>
       </header>
-      <header className="hidden w-full items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
+      <header className="hidden w-[100vw] items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
         <div className="flex items-center gap-6">
           <Logo size="small" />
           {renderNavbar()}
@@ -242,15 +246,16 @@ const Header = () => {
                 onClick={() => alert('click')}
               />
             </ButtonWithChip>
-            <ButtonWithChip value="10">
-              <IconButton
-                variant="ghost"
-                icon={<Bell size={28} />}
-                className="p-2"
-                data-testid="button-notif"
-                onClick={() => alert('click')}
-              />
-            </ButtonWithChip>
+            <NotificationPopover>
+              <ButtonWithChip value="10">
+                <IconButton
+                  variant="ghost"
+                  icon={<Bell size={28} />}
+                  className="p-2"
+                  data-testid="button-notif"
+                />
+              </ButtonWithChip>
+            </NotificationPopover>
             <div className="relative ml-2 h-11 w-11">
               <AvatarPopover>
                 <Image
@@ -269,6 +274,7 @@ const Header = () => {
                 <CaretDown size={12} />
               </div>
             </div>
+            <LocaleSwitcher className="shrink" />
           </div>
         )}
       </header>

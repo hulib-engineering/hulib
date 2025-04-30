@@ -405,11 +405,25 @@
     "see_all": "See All",
     "hide_all": "Hide All"
   },
+  "Huber": {
+    "title": "Explore our Hubers",
+    "description": "Discover and find your suitable huber",
+    "huber_btn_all": "See all",
+    "huber_view_more": "View more",
+    "explore_all_huber": " Explore all Hubers",
+    "card": {
+      "introduce": "My name is {fullName}, I am a book lover and enjoy sharing knowledge. I have read many books and want to share what I have learned with everyone.",
+      "topics": "Topics",
+      "ratings": "Ratings",
+      "visit_profile": "Visit Profile"
+    }
+  },
   "Time_slots": {
     "title": "Time Slots",
     "description": "Select your available time slots",
     "time_slots": "Time Slots",
     "available_time_slots": "My available slots",
+    "available_time_slots_description": "Wow below are slots you chose",
     "select_time_slots": "Select the times you’re available for Liber!",
     "update_time_slots": "Update My Slots",
     "select_time_slots_description": "Select the time slots you are available for the session",
