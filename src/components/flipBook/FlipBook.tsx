@@ -228,6 +228,7 @@ export const FlipBook = ({ data }: BookCommonProps) => {
           <CustomCoverBook
             titleStory={title}
             authorName={data?.humanBook?.fullName || ''}
+            srcImage={data?.cover?.path}
           />
         </div>
       </div>
