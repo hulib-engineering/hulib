@@ -29,6 +29,7 @@ export interface User {
   education: string | null;
   educationStart: string | null;
   educationEnd: string | null;
+  email: string | null;
 }
 
 export interface GetUsersParams {

@@ -11,13 +11,12 @@ import * as React from 'react';
 
 import type { User } from '@/libs/services/modules/user/userType';
 
-import { ContactInformationSection } from '../ContactInformationSection';
-import OverviewSection from '../OverviewSection';
-import WorkAndEducationSection from '../WorkAndEducationSection';
+import { ContactInformationSection } from '../profile/ContactInformationSection';
+import OverviewSection from '../profile/OverviewSection';
+import WorkAndEducationSection from '../profile/WorkAndEducationSection';
 
 type Props = {
   liberDetail?: User;
-  onInvalidate?: () => void; // Called after successful update to refetch
 };
 
 type AboutSectionMenu = {
@@ -25,37 +24,28 @@ type AboutSectionMenu = {
   label: React.ReactNode;
   icon: React.ReactNode;
   component: React.ReactNode;
-  isShow?: boolean;
 };
 
-export const AboutPanel = ({ liberDetail, onInvalidate }: Props) => {
+export const AboutPanel = ({ liberDetail }: Props) => {
   const [activeSection, setActiveSection] = React.useState('liberOverview');
   const sectionMenu: AboutSectionMenu[] = [
     {
       type: 'liberOverview',
       label: 'Liber Overview',
       icon: <Books size={20} />,
-      component: (
-        <OverviewSection
-          liberDetail={liberDetail}
-          onInvalidate={onInvalidate}
-        />
-      ),
-      isShow: true,
+      component: <OverviewSection liberDetail={liberDetail} />,
     },
     {
       type: 'workAndEducation',
       label: 'Work and Education',
       icon: <Suitcase size={20} />,
       component: <WorkAndEducationSection liberDetail={liberDetail} />,
-      isShow: liberDetail?.role?.name === 'Human Book',
     },
     {
       type: 'contactInformation',
       label: 'Contact Information',
       icon: <Users size={20} />,
       component: <ContactInformationSection liberDetail={liberDetail} />,
-      isShow: true,
     },
   ];
 
@@ -66,45 +56,43 @@ export const AboutPanel = ({ liberDetail, onInvalidate }: Props) => {
         <div className="p-5 text-base font-medium text-neutral-10">
           Giới thiệu
         </div>
-        {sectionMenu
-          .filter((section) => section.isShow)
-          .map((section) => (
-            <div key={section.type} className="border-t border-neutral-90">
-              {/* Section Toggle Button */}
-              <button
-                type="button"
-                className={`flex w-full flex-row items-center justify-between gap-x-2 p-4 text-sm font-medium ${
-                  activeSection === section.type
-                    ? 'bg-primary-98 text-primary-50'
-                    : 'text-neutral-40'
-                }`}
-                onClick={() =>
-                  setActiveSection(
-                    section.type === activeSection ? '' : section.type,
-                  )
-                }
-              >
-                <div className="flex items-center gap-x-2">
-                  <span className="flex h-5 w-5 items-center justify-center">
-                    {section.icon}
-                  </span>
-                  <span>{section.label}</span>
-                </div>
-                {activeSection === section.type ? (
-                  <CaretUp size={20} />
-                ) : (
-                  <CaretDown size={20} />
-                )}
-              </button>
-
-              {/* Section Content (shows when active) */}
-              {activeSection === section.type && (
-                <div className="border-t border-neutral-90 bg-white p-4">
-                  {section.component}
-                </div>
+        {sectionMenu.map((section) => (
+          <div key={section.type} className="border-t border-neutral-90">
+            {/* Section Toggle Button */}
+            <button
+              type="button"
+              className={`flex w-full flex-row items-center justify-between gap-x-2 p-4 text-sm font-medium ${
+                activeSection === section.type
+                  ? 'bg-primary-98 text-primary-50'
+                  : 'text-neutral-40'
+              }`}
+              onClick={() =>
+                setActiveSection(
+                  section.type === activeSection ? '' : section.type,
+                )
+              }
+            >
+              <div className="flex items-center gap-x-2">
+                <span className="flex h-5 w-5 items-center justify-center">
+                  {section.icon}
+                </span>
+                <span>{section.label}</span>
+              </div>
+              {activeSection === section.type ? (
+                <CaretUp size={20} />
+              ) : (
+                <CaretDown size={20} />
               )}
-            </div>
-          ))}
+            </button>
+
+            {/* Section Content (shows when active) */}
+            {activeSection === section.type && (
+              <div className="border-t border-neutral-90 bg-white p-4">
+                {section.component}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
 
       {/* Desktop View - Side by Side */}
