@@ -6,6 +6,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
+import { ScheduleFilterPopover } from '@/components/schedule/components/ScheduleFilter/ScheduleFilter';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 
@@ -162,9 +163,15 @@ export default function BigCalendar() {
 
   return (
     <div className="bg-white p-4">
-      <h2 className="rounded-md bg-white p-2 text-[28px] font-[500] leading-[36px] text-[#010D26]">
-        Appointment schedule {currentMonthYear}
-      </h2>
+      <div className="flex w-full items-center justify-between">
+        <h2 className="flex-1 rounded-md bg-white p-2 text-[28px] font-[500] leading-[36px] text-[#010D26]">
+          Appointment schedule {currentMonthYear}
+        </h2>
+        <div className="flex items-center gap-x-2">
+          <span>View:</span>
+          <ScheduleFilterPopover />
+        </div>
+      </div>
       <div className="w-full">
         {list?.length > 0 && (
           <FullCalendar
