@@ -3,7 +3,7 @@
 import { IconButton } from '@mui/material';
 import { MapPin, PencilSimple, Star, Users } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 import * as React from 'react';
 
@@ -31,8 +31,8 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 };
 
 const Profile = () => {
-  const searchParams = useSearchParams();
-  const huberId = searchParams.get('huberId');
+  // const searchParams = useSearchParams();
+  // const huberId = searchParams.get('huberId');
   const user = useAppSelector((state) => state.auth.userInfo);
   const path = usePathname().split('/').filter(Boolean);
   const isMyProfilePage = path[1] === 'profile' && path.length === 2;
