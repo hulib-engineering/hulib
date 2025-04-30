@@ -5,22 +5,24 @@ import { svnRio } from '@/templates/BaseTemplate';
 type Props = {
   titleStory: string;
   authorName: string;
-  isSelected?: boolean;
+  active?: boolean;
   widthImage?: number;
   heightImage?: number;
+  srcImage: string;
 };
 
 const CustomCoverBook = ({
   titleStory,
   authorName,
-  isSelected = true,
+  active = true,
   widthImage = 180,
   heightImage = 255,
+  srcImage = '/assets/images/cover-book/story_background_yellow.png',
 }: Props) => {
   return (
     <div
       id="cover-book"
-      className={`relative ${isSelected ? 'grayscale-0' : 'grayscale'}`}
+      className={`relative ${active ? 'grayscale-0' : 'grayscale'}`}
     >
       <div
         className={`absolute left-0 top-[8px] line-clamp-3 w-full max-w-[180px] text-wrap px-5 text-center text-[22px] text-primary-50 ${svnRio.className} whitespace-pre-line`}
@@ -31,8 +33,8 @@ const CustomCoverBook = ({
         {`_${authorName || 'author name'}_`}
       </div>
       <Image
-        src="/assets/images/cover-book/story_background_yellow.png"
-        alt="story background yellow"
+        src={srcImage}
+        alt={`${titleStory} - ${authorName}`}
         width={widthImage}
         height={heightImage}
       />
