@@ -35,12 +35,22 @@ const baseQueryWithInterceptor = async (
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock();
 
-  // Check if it's a POST request
-  if (typeof args !== 'string' && args.method === 'POST') {
+  // Check if args is an object (FetchArgs) and not a string
+  if (typeof args !== 'string') {
     if (!args.headers) {
       args.headers = new Headers();
     }
-    (args.headers as Headers).set('Content-Type', 'application/json');
+
+    // For regular POST requests, set application/json
+    if (args.method === 'POST' && !(args.body instanceof FormData)) {
+      (args.headers as Headers).set('Content-Type', 'application/json');
+    }
+
+    // For FormData, we don't set Content-Type - browser will handle it
+    if (args.method === 'POST' && args.body instanceof FormData) {
+      // Remove Content-Type header if it exists
+      (args.headers as Headers).delete('Content-Type');
+    }
   }
 
   const result = await baseQuery(args, api, extraOptions);
