@@ -2,7 +2,11 @@
 
 import { MapPin, Star, Users } from '@phosphor-icons/react';
 import Image from 'next/image';
+<<<<<<< HEAD
 import { useSearchParams } from 'next/navigation';
+=======
+import { usePathname } from 'next/navigation';
+>>>>>>> b038168 (refactor: remove unused search parameters from profile component)
 import type { ReactNode } from 'react';
 import * as React from 'react';
 
@@ -35,10 +39,18 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 };
 
 const Profile = () => {
+<<<<<<< HEAD
   const searchParams = useSearchParams();
   const userInfo = useAppSelector((state) => state.auth.userInfo);
   const isLiber = userInfo?.role?.id === 3;
   const huberId = searchParams.get('huberId');
+=======
+  // const searchParams = useSearchParams();
+  // const huberId = searchParams.get('huberId');
+  const user = useAppSelector((state) => state.auth.userInfo);
+  const path = usePathname().split('/').filter(Boolean);
+  const isMyProfilePage = path[1] === 'profile' && path.length === 2;
+>>>>>>> b038168 (refactor: remove unused search parameters from profile component)
   const {
     data: userDetail,
     isLoading,
