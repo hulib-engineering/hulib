@@ -159,7 +159,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
           <Button
             variant="primary"
             className="flex w-full items-center justify-center gap-2 py-2.5"
-            onClick={() => router.push(`/profile/${huber.id}`)}
+            onClick={() => router.push(`/profile?huberId=${huber.id}`)}
           >
             <CaretCircleRight size={20} />
             <p>{t('visit_profile')}</p>
@@ -171,7 +171,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
           <Button
             variant="primary"
             className="flex w-full items-center justify-center gap-2 rounded-full py-2 text-sm"
-            onClick={() => router.push(`/profile/${huber.id}`)}
+            onClick={() => router.push(`/profile?huberId=${huber.id}`)}
           >
             <p>Visit Profile</p>
           </Button>
