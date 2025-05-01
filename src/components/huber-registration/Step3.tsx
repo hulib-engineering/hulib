@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CaretDown, X } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 import React, { useEffect, useRef, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import type { z } from 'zod';
@@ -23,6 +24,7 @@ interface Topic {
 }
 
 const Step3 = ({ next }: { next: () => void }) => {
+  const t = useTranslations('Common');
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const userInfo = useAppSelector((state) => state.auth.userInfo);
@@ -77,7 +79,7 @@ const Step3 = ({ next }: { next: () => void }) => {
 
   const onSubmit = async (formValues: z.infer<typeof StoriesValidation>) => {
     try {
-      const response = await createStory({
+      await createStory({
         title: formValues.title,
         abstract: formValues.abstract,
         topicIds: formValues.topicIds,
@@ -86,16 +88,12 @@ const Step3 = ({ next }: { next: () => void }) => {
         },
         cover: formValues.cover,
         publishStatus: 'draft',
-      });
-      if (response?.error && response?.error?.status === 422) {
-        pushError('Failed to create story');
-      } else {
-        localStorage.setItem('huber_registration_step', '4');
-        pushSuccess('Story created successfully');
-        next();
-      }
-    } catch (error) {
-      pushError('Failed to create story');
+      }).unwrap();
+      localStorage.setItem('huber_registration_step', '4');
+      pushSuccess('Story created successfully');
+      next();
+    } catch (error: any) {
+      pushError(t(error?.message || 'error_contact_admin'));
     }
   };
 
@@ -142,7 +140,7 @@ const Step3 = ({ next }: { next: () => void }) => {
                               {selectedTopics?.length > 0 ? (
                                 selectedTopics?.map((topicId) => {
                                   const topic = (topicsPages?.data || []).find(
-                                    (t: Topic) => t.id === topicId,
+                                    (i: Topic) => i.id === topicId,
                                   );
                                   if (!topic) return null;
                                   return (
