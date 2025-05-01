@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -17,6 +18,7 @@ import { ChangePasswordValidation } from '@/validations/ChangePasswordValidation
 import { pushError, pushSuccess } from '../CustomToastifyContainer';
 
 const ChangePassword = () => {
+  const t = useTranslations('Common');
   const [changePassword] = useChangePasswordMutation();
   const {
     handleSubmit,
@@ -37,18 +39,14 @@ const ChangePassword = () => {
   const onHandleSubmit = handleSubmit(async (data) => {
     setIsOpen(!isOpen);
     try {
-      const rs = await changePassword({
+      await changePassword({
         currentPassword: data.oldPassword,
         newPassword: data.newPassword,
         confirmPassword: data.confirmPassword,
-      });
-
-      if (rs.error.status === 422) {
-        return pushError(`Error: Current Password not match.`);
-      }
-      return pushSuccess('Change password successfully');
+      }).unwrap();
+      pushSuccess(t('update_successfully'));
     } catch (error: any) {
-      return pushError(`Error: Change password failed.`);
+      pushError(t(error?.message || 'error_contact_admin'));
     }
   });
 
