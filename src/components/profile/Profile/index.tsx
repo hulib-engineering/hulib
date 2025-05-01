@@ -145,9 +145,6 @@ const Profile = () => {
               alt="banner"
               loading="lazy"
             />
-            {/* <div className="absolute right-2 top-8">
-              <EditIcon />
-            </div> */}
           </div>
         </div>
         <div className="flex w-full flex-row gap-y-2 bg-[#FFFFFF]">
