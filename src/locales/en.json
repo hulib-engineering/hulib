@@ -461,7 +461,13 @@
       "description": "Short Description",
       "btn": "Join as Huber"
     },
+    "no_data": "No Data"
+  },
+  "Common": {
     "no_data": "No Data",
-    "error_contact_admin": "An error occurred, please contact admin for support!"
+    "error_contact_admin": "An error occurred, please contact admin for support!",
+    "validation_error": "Data is not valid",
+    "update_failed": "Update failed",
+    "update_successfully": "Update successfully"
   }
 }
