@@ -1,9 +1,10 @@
 'use client';
 
-import * as React from 'react';
+import { IconButton } from '@mui/material';
+import { PencilSimple } from '@phosphor-icons/react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { EditIcon } from '@/components/authorDetail/EditIcon';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import type { User } from '@/libs/services/modules/user/userType';
 
@@ -28,12 +29,17 @@ const OverviewSection = ({ liberDetail, onInvalidate }: Props) => {
       <div className="flex flex-row justify-between font-medium">
         <span>Bio</span>
         {!openEditPopup && (
-          <EditIcon
-            onClick={() => {
-              reset({ bio: liberDetail?.bio || '' });
-              setOpenEditPopup(true);
-            }}
-          />
+          <div className="rounded-full bg-primary-90">
+            <IconButton
+              color="primary"
+              onClick={() => {
+                reset({ bio: liberDetail?.bio || '' });
+                setOpenEditPopup(true);
+              }}
+            >
+              <PencilSimple size={12} />
+            </IconButton>
+          </div>
         )}
       </div>
       {openEditPopup ? (
