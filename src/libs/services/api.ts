@@ -99,6 +99,15 @@ const baseQueryWithInterceptor = async (
       baseQuery(args, api, extraOptions);
     }
   }
+
+  if (result.error && result.error.status === 422) {
+    throw new Error('validation_error');
+  }
+
+  if (result.error) {
+    throw new Error('error_contact_admin');
+  }
+
   return result;
 };
 
