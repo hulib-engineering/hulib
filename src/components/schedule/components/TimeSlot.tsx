@@ -53,15 +53,10 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
         ),
       );
 
-      const response = await createTimeSlots({ timeSlots: sanitizedListDay });
-
-      if (response?.error?.status === 422) {
-        pushError(t('error_time_slots'));
-      } else {
-        pushSuccess(t('success_time_slots_description'));
-      }
-    } catch (error) {
-      pushError('An error has occurred.');
+      await createTimeSlots({ timeSlots: sanitizedListDay }).unwrap();
+      pushSuccess(t('success_time_slots_description'));
+    } catch (error: any) {
+      pushError(t(error?.message || 'error_contact_admin'));
     } finally {
       setIsModalOpen(false);
     }
