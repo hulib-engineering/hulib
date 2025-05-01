@@ -22,6 +22,7 @@ type FormData = z.infer<ReturnType<typeof HuberStep1Validation>>;
 const Step1 = (props: Props) => {
   const { next } = props;
   const t = useTranslations('HumanBookRegister');
+  const tCommon = useTranslations('Common');
   const router = useRouter();
   const [registerHuber, { isLoading }] = useRegisterHuberMutation();
 
@@ -52,17 +53,12 @@ const Step1 = (props: Props) => {
 
   const onSubmit = async (formData: FormData) => {
     try {
-      const res = await registerHuber(formData);
-
-      if (res?.error?.status === 422) {
-        pushError('An error occurred, please contact admin for support!');
-      } else {
-        localStorage.setItem('huber_registration_step', '2');
-        pushSuccess('Registration successful!');
-        next();
-      }
+      await registerHuber(formData).unwrap();
+      localStorage.setItem('huber_registration_step', '2');
+      pushSuccess('Registration successful!');
+      next();
     } catch (error: any) {
-      pushError(error?.message || '');
+      pushError(tCommon(error?.message || 'error_contact_admin'));
     }
   };
 
