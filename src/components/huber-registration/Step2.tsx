@@ -15,6 +15,7 @@ import { pushError, pushSuccess } from '../CustomToastifyContainer';
 
 const Step2 = ({ next }: { next: () => void }) => {
   const t = useTranslations('HumanBookRegister.Step2');
+  const tCommon = useTranslations('Common');
 
   const formSchema = z.object({
     timeSlots: z
@@ -67,18 +68,14 @@ const Step2 = ({ next }: { next: () => void }) => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const res = await createTimeSlots({
+      await createTimeSlots({
         timeSlots: data.timeSlots,
-      });
-      if (res?.error?.status === 422) {
-        pushError(t('error_contact_admin'));
-      } else {
-        localStorage.setItem('huber_registration_step', '3');
-        pushSuccess(t('success_time_slots_description'));
-        next();
-      }
+      }).unwrap();
+      localStorage.setItem('huber_registration_step', '3');
+      pushSuccess(t('success_time_slots_description'));
+      next();
     } catch (error: any) {
-      pushError(error?.message || t('error_contact_admin'));
+      pushError(tCommon(error?.message || 'error_contact_admin'));
     }
   };
 

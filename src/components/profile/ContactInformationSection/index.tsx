@@ -8,9 +8,11 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { PencilSimple } from '@phosphor-icons/react';
 import dayjs from 'dayjs';
+import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import Form from '@/components/form/Form';
 import TextInput from '@/components/textInput/TextInput';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
@@ -27,9 +29,9 @@ export const ContactInformationSection = ({
 }: {
   liberDetail: User | undefined;
 }) => {
+  const t = useTranslations('Common');
   const [editMode, setEditMode] = React.useState(false);
   // eslint-disable-next-line unused-imports/no-unused-vars
-  const [error, setError] = React.useState<string | null>(null);
   const [updateProfile, { isLoading: isSubmitting }] =
     useUpdateProfileMutation();
   const defaultValues = React.useMemo(
@@ -39,7 +41,7 @@ export const ContactInformationSection = ({
       birthday: liberDetail?.birthday || '',
       address: liberDetail?.address || '',
       email: liberDetail?.email || '',
-      phoneNumber: liberDetail?.phoneNumber || '',
+      phoneNumber: liberDetail?.phoneNumber || undefined,
     }),
     [liberDetail],
   );
@@ -66,11 +68,9 @@ export const ContactInformationSection = ({
   const handleCancel = () => {
     reset(defaultValues);
     setEditMode(false);
-    setError(null);
   };
 
   const onSubmit = async (data: ContactInfoFormData) => {
-    setError(null);
     try {
       await updateProfile({
         fullName: data.fullName,
@@ -79,13 +79,10 @@ export const ContactInformationSection = ({
         address: data.address,
         phoneNumber: data.phoneNumber,
       }).unwrap();
+      pushSuccess(t('update_successfully'));
       setEditMode(false);
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : 'Failed to update contact information',
-      );
+    } catch (error: any) {
+      pushError(t(error.message));
     }
   };
 

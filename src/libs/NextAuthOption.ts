@@ -37,7 +37,6 @@ export const authOptions = {
       credentials: {},
       async authorize(credentials: any) {
         if (credentials?.accessToken) {
-          console.log('Full Credentials', credentials);
           return {
             id: credentials.id,
             accessToken: credentials.accessToken,
@@ -59,7 +58,6 @@ export const authOptions = {
     }) {
       let tokenParsed = token;
       if (account && user) {
-        console.log('Account', account);
         if (account?.provider === 'google') {
           const res = await fetch(
             `${AppConfig.api.endpoint}/${AppConfig.api.version}/auth/google/login`,
@@ -85,16 +83,13 @@ export const authOptions = {
           tokenParsed = { ...tokenParsed, accessToken: resParsed.token };
         }
         if (account?.provider === 'credentials') {
-          console.log('Credentials', user);
           tokenParsed = { ...tokenParsed, accessToken: user.accessToken };
         }
       }
 
-      console.log('JWT Token', tokenParsed);
       return tokenParsed;
     },
     async session({ session, token }: { session: any; token: any }) {
-      console.log('Token', token);
       session.accessToken = token.accessToken;
 
       return session;

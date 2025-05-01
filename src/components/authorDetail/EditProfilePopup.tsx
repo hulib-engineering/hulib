@@ -7,7 +7,6 @@ import Button from '@/components/button/Button';
 import Modal from '@/components/Modal';
 
 import AvatarUploader from '../AvatarUploader';
-import { EditIcon } from './EditIcon';
 
 type Props = {
   open: boolean;
@@ -40,7 +39,6 @@ const EditProfilePopup = (props: Props) => {
                 <h6 className="text-2xl font-medium text-neutral-10">
                   Cover picture
                 </h6>
-                <EditIcon />
               </div>
               <div className="relative h-[200px] w-full">
                 <Image
