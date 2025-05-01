@@ -3,14 +3,13 @@
 import { IconButton } from '@mui/material';
 import { MapPin, PencilSimple, Star, Users } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import type { ReactNode } from 'react';
 import * as React from 'react';
 
 import type { ProfileMenuItem } from '@/components/core/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/core/NavBar/NavBar';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
-import { useAppSelector } from '@/libs/hooks';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import { useGetAuthorDetailQuery } from '@/libs/services/modules/user';
 
@@ -31,17 +30,15 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 };
 
 const Profile = () => {
-  // const searchParams = useSearchParams();
-  // const huberId = searchParams.get('huberId');
-  const user = useAppSelector((state) => state.auth.userInfo);
-  const path = usePathname().split('/').filter(Boolean);
-  const isMyProfilePage = path[1] === 'profile' && path.length === 2;
+  const searchParams = useSearchParams();
+  const huberId = searchParams.get('huberId');
+  const isMyProfilePage = !huberId;
   const {
     data: authorData,
     isLoading: authorLoading,
     refetch: authorRefetch,
-  } = useGetAuthorDetailQuery(user?.id, {
-    skip: isMyProfilePage || !user?.id,
+  } = useGetAuthorDetailQuery(huberId, {
+    skip: isMyProfilePage,
   });
   const {
     data: personalData,
@@ -148,9 +145,6 @@ const Profile = () => {
               alt="banner"
               loading="lazy"
             />
-            {/* <div className="absolute right-2 top-8">
-              <EditIcon />
-            </div> */}
           </div>
         </div>
         <div className="flex w-full flex-row gap-y-2 bg-[#FFFFFF]">
@@ -213,7 +207,6 @@ const Profile = () => {
           />
         </div>
         <div className="mt-8 flex w-full flex-col items-start justify-between gap-8 lg:flex-row">
-          {/* <div className="mb-10 w-full flex-1 bg-[#FFFFFF] p-5"> */}
           <div className="h-full w-full bg-[#FFFFFF]">
             {tabsRender?.[selectedItemIndex]?.component}
           </div>
