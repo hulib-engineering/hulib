@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import clsx from 'clsx';
 import React from 'react';
 
 interface Props {
@@ -12,7 +13,10 @@ const CommonLayout = (props: Props) => {
   return (
     <section className="w-full">
       <div
-        className={`w-full justify-between rounded-md px-4 py-[-2rem] md:px-28 md:py-12 lg:flex-row ${className}`}
+        className={clsx(
+          `${className} w-full justify-between rounded-md p-0 px-4  py-[-2rem] lg:flex-row `,
+          'md:px-28 md:py-12',
+        )}
       >
         {children}
       </div>
