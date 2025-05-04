@@ -40,17 +40,25 @@ const useStepManagement = () => {
 };
 
 const ProgressBar = ({ currentStep }: { currentStep: number }) => (
-  <div className="relative mb-4 flex w-full items-center justify-between px-8">
-    <div className="absolute inset-x-0 top-4 z-0 flex w-full items-center justify-center pl-[4.125rem] pr-[5rem]">
+  <div
+    className={clsx(
+      'relative mb-4 flex  w-full items-center justify-between px-0',
+      ' md:px-8 ',
+    )}
+  >
+    <div
+      className={clsx(
+        'absolute inset-x-0 top-4 z-0  flex w-full items-center justify-center p-0',
+        'md:pl-[4.125rem] md:pr-[5rem] ',
+      )}
+    >
       <div
-        className={`h-0.5 w-1/2 ${
-          currentStep > 1 ? 'bg-primary-50' : 'bg-neutral-80'
-        }`}
+        className={`h-0.5 w-1/2 
+          ${currentStep > 1 ? 'bg-primary-50' : 'bg-neutral-80'}`}
       />
       <div
-        className={`h-0.5 w-1/2 ${
-          currentStep > 2 ? 'bg-primary-50' : 'bg-neutral-80'
-        }`}
+        className={`h-0.5 w-1/2 
+          ${currentStep > 2 ? 'bg-primary-50' : 'bg-neutral-80'}`}
       />
     </div>
     {STEPS.map((item) => (
@@ -130,10 +138,14 @@ const Page = () => {
         currentStep !== 3 && 'items-center',
       )}
     >
-      <div className="w-[37.5rem]">
+      <div className={clsx('w-full', 'md:w-[37.5rem]')}>
         <ProgressBar currentStep={currentStep} />
       </div>
-      <div className={clsx(currentStep !== 3 ? 'w-[37.5rem]' : 'w-full')}>
+      <div
+        className={clsx(
+          currentStep !== 3 ? clsx('w-full', 'md:w-[37.5rem]') : 'w-full',
+        )}
+      >
         <StepContent currentStep={currentStep} onNext={handleNextStep} />
       </div>
     </CommonLayout>

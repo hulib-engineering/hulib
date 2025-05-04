@@ -358,6 +358,17 @@
     "supporting_text": "Văn bản hỗ trợ",
     "Submit": "Nộp",
     "humanBookRegistered": "Bạn đã đăng ký trở thành Human Book. Vui lòng chờ Admin phê duyệt!",
+    "Step2": {
+      "title": "Đăng ký huber",
+      "available_slots": "Lịch trống của mình",
+      "available_slots_description": "Dưới đây là khung giờ trống của bạn",
+      "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
+      "success_time_slots": "Tạo khung giờ thành công!",
+      "success_time_slots_description": "Bạn đã tạo khung giờ của mình thành công",
+      "validation": {
+        "error_select_at_least_one_time_slot": "Vui lòng chọn ít nhất một khung giờ"
+      }
+    },
     "validation": {
       "required": "Bắt buộc",
       "invalidYear": "Năm không hợp lệ",
@@ -369,7 +380,7 @@
     "confirm": "Tôi xác nhận rằng tôi đã đọc và hiểu các điều khoản và điều kiện của Hulib, và tôi đồng ý tuân theo chúng.",
     "cancel": "Hủy",
     "next": "Tiếp theo",
-    "step_1_title": "Dăng ký Huber",
+    "step_1_title": "Đăng ký Huber",
     "general": "General"
   },
   "ExporeStory": {
