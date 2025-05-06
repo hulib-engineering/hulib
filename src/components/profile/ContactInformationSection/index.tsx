@@ -2,11 +2,10 @@
 
 'use client';
 
-import { FormControl, IconButton, MenuItem, Select } from '@mui/material';
+import { FormControl, MenuItem, Select } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { PencilSimple } from '@phosphor-icons/react';
 import dayjs from 'dayjs';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
@@ -18,6 +17,8 @@ import TextInput from '@/components/textInput/TextInput';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import type { User } from '@/libs/services/modules/user/userType';
 
+import IconButtonEdit from '../IconButtonEdit';
+
 const genderOptions = [
   { name: 'Male', id: 1 },
   { name: 'Female', id: 2 },
@@ -25,9 +26,9 @@ const genderOptions = [
 ];
 
 export const ContactInformationSection = ({
-  liberDetail,
+  data,
 }: {
-  liberDetail: User | undefined;
+  data: User | undefined;
 }) => {
   const t = useTranslations('Common');
   const [editMode, setEditMode] = React.useState(false);
@@ -36,14 +37,14 @@ export const ContactInformationSection = ({
     useUpdateProfileMutation();
   const defaultValues = React.useMemo(
     () => ({
-      fullName: liberDetail?.fullName || '',
-      gender: liberDetail?.gender || { name: '', id: 0 },
-      birthday: liberDetail?.birthday || '',
-      address: liberDetail?.address || '',
-      email: liberDetail?.email || '',
-      phoneNumber: liberDetail?.phoneNumber || undefined,
+      fullName: data?.fullName || '',
+      gender: data?.gender || { name: '', id: 0 },
+      birthday: data?.birthday || '',
+      address: data?.address || '',
+      email: data?.email || '',
+      phoneNumber: data?.phoneNumber || undefined,
     }),
-    [liberDetail],
+    [data],
   );
 
   type ContactInfoFormData = {
@@ -70,14 +71,14 @@ export const ContactInformationSection = ({
     setEditMode(false);
   };
 
-  const onSubmit = async (data: ContactInfoFormData) => {
+  const onSubmit = async (formData: ContactInfoFormData) => {
     try {
       await updateProfile({
-        fullName: data.fullName,
-        gender: { id: Number(data.gender.id) },
-        birthday: data.birthday,
-        address: data.address,
-        phoneNumber: data.phoneNumber,
+        fullName: formData.fullName,
+        gender: { id: Number(formData.gender.id) },
+        birthday: formData.birthday,
+        address: formData.address,
+        phoneNumber: formData.phoneNumber,
       }).unwrap();
       pushSuccess(t('update_successfully'));
       setEditMode(false);
@@ -92,11 +93,12 @@ export const ContactInformationSection = ({
     <div className="flex flex-col gap-y-2 py-5">
       <div className="flex flex-row items-center justify-between py-2">
         <span>Contact Information</span>
-        {!editMode && (
-          <IconButton onClick={() => setEditMode(true)}>
-            <PencilSimple size={20} />
-          </IconButton>
-        )}
+        <IconButtonEdit
+          onClick={() => {
+            reset(defaultValues);
+            setEditMode(true);
+          }}
+        />
       </div>
       {editMode ? (
         <FormProvider {...methods}>

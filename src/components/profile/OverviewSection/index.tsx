@@ -1,97 +1,123 @@
 'use client';
 
-import { IconButton } from '@mui/material';
-import { PencilSimple } from '@phosphor-icons/react';
+import { CardMedia } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+import Button from '@/components/button/Button';
+import { Chip } from '@/components/common/chip/Chip';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import type { User } from '@/libs/services/modules/user/userType';
 
+import IconButtonEdit from '../IconButtonEdit';
+
 type Props = {
-  liberDetail: User | undefined;
+  data: User | undefined;
   onInvalidate?: () => void; // Called after successful update to refetch
 };
 
-const OverviewSection = ({ liberDetail, onInvalidate }: Props) => {
+const OverviewSection = ({ data, onInvalidate }: Props) => {
   const [openEditPopup, setOpenEditPopup] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const [updateProfile, { isLoading: isSubmitting }] =
     useUpdateProfileMutation();
 
   const { register, handleSubmit, reset } = useForm<{ bio: string }>({
-    defaultValues: { bio: liberDetail?.bio || '' },
+    defaultValues: { bio: data?.bio || '' },
   });
 
+  const onSubmit = async (formData: { bio: string }) => {
+    try {
+      setErrorMessage(null);
+      await updateProfile({ bio: formData.bio }).unwrap();
+      setOpenEditPopup(false);
+      if (onInvalidate) onInvalidate();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="mb-3 flex flex-col gap-y-2 border-b border-neutral-90/50 py-5 font-light">
+    <div className="mb-3 flex flex-col gap-y-4 py-5 font-light">
+      {data?.topics && (
+        <div className="flex flex-col gap-y-2">
+          <span className="font-medium">Topic</span>
+          <div className="flex flex-row gap-x-2">
+            {data?.topics.map((topic) => (
+              <Chip
+                key={topic?.id}
+                className="rounded-full border border-primary-60 bg-primary-90 text-primary-60"
+              >
+                <span>{topic?.name || ''}</span>
+              </Chip>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="flex flex-row justify-between font-medium">
         <span>Bio</span>
-        {!openEditPopup && (
-          <div className="rounded-full bg-primary-90">
-            <IconButton
-              color="primary"
-              onClick={() => {
-                reset({ bio: liberDetail?.bio || '' });
-                setOpenEditPopup(true);
-              }}
-            >
-              <PencilSimple size={12} />
-            </IconButton>
-          </div>
-        )}
+        <IconButtonEdit
+          isHidden={openEditPopup}
+          onClick={() => {
+            reset({ bio: data?.bio || '' });
+            setOpenEditPopup(true);
+          }}
+        />
       </div>
       {openEditPopup ? (
         <form
           className="flex flex-col gap-y-2 font-normal leading-[20px] tracking-wide"
-          onSubmit={handleSubmit(async (data) => {
-            setError(null);
-
-            try {
-              await updateProfile({ bio: data.bio }).unwrap();
-              setOpenEditPopup(false);
-              if (onInvalidate) onInvalidate();
-            } catch (err) {
-              setError(
-                err instanceof Error ? err.message : 'Failed to update bio',
-              );
-            }
-          })}
+          onSubmit={handleSubmit(onSubmit)}
         >
           <textarea
             className="w-full rounded-lg border border-[#C2C6CF] p-2 font-light"
             rows={4}
             {...register('bio')}
           />
-          {error && (
+          {errorMessage && (
             <div className="mb-2 rounded bg-red-100 p-2 text-sm text-red-600">
-              {error}
+              {errorMessage}
             </div>
           )}
           <div className="flex flex-row justify-end gap-x-2">
-            <button
-              type="submit"
-              className="rounded-full border-[#C2C6CF] bg-primary-50 px-7 py-3 text-white disabled:bg-neutral-60"
+            <Button
+              variant="outline"
+              size="sm"
               disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Saving...' : 'Save'}
-            </button>
-            <button
-              type="button"
-              className="rounded-[100px] bg-neutral-90 px-4 py-2 text-sm text-neutral-40"
               onClick={() => {
-                reset({ bio: liberDetail?.bio || '' });
+                reset({ bio: data?.bio || '' });
                 setOpenEditPopup(false);
               }}
             >
               Cancel
-            </button>
+            </Button>
+            <Button
+              variant="primary"
+              type="submit"
+              size="sm"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Saving...' : 'Save'}
+            </Button>
           </div>
         </form>
       ) : (
-        <div className="font-light ">
-          <p className="leading-[20px] tracking-wide">{liberDetail?.bio}</p>
+        <div className="font-light">
+          <p>{data?.bio}</p>
+        </div>
+      )}
+      {data?.videoUrl && (
+        <div className="flex flex-col gap-y-4">
+          <span className="font-medium">Video Introduction</span>
+          <div className="h-[200px] w-1/2 overflow-hidden rounded-lg">
+            <CardMedia
+              component="video"
+              src={data?.videoUrl}
+              controls
+              autoPlay={false}
+            />
+          </div>
         </div>
       )}
     </div>
