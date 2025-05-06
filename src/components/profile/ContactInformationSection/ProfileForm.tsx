@@ -1,30 +1,27 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import type { z } from 'zod';
+import { useTranslations } from 'next-intl';
+import React, { useState } from 'react';
 
 import Button from '@/components/button/Button';
 import ConfirmUpdatePopup from '@/components/confirmUpdatePopup/ConfirmUpdatePopup';
 import { pushError } from '@/components/CustomToastifyContainer';
 import Form from '@/components/form/Form';
-import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 import { ControlledSelect } from '@/components/Select';
 import TextInput from '@/components/textInput-v1/TextInput';
 import { genders } from '@/libs/constants';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
-import {
-  useGetPersonalInfoQuery,
-  useUpdateProfileMutation,
-} from '@/libs/services/modules/auth';
-import { setAvatarUrl } from '@/libs/store/authentication';
-import { ProfileValidation } from '@/validations/ProfileValidation';
+import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
+import { setUserInfo } from '@/libs/store/authentication';
 
-export const ProfileForm = () => {
-  const { data, isLoading } = useGetPersonalInfoQuery();
-  const [isEditMode, setIsEditMode] = useState(false);
+export const ProfileForm = ({
+  setEditMode,
+  methods,
+}: {
+  setEditMode: (open: boolean) => void;
+  methods: any;
+}) => {
+  const t = useTranslations('Common');
   const [updateProfile] = useUpdateProfileMutation();
 
   const avatarId = useAppSelector((state) => state.auth.avatarId);
@@ -34,92 +31,29 @@ export const ProfileForm = () => {
   const {
     control,
     register,
-    reset,
     watch,
     handleSubmit,
-    formState: { errors, isValid, isSubmitting },
-  } = useForm<z.infer<typeof ProfileValidation>>({
-    resolver: zodResolver(ProfileValidation),
-    defaultValues: {
-      isUnderGuard: false,
-      fullName: '',
-      birthday: '',
-      email: '',
-      gender: 3,
-      phoneNumber: '',
-      address: '',
-      parentPhoneNumber: '',
-    },
-  });
-  const router = useRouter();
-
+    formState: { errors, isSubmitting },
+  } = methods;
   const [isOpen, setIsOpen] = useState(false);
 
-  const onHandleClickUpdateBtn = handleSubmit(() => {
-    if (!isEditMode) {
-      setIsEditMode(true);
-    }
-
-    if (isEditMode && isValid) {
-      setIsOpen(!isOpen);
-    }
-  });
-
-  useEffect(() => {
-    // Calculate the age of user based on the birthday
-    const calculateAge = (birthday: string) => {
-      const dob = new Date(birthday);
-      const diffMs = Date.now() - dob.getTime();
-      const ageDt = new Date(diffMs);
-
-      return Math.abs(ageDt.getUTCFullYear() - 1970);
-    };
-
-    reset({
-      isUnderGuard: Boolean(calculateAge(data?.birthday) < 18) ?? false,
-      fullName: data?.fullName ?? '',
-      birthday: data?.birthday ?? '',
-      email: data?.email ?? '',
-      gender: (data?.gender && data?.gender?.id) || 3,
-      phoneNumber: data?.phoneNumber ?? '',
-      address: data?.address ?? '',
-      parentPhoneNumber: data?.parentPhoneNumber ?? null,
-    });
-    dispatch(setAvatarUrl(data?.photo ?? {}));
-  }, [data]);
-
-  const handleUpdate = handleSubmit(async (values) => {
+  const handleUpdate = handleSubmit(async (values: any) => {
     try {
-      await updateProfile({
+      const response = await updateProfile({
         ...values,
         gender: { id: values.gender },
         photo: avatarId !== '' ? { id: avatarId } : null,
       }).unwrap();
-      return router.refresh();
+      dispatch(setUserInfo(response));
+      setEditMode(false);
     } catch (error: any) {
-      if (error?.data) {
-        return pushError(`Error: ${error?.data?.message}`);
-      }
-      return pushError(`Error: ${error?.message}`);
-    } finally {
-      setIsOpen(false);
+      pushError(t(error.message));
     }
   });
 
-  if (isLoading) {
-    return (
-      <div className="flex h-full w-full justify-center">
-        <LoadingSkeleton />
-      </div>
-    );
-  }
-
   return (
     <>
-      <Form
-        className="flex w-full flex-col gap-6"
-        onSubmit={onHandleClickUpdateBtn}
-      >
+      <Form className="flex w-full flex-col gap-6" onSubmit={handleUpdate}>
         <Form.Item className="flex flex-col gap-2 lg:flex-row">
           <fieldset className="w-full">
             <TextInput
@@ -129,7 +63,6 @@ export const ProfileForm = () => {
               {...register('fullName')}
               isError={!!errors.fullName}
               hintText={errors.fullName?.message}
-              disabled={!isEditMode}
               required
             />
           </fieldset>
@@ -139,7 +72,6 @@ export const ProfileForm = () => {
               control={control}
               label="Gender"
               options={genders}
-              disabled={!isEditMode}
             />
           </fieldset>
         </Form.Item>
@@ -149,7 +81,6 @@ export const ProfileForm = () => {
               type="date"
               label="Date of birth"
               {...register('birthday')}
-              disabled={!isEditMode}
               isError={!!errors.birthday}
               hintText={errors.birthday?.message}
               required
@@ -174,7 +105,6 @@ export const ProfileForm = () => {
               label="Address"
               placeholder="Enter your address"
               {...register('address')}
-              disabled={!isEditMode}
             />
           </fieldset>
           <fieldset className="w-full">
@@ -184,7 +114,6 @@ export const ProfileForm = () => {
                 type="number"
                 pattern="^[0-9-+\s()]*$"
                 label="Your Guardian Phone Number"
-                placeholder="Ex: 012 345 678"
                 {...register('parentPhoneNumber')}
                 disabled
                 isError={!!errors.parentPhoneNumber}
@@ -196,31 +125,32 @@ export const ProfileForm = () => {
                 type="number"
                 pattern="^[0-9-+\s()]*$"
                 label="Phone Number"
-                placeholder="Ex: 012 345 678"
                 {...register('phoneNumber')}
-                disabled={!isEditMode}
               />
             )}
           </fieldset>
         </Form.Item>
-        <p className="text-sm leading-5 text-[#171819] opacity-80">
-          <span className="font-medium underline !opacity-100">Note:</span>
-          &nbsp; Human book will contact you via the above phone number in case
-          of emergencies during the process of connecting with a mentor. For
-          example, the advisor/recipient forgets to confirm the appointment or
-          does not show up for the appointment...
-        </p>
-        <Form.Item className="py-4">
+        <div className="flex flex-row justify-end gap-x-2">
           <Button
+            variant="outline"
+            size="sm"
+            disabled={isSubmitting}
+            onClick={() => {
+              setEditMode(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="primary"
             type="submit"
-            value="Submit"
-            className="w-full lg:w-[240px]"
+            size="sm"
             disabled={isSubmitting}
             animation={isSubmitting && 'progress'}
           >
-            {isEditMode ? 'Update' : 'Edit'}
+            {isSubmitting ? 'Saving...' : 'Save'}
           </Button>
-        </Form.Item>
+        </div>
       </Form>
       <ConfirmUpdatePopup
         open={isOpen}

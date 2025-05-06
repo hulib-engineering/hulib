@@ -6,7 +6,7 @@ export const ProfileValidation = z
     birthday: z.string().trim().min(1),
     email: z.string().trim().min(1).email(),
     gender: z.number().min(1).max(3).default(3),
-    phoneNumber: z.string(),
+    phoneNumber: z.string().nullable(),
     address: z.string(),
     isUnderGuard: z.boolean().default(false),
     parentPhoneNumber: z.any(),

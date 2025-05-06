@@ -15,7 +15,7 @@ const addStoryToFavorites = (
       }),
     }),
     // Invalidates the cache of the 'stories' endpoint (or any other relevant query)
-    invalidatesTags: [{ type: 'Stories', id: 'LIST' }],
+    invalidatesTags: [{ type: 'FavoritesStory', id: 'LIST' }],
   });
 
 export default addStoryToFavorites;

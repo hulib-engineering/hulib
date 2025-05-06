@@ -2,300 +2,105 @@
 
 'use client';
 
-import { FormControl, IconButton, MenuItem, Select } from '@mui/material';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { PencilSimple } from '@phosphor-icons/react';
-import dayjs from 'dayjs';
-import { useTranslations } from 'next-intl';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { IconButton } from '@mui/material';
+import { GlobeHemisphereWest } from '@phosphor-icons/react';
 import * as React from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import type { z } from 'zod';
 
-import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import Form from '@/components/form/Form';
-import TextInput from '@/components/textInput/TextInput';
-import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
-import type { User } from '@/libs/services/modules/user/userType';
+import { ProfileForm } from '@/components/profile/ContactInformationSection/ProfileForm';
+import type { Gender } from '@/types/common';
+import { GenderName } from '@/types/common';
+import { ProfileValidation } from '@/validations/ProfileValidation';
 
-const genderOptions = [
-  { name: 'Male', id: 1 },
-  { name: 'Female', id: 2 },
-  { name: 'Other', id: 3 },
-];
+import IconButtonEdit from '../IconButtonEdit';
 
-export const ContactInformationSection = ({
-  liberDetail,
-}: {
-  liberDetail: User | undefined;
-}) => {
-  const t = useTranslations('Common');
+export const ContactInformationSection = ({ data }: { data: any }) => {
+  const [contactInfoData, setContactInfoData] = React.useState<any>(data);
+  const methods = useForm<z.infer<typeof ProfileValidation>>({
+    resolver: zodResolver(ProfileValidation),
+    defaultValues: {
+      isUnderGuard: false,
+      fullName: data?.fullName ?? '',
+      birthday: data?.birthday ?? '',
+      email: data?.email ?? '',
+      gender: data?.gender?.id ?? 0,
+      phoneNumber: data?.phoneNumber ?? null,
+      address: data?.address ?? '',
+      parentPhoneNumber: data?.parentPhoneNumber ?? null,
+    },
+  });
+  const formValues = methods.watch();
   const [editMode, setEditMode] = React.useState(false);
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  const [updateProfile, { isLoading: isSubmitting }] =
-    useUpdateProfileMutation();
-  const defaultValues = React.useMemo(
-    () => ({
-      fullName: liberDetail?.fullName || '',
-      gender: liberDetail?.gender || { name: '', id: 0 },
-      birthday: liberDetail?.birthday || '',
-      address: liberDetail?.address || '',
-      email: liberDetail?.email || '',
-      phoneNumber: liberDetail?.phoneNumber || undefined,
-    }),
-    [liberDetail],
-  );
 
-  type ContactInfoFormData = {
-    fullName: string;
-    gender: {
-      name: string;
-      id: number;
-    };
-    birthday: string;
-    address: string;
-    email: string;
-    phoneNumber: string;
-  };
-
-  const methods = useForm<ContactInfoFormData>({ defaultValues });
-  const { handleSubmit, reset, control, watch } = methods;
-
-  React.useEffect(() => {
-    reset(defaultValues);
-  }, [defaultValues, reset]);
-
-  const handleCancel = () => {
-    reset(defaultValues);
-    setEditMode(false);
-  };
-
-  const onSubmit = async (data: ContactInfoFormData) => {
-    try {
-      await updateProfile({
-        fullName: data.fullName,
-        gender: { id: Number(data.gender.id) },
-        birthday: data.birthday,
-        address: data.address,
-        phoneNumber: data.phoneNumber,
-      }).unwrap();
-      pushSuccess(t('update_successfully'));
-      setEditMode(false);
-    } catch (error: any) {
-      pushError(t(error.message));
+  useEffect(() => {
+    if (!editMode) {
+      setContactInfoData({
+        ...formValues,
+        gender: { id: formValues.gender },
+      });
     }
-  };
+  }, [editMode]);
 
-  const values = watch();
+  const contactInfo = React.useMemo(() => {
+    return [
+      {
+        title: 'Full Name',
+        value: contactInfoData?.fullName || 'Not provided',
+      },
+      {
+        title: 'Gender',
+        value:
+          GenderName[contactInfoData?.gender?.id as Gender] || 'Not provided',
+      },
+      { title: 'Birthday', value: contactInfoData?.birthday || 'Not provided' },
+      { title: 'Address', value: contactInfoData?.address || 'Not provided' },
+      { title: 'Email', value: contactInfoData?.email || 'Not provided' },
+      {
+        title: 'Phone Number',
+        value: contactInfoData?.phoneNumber || 'Not provided',
+      },
+    ];
+  }, [contactInfoData]);
 
   return (
     <div className="flex flex-col gap-y-2 py-5">
       <div className="flex flex-row items-center justify-between py-2">
         <span>Contact Information</span>
-        {!editMode && (
-          <IconButton onClick={() => setEditMode(true)}>
-            <PencilSimple size={20} />
-          </IconButton>
-        )}
+        <IconButtonEdit
+          isHidden={editMode}
+          onClick={() => {
+            setEditMode(true);
+          }}
+        />
       </div>
       {editMode ? (
-        <FormProvider {...methods}>
-          <form
-            className="flex flex-col gap-y-4"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <Form.Item>
-              <Controller
-                name="fullName"
-                control={control}
-                render={({ field }) => (
-                  <TextInput
-                    {...field}
-                    type="text"
-                    id="ci-fullName"
-                    className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
-                    label="Full Name"
-                    // isError={!!errors.fullName}
-                    // hintText={errors.fullName?.message || (errors.fullName && 'Required')}
-                  />
-                )}
-              />
-            </Form.Item>
-            <Form.Item className="flex flex-row gap-2 lg:flex-row">
-              <fieldset className="w-1/2">
-                <Controller
-                  name="gender"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControl fullWidth>
-                      <p id="gender-label" className="text-sm text-neutral-10">
-                        Gender
-                      </p>
-                      <Select
-                        labelId="gender-select-label"
-                        id="gender-select"
-                        value={field?.value?.id || ''}
-                        onChange={(e) => {
-                          const selectedOption = genderOptions.find(
-                            (option) => option.id === e.target.value,
-                          );
-                          field.onChange(selectedOption || null);
-                        }}
-                        sx={{
-                          // borderRadius: '20px',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          '& .MuiOutlinedInput-notchedOutline': {
-                            height: '50px',
-                          },
-                        }}
-                      >
-                        {genderOptions.map((option) => (
-                          <MenuItem key={option.id} value={option.id}>
-                            {option.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  )}
-                />
-              </fieldset>
-              <fieldset className="w-1/2">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <Controller
-                    name="birthday"
-                    control={control}
-                    render={({ field }) => (
-                      <>
-                        <p
-                          id="birthday-label"
-                          className="text-sm text-neutral-10"
-                        >
-                          Birthday
-                        </p>
-                        <DatePicker
-                          value={field.value ? dayjs(field.value) : null}
-                          onChange={(date) =>
-                            field.onChange(
-                              date ? date.format('YYYY-MM-DD') : '',
-                            )
-                          }
-                          slotProps={{
-                            textField: {
-                              fullWidth: true,
-                              sx: {
-                                borderRadius: '100px',
-                                '& .MuiOutlinedInput-notchedOutline': {
-                                  height: '50px',
-                                },
-                              },
-                            },
-                          }}
-                        />
-                      </>
-                    )}
-                  />
-                </LocalizationProvider>
-              </fieldset>
-            </Form.Item>
-            <Form.Item>
-              <Controller
-                name="address"
-                control={control}
-                render={({ field }) => (
-                  <TextInput
-                    {...field}
-                    id="ci-address"
-                    type="text"
-                    className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
-                    label="Address"
-                    // isError={!!errors.address}
-                    // hintText={errors.address?.message || (errors.address && 'Required')}
-                  />
-                )}
-              />
-            </Form.Item>
-            <Form.Item>
-              <Controller
-                name="email"
-                control={control}
-                render={({ field }) => (
-                  <TextInput
-                    {...field}
-                    id="ci-email"
-                    type="email"
-                    value={field.value || ''}
-                    className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
-                    label="Email"
-                    placeholder=""
-                    disabled
-                    // isError={!!errors.email}
-                    // hintText={errors.email?.message || (errors.email && 'Required')}
-                  />
-                )}
-              />
-            </Form.Item>
-            <Form.Item>
-              <Controller
-                name="phoneNumber"
-                control={control}
-                render={({ field }) => (
-                  <TextInput
-                    {...field}
-                    id="ci-phoneNumber"
-                    type="tel"
-                    className="mt-1 w-full rounded border border-[#C2C6CF] p-2"
-                    label="Phone Number"
-                    // isError={!!errors.phoneNumber}
-                    // hintText={errors.phoneNumber?.message || (errors.phoneNumber && 'Required')}
-                  />
-                )}
-              />
-            </Form.Item>
-            <div className="flex flex-row justify-end gap-x-2">
-              <button
-                type="button"
-                className="rounded-[100px] bg-neutral-90 px-4 py-2 text-sm text-neutral-40"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="rounded-[100px] bg-primary-50 px-4 py-2 text-sm text-white disabled:bg-neutral-60"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Saving...' : 'Save'}
-              </button>
-            </div>
-          </form>
-        </FormProvider>
+        <ProfileForm methods={methods} setEditMode={setEditMode} />
       ) : (
         <div className="flex flex-col gap-y-3">
-          <div>
-            <p className="font-medium">Full Name </p>
-            <p className="font-light">{values.fullName || 'Not provided'}</p>
-          </div>
-          <div>
-            <p className="font-medium">Gender </p>
-            <p className="font-light">{values.gender.name || 'Not provided'}</p>
-          </div>
-          <div>
-            <p className="font-medium">Birthday </p>
-            <p className="font-light">{values.birthday || 'Not provided'}</p>
-          </div>
-          <div>
-            <p className="font-medium">Address </p>
-            <p className="font-light">{values.address || 'Not provided'}</p>
-          </div>
-          <div>
-            <p className="font-medium">Email </p>
-            <p className="font-light">{values.email || 'Not available'}</p>
-          </div>
-          <div>
-            <p className="font-medium">Phone Number </p>
-            <p className="font-light">{values.phoneNumber || 'Not provided'}</p>
-          </div>
+          {contactInfo.map((item) => {
+            return (
+              <div
+                key={item.title}
+                className="flex flex-row items-center justify-between"
+              >
+                <div>
+                  <p className="font-medium">{item.title}</p>
+                  <p className="font-light">{item.value}</p>
+                </div>
+                <div className="rounded-full bg-neutral-90">
+                  <IconButton disabled>
+                    <GlobeHemisphereWest
+                      size={12}
+                      className="text-neutral-40"
+                    />
+                  </IconButton>
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
