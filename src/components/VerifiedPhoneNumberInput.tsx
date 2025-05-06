@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
-import { Chip } from '@/components/chip/Chip';
+import { Chip } from '@/components/common/chip/Chip';
 import { mergeClassnames } from '@/components/private/utils';
 import TextInput from '@/components/textInput/TextInput';
 import { auth } from '@/libs/firebase';
