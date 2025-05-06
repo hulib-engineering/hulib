@@ -1,10 +1,8 @@
 'use client';
 
 import {
-  Bell,
   CaretDown,
   Gear,
-  MessengerLogo,
   Pencil,
   SignOut,
   UserCircle,
@@ -15,27 +13,25 @@ import { signOut } from 'next-auth/react';
 import React, { useMemo } from 'react';
 
 import Button from '@/components/button/Button';
-import IconButton from '@/components/iconButton/IconButton';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import MenuItem from '@/components/menuItem/MenuItem';
-import { NotificationPopover } from '@/components/notification/NotificationPopover';
 import Popover from '@/components/popover/Popover';
 import type { WithChildren } from '@/components/private/types';
 import SearchInput from '@/components/SearchInput';
 import { useAppSelector } from '@/libs/hooks';
 
-const ButtonWithChip = ({
-  children,
-  value,
-}: WithChildren<{ value: string }>) => (
-  <div className="relative">
-    <div className="absolute left-6 top-0.5 z-10 rounded-full border border-white bg-red-50 px-1 py-[0.5px] text-[10px] leading-3 text-white">
-      {value}
-    </div>
-    {children}
-  </div>
-);
+// const ButtonWithChip = ({
+//   children,
+//   value,
+// }: WithChildren<{ value: string }>) => (
+//   <div className="relative">
+//     <div className="absolute left-6 top-0.5 z-10 rounded-full border border-white bg-red-50 px-1 py-[0.5px] text-[10px] leading-3 text-white">
+//       {value}
+//     </div>
+//     {children}
+//   </div>
+// );
 
 const AvatarPopoverMenuItems = [
   {
@@ -175,7 +171,7 @@ const Header = () => {
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <ButtonWithChip value="10">
+              {/* <ButtonWithChip value="10">
                 <IconButton
                   variant="ghost"
                   icon={<MessengerLogo size={28} />}
@@ -193,7 +189,7 @@ const Header = () => {
                     data-testid="button-notif"
                   />
                 </ButtonWithChip>
-              </NotificationPopover>
+              </NotificationPopover> */}
               <div className="relative ml-2">
                 <AvatarPopover>
                   <Image
@@ -206,7 +202,7 @@ const Header = () => {
                         ? '/assets/images/icons/avatar.svg'
                         : user.photo.path
                     }
-                    className="h-11 w-11 object-contain"
+                    className="h-11 w-11 rounded-full object-contain"
                   />
                 </AvatarPopover>
                 <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
@@ -237,7 +233,7 @@ const Header = () => {
           </div>
         ) : (
           <div className="flex items-center gap-2">
-            <ButtonWithChip value="10">
+            {/* <ButtonWithChip value="10">
               <IconButton
                 variant="ghost"
                 icon={<MessengerLogo size={28} />}
@@ -255,13 +251,13 @@ const Header = () => {
                   data-testid="button-notif"
                 />
               </ButtonWithChip>
-            </NotificationPopover>
+            </NotificationPopover> */}
             <div className="relative ml-2 h-11 w-11">
               <AvatarPopover>
                 <Image
                   alt="Avatar Icon"
                   layout="fill"
-                  className="h-11 w-11 object-contain"
+                  className="h-11 w-11 rounded-full object-contain"
                   loading="lazy"
                   src={
                     !user || !user.photo || !user.photo.path

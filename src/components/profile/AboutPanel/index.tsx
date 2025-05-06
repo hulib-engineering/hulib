@@ -16,7 +16,7 @@ import OverviewSection from '../OverviewSection';
 import WorkAndEducationSection from '../WorkAndEducationSection';
 
 type Props = {
-  liberDetail?: User;
+  data?: User;
   onInvalidate?: () => void; // Called after successful update to refetch
 };
 
@@ -28,33 +28,28 @@ type AboutSectionMenu = {
   isShow?: boolean;
 };
 
-export const AboutPanel = ({ liberDetail, onInvalidate }: Props) => {
+export const AboutPanel = ({ data, onInvalidate }: Props) => {
   const [activeSection, setActiveSection] = React.useState('liberOverview');
   const sectionMenu: AboutSectionMenu[] = [
     {
       type: 'liberOverview',
       label: 'Liber Overview',
       icon: <Books size={20} />,
-      component: (
-        <OverviewSection
-          liberDetail={liberDetail}
-          onInvalidate={onInvalidate}
-        />
-      ),
+      component: <OverviewSection data={data} onInvalidate={onInvalidate} />,
       isShow: true,
     },
     {
       type: 'workAndEducation',
       label: 'Work and Education',
       icon: <Suitcase size={20} />,
-      component: <WorkAndEducationSection liberDetail={liberDetail} />,
-      isShow: liberDetail?.role?.name === 'Human Book',
+      component: <WorkAndEducationSection data={data} />,
+      isShow: data?.role?.name === 'Human Book',
     },
     {
       type: 'contactInformation',
       label: 'Contact Information',
       icon: <Users size={20} />,
-      component: <ContactInformationSection liberDetail={liberDetail} />,
+      component: <ContactInformationSection data={data} />,
       isShow: true,
     },
   ];
