@@ -30,6 +30,12 @@ export interface User {
   educationStart: string | null;
   educationEnd: string | null;
   email: string | null;
+  topics: Topic[];
+}
+
+export interface Topic {
+  id: number;
+  name: string;
 }
 
 export interface GetUsersParams {
