@@ -1,7 +1,6 @@
 'use client';
 
-import { IconButton } from '@mui/material';
-import { MapPin, PencilSimple, Star, Users } from '@phosphor-icons/react';
+import { MapPin, Star, Users } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import type { ReactNode } from 'react';
@@ -9,11 +8,17 @@ import * as React from 'react';
 
 import type { ProfileMenuItem } from '@/components/core/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/core/NavBar/NavBar';
+import { pushError } from '@/components/CustomToastifyContainer';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
-import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
-import { useGetAuthorDetailQuery } from '@/libs/services/modules/user';
+import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
+import { useUploadMutation } from '@/libs/services/modules/files';
+import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
+import { setAvatarUrl } from '@/libs/store/authentication';
+import FormDataBuilder from '@/utils/FormDataBuilder';
 
 import { AboutPanel } from '../AboutPanel';
+import IconButtonEdit from '../IconButtonEdit';
 
 type Props = {
   label: string;
@@ -31,35 +36,62 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 
 const Profile = () => {
   const searchParams = useSearchParams();
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const isLiber = userInfo?.role?.id === 3;
   const huberId = searchParams.get('huberId');
-  const isMyProfilePage = !huberId;
   const {
-    data: authorData,
-    isLoading: authorLoading,
-    refetch: authorRefetch,
-  } = useGetAuthorDetailQuery(huberId, {
-    skip: isMyProfilePage,
+    data: userDetail,
+    isLoading,
+    refetch,
+  } = useGetUsersByIdQuery(huberId || userInfo?.id, {
+    skip: !huberId && !userInfo?.id,
   });
-  const {
-    data: personalData,
-    isLoading: personalLoading,
-    refetch: personalRefetch,
-  } = useGetPersonalInfoQuery();
 
-  const userDetail = isMyProfilePage ? personalData : authorData;
-  const isLoading = isMyProfilePage ? personalLoading : authorLoading;
-  const refetch = isMyProfilePage ? personalRefetch : authorRefetch;
-  const isLiber = userDetail?.role?.name === 'Reader';
+  const dispatch = useAppDispatch();
+  const billUploader = React.useRef<HTMLInputElement>(null);
+  const [upload] = useUploadMutation();
+  const [updateProfile] = useUpdateProfileMutation();
 
   const [selectedMenuItem, setSelectedMenuItem] = React.useState<
     ProfileMenuItem | undefined
   >();
 
   const handleChangeSelectedMenu = (item: ProfileMenuItem | undefined) => {
-    setSelectedMenuItem(item);
+    if (item) {
+      setSelectedMenuItem(item);
+    }
   };
 
-  // const listSkill = ['Life', 'Study', 'Career'];
+  const handleAvatarUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): Promise<void> => {
+    if (event.target.files && event.target.files.length > 0) {
+      dispatch(
+        setAvatarUrl({
+          path: URL.createObjectURL(event.target.files[0] as Blob),
+        }),
+      );
+      try {
+        const result = await upload(
+          FormDataBuilder({ file: event.target.files[0] }),
+        ).unwrap();
+        if (result?.file) {
+          dispatch(
+            setAvatarUrl({ id: result?.file?.id, path: result?.file?.path }),
+          );
+
+          await updateProfile({
+            photo: {
+              id: result?.file?.id,
+              path: result?.file?.path,
+            },
+          }).unwrap();
+        }
+      } catch (error: any) {
+        pushError(`Error: ${error.message}`);
+      }
+    }
+  };
 
   const tabsRender: ProfileMenuItem[] = React.useMemo(() => {
     return [
@@ -78,27 +110,25 @@ const Profile = () => {
             </p>
           </div>
         ),
-        component: (
-          <AboutPanel liberDetail={userDetail} onInvalidate={refetch} />
-        ),
+        component: <AboutPanel data={userDetail} onInvalidate={refetch} />,
       },
-      {
-        type: MyProfilePanelIndex.MY_FAVORITE,
-        label: (
-          <div>
-            <p
-              className={
-                selectedMenuItem?.type === MyProfilePanelIndex.MY_FAVORITE
-                  ? 'border-b-2 border-primary-50 py-2 text-sm font-medium text-primary-50'
-                  : 'py-2 text-sm font-medium text-neutral-40'
-              }
-            >
-              My Favorite
-            </p>
-          </div>
-        ),
-        component: <div>TBD</div>,
-      },
+      // {
+      //   type: MyProfilePanelIndex.MY_FAVORITE,
+      //   label: (
+      //     <div>
+      //       <p
+      //         className={
+      //           selectedMenuItem?.type === MyProfilePanelIndex.MY_FAVORITE
+      //             ? 'border-b-2 border-primary-50 py-2 text-sm font-medium text-primary-50'
+      //             : 'py-2 text-sm font-medium text-neutral-40'
+      //         }
+      //       >
+      //         My Favorite
+      //       </p>
+      //     </div>
+      //   ),
+      //   component: <FavoriteTab />,
+      // },
     ];
   }, [userDetail, selectedMenuItem?.type]);
 
@@ -115,7 +145,10 @@ const Profile = () => {
   }, [getActiveMenuItemIndex, selectedMenuItem?.type]);
 
   React.useEffect(() => {
-    return setSelectedMenuItem(tabsRender?.[selectedItemIndex]);
+    const selectedItem = tabsRender?.[selectedItemIndex];
+    if (selectedItem) {
+      setSelectedMenuItem(selectedItem);
+    }
   }, [selectedItemIndex, tabsRender]);
 
   if (isLoading) {
@@ -154,29 +187,37 @@ const Profile = () => {
                 alt="Avatar Icon"
                 width={160}
                 height={160}
-                className="h-[100px] w-[100px] lg:h-[160px] lg:w-[160px]"
+                className="h-[100px] w-[100px] rounded-full lg:h-[160px] lg:w-[160px]"
                 loading="lazy"
-                src="/assets/images/icons/avatar.svg"
+                src={
+                  userDetail?.photo?.path || '/assets/images/user-avatar.jpeg'
+                }
               />
 
               <div className="absolute bottom-0 left-20 opacity-0 transition-opacity duration-200 group-hover:opacity-100 lg:left-28 ">
-                <IconButton
-                  sx={{
-                    backgroundColor: '#CDDDFE',
-                    border: '1px solid white',
-                  }}
-                  onClick={() => {}}
-                  title="Edit"
-                >
-                  <PencilSimple size={16} color="#033599" className="p-0.5" />
-                </IconButton>
+                <input
+                  id="avatar"
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  aria-hidden
+                  ref={billUploader}
+                  onChange={handleAvatarUpload}
+                />
+                <IconButtonEdit
+                  onClick={() =>
+                    billUploader &&
+                    billUploader?.current &&
+                    billUploader?.current?.click()
+                  }
+                />
               </div>
             </div>
 
             <div className="relative left-4 mb-10 flex w-full flex-row items-center justify-between gap-2 lg:left-0 lg:ml-[210px] lg:mr-5">
               <div className="flex-col gap-y-1 lg:gap-y-1">
                 <p className="text-3xl font-medium text-[#000000]">
-                  {userDetail?.fullName ?? 'Author Full name'}
+                  {userDetail?.fullName ?? 'Not provided'}
                 </p>
                 <div className="flex items-center gap-x-10 text-sm text-neutral-20">
                   <LabelWithLeftIcon
