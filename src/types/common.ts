@@ -9,3 +9,15 @@ export const GenderName = {
   [Gender.FEMALE]: 'Female',
   [Gender.OTHER]: 'Other',
 } as const;
+
+export enum Role {
+  ADMIN = 1,
+  HUBER = 2,
+  LIBER = 3,
+}
+
+export const ROLE_NAME = {
+  [Role.ADMIN]: 'Admin',
+  [Role.HUBER]: 'Huber',
+  [Role.LIBER]: 'Liber',
+} as const;
