@@ -17,7 +17,7 @@ import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import { setAvatarUrl } from '@/libs/store/authentication';
 import FormDataBuilder from '@/utils/FormDataBuilder';
 
-import { AboutPanel } from '../AboutPanel';
+import AboutPanel from '../AboutPanel';
 import IconButtonEdit from '../IconButtonEdit';
 
 type Props = {
@@ -130,7 +130,7 @@ const Profile = () => {
       //   component: <FavoriteTab />,
       // },
     ];
-  }, [userDetail, selectedMenuItem?.type]);
+  }, [userDetail, selectedMenuItem?.type, huberId]);
 
   const getActiveMenuItemIndex = React.useCallback(
     (type: MyProfilePanelIndex | undefined) => {
