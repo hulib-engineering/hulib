@@ -15,6 +15,7 @@ import { signOut } from 'next-auth/react';
 import React, { useMemo } from 'react';
 
 import Button from '@/components/button/Button';
+import SkeletonShimmer from '@/components/header/SkeletonShimmer';
 import IconButton from '@/components/iconButton/IconButton';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
@@ -138,7 +139,6 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
 
 const Header = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
-
   const renderNavbar = () => {
     return (
       <div className="flex items-center justify-between gap-x-2">
@@ -169,9 +169,8 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <Logo size="small" />
           {!user || !user?.id ? (
-            <div className="flex gap-3">
-              <Button variant="outline">Log In</Button>
-              <Button>Sign Up</Button>
+            <div className="flex gap-3 px-10 ">
+              <SkeletonShimmer />
             </div>
           ) : (
             <div className="flex items-center gap-2">
@@ -231,9 +230,8 @@ const Header = () => {
           <SearchInput />
         </div>
         {!user || !user?.id ? (
-          <div className="flex gap-3">
-            <Button variant="outline">Log In</Button>
-            <Button>Sign Up</Button>
+          <div className="flex gap-3 px-10 ">
+            <SkeletonShimmer />
           </div>
         ) : (
           <div className="flex items-center gap-2">
