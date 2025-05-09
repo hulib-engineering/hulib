@@ -10,6 +10,7 @@ import {
 import * as React from 'react';
 
 import type { User } from '@/libs/services/modules/user/userType';
+import { Role, ROLE_NAME } from '@/types/common';
 
 import { ContactInformationSection } from '../ContactInformationSection';
 import OverviewSection from '../OverviewSection';
@@ -28,8 +29,8 @@ type AboutSectionMenu = {
   isShow?: boolean;
 };
 
-export const AboutPanel = ({ data, onInvalidate }: Props) => {
-  const [activeSection, setActiveSection] = React.useState('liberOverview');
+const AboutPanel = ({ data, onInvalidate }: Props) => {
+  const [activeSection, setActiveSection] = React.useState('workAndEducation');
   const sectionMenu: AboutSectionMenu[] = [
     {
       type: 'liberOverview',
@@ -43,7 +44,7 @@ export const AboutPanel = ({ data, onInvalidate }: Props) => {
       label: 'Work and Education',
       icon: <Suitcase size={20} />,
       component: <WorkAndEducationSection data={data} />,
-      isShow: data?.role?.name === 'Human Book',
+      isShow: data?.role?.name === ROLE_NAME[Role.HUBER],
     },
     {
       type: 'contactInformation',
@@ -138,3 +139,5 @@ export const AboutPanel = ({ data, onInvalidate }: Props) => {
     </>
   );
 };
+
+export default AboutPanel;
