@@ -167,3 +167,33 @@ html { scroll-behavior: smooth; box-sizing: border-box }
     width: 2rem;
     display: flex;
 }
+.skeleton-wrapper {
+  width: 200px;
+  height: 40px;
+  border-radius: 999px;
+  overflow: hidden;
+  background-color: #e5e5e5;
+  position: relative;
+}
+
+.skeleton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150px;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(300px);
+  }
+}
