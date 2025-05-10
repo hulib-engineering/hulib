@@ -12,6 +12,14 @@ export type FeedBack = {
   content: string;
 };
 
+export type StatusType =
+  | 'finished'
+  | 'pending'
+  | 'canceled'
+  | 'rejected'
+  | 'approved'
+  | 'unInitialized';
+
 export type Message = {
   id: string;
   readingSessionId: string;
@@ -33,6 +41,8 @@ export type ReadingSession = {
   review: string;
   recordingUrl: string;
   sessionStatus: string;
+  startedAt: string;
+  endedAt: string;
   startTime: string;
   endTime: string;
   feedbacks: FeedBack[];
