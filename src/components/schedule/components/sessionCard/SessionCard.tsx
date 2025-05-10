@@ -1,5 +1,5 @@
 import { CaretDown, CaretUp } from '@phosphor-icons/react';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { useAppSelector } from '@/libs/hooks';
 import type {
@@ -34,7 +34,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
   const cardBackgroundColor = isVibing
     ? 'rgba(240, 245, 255, 1)'
     : 'rgba(255, 249, 245, 1)';
-  const renderStatusBadge = () => {
+  const renderStatusBadge = useMemo(() => {
     const statusMap: Record<ReadingSession['sessionStatus'], StatusType> = {
       finished: 'finished',
       canceled: 'canceled',
@@ -44,34 +44,38 @@ export const SessionCard: React.FC<SessionCardProps> = ({
       approved: 'approved',
     };
 
-    const status = statusMap[session.sessionStatus as keyof typeof statusMap];
+    const status = statusMap[session?.sessionStatus as keyof typeof statusMap];
     return status ? <StatusBadge status={status} /> : null;
-  };
-  const renderCollapsedUserInfo = () => (
-    <div className="flex items-center">
-      <UserAvatar
-        user={isVibing ? session.humanBook : session.reader}
-        role="presentation"
-      />
-      <div className="ml-2">
-        <span
-          className="mr-1 rounded-[100px] px-2 py-0.5 text-xs"
-          style={{
-            backgroundColor: isVibing
-              ? 'rgba(205, 221, 254, 1)'
-              : 'rgba(255, 227, 204, 1)',
-            color: isVibing ? 'rgba(4, 66, 191, 1)' : 'rgba(255, 115, 1, 1)',
-          }}
-        >
-          {isVibing ? 'Huber' : 'Liber'}
-        </span>
-        <span className="text-sm font-medium text-black">
-          {isVibing
-            ? session.humanBook?.fullName || 'Unnamed'
-            : session.reader?.fullName || 'Unnamed'}
-        </span>
+  }, [session?.sessionStatus]);
+
+  const renderCollapsedUserInfo = useMemo(
+    () => (
+      <div className="flex items-center">
+        <UserAvatar
+          user={isVibing ? session?.humanBook : session?.reader}
+          role="presentation"
+        />
+        <div className="ml-2">
+          <span
+            className="mr-1 rounded-[100px] px-2 py-0.5 text-xs"
+            style={{
+              backgroundColor: isVibing
+                ? 'rgba(205, 221, 254, 1)'
+                : 'rgba(253, 243, 206, 1)',
+              color: isVibing ? 'rgba(4, 66, 191, 1)' : 'rgba(219, 174, 10, 1)',
+            }}
+          >
+            {isVibing ? 'Huber' : 'Liber'}
+          </span>
+          <span className="text-sm font-medium text-black">
+            {isVibing
+              ? session.humanBook?.fullName || 'Unnamed'
+              : session.reader?.fullName || 'Unnamed'}
+          </span>
+        </div>
       </div>
-    </div>
+    ),
+    [isVibing, session?.humanBook, session?.reader],
   );
 
   return (
@@ -105,16 +109,16 @@ export const SessionCard: React.FC<SessionCardProps> = ({
             </div>
           )}
         <div className="flex gap-2">
-          {renderStatusBadge()}
+          {renderStatusBadge}
           {isExpanded ? <CaretUp size={20} /> : <CaretDown size={20} />}
         </div>
       </div>
-      {isExpanded && session.sessionStatus === 'pending' && (
+      {isExpanded && session?.sessionStatus === 'pending' && (
         <StatusBadge status="pending" isVibing={isVibing} />
       )}
       {isExpanded && (
         <div>
-          <span className="text-sm">From: </span>
+          <span className="text-sm text-black">From: </span>
           <span className="text-sm text-[#0858FA]">{session.story.title}</span>
         </div>
       )}
@@ -129,9 +133,10 @@ export const SessionCard: React.FC<SessionCardProps> = ({
         <SessionAttendees
           humanBook={session.humanBook}
           reader={session.reader}
+          isVibing={isVibing}
         />
       ) : (
-        renderCollapsedUserInfo()
+        renderCollapsedUserInfo
       )}
       {isExpanded && (
         <div className="w-full pb-3">

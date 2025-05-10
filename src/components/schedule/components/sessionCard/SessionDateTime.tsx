@@ -40,7 +40,7 @@ export const SessionDateTime: React.FC<SessionDateTimeProps> = ({
   };
 
   return (
-    <div className="mb-3 flex items-center">
+    <div className="mb-3 flex items-center text-black">
       <Calendar size={16} className="mr-2" />
       <div>
         <span>Tue, {formatDate(startDate)} | </span>

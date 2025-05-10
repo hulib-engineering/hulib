@@ -1,4 +1,4 @@
-import { BookOpen } from '@phosphor-icons/react';
+import Image from 'next/image';
 import React from 'react';
 
 interface SessionStoryDescriptionProps {
@@ -20,7 +20,13 @@ export const SessionStoryDescription: React.FC<
   return (
     <div className="mb-3">
       <div className="mb-1 flex items-start gap-1 text-sm text-gray-800">
-        <BookOpen size={16} className="shrink-0" />
+        <Image
+          src="/assets/icons/Note.svg"
+          alt="Note Icon"
+          width={16}
+          height={16}
+          className="shrink-0"
+        />
         <div>
           <p>{note}</p>
         </div>
