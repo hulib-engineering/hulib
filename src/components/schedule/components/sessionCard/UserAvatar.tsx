@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 
-import type { User } from '../../libs/services/modules/user/userType';
+import type { User } from '../../../../libs/services/modules/user/userType';
 
 interface UserAvatarProps {
   user: User;
@@ -9,10 +9,8 @@ interface UserAvatarProps {
 }
 
 export const UserAvatar: React.FC<UserAvatarProps> = ({ user, role }) => {
-  // Use first letter of full name as fallback
-  const firstLetter = user?.fullName?.charAt(0) || '?';
+  const [imageError, setImageError] = useState(false);
 
-  // Set background color based on role
   let bgColor = 'bg-gray-300';
   if (role === 'Huber') bgColor = 'bg-blue-200';
   if (role === 'Liber') bgColor = 'bg-yellow-200';
@@ -21,16 +19,23 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({ user, role }) => {
     <div
       className={`flex h-8 w-8 items-center justify-center rounded-full ${bgColor} text-sm font-medium text-gray-700`}
     >
-      {user?.photo?.path ? (
+      {user?.photo?.path && !imageError ? (
         <Image
           src={user.photo.path}
           alt={user.fullName || 'User avatar'}
           className="h-full w-full rounded-full object-cover"
           width={32}
           height={32}
+          onError={() => setImageError(true)}
         />
       ) : (
-        <span>{firstLetter}</span>
+        <Image
+          src="/assets/images/avatar-meeting.png"
+          alt="Default avatar"
+          className="h-full w-full rounded-full object-cover"
+          width={32}
+          height={32}
+        />
       )}
     </div>
   );
