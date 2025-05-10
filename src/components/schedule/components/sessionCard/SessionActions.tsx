@@ -15,7 +15,7 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
         <div className="flex w-full gap-3">
           <button
             type="button"
-            className="w-1/2 rounded-[100px] bg-gray-100 px-4 py-1 text-sm font-medium text-blue-700 hover:bg-gray-200"
+            className="flex-1 rounded-[100px] bg-gray-100 px-4 py-1 text-sm font-medium text-blue-700 hover:bg-gray-200"
           >
             Reject
           </button>
