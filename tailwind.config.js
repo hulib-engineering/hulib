@@ -399,17 +399,13 @@ module.exports = {
         glider: 'glider 1s infinite linear',
         flashing: 'flash 3s infinite',
       },
-      theme: {
-        extend: {
-          animation: {
-            shimmer: 'shimmer 1.5s infinite',
-          },
-          keyframes: {
-            shimmer: {
-              '100%': { transform: 'translateX(300px)' },
-            },
-          },
-        },
+    },
+    animation: {
+      shimmer: 'shimmer 1.5s infinite',
+    },
+    keyframes: {
+      shimmer: {
+        '100%': { transform: 'translateX(300px)' },
       },
     },
   },
