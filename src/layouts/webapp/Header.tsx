@@ -13,7 +13,6 @@ import { signOut } from 'next-auth/react';
 import React, { useMemo } from 'react';
 
 import Button from '@/components/button/Button';
-import SkeletonShimmer from '@/components/header/SkeletonShimmer';
 import IconButton from '@/components/iconButton/IconButton';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
@@ -21,6 +20,7 @@ import MenuItem from '@/components/menuItem/MenuItem';
 import Popover from '@/components/popover/Popover';
 import type { WithChildren } from '@/components/private/types';
 import SearchInput from '@/components/SearchInput';
+import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppSelector } from '@/libs/hooks';
 
 // const ButtonWithChip = ({
@@ -167,7 +167,7 @@ const Header = () => {
           <Logo size="small" />
           {!user || !user?.id ? (
             <div className="flex gap-3 px-10 ">
-              <SkeletonShimmer />
+              <SkeletonHeader />
             </div>
           ) : (
             <div className="flex items-center gap-2">
@@ -228,7 +228,7 @@ const Header = () => {
         </div>
         {!user || !user?.id ? (
           <div className="flex gap-3 px-10 ">
-            <SkeletonShimmer />
+            <SkeletonHeader />
           </div>
         ) : (
           <div className="flex items-center gap-2">
