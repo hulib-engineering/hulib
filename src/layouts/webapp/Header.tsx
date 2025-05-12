@@ -13,12 +13,14 @@ import { signOut } from 'next-auth/react';
 import React, { useMemo } from 'react';
 
 import Button from '@/components/button/Button';
+import IconButton from '@/components/iconButton/IconButton';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import MenuItem from '@/components/menuItem/MenuItem';
 import Popover from '@/components/popover/Popover';
 import type { WithChildren } from '@/components/private/types';
 import SearchInput from '@/components/SearchInput';
+import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppSelector } from '@/libs/hooks';
 
 // const ButtonWithChip = ({
@@ -134,7 +136,6 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
 
 const Header = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
-
   const renderNavbar = () => {
     return (
       <div className="flex items-center justify-between gap-x-2">
@@ -165,9 +166,8 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <Logo size="small" />
           {!user || !user?.id ? (
-            <div className="flex gap-3">
-              <Button variant="outline">Log In</Button>
-              <Button>Sign Up</Button>
+            <div className="flex gap-3 px-10 ">
+              <SkeletonHeader />
             </div>
           ) : (
             <div className="flex items-center gap-2">
@@ -227,9 +227,8 @@ const Header = () => {
           <SearchInput />
         </div>
         {!user || !user?.id ? (
-          <div className="flex gap-3">
-            <Button variant="outline">Log In</Button>
-            <Button>Sign Up</Button>
+          <div className="flex gap-3 px-10 ">
+            <SkeletonHeader />
           </div>
         ) : (
           <div className="flex items-center gap-2">
