@@ -1,3 +1,28 @@
+# [1.14.0](https://github.com/hulib-engineering/hulib/compare/v1.13.1...v1.14.0) (2025-04-30)
+
+
+### Bug Fixes
+
+* api and add translate ([0cafef1](https://github.com/hulib-engineering/hulib/commit/0cafef1a13fa99563657e1f88e276c043282a061))
+* call api huber ([fb898bd](https://github.com/hulib-engineering/hulib/commit/fb898bd9d63745fbcee40d4b55aa5e838c8246e9))
+* hide tags when no topic ([709f193](https://github.com/hulib-engineering/hulib/commit/709f193f0339c374430513a9d4c2ad4f6dc6d738))
+* translate huber name ([dc80b7b](https://github.com/hulib-engineering/hulib/commit/dc80b7bb22307e4fcf78a993a1df8927ebfafb8c))
+* update video URL validation to be optional and improve error handling ([2b5b876](https://github.com/hulib-engineering/hulib/commit/2b5b8765bf19d072e30eae8ceb741a26463aa259))
+
+
+### Features
+
+* add custom cover book component and integrate it into registration and flip book sections ([dc1d5b3](https://github.com/hulib-engineering/hulib/commit/dc1d5b31f2a5db89b5940cd160d3f7b66f722b5a))
+* integrate user details in meeting scheduling and enhance reading session management ([cd083a0](https://github.com/hulib-engineering/hulib/commit/cd083a07aee7335e6043de19a334d981ecce6e18))
+* liber profile ([1cdb307](https://github.com/hulib-engineering/hulib/commit/1cdb3073ad1c970f5138d2f4cb725cd26ca4c251))
+* liber profile ([425a6a0](https://github.com/hulib-engineering/hulib/commit/425a6a081454f16f9bb33c7e0d9b55d4708321b8))
+* notification component ([eb2d15e](https://github.com/hulib-engineering/hulib/commit/eb2d15e4a0d9749828d93ae70015a1f872bebae3))
+* notification component ([d99d984](https://github.com/hulib-engineering/hulib/commit/d99d984783cb352b54a671bf6f53c646ef7157e4))
+* refactor CustomCoverBook component and integrate it into Step3 and FlipBook components ([531c4c5](https://github.com/hulib-engineering/hulib/commit/531c4c51de6cfb59a0b720e6f7de99bcd65dff42))
+* refactor profile components and add new sections ([1652367](https://github.com/hulib-engineering/hulib/commit/1652367f93459915b52065e8ee112a05da144285))
+* responsive ui for weekly schedule screen ([fa282a7](https://github.com/hulib-engineering/hulib/commit/fa282a73315b5616e5120e102fb48d6f6602e583))
+* update profile routing and enhance profile detail handling ([999a918](https://github.com/hulib-engineering/hulib/commit/999a918ddf13cf434fabb13aa1d4f49e0aa2aa93))
+
 ## [1.13.1](https://github.com/hulib-engineering/hulib/compare/v1.13.0...v1.13.1) (2025-04-26)
 
 

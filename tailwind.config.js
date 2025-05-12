@@ -400,6 +400,14 @@ module.exports = {
         flashing: 'flash 3s infinite',
       },
     },
+    animation: {
+      shimmer: 'shimmer 1.5s infinite',
+    },
+    keyframes: {
+      shimmer: {
+        '100%': { transform: 'translateX(300px)' },
+      },
+    },
   },
   plugins: [
     backfaceVisibility,
