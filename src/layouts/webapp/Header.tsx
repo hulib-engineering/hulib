@@ -13,7 +13,6 @@ import { signOut } from 'next-auth/react';
 import React, { useMemo } from 'react';
 
 import Button from '@/components/button/Button';
-import IconButton from '@/components/iconButton/IconButton';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import MenuItem from '@/components/menuItem/MenuItem';
