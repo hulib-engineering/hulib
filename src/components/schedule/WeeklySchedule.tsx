@@ -12,7 +12,7 @@ import UpComingEvent from './components/UpComingEvent';
 
 const WeeklySchedule = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
-  const isHuber = user?.role?.name === 'Human Book';
+  const isHuber = user?.role?.name === 'Huber';
   const { data: timeSlotHuber, isLoading: isLoadingTimeSlots } =
     useGetTimeSlotsHuberQuery(
       { id: 23 },

@@ -7,159 +7,112 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 import { ScheduleFilterPopover } from '@/components/schedule/components/ScheduleFilter/ScheduleFilter';
+import { SessionCard } from '@/components/schedule/components/sessionCard/SessionCard';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 
-// import StoriesSkeleton from '../../../stories/StoriesSkeleton';
-import DetailEventHuber from '../DetailEventHuber';
-import DetailEventLiber from '../DetailEventLiber';
-
-const slotLabelContent = (arg: any) => {
-  const hour24 = arg.date.getHours();
-  return (
-    <span className="align-top font-semibold text-black">{hour24}h00</span>
-  );
-};
-
-const dayHeaderContent = (arg: any) => {
-  const date = new Date(arg.date);
-  const dayName = date
-    .toLocaleDateString('en-US', { weekday: 'short' })
-    .toUpperCase();
-  const dayNumber = date.getDate();
-
-  return (
-    <div className="flex flex-col items-center">
-      <span className="font-bold">
-        {dayName} {dayNumber}
-      </span>
-    </div>
-  );
-};
-
 export default function BigCalendar() {
-  const { data: readingSessions, isLoading: isLoadingReadingSessions } =
-    useGetReadingSessionsQuery();
-  const [list, setList] = useState([]);
-  const userInfor = useAppSelector((state) => state.auth.userInfo);
+  const { data: readingSessions, isLoading } = useGetReadingSessionsQuery();
+  const [events, setEvents] = useState<
+    { title: string; start: any; end: any; extendedProps: any }[]
+  >([]);
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
   const currentMonthYear = new Date().toLocaleString('en-US', {
     month: 'long',
     year: 'numeric',
   });
 
-  const formatData = (data: any) => {
-    return data?.map((item: any) => {
+  const formatEvents = (data: any) => {
+    if (!data || !Array.isArray(data)) {
+      return [];
+    }
+    return data.map((item: any) => {
       return {
         title: `${item.humanBook?.fullName || 'Unknown'} - ${
           item.reader?.fullName || 'Unknown'
         }`,
         start: item.startedAt,
         end: item.endedAt,
-        extendedProps: {
-          ...item,
-        },
-        backgroundColor: item.backgroundColor || '#3b82f6',
-        borderColor: item.borderColor || '#1e40af',
-        textColor: item.textColor || '#ffffff',
+        extendedProps: { ...item },
       };
     });
   };
 
   useEffect(() => {
-    if (readingSessions && !isLoadingReadingSessions) {
-      setList(formatData(readingSessions));
+    if (readingSessions && !isLoading) {
+      const formattedEvents = formatEvents(readingSessions);
+      setEvents(formattedEvents);
     }
-  }, [readingSessions, isLoadingReadingSessions]);
+  }, [readingSessions, isLoading]);
 
-  function renderEventContent(eventInfo: any, user: any) {
+  const renderEventContent = (eventInfo: { event: any }) => {
+    const { event } = eventInfo;
+    const { extendedProps } = event;
+    const isHumanBook = userInfo?.id === extendedProps.humanBookId;
+    const isPending = extendedProps.sessionStatus !== 'approved';
+
     return (
       <div className="group relative z-[50] cursor-pointer overflow-visible">
         <div className="relative min-w-[60px] overflow-visible">
-          {user?.id === eventInfo.event.extendedProps.humanBookId ? (
-            <>
-              <div className="relative flex flex-col justify-start overflow-visible rounded-md border border-[#fff] bg-[#CDDDFE] p-[2px]">
-                {/* <p className="clip-auto z-10 absolute -left-[20px] -top-[22px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
+          <div
+            className={`relative flex flex-col justify-start overflow-visible rounded-md border border-[#fff] ${
+              isHumanBook ? 'bg-[#CDDDFE]' : 'bg-[#FFE3CC]'
+            } p-[2px]`}
+          >
+            {isPending && (
+              <p className="absolute left-[-20px] top-[-20px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] border-l-[#fff] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
                 Pending...
-              </p> */}
-                <p
-                  className={`absolute -left-[20px] -top-[20px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] border-l-[#fff] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000] ${
-                    eventInfo.event.extendedProps.sessionStatus === 'approved'
-                      ? 'hidden'
-                      : 'block'
-                  }`}
-                >
-                  {eventInfo.event.extendedProps.sessionStatus === 'approved'
-                    ? ''
-                    : 'Pending....'}
-                </p>
-                <div className="flex items-center">
-                  <Image
-                    alt="avatar"
-                    // src={
-                    //   eventInfo.event.extendedProps.humanBook.videoUrl
-                    //     ? eventInfo.event.extendedProps.humanBook.videoUrl
-                    //     : '/assets/images/icons/avatar.svg'
-                    // }
-                    src="/assets/images/icons/avatar.svg"
-                    width={14}
-                    height={14}
-                    loading="lazy"
-                    className="mr-[2px] rounded-full border border-[#fff]"
-                  />
-                  <p className="h-[20px] w-[80px] truncate text-[#171819]">
-                    {eventInfo.event.extendedProps.humanBook.fullName}
-                  </p>
-                </div>
-                <p className="text-[#0442BF]">Huber</p>
-              </div>
-              <div className="absolute -left-[396px] top-[5px] z-50 hidden group-hover:block">
-                <DetailEventHuber
-                  data={eventInfo.event.extendedProps}
-                  // callblack={(data: boolean) => getAllData(data)}
-                />
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="relative flex flex-col justify-start overflow-visible rounded-md border border-[#fff] bg-[#FFE3CC] p-[2px]">
-                {/* <p className="absolute -left-[20px] -top-[18px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
-              Pending...
-            </p> */}
-                <p
-                  className={`absolute -left-[20px] -top-[20px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] border-l-[#fff] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000] ${
-                    eventInfo.event.extendedProps.sessionStatus === 'approved'
-                      ? 'hidden'
-                      : 'block'
-                  }`}
-                >
-                  {eventInfo.event.extendedProps.sessionStatus === 'approved'
-                    ? ''
-                    : 'Pending...'}
-                </p>
-                <div className="flex items-center">
-                  <Image
-                    alt="avatar"
-                    src="/assets/images/icons/avatar.svg"
-                    width={14}
-                    height={14}
-                    loading="lazy"
-                    className="mr-[2px] rounded-full border border-[#fff]"
-                  />
-                  <p className="h-[20px] w-[70px] truncate text-[#171819]">
-                    {eventInfo?.event?.extendedProps?.reader?.fullName}
-                  </p>
-                </div>
-                <p className="overflow-hidden text-[#FF7301]">Liber</p>
-              </div>
-              <div className="absolute -left-[396px] -top-[5px] z-[9999] hidden overflow-visible group-hover:block">
-                <DetailEventLiber data={eventInfo.event.extendedProps} />
-              </div>
-            </>
-          )}
+              </p>
+            )}
+            <div className="flex items-center">
+              <Image
+                alt="avatar"
+                src="/assets/images/icons/avatar.svg"
+                width={14}
+                height={14}
+                loading="lazy"
+                className="mr-[2px] rounded-full border border-[#fff]"
+              />
+              <p className="h-[20px] w-[80px] truncate text-[#171819]">
+                {isHumanBook
+                  ? extendedProps.humanBook.fullName
+                  : extendedProps.reader?.fullName}
+              </p>
+            </div>
+            <p className={isHumanBook ? 'text-[#0442BF]' : 'text-[#FF7301]'}>
+              {isHumanBook ? 'Huber' : 'Liber'}
+            </p>
+          </div>
+          <div className="absolute left-[-396px] top-[5px] z-50 hidden group-hover:block">
+            <SessionCard session={extendedProps} expanded />
+          </div>
         </div>
       </div>
     );
-  }
+  };
+
+  const slotLabelContent = (arg: { date: Date }) => {
+    return (
+      <span className="align-top font-semibold text-black">
+        {arg.date.getHours()}h00
+      </span>
+    );
+  };
+
+  const dayHeaderContent = (arg: { date: Date }) => {
+    const date = new Date(arg.date);
+    const dayName = date
+      .toLocaleDateString('en-US', { weekday: 'short' })
+      .toUpperCase();
+    const dayNumber = date.getDate();
+    return (
+      <div className="flex flex-col items-center">
+        <span className="font-bold">
+          {dayName} {dayNumber}
+        </span>
+      </div>
+    );
+  };
 
   return (
     <div className="bg-white p-4">
@@ -173,15 +126,11 @@ export default function BigCalendar() {
         </div>
       </div>
       <div className="w-full">
-        {list?.length > 0 && (
+        {events?.length > 0 && (
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin]}
             initialView="timeGridWeek"
-            headerToolbar={{
-              left: '',
-              center: '',
-              right: '',
-            }}
+            headerToolbar={{ left: '', center: '', right: '' }}
             views={{
               timeGridWeek: {
                 titleFormat: { year: 'numeric', month: 'long' },
@@ -193,10 +142,8 @@ export default function BigCalendar() {
             slotMinTime="00:00:00"
             slotMaxTime="24:00:00"
             dayHeaderContent={dayHeaderContent}
-            events={list}
-            eventContent={(eventInfo) =>
-              renderEventContent(eventInfo, userInfor)
-            }
+            events={events}
+            eventContent={renderEventContent}
           />
         )}
       </div>
