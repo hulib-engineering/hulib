@@ -16,6 +16,9 @@ const updateStatusReadingSession = (
     query: ({ id, sessionStatus }) => ({
       url: `reading-sessions/${id}`,
       method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         sessionStatus,
       }),
