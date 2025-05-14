@@ -7,7 +7,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 import { ScheduleFilterPopover } from '@/components/schedule/components/ScheduleFilter/ScheduleFilter';
-import { SessionCard } from '@/components/schedule/components/sessionCard/SessionCard';
+import { PortalSessionCard } from '@/components/schedule/components/sessionCard/PortalSessionCard';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 
@@ -21,6 +21,11 @@ export default function BigCalendar() {
     month: 'long',
     year: 'numeric',
   });
+  const [hoveredSession, setHoveredSession] = useState<any>(null);
+  const [popupPosition, setPopupPosition] = useState<{
+    top: number;
+    left: number;
+  }>({ top: 0, left: 0 });
 
   const formatEvents = (data: any) => {
     if (!data || !Array.isArray(data)) {
@@ -51,8 +56,24 @@ export default function BigCalendar() {
     const isHumanBook = userInfo?.id === extendedProps.humanBookId;
     const isPending = extendedProps.sessionStatus !== 'approved';
 
+    const handleMouseEnter = (e: React.MouseEvent) => {
+      const rect = (e.target as HTMLElement).getBoundingClientRect();
+      setPopupPosition({
+        top: rect.top + window.scrollY + 30,
+        left: rect.left + window.scrollX - 400,
+      });
+      setHoveredSession(extendedProps);
+    };
+    const handleMouseLeave = () => {
+      setHoveredSession(null);
+    };
+
     return (
-      <div className="group relative z-[50] cursor-pointer overflow-visible">
+      <div
+        className="group relative z-[50] cursor-pointer overflow-visible"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <div className="relative min-w-[60px] overflow-visible">
           <div
             className={`relative flex flex-col justify-start overflow-visible rounded-md border border-[#fff] ${
@@ -82,9 +103,6 @@ export default function BigCalendar() {
             <p className={isHumanBook ? 'text-[#0442BF]' : 'text-[#FF7301]'}>
               {isHumanBook ? 'Huber' : 'Liber'}
             </p>
-          </div>
-          <div className="absolute left-[-396px] top-[5px] z-50 hidden group-hover:block">
-            <SessionCard session={extendedProps} expanded />
           </div>
         </div>
       </div>
@@ -125,7 +143,8 @@ export default function BigCalendar() {
           <ScheduleFilterPopover />
         </div>
       </div>
-      <div className="w-full">
+      {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
+      <div className="calendar-scroll-wrapper">
         {events?.length > 0 && (
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin]}
@@ -141,9 +160,18 @@ export default function BigCalendar() {
             contentHeight="auto"
             slotMinTime="00:00:00"
             slotMaxTime="24:00:00"
+            slotDuration="01:00:00"
             dayHeaderContent={dayHeaderContent}
             events={events}
             eventContent={renderEventContent}
+          />
+        )}
+        {hoveredSession && (
+          <PortalSessionCard
+            session={hoveredSession}
+            expanded
+            position={popupPosition}
+            onClose={() => setHoveredSession(null)}
           />
         )}
       </div>

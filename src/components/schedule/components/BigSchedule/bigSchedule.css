@@ -184,3 +184,28 @@ table table td:first-child .fc-timegrid-col-frame {
 .fc-scroller-harness {
   overflow: visible;
 }
+
+.fc-timegrid-slot-label {
+  height: 100px !important; /* Match the height of the time slot label */
+}
+
+.calendar-scroll-wrapper {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  overflow-x: visible;
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db #fff;
+}
+.calendar-scroll-wrapper::-webkit-scrollbar {
+  width: 8px;
+  background: #fff;
+}
+.calendar-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 8px;
+}
