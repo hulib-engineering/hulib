@@ -141,7 +141,11 @@ export const SessionCard: React.FC<SessionCardProps> = ({
       {isExpanded && (
         <div className="w-full pb-3">
           <SessionStoryDescription note={session.note} />
-          <SessionActions status={session.sessionStatus} isVibing={isVibing} />
+          <SessionActions
+            status={session.sessionStatus}
+            isVibing={isVibing}
+            sessionId={session.id}
+          />
         </div>
       )}
     </div>
