@@ -1,38 +1,36 @@
-import { Bookmarks } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useRef, useState } from 'react';
 
 import Button from '@/components/button/Button';
-import { pushError } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/private/utils';
-import { useAddStoryToFavoritesMutation } from '@/libs/services/modules/fav-stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
 import CustomCoverBook from '../common/CustomCoverBook';
 
 export type BookCommonProps = {
   data: StoryType;
+  renderActions: () => React.ReactNode;
 };
-export const FlipBook = ({ data }: BookCommonProps) => {
+export const FlipBook = ({ data, renderActions }: BookCommonProps) => {
   const { title, abstract = '' } = data;
   const [isFlipped, setIsFlipped] = useState(false);
   const [maxCharsPageLeft, setmaxCharsPageLeft] = useState(200);
   const pageLeftRef = useRef<HTMLParagraphElement>(null);
   const router = useRouter();
   const t = useTranslations('ExporeStory');
-  const [addStoryToFavorites] = useAddStoryToFavoritesMutation();
+  // const [addStoryToFavorites] = useAddStoryToFavoritesMutation();
 
-  const handleAddToFavorites = async (storyId: number) => {
-    try {
-      // Call the mutation to add the story to favorites
-      await addStoryToFavorites({ storyId: storyId.toString() }).unwrap();
-    } catch (err) {
-      // Handle the error if mutation fails
-      pushError('Error adding story to favorites');
-    }
-  };
+  // const handleAddToFavorites = async (storyId: number) => {
+  //   try {
+  //     // Call the mutation to add the story to favorites
+  //     await addStoryToFavorites({ storyId: storyId.toString() }).unwrap();
+  //   } catch (err) {
+  //     // Handle the error if mutation fails
+  //     pushError('Error adding story to favorites');
+  //   }
+  // };
 
   const detectDeviceType = () =>
     /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent)
@@ -188,34 +186,7 @@ export const FlipBook = ({ data }: BookCommonProps) => {
               </p>
             </div>
 
-            <div
-              className={mergeClassnames(
-                'flex w-full items-center gap-2 justify-self-end mt-3 absolute bottom-[10px]',
-                'md:flex-row md:mt-2 md:px-3 md:pl-0',
-              )}
-            >
-              <Button
-                variant="primary"
-                className={mergeClassnames(
-                  'text-base h-8 max-h-8 w-[120px] flex-none rounded-full px-[12px] py-[12px]',
-                  'md:h-[44px] md:max-h-[44px] md:w-[105px]',
-                )}
-                onClick={() => router.push(`/explore-story/${data?.id}`)}
-              >
-                {t('read_story')}
-              </Button>
-              <Button
-                variant="outline"
-                className={mergeClassnames(
-                  'w-full h-8',
-                  'md:size-10 md:min-h-10 md:min-w-10',
-                )}
-                iconOnly
-                onClick={() => handleAddToFavorites(data?.id)}
-              >
-                <Bookmarks size={20} />
-              </Button>
-            </div>
+            {renderActions && renderActions()}
           </div>
         </div>
         <div

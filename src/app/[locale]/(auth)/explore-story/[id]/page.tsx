@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import * as React from 'react';
 
 import SimilarStory from '@/components/exploreStory/SimilarStory';
-import HumanBookInfo from '@/components/storyDetails/HumanBookInfo';
+import HuberInfo from '@/components/storyDetails/HuberInfo';
 import RatingOverview from '@/components/storyDetails/RatingOverview';
 import ReaderReview from '@/components/storyDetails/ReaderReview';
 import Story from '@/components/storyDetails/Story';
@@ -42,7 +42,7 @@ export default function Index() {
               />
             </div>
             <div className="w-full lg:w-[268px]">
-              <HumanBookInfo
+              <HuberInfo
                 humanBook={data?.humanBook}
                 title={data?.title}
                 coverPath={data?.cover?.path}

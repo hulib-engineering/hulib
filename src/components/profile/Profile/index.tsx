@@ -58,11 +58,7 @@ const Profile = () => {
 
   const [selectedMenuItem, setSelectedMenuItem] = React.useState<
     ProfileMenuItem | undefined
-  >({
-    type: MyProfilePanelIndex.STORY,
-    label: <div>Stories</div>,
-    component: <StoriesTab />,
-  });
+  >();
 
   const handleChangeSelectedMenu = (item: ProfileMenuItem | undefined) => {
     if (item) {
