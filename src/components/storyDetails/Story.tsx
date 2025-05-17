@@ -125,8 +125,8 @@ const Story: React.FC<StoryProps> = ({ abstract, title, cover }) => {
                   <h2 className="text-[36px] font-bold">{page?.title}</h2>
                   <Image
                     src={page?.cover?.path ?? '/assets/images/user-avatar.jpeg'}
-                    height={532}
-                    width={100}
+                    height={500}
+                    width={355}
                     alt="Book cover"
                     className="w-full object-cover"
                   />
