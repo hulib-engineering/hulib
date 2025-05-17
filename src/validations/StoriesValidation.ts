@@ -5,7 +5,7 @@ export const StoriesValidation = z.object({
   abstract: z.string().min(1, 'Abstract is required'),
   topicIds: z.array(z.number()).min(1, 'Please select at least one topic'),
   cover: z.object({
-    id: z.string().min(1, 'Cover is required'),
+    // id: z.string().min(1, 'Cover is required'),
     path: z.string().min(1, 'Cover is required'),
   }),
 });
