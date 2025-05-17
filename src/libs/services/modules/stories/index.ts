@@ -5,6 +5,7 @@ import getSearchByKeyword from './getSearchByKeyword';
 import getSimilarStories from './getSimilarStories';
 import getStories from './getStories';
 import getStoryDetails from './getStoryDetails';
+import updateStory from './updateStory';
 
 const apiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['Stories'],
@@ -18,6 +19,7 @@ const storiesApi = apiWithTag.injectEndpoints({
     getSimilarStories: getSimilarStories(build),
     getSearchByKeyword: getSearchByKeyword(build),
     createStory: createStory(build),
+    updateStory: updateStory(build),
   }),
   overrideExisting: false,
 });
@@ -29,4 +31,5 @@ export const {
   useGetSimilarStoriesQuery,
   useGetSearchByKeywordQuery,
   useCreateStoryMutation,
+  useUpdateStoryMutation,
 }: any = storiesApi;
