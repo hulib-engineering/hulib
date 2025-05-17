@@ -29,9 +29,13 @@ export default function Index() {
           <div className="flex flex-col justify-start gap-5 lg:flex-row">
             <div className="flex-1">
               <Story
+                // cover={{
+                //   id: data?.cover?.id || '',
+                //   path: data?.cover?.path || '/assets/images/user-avatar.jpeg',
+                // }}
                 cover={{
                   id: data?.cover?.id || '',
-                  path: data?.cover?.path || '/assets/images/user-avatar.jpeg',
+                  path: '/assets/images/user-avatar.jpeg',
                 }}
                 title={data?.title || ''}
                 abstract={data?.abstract || ''}
