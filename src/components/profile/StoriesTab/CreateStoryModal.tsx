@@ -15,7 +15,10 @@ import Modal from '@/components/Modal';
 import TextArea from '@/components/textArea/TextArea';
 import TextInput from '@/components/textInput/TextInput';
 import { useAppSelector } from '@/libs/hooks';
-import { useCreateStoryMutation } from '@/libs/services/modules/stories';
+import {
+  useCreateStoryMutation,
+  useUpdateStoryMutation,
+} from '@/libs/services/modules/stories';
 import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import { StoriesValidation } from '@/validations/StoriesValidation';
 
@@ -27,15 +30,21 @@ interface Topic {
 interface CreateStoryModalProps {
   open: boolean;
   onClose: () => void;
+  editingStory?: any;
 }
 
-const CreateStoryModal = ({ open, onClose }: CreateStoryModalProps) => {
+const CreateStoryModal = ({
+  open,
+  onClose,
+  editingStory,
+}: CreateStoryModalProps) => {
   const t = useTranslations('Common');
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const userInfo = useAppSelector((state) => state.auth.userInfo);
   const { data: topicsPages, isLoading } = useGetTopicsQuery();
   const [createStory] = useCreateStoryMutation();
+  const [updateStory] = useUpdateStoryMutation();
   const [coverImages] = useState<any[]>([
     {
       path: 'https://hulib-services.onrender.com/api/v1/files/3a453887a11688d76b8ef.png',
@@ -58,8 +67,28 @@ const CreateStoryModal = ({ open, onClose }: CreateStoryModalProps) => {
     watch,
     setValue,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = methods;
+
+  // Reset form when editingStory changes
+  useEffect(() => {
+    if (editingStory) {
+      reset({
+        title: editingStory.title,
+        abstract: editingStory.abstract,
+        topicIds: editingStory.topicIds || [],
+        cover: editingStory.cover || coverImages[0],
+      });
+    } else {
+      reset({
+        title: '',
+        abstract: '',
+        topicIds: [],
+        cover: coverImages[0],
+      });
+    }
+  }, [editingStory, reset, coverImages]);
 
   const selectedTopics = watch('topicIds') || [];
   const title = watch('title') || '';
@@ -85,17 +114,28 @@ const CreateStoryModal = ({ open, onClose }: CreateStoryModalProps) => {
 
   const onSubmit = async (formValues: z.infer<typeof StoriesValidation>) => {
     try {
-      await createStory({
-        title: formValues.title,
-        abstract: formValues.abstract,
-        topicIds: formValues.topicIds,
-        humanBook: {
-          id: userInfo?.id,
-        },
-        cover: formValues.cover,
-        publishStatus: 'published',
-      }).unwrap();
-      pushSuccess('Story created successfully');
+      if (editingStory) {
+        await updateStory({
+          id: editingStory.id,
+          ...formValues,
+          humanBook: {
+            id: userInfo?.id,
+          },
+        }).unwrap();
+        pushSuccess('Story updated successfully');
+      } else {
+        await createStory({
+          title: formValues.title,
+          abstract: formValues.abstract,
+          topicIds: formValues.topicIds,
+          humanBook: {
+            id: userInfo?.id,
+          },
+          cover: formValues.cover,
+          publishStatus: 'published',
+        }).unwrap();
+        pushSuccess('Story created successfully');
+      }
       onClose();
     } catch (error: any) {
       pushError(t(error?.message || 'error_contact_admin'));
@@ -125,7 +165,7 @@ const CreateStoryModal = ({ open, onClose }: CreateStoryModalProps) => {
         <div className="rounded-lg bg-white/100 p-5">
           <div className="mb-8 flex items-center justify-between">
             <p className="text-[36px] leading-[44px] tracking-[-0.02em]">
-              Create New Story
+              {editingStory ? 'Edit Story' : 'Create New Story'}
             </p>
             <button
               type="button"
@@ -312,7 +352,7 @@ const CreateStoryModal = ({ open, onClose }: CreateStoryModalProps) => {
                   className="min-w-[120px]"
                   disabled={isSubmitting}
                 >
-                  Create
+                  {editingStory ? 'Save Changes' : 'Create'}
                 </Button>
               </div>
             </Form>
