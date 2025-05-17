@@ -32,8 +32,7 @@ const Step3 = ({ next }: { next: () => void }) => {
   const [createStory] = useCreateStoryMutation();
   const [coverImages] = useState<any[]>([
     {
-      path: 'https://hulib-services.onrender.com/api/v1/files/3a453887a11688d76b8ef.png',
-      id: 'dadcbf14-0596-4a5a-8681-f6234cea30b6',
+      path: '/assets/images/cover-book/story_background_yellow.png',
     },
   ]);
 
