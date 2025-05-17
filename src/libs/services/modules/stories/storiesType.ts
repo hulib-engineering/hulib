@@ -11,6 +11,7 @@ export interface SimilarStoriesParams {
 }
 
 export interface StoriesParams {
+  humanBookId?: number;
   page: number;
   limit: number;
   topicIds?: string[];

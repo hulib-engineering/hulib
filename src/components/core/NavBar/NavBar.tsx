@@ -7,6 +7,7 @@ export enum MyProfilePanelIndex {
   WHAT_MENTEE_SAYS = 'WhatMenteeSays',
   AVAILABLE_SLOT = 'AvailableSlot',
   MY_FAVORITE = 'MyFavorite',
+  STORY = 'My Stories',
 }
 
 export type ProfileMenuItem = {

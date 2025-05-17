@@ -1,3 +1,5 @@
+'use client';
+
 import Banner from '@/components/home/Banner';
 import NewestBooks from '@/components/research/NewestBooks';
 import CommonLayout from '@/layouts/CommonLayout';
