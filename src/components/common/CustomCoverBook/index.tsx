@@ -8,7 +8,7 @@ type Props = {
   active?: boolean;
   widthImage?: number;
   heightImage?: number;
-  srcImage: string;
+  srcImage?: string;
 };
 
 const CustomCoverBook = ({

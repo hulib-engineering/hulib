@@ -15,10 +15,12 @@ import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { useUploadMutation } from '@/libs/services/modules/files';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import { setAvatarUrl } from '@/libs/store/authentication';
+import { Role } from '@/types/common';
 import FormDataBuilder from '@/utils/FormDataBuilder';
 
 import AboutPanel from '../AboutPanel';
 import IconButtonEdit from '../IconButtonEdit';
+import StoriesTab from '../StoriesTab';
 
 type Props = {
   label: string;
@@ -37,7 +39,9 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 const Profile = () => {
   const searchParams = useSearchParams();
   const userInfo = useAppSelector((state) => state.auth.userInfo);
+  // isLiber: if user is a Liber, means user is a Liber
   const isLiber = userInfo?.role?.id === 3;
+  // huberId: if Huber is not defined, means someone is viewing huber's profile
   const huberId = searchParams.get('huberId');
   const {
     data: userDetail,
@@ -54,7 +58,11 @@ const Profile = () => {
 
   const [selectedMenuItem, setSelectedMenuItem] = React.useState<
     ProfileMenuItem | undefined
-  >();
+  >({
+    type: MyProfilePanelIndex.STORY,
+    label: <div>Stories</div>,
+    component: <StoriesTab />,
+  });
 
   const handleChangeSelectedMenu = (item: ProfileMenuItem | undefined) => {
     if (item) {
@@ -129,7 +137,26 @@ const Profile = () => {
       //   ),
       //   component: <FavoriteTab />,
       // },
-    ];
+      !huberId && userDetail?.role?.id === Role.HUBER
+        ? {
+            type: MyProfilePanelIndex.STORY,
+            label: (
+              <div>
+                <p
+                  className={
+                    selectedMenuItem?.type === MyProfilePanelIndex.STORY
+                      ? 'border-b-2 border-primary-50 py-2 text-sm font-medium text-primary-50'
+                      : 'py-2 text-sm font-medium text-neutral-40'
+                  }
+                >
+                  My Stories
+                </p>
+              </div>
+            ),
+            component: <StoriesTab />,
+          }
+        : null,
+    ].filter(Boolean) as ProfileMenuItem[];
   }, [userDetail, selectedMenuItem?.type, huberId]);
 
   const getActiveMenuItemIndex = React.useCallback(
@@ -166,8 +193,8 @@ const Profile = () => {
   const rating = '5/5';
 
   return (
-    <div className="h-full w-full bg-neutral-98 shadow-[0_2px_4px_0px_rgba(0,0,0,0.1)]">
-      <div className="h-full w-full">
+    <div className="mb-5 flex h-full w-full flex-col gap-y-4">
+      <div>
         <div className="relative flex h-[99.99px] justify-end justify-items-end bg-[#A6D4FF] lg:h-[200px]">
           <div className="relative h-[99.99px] w-full lg:h-[200px]">
             <Image
@@ -189,9 +216,10 @@ const Profile = () => {
                 height={160}
                 className="h-[100px] w-[100px] rounded-full lg:h-[160px] lg:w-[160px]"
                 loading="lazy"
-                src={
-                  userDetail?.photo?.path || '/assets/images/user-avatar.jpeg'
-                }
+                // src={
+                //   userDetail?.photo?.path || '/assets/images/user-avatar.jpeg'
+                // }
+                src="/assets/images/user-avatar.jpeg"
               />
 
               <div className="absolute bottom-0 left-20 opacity-0 transition-opacity duration-200 group-hover:opacity-100 lg:left-28 ">
@@ -205,6 +233,7 @@ const Profile = () => {
                   onChange={handleAvatarUpload}
                 />
                 <IconButtonEdit
+                  disabled
                   onClick={() =>
                     billUploader &&
                     billUploader?.current &&
@@ -226,7 +255,7 @@ const Profile = () => {
                   />
                   {!isLiber && (
                     <LabelWithLeftIcon
-                      label={`${menteeCount} mentees`}
+                      label={`${menteeCount} liber`}
                       icon={<Users size={20} />}
                     />
                   )}
@@ -241,17 +270,16 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="left-4 mb-10 flex w-full flex-col rounded-b-lg border-b  border-t-[0.5px] border-t-neutral-90/50 bg-[#FFFFFF] shadow-[0_4px_6px_-1px_neutral-90]">
+        <div className="left-4 mb-5 flex w-full flex-col rounded-b-lg border-b  border-t-[0.5px] border-t-neutral-90/50 bg-[#FFFFFF] shadow-[0_4px_6px_-1px_neutral-90]">
           <NavBar
             handleChangeSelectedMenu={handleChangeSelectedMenu}
             tabsRender={tabsRender}
           />
         </div>
-        <div className="mt-8 flex w-full flex-col items-start justify-between gap-8 lg:flex-row">
-          <div className="h-full w-full bg-[#FFFFFF]">
-            {tabsRender?.[selectedItemIndex]?.component}
-          </div>
-        </div>
+      </div>
+
+      <div className="flex w-full flex-col items-start justify-between lg:flex-row">
+        {tabsRender?.[selectedItemIndex]?.component}
       </div>
     </div>
   );

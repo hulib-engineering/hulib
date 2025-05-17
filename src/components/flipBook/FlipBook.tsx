@@ -91,7 +91,7 @@ export const FlipBook = ({ data }: BookCommonProps) => {
     <div
       className={mergeClassnames(
         'relative flex w-full flex-row bg-pink-100 p-4 rounded-xl shadow-sm',
-        'h-[300px] md:h-[300px] w-[392px]',
+        'h-[287px] w-[392px]',
       )}
       onMouseLeave={!isMobile ? handleMouseLeave : undefined}
     >
@@ -113,7 +113,7 @@ export const FlipBook = ({ data }: BookCommonProps) => {
             <h2
               className={mergeClassnames(
                 'text-base font-medium leading-6 text-primary-10 line-clamp-3 capitalize',
-                'md:text-[18px] md:leading-7 md:h-[100px]',
+                'md:text-[18px] md:leading-7',
               )}
             >
               {data?.title.toLowerCase()}
@@ -228,7 +228,7 @@ export const FlipBook = ({ data }: BookCommonProps) => {
           <CustomCoverBook
             titleStory={title}
             authorName={data?.humanBook?.fullName || ''}
-            srcImage={data?.cover?.path}
+            // srcImage={data?.cover?.path}
           />
         </div>
       </div>
