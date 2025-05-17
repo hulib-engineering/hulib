@@ -9,6 +9,7 @@ const getStories = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
     query: (params) => ({
       url: 'stories',
       params: {
+        humanBookId: params?.humanBookId || undefined,
         page: params?.page || 1,
         limit: params?.limit,
         topicIds: params?.topicIds,
