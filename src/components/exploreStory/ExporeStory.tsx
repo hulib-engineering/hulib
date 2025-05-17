@@ -1,6 +1,11 @@
 'use client';
 
-import { CaretCircleDown, CaretCircleUp } from '@phosphor-icons/react';
+import {
+  Bookmarks,
+  CaretCircleDown,
+  CaretCircleUp,
+} from '@phosphor-icons/react';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -18,6 +23,7 @@ type ExporeStoryProps = {
 };
 
 const ExploreStory = ({ topicIds }: ExporeStoryProps) => {
+  const router = useRouter();
   const t = useTranslations('ExporeStory');
 
   const [isExpandList, setIsExpandList] = React.useState(false);
@@ -34,6 +40,43 @@ const ExploreStory = ({ topicIds }: ExporeStoryProps) => {
   });
   const onClickSeeAll = () => {
     setIsExpandList((prev) => !prev);
+  };
+
+  const handleAddToFavorites = () => {
+    // TODO: Implement add to favorites
+  };
+
+  const renderActions = (storyId: number) => {
+    return (
+      <div
+        className={mergeClassnames(
+          'flex w-full items-center gap-2 justify-self-end mt-3 absolute bottom-[10px]',
+          'md:flex-row md:mt-2 md:px-3 md:pl-0',
+        )}
+      >
+        <Button
+          variant="primary"
+          className={mergeClassnames(
+            'text-base h-8 max-h-8 w-[120px] flex-none rounded-full px-[12px] py-[12px]',
+            'md:h-[44px] md:max-h-[44px] md:w-[105px]',
+          )}
+          onClick={() => router.push(`/explore-story/${storyId}`)}
+        >
+          {t('read_story')}
+        </Button>
+        <Button
+          variant="outline"
+          className={mergeClassnames(
+            'w-full h-8',
+            'md:size-10 md:min-h-10 md:min-w-10',
+          )}
+          iconOnly
+          onClick={() => handleAddToFavorites()}
+        >
+          <Bookmarks size={20} />
+        </Button>
+      </div>
+    );
   };
 
   React.useEffect(() => {
@@ -63,8 +106,11 @@ const ExploreStory = ({ topicIds }: ExporeStoryProps) => {
         )}
       >
         {storiesPages?.data?.map((story: StoryType) => (
-          // <Story key={story?.id} data={story} />
-          <FlipBook key={story?.id} data={story} />
+          <FlipBook
+            key={story?.id}
+            data={story}
+            renderActions={() => renderActions(story?.id)}
+          />
         ))}
       </div>
 

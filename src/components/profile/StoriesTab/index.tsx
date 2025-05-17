@@ -28,11 +28,51 @@ const StoriesTab = () => {
     },
   );
   const [isCreateModalOpen, setIsCreateModalOpen] = React.useState(false);
+  const [editingStory, setEditingStory] = React.useState<any>(null);
 
   const handleCloseModal = () => {
     setIsCreateModalOpen(false);
-    // Refetch stories after modal is closed (which means story was created successfully)
+    setEditingStory(null);
+    // Refetch stories after modal is closed (which means story was created/edited successfully)
     refetch();
+  };
+
+  const handleEditStory = (story: any) => {
+    setEditingStory(story);
+    setIsCreateModalOpen(true);
+  };
+
+  const renderActions = (story: any) => {
+    return (
+      <div
+        className={mergeClassnames(
+          'flex w-full items-center gap-2 justify-self-end mt-3 absolute bottom-[10px]',
+          'md:flex-row md:mt-2 md:px-3 md:pl-0',
+        )}
+      >
+        <Button
+          variant="primary"
+          className={mergeClassnames(
+            'text-base h-8 max-h-8 w-[120px] flex-none rounded-full px-[12px] py-[12px]',
+            'md:h-[44px] md:max-h-[44px] md:w-[105px]',
+          )}
+          onClick={() => handleEditStory(story)}
+        >
+          Editing
+        </Button>
+        {/* <Button
+          variant="outline"
+          className={mergeClassnames(
+            'w-full h-8',
+            'md:size-10 md:min-h-10 md:min-w-10',
+          )}
+          iconOnly
+          onClick={() => handleDeleteStory(story.id)}
+        >
+          <Trash size={20} />
+        </Button> */}
+      </div>
+    );
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -57,12 +97,20 @@ const StoriesTab = () => {
         </div>
         {stories?.data?.length > 0
           ? stories?.data?.map((story: any) => (
-              <FlipBook key={story?.id} data={story} />
+              <FlipBook
+                key={story?.id}
+                data={story}
+                renderActions={() => renderActions(story)}
+              />
             ))
           : null}
       </div>
 
-      <CreateStoryModal open={isCreateModalOpen} onClose={handleCloseModal} />
+      <CreateStoryModal
+        open={isCreateModalOpen}
+        onClose={handleCloseModal}
+        editingStory={editingStory}
+      />
     </div>
   );
 };
