@@ -1,6 +1,6 @@
 'use client';
 
-import { CaretCircleRight } from '@phosphor-icons/react';
+import { Bookmarks, CaretCircleRight } from '@phosphor-icons/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -27,6 +27,43 @@ const ExploreStories = () => {
     topicIds: topicIds ? topicIds.split(',').map(Number) : undefined,
   });
 
+  const handleAddToFavorites = () => {
+    // TODO: Implement add to favorites
+  };
+
+  const renderActions = (storyId: number) => {
+    return (
+      <div
+        className={mergeClassnames(
+          'flex w-full items-center gap-2 justify-self-end mt-3 absolute bottom-[10px]',
+          'md:flex-row md:mt-2 md:px-3 md:pl-0',
+        )}
+      >
+        <Button
+          variant="primary"
+          className={mergeClassnames(
+            'text-base h-8 max-h-8 w-[120px] flex-none rounded-full px-[12px] py-[12px]',
+            'md:h-[44px] md:max-h-[44px] md:w-[105px]',
+          )}
+          onClick={() => router.push(`/explore-story/${storyId}`)}
+        >
+          Read all
+        </Button>
+        <Button
+          variant="outline"
+          className={mergeClassnames(
+            'w-full h-8',
+            'md:size-10 md:min-h-10 md:min-w-10',
+          )}
+          iconOnly
+          onClick={() => handleAddToFavorites()}
+        >
+          <Bookmarks size={20} />
+        </Button>
+      </div>
+    );
+  };
+
   return (
     <div className="mt-8 items-center justify-center rounded-lg bg-white md:p-5">
       <h3 className="text-[2.375rem] font-medium leading-[2.75rem] text-primary-10">
@@ -38,8 +75,6 @@ const ExploreStories = () => {
           <StoriesSkeleton />
         </div>
       ) : storiesPages?.data?.length > 0 ? (
-        // <div className="relative mt-4 flex flex-wrap items-center justify-center gap-8 xl:justify-start 2xl:gap-12">
-        // <div className="relative mt-4 flex flex-wrap items-center justify-center gap-8 2xl:gap-12">
         <div
           className={mergeClassnames(
             'mt-6 grid grid-cols-1 gap-8 rounded-lg bg-white',
@@ -48,7 +83,11 @@ const ExploreStories = () => {
           )}
         >
           {storiesPages?.data?.map((item: StoryType) => (
-            <FlipBook key={item.id} data={item} />
+            <FlipBook
+              key={item.id}
+              data={item}
+              renderActions={() => renderActions(item?.id)}
+            />
           ))}
         </div>
       ) : (

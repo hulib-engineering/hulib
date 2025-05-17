@@ -30,7 +30,7 @@ type AboutSectionMenu = {
 };
 
 const AboutPanel = ({ data, onInvalidate }: Props) => {
-  const [activeSection, setActiveSection] = React.useState('workAndEducation');
+  const [activeSection, setActiveSection] = React.useState('liberOverview');
   const sectionMenu: AboutSectionMenu[] = [
     {
       type: 'liberOverview',
@@ -56,9 +56,9 @@ const AboutPanel = ({ data, onInvalidate }: Props) => {
   ];
 
   return (
-    <>
+    <div className="h-full w-full rounded-lg bg-white shadow-sm">
       {/* Mobile View - Accordion Style */}
-      <div className="flex w-full flex-col rounded-xl border-neutral-90  active:bg-primary-98 lg:hidden">
+      <div className="flex w-full flex-col rounded-xl border-neutral-90 active:bg-primary-98 lg:hidden">
         <div className="p-5 text-base font-medium text-neutral-10">
           Giới thiệu
         </div>
@@ -136,7 +136,7 @@ const AboutPanel = ({ data, onInvalidate }: Props) => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

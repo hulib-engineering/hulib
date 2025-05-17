@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import * as React from 'react';
 
 import SimilarStory from '@/components/exploreStory/SimilarStory';
-import HumanBookInfo from '@/components/storyDetails/HumanBookInfo';
+import HuberInfo from '@/components/storyDetails/HuberInfo';
 import RatingOverview from '@/components/storyDetails/RatingOverview';
 import ReaderReview from '@/components/storyDetails/ReaderReview';
 import Story from '@/components/storyDetails/Story';
@@ -29,16 +29,20 @@ export default function Index() {
           <div className="flex flex-col justify-start gap-5 lg:flex-row">
             <div className="flex-1">
               <Story
+                // cover={{
+                //   id: data?.cover?.id || '',
+                //   path: data?.cover?.path || '/assets/images/user-avatar.jpeg',
+                // }}
                 cover={{
                   id: data?.cover?.id || '',
-                  path: data?.cover?.path || '/assets/images/user-avatar.jpeg',
+                  path: '/assets/images/user-avatar.jpeg',
                 }}
                 title={data?.title || ''}
                 abstract={data?.abstract || ''}
               />
             </div>
             <div className="w-full lg:w-[268px]">
-              <HumanBookInfo
+              <HuberInfo
                 humanBook={data?.humanBook}
                 title={data?.title}
                 coverPath={data?.cover?.path}

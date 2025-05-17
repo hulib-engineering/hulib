@@ -3,6 +3,7 @@
 import { Book, BookmarkSimple, Brain } from '@phosphor-icons/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 import type { Topic } from '@/libs/services/modules/topics/topicType';
@@ -37,8 +38,14 @@ const HumanBookInfo = ({
   storyId,
 }: Props) => {
   const [imgError, setImgError] = useState(false);
+  const router = useRouter();
+
   const handleImageError = () => {
     setImgError(true);
+  };
+
+  const handleNameClick = () => {
+    router.push(`/profile?huberId=${humanBook.id}`);
   };
 
   return (
@@ -76,7 +83,13 @@ const HumanBookInfo = ({
               onError={handleImageError}
             />
             <div>
-              <p>{humanBook?.fullName || ''}</p>
+              <button
+                type="button"
+                className="cursor-pointer transition-colors hover:text-primary-50"
+                onClick={handleNameClick}
+              >
+                {humanBook?.fullName || ''}
+              </button>
             </div>
             {humanBook?.topics && (
               <p>{`${humanBook?.topics?.length || 0} topics`}</p>

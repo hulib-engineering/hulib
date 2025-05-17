@@ -196,11 +196,12 @@ const Header = () => {
                     width={44}
                     height={44}
                     loading="lazy"
-                    src={
-                      !user || !user.photo || !user.photo.path
-                        ? '/assets/images/icons/avatar.svg'
-                        : user.photo.path
-                    }
+                    // src={
+                    //   !user || !user.photo || !user.photo.path
+                    //     ? '/assets/images/icons/avatar.svg'
+                    //     : user.photo.path
+                    // }
+                    src="/assets/images/icons/avatar.svg"
                     className="h-11 w-11 rounded-full object-contain"
                   />
                 </AvatarPopover>
@@ -257,11 +258,12 @@ const Header = () => {
                   layout="fill"
                   className="h-11 w-11 rounded-full object-contain"
                   loading="lazy"
-                  src={
-                    !user || !user.photo || !user.photo.path
-                      ? '/assets/images/icons/avatar.svg'
-                      : user.photo.path
-                  }
+                  // src={
+                  //   !user || !user.photo || !user.photo.path
+                  //     ? '/assets/images/icons/avatar.svg'
+                  //     : user.photo.path
+                  // }
+                  src="/assets/images/icons/avatar.svg"
                 />
               </AvatarPopover>
               <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
