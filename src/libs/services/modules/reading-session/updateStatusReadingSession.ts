@@ -11,6 +11,7 @@ const updateStatusReadingSession = (
     {
       id: number;
       sessionStatus: string;
+      note: string;
     }
   >({
     query: ({ id, sessionStatus }) => ({
