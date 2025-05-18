@@ -1,6 +1,7 @@
 import React from 'react';
 
 import type { StatusType } from '@/libs/services/modules/reading-session/createNewReadingSession';
+import { StatusEnum } from '@/types/common';
 
 interface StatusBadgeProps {
   status: StatusType;
@@ -22,10 +23,10 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
       bgColor = 'bg-[rgba(255,227,204,1)] text-[rgba(255,115,1,1)]';
       displayText = 'Waiting for approving';
     }
-  } else if (status === 'finished') {
+  } else if (status === StatusEnum.Finished) {
     bgColor = 'bg-green-100 text-green-600';
     displayText = 'Done';
-  } else if (status === 'canceled') {
+  } else if (status === StatusEnum.Canceled) {
     bgColor = 'bg-red-100 text-red-600';
     displayText = 'Canceled';
   }

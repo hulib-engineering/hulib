@@ -20,6 +20,13 @@ export const SessionDateTime: React.FC<SessionDateTimeProps> = ({
     });
   };
 
+  // Get day of week from date
+  const getDayOfWeek = (dateString: string): string => {
+    const date = new Date(dateString);
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    return days[date.getDay()] ?? '';
+  };
+
   // Format time: convert ISO date string to readable time
   const formatTime = (dateString: string): string => {
     const date = new Date(dateString);
@@ -33,17 +40,18 @@ export const SessionDateTime: React.FC<SessionDateTimeProps> = ({
   // Calculate session duration
   const getSessionDuration = (): string => {
     if (!startDate || !endDate) return '';
-
-    const start = formatTime(startDate);
-    const end = formatTime(endDate);
-    return `${start} - ${end}`;
+    const startTime = formatTime(startDate);
+    const endTime = formatTime(endDate);
+    return `${startTime} - ${endTime}`;
   };
 
   return (
     <div className="mb-3 flex items-center text-black">
       <Calendar size={16} className="mr-2" />
       <div>
-        <span>Tue, {formatDate(startDate)} | </span>
+        <span>
+          {getDayOfWeek(startDate)}, {formatDate(startDate)} |{' '}
+        </span>
         <span>{getSessionDuration()}</span>
       </div>
     </div>

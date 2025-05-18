@@ -4,12 +4,13 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { ScheduleFilterPopover } from '@/components/schedule/components/ScheduleFilter/ScheduleFilter';
 import { PortalSessionCard } from '@/components/schedule/components/sessionCard/PortalSessionCard';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
+import { Role, ROLE_NAME, StatusEnum } from '@/types/common';
 
 export default function BigCalendar() {
   const { data: readingSessions, isLoading } = useGetReadingSessionsQuery();
@@ -26,6 +27,8 @@ export default function BigCalendar() {
     top: number;
     left: number;
   }>({ top: 0, left: 0 });
+
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const formatEvents = (data: any) => {
     if (!data || !Array.isArray(data)) {
@@ -45,33 +48,54 @@ export default function BigCalendar() {
 
   useEffect(() => {
     if (readingSessions && !isLoading) {
-      const formattedEvents = formatEvents(readingSessions);
+      const filteredSessions = readingSessions.filter(
+        (item: any) =>
+          item.sessionStatus !== StatusEnum.Canceled &&
+          item.sessionStatus !== StatusEnum.Rejected,
+      );
+      const formattedEvents = formatEvents(filteredSessions);
       setEvents(formattedEvents);
     }
   }, [readingSessions, isLoading]);
+
+  const handleMouseEnter = (e: React.MouseEvent, session: any) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+
+    const rect = (e.target as HTMLElement).getBoundingClientRect();
+    setPopupPosition({
+      top: rect.top + window.scrollY + 30,
+      left: rect.left + window.scrollX - 400,
+    });
+    setHoveredSession(session);
+  };
+
+  const handleMouseLeave = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setHoveredSession(null);
+    }, 300);
+  };
+  const handlePopupMouseEnter = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
 
   const renderEventContent = (eventInfo: { event: any }) => {
     const { event } = eventInfo;
     const { extendedProps } = event;
     const isHumanBook = userInfo?.id === extendedProps.humanBookId;
-    const isPending = extendedProps.sessionStatus !== 'approved';
-
-    const handleMouseEnter = (e: React.MouseEvent) => {
-      const rect = (e.target as HTMLElement).getBoundingClientRect();
-      setPopupPosition({
-        top: rect.top + window.scrollY + 30,
-        left: rect.left + window.scrollX - 400,
-      });
-      setHoveredSession(extendedProps);
-    };
-    const handleMouseLeave = () => {
-      setHoveredSession(null);
-    };
+    const isPending =
+      extendedProps.sessionStatus !==
+      (StatusEnum.Approved || StatusEnum.Finished);
 
     return (
       <div
         className="group relative z-[50] cursor-pointer overflow-visible"
-        onMouseEnter={handleMouseEnter}
+        onMouseEnter={(e) => handleMouseEnter(e, extendedProps)}
         onMouseLeave={handleMouseLeave}
       >
         <div className="relative min-w-[60px] overflow-visible">
@@ -101,7 +125,7 @@ export default function BigCalendar() {
               </p>
             </div>
             <p className={isHumanBook ? 'text-[#0442BF]' : 'text-[#FF7301]'}>
-              {isHumanBook ? 'Huber' : 'Liber'}
+              {isHumanBook ? ROLE_NAME[Role.HUBER] : ROLE_NAME[Role.LIBER]}
             </p>
           </div>
         </div>
@@ -167,12 +191,14 @@ export default function BigCalendar() {
           />
         )}
         {hoveredSession && (
-          <PortalSessionCard
-            session={hoveredSession}
-            expanded
-            position={popupPosition}
-            onClose={() => setHoveredSession(null)}
-          />
+          <div onMouseEnter={handlePopupMouseEnter}>
+            <PortalSessionCard
+              session={hoveredSession}
+              expanded
+              position={popupPosition}
+              onClose={() => setHoveredSession(null)}
+            />
+          </div>
         )}
       </div>
     </div>
