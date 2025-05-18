@@ -6,6 +6,7 @@ import type {
   ReadingSession,
   StatusType,
 } from '@/libs/services/modules/reading-session/createNewReadingSession';
+import { Role, ROLE_NAME, StatusEnum } from '@/types/common';
 
 import { SessionActions } from './SessionActions';
 import { SessionAttendees } from './SessionAttendees';
@@ -28,7 +29,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
 
   const role = useAppSelector((state) => state.auth.userInfo?.role?.name);
 
-  const isVibing = role !== 'Huber';
+  const isVibing = role !== ROLE_NAME[Role.HUBER];
   const cardTitle = isVibing ? 'Vibing with Huber' : 'Session with Liber';
   const toggleExpand = () => setIsExpanded(!isExpanded);
   const cardBackgroundColor = isVibing
@@ -65,7 +66,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
               color: isVibing ? 'rgba(4, 66, 191, 1)' : 'rgba(219, 174, 10, 1)',
             }}
           >
-            {isVibing ? 'Huber' : 'Liber'}
+            {isVibing ? ROLE_NAME[Role.HUBER] : ROLE_NAME[Role.LIBER]}
           </span>
           <span className="text-sm font-medium text-black">
             {isVibing
@@ -99,8 +100,8 @@ export const SessionCard: React.FC<SessionCardProps> = ({
           <h3 className="text-[24px] font-medium text-gray-800">{cardTitle}</h3>
         </div>
         {!isExpanded &&
-          (session.sessionStatus === 'pending' ||
-            session.sessionStatus === 'unInitialized') && (
+          (session.sessionStatus === StatusEnum.Pending ||
+            session.sessionStatus === StatusEnum.UnInitialized) && (
             <div
               className="rounded-[100px] p-[10px] text-[14px] text-gray-500"
               style={{ backgroundColor: 'rgba(255, 227, 204, 1)' }}
@@ -113,8 +114,8 @@ export const SessionCard: React.FC<SessionCardProps> = ({
           {isExpanded ? <CaretUp size={20} /> : <CaretDown size={20} />}
         </div>
       </div>
-      {isExpanded && session?.sessionStatus === 'pending' && (
-        <StatusBadge status="pending" isVibing={isVibing} />
+      {isExpanded && session?.sessionStatus === StatusEnum.Pending && (
+        <StatusBadge status={StatusEnum.Pending} isVibing={isVibing} />
       )}
       {isExpanded && (
         <div>
@@ -126,7 +127,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
         startDate={session.startedAt}
         endDate={session.endedAt}
       />
-      {session.sessionUrl && session.sessionStatus !== 'pending' && (
+      {session.sessionUrl && session.sessionStatus !== StatusEnum.Pending && (
         <SessionUrl url={session.sessionUrl} />
       )}
       {isExpanded ? (
