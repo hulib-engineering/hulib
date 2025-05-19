@@ -36,6 +36,7 @@ export default function BigCalendar() {
     }
     return data.map((item: any) => {
       return {
+        id: item.id,
         title: `${item.humanBook?.fullName || 'Unknown'} - ${
           item.reader?.fullName || 'Unknown'
         }`,
