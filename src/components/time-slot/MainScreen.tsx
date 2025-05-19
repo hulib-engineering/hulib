@@ -52,15 +52,6 @@ export const MainScreen = ({
     );
   }, [selectDate, timeSlots]);
 
-  const convertToAmPm = (time24hr: string): string => {
-    const [hour24, minute] = time24hr.split(':').map(Number);
-    const safeHour24 = hour24 ?? 0;
-    const period = safeHour24 >= 12 ? 'PM' : 'AM';
-    const hour12 = safeHour24 % 12 === 0 ? 12 : safeHour24 % 12;
-
-    return `${hour12}:${minute?.toString().padStart(2, '0')} ${period}`;
-  };
-
   const morningTimeSlot = React.useMemo(() => {
     const times = filterTimeSlots
       .filter(
@@ -69,7 +60,7 @@ export const MainScreen = ({
           Number(time.startTime.slice(0, 2)) < AFTERNOON_TIME_START,
       )
       .map((item) => item.startTime);
-    return times.map((it) => convertToAmPm(it));
+    return times;
   }, [filterTimeSlots]);
 
   const afterNoonTimeSlot = React.useMemo(() => {
@@ -80,7 +71,7 @@ export const MainScreen = ({
           Number(time.startTime.slice(0, 2)) < EVENING_TIME_START,
       )
       .map((item) => item.startTime);
-    return times.map((it) => convertToAmPm(it));
+    return times;
   }, [filterTimeSlots]);
 
   const eveningTimeSlot = React.useMemo(() => {
@@ -89,7 +80,7 @@ export const MainScreen = ({
         (time) => Number(time.startTime.slice(0, 2)) >= EVENING_TIME_START,
       )
       .map((item) => item.startTime);
-    return times.map((it) => convertToAmPm(it));
+    return times;
   }, [filterTimeSlots]);
 
   const onClickDate = (day: Date) => {
