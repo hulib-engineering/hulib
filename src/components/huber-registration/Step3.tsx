@@ -23,7 +23,7 @@ interface Topic {
   name: string;
 }
 
-const Step3 = ({ next }: { next: () => void }) => {
+const Step3 = ({ next, back }: { next: () => void; back: () => void }) => {
   const t = useTranslations('Common');
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -294,6 +294,10 @@ const Step3 = ({ next }: { next: () => void }) => {
             <button
               type="button"
               className="flex-1 rounded-full border border-neutral-80 bg-white px-6 py-2 text-center text-primary-50 transition-colors"
+              onClick={() => {
+                localStorage.setItem('huber_registration_step', '2');
+                back();
+              }}
             >
               Back
             </button>
