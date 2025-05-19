@@ -35,8 +35,13 @@ const useStepManagement = () => {
   const handleNextStep = () => {
     setCurrentStep((prev) => prev + 1);
   };
+  const handleBackStep = () => {
+    const prevStep = Math.max(1, currentStep - 1);
+    setCurrentStep(prevStep);
+    localStorage.setItem('huber_registration_step', prevStep.toString());
+  };
 
-  return { currentStep, handleNextStep };
+  return { currentStep, handleNextStep, handleBackStep };
 };
 
 const ProgressBar = ({ currentStep }: { currentStep: number }) => (
@@ -103,17 +108,19 @@ const ProgressBar = ({ currentStep }: { currentStep: number }) => (
 const StepContent = ({
   currentStep,
   onNext,
+  onBack,
 }: {
   currentStep: number;
   onNext: () => void;
+  onBack: () => void;
 }) => {
   switch (currentStep) {
     case 1:
       return <Step1 next={onNext} />;
     case 2:
-      return <Step2 next={onNext} />;
+      return <Step2 next={onNext} back={onBack} />;
     case 3:
-      return <Step3 next={onNext} />;
+      return <Step3 next={onNext} back={onBack} />;
     case 4:
       return (
         <SuccessScreen
@@ -129,7 +136,7 @@ const StepContent = ({
 };
 
 const Page = () => {
-  const { currentStep, handleNextStep } = useStepManagement();
+  const { currentStep, handleNextStep, handleBackStep } = useStepManagement();
 
   return (
     <CommonLayout
@@ -146,7 +153,11 @@ const Page = () => {
           currentStep !== 3 ? clsx('w-full', 'md:w-[37.5rem]') : 'w-full',
         )}
       >
-        <StepContent currentStep={currentStep} onNext={handleNextStep} />
+        <StepContent
+          currentStep={currentStep}
+          onNext={handleNextStep}
+          onBack={handleBackStep}
+        />
       </div>
     </CommonLayout>
   );
