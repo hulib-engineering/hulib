@@ -459,5 +459,34 @@
       "btn": "Tham gia với tư cách Huber"
     },
     "no_data": "Không có dữ liệu"
+  },
+  "FeedbackForm": {
+    "sessionFeedback": "Phản hồi cho buổi học",
+    "feedbackForHuber": "Phản hồi cho Huber",
+    "attendees": "{count} Người tham gia",
+    "you": "Bạn",
+    "howDoYouFeel": "Bạn cảm thấy thế nào sau khi tham gia buổi học?",
+    "notGood": "Không tốt",
+    "veryGood": "Rất tốt",
+    "didSessionSatisfy": "Buổi học có đáp ứng vấn đề/sở thích của bạn không?",
+    "notSatisfied": "Không hài lòng",
+    "verySatisfied": "Rất hài lòng",
+    "rateForStory": "Đánh giá cho câu chuyện",
+    "shareThought": "Chia sẻ suy nghĩ của bạn về câu chuyện",
+    "cancel": "Hủy",
+    "next": "Tiếp theo",
+    "back": "Quay lại",
+    "confirm": "Xác nhận",
+    "howManyLove": "Bạn muốn gửi bao nhiêu tình yêu đến Huber",
+    "saySomething": "Nói gì đó với Huber của bạn",
+    "writeSomething": "Viết gì đó ở đây",
+    "whatTag": "Bạn muốn gắn thẻ Huber như thế nào? (Tùy chọn)",
+    "chooseTag": "Chọn một thẻ",
+    "tags": {
+      "selfTaught": "Tự học",
+      "optimistic": "Lạc quan",
+      "energy": "Năng lượng",
+      "selectOption": "Chọn tùy chọn"
+    }
   }
 }
