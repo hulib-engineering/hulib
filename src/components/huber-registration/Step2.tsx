@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable prettier/prettier */
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -13,7 +15,7 @@ import { useCreateTimeSlotsMutation } from '@/libs/services/modules/time-slots';
 import AvailableSchedule from '../common/AvailableSchedule';
 import { pushError, pushSuccess } from '../CustomToastifyContainer';
 
-const Step2 = ({ next }: { next: () => void }) => {
+const Step2 = ({ next, back }: { next: () => void; back: () => void }) => {
   const t = useTranslations('HumanBookRegister.Step2');
   const tCommon = useTranslations('Common');
 
@@ -136,15 +138,19 @@ const Step2 = ({ next }: { next: () => void }) => {
       <div className="mt-8 flex justify-between gap-2">
         <Button
           variant="outline"
-          className="w-1/2 rounded-full border-neutral-80 px-12 py-2 text-primary-50"
-          disabled={isLoading}
+          onClick={() => {
+            localStorage.setItem('huber_registration_step', '1');
+            back();
+          }}
+          disabled={currentDay === 0}
+          className={`w-1/2 rounded-full px-12 py-2 text-primary-50 ${currentDay===0 && 'border bg-[#E3E4E5] text-neutral-70'}`}
         >
           Back
         </Button>
         <Button
           type="submit"
-          className="w-1/2 rounded-full bg-primary-50 px-12 py-2 text-white"
-          disabled={currentDay !== 6}
+          className={`w-1/2 rounded-full bg-primary-50 px-12 py-2 text-white ${currentDay!== 6 && 'border bg-[#E3E4E5] text-neutral-70'}`}
+          disabled={currentDay !== 6 || isLoading}
           animation={isLoading ? 'progress' : undefined}
         >
           Next
