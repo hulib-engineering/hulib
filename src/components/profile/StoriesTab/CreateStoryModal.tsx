@@ -169,7 +169,7 @@ const CreateStoryModal = ({
             <button
               type="button"
               onClick={onClose}
-              className="hover:bg-neutral-95 rounded-full p-2"
+              className="rounded-full p-2 hover:bg-neutral-80"
             >
               <X size={24} />
             </button>

@@ -10,6 +10,7 @@ import type { z } from 'zod';
 import Button from '@/components/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import TermAndCondition from '@/components/huber-registration/TermAndCondition';
+import { useAppSelector } from '@/libs/hooks';
 import { useRegisterHuberMutation } from '@/libs/services/modules/auth';
 import { HuberStep1Validation } from '@/validations/HuberValidation';
 
@@ -25,6 +26,7 @@ const Step1 = (props: Props) => {
   const tCommon = useTranslations('Common');
   const router = useRouter();
   const [registerHuber, { isLoading }] = useRegisterHuberMutation();
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
 
   const {
     control,
@@ -54,7 +56,9 @@ const Step1 = (props: Props) => {
   const onSubmit = async (formData: FormData) => {
     try {
       await registerHuber(formData).unwrap();
-      localStorage.setItem('huber_registration_step', '2');
+      // Store registration step with user ID and name from auth state
+      const userKey = `${userInfo.id}_huber_registration_step`;
+      localStorage.setItem(userKey, '2');
       pushSuccess('Registration successful!');
       next();
     } catch (error: any) {

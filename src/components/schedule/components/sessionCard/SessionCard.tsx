@@ -99,16 +99,14 @@ export const SessionCard: React.FC<SessionCardProps> = ({
         <div className="flex items-center">
           <h3 className="text-[24px] font-medium text-gray-800">{cardTitle}</h3>
         </div>
-        {!isExpanded &&
-          (session.sessionStatus === StatusEnum.Pending ||
-            session.sessionStatus === StatusEnum.UnInitialized) && (
-            <div
-              className="rounded-[100px] p-[10px] text-[14px] text-gray-500"
-              style={{ backgroundColor: 'rgba(255, 227, 204, 1)' }}
-            >
-              waiting...
-            </div>
-          )}
+        {!isExpanded && session.sessionStatus === StatusEnum.Pending && (
+          <div
+            className="rounded-[100px] p-[10px] text-[14px] text-gray-500"
+            style={{ backgroundColor: 'rgba(255, 227, 204, 1)' }}
+          >
+            waiting...
+          </div>
+        )}
         <div className="flex gap-2">
           {renderStatusBadge}
           {isExpanded ? <CaretUp size={20} /> : <CaretDown size={20} />}
