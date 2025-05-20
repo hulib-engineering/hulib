@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable prettier/prettier */
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -8,6 +10,7 @@ import * as z from 'zod';
 
 import Button from '@/components/button/Button';
 import HeadSlots from '@/components/common/HeadSlots';
+import { useAppSelector } from '@/libs/hooks';
 import { useCreateTimeSlotsMutation } from '@/libs/services/modules/time-slots';
 
 import AvailableSchedule from '../common/AvailableSchedule';
@@ -41,6 +44,7 @@ const Step2 = ({ next }: { next: () => void }) => {
       timeSlots: [],
     },
   });
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
   const [currentDay, setCurrentDay] = useState(0);
   const [createTimeSlots, { isLoading }] = useCreateTimeSlotsMutation();
 
@@ -71,7 +75,8 @@ const Step2 = ({ next }: { next: () => void }) => {
       await createTimeSlots({
         timeSlots: data.timeSlots,
       }).unwrap();
-      localStorage.setItem('huber_registration_step', '3');
+      const userKey = `${userInfo.id}_huber_registration_step`;
+      localStorage.setItem(userKey, '3');
       pushSuccess(t('success_time_slots_description'));
       next();
     } catch (error: any) {
@@ -136,15 +141,16 @@ const Step2 = ({ next }: { next: () => void }) => {
       <div className="mt-8 flex justify-between gap-2">
         <Button
           variant="outline"
-          className="w-1/2 rounded-full border-neutral-80 px-12 py-2 text-primary-50"
-          disabled={isLoading}
+          onClick={() => setCurrentDay((prev) => prev - 1)}
+          disabled={currentDay === 0}
+          className={`w-1/2 rounded-full px-12 py-2 text-primary-50 ${currentDay===0 && 'border bg-[#E3E4E5] text-neutral-70'}`}
         >
           Back
         </Button>
         <Button
           type="submit"
-          className="w-1/2 rounded-full bg-primary-50 px-12 py-2 text-white"
-          disabled={currentDay !== 6}
+          className={`w-1/2 rounded-full bg-primary-50 px-12 py-2 text-white ${currentDay!== 6 && 'border bg-[#E3E4E5] text-neutral-70'}`}
+          disabled={currentDay !== 6 || isLoading}
           animation={isLoading ? 'progress' : undefined}
         >
           Next

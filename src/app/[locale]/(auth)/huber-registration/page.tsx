@@ -9,6 +9,7 @@ import Step1 from '@/components/huber-registration/Step1';
 import Step2 from '@/components/huber-registration/Step2';
 import Step3 from '@/components/huber-registration/Step3';
 import CommonLayout from '@/layouts/CommonLayout';
+import { useAppSelector } from '@/libs/hooks';
 
 interface Step {
   no: string;
@@ -23,10 +24,13 @@ const STEPS: Step[] = [
 ];
 
 const useStepManagement = () => {
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
   const [currentStep, setCurrentStep] = React.useState(1);
 
   useEffect(() => {
-    const savedStep = localStorage.getItem('huber_registration_step');
+    const savedStep = localStorage.getItem(
+      `huber_registration_step_${userInfo.id}`,
+    );
     if (savedStep) {
       setCurrentStep(Number(savedStep));
     }
@@ -35,8 +39,13 @@ const useStepManagement = () => {
   const handleNextStep = () => {
     setCurrentStep((prev) => prev + 1);
   };
+  const handleBackStep = () => {
+    const prevStep = Math.max(1, currentStep - 1);
+    setCurrentStep(prevStep);
+    localStorage.setItem('huber_registration_step', prevStep.toString());
+  };
 
-  return { currentStep, handleNextStep };
+  return { currentStep, handleNextStep, handleBackStep };
 };
 
 const ProgressBar = ({ currentStep }: { currentStep: number }) => (

@@ -1,3 +1,37 @@
+## [1.15.1](https://github.com/hulib-engineering/hulib/compare/v1.15.0...v1.15.1) (2025-05-20)
+
+
+### Bug Fixes
+
+* fix button back and next on huber registration ([58f228c](https://github.com/hulib-engineering/hulib/commit/58f228c394032d210b1cd567798070df2efc1867))
+
+# [1.15.0](https://github.com/hulib-engineering/hulib/compare/v1.14.0...v1.15.0) (2025-05-17)
+
+
+### Bug Fixes
+
+* custom Shimmer ([ec65d2d](https://github.com/hulib-engineering/hulib/commit/ec65d2dda2015e88b2ee984ef5ef7fd0c6670823))
+* **header:** custom skeleton for user area when user changes language ([60f8910](https://github.com/hulib-engineering/hulib/commit/60f8910110069a375257bf480e4d3306ff2fd41c))
+* updated skeleton ([24f136e](https://github.com/hulib-engineering/hulib/commit/24f136e2e9e09e1d2e8ea86272df6af89e7e06e5))
+* updated Skeleton because test is Erorr ([79a590d](https://github.com/hulib-engineering/hulib/commit/79a590dabe84815b42760c719fd6239052e48c0e))
+
+
+### Features
+
+* add api change status ([8e9da3d](https://github.com/hulib-engineering/hulib/commit/8e9da3d2ad1a352a4e28fd3a43b5f77ec5bc4c3f))
+* create filter schedule ([b881ab6](https://github.com/hulib-engineering/hulib/commit/b881ab6ad77dcf3583d35c8a0af06750f91c7b50))
+* enhance error handling and success messages with translations across multiple components ([e9aab56](https://github.com/hulib-engineering/hulib/commit/e9aab56b233004ffabf0b715e86853098fe8b2e4))
+* meeting component ([accfc8e](https://github.com/hulib-engineering/hulib/commit/accfc8ec243eb7c69783c65499ff63d140295153))
+* meeting component ([899ac0c](https://github.com/hulib-engineering/hulib/commit/899ac0cead660d840187315a075d4b3ebad3dc6a))
+* **profile:** add StoriesTab component and CreateStoryModal for story management ([f0f9cee](https://github.com/hulib-engineering/hulib/commit/f0f9cee4d1e809dc909cf02e201c2803337d706e))
+* **profile:** bind api, improve about tab ui ([936e3a5](https://github.com/hulib-engineering/hulib/commit/936e3a598860b2613fda00a3a0ed38f0735c43fa))
+* **profile:** enhance AboutPanel and WorkAndEducationSection ([d08007a](https://github.com/hulib-engineering/hulib/commit/d08007adbfc0f975839be463837d08e763c6f7ee))
+* **profile:** improve contact infomation tab ([6984ecb](https://github.com/hulib-engineering/hulib/commit/6984ecb78c64f4d7dbd35c7f1da8c0c44298e448))
+* **schedule:** enhance BigSchedule component with SessionCard and improve reading session query ([ac6e859](https://github.com/hulib-engineering/hulib/commit/ac6e859b2c745ea70059421c54b4fd6ff1bbe3e6))
+* **schedule:** implement hover functionality with PortalSessionCard and enhance calendar scroll ([27a84e9](https://github.com/hulib-engineering/hulib/commit/27a84e962c60b201ff7bd259a1ede713e921205b))
+* **stories:** enhance story components with favorite functionality and editing capabilities ([1544e87](https://github.com/hulib-engineering/hulib/commit/1544e8701a4f2856d30f702273332098c00be3b4))
+* update ui ([e8f6eaa](https://github.com/hulib-engineering/hulib/commit/e8f6eaa5057389f6853eac5834a2e41c30583a59))
+
 # [1.14.0](https://github.com/hulib-engineering/hulib/compare/v1.13.1...v1.14.0) (2025-04-30)
 
 

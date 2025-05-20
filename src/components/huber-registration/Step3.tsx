@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CaretDown, X } from '@phosphor-icons/react';
+import router from 'next/router';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useRef, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
@@ -88,7 +89,8 @@ const Step3 = ({ next }: { next: () => void }) => {
         cover: formValues.cover,
         publishStatus: 'draft',
       }).unwrap();
-      localStorage.setItem('huber_registration_step', '4');
+      const userKey = `${userInfo.id}_huber_registration_step`;
+      localStorage.setItem(userKey, '4');
       pushSuccess('Story created successfully');
       next();
     } catch (error: any) {
@@ -293,6 +295,11 @@ const Step3 = ({ next }: { next: () => void }) => {
             <button
               type="button"
               className="flex-1 rounded-full border border-neutral-80 bg-white px-6 py-2 text-center text-primary-50 transition-colors"
+              onClick={() => {
+                const userKey = `${userInfo.id}_huber_registration_step`;
+                localStorage.setItem(userKey, '2');
+                router.reload();
+              }}
             >
               Back
             </button>

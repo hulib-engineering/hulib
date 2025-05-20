@@ -28,5 +28,4 @@ export enum StatusEnum {
   Canceled = 'canceled',
   Rejected = 'rejected',
   Approved = 'approved',
-  UnInitialized = 'unInitialized',
 }
