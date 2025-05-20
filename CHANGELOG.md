@@ -1,3 +1,10 @@
+## [1.15.1](https://github.com/hulib-engineering/hulib/compare/v1.15.0...v1.15.1) (2025-05-20)
+
+
+### Bug Fixes
+
+* fix button back and next on huber registration ([58f228c](https://github.com/hulib-engineering/hulib/commit/58f228c394032d210b1cd567798070df2efc1867))
+
 # [1.15.0](https://github.com/hulib-engineering/hulib/compare/v1.14.0...v1.15.0) (2025-05-17)
 
 
