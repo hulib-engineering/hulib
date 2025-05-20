@@ -376,8 +376,14 @@
       "bio_required": "Vui lòng nhập tiểu sử của bạn",
       "terms_required": "Vui lòng chấp thuận các điều khoản và điều kiện"
     },
-    "bio": { "text": "Tiểu sử", "placeholder": "Chỗ để điền" },
-    "intro_video": { "text": "Video giới thiệu", "placeholder": "https://" },
+    "bio": {
+      "text": "Tiểu sử",
+      "placeholder": "Chỗ để điền"
+    },
+    "intro_video": {
+      "text": "Video giới thiệu",
+      "placeholder": "https://"
+    },
     "read_community": "Đọc hướng dẫn cộng đồng",
     "confirm": "Tôi xác nhận rằng tôi đã đọc và hiểu các điều khoản và điều kiện của Hulib, và tôi đồng ý tuân theo chúng.",
     "cancel": "Hủy",
@@ -470,6 +476,35 @@
       "validation_error": "Dữ liệu không hợp lệ",
       "update_failed": "Cập nhật thất bại",
       "update_successfully": "Cập nhật thành công"
+    }
+  },
+  "FeedbackForm": {
+    "sessionFeedback": "Phản hồi cho buổi học",
+    "feedbackForHuber": "Phản hồi cho Huber",
+    "attendees": "{count} Người tham gia",
+    "you": "Bạn",
+    "howDoYouFeel": "Bạn cảm thấy thế nào sau khi tham gia buổi học?",
+    "notGood": "Không tốt",
+    "veryGood": "Rất tốt",
+    "didSessionSatisfy": "Buổi học có đáp ứng vấn đề/sở thích của bạn không?",
+    "notSatisfied": "Không hài lòng",
+    "verySatisfied": "Rất hài lòng",
+    "rateForStory": "Đánh giá cho câu chuyện",
+    "shareThought": "Chia sẻ suy nghĩ của bạn về câu chuyện",
+    "cancel": "Hủy",
+    "next": "Tiếp theo",
+    "back": "Quay lại",
+    "confirm": "Xác nhận",
+    "howManyLove": "Bạn muốn gửi bao nhiêu tình yêu đến Huber",
+    "saySomething": "Nói gì đó với Huber của bạn",
+    "writeSomething": "Viết gì đó ở đây",
+    "whatTag": "Bạn muốn gắn thẻ Huber như thế nào? (Tùy chọn)",
+    "chooseTag": "Chọn một thẻ",
+    "tags": {
+      "selfTaught": "Tự học",
+      "optimistic": "Lạc quan",
+      "energy": "Năng lượng",
+      "selectOption": "Chọn tùy chọn"
     }
   }
 }
