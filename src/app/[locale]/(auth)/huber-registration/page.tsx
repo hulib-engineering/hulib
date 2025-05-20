@@ -9,6 +9,7 @@ import Step1 from '@/components/huber-registration/Step1';
 import Step2 from '@/components/huber-registration/Step2';
 import Step3 from '@/components/huber-registration/Step3';
 import CommonLayout from '@/layouts/CommonLayout';
+import { useAppSelector } from '@/libs/hooks';
 
 interface Step {
   no: string;
@@ -23,10 +24,13 @@ const STEPS: Step[] = [
 ];
 
 const useStepManagement = () => {
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
   const [currentStep, setCurrentStep] = React.useState(1);
 
   useEffect(() => {
-    const savedStep = localStorage.getItem('huber_registration_step');
+    const savedStep = localStorage.getItem(
+      `huber_registration_step_${userInfo.id}`,
+    );
     if (savedStep) {
       setCurrentStep(Number(savedStep));
     }
@@ -108,19 +112,17 @@ const ProgressBar = ({ currentStep }: { currentStep: number }) => (
 const StepContent = ({
   currentStep,
   onNext,
-  onBack,
 }: {
   currentStep: number;
   onNext: () => void;
-  onBack: () => void;
 }) => {
   switch (currentStep) {
     case 1:
       return <Step1 next={onNext} />;
     case 2:
-      return <Step2 next={onNext} back={onBack} />;
+      return <Step2 next={onNext} />;
     case 3:
-      return <Step3 next={onNext} back={onBack} />;
+      return <Step3 next={onNext} />;
     case 4:
       return (
         <SuccessScreen
@@ -136,7 +138,7 @@ const StepContent = ({
 };
 
 const Page = () => {
-  const { currentStep, handleNextStep, handleBackStep } = useStepManagement();
+  const { currentStep, handleNextStep } = useStepManagement();
 
   return (
     <CommonLayout
@@ -153,11 +155,7 @@ const Page = () => {
           currentStep !== 3 ? clsx('w-full', 'md:w-[37.5rem]') : 'w-full',
         )}
       >
-        <StepContent
-          currentStep={currentStep}
-          onNext={handleNextStep}
-          onBack={handleBackStep}
-        />
+        <StepContent currentStep={currentStep} onNext={handleNextStep} />
       </div>
     </CommonLayout>
   );

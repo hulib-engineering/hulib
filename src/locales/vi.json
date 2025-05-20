@@ -372,7 +372,9 @@
     "validation": {
       "required": "Bắt buộc",
       "invalidYear": "Năm không hợp lệ",
-      "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại"
+      "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại",
+      "bio_required": "Vui lòng nhập tiểu sử của bạn",
+      "terms_required": "Vui lòng chấp thuận các điều khoản và điều kiện"
     },
     "bio": { "text": "Tiểu sử", "placeholder": "Chỗ để điền" },
     "intro_video": { "text": "Video giới thiệu", "placeholder": "https://" },
@@ -458,6 +460,13 @@
       "description": "Mô tả ngắn",
       "btn": "Tham gia với tư cách Huber"
     },
-    "no_data": "Không có dữ liệu"
+    "no_data": "Không có dữ liệu",
+    "Common": {
+      "no_data": "Không có dữ liệu",
+      "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
+      "validation_error": "Dữ liệu không hợp lệ",
+      "update_failed": "Cập nhật thất bại",
+      "update_successfully": "Cập nhật thành công"
+    }
   }
 }

@@ -10,12 +10,13 @@ import * as z from 'zod';
 
 import Button from '@/components/button/Button';
 import HeadSlots from '@/components/common/HeadSlots';
+import { useAppSelector } from '@/libs/hooks';
 import { useCreateTimeSlotsMutation } from '@/libs/services/modules/time-slots';
 
 import AvailableSchedule from '../common/AvailableSchedule';
 import { pushError, pushSuccess } from '../CustomToastifyContainer';
 
-const Step2 = ({ next, back }: { next: () => void; back: () => void }) => {
+const Step2 = ({ next }: { next: () => void }) => {
   const t = useTranslations('HumanBookRegister.Step2');
   const tCommon = useTranslations('Common');
 
@@ -43,6 +44,7 @@ const Step2 = ({ next, back }: { next: () => void; back: () => void }) => {
       timeSlots: [],
     },
   });
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
   const [currentDay, setCurrentDay] = useState(0);
   const [createTimeSlots, { isLoading }] = useCreateTimeSlotsMutation();
 
@@ -73,7 +75,8 @@ const Step2 = ({ next, back }: { next: () => void; back: () => void }) => {
       await createTimeSlots({
         timeSlots: data.timeSlots,
       }).unwrap();
-      localStorage.setItem('huber_registration_step', '3');
+      const userKey = `${userInfo.id}_huber_registration_step`;
+      localStorage.setItem(userKey, '3');
       pushSuccess(t('success_time_slots_description'));
       next();
     } catch (error: any) {
@@ -138,10 +141,7 @@ const Step2 = ({ next, back }: { next: () => void; back: () => void }) => {
       <div className="mt-8 flex justify-between gap-2">
         <Button
           variant="outline"
-          onClick={() => {
-            localStorage.setItem('huber_registration_step', '1');
-            back();
-          }}
+          onClick={() => setCurrentDay((prev) => prev - 1)}
           disabled={currentDay === 0}
           className={`w-1/2 rounded-full px-12 py-2 text-primary-50 ${currentDay===0 && 'border bg-[#E3E4E5] text-neutral-70'}`}
         >
