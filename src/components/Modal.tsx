@@ -106,7 +106,7 @@ type PanelProps = {
   className?: string;
 };
 const Panel = ({ children, className }: WithChildren<PanelProps>) => (
-  <div className="fixed inset-0 overflow-y-auto">
+  <div className="fixed inset-0 overflow-y-auto bg-black/70">
     <div className="flex min-h-full items-center justify-center p-4">
       <Transition.Child
         enter="transition duration-500 ease-in-out"
