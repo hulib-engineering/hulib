@@ -10,10 +10,12 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
-import hulibThanks from '@/public/assets/images/afterMetting/hulib_thankyou.png';
+import hulibThanks from '@/public/assets/images/afterMetting/hulib_thanks_image.png';
 
-export default function FeedbackConfirmation() {
+export default function FeedbackConfirmationPage() {
+  const t = useTranslations('thanks_page');
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>
       <Paper
@@ -53,7 +55,7 @@ export default function FeedbackConfirmation() {
             mb: 2,
           }}
         >
-          Thank you for your feedback
+          {t('thank_you')}
         </Typography>
 
         <Typography
@@ -62,9 +64,7 @@ export default function FeedbackConfirmation() {
           color="text.secondary"
           sx={{ mb: 4 }}
         >
-          Your feedback is valuable to us. This
-          <br />
-          content need to be modify
+          {t('feedback_value')}
         </Typography>
 
         <Stack direction="row" spacing={2}>
@@ -80,7 +80,7 @@ export default function FeedbackConfirmation() {
               },
             }}
           >
-            Go to schedule
+            {t('go_to_schedule')}
           </Button>
           <Button
             component={Link}
@@ -95,7 +95,7 @@ export default function FeedbackConfirmation() {
               },
             }}
           >
-            Back to Home
+            {t('back_to_home')}
           </Button>
         </Stack>
       </Paper>

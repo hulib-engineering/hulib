@@ -25,8 +25,10 @@ import React, { useState } from 'react';
 
 export default function FeedbackForm() {
   const router = useRouter();
-  const t = useTranslations('FeedbackForm');
-  const [step, setStep] = useState(1);
+  const t = useTranslations('feedback_form');
+  const [step, setStep] = useState<'feedback-sesion' | 'feedback-huber'>(
+    'feedback-sesion',
+  );
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -36,21 +38,21 @@ export default function FeedbackForm() {
   const [loveRating, setLoveRating] = useState(3); // Default to 4 hearts (index 3)
 
   const tagOptions = [
-    t('tags.selfTaught'),
+    t('tags.self_taught'),
     t('tags.optimistic'),
     t('tags.energy'),
-    t('tags.selectOption'),
+    t('tags.select_option'),
   ];
 
   const feelingEmojis = ['😢', '😔', '😐', '🙂', '😍'];
   const satisfactionEmojis = ['😢', '😔', '😐', '🙂', '😍'];
 
   const handleNext = () => {
-    setStep(2);
+    setStep('feedback-huber');
   };
 
   const handleBack = () => {
-    setStep(1);
+    setStep('feedback-sesion');
   };
 
   const handleTagSelect = (tag: string) => {
@@ -92,7 +94,7 @@ export default function FeedbackForm() {
           position: 'relative',
         }}
       >
-        {step === 1 ? (
+        {step === 'feedback-sesion' ? (
           <>
             <Typography
               variant="h5"
@@ -101,7 +103,7 @@ export default function FeedbackForm() {
               fontWeight="bold"
               mb={3}
             >
-              {t('sessionFeedback')}
+              {t('session_feedback')}
             </Typography>
 
             <Box
@@ -221,7 +223,7 @@ export default function FeedbackForm() {
                 fontWeight="medium"
                 mb={2}
               >
-                {t('howDoYouFeel')}
+                {t('how_do_you_feel')}
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 {feelingEmojis.map((emoji, index) => (
@@ -253,10 +255,12 @@ export default function FeedbackForm() {
                       <Typography fontSize="24px">{emoji}</Typography>
                     </IconButton>
                     {index === 0 && (
-                      <Typography variant="caption">{t('notGood')}</Typography>
+                      <Typography variant="caption">{t('not_good')}</Typography>
                     )}
                     {index === 4 && (
-                      <Typography variant="caption">{t('veryGood')}</Typography>
+                      <Typography variant="caption">
+                        {t('very_good')}
+                      </Typography>
                     )}
                   </Box>
                 ))}
@@ -270,7 +274,7 @@ export default function FeedbackForm() {
                 fontWeight="medium"
                 mb={2}
               >
-                {t('didSessionSatisfy')}
+                {t('did_session_satisfy')}
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 {satisfactionEmojis.map((emoji, index) => (
@@ -306,12 +310,12 @@ export default function FeedbackForm() {
                     </IconButton>
                     {index === 0 && (
                       <Typography variant="caption">
-                        {t('notSatisfied')}
+                        {t('not_satisfied')}
                       </Typography>
                     )}
                     {index === 4 && (
                       <Typography variant="caption">
-                        {t('verySatisfied')}
+                        {t('very_satisfied')}
                       </Typography>
                     )}
                   </Box>
@@ -326,7 +330,7 @@ export default function FeedbackForm() {
                 fontWeight="medium"
                 mb={2}
               >
-                {t('rateForStory')}{' '}
+                {t('rate_for_story')}{' '}
                 <Typography
                   component="span"
                   color="primary"
@@ -351,7 +355,7 @@ export default function FeedbackForm() {
 
             <Box sx={{ mb: 4 }}>
               <TextField
-                placeholder={t('shareThought')}
+                placeholder={t('share_thought')}
                 multiline
                 rows={4}
                 fullWidth
@@ -386,7 +390,7 @@ export default function FeedbackForm() {
               fontWeight="bold"
               mb={3}
             >
-              {t('feedbackForHuber')}
+              {t('feedback_for_huber')}
             </Typography>
 
             <Box
@@ -425,7 +429,7 @@ export default function FeedbackForm() {
                 fontWeight="medium"
                 mb={2}
               >
-                {t('howManyLove')}
+                {t('how_many_love')}
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
                 {[0, 1, 2, 3, 4].map((index) => (
@@ -447,10 +451,10 @@ export default function FeedbackForm() {
 
             <Box sx={{ mb: 4 }}>
               <Typography variant="subtitle1" fontWeight="medium" mb={2}>
-                {t('saySomething')}
+                {t('say_something')}
               </Typography>
               <TextField
-                placeholder={t('writeSomething')}
+                placeholder={t('write_something')}
                 multiline
                 rows={4}
                 fullWidth
@@ -460,7 +464,7 @@ export default function FeedbackForm() {
 
             <Box sx={{ mb: 4 }}>
               <Typography variant="subtitle1" fontWeight="medium" mb={2}>
-                {t('whatTag')}
+                {t('what_tag')}
               </Typography>
               <Box sx={{ position: 'relative' }}>
                 <Box
@@ -495,7 +499,7 @@ export default function FeedbackForm() {
                     ))
                   ) : (
                     <Typography color="text.secondary">
-                      {t('chooseTag')}
+                      {t('choose_tag')}
                     </Typography>
                   )}
                   <KeyboardArrowDown sx={{ ml: 'auto' }} />
