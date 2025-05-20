@@ -5,7 +5,7 @@ import { Trash } from '@phosphor-icons/react';
 import React from 'react';
 
 import Button from '@/components/button/Button';
-import { pushSuccess } from '@/components/CustomToastifyContainer';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { FlipBook } from '@/components/flipBook/FlipBook';
 import { mergeClassnames } from '@/components/private/utils';
 import { useAppSelector } from '@/libs/hooks';
@@ -58,7 +58,7 @@ const StoriesTab = () => {
       pushSuccess('Story deleted successfully');
       refetch();
     } catch (error) {
-      console.error('Error deleting story:', error);
+      pushError('Error deleting story');
     }
   };
 

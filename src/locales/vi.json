@@ -372,7 +372,9 @@
     "validation": {
       "required": "Bắt buộc",
       "invalidYear": "Năm không hợp lệ",
-      "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại"
+      "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại",
+      "bio_required": "Vui lòng nhập tiểu sử của bạn",
+      "terms_required": "Vui lòng chấp thuận các điều khoản và điều kiện"
     },
     "bio": {
       "text": "Tiểu sử",
@@ -499,6 +501,14 @@
     "thank_you": "Cảm ơn phản hồi của bạn",
     "feedback_value": "Phản hồi của bạn rất có giá trị đối với chúng tôi. Nội dung này cần được chỉnh sửa",
     "go_to_schedule": "Đi đến lịch trình",
-    "back_to_home": "Trở về Trang chủ"
+    "back_to_home": "Trở về Trang chủ",
+    "no_data": "Không có dữ liệu",
+    "Common": {
+      "no_data": "Không có dữ liệu",
+      "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
+      "validation_error": "Dữ liệu không hợp lệ",
+      "update_failed": "Cập nhật thất bại",
+      "update_successfully": "Cập nhật thành công"
+    }
   }
 }
