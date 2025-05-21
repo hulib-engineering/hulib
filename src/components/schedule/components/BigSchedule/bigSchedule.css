@@ -209,3 +209,7 @@ table table td:first-child .fc-timegrid-col-frame {
   background: #d1d5db;
   border-radius: 8px;
 }
+
+.fc-timegrid-slot {
+  height: 140px !important;
+}

@@ -196,6 +196,10 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
     }
   }, [timeSlots]);
 
+  const hasMorningSlots = (listDay[currentDate]?.morning?.length || 0) > 0;
+  const hasAfternoonSlots = (listDay[currentDate]?.afternoon?.length || 0) > 0;
+  const hasEveningSlots = (listDay[currentDate]?.evening?.length || 0) > 0;
+
   return (
     <div className="mb-[20px] flex flex-col justify-center rounded-[12px] bg-[#fff] p-[16px] drop-shadow-md">
       <div className="my-[10px]">
@@ -216,11 +220,12 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
             listDay[currentDate]?.evening,
           ) || []
         }
+        availableSlot
       />
       <div>
-        <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-          {(listDay[currentDate] as { morning: any[] })?.morning?.length > 0 &&
-            (listDay[currentDate] as { morning: any[] }).morning.map(
+        {hasMorningSlots && (
+          <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
+            {(listDay[currentDate] as { morning: any[] }).morning.map(
               (time: any, index: any) => (
                 <div
                   key={index}
@@ -230,11 +235,12 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
                 </div>
               ),
             )}
-        </div>
-        <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-          {(listDay[currentDate] as { afternoon: any[] })?.afternoon?.length >
-            0 &&
-            (listDay[currentDate] as { afternoon: any[] }).afternoon.map(
+          </div>
+        )}
+
+        {hasAfternoonSlots && (
+          <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
+            {(listDay[currentDate] as { afternoon: any[] }).afternoon.map(
               (time: any, index: any) => (
                 <div
                   key={index}
@@ -244,10 +250,11 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
                 </div>
               ),
             )}
-        </div>
-        <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-          {(listDay[currentDate] as { evening: any[] })?.evening?.length > 0 &&
-            (listDay[currentDate] as { evening: any[] }).evening.map(
+          </div>
+        )}
+        {hasEveningSlots && (
+          <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
+            {(listDay[currentDate] as { evening: any[] }).evening.map(
               (time: any, index: any) => (
                 <div
                   key={index}
@@ -257,9 +264,11 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
                 </div>
               ),
             )}
-        </div>
+          </div>
+        )}
       </div>
-      <div className="w-full">
+
+      <div className="mt-2 w-full">
         <button
           type="button"
           onClick={handleUpdateTimeSlot}
