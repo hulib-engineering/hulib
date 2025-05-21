@@ -7,6 +7,7 @@ interface Props {
   dayOfWeek: any;
   onChangeDayOfWeek: Function;
   selectedTimes: any;
+  availableSlot?: boolean;
 }
 
 const days = {
@@ -51,12 +52,14 @@ export default function HeadSlots({
   dayOfWeek = 0,
   onChangeDayOfWeek,
   selectedTimes,
+  availableSlot = false,
 }: Props) {
   const [selectedDay, setSelectedDay] = useState<keyof typeof days>(dayOfWeek);
   const [numberOfTimeSlots, setNumberOfTimeSlots] = useState<number>(0);
 
   useEffect(() => {
     setSelectedDay(dayOfWeek);
+    console.log('dayOfWeek', dayOfWeek);
   }, [dayOfWeek]);
 
   useEffect(() => {
@@ -90,15 +93,23 @@ export default function HeadSlots({
 
       {/* Message below the day selector */}
       <Typography
-        className="mt-3 text-center"
+        className={`mt-3 ${
+          availableSlot ? 'text-left text-xs' : 'text-center'
+        }`}
         sx={{
-          color: numberOfTimeSlots > 0 ? '#38AA16' : '#e83e8c',
-          fontSize: '1.1rem',
+          color: availableSlot
+            ? '#38AA16'
+            : numberOfTimeSlots > 0
+              ? '#38AA16'
+              : '#e83e8c',
+          fontSize: availableSlot ? '0.75rem' : '1.1rem',
         }}
       >
         {numberOfTimeSlots > 0
           ? `Amazing!!! You can meet ${numberOfTimeSlots} Libers every ${days[selectedDay].name}! 💚`
-          : days[selectedDay].text}
+          : availableSlot
+            ? 'You did not choose any available time slot in this day, update now to meet with more people'
+            : days[selectedDay].text}
       </Typography>
     </Box>
   );
