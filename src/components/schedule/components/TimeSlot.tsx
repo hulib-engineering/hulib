@@ -40,6 +40,15 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
     setIsModalOpen(true);
   };
 
+  const sortTimeSlots = (slots: any[]) => {
+    return slots.sort((a: any, b: any) => {
+      const [aHours, aMinutes] = a.startTime.split(':').map(Number);
+      const [bHours, bMinutes] = b.startTime.split(':').map(Number);
+      const aTime = aHours * 60 + aMinutes;
+      const bTime = bHours * 60 + bMinutes;
+      return aTime - bTime;
+    });
+  };
   const submitUpdateSlots = async () => {
     try {
       const sanitizedListDay = Object.entries(listDay).flatMap(([_, slots]) =>
@@ -225,49 +234,49 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
       <div>
         {hasMorningSlots && (
           <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-            {(listDay[currentDate] as { morning: any[] }).morning.map(
-              (time: any, index: any) => (
-                <div
-                  key={index}
-                  className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
-                >
-                  {time.startTime}
-                </div>
-              ),
-            )}
+            {sortTimeSlots(
+              (listDay[currentDate] as { morning: any[] }).morning,
+            ).map((time: any, index: any) => (
+              <div
+                key={index}
+                className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
+              >
+                {time.startTime}
+              </div>
+            ))}
           </div>
         )}
 
         {hasAfternoonSlots && (
           <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-            {(listDay[currentDate] as { afternoon: any[] }).afternoon.map(
-              (time: any, index: any) => (
-                <div
-                  key={index}
-                  className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
-                >
-                  {time.startTime}
-                </div>
-              ),
-            )}
+            {sortTimeSlots(
+              (listDay[currentDate] as { afternoon: any[] }).afternoon,
+            ).map((time: any, index: any) => (
+              <div
+                key={index}
+                className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
+              >
+                {time.startTime}
+              </div>
+            ))}
           </div>
         )}
+
         {hasEveningSlots && (
           <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
-            {(listDay[currentDate] as { evening: any[] }).evening.map(
-              (time: any, index: any) => (
-                <div
-                  key={index}
-                  className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
-                >
-                  {time?.startTime}
-                </div>
-              ),
-            )}
+            {sortTimeSlots(
+              (listDay[currentDate] as { evening: any[] }).evening,
+            ).map((time: any, index: any) => (
+              <div
+                key={index}
+                className="my-[2px] flex h-[20px] w-[calc((100%/6)-4px)] items-center justify-center rounded-[16px] bg-[#D9F9CF] text-[8px] text-[#2A8010]"
+              >
+                {time?.startTime}
+              </div>
+            ))}
           </div>
         )}
       </div>
-
       <div className="mt-2 w-full">
         <button
           type="button"
