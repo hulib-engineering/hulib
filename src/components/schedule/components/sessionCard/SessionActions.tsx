@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
@@ -20,42 +21,49 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
 }) => {
   const [updateStatus, { isLoading }] = useUpdateStatusReadingSessionMutation();
   const [showCancelDialog, setShowCancelDialog] = useState(false);
-  const [cancelReason, setCancelReason] = useState('');
+  const t = useTranslations('Meeting');
+  const defaultCancelReason = t('cancel_meeting');
+  const [cancelReason, setCancelReason] = useState(defaultCancelReason);
 
   const handleStatusChange = async (newStatus: StatusType, reason?: string) => {
     try {
-      await updateStatus({
+      const payload: any = {
         id: sessionId,
         sessionStatus: newStatus,
-        ...(reason && { note: reason }),
-      }).unwrap();
+      };
+
+      if (newStatus === StatusEnum.Canceled) {
+        const finalReason = reason || defaultCancelReason;
+        payload.note = finalReason;
+      }
+
+      await updateStatus(payload).unwrap();
 
       if (onStatusChange) {
         onStatusChange(newStatus);
       }
       pushSuccess('Status updated successfully!');
 
-      // Reset cancel dialog state if it was a cancellation
       if (newStatus === StatusEnum.Canceled) {
         setShowCancelDialog(false);
-        setCancelReason('');
+        setCancelReason(defaultCancelReason);
       }
     } catch (error) {
       pushError('Failed to update status. Please try again.');
     }
   };
-
   const handleCancelRequest = () => {
     setShowCancelDialog(true);
   };
 
   const handleCancelConfirm = () => {
-    handleStatusChange(StatusEnum.Canceled, cancelReason);
+    const reasonToSend = cancelReason.trim() || defaultCancelReason;
+    handleStatusChange(StatusEnum.Canceled, reasonToSend);
   };
 
   const handleCancelAbort = () => {
     setShowCancelDialog(false);
-    setCancelReason('');
+    setCancelReason(defaultCancelReason);
   };
 
   const renderCancelDialog = () => {
@@ -70,8 +78,9 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
             <textarea
               id="cancelReason"
               name="cancelReason"
+              required
               className="mt-1 w-full rounded-md border border-gray-300 p-2 text-sm"
-              placeholder="I don't want to meeting anymore"
+              placeholder={defaultCancelReason}
               value={cancelReason}
               onChange={(e) => setCancelReason(e.target.value)}
               rows={3}
