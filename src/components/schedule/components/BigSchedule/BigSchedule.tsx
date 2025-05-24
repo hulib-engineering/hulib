@@ -95,20 +95,22 @@ export default function BigCalendar() {
 
     return (
       <div
-        className="group relative z-[50] cursor-pointer overflow-visible"
+        className="group relative z-[50] h-[68px] cursor-pointer overflow-visible"
         onMouseEnter={(e) => handleMouseEnter(e, extendedProps)}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="relative min-w-[60px] overflow-visible">
+        <div className="relative h-full min-w-[60px] overflow-visible">
           <div
-            className={`relative flex flex-col justify-start overflow-visible rounded-md border border-[#fff] ${
-              isHumanBook ? 'bg-[#CDDDFE]' : 'bg-[#FFE3CC]'
+            className={`relative flex h-full flex-col  justify-center overflow-visible rounded-xl border  ${
+              isHumanBook
+                ? 'border-[#FEF3C7] bg-[#FFFBEB]'
+                : 'border-[#DBEAFE] bg-[#DBEAFE]'
             } p-[2px]`}
           >
             {isPending && (
-              <p className="absolute left-[-20px] top-[-20px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] border-l-[#fff] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
-                Pending...
-              </p>
+              <span className=" inline-block h-[24px] w-[80px] self-end rounded-[100px] border-l-[#fff] bg-[#FFEDD5] p-[7px] text-right text-[12px] font-[500] leading-[16px] text-[#F97316]">
+                Waiting...
+              </span>
             )}
             <div className="flex items-center">
               <Image
@@ -119,14 +121,18 @@ export default function BigCalendar() {
                 loading="lazy"
                 className="mr-[2px] rounded-full border border-[#fff]"
               />
-              <p className="h-[20px] w-[80px] truncate text-[#171819]">
+              <p className="h-[20px] w-[80px] truncate text-xs text-[#171819]">
                 {isHumanBook
-                  ? extendedProps.humanBook.fullName
-                  : extendedProps.reader?.fullName}
+                  ? extendedProps.reader.fullName
+                  : extendedProps.humanBook?.fullName}
               </p>
             </div>
-            <p className={isHumanBook ? 'text-[#0442BF]' : 'text-[#FF7301]'}>
-              {isHumanBook ? ROLE_NAME[Role.HUBER] : ROLE_NAME[Role.LIBER]}
+            <p
+              className={`ml-3 text-xs ${
+                isHumanBook ? 'text-[#DBAE0A]' : 'text-[#0442BF]'
+              }`}
+            >
+              {isHumanBook ? ROLE_NAME[Role.LIBER] : ROLE_NAME[Role.HUBER]}
             </p>
           </div>
         </div>
@@ -183,7 +189,7 @@ export default function BigCalendar() {
             slotLabelContent={slotLabelContent}
             height="auto"
             contentHeight="auto"
-            slotMinTime="00:00:00"
+            slotMinTime="6:00:00"
             slotMaxTime="24:00:00"
             slotDuration="01:00:00"
             dayHeaderContent={dayHeaderContent}
