@@ -190,7 +190,6 @@ table table td:first-child .fc-timegrid-col-frame {
 }
 
 .calendar-scroll-wrapper {
-  max-height: calc(100vh - 200px);
   overflow-y: auto;
   overflow-x: visible;
   width: 100%;

@@ -121,8 +121,9 @@ export const SessionCard: React.FC<SessionCardProps> = ({
         </div>
       )}
       <SessionDateTime
-        startDate={session.startedAt}
-        endDate={session.endedAt}
+        date={session.startedAt}
+        startDate={session.startTime}
+        endDate={session.endTime}
       />
       {session.sessionUrl && session.sessionStatus !== StatusEnum.Pending && (
         <SessionUrl url={session.sessionUrl} />
