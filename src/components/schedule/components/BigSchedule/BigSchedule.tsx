@@ -95,13 +95,13 @@ export default function BigCalendar() {
 
     return (
       <div
-        className="group relative z-[50] cursor-pointer overflow-visible"
+        className="group relative z-[50] h-[68px] cursor-pointer overflow-visible"
         onMouseEnter={(e) => handleMouseEnter(e, extendedProps)}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="relative min-w-[60px] overflow-visible">
+        <div className="relative h-full min-w-[60px] overflow-visible">
           <div
-            className={`relative flex flex-col justify-start overflow-visible rounded-xl border  ${
+            className={`relative flex h-full flex-col  justify-center overflow-visible rounded-xl border  ${
               isHumanBook
                 ? 'border-[#FEF3C7] bg-[#FFFBEB]'
                 : 'border-[#DBEAFE] bg-[#DBEAFE]'
