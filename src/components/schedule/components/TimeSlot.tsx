@@ -277,7 +277,8 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
           open={isModalOpen}
           disableClosingTrigger={false}
         >
-          <Modal.Panel className="inset-0 flex w-[550px] items-center justify-center ">
+          <Modal.Backdrop />
+          <Modal.Panel className="inset-0 flex w-[550px] items-center justify-center">
             <div className="rounded-lg bg-white p-6 shadow-lg">
               <Modal.Title>{t('available_time_slots')} </Modal.Title>
               <span>{t('select_time_slots')}</span>
