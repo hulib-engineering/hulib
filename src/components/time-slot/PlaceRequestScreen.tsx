@@ -12,13 +12,14 @@ import {
 import dayjs from 'dayjs';
 import { isEmpty } from 'lodash';
 import * as React from 'react';
+import { useMemo } from 'react';
 
 import Button from '@/components/button/Button';
 import AttendeesInfo from '@/components/time-slot/AttendeesInfo';
 import { useAppSelector } from '@/libs/hooks';
 import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
 
-import { pushError } from '../CustomToastifyContainer';
+import { pushError, pushSuccess } from '../CustomToastifyContainer';
 
 type Props = {
   attendees: {
@@ -46,7 +47,7 @@ export const PlaceRequestScreen = ({
   const [placeRequest] = useCreateNewReadingSessionMutation();
   const [note, setNote] = React.useState('');
   const [startedAt] = React.useState<any>(() => {
-    const parsed = dayjs(`${dateTime} ${startTime}`, 'dddd, MMMM D HH:mm');
+    const parsed = dayjs(`${dateTime} ${startTime}`, 'ddd, DD MMM HH:mm');
     const currentYear = dayjs().year();
     const parsedWithYear = parsed.year(currentYear);
     return parsedWithYear.toDate();
@@ -55,13 +56,17 @@ export const PlaceRequestScreen = ({
     const end = dayjs(startedAt).add(30, 'minute');
     return end.toDate();
   });
-  const [endTimeString] = React.useState<string>(
-    dayjs(endedAt).format('HH:mm'),
-  );
+
+  const endTimeString = useMemo(() => {
+    if (endedAt) {
+      return dayjs(endedAt).format('HH:mm');
+    }
+    return '';
+  }, [endedAt]);
 
   const onPlaceRequest = async () => {
     try {
-      const result = await placeRequest({
+      await placeRequest({
         humanBookId,
         readerId: user?.id ?? 0,
         storyId,
@@ -70,13 +75,10 @@ export const PlaceRequestScreen = ({
         startedAt: startedAt.toISOString(),
         endedAt: endedAt.toISOString(),
         note,
-      });
+      }).unwrap();
 
-      if (!isEmpty(result?.error)) {
-        pushError('Something went wrong');
-      } else {
-        nextStep();
-      }
+      pushSuccess('Request sent successfully');
+      nextStep();
     } catch (error) {
       pushError('Something went wrong');
     }
