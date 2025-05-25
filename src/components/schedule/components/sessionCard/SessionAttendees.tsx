@@ -9,7 +9,7 @@ import { UserAvatar } from './UserAvatar';
 interface SessionAttendeesProps {
   humanBook: User;
   reader: User;
-  isVibing?: boolean;
+  isVibing: boolean;
 }
 
 export const SessionAttendees: React.FC<SessionAttendeesProps> = ({

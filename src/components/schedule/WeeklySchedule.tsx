@@ -15,7 +15,7 @@ const WeeklySchedule = () => {
   const isHuber = user?.role?.name === 'Huber';
   const { data: timeSlotHuber, isLoading: isLoadingTimeSlots } =
     useGetTimeSlotsHuberQuery(
-      { id: 23 },
+      { id: user?.id },
       {
         skip: !user?.id || !isHuber,
       },
