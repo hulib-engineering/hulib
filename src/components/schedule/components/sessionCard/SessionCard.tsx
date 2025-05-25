@@ -26,10 +26,9 @@ export const SessionCard: React.FC<SessionCardProps> = ({
   expanded = false,
 }) => {
   const [isExpanded, setIsExpanded] = useState(expanded);
+  const userId = useAppSelector((state) => state.auth.userInfo?.id);
 
-  const role = useAppSelector((state) => state.auth.userInfo?.role?.name);
-
-  const isVibing = role !== ROLE_NAME[Role.HUBER];
+  const isVibing = Number(userId) === Number(session?.reader?.id);
   const cardTitle = isVibing ? 'Vibing with Huber' : 'Session with Liber';
   const toggleExpand = () => setIsExpanded(!isExpanded);
   const cardBackgroundColor = isVibing
