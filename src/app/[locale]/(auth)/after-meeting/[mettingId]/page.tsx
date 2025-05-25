@@ -9,7 +9,6 @@ import {
 import {
   Avatar,
   Box,
-  Button,
   Chip,
   IconButton,
   Menu,
@@ -18,10 +17,90 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { Heart } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
+
+import Button from '@/components/button/Button';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import { useUpdateStatusReadingSessionMutation } from '@/libs/services/modules/reading-session';
+
+type RateProps = {
+  question: string;
+  rateLowestText: string;
+  rateHighestText: string;
+  selectedRating: number;
+  setSelectedRating: (rating: number) => void;
+};
+
+const Rate = ({
+  question,
+  rateLowestText,
+  rateHighestText,
+  selectedRating,
+  setSelectedRating,
+}: RateProps) => {
+  const ratingImages = [
+    '/assets/images/after-meeting/rate-1.png',
+    '/assets/images/after-meeting/rate-2.png',
+    '/assets/images/after-meeting/rate-3.png',
+    '/assets/images/after-meeting/rate-4.png',
+    '/assets/images/after-meeting/rate-5.png',
+  ];
+
+  return (
+    <Box sx={{ mb: 2 }}>
+      <p className="text-center text-base font-medium text-neutral-10">
+        {question}
+      </p>
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 5.5 }}>
+        {ratingImages.map((image, index) => (
+          <Box
+            key={index}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <IconButton
+              sx={{
+                mb: 1,
+                height: 48,
+                width: 48,
+                bgcolor: selectedRating === index ? '#0442BF' : 'transparent',
+                color: selectedRating === index ? 'white' : 'inherit',
+                '&:hover': {
+                  bgcolor:
+                    selectedRating === index
+                      ? '#0442BF'
+                      : 'rgba(0, 0, 0, 0.04)',
+                },
+              }}
+              onClick={() => setSelectedRating(index)}
+            >
+              <Image
+                src={image}
+                alt="Rating"
+                width={32}
+                height={32}
+                className="h-8 w-8"
+              />
+            </IconButton>
+            {index === 0 && (
+              <Typography variant="caption">{rateLowestText}</Typography>
+            )}
+            {index === 4 && (
+              <Typography variant="caption">{rateHighestText}</Typography>
+            )}
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  );
+};
 
 export default function FeedbackForm() {
   const router = useRouter();
@@ -32,10 +111,9 @@ export default function FeedbackForm() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  // Track selected ratings with default middle option (index 2)
   const [feelingRating, setFeelingRating] = useState(2);
   const [satisfactionRating, setSatisfactionRating] = useState(2);
-  const [loveRating, setLoveRating] = useState(3); // Default to 4 hearts (index 3)
+  const [loveRating, setLoveRating] = useState(3);
 
   const tagOptions = [
     t('tags.self_taught'),
@@ -44,11 +122,23 @@ export default function FeedbackForm() {
     t('tags.select_option'),
   ];
 
-  const feelingEmojis = ['😢', '😔', '😐', '🙂', '😍'];
-  const satisfactionEmojis = ['😢', '😔', '😐', '🙂', '😍'];
+  const [updateStatusReadingSession, { isLoading }] =
+    useUpdateStatusReadingSessionMutation();
 
-  const handleNext = () => {
-    setStep('feedback-huber');
+  const handleNext = async () => {
+    try {
+      await updateStatusReadingSession({
+        id: 1,
+        sessionFeedback: {
+          rating: feelingRating,
+          content: '',
+        },
+      }).unwrap();
+      pushSuccess('Cập nhật trạng thái thành công');
+      setStep('feedback-huber');
+    } catch (error) {
+      pushError('Có lỗi xảy ra, vui lòng thử lại');
+    }
   };
 
   const handleBack = () => {
@@ -106,43 +196,26 @@ export default function FeedbackForm() {
               {t('session_feedback')}
             </Typography>
 
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 1,
-                mb: 3,
-                color: 'text.secondary',
-              }}
-            >
+            <div className="flex items-center gap-1 text-neutral-20">
               <CalendarMonth color="primary" fontSize="small" />
               <Typography>Tue, 02/02/2025 | 14:00 - 14:30</Typography>
-            </Box>
+            </div>
+            <div className="flex items-center gap-1 text-sm text-neutral-20">
+              <Person color="primary" fontSize="small" />
+              <Typography>{t('attendees', { count: 2 })}</Typography>
+            </div>
 
             <Box sx={{ mb: 3 }}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1,
-                  color: 'text.secondary',
-                }}
-              >
-                <Person color="primary" fontSize="small" />
-                <Typography>{t('attendees', { count: 2 })}</Typography>
-              </Box>
-
               <Box
                 sx={{ mt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}
               >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <Avatar sx={{ width: 40, height: 40 }}>
+                  <Avatar sx={{ width: 32, height: 32 }}>
                     <Image
-                      src="/placeholder.svg?height=40&width=40"
+                      src="/assets/images/Avatar.png"
                       alt="Avatar"
-                      width={40}
-                      height={40}
+                      width={32}
+                      height={32}
                     />
                   </Avatar>
                   <Box
@@ -162,26 +235,19 @@ export default function FeedbackForm() {
                         borderRadius: '16px',
                       }}
                     />
-                    <Chip
-                      label="[Thân bùm]"
-                      size="small"
-                      sx={{
-                        bgcolor: '#F3E5F5',
-                        color: '#7B1FA2',
-                        borderRadius: '16px',
-                      }}
-                    />
-                    <Typography>Hari Won ({t('you')})</Typography>
+                    <p className="text-center font-medium text-neutral-10">
+                      Hari Won ({t('you')})
+                    </p>
                   </Box>
                 </Box>
 
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <Avatar sx={{ width: 40, height: 40 }}>
+                  <Avatar sx={{ width: 32, height: 32 }}>
                     <Image
-                      src="/placeholder.svg?height=40&width=40"
+                      src="/assets/images/Avatar.png"
                       alt="Avatar"
-                      width={40}
-                      height={40}
+                      width={32}
+                      height={32}
                     />
                   </Avatar>
                   <Box
@@ -201,129 +267,31 @@ export default function FeedbackForm() {
                         borderRadius: '16px',
                       }}
                     />
-                    <Chip
-                      label="[Thợ lặn]"
-                      size="small"
-                      sx={{
-                        bgcolor: '#FFEBEE',
-                        color: '#C62828',
-                        borderRadius: '16px',
-                      }}
-                    />
-                    <Typography>Đinh Tiến Đạt</Typography>
+                    <p className="text-center font-medium text-neutral-10">
+                      Đinh Tiến Đạt
+                    </p>
                   </Box>
                 </Box>
               </Box>
             </Box>
 
-            <Box sx={{ mb: 4 }}>
-              <Typography
-                variant="subtitle1"
-                align="center"
-                fontWeight="medium"
-                mb={2}
-              >
-                {t('how_do_you_feel')}
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                {feelingEmojis.map((emoji, index) => (
-                  <Box
-                    key={index}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <IconButton
-                      sx={{
-                        mb: 1,
-                        height: 48,
-                        width: 48,
-                        bgcolor:
-                          feelingRating === index ? '#2196f3' : 'transparent',
-                        color: feelingRating === index ? 'white' : 'inherit',
-                        '&:hover': {
-                          bgcolor:
-                            feelingRating === index
-                              ? '#1976d2'
-                              : 'rgba(0, 0, 0, 0.04)',
-                        },
-                      }}
-                      onClick={() => setFeelingRating(index)}
-                    >
-                      <Typography fontSize="24px">{emoji}</Typography>
-                    </IconButton>
-                    {index === 0 && (
-                      <Typography variant="caption">{t('not_good')}</Typography>
-                    )}
-                    {index === 4 && (
-                      <Typography variant="caption">
-                        {t('very_good')}
-                      </Typography>
-                    )}
-                  </Box>
-                ))}
-              </Box>
-            </Box>
+            <Rate
+              question={t('how_do_you_feel')}
+              selectedRating={feelingRating}
+              setSelectedRating={setFeelingRating}
+              rateLowestText={t('not_good')}
+              rateHighestText={t('very_good')}
+            />
 
-            <Box sx={{ mb: 4 }}>
-              <Typography
-                variant="subtitle1"
-                align="center"
-                fontWeight="medium"
-                mb={2}
-              >
-                {t('did_session_satisfy')}
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                {satisfactionEmojis.map((emoji, index) => (
-                  <Box
-                    key={index}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <IconButton
-                      sx={{
-                        mb: 1,
-                        height: 48,
-                        width: 48,
-                        bgcolor:
-                          satisfactionRating === index
-                            ? '#2196f3'
-                            : 'transparent',
-                        color:
-                          satisfactionRating === index ? 'white' : 'inherit',
-                        '&:hover': {
-                          bgcolor:
-                            satisfactionRating === index
-                              ? '#1976d2'
-                              : 'rgba(0, 0, 0, 0.04)',
-                        },
-                      }}
-                      onClick={() => setSatisfactionRating(index)}
-                    >
-                      <Typography fontSize="24px">{emoji}</Typography>
-                    </IconButton>
-                    {index === 0 && (
-                      <Typography variant="caption">
-                        {t('not_satisfied')}
-                      </Typography>
-                    )}
-                    {index === 4 && (
-                      <Typography variant="caption">
-                        {t('very_satisfied')}
-                      </Typography>
-                    )}
-                  </Box>
-                ))}
-              </Box>
-            </Box>
+            <Rate
+              question={t('did_session_satisfy')}
+              selectedRating={satisfactionRating}
+              setSelectedRating={setSatisfactionRating}
+              rateLowestText={t('not_satisfied')}
+              rateHighestText={t('very_satisfied')}
+            />
 
-            <Box sx={{ mb: 4 }}>
+            <Box sx={{ mb: 2 }}>
               <Typography
                 variant="subtitle1"
                 align="center"
@@ -340,20 +308,23 @@ export default function FeedbackForm() {
                 </Typography>
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-                {[0, 1, 2, 3, 4].map((index) => (
-                  <IconButton key={index} onClick={() => {}} sx={{ p: 0 }}>
-                    <Typography
-                      fontSize="28px"
-                      color={index <= 3 ? '#FFD700' : '#E0E0E0'}
-                    >
-                      ❤️
-                    </Typography>
+                {[0, 1, 2, 3, 4].map((indexRating) => (
+                  <IconButton
+                    key={indexRating}
+                    onClick={() => setLoveRating(indexRating)}
+                    sx={{ p: 0 }}
+                  >
+                    <Heart
+                      size={42}
+                      weight="fill"
+                      color={indexRating <= loveRating ? '#F3C00C' : '#E0E0E0'}
+                    />
                   </IconButton>
                 ))}
               </Box>
             </Box>
 
-            <Box sx={{ mb: 4 }}>
+            <Box sx={{ mb: 2 }}>
               <TextField
                 placeholder={t('share_thought')}
                 multiline
@@ -364,19 +335,10 @@ export default function FeedbackForm() {
             </Box>
 
             <Box sx={{ display: 'flex', gap: 2 }}>
-              <Button
-                variant="outlined"
-                fullWidth
-                sx={{ borderRadius: 1, py: 1 }}
-              >
+              <Button fullWidth variant="outline" disabled={isLoading}>
                 {t('cancel')}
               </Button>
-              <Button
-                variant="contained"
-                fullWidth
-                sx={{ borderRadius: 1, py: 1, bgcolor: '#1976d2' }}
-                onClick={handleNext}
-              >
+              <Button fullWidth onClick={handleNext} disabled={isLoading}>
                 {t('next')}
               </Button>
             </Box>
@@ -422,7 +384,7 @@ export default function FeedbackForm() {
               <Typography>Đinh Tiến Đạt</Typography>
             </Box>
 
-            <Box sx={{ mb: 4 }}>
+            <Box sx={{ mb: 2 }}>
               <Typography
                 variant="subtitle1"
                 align="center"
@@ -449,7 +411,7 @@ export default function FeedbackForm() {
               </Box>
             </Box>
 
-            <Box sx={{ mb: 4 }}>
+            <Box sx={{ mb: 2 }}>
               <Typography variant="subtitle1" fontWeight="medium" mb={2}>
                 {t('say_something')}
               </Typography>
@@ -462,7 +424,7 @@ export default function FeedbackForm() {
               />
             </Box>
 
-            <Box sx={{ mb: 4 }}>
+            <Box sx={{ mb: 2 }}>
               <Typography variant="subtitle1" fontWeight="medium" mb={2}>
                 {t('what_tag')}
               </Typography>
@@ -548,18 +510,11 @@ export default function FeedbackForm() {
             </Box>
 
             <Box sx={{ display: 'flex', gap: 2 }}>
-              <Button
-                variant="outlined"
-                fullWidth
-                sx={{ borderRadius: 1, py: 1 }}
-                onClick={handleBack}
-              >
+              <Button variant="outline" fullWidth onClick={handleBack}>
                 {t('back')}
               </Button>
               <Button
-                variant="contained"
                 fullWidth
-                sx={{ borderRadius: 1, py: 1, bgcolor: '#1976d2' }}
                 onClick={() => router.push('/after-metting/thanks')}
               >
                 {t('confirm')}
