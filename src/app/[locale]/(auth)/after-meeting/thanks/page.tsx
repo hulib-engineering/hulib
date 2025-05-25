@@ -12,8 +12,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
-import hulibThanks from '@/public/assets/images/afterMetting/hulib_thanks_image.png';
-
 export default function FeedbackConfirmationPage() {
   const t = useTranslations('thanks_page');
   return (
@@ -39,7 +37,7 @@ export default function FeedbackConfirmationPage() {
           }}
         >
           <Image
-            src={hulibThanks}
+            src="/assets/images/after-meeting/hulib_thanks_image.png"
             alt="Thank you character"
             fill
             style={{ objectFit: 'contain' }}
