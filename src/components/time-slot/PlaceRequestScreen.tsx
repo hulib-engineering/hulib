@@ -9,15 +9,17 @@ import {
   Users,
   Warning,
 } from '@phosphor-icons/react';
+import dayjs from 'dayjs';
 import { isEmpty } from 'lodash';
 import * as React from 'react';
+import { useMemo } from 'react';
 
 import Button from '@/components/button/Button';
 import AttendeesInfo from '@/components/time-slot/AttendeesInfo';
 import { useAppSelector } from '@/libs/hooks';
 import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
 
-import { pushError } from '../CustomToastifyContainer';
+import { pushError, pushSuccess } from '../CustomToastifyContainer';
 
 type Props = {
   attendees: {
@@ -42,90 +44,41 @@ export const PlaceRequestScreen = ({
   backStep,
 }: Props) => {
   const user = useAppSelector((state) => state.auth.userInfo);
-
   const [placeRequest] = useCreateNewReadingSessionMutation();
   const [note, setNote] = React.useState('');
+  const [startedAt] = React.useState<any>(() => {
+    const parsed = dayjs(`${dateTime} ${startTime}`, 'ddd, DD MMM HH:mm');
+    const currentYear = dayjs().year();
+    const parsedWithYear = parsed.year(currentYear);
+    return parsedWithYear.toDate();
+  });
+  const [endedAt] = React.useState<any>(() => {
+    const end = dayjs(startedAt).add(30, 'minute');
+    return end.toDate();
+  });
 
-  function convertTo24HourFormat(time: string): string {
-    // Parse the input time (e.g., "03:45 PM" or "11:30 AM")
-    const [timeStr, period] = time.split(' ');
-    const [hours, minutes] = timeStr?.split(':') || ['00', '00'];
-
-    let hour = parseInt(hours || '00', 10);
-
-    // Convert to 24-hour format
-    if (period === 'PM' && hour !== 12) {
-      hour += 12;
-    } else if (period === 'AM' && hour === 12) {
-      hour = 0;
+  const endTimeString = useMemo(() => {
+    if (endedAt) {
+      return dayjs(endedAt).format('HH:mm');
     }
+    return '';
+  }, [endedAt]);
 
-    // Format with leading zeros
-    const formattedHour = hour.toString().padStart(2, '0');
-
-    return `${formattedHour}:${minutes}`;
-  }
-
-  function add30Minutes(time: string): string {
-    const [timeStr, period] = time.split(' ');
-    const [hours, minutes] = timeStr?.split(':') || ['00', '00'];
-
-    let hour = parseInt(hours || '00', 10);
-    let minute = parseInt(minutes || '00', 10);
-
-    // Convert to 24-hour format
-    if (period === 'PM' && hour !== 12) {
-      hour += 12;
-    } else if (period === 'AM' && hour === 12) {
-      hour = 0;
-    }
-
-    // Add 30 minutes
-    minute += 30;
-    if (minute >= 60) {
-      hour += 1;
-      minute -= 60;
-    }
-    if (hour >= 24) {
-      hour -= 24;
-    }
-
-    // Format with leading zeros
-    const formattedHour = hour.toString().padStart(2, '0');
-    const formattedMinute = minute.toString().padStart(2, '0');
-
-    return `${formattedHour}:${formattedMinute}`;
-  }
-
-  const convertToAmPm = (time24hr: string): string => {
-    const [hour24, minute] = time24hr.split(':').map(Number);
-    const safeHour24 = hour24 ?? 0;
-    const period = safeHour24 >= 12 ? 'PM' : 'AM';
-    const hour12 = safeHour24 % 12 === 0 ? 12 : safeHour24 % 12;
-
-    return `${hour12}:${minute?.toString().padStart(2, '0')} ${period}`;
-  };
-
-  const endTime = add30Minutes(startTime);
   const onPlaceRequest = async () => {
-    const today = new Date().toISOString();
     try {
-      const result = await placeRequest({
+      await placeRequest({
         humanBookId,
         readerId: user?.id ?? 0,
         storyId,
-        startTime: convertTo24HourFormat(startTime),
-        endTime,
-        startedAt: today,
-        endedAt: today,
+        startTime,
+        endTime: endTimeString,
+        startedAt: startedAt.toISOString(),
+        endedAt: endedAt.toISOString(),
         note,
-      });
+      }).unwrap();
 
-      if (!isEmpty(result?.error)) {
-        pushError('Something went wrong');
-      } else {
-        nextStep();
-      }
+      pushSuccess('Request sent successfully');
+      nextStep();
     } catch (error) {
       pushError('Something went wrong');
     }
@@ -153,12 +106,14 @@ export const PlaceRequestScreen = ({
             Attendees
           </div>
           <AttendeesInfo
-            source={liber?.avatar}
+            source="/assets/images/Avatar.png"
+            // source={liber?.avatar}
             role={liber?.role?.name}
             name={liber?.fullName}
           />
           <AttendeesInfo
-            source={huber?.avatar}
+            source="/assets/images/Avatar.png"
+            // source={huber?.avatar}
             role={huber?.role}
             name={huber?.fullName}
           />
@@ -174,7 +129,7 @@ export const PlaceRequestScreen = ({
             <div className="flex w-full justify-end">
               <ArrowRight size={16} />
             </div>
-            <span className="w-full text-right">{convertToAmPm(endTime)}</span>
+            <span className="w-full text-right">{endTimeString}</span>
           </div>
           <div className="grid grid-cols-2 items-center justify-between gap-x-2 text-base font-normal text-primary-50">
             <span>{dateTime}</span>

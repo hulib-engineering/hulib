@@ -11,9 +11,10 @@ const updateStatusReadingSession = (
     {
       id: number;
       sessionStatus: string;
+      note: string;
     }
   >({
-    query: ({ id, sessionStatus }) => ({
+    query: ({ id, sessionStatus, note }) => ({
       url: `reading-sessions/${id}`,
       method: 'PATCH',
       headers: {
@@ -21,6 +22,7 @@ const updateStatusReadingSession = (
       },
       body: JSON.stringify({
         sessionStatus,
+        note,
       }),
     }),
     invalidatesTags: [{ type: 'ReadingSession' }],

@@ -20,10 +20,7 @@ const Backdrop = ({
     leaveTo="opacity-0"
   >
     <div
-      className={mergeClassnames(
-        'fixed -z-1 inset-0 bg-gray-700 bg-opacity-30',
-        className,
-      )}
+      className={mergeClassnames('fixed -z-1 inset-0 bg-black/70', className)}
       aria-hidden="true"
       onClick={onClose}
     />

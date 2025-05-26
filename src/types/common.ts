@@ -21,3 +21,11 @@ export const ROLE_NAME = {
   [Role.HUBER]: 'Huber',
   [Role.LIBER]: 'Liber',
 } as const;
+
+export enum StatusEnum {
+  Finished = 'finished',
+  Pending = 'pending',
+  Canceled = 'canceled',
+  Rejected = 'rejected',
+  Approved = 'approved',
+}
