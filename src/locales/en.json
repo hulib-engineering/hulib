@@ -430,6 +430,9 @@
     "error_time_slots": "An error has occurred. Please check your time slots and try again.",
     "success_time_slots_description": "You have successfully created your time slots"
   },
+  "Meeting": {
+    "cancel_meeting": "I don't want to meeting anymore"
+  },
   "Home": {
     "banner": {
       "title": "Hi!",

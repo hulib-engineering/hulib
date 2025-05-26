@@ -1,20 +1,27 @@
 'use client';
 
 import { PlusIcon } from '@heroicons/react/24/outline';
+import { Trash } from '@phosphor-icons/react';
 import React from 'react';
 
 import Button from '@/components/button/Button';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { FlipBook } from '@/components/flipBook/FlipBook';
 import { mergeClassnames } from '@/components/private/utils';
 import { useAppSelector } from '@/libs/hooks';
-import { useGetStoriesQuery } from '@/libs/services/modules/stories';
+import {
+  useDeleteStoryMutation,
+  useGetStoriesQuery,
+} from '@/libs/services/modules/stories';
 import { Role } from '@/types/common';
 
 import CreateStoryModal from './CreateStoryModal';
+import DeleteStoryModal from './DeleteStoryModal';
 
 const StoriesTab = () => {
   const userInfo = useAppSelector((state) => state.auth.userInfo);
   const isHuber = userInfo?.role?.id === Role.HUBER;
+  const [deleteStory] = useDeleteStoryMutation();
   const {
     data: stories,
     isLoading,
@@ -29,6 +36,8 @@ const StoriesTab = () => {
   );
   const [isCreateModalOpen, setIsCreateModalOpen] = React.useState(false);
   const [editingStory, setEditingStory] = React.useState<any>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+  const [storyToDelete, setStoryToDelete] = React.useState<any>(null);
 
   const handleCloseModal = () => {
     setIsCreateModalOpen(false);
@@ -40,6 +49,17 @@ const StoriesTab = () => {
   const handleEditStory = (story: any) => {
     setEditingStory(story);
     setIsCreateModalOpen(true);
+  };
+
+  const handleDeleteStory = async (story: any) => {
+    try {
+      await deleteStory({ id: story.id }).unwrap();
+      setIsDeleteModalOpen(false);
+      pushSuccess('Story deleted successfully');
+      refetch();
+    } catch (error) {
+      pushError('Error deleting story');
+    }
   };
 
   const renderActions = (story: any) => {
@@ -60,17 +80,20 @@ const StoriesTab = () => {
         >
           Editing
         </Button>
-        {/* <Button
+        <Button
           variant="outline"
           className={mergeClassnames(
             'w-full h-8',
             'md:size-10 md:min-h-10 md:min-w-10',
           )}
           iconOnly
-          onClick={() => handleDeleteStory(story.id)}
+          onClick={() => {
+            setStoryToDelete(story);
+            setIsDeleteModalOpen(true);
+          }}
         >
           <Trash size={20} />
-        </Button> */}
+        </Button>
       </div>
     );
   };
@@ -111,6 +134,15 @@ const StoriesTab = () => {
         onClose={handleCloseModal}
         editingStory={editingStory}
       />
+
+      {storyToDelete && (
+        <DeleteStoryModal
+          open={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          onDelete={() => handleDeleteStory(storyToDelete)}
+          story={storyToDelete}
+        />
+      )}
     </div>
   );
 };

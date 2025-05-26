@@ -4,12 +4,13 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { ScheduleFilterPopover } from '@/components/schedule/components/ScheduleFilter/ScheduleFilter';
 import { PortalSessionCard } from '@/components/schedule/components/sessionCard/PortalSessionCard';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
+import { Role, ROLE_NAME, StatusEnum } from '@/types/common';
 
 export default function BigCalendar() {
   const { data: readingSessions, isLoading } = useGetReadingSessionsQuery();
@@ -27,12 +28,15 @@ export default function BigCalendar() {
     left: number;
   }>({ top: 0, left: 0 });
 
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const formatEvents = (data: any) => {
     if (!data || !Array.isArray(data)) {
       return [];
     }
     return data.map((item: any) => {
       return {
+        id: item.id,
         title: `${item.humanBook?.fullName || 'Unknown'} - ${
           item.reader?.fullName || 'Unknown'
         }`,
@@ -45,45 +49,68 @@ export default function BigCalendar() {
 
   useEffect(() => {
     if (readingSessions && !isLoading) {
-      const formattedEvents = formatEvents(readingSessions);
+      const filteredSessions = readingSessions.filter(
+        (item: any) =>
+          item.sessionStatus !== StatusEnum.Canceled &&
+          item.sessionStatus !== StatusEnum.Rejected,
+      );
+      const formattedEvents = formatEvents(filteredSessions);
       setEvents(formattedEvents);
     }
   }, [readingSessions, isLoading]);
+
+  const handleMouseEnter = (e: React.MouseEvent, session: any) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+
+    const rect = (e.target as HTMLElement).getBoundingClientRect();
+    setPopupPosition({
+      top: rect.top + window.scrollY + 30,
+      left: rect.left + window.scrollX - 400,
+    });
+    setHoveredSession(session);
+  };
+
+  const handleMouseLeave = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setHoveredSession(null);
+    }, 300);
+  };
+  const handlePopupMouseEnter = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
 
   const renderEventContent = (eventInfo: { event: any }) => {
     const { event } = eventInfo;
     const { extendedProps } = event;
     const isHumanBook = userInfo?.id === extendedProps.humanBookId;
-    const isPending = extendedProps.sessionStatus !== 'approved';
-
-    const handleMouseEnter = (e: React.MouseEvent) => {
-      const rect = (e.target as HTMLElement).getBoundingClientRect();
-      setPopupPosition({
-        top: rect.top + window.scrollY + 30,
-        left: rect.left + window.scrollX - 400,
-      });
-      setHoveredSession(extendedProps);
-    };
-    const handleMouseLeave = () => {
-      setHoveredSession(null);
-    };
+    const isPending =
+      extendedProps.sessionStatus !==
+      (StatusEnum.Approved || StatusEnum.Finished);
 
     return (
       <div
-        className="group relative z-[50] cursor-pointer overflow-visible"
-        onMouseEnter={handleMouseEnter}
+        className="group relative z-[50] h-[68px] cursor-pointer overflow-visible"
+        onMouseEnter={(e) => handleMouseEnter(e, extendedProps)}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="relative min-w-[60px] overflow-visible">
+        <div className="relative h-full min-w-[60px] overflow-visible">
           <div
-            className={`relative flex flex-col justify-start overflow-visible rounded-md border border-[#fff] ${
-              isHumanBook ? 'bg-[#CDDDFE]' : 'bg-[#FFE3CC]'
+            className={`relative flex h-full flex-col  justify-center overflow-visible rounded-xl border  ${
+              isHumanBook
+                ? 'border-[#FEF3C7] bg-[#FFFBEB]'
+                : 'border-[#DBEAFE] bg-[#DBEAFE]'
             } p-[2px]`}
           >
             {isPending && (
-              <p className="absolute left-[-20px] top-[-20px] flex h-[24px] w-[82px] items-center justify-center rounded-[100px] border-l-[#fff] bg-[#FFC745] p-[7px] text-[14px] font-[500] leading-[16px] text-[#000]">
-                Pending...
-              </p>
+              <span className=" inline-block h-[24px] w-[80px] self-end rounded-[100px] border-l-[#fff] bg-[#FFEDD5] p-[7px] text-right text-[12px] font-[500] leading-[16px] text-[#F97316]">
+                Waiting...
+              </span>
             )}
             <div className="flex items-center">
               <Image
@@ -94,14 +121,18 @@ export default function BigCalendar() {
                 loading="lazy"
                 className="mr-[2px] rounded-full border border-[#fff]"
               />
-              <p className="h-[20px] w-[80px] truncate text-[#171819]">
+              <p className="h-[20px] w-[80px] truncate text-xs text-[#171819]">
                 {isHumanBook
-                  ? extendedProps.humanBook.fullName
-                  : extendedProps.reader?.fullName}
+                  ? extendedProps.reader.fullName
+                  : extendedProps.humanBook?.fullName}
               </p>
             </div>
-            <p className={isHumanBook ? 'text-[#0442BF]' : 'text-[#FF7301]'}>
-              {isHumanBook ? 'Huber' : 'Liber'}
+            <p
+              className={`ml-3 text-xs ${
+                isHumanBook ? 'text-[#DBAE0A]' : 'text-[#0442BF]'
+              }`}
+            >
+              {isHumanBook ? ROLE_NAME[Role.LIBER] : ROLE_NAME[Role.HUBER]}
             </p>
           </div>
         </div>
@@ -158,7 +189,7 @@ export default function BigCalendar() {
             slotLabelContent={slotLabelContent}
             height="auto"
             contentHeight="auto"
-            slotMinTime="00:00:00"
+            slotMinTime="6:00:00"
             slotMaxTime="24:00:00"
             slotDuration="01:00:00"
             dayHeaderContent={dayHeaderContent}
@@ -167,12 +198,14 @@ export default function BigCalendar() {
           />
         )}
         {hoveredSession && (
-          <PortalSessionCard
-            session={hoveredSession}
-            expanded
-            position={popupPosition}
-            onClose={() => setHoveredSession(null)}
-          />
+          <div onMouseEnter={handlePopupMouseEnter}>
+            <PortalSessionCard
+              session={hoveredSession}
+              expanded
+              position={popupPosition}
+              onClose={() => setHoveredSession(null)}
+            />
+          </div>
         )}
       </div>
     </div>

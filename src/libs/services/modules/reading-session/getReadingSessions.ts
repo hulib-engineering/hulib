@@ -5,21 +5,14 @@ const getReadingSessions = (
   build: EndpointBuilder<BaseQueryFn, string, string>,
 ) =>
   build.query<any, { upcoming?: boolean; page?: number; limit?: number }>({
-    query: (params) => {
-      // Set default values for pagination
-      const page = params?.page ?? 1;
-      const limit = params?.limit ?? 1000;
-
-      const queryString = new URLSearchParams();
-      if (params?.upcoming)
-        queryString.append('upcoming', params.upcoming.toString());
-
-      // Always add page and limit with default values
-      queryString.append('page', page.toString());
-      queryString.append('limit', limit.toString());
-
-      return `reading-sessions?${queryString.toString()}`;
-    },
+    query: (params) => ({
+      url: 'reading-sessions',
+      params: {
+        upcoming: params?.upcoming || undefined,
+        page: params?.page || 1,
+        limit: params?.limit || 100,
+      },
+    }),
     providesTags: [{ type: 'ReadingSession' }],
   });
 

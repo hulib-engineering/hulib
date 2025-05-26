@@ -1,13 +1,15 @@
 import { Users } from '@phosphor-icons/react';
 import React from 'react';
 
+import { Role, ROLE_NAME } from '@/types/common';
+
 import type { User } from '../../../../libs/services/modules/user/userType';
 import { UserAvatar } from './UserAvatar';
 
 interface SessionAttendeesProps {
   humanBook: User;
   reader: User;
-  isVibing?: boolean;
+  isVibing: boolean;
 }
 
 export const SessionAttendees: React.FC<SessionAttendeesProps> = ({
@@ -33,7 +35,7 @@ export const SessionAttendees: React.FC<SessionAttendeesProps> = ({
                 color: 'rgba(4, 66, 191, 1)',
               }}
             >
-              Huber
+              {ROLE_NAME[Role.HUBER]}
             </span>
             <span className="text-sm font-medium text-black">
               {humanBook?.fullName || 'Unnamed'}
@@ -52,7 +54,7 @@ export const SessionAttendees: React.FC<SessionAttendeesProps> = ({
                 color: 'rgba(219, 174, 10, 1)',
               }}
             >
-              Liber
+              {ROLE_NAME[Role.LIBER]}
             </span>
             <span className="text-sm font-medium text-black">
               {reader?.fullName || 'Unnamed'}

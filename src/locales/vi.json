@@ -429,6 +429,9 @@
     "error_time_slots": "Đã xảy ra lỗi. Vui lòng kiểm tra khung giờ của bạn và thử lại.",
     "success_time_slots_description": "Bạn đã tạo khung giờ thành công"
   },
+  "Meeting": {
+    "cancel_meeting": "Tôi không muốn gặp nữa"
+  },
   "Home": {
     "banner": {
       "title": "Xin chào!",
