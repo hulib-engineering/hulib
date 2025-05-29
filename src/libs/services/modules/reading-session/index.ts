@@ -2,7 +2,7 @@ import { api } from '../../api';
 import createNewReadingSession from './createNewReadingSession';
 import getReadingSessionById from './getReadingSessionById';
 import getReadingSessions from './getReadingSessions';
-import updateStatusReadingSession from './updateStatusReadingSession';
+import updateReadingSession from './updateReadingSession';
 
 const apiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['ReadingSession'],
@@ -12,7 +12,7 @@ const readingSessionApi = apiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
     createNewReadingSession: createNewReadingSession(build),
     getReadingSessions: getReadingSessions(build),
-    updateStatusReadingSession: updateStatusReadingSession(build),
+    updateReadingSession: updateReadingSession(build),
     getReadingSessionById: getReadingSessionById(build),
   }),
   overrideExisting: false,
@@ -21,6 +21,6 @@ const readingSessionApi = apiWithTag.injectEndpoints({
 export const {
   useCreateNewReadingSessionMutation,
   useGetReadingSessionsQuery,
-  useUpdateStatusReadingSessionMutation,
+  useUpdateReadingSessionMutation,
   useGetReadingSessionByIdQuery,
 }: any = readingSessionApi;
