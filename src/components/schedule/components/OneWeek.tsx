@@ -1,8 +1,17 @@
 'use client';
 
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
-import { addDays, format, isToday, startOfWeek } from 'date-fns';
+import {
+  addDays,
+  format,
+  isBefore,
+  isToday,
+  startOfDay,
+  startOfWeek,
+} from 'date-fns';
 import { useState } from 'react';
+
+import Button from '@/components/button/Button';
 
 type Props = {
   selectDate: Date | null;
@@ -14,14 +23,17 @@ type Props = {
 export default function OneWeek({
   selectDate,
   setSelectDate,
-  todayClass = 'border border-blue-500 text-blue-500',
-  selectedClass = 'border bg-blue-600 text-white',
+  todayClass = 'border border-primary-500 text-primary-500 bg-primary-50',
+  selectedClass = 'border bg-primary-500 text-white',
 }: Props) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const startOfCurrentWeek = startOfWeek(new Date(), { weekStartsOn: 0 });
   const [selectedDate, setSelectedDate] = useState<Date | null>(selectDate);
 
   const onClickDateItem = (item: Date) => {
+    if (isBefore(startOfDay(item), startOfDay(new Date()))) {
+      return;
+    }
     setSelectedDate(item);
     setSelectDate?.(item);
   };
@@ -50,24 +62,35 @@ export default function OneWeek({
         </button>
       </div>
       <div className="grid grid-cols-7 gap-2 text-center">
-        {getWeekDays().map((day, index) => (
-          <div key={index} className="flex w-full flex-col items-center">
-            <span className="text-sm text-gray-500">{format(day, 'E')}</span>
-            <button
-              type="button"
-              onClick={() => onClickDateItem(day)}
-              className={`flex h-16 w-full items-center justify-center rounded-md transition-all
-                ${isToday(day) ? todayClass : 'border-gray-300'}
-                ${
-                  selectedDate?.toDateString() === day.toDateString()
-                    ? selectedClass
-                    : 'hover:bg-gray-200'
-                }`}
-            >
-              {format(day, 'd')}
-            </button>
-          </div>
-        ))}
+        {getWeekDays().map((day, index) => {
+          const isPastDate = isBefore(startOfDay(day), startOfDay(new Date()));
+          const isSelected =
+            selectedDate?.toDateString() === day.toDateString();
+          const isTodayDate = isToday(day);
+
+          return (
+            <div key={index} className="flex w-full flex-col items-center">
+              <span className="text-sm text-gray-500">{format(day, 'E')}</span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onClickDateItem(day)}
+                disabled={isPastDate}
+                className={`flex h-10 w-full items-center justify-center rounded-md transition-all
+                  ${isTodayDate ? todayClass : 'border-gray-300'}
+                  ${
+                    !isPastDate && isSelected
+                      ? selectedClass
+                      : !isPastDate
+                        ? 'hover:bg-gray-200'
+                        : ''
+                  }`}
+              >
+                {format(day, 'd')}
+              </Button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

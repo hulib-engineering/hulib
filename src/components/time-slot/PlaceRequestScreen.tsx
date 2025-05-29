@@ -6,20 +6,20 @@ import {
   CalendarDots,
   Note,
   Timer,
-  Users,
   Warning,
 } from '@phosphor-icons/react';
 import dayjs from 'dayjs';
 import { isEmpty } from 'lodash';
+import { useParams } from 'next/navigation';
 import * as React from 'react';
 import { useMemo } from 'react';
 
 import Button from '@/components/button/Button';
-import AttendeesInfo from '@/components/time-slot/AttendeesInfo';
 import { useAppSelector } from '@/libs/hooks';
 import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
 
 import { pushError, pushSuccess } from '../CustomToastifyContainer';
+import { SessionAttendees } from '../schedule/components/sessionCard/SessionAttendees';
 
 type Props = {
   attendees: {
@@ -28,7 +28,6 @@ type Props = {
   };
   startTime: string;
   dateTime: string;
-  humanBookId: number;
   storyId: number;
   nextStep: () => void;
   backStep: () => void;
@@ -38,12 +37,12 @@ export const PlaceRequestScreen = ({
   attendees: { liber, huber },
   startTime,
   dateTime,
-  humanBookId,
   storyId,
   nextStep,
   backStep,
 }: Props) => {
-  const user = useAppSelector((state) => state.auth.userInfo);
+  const { huberId } = useParams();
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
   const [placeRequest] = useCreateNewReadingSessionMutation();
   const [note, setNote] = React.useState('');
   const [startedAt] = React.useState<any>(() => {
@@ -67,8 +66,8 @@ export const PlaceRequestScreen = ({
   const onPlaceRequest = async () => {
     try {
       await placeRequest({
-        humanBookId,
-        readerId: user?.id ?? 0,
+        humanBookId: Number(huberId),
+        readerId: userInfo?.id,
         storyId,
         startTime,
         endTime: endTimeString,
@@ -79,8 +78,8 @@ export const PlaceRequestScreen = ({
 
       pushSuccess('Request sent successfully');
       nextStep();
-    } catch (error) {
-      pushError('Something went wrong');
+    } catch (error: any) {
+      pushError('Failed to book meeting');
     }
   };
 
@@ -100,24 +99,11 @@ export const PlaceRequestScreen = ({
           Back
         </button>
         <h4 className="text-[28px] font-medium">30 Minutes meeting</h4>
-        <div className="flex flex-col gap-y-1.5">
-          <div className="flex items-center gap-x-2 text-sm font-medium text-neutral-10">
-            <Users size={16} />
-            Attendees
-          </div>
-          <AttendeesInfo
-            source="/assets/images/Avatar.png"
-            // source={liber?.avatar}
-            role={liber?.role?.name}
-            name={liber?.fullName}
-          />
-          <AttendeesInfo
-            source="/assets/images/Avatar.png"
-            // source={huber?.avatar}
-            role={huber?.role}
-            name={huber?.fullName}
-          />
-        </div>
+        <SessionAttendees
+          humanBook={huber}
+          reader={liber}
+          isVibing={Number(userInfo?.id) === Number(liber?.id)}
+        />
 
         <div className="flex flex-col gap-y-1.5">
           <div className="flex items-center gap-x-2 text-sm font-medium text-neutral-10">
