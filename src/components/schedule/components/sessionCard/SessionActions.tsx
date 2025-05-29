@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import { useUpdateStatusReadingSessionMutation } from '@/libs/services/modules/reading-session';
+import { useUpdateReadingSessionMutation } from '@/libs/services/modules/reading-session';
 import type { StatusType } from '@/libs/services/modules/reading-session/createNewReadingSession';
 import { StatusEnum } from '@/types/common';
 
@@ -19,7 +19,7 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
   isVibing,
   onStatusChange,
 }) => {
-  const [updateStatus, { isLoading }] = useUpdateStatusReadingSessionMutation();
+  const [updateStatus, { isLoading }] = useUpdateReadingSessionMutation();
   const [showCancelDialog, setShowCancelDialog] = useState(false);
   const t = useTranslations('Meeting');
   const defaultCancelReason = t('cancel_meeting');
