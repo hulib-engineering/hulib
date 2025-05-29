@@ -59,7 +59,6 @@ export default function HeadSlots({
 
   useEffect(() => {
     setSelectedDay(dayOfWeek);
-    console.log('dayOfWeek', dayOfWeek);
   }, [dayOfWeek]);
 
   useEffect(() => {

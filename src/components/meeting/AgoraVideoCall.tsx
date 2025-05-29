@@ -2,7 +2,11 @@
 
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+
+import { useAppSelector } from '@/libs/hooks';
+import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
 
 import VideoComponent from './Video';
 
@@ -11,6 +15,8 @@ type Props = {
 };
 
 export default function AgoraVideoCall({ appId }: Props) {
+  const router = useRouter();
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
   const [ready, setReady] = useState(true);
   const [isCameraOn, setIsCameraOn] = useState(true);
   const [isMicOn, setIsMicOn] = useState(true);
@@ -22,8 +28,16 @@ export default function AgoraVideoCall({ appId }: Props) {
 
   const urlParams = new URLSearchParams(window.location.search);
   const channel = urlParams.get('channel') || '';
-  const storyName = channel?.split('-')?.[0];
+  const [storyName, sessionId] = channel?.split('-') || [];
   const token = urlParams.get('token') || '';
+  const { data: readingSession } = useGetReadingSessionByIdQuery(
+    {
+      id: sessionId || 0,
+    },
+    {
+      skip: !sessionId,
+    },
+  );
 
   const localRef = useRef<HTMLDivElement>(null);
   const remoteRef = useRef<HTMLDivElement>(null);
@@ -41,13 +55,10 @@ export default function AgoraVideoCall({ appId }: Props) {
 
     const start = async () => {
       try {
-        console.log('🚀 Starting Agora client...');
         await agoraClient.join(appId, channel, token);
-        console.log('✅ Joined channel successfully');
 
         // Tạo tracks cho microphone và camera
         tracks = await AgoraRTC.createMicrophoneAndCameraTracks();
-        console.log('✅ Created tracks:', tracks);
 
         // Cập nhật localTracks state
         setLocalTracks(tracks);
@@ -56,28 +67,23 @@ export default function AgoraVideoCall({ appId }: Props) {
         // Play video track vào local container
         if (tracks[1] && localRef.current) {
           tracks[1].play(localRef.current);
-          console.log('✅ Playing local video track');
         }
 
         // Publish tracks
         await agoraClient.publish(tracks);
-        console.log('✅ Published tracks successfully');
 
         // Set up remote user handling
         agoraClient.on('user-published', async (user, mediaType) => {
-          console.log('👤 User published:', user.uid, mediaType);
           await agoraClient.subscribe(user, mediaType);
           if (mediaType === 'video' && remoteRef.current) {
             user.videoTrack?.play(remoteRef.current);
-            console.log('✅ Playing remote video track');
           }
           if (mediaType === 'audio') {
             user.audioTrack?.play();
-            console.log('✅ Playing remote audio track');
           }
         });
       } catch (error) {
-        console.error('❌ Failed to start Agora client:', error);
+        // Silent error handling - could be replaced with proper error reporting
       }
     };
 
@@ -85,7 +91,6 @@ export default function AgoraVideoCall({ appId }: Props) {
 
     // Cleanup function với proper function declaration
     const cleanup = () => {
-      console.log('🧹 Cleaning up Agora client...');
       if (tracks.length > 0) {
         tracks.forEach((track) => {
           track.stop();
@@ -106,29 +111,18 @@ export default function AgoraVideoCall({ appId }: Props) {
    */
   const toggleCamera = async () => {
     try {
-      console.log('🎥 Toggling camera...', {
-        tracksReady,
-        localTracksLength: localTracks.length,
-        currentCameraState: isCameraOn,
-        cameraTrack: localTracks[1],
-      });
-
       // Kiểm tra xem tracks đã sẵn sàng chưa
       if (!tracksReady || !localTracks[1]) {
-        console.warn('⚠️ Camera track not ready yet');
         return;
       }
 
       const newState = !isCameraOn;
-      console.log(`🎥 Setting camera to: ${newState ? 'ON' : 'OFF'}`);
 
       // Enable/disable camera track
       await localTracks[1].setEnabled(newState);
       setIsCameraOn(newState);
-
-      console.log('✅ Camera toggled successfully to:', newState);
     } catch (error) {
-      console.error('❌ Failed to toggle camera:', error);
+      // Silent error handling - could be replaced with proper error reporting
     }
   };
 
@@ -138,28 +132,17 @@ export default function AgoraVideoCall({ appId }: Props) {
    */
   const toggleMic = async () => {
     try {
-      console.log('🎤 Toggling microphone...', {
-        tracksReady,
-        localTracksLength: localTracks.length,
-        currentMicState: isMicOn,
-        micTrack: localTracks[0],
-      });
-
       if (!tracksReady || !localTracks[0]) {
-        console.warn('⚠️ Microphone track not ready yet');
         return;
       }
 
       const newState = !isMicOn;
-      console.log(`🎤 Setting microphone to: ${newState ? 'ON' : 'OFF'}`);
 
       // Enable/disable microphone track
       await localTracks[0].setEnabled(newState);
       setIsMicOn(newState);
-
-      console.log('✅ Microphone toggled successfully to:', newState);
     } catch (error) {
-      console.error('❌ Failed to toggle microphone:', error);
+      // Silent error handling - could be replaced with proper error reporting
     }
   };
 
@@ -168,8 +151,6 @@ export default function AgoraVideoCall({ appId }: Props) {
    */
   const endCall = async () => {
     try {
-      console.log('☎️ Ending call...');
-
       if (localTracks.length > 0) {
         localTracks.forEach((track) => {
           track.stop();
@@ -183,10 +164,12 @@ export default function AgoraVideoCall({ appId }: Props) {
       setIsMicOn(true);
       setTracksReady(false);
       setReady(false); // reset để tránh rejoin
-
-      console.log('✅ Call ended successfully');
+      const isLiber = readingSession?.reader.id === userInfo.id;
+      if (!isLiber) {
+        router.push(`/after-meeting/${sessionId}?storyName=${storyName}`);
+      }
     } catch (error) {
-      console.error('❌ Failed to end call:', error);
+      // Silent error handling - could be replaced with proper error reporting
     }
   };
 
