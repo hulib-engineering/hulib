@@ -37,7 +37,12 @@ const OverviewSection = ({ data, onInvalidate }: Props) => {
       console.log(error);
     }
   };
-
+  const truncateText = (text: string, maxLength = 30) => {
+    if (!text) return '';
+    return text.length > maxLength
+      ? `${text.substring(0, maxLength)}...`
+      : text;
+  };
   return (
     <div className="mb-3 flex flex-col gap-y-4 py-5 font-light">
       {data?.topics && (
@@ -47,9 +52,9 @@ const OverviewSection = ({ data, onInvalidate }: Props) => {
             {data?.topics.map((topic) => (
               <Chip
                 key={topic?.id}
-                className="rounded-full border border-primary-60 bg-primary-90 text-primary-60"
+                className="h-full rounded-full border border-primary-60 bg-primary-90 px-3 py-2 text-primary-60"
               >
-                <span>{topic?.name || ''}</span>
+                <span>{truncateText(topic?.name)}</span>
               </Chip>
             ))}
           </div>
