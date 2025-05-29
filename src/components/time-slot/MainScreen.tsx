@@ -27,7 +27,6 @@ export const MainScreen = ({
   attendees,
   selectDate,
   selectTime,
-  huberId,
   onSelectDay,
   onSelectTime,
   nextStep,
@@ -35,13 +34,12 @@ export const MainScreen = ({
   attendees: { liber: IAttendee; huber: any };
   selectDate: Date;
   selectTime: string;
-  huberId: number;
   onSelectDay: (day: Date) => void;
   onSelectTime: (time: string) => void;
   nextStep: () => void;
 }) => {
   const { data: timeSlots } = useGetTimeSlotsHuberQuery({
-    id: Number(huberId),
+    id: Number(attendees.huber.id),
   });
 
   const filterTimeSlots: TimeSlot[] = React.useMemo(() => {
