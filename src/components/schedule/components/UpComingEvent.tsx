@@ -57,7 +57,7 @@ function UpComingEvent() {
           </div>
           <div className="flex items-center">
             <div className="mr-[4px]">
-              <CalendarDot size={13} color="#292D37" className="-mt-[4px]" />
+              <CalendarDot size={13} color="#292D37" />
             </div>
             <div className="text-[14px] font-[400] leading-[16px]">
               Today{' '}
@@ -68,18 +68,19 @@ function UpComingEvent() {
           </div>
           <div className="flex items-center">
             <div className="mr-[4px]">
-              <MapPinArea size={13} color="#292D37" className="-mt-[4px]" />
+              <MapPinArea size={13} color="#292D37" />
             </div>
-            <div className="text-[#4682FB]">
+            <div className="max-w-[300px] text-primary-60">
               <Link
                 href={`${
                   data.sessionUrl
                     ? data.sessionUrl
                     : 'https://shorturl.at/miRK7'
                 }`}
-                className="text-[14px] font-[500] leading-[16px]"
+                className="block truncate text-[14px] font-[500] leading-[16px] hover:underline"
+                title={data.sessionUrl}
               >
-                {data.sessionUrl}
+                {data.sessionUrl || 'https://shorturl.at/miRK7'}
               </Link>
             </div>
           </div>

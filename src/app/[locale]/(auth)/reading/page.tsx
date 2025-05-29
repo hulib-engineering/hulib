@@ -1,72 +1,34 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import Button from '@/components/button/Button';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import Loader from '@/components/loader/Loader';
+import RatingScale from '@/components/meeting/RatingScale';
 import { useAppSelector } from '@/libs/hooks';
+import {
+  useGetReadingSessionByIdQuery,
+  useUpdateReadingSessionMutation,
+} from '@/libs/services/modules/reading-session';
 
 // Dynamic import để dùng component client
 const AgoraVideoCall = dynamic(
-  () => import('../../../../components/meeting/AgoraVideoCall'),
+  () => import('@/components/meeting/AgoraVideoCall'),
   {
     ssr: false,
-  }
-);
-
-// Rating component for reusability - moved outside to avoid re-creation on each render
-const RatingScale = ({
-  question,
-  leftLabel,
-  rightLabel,
-  value,
-  onChange,
-}: {
-  question: string;
-  leftLabel: string;
-  rightLabel: string;
-  value: number;
-  onChange: (rating: number) => void;
-}) => (
-  <div className="space-y-3 sm:space-y-4">
-    <h3 className="text-base font-medium text-gray-900 sm:text-lg">
-      {question}
-    </h3>
-    <div className="mx-auto flex w-full items-end justify-between sm:w-[80%]">
-      <span className="text-xs font-medium text-primary-60 sm:text-sm">
-        {leftLabel}
-      </span>
-      <div className="flex space-x-4 sm:space-x-10">
-        {[1, 2, 3, 4, 5].map((rating) => (
-          <div
-            key={rating}
-            className="flex flex-col items-center space-y-1 sm:space-y-2"
-          >
-            <span className="text-sm sm:text-base">{rating}</span>
-            <button
-              type="button"
-              onClick={() => onChange(rating)}
-              className={`h-5 w-5 rounded-full border-2 transition-all duration-200 hover:scale-110 sm:h-6 sm:w-6 ${
-                value === rating
-                  ? 'border-primary-60 bg-primary-60'
-                  : 'border-gray-300 bg-white hover:border-primary-60'
-              }`}
-              aria-label={`Rating ${rating}`}
-            >
-              <span className="sr-only">{rating}</span>
-            </button>
-          </div>
-        ))}
-      </div>
-      <span className="text-xs font-medium text-primary-60 sm:text-sm">
-        {rightLabel}
-      </span>
-    </div>
-  </div>
+  },
 );
 
 export default function ReadingPage() {
   const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const searchParams = useSearchParams();
+  const channel = searchParams.get('channel');
+  const sessionId = channel?.split('-')?.[1];
+  const [updateReadingSession, { isLoading }] =
+    useUpdateReadingSessionMutation();
   const [isDoneSurveyForReading, setIsDoneSurveyForReading] = useState(false);
   const [surveyData, setSurveyData] = useState({
     feeling: 0,
@@ -75,30 +37,75 @@ export default function ReadingPage() {
     session: 0,
   });
   const appId = process.env.NEXT_PUBLIC_AGORA_APP_ID || '';
+  const { data: readingSession } = useGetReadingSessionByIdQuery(
+    {
+      id: sessionId || 0,
+    },
+    {
+      skip: !sessionId,
+    },
+  );
 
   useEffect(() => {
-    if (!userInfo?.id) return;
+    if (!userInfo?.id || !readingSession) return;
+    const isHuber = userInfo?.id === readingSession.humanBook.id;
     const savedIsDoneSurveyForReading = localStorage.getItem(
       `is_done_survey_for_reading_${userInfo.id}`,
     );
-    if (savedIsDoneSurveyForReading) {
-      setIsDoneSurveyForReading(savedIsDoneSurveyForReading === 'true');
+    if (isHuber || savedIsDoneSurveyForReading) {
+      setIsDoneSurveyForReading(true);
     }
-  }, [userInfo?.id]);
+  }, [userInfo?.id, readingSession]);
 
   // Handle survey submission
-  const handleSurveySubmit = () => {
-    // Save survey completion status to localStorage
-    localStorage.setItem(`is_done_survey_for_reading_${userInfo.id}`, 'true');
+  const handleSurveySubmit = async () => {
+    try {
+      // Save survey completion status to localStorage
+      localStorage.setItem(`is_done_survey_for_reading_${userInfo.id}`, 'true');
 
-    // Save survey data (you can send this to your backend)
-    localStorage.setItem(
-      `survey_data_${userInfo.id}`,
-      JSON.stringify(surveyData),
-    );
+      // Save survey data (you can send this to your backend)
+      localStorage.setItem(
+        `survey_data_${userInfo.id}`,
+        JSON.stringify(surveyData),
+      );
 
-    // Update state to show video call
-    setIsDoneSurveyForReading(true);
+      // Update reading session with presurvey data if sessionId exists
+      if (sessionId) {
+        const presurveyData = [
+          {
+            id: 1,
+            rating: surveyData.feeling,
+          },
+          {
+            id: 2,
+            rating: surveyData.story,
+          },
+          {
+            id: 3,
+            rating: surveyData.huber,
+          },
+          {
+            id: 4,
+            rating: surveyData.session,
+          },
+        ];
+
+        await updateReadingSession({
+          id: parseInt(sessionId, 10),
+          presurvey: presurveyData,
+        }).unwrap();
+
+        pushSuccess('Survey data saved successfully!');
+      }
+
+      // Update state to show video call
+      setIsDoneSurveyForReading(true);
+    } catch (error) {
+      pushError('Failed to save survey data. Please try again.');
+
+      // Still show video call even if API call fails
+      setIsDoneSurveyForReading(true);
+    }
   };
 
   // Handle rating selection
@@ -111,6 +118,13 @@ export default function ReadingPage() {
 
   // Check if all questions are answered
   const isFormComplete = Object.values(surveyData).every((value) => value > 0);
+
+  if (!readingSession || isLoading)
+    return (
+      <div className="flex h-[300px] w-full items-center justify-center">
+        <Loader />
+      </div>
+    );
 
   return (
     <div className="flex size-full items-center justify-center">

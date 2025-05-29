@@ -17,18 +17,23 @@ export default function AgoraVideoCall({ appId }: Props) {
   const [client, setClient] = useState<any>(null);
   const [localTracks, setLocalTracks] = useState<any[]>([]);
 
+  // Thêm state để theo dõi việc setup tracks
+  const [tracksReady, setTracksReady] = useState(false);
+
   const urlParams = new URLSearchParams(window.location.search);
   const channel = urlParams.get('channel') || '';
+  const storyName = channel?.split('-')?.[0];
   const token = urlParams.get('token') || '';
-
-  console.log('channel:', channel);
-  console.log('token:', token);
 
   const localRef = useRef<HTMLDivElement>(null);
   const remoteRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!ready) return;
+    // Always return a cleanup function, even if we don't set up anything
+    if (!ready) {
+      // Return empty cleanup function for consistency
+      return () => {};
+    }
 
     const agoraClient = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' });
     setClient(agoraClient);
@@ -36,30 +41,51 @@ export default function AgoraVideoCall({ appId }: Props) {
 
     const start = async () => {
       try {
+        console.log('🚀 Starting Agora client...');
         await agoraClient.join(appId, channel, token);
+        console.log('✅ Joined channel successfully');
+
+        // Tạo tracks cho microphone và camera
         tracks = await AgoraRTC.createMicrophoneAndCameraTracks();
+        console.log('✅ Created tracks:', tracks);
+
+        // Cập nhật localTracks state
         setLocalTracks(tracks);
+        setTracksReady(true);
 
-        tracks[1].play(localRef.current!);
+        // Play video track vào local container
+        if (tracks[1] && localRef.current) {
+          tracks[1].play(localRef.current);
+          console.log('✅ Playing local video track');
+        }
+
+        // Publish tracks
         await agoraClient.publish(tracks);
+        console.log('✅ Published tracks successfully');
 
+        // Set up remote user handling
         agoraClient.on('user-published', async (user, mediaType) => {
+          console.log('👤 User published:', user.uid, mediaType);
           await agoraClient.subscribe(user, mediaType);
-          if (mediaType === 'video') {
-            user.videoTrack?.play(remoteRef.current!);
+          if (mediaType === 'video' && remoteRef.current) {
+            user.videoTrack?.play(remoteRef.current);
+            console.log('✅ Playing remote video track');
           }
           if (mediaType === 'audio') {
             user.audioTrack?.play();
+            console.log('✅ Playing remote audio track');
           }
         });
       } catch (error) {
-        console.error('Failed to start Agora client:', error);
+        console.error('❌ Failed to start Agora client:', error);
       }
     };
 
     start();
 
-    return () => {
+    // Cleanup function với proper function declaration
+    const cleanup = () => {
+      console.log('🧹 Cleaning up Agora client...');
       if (tracks.length > 0) {
         tracks.forEach((track) => {
           track.stop();
@@ -67,39 +93,106 @@ export default function AgoraVideoCall({ appId }: Props) {
         });
       }
       agoraClient.leave();
+      setTracksReady(false);
     };
-  }, [ready]);
 
+    // Always return cleanup function for consistent return behavior
+    return cleanup;
+  }, [ready, appId, channel, token]);
+
+  /**
+   * Toggle camera on/off với improved error handling
+   * tracks[1] là camera track, tracks[0] là microphone track
+   */
   const toggleCamera = async () => {
-    if (!localTracks[1]) return;
-    const newState = !isCameraOn;
-    await localTracks[1].setEnabled(newState);
-    setIsCameraOn(newState);
-  };
-
-  const toggleMic = async () => {
-    if (!localTracks[0]) return;
-    const newState = !isMicOn;
-    await localTracks[0].setEnabled(newState);
-    setIsMicOn(newState);
-  };
-
-  const endCall = async () => {
-    if (localTracks.length > 0) {
-      localTracks.forEach((track) => {
-        track.stop();
-        track.close();
+    try {
+      console.log('🎥 Toggling camera...', {
+        tracksReady,
+        localTracksLength: localTracks.length,
+        currentCameraState: isCameraOn,
+        cameraTrack: localTracks[1],
       });
+
+      // Kiểm tra xem tracks đã sẵn sàng chưa
+      if (!tracksReady || !localTracks[1]) {
+        console.warn('⚠️ Camera track not ready yet');
+        return;
+      }
+
+      const newState = !isCameraOn;
+      console.log(`🎥 Setting camera to: ${newState ? 'ON' : 'OFF'}`);
+
+      // Enable/disable camera track
+      await localTracks[1].setEnabled(newState);
+      setIsCameraOn(newState);
+
+      console.log('✅ Camera toggled successfully to:', newState);
+    } catch (error) {
+      console.error('❌ Failed to toggle camera:', error);
     }
-    await client?.leave();
-    setLocalTracks([]);
-    setIsCameraOn(true);
-    setIsMicOn(true);
-    setReady(false); // reset để tránh rejoin
+  };
+
+  /**
+   * Toggle microphone on/off với improved error handling
+   * tracks[0] là microphone track
+   */
+  const toggleMic = async () => {
+    try {
+      console.log('🎤 Toggling microphone...', {
+        tracksReady,
+        localTracksLength: localTracks.length,
+        currentMicState: isMicOn,
+        micTrack: localTracks[0],
+      });
+
+      if (!tracksReady || !localTracks[0]) {
+        console.warn('⚠️ Microphone track not ready yet');
+        return;
+      }
+
+      const newState = !isMicOn;
+      console.log(`🎤 Setting microphone to: ${newState ? 'ON' : 'OFF'}`);
+
+      // Enable/disable microphone track
+      await localTracks[0].setEnabled(newState);
+      setIsMicOn(newState);
+
+      console.log('✅ Microphone toggled successfully to:', newState);
+    } catch (error) {
+      console.error('❌ Failed to toggle microphone:', error);
+    }
+  };
+
+  /**
+   * End call và cleanup tất cả resources
+   */
+  const endCall = async () => {
+    try {
+      console.log('☎️ Ending call...');
+
+      if (localTracks.length > 0) {
+        localTracks.forEach((track) => {
+          track.stop();
+          track.close();
+        });
+      }
+
+      await client?.leave();
+      setLocalTracks([]);
+      setIsCameraOn(true);
+      setIsMicOn(true);
+      setTracksReady(false);
+      setReady(false); // reset để tránh rejoin
+
+      console.log('✅ Call ended successfully');
+    } catch (error) {
+      console.error('❌ Failed to end call:', error);
+    }
   };
 
   return (
     <div className="m-4 size-full rounded-lg bg-[#FFFFFF] p-6 shadow-lg">
+      {/* Header với meeting info và controls */}
       <div className="flex items-center justify-between">
         <div />
         <div className="flex gap-8 text-center text-2xl text-lp-primary-blue">
@@ -113,7 +206,7 @@ export default function AgoraVideoCall({ appId }: Props) {
             />
             <span>00:00:00</span>
           </div>
-          Meeting topic: {channel}
+          Meeting topic: {storyName}
         </div>
 
         <Image
@@ -127,9 +220,12 @@ export default function AgoraVideoCall({ appId }: Props) {
         />
       </div>
 
+      {/* Video display area */}
       <div className="relative mt-4">
+        {/* Main video (local) */}
         <VideoComponent localRef={localRef} isShowWaitingText />
 
+        {/* Picture-in-picture video (remote) */}
         <div className="absolute right-2 top-2 h-[181px] w-[297px]">
           <VideoComponent
             localRef={remoteRef}
@@ -142,9 +238,10 @@ export default function AgoraVideoCall({ appId }: Props) {
         </div>
       </div>
 
+      {/* Control panel */}
       <div className="mt-4 h-[76px] rounded-sm bg-[#F9F9F9] px-2 py-4">
         <div className="flex items-center justify-center gap-4">
-          {/* Toggle Camera */}
+          {/* Toggle Camera Button */}
           <Image
             src={
               isCameraOn
@@ -155,26 +252,32 @@ export default function AgoraVideoCall({ appId }: Props) {
             height={44}
             alt="camera-icon"
             loading="lazy"
-            className="cursor-pointer"
+            className={`cursor-pointer transition-opacity ${
+              tracksReady ? 'opacity-100' : 'opacity-50'
+            }`}
             onClick={toggleCamera}
+            title={tracksReady ? 'Toggle Camera' : 'Camera not ready'}
           />
 
-          {/* Toggle Microphone */}
+          {/* Toggle Microphone Button */}
           <Image
             src={
               isMicOn
                 ? '/assets/icons/meeting/voice.svg'
-                : '/assets/icons/meeting/voice-off.svg'
+                : '/assets/icons/meeting/mute-voice.svg'
             }
             width={44}
             height={44}
             alt="mic-icon"
             loading="lazy"
-            className="cursor-pointer"
+            className={`cursor-pointer transition-opacity ${
+              tracksReady ? 'opacity-100' : 'opacity-50'
+            }`}
             onClick={toggleMic}
+            title={tracksReady ? 'Toggle Microphone' : 'Microphone not ready'}
           />
 
-          {/* End Call */}
+          {/* End Call Button */}
           <Image
             src="/assets/icons/meeting/end-call.svg"
             width={44}
@@ -183,9 +286,10 @@ export default function AgoraVideoCall({ appId }: Props) {
             loading="lazy"
             className="cursor-pointer"
             onClick={endCall}
+            title="End Call"
           />
 
-          {/* (Optional) Share screen */}
+          {/* Share Screen Button (placeholder) */}
           <Image
             src="/assets/icons/meeting/share-screen.svg"
             width={44}
@@ -194,9 +298,20 @@ export default function AgoraVideoCall({ appId }: Props) {
             loading="lazy"
             className="cursor-pointer"
             onClick={() => {}}
+            title="Share Screen (Coming Soon)"
           />
         </div>
       </div>
+
+      {/* Debug info (chỉ hiện trong development) */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="mt-2 rounded bg-gray-100 p-2 text-xs">
+          <div>Tracks Ready: {tracksReady ? '✅' : '❌'}</div>
+          <div>Local Tracks: {localTracks.length}</div>
+          <div>Camera: {isCameraOn ? 'ON' : 'OFF'}</div>
+          <div>Microphone: {isMicOn ? 'ON' : 'OFF'}</div>
+        </div>
+      )}
     </div>
   );
 }
