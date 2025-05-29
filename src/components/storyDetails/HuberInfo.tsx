@@ -1,11 +1,12 @@
 'use client';
 
-import { Book, BookmarkSimple, Brain } from '@phosphor-icons/react';
+import { Book, Brain } from '@phosphor-icons/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
+import { useAppSelector } from '@/libs/hooks';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 
 import IconButton from '../iconButton/IconButton';
@@ -22,10 +23,10 @@ interface Props {
   title: string;
   coverPath: string;
   abstract: string;
-  storyReview: {
-    rating: number;
-    numberOfReviews: number;
-  };
+  // storyReview: {
+  //   rating: number;
+  //   numberOfReviews: number;
+  // };
   storyId: number;
 }
 
@@ -34,12 +35,12 @@ const HumanBookInfo = ({
   title,
   coverPath,
   abstract,
-  storyReview,
+  // storyReview,
   storyId,
 }: Props) => {
   const [imgError, setImgError] = useState(false);
   const router = useRouter();
-
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
   const handleImageError = () => {
     setImgError(true);
   };
@@ -56,16 +57,17 @@ const HumanBookInfo = ({
             <IconButton
               icon={<Book size={16} />}
               className="w-full px-4 text-base text-white"
+              disabled={Number(humanBook?.id) === Number(userInfo?.id)}
             >
               Schedule a Meeting
             </IconButton>
           </Link>
-          <IconButton
+          {/* <IconButton
             icon={<BookmarkSimple size={16} />}
             className="bg-transparent text-base text-primary-50"
           >
             Save to Later
-          </IconButton>
+          </IconButton> */}
         </div>
         <div className="flex flex-col items-start justify-between px-3 py-1">
           <h2 className="mb-2 text-xl font-bold">{title}</h2>
@@ -95,12 +97,12 @@ const HumanBookInfo = ({
               <p>{`${humanBook?.topics?.length || 0} topics`}</p>
             )}
           </div>
-          <div className="flex items-center gap-1 py-2 text-sm">
-            <span>⭐️ {storyReview?.rating || 0}</span>
+          {/* <div className="flex items-center gap-1 py-2 text-sm">
+            <span>⭐️ {humanBook?.rating || 0}</span>
             <span className="ml-1 text-base text-gray-500">{`(${
-              storyReview?.numberOfReviews || 0
+              humanBook?.numberOfReviews || 0
             } reviews)`}</span>
-          </div>
+          </div> */}
           <div>
             {humanBook?.topics?.map((topic) => (
               <IconButton

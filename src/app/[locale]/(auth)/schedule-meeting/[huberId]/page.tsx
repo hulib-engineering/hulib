@@ -39,6 +39,7 @@ export default function Index() {
           attendees={{
             liber: currentUser,
             huber: {
+              id: Number(huberId),
               fullName: huberInfo?.fullName,
               role: huberInfo?.role?.name,
               avatar: huberInfo?.photo?.path,
@@ -49,7 +50,6 @@ export default function Index() {
           }}
           selectDate={selectedDay}
           selectTime={selectedTime}
-          huberId={Number(huberId)}
           onSelectDay={onSelectDay}
           onSelectTime={setSelectedTime}
           nextStep={() => setCurrentStep('confirm')}
@@ -76,7 +76,6 @@ export default function Index() {
               month: 'short',
             }) ?? ''
           }
-          humanBookId={Number(huberId)}
           storyId={Number(storyId)}
           backStep={() => setCurrentStep('select-time')}
           nextStep={() => setCurrentStep('success')}

@@ -26,6 +26,7 @@ import {
   useGetReadingSessionByIdQuery,
   useUpdateReadingSessionMutation,
 } from '@/libs/services/modules/reading-session';
+import { StatusEnum } from '@/types/common';
 
 export default function FeedbackForm() {
   const router = useRouter();
@@ -65,6 +66,7 @@ export default function FeedbackForm() {
         id: meetingId,
         ...(step === 'feedback-sesion'
           ? {
+              sessionStatus: StatusEnum.Finished,
               sessionRating: {
                 rating: feelingRating,
               },
