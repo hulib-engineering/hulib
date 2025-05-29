@@ -472,5 +472,40 @@
     "validation_error": "Data is not valid",
     "update_failed": "Update failed",
     "update_successfully": "Update successfully"
+  },
+  "feedback_form": {
+    "session_feedback": "Feedback for the session",
+    "feedback_for_huber": "Feedback for the Huber",
+    "attendees": "{count} Attendees",
+    "you": "You",
+    "how_do_you_feel": "How do you feel after joining the session?",
+    "not_good": "Not good",
+    "very_good": "Very good",
+    "did_session_satisfy": "Did the session satisfy your problems/interest?",
+    "not_satisfied": "Not satisfied",
+    "very_satisfied": "Very satisfied",
+    "rate_for_story": "Rate for story",
+    "share_thought": "Share your thought about the story",
+    "cancel": "Cancel",
+    "next": "Next",
+    "back": "Back",
+    "confirm": "Confirm",
+    "how_many_love": "How many love do you want to send to Huber",
+    "say_something": "Say something to your Huber",
+    "write_something": "Write something here",
+    "what_tag": "What do you want to tag Huber as? (Optional)",
+    "choose_tag": "Choose a tag",
+    "tags": {
+      "self_taught": "Self-taught",
+      "optimistic": "Optimistic",
+      "energy": "Energy",
+      "select_option": "Select option"
+    }
+  },
+  "thanks_page": {
+    "thank_you": "Thank you for your feedback",
+    "feedback_value": "Your feedback is valuable to us. This content need to be modify",
+    "go_to_schedule": "Go to schedule",
+    "back_to_home": "Back to Home"
   }
 }
