@@ -165,7 +165,7 @@ export default function AgoraVideoCall({ appId }: Props) {
       setTracksReady(false);
       setReady(false); // reset để tránh rejoin
       const isLiber = readingSession?.reader.id === userInfo.id;
-      if (!isLiber) {
+      if (isLiber) {
         router.push(`/after-meeting/${sessionId}?storyName=${storyName}`);
       }
     } catch (error) {
