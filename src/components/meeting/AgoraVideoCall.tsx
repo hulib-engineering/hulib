@@ -3,6 +3,7 @@
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+
 import VideoComponent from './Video';
 
 type Props = {
@@ -16,12 +17,15 @@ export default function AgoraVideoCall({ appId }: Props) {
   const [client, setClient] = useState<any>(null);
   const [localTracks, setLocalTracks] = useState<any[]>([]);
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const channel = urlParams.get('channel') || '';
+  const token = urlParams.get('token') || '';
+
+  console.log('channel:', channel);
+  console.log('token:', token);
+
   const localRef = useRef<HTMLDivElement>(null);
   const remoteRef = useRef<HTMLDivElement>(null);
-
-  const channel = 'dev';
-  const token =
-    '007eJxTYDjwNOOSd3Drrx1n22KOi7SYWHLIxVR+r5dqXycR3WOQ8E2BIcXYwtLE0MTYyMzMxCTN2MQyJdHILDXFxNwwJc08zdwi6LtpRkMgI0PWtWQWRgYIBPGZGVJSyxgYABgaHnQ=';
 
   useEffect(() => {
     if (!ready) return;
@@ -123,10 +127,10 @@ export default function AgoraVideoCall({ appId }: Props) {
         />
       </div>
 
-      <div className="mt-4 relative">
+      <div className="relative mt-4">
         <VideoComponent localRef={localRef} isShowWaitingText />
 
-        <div className="absolute h-[181px] w-[297px] right-2 top-2">
+        <div className="absolute right-2 top-2 h-[181px] w-[297px]">
           <VideoComponent
             localRef={remoteRef}
             isShowWaitingText={false}
