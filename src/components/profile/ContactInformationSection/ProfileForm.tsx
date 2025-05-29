@@ -35,6 +35,7 @@ export const ProfileForm = ({
     handleSubmit,
     formState: { errors, isSubmitting },
   } = methods;
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleUpdate = handleSubmit(async (values: any) => {
@@ -114,7 +115,11 @@ export const ProfileForm = ({
                 type="number"
                 pattern="^[0-9-+\s()]*$"
                 label="Your Guardian Phone Number"
+                className="[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 {...register('parentPhoneNumber')}
+                style={{
+                  MozAppearance: 'textfield',
+                }}
                 disabled
                 isError={!!errors.parentPhoneNumber}
                 // @ts-ignore
@@ -124,8 +129,12 @@ export const ProfileForm = ({
               <TextInput
                 type="number"
                 pattern="^[0-9-+\s()]*$"
+                className="[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 label="Phone Number"
                 {...register('phoneNumber')}
+                style={{
+                  MozAppearance: 'textfield',
+                }}
               />
             )}
           </fieldset>
