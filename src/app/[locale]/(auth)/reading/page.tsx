@@ -50,7 +50,7 @@ export default function ReadingPage() {
     if (!userInfo?.id || !readingSession) return;
     const isHuber = userInfo?.id === readingSession.humanBook.id;
     const savedIsDoneSurveyForReading = localStorage.getItem(
-      `is_done_survey_for_reading_${userInfo.id}`,
+      `is_done_survey_for_reading_${userInfo.id}_${readingSession.id}`,
     );
     if (isHuber || savedIsDoneSurveyForReading) {
       setIsDoneSurveyForReading(true);
@@ -61,14 +61,10 @@ export default function ReadingPage() {
   const handleSurveySubmit = async () => {
     try {
       // Save survey completion status to localStorage
-      localStorage.setItem(`is_done_survey_for_reading_${userInfo.id}`, 'true');
-
-      // Save survey data (you can send this to your backend)
       localStorage.setItem(
-        `survey_data_${userInfo.id}`,
-        JSON.stringify(surveyData),
+        `is_done_survey_for_reading_${userInfo.id}_${readingSession.id}`,
+        'true',
       );
-
       // Update reading session with presurvey data if sessionId exists
       if (sessionId) {
         const presurveyData = [
