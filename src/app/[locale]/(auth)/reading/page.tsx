@@ -48,23 +48,18 @@ export default function ReadingPage() {
 
   useEffect(() => {
     if (!userInfo?.id || !readingSession) return;
-    const isHuber = userInfo?.id === readingSession.humanBook.id;
     const savedIsDoneSurveyForReading = localStorage.getItem(
       `is_done_survey_for_reading_${userInfo.id}_${readingSession.id}`,
     );
+    const isHuber = userInfo?.id === readingSession.humanBook.id;
     if (isHuber || savedIsDoneSurveyForReading) {
-      setIsDoneSurveyForReading(true);
+      setIsDoneSurveyForReading(savedIsDoneSurveyForReading === 'true');
     }
   }, [userInfo?.id, readingSession]);
 
   // Handle survey submission
   const handleSurveySubmit = async () => {
     try {
-      // Save survey completion status to localStorage
-      localStorage.setItem(
-        `is_done_survey_for_reading_${userInfo.id}_${readingSession.id}`,
-        'true',
-      );
       // Update reading session with presurvey data if sessionId exists
       if (sessionId) {
         const presurveyData = [
@@ -90,6 +85,12 @@ export default function ReadingPage() {
           id: parseInt(sessionId, 10),
           presurvey: presurveyData,
         }).unwrap();
+
+        // Save survey completion status to localStorage
+        localStorage.setItem(
+          `is_done_survey_for_reading_${userInfo.id}_${readingSession.id}`,
+          'true',
+        );
 
         pushSuccess('Survey data saved successfully!');
       }
