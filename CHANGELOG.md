@@ -1,3 +1,22 @@
+# [1.17.0](https://github.com/hulib-engineering/hulib/compare/v1.16.0...v1.17.0) (2025-05-30)
+
+
+### Bug Fixes
+
+* **399043:** fixed joining reading room and processing token from ([ecccfc5](https://github.com/hulib-engineering/hulib/commit/ecccfc5ed0fec90492711db6dff0409693dbf4f3))
+* **AgoraVideoCall:** correct conditional logic for redirecting non-liber users after meeting ([09c4a01](https://github.com/hulib-engineering/hulib/commit/09c4a01ab9bcfc26f01d6ce892f1dde084c5a4ba))
+* rename file and add change language to FeedbackConfirmationPage ([0d418af](https://github.com/hulib-engineering/hulib/commit/0d418afb0452bd61356ec18db8308aa276c955ce))
+
+
+### Features
+
+* add new microphone icons and enhance AgoraVideoCall component ([272f207](https://github.com/hulib-engineering/hulib/commit/272f2078782578562b90cbe1020d97d2c6be9bc3))
+* **after-meeting:** add feedback form and integrate Agora SDK for enhanced user experience ([f3a3a40](https://github.com/hulib-engineering/hulib/commit/f3a3a404420a41ccc9a2f4bdf02d0220b9678ef8))
+* **after-meeting:** enhance after-meeting feedback flow with new UI components and ratings system ([30731bc](https://github.com/hulib-engineering/hulib/commit/30731bc91f0b52bc92b89bc6bb5d04d199db0274))
+* custom ui flow after metting ([1d51429](https://github.com/hulib-engineering/hulib/commit/1d514296d658a27f36249bedd64c0b299049471f))
+* enhance reading session functionality with survey integration ([1938bed](https://github.com/hulib-engineering/hulib/commit/1938bed76973f409945bfe6d1661ac2eb087dfb9))
+* implement survey form for mental well-being assessment ([9892c30](https://github.com/hulib-engineering/hulib/commit/9892c30391418f0507e385c7332bb48482e88424))
+
 # [1.16.0](https://github.com/hulib-engineering/hulib/compare/v1.15.1...v1.16.0) (2025-05-26)
 
 
