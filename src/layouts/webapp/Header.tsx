@@ -49,7 +49,7 @@ const AvatarPopoverMenuItems = [
     label: 'Register to become human book',
     icon: <Pencil size={20} color="primary-20" />,
     href: '/huber-registration',
-    roles: ['Reader'],
+    roles: ['Liber'],
   },
   {
     label: 'Sign out',
