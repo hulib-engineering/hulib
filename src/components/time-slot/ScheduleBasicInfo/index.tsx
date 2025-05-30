@@ -1,9 +1,12 @@
-import { ArrowLeft, Heart, Info, Timer, Users } from '@phosphor-icons/react';
+import { ArrowLeft, Heart, Info, Timer } from '@phosphor-icons/react';
 import Image from 'next/image';
 
-import AttendeesInfo from '@/components/time-slot/AttendeesInfo';
+import { SessionAttendees } from '@/components/schedule/components/sessionCard/SessionAttendees';
+import { useAppSelector } from '@/libs/hooks';
 
 const ScheduleBasicInfo = ({ attendees: { liber, huber } }: any) => {
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
+
   return (
     <div className="flex w-full flex-col gap-y-4 rounded-3xl bg-white p-4 xl:w-1/3 xl:p-8">
       <button
@@ -47,19 +50,10 @@ const ScheduleBasicInfo = ({ attendees: { liber, huber } }: any) => {
         </div>
       </div>
       <div className="flex flex-col gap-y-1.5 bg-white">
-        <div className="flex items-center gap-x-2 text-sm font-medium text-neutral-10">
-          <Users size={16} />
-          Attendees
-        </div>
-        <AttendeesInfo
-          source={liber?.avatar}
-          role={liber?.role?.name}
-          name={liber?.fullName}
-        />
-        <AttendeesInfo
-          source={huber?.avatar}
-          role={huber?.role}
-          name={huber?.fullName}
+        <SessionAttendees
+          humanBook={huber}
+          reader={liber}
+          isVibing={Number(userInfo?.id) === Number(liber?.id)}
         />
         <div className="flex flex-col gap-y-1">
           <div className="flex items-center gap-x-2 text-sm font-medium text-neutral-10">
