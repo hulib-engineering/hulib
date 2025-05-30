@@ -3,7 +3,6 @@ import Image from 'next/image';
 type VideoProps = {
   localRef?: React.RefObject<HTMLDivElement>;
   height?: number;
-  width?: number;
   waitingText?: string;
   isShowWaitingText?: boolean;
   isSelf?: boolean;
@@ -17,7 +16,6 @@ const VideoComponent = (props: VideoProps) => {
   const {
     localRef,
     height = 700,
-    width = 700,
     waitingText = 'Waiting for partner to join...',
     isShowWaitingText = false,
     isSelf,
@@ -30,7 +28,7 @@ const VideoComponent = (props: VideoProps) => {
   return (
     <div
       className={`${customClass} flex w-full items-center justify-center rounded-[32px] bg-gray-100`}
-      style={{ height: `${height}px`, width: `${width}px` }}
+      style={{ height: `${height}px` }}
     >
       <div
         ref={localRef}
