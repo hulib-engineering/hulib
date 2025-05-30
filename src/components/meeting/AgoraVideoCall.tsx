@@ -241,7 +241,6 @@ export default function AgoraVideoCall({ appId }: Props) {
             localRef={remoteRef}
             isShowWaitingText={false}
             height={181}
-            // width={297}
             isSelf={false} // Remote video luôn là của người kia
             isVibing={isVibing}
             isMicOn={remoteMicOn} // Trạng thái mic của remote user
