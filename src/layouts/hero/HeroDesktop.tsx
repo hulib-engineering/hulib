@@ -154,7 +154,7 @@ const HeroDesktop = (props: HeroProps) => {
                   alt="Play icon"
                   src={`/assets/images/icons/${
                     isPlaying ? 'pause' : 'play'
-                  }-circle.png`}
+                  }-circle.svg`}
                   className="cursor-pointer"
                 />
                 <WavesurferPlayer

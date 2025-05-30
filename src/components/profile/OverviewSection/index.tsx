@@ -1,6 +1,7 @@
 'use client';
 
 import { CardMedia } from '@mui/material';
+import _ from 'lodash';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -34,10 +35,9 @@ const OverviewSection = ({ data, onInvalidate }: Props) => {
       setOpenEditPopup(false);
       if (onInvalidate) onInvalidate();
     } catch (error) {
-      console.log(error);
+      setErrorMessage('Failed to update profile. Please try again.');
     }
   };
-
   return (
     <div className="mb-3 flex flex-col gap-y-4 py-5 font-light">
       {data?.topics && (
@@ -47,9 +47,9 @@ const OverviewSection = ({ data, onInvalidate }: Props) => {
             {data?.topics.map((topic) => (
               <Chip
                 key={topic?.id}
-                className="rounded-full border border-primary-60 bg-primary-90 text-primary-60"
+                className="h-full rounded-full border border-primary-60 bg-primary-90 px-3 py-2 text-primary-60"
               >
-                <span>{topic?.name || ''}</span>
+                <span>{_.truncate(topic?.name, { length: 30 })}</span>
               </Chip>
             ))}
           </div>
