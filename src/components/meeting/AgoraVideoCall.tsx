@@ -99,6 +99,45 @@ export default function AgoraVideoCall({ appId }: Props) {
             setRemoteMicOn(false); // Remote user muted microphone
           }
         });
+
+        // **FIX: Xử lý existing users đã có sẵn trong channel**
+        // Khi join vào channel, cần kiểm tra và subscribe tới remote users đã có sẵn
+        const { remoteUsers } = agoraClient;
+
+        // Sử dụng Promise.all để xử lý concurrent thay vì await trong loop
+        const subscribePromises = remoteUsers.map(async (remoteUser) => {
+          const promises = [];
+
+          // Subscribe tới video track nếu user đã publish video
+          if (remoteUser.hasVideo && !remoteUser.videoTrack) {
+            const videoPromise = agoraClient
+              .subscribe(remoteUser, 'video')
+              .then(() => {
+                if (remoteUser.videoTrack && remoteRef.current) {
+                  remoteUser.videoTrack.play(remoteRef.current);
+                }
+              });
+            promises.push(videoPromise);
+          }
+
+          // Subscribe tới audio track nếu user đã publish audio
+          if (remoteUser.hasAudio && !remoteUser.audioTrack) {
+            const audioPromise = agoraClient
+              .subscribe(remoteUser, 'audio')
+              .then(() => {
+                if (remoteUser.audioTrack) {
+                  remoteUser.audioTrack.play();
+                  setRemoteMicOn(true);
+                }
+              });
+            promises.push(audioPromise);
+          }
+
+          return Promise.all(promises);
+        });
+
+        // Chờ tất cả subscription hoàn thành
+        await Promise.all(subscribePromises);
       } catch (error) {
         // Silent error handling - could be replaced with proper error reporting
       }
@@ -322,6 +361,16 @@ export default function AgoraVideoCall({ appId }: Props) {
           <div>Local Camera: {isCameraOn ? 'ON' : 'OFF'}</div>
           <div>Local Microphone: {isMicOn ? 'ON' : 'OFF'}</div>
           <div>Remote Microphone: {remoteMicOn ? 'ON' : 'OFF'}</div>
+          <div>Remote Users Count: {client?.remoteUsers?.length || 0}</div>
+          <div>
+            Remote Users:{' '}
+            {client?.remoteUsers
+              ?.map(
+                (u: any) =>
+                  `${u.uid}(${u.hasVideo ? 'V' : ''}${u.hasAudio ? 'A' : ''})`,
+              )
+              .join(', ') || 'None'}
+          </div>
           <div>User ID: {userInfo?.id}</div>
           <div>Reader ID: {readingSession?.reader?.id}</div>
           <div>HumanBook ID: {readingSession?.humanBook?.id}</div>
