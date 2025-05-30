@@ -83,6 +83,9 @@ export default function FeedbackForm() {
             }),
       }).unwrap();
       pushSuccess('Sent feedback successfully');
+      localStorage.removeItem(
+        `is_done_survey_for_reading_${userId}_${meetingId}`,
+      );
       setStep('feedback-huber');
     } catch (error) {
       pushError('Sent feedback failed');

@@ -53,7 +53,7 @@ export default function ReadingPage() {
     );
     const isHuber = userInfo?.id === readingSession.humanBook.id;
     if (isHuber || savedIsDoneSurveyForReading) {
-      setIsDoneSurveyForReading(savedIsDoneSurveyForReading === 'true');
+      setIsDoneSurveyForReading(true);
     }
   }, [userInfo?.id, readingSession]);
 

@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import React from 'react';
 
 type VideoProps = {
   localRef?: React.RefObject<HTMLDivElement>;
@@ -9,6 +8,9 @@ type VideoProps = {
   isShowWaitingText?: boolean;
   isSelf?: boolean;
   customClass?: string;
+  isVibing?: boolean;
+  isMicOn?: boolean;
+  showMicIndicator?: boolean;
 };
 
 const VideoComponent = (props: VideoProps) => {
@@ -20,24 +22,23 @@ const VideoComponent = (props: VideoProps) => {
     isShowWaitingText = false,
     isSelf,
     customClass = '',
+    isVibing,
+    isMicOn,
+    showMicIndicator,
   } = props;
 
   return (
     <div
       className={`${customClass} flex w-full items-center justify-center rounded-[32px] bg-gray-100`}
-      style={{ height: `${height}px` }}
+      style={{ height: `${height}px`, width: `${width}px` }}
     >
       <div
         ref={localRef}
         className="relative flex size-full items-center justify-center rounded-lg bg-[#2E3032] text-[#0858FA]"
       >
-        <div className="absolute left-2 top-2 flex gap-2 z-[12312]">
+        <div className="absolute left-2 top-2 z-[12312] flex gap-2">
           <div className="rounded-[100px] bg-[#FFFDF5] px-4 py-2 text-[#F3C00C]">
-            {isSelf ? 'You' : 'Huber'}
-          </div>
-
-          <div className="rounded-[100px] bg-[#FFFDF5] px-4 py-2 text-[#F3C00C]">
-            {isSelf ? 'You' : 'Huber Name'}
+            {isSelf ? 'You' : isVibing ? 'Liber' : 'Huber'}
           </div>
         </div>
 
@@ -51,23 +52,30 @@ const VideoComponent = (props: VideoProps) => {
           />
 
           {isShowWaitingText && (
-            <div className="text-center text-lg text-white">
-              Waiting for partner to join...
-            </div>
+            <div className="text-center text-lg text-white">{waitingText}</div>
           )}
         </div>
 
-        <div className="absolute bottom-2 left-2 flex flex-col items-center  z-[12312]">
-          <Image
-            src="/assets/icons/meeting/mute-voice.svg"
-            width={44}
-            height={44}
-            alt="arrow-icon"
-            loading="lazy"
-            onClick={() => {}}
-            className="cursor-pointer"
-          />
-        </div>
+        {/* Microphone indicator - chỉ hiện khi showMicIndicator = true */}
+        {showMicIndicator && (
+          <div className="absolute bottom-2 left-2 z-[12312] flex flex-col items-center">
+            <Image
+              src={
+                isMicOn
+                  ? '/assets/icons/meeting/voice-2-on.svg'
+                  : '/assets/icons/meeting/voice-2-off.svg'
+              }
+              width={32}
+              height={32}
+              alt="microphone-icon"
+              loading="lazy"
+              className={`${
+                isMicOn ? 'opacity-100' : 'opacity-60'
+              } transition-opacity`}
+              title={isMicOn ? 'Microphone On' : 'Microphone Off'}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -27,10 +27,12 @@ export default function AgoraVideoCall({ appId }: Props) {
   const [localTracks, setLocalTracks] = useState<any[]>([]);
   // Thêm state để theo dõi việc setup tracks
   const [tracksReady, setTracksReady] = useState(false);
+  // Thêm state để track trạng thái microphone của remote user
+  const [remoteMicOn, setRemoteMicOn] = useState(true);
 
   const urlParams = new URLSearchParams(window.location.search);
   const channel = urlParams.get('channel') || '';
-  const [storyName, sessionId] = channel?.split('-') || [];
+  const sessionId = channel.split('-')[1];
   const token = urlParams.get('token')?.replace(/ /g, '+') || '';
   const { data: readingSession } = useGetReadingSessionByIdQuery(
     {
@@ -40,6 +42,11 @@ export default function AgoraVideoCall({ appId }: Props) {
       skip: !sessionId,
     },
   );
+
+  // Xác định vai trò của user hiện tại
+  const isVibing = Number(userInfo?.id) === Number(readingSession?.reader?.id); // User là Liber (reader)
+  const isHuber =
+    Number(userInfo?.id) === Number(readingSession?.humanBook?.id); // User là Huber (humanBook)
 
   const localRef = useRef<HTMLDivElement>(null);
   const remoteRef = useRef<HTMLDivElement>(null);
@@ -82,6 +89,14 @@ export default function AgoraVideoCall({ appId }: Props) {
           }
           if (mediaType === 'audio') {
             user.audioTrack?.play();
+            setRemoteMicOn(true); // Remote user has audio track
+          }
+        });
+
+        // Xử lý khi remote user unpublish (bật/tắt mic)
+        agoraClient.on('user-unpublished', async (user, mediaType) => {
+          if (mediaType === 'audio') {
+            setRemoteMicOn(false); // Remote user muted microphone
           }
         });
       } catch (error) {
@@ -166,9 +181,12 @@ export default function AgoraVideoCall({ appId }: Props) {
       setIsMicOn(true);
       setTracksReady(false);
       setReady(false); // reset để tránh rejoin
-      const isLiber = readingSession?.reader.id === userInfo.id;
-      if (isLiber) {
-        router.push(`/after-meeting/${sessionId}?storyName=${storyName}`);
+
+      // Sử dụng biến isVibing đã định nghĩa sẵn
+      if (isVibing) {
+        router.push(
+          `/after-meeting/${sessionId}?storyName=${readingSession.story.title}`,
+        );
       }
     } catch (error) {
       // Silent error handling - could be replaced with proper error reporting
@@ -191,7 +209,7 @@ export default function AgoraVideoCall({ appId }: Props) {
             />
             <span>00:00:00</span>
           </div>
-          Meeting topic: {storyName}
+          Meeting story: {readingSession.story.title}
         </div>
 
         <Image
@@ -207,18 +225,27 @@ export default function AgoraVideoCall({ appId }: Props) {
 
       {/* Video display area */}
       <div className="relative mt-4">
-        {/* Main video (local) */}
-        <VideoComponent localRef={localRef} isShowWaitingText />
+        {/* Main video (local) - luôn là video của chính user hiện tại */}
+        <VideoComponent
+          localRef={localRef}
+          isShowWaitingText
+          isSelf // Local video luôn là của chính user
+          isVibing={isVibing}
+          isMicOn={isMicOn} // Trạng thái mic của user hiện tại
+          showMicIndicator // Luôn hiển thị indicator cho local video
+        />
 
-        {/* Picture-in-picture video (remote) */}
+        {/* Picture-in-picture video (remote) - là video của người kia */}
         <div className="absolute right-2 top-2 h-[181px] w-[297px]">
           <VideoComponent
             localRef={remoteRef}
             isShowWaitingText={false}
             height={181}
-            width={297}
-            isSelf
-            customClass=""
+            // width={297}
+            isSelf={false} // Remote video luôn là của người kia
+            isVibing={isVibing}
+            isMicOn={remoteMicOn} // Trạng thái mic của remote user
+            showMicIndicator // Hiển thị indicator cho remote video
           />
         </div>
       </div>
@@ -249,7 +276,7 @@ export default function AgoraVideoCall({ appId }: Props) {
             src={
               isMicOn
                 ? '/assets/icons/meeting/voice.svg'
-                : '/assets/icons/meeting/mute-voice.svg'
+                : '/assets/icons/meeting/voice-off.svg'
             }
             width={44}
             height={44}
@@ -293,8 +320,14 @@ export default function AgoraVideoCall({ appId }: Props) {
         <div className="mt-2 rounded bg-gray-100 p-2 text-xs">
           <div>Tracks Ready: {tracksReady ? '✅' : '❌'}</div>
           <div>Local Tracks: {localTracks.length}</div>
-          <div>Camera: {isCameraOn ? 'ON' : 'OFF'}</div>
-          <div>Microphone: {isMicOn ? 'ON' : 'OFF'}</div>
+          <div>Local Camera: {isCameraOn ? 'ON' : 'OFF'}</div>
+          <div>Local Microphone: {isMicOn ? 'ON' : 'OFF'}</div>
+          <div>Remote Microphone: {remoteMicOn ? 'ON' : 'OFF'}</div>
+          <div>User ID: {userInfo?.id}</div>
+          <div>Reader ID: {readingSession?.reader?.id}</div>
+          <div>HumanBook ID: {readingSession?.humanBook?.id}</div>
+          <div>Is Vibing (Liber): {isVibing ? '✅' : '❌'}</div>
+          <div>Is Huber: {isHuber ? '✅' : '❌'}</div>
         </div>
       )}
     </div>
