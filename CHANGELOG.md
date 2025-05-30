@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/hulib-engineering/hulib/compare/v1.17.1...v1.18.0) (2025-05-30)
+
+
+### Features
+
+* enhance AgoraVideoCall to handle existing remote users and improve user info display ([b20e3df](https://github.com/hulib-engineering/hulib/commit/b20e3dfd19f817d43664cd0b41ec7d117d84b3f6))
+
 ## [1.17.1](https://github.com/hulib-engineering/hulib/compare/v1.17.0...v1.17.1) (2025-05-30)
 
 
