@@ -17,7 +17,7 @@ const socialLinks = [
   },
   {
     iconUrl: '/assets/images/icons/instagram.svg',
-    link: 'https://www.instagram.com/hulibofficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
+    link: 'https://www.instagram.com/hulibvn/',
     name: 'Instagram',
   },
   {
@@ -50,9 +50,9 @@ const FooterWebApp = () => {
     {
       title: t('site'),
       items: [
-        { title: t('my_schedule') },
-        { title: t('books') },
-        { title: t('profile') },
+        { title: t('my_schedule'), href: '/schedule-meeting/weekly-schedule' },
+        { title: t('books'), href: '/explore-story' },
+        { title: t('profile'), href: '/profile' },
       ],
     },
     {
@@ -128,7 +128,6 @@ const FooterWebApp = () => {
                         {...(item.href
                           ? {
                               href: item.href as any,
-                              target: '_blank',
                               rel: 'noreferrer',
                             }
                           : {})}
@@ -218,7 +217,6 @@ const FooterWebApp = () => {
                         {...(item.href
                           ? {
                               href: item.href as any,
-                              target: '_blank',
                               rel: 'noreferrer',
                             }
                           : {})}
