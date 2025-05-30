@@ -19,7 +19,7 @@ const SocialLinks = [
   },
   {
     iconUrl: '/assets/images/icons/instagram.svg',
-    link: 'https://www.instagram.com/hulibofficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
+    link: 'https://www.instagram.com/hulibvn/',
     name: 'Instagram',
   },
   {
