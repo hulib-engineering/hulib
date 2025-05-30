@@ -16,20 +16,22 @@ type Props = {
 
 export default function AgoraVideoCall({ appId }: Props) {
   const router = useRouter();
+
   const userInfo = useAppSelector((state) => state.auth.userInfo);
+
   const [ready, setReady] = useState(true);
   const [isCameraOn, setIsCameraOn] = useState(true);
   const [isMicOn, setIsMicOn] = useState(true);
   const [client, setClient] = useState<any>(null);
-  const [localTracks, setLocalTracks] = useState<any[]>([]);
 
+  const [localTracks, setLocalTracks] = useState<any[]>([]);
   // Thêm state để theo dõi việc setup tracks
   const [tracksReady, setTracksReady] = useState(false);
 
   const urlParams = new URLSearchParams(window.location.search);
   const channel = urlParams.get('channel') || '';
   const [storyName, sessionId] = channel?.split('-') || [];
-  const token = urlParams.get('token') || '';
+  const token = urlParams.get('token')?.replace(/ /g, '+') || '';
   const { data: readingSession } = useGetReadingSessionByIdQuery(
     {
       id: sessionId || 0,
@@ -45,7 +47,7 @@ export default function AgoraVideoCall({ appId }: Props) {
   useEffect(() => {
     // Always return a cleanup function, even if we don't set up anything
     if (!ready) {
-      // Return empty cleanup function for consistency
+      // Return an empty cleanup function for consistency
       return () => {};
     }
 
@@ -55,7 +57,7 @@ export default function AgoraVideoCall({ appId }: Props) {
 
     const start = async () => {
       try {
-        await agoraClient.join(appId, channel, token);
+        await agoraClient.join(appId, channel, token, 0);
 
         // Tạo tracks cho microphone và camera
         tracks = await AgoraRTC.createMicrophoneAndCameraTracks();
@@ -101,7 +103,7 @@ export default function AgoraVideoCall({ appId }: Props) {
       setTracksReady(false);
     };
 
-    // Always return cleanup function for consistent return behavior
+    // Always return a cleanup function for consistent return behavior
     return cleanup;
   }, [ready, appId, channel, token]);
 
