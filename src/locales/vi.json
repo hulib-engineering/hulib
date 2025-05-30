@@ -376,8 +376,14 @@
       "bio_required": "Vui lòng nhập tiểu sử của bạn",
       "terms_required": "Vui lòng chấp thuận các điều khoản và điều kiện"
     },
-    "bio": { "text": "Tiểu sử", "placeholder": "Chỗ để điền" },
-    "intro_video": { "text": "Video giới thiệu", "placeholder": "https://" },
+    "bio": {
+      "text": "Tiểu sử",
+      "placeholder": "Chỗ để điền"
+    },
+    "intro_video": {
+      "text": "Video giới thiệu",
+      "placeholder": "https://"
+    },
     "read_community": "Đọc hướng dẫn cộng đồng",
     "confirm": "Tôi xác nhận rằng tôi đã đọc và hiểu các điều khoản và điều kiện của Hulib, và tôi đồng ý tuân theo chúng.",
     "cancel": "Hủy",
@@ -471,5 +477,40 @@
       "update_failed": "Cập nhật thất bại",
       "update_successfully": "Cập nhật thành công"
     }
+  },
+  "feedback_form": {
+    "session_feedback": "Phản hồi cho buổi học",
+    "feedback_for_huber": "Phản hồi cho Huber",
+    "attendees": "{count} Người tham gia",
+    "you": "Bạn",
+    "how_do_you_feel": "Bạn cảm thấy thế nào sau khi tham gia buổi học?",
+    "not_good": "Không tốt",
+    "very_good": "Rất tốt",
+    "did_session_satisfy": "Buổi học có đáp ứng vấn đề/sở thích của bạn không?",
+    "not_satisfied": "Không hài lòng",
+    "very_satisfied": "Rất hài lòng",
+    "rate_for_story": "Đánh giá cho câu chuyện",
+    "share_thought": "Chia sẻ suy nghĩ của bạn về câu chuyện",
+    "cancel": "Hủy",
+    "next": "Tiếp theo",
+    "back": "Quay lại",
+    "confirm": "Xác nhận",
+    "how_many_love": "Bạn muốn gửi bao nhiêu tình yêu đến Huber",
+    "say_something": "Nói gì đó với Huber của bạn",
+    "write_something": "Viết gì đó ở đây",
+    "what_tag": "Bạn muốn gắn thẻ Huber như thế nào? (Tùy chọn)",
+    "choose_tag": "Chọn một thẻ",
+    "tags": {
+      "self_taught": "Tự học",
+      "optimistic": "Lạc quan",
+      "energy": "Năng lượng",
+      "select_option": "Chọn tùy chọn"
+    }
+  },
+  "thanks_page": {
+    "thank_you": "Cảm ơn phản hồi của bạn",
+    "feedback_value": "Phản hồi của bạn rất có giá trị đối với chúng tôi. Nội dung này cần được chỉnh sửa",
+    "go_to_schedule": "Đi đến lịch trình",
+    "back_to_home": "Trở về Trang chủ"
   }
 }

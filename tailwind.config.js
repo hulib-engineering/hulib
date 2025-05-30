@@ -96,6 +96,7 @@ module.exports = {
           75: '#ffdf8e',
         },
         yellow: {
+          60: '#F6CE3C',
           90: '#FDF3CE',
         },
         neutral: {
