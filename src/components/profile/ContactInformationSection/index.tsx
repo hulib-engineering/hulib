@@ -19,7 +19,6 @@ import IconButtonEdit from '../IconButtonEdit';
 
 export const ContactInformationSection = ({ data }: { data: any }) => {
   const [contactInfoData, setContactInfoData] = React.useState<any>(data);
-  console.log('data', data);
   const methods = useForm<z.infer<typeof ProfileValidation>>({
     resolver: zodResolver(ProfileValidation),
     defaultValues: {
