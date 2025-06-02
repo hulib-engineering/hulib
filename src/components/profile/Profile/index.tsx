@@ -90,6 +90,9 @@ const Profile = () => {
               path: result?.file?.path,
             },
           }).unwrap();
+
+          // Refetch user data to update the UI with the new avatar
+          await refetch();
         }
       } catch (error: any) {
         pushError(`Error: ${error.message}`);
@@ -212,10 +215,9 @@ const Profile = () => {
                 height={160}
                 className="h-[100px] w-[100px] rounded-full lg:h-[160px] lg:w-[160px]"
                 loading="lazy"
-                // src={
-                //   userDetail?.photo?.path || '/assets/images/user-avatar.jpeg'
-                // }
-                src="/assets/images/user-avatar.jpeg"
+                src={
+                  userDetail?.photo?.path ?? '/assets/images/icons/avatar.svg'
+                }
               />
 
               <div className="absolute bottom-0 left-20 opacity-0 transition-opacity duration-200 group-hover:opacity-100 lg:left-28 ">
@@ -229,7 +231,7 @@ const Profile = () => {
                   onChange={handleAvatarUpload}
                 />
                 <IconButtonEdit
-                  disabled
+                  disabled={!!huberId}
                   onClick={() =>
                     billUploader &&
                     billUploader?.current &&
