@@ -21,18 +21,7 @@ import type { WithChildren } from '@/components/private/types';
 import SearchInput from '@/components/SearchInput';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppSelector } from '@/libs/hooks';
-
-// const ButtonWithChip = ({
-//   children,
-//   value,
-// }: WithChildren<{ value: string }>) => (
-//   <div className="relative">
-//     <div className="absolute left-6 top-0.5 z-10 rounded-full border border-white bg-red-50 px-1 py-[0.5px] text-[10px] leading-3 text-white">
-//       {value}
-//     </div>
-//     {children}
-//   </div>
-// );
+import { Role } from '@/types/common';
 
 const AvatarPopoverMenuItems = [
   {
@@ -49,7 +38,7 @@ const AvatarPopoverMenuItems = [
     label: 'Register to become human book',
     icon: <Pencil size={20} color="primary-20" />,
     href: '/huber-registration',
-    roles: ['Liber'],
+    roles: [Role.LIBER],
   },
   {
     label: 'Sign out',
@@ -87,7 +76,7 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
     return (
       AvatarPopoverMenuItems.filter((item) => {
         if (item?.roles) {
-          return item.roles.includes(role?.name);
+          return item.roles.includes(role?.id as Role);
         }
         return true;
       }) || []
@@ -196,12 +185,7 @@ const Header = () => {
                     width={44}
                     height={44}
                     loading="lazy"
-                    // src={
-                    //   !user || !user.photo || !user.photo.path
-                    //     ? '/assets/images/icons/avatar.svg'
-                    //     : user.photo.path
-                    // }
-                    src="/assets/images/icons/avatar.svg"
+                    src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
                     className="h-11 w-11 rounded-full object-contain"
                   />
                 </AvatarPopover>
@@ -258,12 +242,7 @@ const Header = () => {
                   layout="fill"
                   className="h-11 w-11 rounded-full object-contain"
                   loading="lazy"
-                  // src={
-                  //   !user || !user.photo || !user.photo.path
-                  //     ? '/assets/images/icons/avatar.svg'
-                  //     : user.photo.path
-                  // }
-                  src="/assets/images/icons/avatar.svg"
+                  src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
                 />
               </AvatarPopover>
               <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">

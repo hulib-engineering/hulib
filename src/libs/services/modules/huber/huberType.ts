@@ -24,6 +24,10 @@ export interface Huber {
   rating: number | null;
   educationEnd: string | null;
   abtract?: string | null;
+  photo: {
+    id: number;
+    path: string;
+  };
   humanBookTopic: Array<{
     userId: number;
     topicId: number;
