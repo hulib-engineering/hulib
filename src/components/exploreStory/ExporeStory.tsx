@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable no-unsafe-optional-chaining */
+
 import {
   Bookmarks,
   CaretCircleDown,
@@ -7,15 +9,21 @@ import {
 } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
 import ListTopics from '@/components/stories/ListTopics';
 import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
+import useAppSelector from '@/libs/hooks/useAppSelector';
+import {
+  useAddStoryToFavoritesMutation,
+  useGetFavoritesStoryQuery,
+} from '@/libs/services/modules/fav-stories';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
+import { pushError, pushSuccess } from '../CustomToastifyContainer';
 import { FlipBook } from '../flipBook/FlipBook';
 
 type ExporeStoryProps = {
@@ -23,6 +31,10 @@ type ExporeStoryProps = {
 };
 
 const ExploreStory = ({ topicIds }: ExporeStoryProps) => {
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const [favoriteStoriesIds, setFavoriteStoriesIds] = React.useState<number[]>(
+    [],
+  );
   const router = useRouter();
   const t = useTranslations('ExporeStory');
 
@@ -38,14 +50,37 @@ const ExploreStory = ({ topicIds }: ExporeStoryProps) => {
     limit,
     topicIds: topicIds ? topicIds.split(',').map(Number) : undefined,
   });
+  const userId: number = +userInfo?.id;
+  const { data: favoriteStories } = useGetFavoritesStoryQuery(userId, {
+    skip: !userId,
+  });
+
+  useEffect(() => {
+    if (favoriteStories) {
+      favoriteStories?.forEach((story: StoryType) => {
+        setFavoriteStoriesIds((prev) => [...prev, story.id]);
+      });
+    }
+  }, [favoriteStories]);
   const onClickSeeAll = () => {
     setIsExpandList((prev) => !prev);
   };
 
-  const handleAddToFavorites = () => {
-    // TODO: Implement add to favorites
-  };
+  const [addStoryToFavorites] = useAddStoryToFavoritesMutation();
 
+  const handleAddToFavorites = (storyId: number) => {
+    if (!userInfo) {
+      router.push('/login');
+      return;
+    }
+    addStoryToFavorites({ storyId, userId }).then((response: any) => {
+      if (response.error) {
+        pushError(t(response.error?.message || 'error_contact_admin'));
+      } else {
+        pushSuccess(t(response.data?.message || 'story_added_to_favorites'));
+      }
+    });
+  };
   const renderActions = (storyId: number) => {
     return (
       <div
@@ -68,10 +103,13 @@ const ExploreStory = ({ topicIds }: ExporeStoryProps) => {
           variant="outline"
           className={mergeClassnames(
             'w-full h-8',
-            'md:size-10 md:min-h-10 md:min-w-10',
+            'md:size-10 md:min-h-10 md:min-w-10 bg-primary-hover text-white',
+            favoriteStoriesIds.includes(storyId)
+              ? 'bg-primary-hover text-white'
+              : 'bg-white text-neutral-20',
           )}
           iconOnly
-          onClick={() => handleAddToFavorites()}
+          onClick={() => handleAddToFavorites(storyId)}
         >
           <Bookmarks size={20} />
         </Button>
