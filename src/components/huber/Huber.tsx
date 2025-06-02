@@ -41,7 +41,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
     >
       <div className="relative overflow-hidden rounded-lg">
         <Image
-          src="/assets/images/huber/cover-huber.png"
+          src={huber.photo?.path ?? '/assets/images/huber/cover-huber.png'}
           alt={huber.fullName}
           width={0}
           height={0}
