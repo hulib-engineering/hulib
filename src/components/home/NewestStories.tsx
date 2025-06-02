@@ -63,15 +63,15 @@ const NewestStories = () => {
   if (loadingStories) return <StoriesSkeleton />;
 
   return (
-    <div className="mt-8 items-center justify-center rounded-lg bg-white md:p-5">
+    <div className="mt-8 items-center justify-center rounded-lg  md:p-5">
       <h3 className="text-[2.375rem] font-medium leading-[2.75rem] text-primary-10">
         {t('newest_stories.title')}
       </h3>
       {storiesPages?.data?.length > 0 ? (
         <div
           className={mergeClassnames(
-            'mt-6 grid grid-cols-1 gap-8 rounded-lg bg-white',
-            'md:grid-cols-2 md:p-5',
+            'mt-6 grid grid-cols-1 gap-8 rounded-lg',
+            'md:grid-cols-2 ',
             'xl:grid-cols-3',
           )}
         >
