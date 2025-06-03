@@ -13,11 +13,12 @@ import type { User } from '@/libs/services/modules/user/userType';
 import IconButtonEdit from '../IconButtonEdit';
 
 type Props = {
+  isLiber?: boolean;
   data: User | undefined;
   onInvalidate?: () => void; // Called after successful update to refetch
 };
 
-const OverviewSection = ({ data, onInvalidate }: Props) => {
+const OverviewSection = ({ isLiber, data, onInvalidate }: Props) => {
   const [openEditPopup, setOpenEditPopup] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
@@ -39,8 +40,8 @@ const OverviewSection = ({ data, onInvalidate }: Props) => {
     }
   };
   return (
-    <div className="mb-3 flex flex-col gap-y-4 py-5 font-light">
-      {data?.topics && (
+    <div className="mb-3 flex flex-col gap-y-4 rounded-xl  font-light">
+      {!isLiber && data?.topics && (
         <div className="flex flex-col gap-y-2">
           <span className="font-medium">Topic</span>
           <div className="flex flex-row gap-x-2">
