@@ -3,6 +3,7 @@
 import { Globe } from '@phosphor-icons/react';
 import { isEmpty } from 'lodash';
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
@@ -11,6 +12,7 @@ import {
   EVENING_TIME_START,
   MORNING_TIME_START,
 } from '@/libs/constants/date';
+import { useCheckAvailabilityMutation } from '@/libs/services/modules/huber';
 import { useGetTimeSlotsHuberQuery } from '@/libs/services/modules/time-slots';
 import type { TimeSlot } from '@/libs/services/modules/time-slots/getAllTimeSlots';
 
@@ -22,6 +24,70 @@ export interface IAttendee {
   role: string;
   fullName: string;
 }
+
+const TimeItem = ({
+  time,
+  date,
+  huberId,
+  isSelected,
+  onClick,
+}: {
+  time: string;
+  date: Date;
+  huberId: number;
+  isSelected: boolean;
+  onClick: (time: string) => void;
+}) => {
+  const [validate, { isLoading }] = useCheckAvailabilityMutation();
+
+  const [isBooked, setIsBooked] = useState(false);
+
+  const toLocaleISO = (dateToConvert: Date) => {
+    const offsetMs = dateToConvert.getTimezoneOffset() * 60 * 1000;
+    const msLocal = dateToConvert.getTime() - offsetMs;
+    const dateLocal = new Date(msLocal);
+    return dateLocal.toISOString();
+  };
+
+  const validateBookedSession = async () => {
+    const hour = parseInt(time.split(':')[0] ?? '0', 10) ?? 0;
+    const minute = parseInt(time.split(':')[1] ?? '0', 10) ?? 0;
+    const timeObj = date.setHours(hour, minute, 0);
+    try {
+      const result = await validate({
+        id: huberId,
+        startAt: toLocaleISO(new Date(timeObj)),
+      }).unwrap();
+      setIsBooked(result.booked);
+    } catch (error: any) {
+      setIsBooked(false);
+    }
+  };
+
+  useEffect(() => {
+    validateBookedSession();
+  }, [time]);
+
+  if (isLoading) {
+    return null;
+  }
+
+  return (
+    <button
+      type="button"
+      className={mergeClassnames(
+        'rounded-full px-3 py-1 text-sm font-medium border hover:opacity-70',
+        isSelected
+          ? 'bg-primary-50 border-primary-50 text-white'
+          : 'bg-white border-neutral-90 text-neutral-10',
+        isBooked && 'invisible',
+      )}
+      onClick={() => onClick(time)}
+    >
+      {time}
+    </button>
+  );
+};
 
 export const MainScreen = ({
   attendees,
@@ -51,34 +117,31 @@ export const MainScreen = ({
   }, [selectDate, timeSlots]);
 
   const morningTimeSlot = React.useMemo(() => {
-    const times = filterTimeSlots
+    return filterTimeSlots
       .filter(
         (time) =>
           Number(time.startTime.slice(0, 2)) >= MORNING_TIME_START &&
           Number(time.startTime.slice(0, 2)) < AFTERNOON_TIME_START,
       )
       .map((item) => item.startTime);
-    return times;
   }, [filterTimeSlots]);
 
   const afterNoonTimeSlot = React.useMemo(() => {
-    const times = filterTimeSlots
+    return filterTimeSlots
       .filter(
         (time) =>
           Number(time.startTime.slice(0, 2)) >= AFTERNOON_TIME_START &&
           Number(time.startTime.slice(0, 2)) < EVENING_TIME_START,
       )
       .map((item) => item.startTime);
-    return times;
   }, [filterTimeSlots]);
 
   const eveningTimeSlot = React.useMemo(() => {
-    const times = filterTimeSlots
+    return filterTimeSlots
       .filter(
         (time) => Number(time.startTime.slice(0, 2)) >= EVENING_TIME_START,
       )
       .map((item) => item.startTime);
-    return times;
   }, [filterTimeSlots]);
 
   const onClickDate = (day: Date) => {
@@ -99,22 +162,18 @@ export const MainScreen = ({
     if (list.length === 0) {
       return null;
     }
+
     return (
       <div className="flex w-full flex-wrap items-center gap-x-1 gap-y-2 xl:p-3">
-        {list.map((item) => (
-          <button
-            key={item}
-            type="button"
-            className={mergeClassnames(
-              'rounded-full px-3 py-1 text-sm font-medium border hover:opacity-70',
-              selectTime === item
-                ? 'bg-primary-50 border-primary-50 text-white'
-                : 'bg-white border-neutral-90 text-neutral-10',
-            )}
-            onClick={() => onClickTime(item)}
-          >
-            {item}
-          </button>
+        {list.map((item, index) => (
+          <TimeItem
+            key={index}
+            time={item}
+            date={selectDate}
+            huberId={Number(attendees.huber.id)}
+            isSelected={selectTime === item}
+            onClick={onClickTime}
+          />
         ))}
       </div>
     );
