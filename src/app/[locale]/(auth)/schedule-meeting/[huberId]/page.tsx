@@ -11,17 +11,19 @@ import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 
 export default function Index() {
   const { huberId } = useParams();
+
   const { data: currentUser } = useGetPersonalInfoQuery();
   const { data: huberInfo } = useGetUsersByIdQuery(huberId as string);
 
   const searchParams = useSearchParams();
+
   const storyId = searchParams.get('storyId');
 
   const [currentStep, setCurrentStep] = useState<
     'select-time' | 'confirm' | 'success'
   >('select-time');
-  const [selectedDay, setSelectedDay] = useState<Date>(new Date());
-  const [selectedTime, setSelectedTime] = useState<string>('');
+  const [selectedDay, setSelectedDay] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState('');
 
   const onSelectDay = (day: Date) => {
     setSelectedDay(day);
