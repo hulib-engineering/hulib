@@ -117,8 +117,15 @@ const Profile = () => {
             </p>
           </div>
         ),
-        component: <AboutPanel data={userDetail} onInvalidate={refetch} />,
+        component: (
+          <AboutPanel
+            isLiber={isLiber}
+            data={userDetail}
+            onInvalidate={refetch}
+          />
+        ),
       },
+
       // {
       //   type: MyProfilePanelIndex.MY_FAVORITE,
       //   label: (
@@ -249,18 +256,18 @@ const Profile = () => {
                 <div className="flex items-center gap-x-10 text-sm text-neutral-20">
                   <LabelWithLeftIcon
                     label={userDetail?.address ?? 'Location'}
-                    icon={<MapPin size={20} />}
+                    icon={<MapPin size={20} className="text-primary-60" />}
                   />
                   {!isLiber && (
                     <LabelWithLeftIcon
                       label={`${menteeCount} liber`}
-                      icon={<Users size={20} />}
+                      icon={<Users size={20} className="text-primary-60" />}
                     />
                   )}
                   {!isLiber && (
                     <LabelWithLeftIcon
                       label={`${rating} rating`}
-                      icon={<Star size={20} />}
+                      icon={<Star size={20} className="text-pink-50" />}
                     />
                   )}
                 </div>

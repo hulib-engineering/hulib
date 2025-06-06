@@ -17,6 +17,7 @@ import OverviewSection from '../OverviewSection';
 import WorkAndEducationSection from '../WorkAndEducationSection';
 
 type Props = {
+  isLiber: boolean;
   data?: User;
   onInvalidate?: () => void; // Called after successful update to refetch
 };
@@ -29,14 +30,20 @@ type AboutSectionMenu = {
   isShow?: boolean;
 };
 
-const AboutPanel = ({ data, onInvalidate }: Props) => {
+const AboutPanel = ({ isLiber, data, onInvalidate }: Props) => {
   const [activeSection, setActiveSection] = React.useState('liberOverview');
   const sectionMenu: AboutSectionMenu[] = [
     {
       type: 'liberOverview',
       label: 'Liber Overview',
       icon: <Books size={20} />,
-      component: <OverviewSection data={data} onInvalidate={onInvalidate} />,
+      component: (
+        <OverviewSection
+          isLiber={isLiber}
+          data={data}
+          onInvalidate={onInvalidate}
+        />
+      ),
       isShow: true,
     },
     {
@@ -56,9 +63,9 @@ const AboutPanel = ({ data, onInvalidate }: Props) => {
   ];
 
   return (
-    <div className="h-full w-full rounded-lg bg-white shadow-sm">
+    <div className="h-full w-full rounded-xl bg-white shadow-sm">
       {/* Mobile View - Accordion Style */}
-      <div className="flex w-full flex-col rounded-xl border-neutral-90 active:bg-primary-98 lg:hidden">
+      <div className="flex w-full flex-col rounded-xl border-neutral-90  lg:hidden">
         <div className="p-5 text-base font-medium text-neutral-10">
           Giới thiệu
         </div>
@@ -71,7 +78,7 @@ const AboutPanel = ({ data, onInvalidate }: Props) => {
                 type="button"
                 className={`flex w-full flex-row items-center justify-between gap-x-2 p-4 text-sm font-medium ${
                   activeSection === section.type
-                    ? 'bg-primary-98 text-primary-50'
+                    ? 'bg-primary-90 text-primary-60'
                     : 'text-neutral-40'
                 }`}
                 onClick={() =>
@@ -114,7 +121,9 @@ const AboutPanel = ({ data, onInvalidate }: Props) => {
               type="button"
               key={section.type}
               className={`mb-4 flex flex-row gap-x-2 rounded-lg p-2 text-sm font-medium text-neutral-40 active:bg-primary-98 ${
-                activeSection === section.type ? 'bg-primary-98' : ''
+                activeSection === section.type
+                  ? 'bg-primary-90 text-primary-60'
+                  : ''
               }`}
               onClick={() => setActiveSection(section.type)}
             >
@@ -125,7 +134,7 @@ const AboutPanel = ({ data, onInvalidate }: Props) => {
             </button>
           ))}
         </div>
-        <div className="w-4/6 flex-1 bg-white">
+        <div className="w-4/6 flex-1 rounded-xl bg-white">
           {sectionMenu.map(
             (section) =>
               section.type === activeSection && (

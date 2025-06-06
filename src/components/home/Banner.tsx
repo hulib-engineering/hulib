@@ -7,7 +7,8 @@ import React from 'react';
 const Banner = () => {
   const t = useTranslations('Home');
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full w-full rounded-lg">
+      <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent to-neutral-98" />
       <Image
         src="/assets/images/home-banner.png"
         width={0}
@@ -16,7 +17,6 @@ const Banner = () => {
         className="h-[8rem] w-full rounded-lg object-cover md:h-full"
         alt="Home Banner"
       />
-
       <div className="absolute left-8 top-1/2 -translate-y-1/2">
         <div className="flex flex-col gap-0 md:gap-2">
           <h3 className="text-base font-medium leading-[1.6rem] text-primary-30 md:text-[2.5rem] md:leading-[3rem]">

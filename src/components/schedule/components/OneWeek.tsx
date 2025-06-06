@@ -3,8 +3,10 @@
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import {
   addDays,
+  differenceInWeeks,
   format,
   isBefore,
+  isSameWeek,
   isToday,
   startOfDay,
   startOfWeek,
@@ -26,8 +28,13 @@ export default function OneWeek({
   todayClass = 'border border-primary-500 text-primary-500 bg-primary-50',
   selectedClass = 'border bg-primary-500 text-white',
 }: Props) {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const startOfCurrentWeek = startOfWeek(new Date(), { weekStartsOn: 0 });
+  const today = new Date();
+  const [currentDate, setCurrentDate] = useState(today);
+
+  const currentWeek = startOfWeek(today, { weekStartsOn: 0 });
+
+  const displayedWeek = startOfWeek(currentDate, { weekStartsOn: 0 });
+
   const [selectedDate, setSelectedDate] = useState<Date | null>(selectDate);
 
   const onClickDateItem = (item: Date) => {
@@ -39,28 +46,67 @@ export default function OneWeek({
   };
 
   const getWeekDays = () => {
-    return Array.from({ length: 7 }, (_, i) => addDays(startOfCurrentWeek, i));
+    return Array.from({ length: 7 }, (_, i) => addDays(displayedWeek, i));
+  };
+
+  const canGoPrevious = () => {
+    return !isSameWeek(displayedWeek, currentWeek, { weekStartsOn: 0 });
+  };
+
+  const canGoNext = () => {
+    const weeksFromCurrent = differenceInWeeks(displayedWeek, currentWeek);
+    return weeksFromCurrent < 3;
   };
 
   const handlePrevWeek = () => {
-    setCurrentDate(addDays(currentDate, -7));
+    if (canGoPrevious()) {
+      setCurrentDate(addDays(currentDate, -7));
+    }
   };
 
   const handleNextWeek = () => {
-    setCurrentDate(addDays(currentDate, 7));
+    if (canGoNext()) {
+      setCurrentDate(addDays(currentDate, 7));
+    }
   };
 
   return (
     <div className="mx-auto w-full rounded-lg bg-white p-4 shadow-lg">
       <div className="mb-2 flex items-center justify-between">
-        <button type="button" onClick={handlePrevWeek}>
+        <button
+          type="button"
+          onClick={handlePrevWeek}
+          disabled={!canGoPrevious()}
+          className={`${
+            !canGoPrevious()
+              ? 'cursor-not-allowed opacity-50'
+              : 'hover:bg-gray-100'
+          } rounded p-1`}
+        >
           <CaretLeft className="h-5 w-5 text-gray-500" />
         </button>
-        <span className="font-semibold">This week</span>
-        <button type="button" onClick={handleNextWeek}>
+
+        <span className="font-semibold">
+          {isSameWeek(displayedWeek, currentWeek, { weekStartsOn: 0 })
+            ? 'This week'
+            : `${format(displayedWeek, 'MMM d')} - ${format(
+                addDays(displayedWeek, 6),
+                'MMM d, yyyy',
+              )}`}
+        </span>
+
+        <button
+          type="button"
+          onClick={handleNextWeek}
+          disabled={!canGoNext()}
+          className={`${
+            !canGoNext() ? 'cursor-not-allowed opacity-50' : 'hover:bg-gray-100'
+          } rounded p-1`}
+        >
           <CaretRight className="h-5 w-5 text-gray-500" />
         </button>
       </div>
+
       <div className="grid grid-cols-7 gap-2 text-center">
         {getWeekDays().map((day, index) => {
           const isPastDate = isBefore(startOfDay(day), startOfDay(new Date()));

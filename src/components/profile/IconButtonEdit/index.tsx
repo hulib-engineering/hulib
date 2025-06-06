@@ -18,9 +18,9 @@ const IconButtonEdit = ({
   if (huberId || isHidden) return null;
 
   return (
-    <div className="rounded-full bg-primary-90">
+    <div className="rounded-full bg-primary-90 ">
       <IconButton color="primary" disabled={disabled} onClick={onClick}>
-        <PencilSimple size={12} className="text-primary-40" />
+        <PencilSimple size={16} className="text-primary-40" />
       </IconButton>
     </div>
   );

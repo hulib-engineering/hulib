@@ -132,6 +132,7 @@ module.exports = {
           90: '#E3E4E5',
           98: '#F9F9F9',
           variant: {
+            80: '#C2C6CF',
             98: '#F3F4F6',
           },
         },
@@ -150,6 +151,7 @@ module.exports = {
           50: '#EE0038',
         },
         pink: {
+          50: '#FF77BA',
           90: '#FFE4F1',
         },
         green: {
@@ -162,6 +164,9 @@ module.exports = {
         lp: {
           'primary-blue': '#0061EF',
         },
+      },
+      boxShadow: {
+        sm: '0 4px 5px 0 rgba(28, 30, 33, 0.1), 0 0px 4px 0 rgba(15, 15, 16, 0.06)',
       },
       rotate: {
         30: '30deg',
