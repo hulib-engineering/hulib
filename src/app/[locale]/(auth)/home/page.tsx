@@ -7,7 +7,7 @@ import CommonLayout from '@/layouts/CommonLayout';
 
 const Page = () => {
   return (
-    <CommonLayout className="bg-white">
+    <CommonLayout className="bg-neutral-98">
       <Banner />
       <NewestStories />
       {/* <RecommendedHubers /> */}

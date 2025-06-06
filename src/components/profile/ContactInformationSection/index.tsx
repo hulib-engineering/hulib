@@ -66,8 +66,8 @@ export const ContactInformationSection = ({ data }: { data: any }) => {
   }, [contactInfoData]);
 
   return (
-    <div className="flex flex-col gap-y-2 py-5">
-      <div className="flex flex-row items-center justify-between py-2">
+    <div className="flex flex-col gap-y-2 ">
+      <div className="flex flex-row items-center justify-between">
         <span>Contact Information</span>
         <IconButtonEdit
           isHidden={editMode}
@@ -88,12 +88,12 @@ export const ContactInformationSection = ({ data }: { data: any }) => {
               >
                 <div>
                   <p className="font-medium">{item.title}</p>
-                  <p className="font-light">{item.value}</p>
+                  <p className="font-light text-neutral-20">{item.value}</p>
                 </div>
                 <div className="rounded-full bg-neutral-90">
                   <IconButton disabled>
                     <GlobeHemisphereWest
-                      size={12}
+                      size={16}
                       className="text-neutral-40"
                     />
                   </IconButton>
