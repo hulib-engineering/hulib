@@ -18,6 +18,7 @@ import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
 import useAppSelector from '@/libs/hooks/useAppSelector';
 import {
   useAddStoryToFavoritesMutation,
+  useDeleteFavoriteStoryMutation,
   useGetFavoritesStoryQuery,
 } from '@/libs/services/modules/fav-stories';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
@@ -67,20 +68,35 @@ const ExploreStory = ({ topicIds }: ExporeStoryProps) => {
   };
 
   const [addStoryToFavorites] = useAddStoryToFavoritesMutation();
+  const [deleteFavoriteStory] = useDeleteFavoriteStoryMutation();
 
-  const handleAddToFavorites = (storyId: number) => {
+  const handleAddToFavorites = async (storyId: number) => {
     if (!userInfo) {
       router.push('/login');
       return;
     }
-    addStoryToFavorites({ storyId, userId }).then((response: any) => {
-      if (response.error) {
-        pushError(t(response.error?.message || 'error_contact_admin'));
+
+    try {
+      if (favoriteStoriesIds.includes(storyId)) {
+        const response = await deleteFavoriteStory({
+          storyId,
+          userId,
+        }).unwrap();
+        pushSuccess(t(response?.message || 'story_removed_from_favorites'));
+        setFavoriteStoriesIds((prev) => prev.filter((id) => id !== storyId));
       } else {
-        pushSuccess(t(response.data?.message || 'story_added_to_favorites'));
+        const response = await addStoryToFavorites({
+          storyId,
+          userId,
+        }).unwrap();
+        pushSuccess(t(response?.message || 'story_added_to_favorites'));
+        setFavoriteStoriesIds((prev) => [...prev, storyId]);
       }
-    });
+    } catch (err: any) {
+      pushError(t(err?.data?.message || 'error_contact_admin'));
+    }
   };
+
   const renderActions = (storyId: number) => {
     return (
       <div
