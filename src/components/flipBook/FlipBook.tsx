@@ -2,55 +2,63 @@ import { BookmarkSimple } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Button from '@/components/button/Button';
 import CustomFlipBook from '@/components/FlipBook';
 import { mergeClassnames } from '@/components/private/utils';
+import { useAppSelector } from '@/libs/hooks';
+import {
+  useAddStoryToFavoritesMutation,
+  useDeleteFavoriteStoryMutation,
+} from '@/libs/services/modules/fav-stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
-// import CustomCoverBook from '../common/CustomCoverBook';
+import { pushError, pushSuccess } from '../CustomToastifyContainer';
 
 export type BookCommonProps = {
   data: StoryType;
   renderActions?: () => React.ReactNode;
+  refetch: () => void;
 };
-export const FlipBook = ({ data, renderActions }: BookCommonProps) => {
-  // const userInfo = useAppSelector((state) => state.auth.userInfo);
-  // const userId = userInfo?.id;
+export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userId = userInfo?.id;
   const { title } = data;
-  const t = useTranslations('ExporeStory');
+  const t = useTranslations('ExploreStory');
+  const [isFavorite, setIsFavorite] = useState(data?.isFavorite);
+
+  useEffect(() => {
+    setIsFavorite(data?.isFavorite);
+  }, [data?.isFavorite]);
 
   const router = useRouter();
 
-  // const [addStoryToFavorites] = useAddStoryToFavoritesMutation();
-  // const [deleteFavoriteStory] = useDeleteFavoriteStoryMutation();
+  const [addStoryToFavorites] = useAddStoryToFavoritesMutation();
+  const [deleteFavoriteStory] = useDeleteFavoriteStoryMutation();
 
   const handleAddToFavorites = async (storyId: number) => {
-    console.log('storyId', storyId);
+    try {
+      setIsFavorite(!isFavorite);
 
-    // if (!userInfo) {
-    //   router.push('/login');
-    // }
-    // try {
-    //   if (favoriteStoriesIds.includes(storyId)) {
-    //     const response = await deleteFavoriteStory({
-    //       storyId,
-    //       userId,
-    //     }).unwrap();
-    //     pushSuccess(t(response?.message || 'story_removed_from_favorites'));
-    //     setFavoriteStoriesIds((prev) => prev.filter((id) => id !== storyId));
-    //   } else {
-    //     const response = await addStoryToFavorites({
-    //       storyId,
-    //       userId,
-    //     }).unwrap();
-    //     pushSuccess(t(response?.message || 'story_added_to_favorites'));
-    //     setFavoriteStoriesIds((prev) => [...prev, storyId]);
-    //   }
-    // } catch (err: any) {
-    //   pushError(t(err?.data?.message || 'error_contact_admin'));
-    // }
+      if (isFavorite) {
+        const response = await deleteFavoriteStory({
+          storyId,
+          userId,
+        }).unwrap();
+        pushSuccess(response?.message || t('story_removed_from_favorites'));
+      } else {
+        const response = await addStoryToFavorites({
+          storyId,
+          userId,
+        }).unwrap();
+        pushSuccess(response?.message || t('story_added_to_favorites'));
+      }
+      refetch();
+    } catch (err: any) {
+      setIsFavorite(isFavorite);
+      pushError(err?.data?.message || t('error_contact_admin'));
+    }
   };
 
   const renderActionsRead = (storyId: number) => {
@@ -82,8 +90,8 @@ export const FlipBook = ({ data, renderActions }: BookCommonProps) => {
         >
           <BookmarkSimple
             size={20}
-            // weight={favoriteStoriesIds.includes(storyId) ? 'fill' : 'regular'}
-            // color={favoriteStoriesIds.includes(storyId) ? '#F6CE3C' : '#0442BF'}
+            weight={isFavorite ? 'fill' : 'regular'}
+            color={isFavorite ? '#F6CE3C' : '#0442BF'}
           />
         </Button>
       </div>

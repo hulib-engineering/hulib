@@ -8,7 +8,7 @@ const Banner = () => {
   const t = useTranslations('Home');
   return (
     <div className="relative h-full w-full rounded-lg">
-      <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent to-neutral-98" />
+      <div className="absolute inset-0 rounded-lg bg-gradient-to-b" />
       <Image
         src="/assets/images/home-banner.png"
         width={0}
