@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  Bookmarks,
-  CaretCircleDown,
-  CaretCircleUp,
-} from '@phosphor-icons/react';
-import router from 'next/router';
+import { CaretCircleDown, CaretCircleUp } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 
@@ -39,43 +34,6 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
     topicIds,
   });
 
-  const handleAddToFavorites = () => {
-    // TODO: Implement add to favorites
-  };
-
-  const renderActions = (storyId: number) => {
-    return (
-      <div
-        className={mergeClassnames(
-          'flex w-full items-center gap-2 justify-self-end mt-3 absolute bottom-[10px]',
-          'md:flex-row md:mt-2 md:px-3 md:pl-0',
-        )}
-      >
-        <Button
-          variant="primary"
-          className={mergeClassnames(
-            'text-base h-8 max-h-8 w-[120px] flex-none rounded-full px-[12px] py-[12px]',
-            'md:h-[44px] md:max-h-[44px] md:w-[105px]',
-          )}
-          onClick={() => router.push(`/explore-story/${storyId}`)}
-        >
-          Read all
-        </Button>
-        <Button
-          variant="outline"
-          className={mergeClassnames(
-            'w-full h-8',
-            'md:size-10 md:min-h-10 md:min-w-10',
-          )}
-          iconOnly
-          onClick={() => handleAddToFavorites()}
-        >
-          <Bookmarks size={20} />
-        </Button>
-      </div>
-    );
-  };
-
   const onClickSeeAll = () => {
     setIsExpandList((prev) => !prev);
   };
@@ -106,11 +64,7 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
         )}
       >
         {similarStoriesPages?.data?.map((story: StoryType) => (
-          <FlipBook
-            key={story?.id}
-            data={story}
-            renderActions={() => renderActions(story?.id)}
-          />
+          <FlipBook key={story?.id} data={story} />
         ))}
       </div>
 

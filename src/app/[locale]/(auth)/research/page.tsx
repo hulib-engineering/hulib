@@ -1,14 +1,14 @@
 'use client';
 
 import Banner from '@/components/home/Banner';
-import NewestBooks from '@/components/research/NewestBooks';
+import NewestStories from '@/components/home/NewestStories';
 import CommonLayout from '@/layouts/CommonLayout';
 
 const Page = () => {
   return (
     <CommonLayout className="bg-white">
       <Banner />
-      <NewestBooks />
+      <NewestStories />
     </CommonLayout>
   );
 };
