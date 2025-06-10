@@ -250,9 +250,16 @@ const Profile = () => {
 
             <div className="relative left-4 mb-10 flex w-full flex-row items-center justify-between gap-2 lg:left-0 lg:ml-[210px] lg:mr-5">
               <div className="flex-col gap-y-1 lg:gap-y-1">
-                <p className="text-3xl font-medium text-[#000000]">
-                  {userDetail?.fullName ?? 'Not provided'}
-                </p>
+                <div className="flex items-center gap-2">
+                  <p className="text-3xl font-medium text-[#000000]">
+                    {userDetail?.fullName ?? ''}{' '}
+                  </p>
+                  {userDetail?.role?.name && (
+                    <span className="inline-flex items-center gap-2 rounded-full bg-primary-90 px-4 py-1 text-sm text-primary-40">
+                      {userDetail?.role?.name || '-'}
+                    </span>
+                  )}
+                </div>
                 <div className="flex items-center gap-x-10 text-sm text-neutral-20">
                   <LabelWithLeftIcon
                     label={userDetail?.address ?? 'Location'}
