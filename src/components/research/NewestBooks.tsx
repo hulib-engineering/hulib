@@ -114,6 +114,7 @@ const NewestBooks: React.FC<NewestBooksProps> = ({
               key={item.id}
               data={item}
               renderActions={() => renderActions(item.id)}
+              refetch={() => {}}
             />
           ))}
         </div>

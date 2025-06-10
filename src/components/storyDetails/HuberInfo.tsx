@@ -22,7 +22,7 @@ interface Props {
     bio: string;
   };
   title: string;
-  coverPath: string;
+  coverPath?: string;
   // abstract: string;
   storyReview: {
     rating: number;
@@ -41,13 +41,12 @@ const HumanBookInfo = ({
   topics,
 }: Props) => {
   const [imgError, setImgError] = useState(false);
-  const t = useTranslations('ExporeStory');
+  const t = useTranslations('ExploreStory');
   const router = useRouter();
   const userInfo = useAppSelector((state) => state.auth.userInfo);
   const handleImageError = () => {
     setImgError(true);
   };
-  console.log('topics', topics);
 
   const handleNameClick = () => {
     router.push(`/profile?huberId=${humanBook.id}`);
@@ -122,7 +121,10 @@ const HumanBookInfo = ({
           <CustomCoverBook
             titleStory={title}
             authorName={humanBook?.fullName || ''}
-            // srcImage={data?.cover?.path}
+            srcImage={
+              coverPath ||
+              '/assets/images/cover-book/story_background_yellow.png'
+            }
           />
         </div>
         <div className="flex w-full flex-col items-center gap-2">

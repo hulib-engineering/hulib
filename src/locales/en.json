@@ -412,7 +412,7 @@
     "step_1_title": "Register as a Huber",
     "general": "General"
   },
-  "ExporeStory": {
+  "ExploreStory": {
     "title": "Explore",
     "description": "Discover and find your perfect story",
     "view_more": "View More",
@@ -429,7 +429,10 @@
     "education": "Education",
     "similar_stories": "Similar Stories",
     "see_all": "See All",
-    "hide_all": "Hide All"
+    "hide_all": "Hide All",
+    "story_added_to_favorites": "Favorite added successfully",
+    "story_removed_from_favorites": "Favorite removed successfully",
+    "error_contact_admin": "An error occurred, please contact admin for support!"
   },
   "Huber": {
     "title": "Explore our Hubers",

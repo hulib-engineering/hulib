@@ -33,7 +33,11 @@ const DeleteStoryModal: React.FC<DeleteStoryModalProps> = ({
           </h4>
 
           <div className="pointer-events-none rounded-2xl shadow-md">
-            <FlipBook data={story} renderActions={() => null} />
+            <FlipBook
+              data={story}
+              renderActions={() => null}
+              refetch={() => {}}
+            />
           </div>
 
           {/* Warning Text */}

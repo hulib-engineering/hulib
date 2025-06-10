@@ -73,7 +73,7 @@ const Page = () => {
       />
 
       {keyword && !loadingStories && (
-        <div className="text-black-500 mb-4 text-sm">{searchResultInfo}</div>
+        <div className="mb-4 text-sm text-neutral-20">{searchResultInfo}</div>
       )}
 
       {renderContent()}
