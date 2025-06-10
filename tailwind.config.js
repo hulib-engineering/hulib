@@ -193,10 +193,6 @@ module.exports = {
       content: {
         flash: 'url("/assets/images/flash-vector.svg")',
       },
-      boxShadow: {
-        'image-shadow': '5px 5px 20px #2e2e2e',
-        'back-cover-shadow': '-10px 0 50px 10px #2e2e2e',
-      },
       keyframes: {
         moveUp: {
           to: { transform: 'translateY(50px)' },

@@ -71,9 +71,9 @@ export interface Story {
   rating: number;
   topics: Topic[];
   storyReview: StoryReview;
-  isFavorited: boolean;
   createdAt?: string | undefined;
   updatedAt?: string | undefined;
+  isFavorite?: boolean;
 }
 
 export interface Histogram {

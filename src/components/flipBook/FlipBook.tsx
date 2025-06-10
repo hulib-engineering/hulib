@@ -1,88 +1,102 @@
+import { BookmarkSimple } from '@phosphor-icons/react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import Button from '@/components/button/Button';
 import CustomFlipBook from '@/components/FlipBook';
 import { mergeClassnames } from '@/components/private/utils';
+import { useAppSelector } from '@/libs/hooks';
+import {
+  useAddStoryToFavoritesMutation,
+  useDeleteFavoriteStoryMutation,
+} from '@/libs/services/modules/fav-stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
-// import CustomCoverBook from '../common/CustomCoverBook';
+import { pushError, pushSuccess } from '../CustomToastifyContainer';
 
 export type BookCommonProps = {
   data: StoryType;
-  renderActions: () => React.ReactNode;
+  renderActions?: () => React.ReactNode;
+  refetch: () => void;
 };
-export const FlipBook = ({ data, renderActions }: BookCommonProps) => {
+export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userId = userInfo?.id;
   const { title } = data;
-  // const [isFlipped, setIsFlipped] = useState(false);
-  // const [maxCharsPageLeft, setmaxCharsPageLeft] = useState(200);
-  // const pageLeftRef = useRef<HTMLParagraphElement>(null);
-  // const router = useRouter();
-  const t = useTranslations('ExporeStory');
-  // const [addStoryToFavorites] = useAddStoryToFavoritesMutation();
+  const t = useTranslations('ExploreStory');
+  const [isFavorite, setIsFavorite] = useState(data?.isFavorite);
 
-  // const handleAddToFavorites = async (storyId: number) => {
-  //   try {
-  //     // Call the mutation to add the story to favorites
-  //     await addStoryToFavorites({ storyId: storyId.toString() }).unwrap();
-  //   } catch (err) {
-  //     // Handle the error if mutation fails
-  //     pushError('Error adding story to favorites');
-  //   }
-  // };
+  useEffect(() => {
+    setIsFavorite(data?.isFavorite);
+  }, [data?.isFavorite]);
 
-  // const detectDeviceType = () =>
-  //   /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent)
-  //     ? 'Mobile'
-  //     : 'Desktop';
+  const router = useRouter();
 
-  // const isMobile = React.useMemo(() => {
-  //   const deviceType = detectDeviceType();
-  //   return deviceType === 'Mobile';
-  // }, []);
+  const [addStoryToFavorites] = useAddStoryToFavoritesMutation();
+  const [deleteFavoriteStory] = useDeleteFavoriteStoryMutation();
 
-  // const handleMouseLeave = () => {
-  //   setIsFlipped(false);
-  // };
-  //
-  // const handleMouseEnter = () => {
-  //   setIsFlipped(true);
-  // };
-  // useEffect(() => {
-  //   const calculateMaxChars = () => {
-  //     const pElement = pageLeftRef.current;
-  //     if (!pElement) return;
-  //
-  //     const tempElement = document.createElement('p');
-  //     tempElement.style.width = `${pElement.offsetWidth}px`;
-  //     tempElement.style.fontSize = window.getComputedStyle(pElement).fontSize;
-  //     tempElement.style.lineHeight =
-  //       window.getComputedStyle(pElement).lineHeight;
-  //     tempElement.style.padding = window.getComputedStyle(pElement).padding;
-  //     tempElement.style.visibility = 'hidden';
-  //     tempElement.style.position = 'absolute';
-  //     document.body.appendChild(tempElement);
-  //
-  //     let charCount = 0;
-  //     for (let i = 0; i < abstract.length; i += 1) {
-  //       tempElement.textContent = abstract.substring(0, i + 1);
-  //       if (tempElement.scrollHeight > pElement.clientHeight) {
-  //         charCount = i;
-  //         break;
-  //       }
-  //     }
-  //
-  //     document.body.removeChild(tempElement);
-  //     if (charCount > 0) {
-  //       const lastSpaceChar = abstract.lastIndexOf(' ', charCount);
-  //       setmaxCharsPageLeft(lastSpaceChar);
-  //     }
-  //   };
-  //
-  //   calculateMaxChars();
-  //   window.addEventListener('resize', calculateMaxChars);
-  //   return () => window.removeEventListener('resize', calculateMaxChars);
-  // }, [abstract]);
+  const handleAddToFavorites = async (storyId: number) => {
+    try {
+      setIsFavorite(!isFavorite);
+
+      if (isFavorite) {
+        const response = await deleteFavoriteStory({
+          storyId,
+          userId,
+        }).unwrap();
+        pushSuccess(response?.message || t('story_removed_from_favorites'));
+      } else {
+        const response = await addStoryToFavorites({
+          storyId,
+          userId,
+        }).unwrap();
+        pushSuccess(response?.message || t('story_added_to_favorites'));
+      }
+      refetch();
+    } catch (err: any) {
+      setIsFavorite(isFavorite);
+      pushError(err?.data?.message || t('error_contact_admin'));
+    }
+  };
+
+  const renderActionsRead = (storyId: number) => {
+    return (
+      <div
+        className={mergeClassnames(
+          'flex w-full items-center gap-2 justify-self-end mt-3 absolute bottom-[10px]',
+          'md:flex-row md:mt-2 md:px-3 md:pl-0',
+        )}
+      >
+        <Button
+          variant="primary"
+          className={mergeClassnames(
+            'text-base h-8 max-h-8 w-[120px] flex-none rounded-full px-[12px] py-[12px]',
+            'md:h-[44px] md:max-h-[44px] md:w-[105px]',
+          )}
+          onClick={() => router.push(`/explore-story/${storyId}`)}
+        >
+          {t('read_story')}
+        </Button>
+        <Button
+          variant="outline"
+          className={mergeClassnames(
+            'w-full h-8',
+            'md:size-10 md:min-h-10 md:min-w-10 bg-white border-neutral-variant',
+          )}
+          iconOnly
+          onClick={() => handleAddToFavorites(storyId)}
+        >
+          <BookmarkSimple
+            size={20}
+            weight={isFavorite ? 'fill' : 'regular'}
+            color={isFavorite ? '#F6CE3C' : '#0442BF'}
+          />
+        </Button>
+      </div>
+    );
+  };
 
   return (
     <div
@@ -185,7 +199,7 @@ export const FlipBook = ({ data, renderActions }: BookCommonProps) => {
               </p>
             </div>
 
-            {renderActions && renderActions()}
+            {renderActions ? renderActions() : renderActionsRead(data?.id)}
           </div>
         </div>
         <div
@@ -206,74 +220,6 @@ export const FlipBook = ({ data, renderActions }: BookCommonProps) => {
           />
         </div>
       </div>
-      {/* Back-Card */}
-      {/* <div */}
-      {/*  className={mergeClassnames( */}
-      {/*    'absolute inset-0 hidden md:block transition-transform duration-500 transform-gpu ', */}
-      {/*    'md:[transform-style:preserve-3d] md:[backface-visibility:hidden]', */}
-      {/*    // isFlipped ? 'md:rotate-y-0' : 'md:rotate-y-180', */}
-      {/*  )} */}
-      {/* > */}
-      {/*  <div className="flip-card-back h-full rounded-2xl"> */}
-      {/*    <div className="grid h-full w-full grid-cols-2 rounded-2xl bg-[#FFFFFF] p-4 shadow-[3px_4px_5px_3px_#1C1E211A]"> */}
-      {/*      <div className="page-left relative h-full rounded-md  bg-[#f5f5f5] before:absolute before:inset-y-0 before:right-0 before:h-full before:w-[36px] before:rounded-lg before:bg-gradient-to-r before:from-transparent before:to-[#C7C9CB] before:content-['']"> */}
-      {/*        <div> */}
-      {/*          <h6 */}
-      {/*            className={mergeClassnames( */}
-      {/*              'book-title h-[56px] text-left text-base font-medium leading-6 text-gray-800', */}
-      {/*              'md:text-[18px] md:leading-7', */}
-      {/*            )} */}
-      {/*            style={{ */}
-      {/*              display: '-webkit-box', */}
-      {/*              WebkitBoxOrient: 'vertical', */}
-      {/*              WebkitLineClamp: 2, */}
-      {/*              overflow: 'hidden', */}
-      {/*              textTransform: 'capitalize', */}
-      {/*            }} */}
-      {/*          > */}
-      {/*            {title.toLowerCase()} */}
-      {/*          </h6> */}
-      {/*          <p */}
-      {/*            ref={pageLeftRef} */}
-      {/*            className="w-full overflow-hidden text-left text-sm text-neutral-600" */}
-      {/*            style={{ */}
-      {/*              display: '-webkit-box', */}
-      {/*              WebkitBoxOrient: 'vertical', */}
-      {/*              WebkitLineClamp: 10, */}
-      {/*            }} */}
-      {/*          > */}
-      {/*            {abstract.substring(0, maxCharsPageLeft) || ''} */}
-      {/*          </p> */}
-      {/*        </div> */}
-      {/*      </div> */}
-
-      {/*      <div className="page-right relative flex h-full flex-col justify-between rounded-l-[8px] bg-[#f5f5f5] before:absolute before:inset-y-0 before:right-0 before:h-full before:w-[36px] before:rounded-md before:bg-gradient-to-r before:from-transparent before:to-[#C7C9CB] before:opacity-30 before:content-['']"> */}
-      {/*        <p */}
-      {/*          className="mt-1 w-full  overflow-hidden  pl-2 pr-1 text-left text-sm font-normal text-neutral-600" */}
-      {/*          style={{ */}
-      {/*            display: '-webkit-box', */}
-      {/*            WebkitBoxOrient: 'vertical', */}
-      {/*            WebkitLineClamp: 10, */}
-      {/*          }} */}
-      {/*        > */}
-      {/*          {abstract.substring(maxCharsPageLeft) || ''} */}
-      {/*        </p> */}
-      {/*        <div className="mb-2 flex justify-center"> */}
-      {/*          <Button */}
-      {/*            variant="primary" */}
-      {/*            className={mergeClassnames( */}
-      {/*              'text-sm h-8 max-h-8 flex-none', */}
-      {/*              'md:h-10 md:max-h-10', */}
-      {/*            )} */}
-      {/*            onClick={() => router.push(`/explore-story/${data?.id}`)} */}
-      {/*          > */}
-      {/*            {t('read_story')} */}
-      {/*          </Button> */}
-      {/*        </div> */}
-      {/*      </div> */}
-      {/*    </div> */}
-      {/*  </div> */}
-      {/* </div> */}
     </div>
   );
 };
