@@ -41,7 +41,7 @@ const HumanBookInfo = ({
   topics,
 }: Props) => {
   const [imgError, setImgError] = useState(false);
-  const t = useTranslations('ExporeStory');
+  const t = useTranslations('ExploreStory');
   const router = useRouter();
   const userInfo = useAppSelector((state) => state.auth.userInfo);
   const handleImageError = () => {
