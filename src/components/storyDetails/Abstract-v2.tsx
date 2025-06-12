@@ -188,10 +188,10 @@ export function FlipBook({
           <HTMLFlipBook
             width={458}
             height={616}
-            size="fixed"
-            minWidth={315}
+            size="stretch"
+            minWidth={458}
             maxWidth={1000}
-            minHeight={400}
+            minHeight={616}
             maxHeight={1533}
             maxShadowOpacity={0.5}
             drawShadow={false}
