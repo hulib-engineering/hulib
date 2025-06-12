@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 
 import Button from '@/components/button/Button';
-import CustomFlipBook from '@/components/FlipBook';
 import { mergeClassnames } from '@/components/private/utils';
 import { useAppSelector } from '@/libs/hooks';
 import {
@@ -15,6 +14,7 @@ import {
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
 import { pushError, pushSuccess } from '../CustomToastifyContainer';
+import AnimatedCover from '../stories/AnimatedCover';
 
 export type BookCommonProps = {
   data: StoryType;
@@ -208,15 +208,12 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
             'md:h-full',
           )}
         >
-          {/* <CustomCoverBook */}
-          {/*  titleStory={title} */}
-          {/*  authorName={data?.humanBook?.fullName || ''} */}
-          {/*  // srcImage={data?.cover?.path} */}
-          {/* /> */}
-          <CustomFlipBook
+          <AnimatedCover
+            abstract={data?.abstract ?? ''}
             title={title}
-            author={data?.humanBook?.fullName || ''}
-            coverUrl={data?.cover?.path}
+            authorName={data?.humanBook?.fullName || ''}
+            coverUrl={data?.cover?.path || ''}
+            onClick={() => router.push(`/explore-story/${data?.id}`)}
           />
         </div>
       </div>
