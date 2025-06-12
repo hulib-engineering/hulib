@@ -30,7 +30,6 @@ const Button = <C extends ElementType = 'button'>({
   animation,
   as,
   className,
-  shouldHover = true,
   ...rest
 }: Props<C> & { shouldHover?: boolean }) => {
   const hasAnimationContent =
@@ -86,7 +85,7 @@ const Button = <C extends ElementType = 'button'>({
           {iconOnly}
         </>
       )}
-      {shouldHover && <Hover isHover={isHover} variant={variant} />}
+      <Hover isHover={isHover} variant={variant} />
     </ButtonComponent>
   );
 };

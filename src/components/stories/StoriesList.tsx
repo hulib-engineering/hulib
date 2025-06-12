@@ -58,9 +58,11 @@ const StoriesList = ({
 
   const storiesWithFavorites = useMemo(() => {
     return stories?.map((story: StoryType) => {
-      const isFavorite = favoriteStories?.some(
-        (favorite: any) => favorite.storyId === story.id,
-      );
+      const isFavorite =
+        favoriteStories &&
+        favoriteStories?.data.some(
+          (favorite: any) => favorite.storyId === story.id,
+        );
       return { ...story, isFavorite };
     });
   }, [stories, favoriteStories]);
