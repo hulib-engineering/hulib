@@ -92,6 +92,7 @@ const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
                   <NotificationItem
                     key={notification.id}
                     notification={notification}
+                    hideDetails
                     // onMarkAsRead={() =>
                     //   console.log('Mark as read:', notification.id)
                     // }
