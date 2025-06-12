@@ -2,9 +2,11 @@ import clsx from 'clsx';
 import { format } from 'date-fns';
 import _ from 'lodash';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import { useUpdateNotificationMutation } from '@/libs/services/modules/notifications';
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
 import { NOTIFICATION_TYPES } from '@/libs/services/modules/notifications/notificationType';
 import { useUpdateReadingSessionMutation } from '@/libs/services/modules/reading-session';
@@ -13,15 +15,18 @@ import { StatusEnum } from '@/types/common';
 
 interface NotificationItemProps {
   notification: Notification;
-  // onMarkAsRead: (id: string) => void;
+  hideDetails?: boolean;
 }
 
 const NotificationItem: FC<NotificationItemProps> = ({
   notification,
-  // onMarkAsRead,
+  hideDetails = false,
 }) => {
+  const router = useRouter();
   const [updateStatus, { isLoading }] = useUpdateReadingSessionMutation();
+  const [updateNotification] = useUpdateNotificationMutation();
   const formattedTime = format(new Date(notification.createdAt), 'MMM d HH:mm');
+
   const handleStatusChange = async (
     sessionId: number,
     newStatus: StatusType,
@@ -38,22 +43,58 @@ const NotificationItem: FC<NotificationItemProps> = ({
       pushError('Failed to update status. Please try again.');
     }
   };
+
+  const handleNotificationClick = async () => {
+    if (
+      notification.type.name === NOTIFICATION_TYPES.PUBLISH_STORY.name ||
+      notification.type.name === NOTIFICATION_TYPES.REVIEW_STORY.name ||
+      notification.type.name === NOTIFICATION_TYPES.ACCOUNT.name
+    ) {
+      if (!notification.seen) {
+        await updateNotification({ id: notification.id.toString() }).unwrap();
+      }
+
+      if (notification.type.name === NOTIFICATION_TYPES.ACCOUNT.name) {
+        router.push('/profile');
+      } else if (notification.relatedEntityId) {
+        router.push(`/explore-story/${notification.relatedEntityId}`);
+      }
+    }
+  };
+
+  const isClickableNotification =
+    notification.type.name === NOTIFICATION_TYPES.PUBLISH_STORY.name ||
+    notification.type.name === NOTIFICATION_TYPES.REVIEW_STORY.name;
+
   return (
     <div
       className={clsx(
-        'border-b p-3 last:border-b-0',
-        !notification.seen && 'bg-green-90',
+        'relative border-b p-3 last:border-b-0',
+        !notification.seen && 'bg-green-90 md:bg-transparent',
+        isClickableNotification && 'cursor-pointer',
       )}
       role="button"
       tabIndex={0}
-      // onClick={() => onMarkAsRead(notification.id.toString())}
-      // onKeyDown={(e) => {
-      //   if (e.key === 'Enter' || e.key === ' ') {
-      //     e.preventDefault();
-      //     onMarkAsRead(notification.id.toString());
-      //   }
-      // }}
+      onClick={handleNotificationClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleNotificationClick();
+        }
+      }}
     >
+      {!notification.seen && (
+        <div className="absolute right-4 top-1/2 hidden -translate-y-1/2 md:block">
+          <Image
+            src="/assets/icons/leaf.svg"
+            alt="Unseen"
+            className="rounded-full"
+            width={16}
+            height={16}
+          />
+        </div>
+      )}
+
       <div className="flex items-start gap-2">
         {notification.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name && (
           <div className="relative shrink-0">
@@ -92,15 +133,28 @@ const NotificationItem: FC<NotificationItemProps> = ({
 
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between">
-            <div className="text-sm">
+            <div className="w-full text-sm">
               {notification.type.name ===
                 NOTIFICATION_TYPES.SESSION_REQUEST.name && (
-                <p>
-                  <span className="font-bold">
-                    {notification.sender.fullName ?? 'Unknown User'}
-                  </span>{' '}
-                  would love to have a meeting...
-                </p>
+                <div className="flex w-full flex-col md:flex-row md:items-center md:justify-between md:gap-2">
+                  <p>
+                    <span className="font-bold">
+                      {notification.sender.fullName ?? 'Unknown User'}
+                    </span>{' '}
+                    would love to have a meeting...
+                  </p>
+                  {!hideDetails && (
+                    <button
+                      type="button"
+                      className="mt-1 text-xs text-primary-60 underline md:mt-0"
+                      onClick={() =>
+                        router.push('/schedule-meeting/weekly-schedule')
+                      }
+                    >
+                      See detail
+                    </button>
+                  )}
+                </div>
               )}
 
               {notification.type.name ===
@@ -136,19 +190,13 @@ const NotificationItem: FC<NotificationItemProps> = ({
               {notification.type.name === NOTIFICATION_TYPES.ACCOUNT.name && (
                 <p>
                   <span className="font-bold">
-                    Your registration to become a Huber
+                    Your registration to become a Huber{' '}
                   </span>
                   has been accepted. Welcome onboard!
                 </p>
               )}
             </div>
           </div>
-          {notification.type.name ===
-            NOTIFICATION_TYPES.SESSION_REQUEST.name && (
-            <span className="text-xs text-primary-60 underline">
-              See detail
-            </span>
-          )}
           <p className="mt-1 text-xs text-gray-500">{formattedTime}</p>
 
           {notification.type.name ===

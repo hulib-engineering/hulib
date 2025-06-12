@@ -7,16 +7,15 @@ type UpdateNotificationRequest = {
 const updateNotification = (
   build: EndpointBuilder<BaseQueryFn, string, string>,
 ) =>
-  build.mutation<void, UpdateNotificationRequest>({
+  build.mutation<any, UpdateNotificationRequest>({
     query: ({ id }) => ({
-      url: `/api/v1/notifications/${id}/Update Seen Notification`,
+      url: `notifications/${id}`,
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: undefined,
     }),
-    invalidatesTags: (result, error, { id }) => [{ type: 'Notification', id }],
+    invalidatesTags: (result, error, { id }) => [
+      { type: 'Notification', id },
+      { type: 'Notification', id: 'LIST' },
+    ],
   });
 
 export default updateNotification;
