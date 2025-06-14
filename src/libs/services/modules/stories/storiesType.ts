@@ -62,6 +62,12 @@ export interface StoryDetailsParams {
   id: number;
 }
 
+export enum StoryPublishStatus {
+  DELETED = 'deleted',
+  PUBLISHED = 'published',
+  DRAFT = 'draft',
+}
+
 export interface Story {
   id: number;
   abstract: string;
@@ -74,6 +80,7 @@ export interface Story {
   createdAt?: string | undefined;
   updatedAt?: string | undefined;
   isFavorite?: boolean;
+  publishStatus: StoryPublishStatus;
 }
 
 export interface Histogram {
