@@ -5,10 +5,10 @@ import { useParams, useRouter } from 'next/navigation';
 import * as React from 'react';
 
 import SimilarStory from '@/components/exploreStory/SimilarStory';
+import { FlipBook } from '@/components/storyDetails/Abstract-v2';
 import HuberInfo from '@/components/storyDetails/HuberInfo';
 import RatingOverview from '@/components/storyDetails/RatingOverview';
 import ReaderReview from '@/components/storyDetails/ReaderReview';
-import Story from '@/components/storyDetails/Story';
 import StoryDetailsSkeleton from '@/components/storyDetails/StoryDetailsSkeleton';
 import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
 
@@ -43,16 +43,21 @@ export default function Index() {
         </div>
         <div className="flex flex-col justify-start gap-5 lg:flex-row">
           <div className="flex-1">
-            <Story
-              // cover={{
-              //   id: data?.cover?.id || '',
-              //   path: data?.cover?.path || '/assets/images/user-avatar.jpeg',
-              // }}
-              // cover={{
-              //   id: data?.cover?.id || '',
-              //   path: '/assets/images/user-avatar.jpeg',
-              // }}
-              // title={data?.title || ''}
+            {/* <Story */}
+            {/*  // cover={{ */}
+            {/*  //   id: data?.cover?.id || '', */}
+            {/*  //   path: data?.cover?.path || '/assets/images/user-avatar.jpeg', */}
+            {/*  // }} */}
+            {/*  // cover={{ */}
+            {/*  //   id: data?.cover?.id || '', */}
+            {/*  //   path: '/assets/images/user-avatar.jpeg', */}
+            {/*  // }} */}
+            {/*  // title={data?.title || ''} */}
+            {/*  abstract={data?.abstract || ''} */}
+            {/* /> */}
+            <FlipBook
+              title={data?.title || ''}
+              cover="/assets/images/user-avatar.jpeg"
               abstract={data?.abstract || ''}
             />
           </div>
@@ -72,7 +77,6 @@ export default function Index() {
           <RatingOverview id={Number(id)} />
         </div>
       </div>
-
       {data?.humanBook?.id && (
         <SimilarStory
           humanBookId={data.humanBook.id}
