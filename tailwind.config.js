@@ -173,6 +173,7 @@ module.exports = {
         60: '60deg',
         120: '120deg',
         150: '150deg',
+        180: '180deg',
         210: '210deg',
         240: '240deg',
         270: '270deg',
@@ -193,6 +194,13 @@ module.exports = {
       content: {
         flash: 'url("/assets/images/flash-vector.svg")',
       },
+      transformOrigin: {
+        right: 'right',
+      },
+      perspective: {
+        '1000px': '1000px',
+      },
+      transform: ['group-hover'],
       keyframes: {
         moveUp: {
           to: { transform: 'translateY(50px)' },
