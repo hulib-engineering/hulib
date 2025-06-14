@@ -3,7 +3,7 @@
 import { Globe } from '@phosphor-icons/react';
 import { isEmpty } from 'lodash';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
@@ -12,82 +12,41 @@ import {
   EVENING_TIME_START,
   MORNING_TIME_START,
 } from '@/libs/constants/date';
-import { useCheckAvailabilityMutation } from '@/libs/services/modules/huber';
+import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
 import { useGetTimeSlotsHuberQuery } from '@/libs/services/modules/time-slots';
 import type { TimeSlot } from '@/libs/services/modules/time-slots/getAllTimeSlots';
+import { toLocaleISO } from '@/utils/dateUtils';
 
 import OneWeek from '../schedule/components/OneWeek';
 import ScheduleBasicInfo from './ScheduleBasicInfo';
+
+type ITimeItemProps = {
+  time: string;
+  isSelected: boolean;
+  isBooked: boolean;
+  onClick: (time: string) => void;
+};
+const TimeItem = ({ time, isSelected, isBooked, onClick }: ITimeItemProps) => (
+  <button
+    type="button"
+    className={mergeClassnames(
+      'rounded-full px-3 py-1 text-sm font-medium border hover:opacity-70',
+      isSelected
+        ? 'bg-primary-50 border-primary-50 text-white'
+        : 'bg-white border-neutral-90 text-neutral-10',
+      isBooked && 'invisible',
+    )}
+    onClick={() => onClick(time)}
+  >
+    {time}
+  </button>
+);
 
 export interface IAttendee {
   icon: string;
   role: string;
   fullName: string;
 }
-
-const TimeItem = ({
-  time,
-  date,
-  huberId,
-  isSelected,
-  onClick,
-}: {
-  time: string;
-  date: Date;
-  huberId: number;
-  isSelected: boolean;
-  onClick: (time: string) => void;
-}) => {
-  const [validate, { isLoading }] = useCheckAvailabilityMutation();
-
-  const [isBooked, setIsBooked] = useState(false);
-
-  const toLocaleISO = (dateToConvert: Date) => {
-    const offsetMs = dateToConvert.getTimezoneOffset() * 60 * 1000;
-    const msLocal = dateToConvert.getTime() - offsetMs;
-    const dateLocal = new Date(msLocal);
-    return dateLocal.toISOString();
-  };
-
-  const validateBookedSession = async () => {
-    const hour = parseInt(time.split(':')[0] ?? '0', 10) ?? 0;
-    const minute = parseInt(time.split(':')[1] ?? '0', 10) ?? 0;
-    const timeObj = date.setHours(hour, minute, 0);
-    try {
-      const result = await validate({
-        id: huberId,
-        startAt: toLocaleISO(new Date(timeObj)),
-      }).unwrap();
-      setIsBooked(result.booked);
-    } catch (error: any) {
-      setIsBooked(false);
-    }
-  };
-
-  useEffect(() => {
-    validateBookedSession();
-  }, [time]);
-
-  if (isLoading) {
-    return null;
-  }
-
-  return (
-    <button
-      type="button"
-      className={mergeClassnames(
-        'rounded-full px-3 py-1 text-sm font-medium border hover:opacity-70',
-        isSelected
-          ? 'bg-primary-50 border-primary-50 text-white'
-          : 'bg-white border-neutral-90 text-neutral-10',
-        isBooked && 'invisible',
-      )}
-      onClick={() => onClick(time)}
-    >
-      {time}
-    </button>
-  );
-};
 
 export const MainScreen = ({
   attendees,
@@ -105,6 +64,9 @@ export const MainScreen = ({
   nextStep: () => void;
 }) => {
   const { data: timeSlots } = useGetTimeSlotsHuberQuery({
+    id: Number(attendees.huber.id),
+  });
+  const { data: bookedTime } = useGetHuberBookedSessionsQuery({
     id: Number(attendees.huber.id),
   });
 
@@ -165,21 +127,30 @@ export const MainScreen = ({
 
     return (
       <div className="flex w-full flex-wrap items-center gap-x-1 gap-y-2 xl:p-3">
-        {list.map((item, index) => (
-          <TimeItem
-            key={index}
-            time={item}
-            date={selectDate}
-            huberId={Number(attendees.huber.id)}
-            isSelected={selectTime === item}
-            onClick={onClickTime}
-          />
-        ))}
+        {list.map((item, index) => {
+          const hour = parseInt(item.split(':')[0] ?? '0', 10) ?? 0;
+          const minute = parseInt(item.split(':')[1] ?? '0', 10) ?? 0;
+          const timeObj = selectDate.setHours(hour, minute, 0, 0);
+          const isBooked =
+            bookedTime &&
+            bookedTime.length &&
+            bookedTime.includes(toLocaleISO(new Date(timeObj)));
+
+          return (
+            <TimeItem
+              key={index}
+              time={item}
+              isBooked={isBooked}
+              isSelected={selectTime === item}
+              onClick={onClickTime}
+            />
+          );
+        })}
       </div>
     );
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
