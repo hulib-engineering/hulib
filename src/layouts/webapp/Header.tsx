@@ -19,6 +19,7 @@ import MenuItem from '@/components/menuItem/MenuItem';
 import Popover from '@/components/popover/Popover';
 import type { WithChildren } from '@/components/private/types';
 import SearchInput from '@/components/SearchInput';
+import NotificationButton from '@/layouts/webapp/NotificationIcon';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppSelector } from '@/libs/hooks';
 import { Role } from '@/types/common';
@@ -124,6 +125,7 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
 
 const Header = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
+
   const renderNavbar = () => {
     if (!user || user?.role?.id === Role.ADMIN) {
       return null;
@@ -170,17 +172,11 @@ const Header = () => {
                   data-testid="button-messenger"
                   onClick={() => alert('click')}
                 />
-              </ButtonWithChip>
-              <NotificationPopover>
-                <ButtonWithChip value="10">
-                  <IconButton
-                    variant="ghost"
-                    icon={<Bell size={28} />}
-                    className="p-2"
-                    data-testid="button-notif"
-                  />
-                </ButtonWithChip>
-              </NotificationPopover> */}
+              </ButtonWithChip> */}
+              <NotificationButton
+                notificationCount="10"
+                notificationPath="/notification"
+              />
               <div className="relative ml-2">
                 <AvatarPopover>
                   <Image
@@ -200,10 +196,7 @@ const Header = () => {
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-2">
-          {/* <SearchEverything /> */}
-          {renderNavbar()}
-        </div>
+        <div className="flex flex-col gap-2">{renderNavbar()}</div>
       </header>
       <header className="hidden w-[100vw] items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
         <div className="flex items-center gap-6">
@@ -220,24 +213,18 @@ const Header = () => {
         ) : (
           <div className="flex items-center gap-2">
             {/* <ButtonWithChip value="10">
-              <IconButton
-                variant="ghost"
-                icon={<MessengerLogo size={28} />}
-                className="p-2"
-                data-testid="button-messenger"
-                onClick={() => alert('click')}
-              />
-            </ButtonWithChip>
-            <NotificationPopover>
-              <ButtonWithChip value="10">
                 <IconButton
                   variant="ghost"
-                  icon={<Bell size={28} />}
+                  icon={<MessengerLogo size={28} />}
                   className="p-2"
-                  data-testid="button-notif"
+                  data-testid="button-messenger"
+                  onClick={() => alert('click')}
                 />
-              </ButtonWithChip>
-            </NotificationPopover> */}
+              </ButtonWithChip> */}
+            <NotificationButton
+              notificationCount="10"
+              notificationPath="/notification"
+            />
             <div className="relative ml-2 h-11 w-11">
               <AvatarPopover>
                 <Image
