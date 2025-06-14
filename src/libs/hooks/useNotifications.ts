@@ -15,7 +15,7 @@ interface UseNotificationsProps {
 
 const useNotifications = ({
   initialPage = 1,
-  limit = 10,
+  limit = 5,
   enablePagination = false,
 }: UseNotificationsProps = {}) => {
   const [page, setPage] = useState(initialPage);
