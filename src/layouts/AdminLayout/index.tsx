@@ -31,9 +31,13 @@ const adminNavItems = [
 const AdminLayout = ({
   children,
   className,
+  pendingStoriesCount = 0,
+  pendingUsersCount = 0,
 }: {
   children: React.ReactNode;
   className?: string;
+  pendingStoriesCount?: number;
+  pendingUsersCount?: number;
 }) => {
   const pathname = usePathname();
 
@@ -67,7 +71,12 @@ const AdminLayout = ({
                       <Icon size={20} weight={isActive ? 'fill' : 'regular'} />
                       <div className="flex items-center gap-2">
                         {item.label}
-                        <CountBadge count={12} />
+                        {item.label === 'Awaiting approval stories' && (
+                          <CountBadge count={pendingStoriesCount || 0} />
+                        )}
+                        {item.label === 'User management' && (
+                          <CountBadge count={pendingUsersCount || 0} />
+                        )}
                       </div>
                     </Link>
                   );

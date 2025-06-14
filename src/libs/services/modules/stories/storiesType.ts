@@ -62,6 +62,13 @@ export interface StoryDetailsParams {
   id: number;
 }
 
+export enum StoryPublishStatus {
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
+  PUBLISHED = 'published',
+  DRAFT = 'draft',
+}
+
 export interface Story {
   id: number;
   abstract: string;
@@ -74,6 +81,7 @@ export interface Story {
   createdAt?: string | undefined;
   updatedAt?: string | undefined;
   isFavorite?: boolean;
+  publishStatus: StoryPublishStatus;
 }
 
 export interface Histogram {

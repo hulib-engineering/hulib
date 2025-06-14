@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import Button from '@/components/button/Button';
 import { FlipBook } from '@/components/flipBook/FlipBook';
@@ -9,7 +9,10 @@ import { mergeClassnames } from '@/components/private/utils';
 import StoryPagination from '@/components/storyDetails/StoryPagination';
 import AdminLayout from '@/layouts/AdminLayout';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
-import type { Story } from '@/libs/services/modules/stories/storiesType';
+import {
+  type Story,
+  StoryPublishStatus,
+} from '@/libs/services/modules/stories/storiesType';
 
 export default function AwaitingApprovalStories() {
   // Router for navigation
@@ -21,7 +24,7 @@ export default function AwaitingApprovalStories() {
   // Fetch stories with pagination
   const { data, isLoading } = useGetStoriesQuery({
     page: currentPage + 1, // API uses 1-based indexing
-    limit: 9,
+    limit: 6,
   });
 
   // Handle page change
@@ -47,9 +50,15 @@ export default function AwaitingApprovalStories() {
     </div>
   );
 
+  const storiesAwaitingApproval = useMemo(() => {
+    return data?.data?.filter(
+      (story: Story) => story.publishStatus === StoryPublishStatus.DRAFT,
+    );
+  }, [data]);
+
   return (
     // AdminLayout provides sidebar and main content area
-    <AdminLayout>
+    <AdminLayout pendingStoriesCount={storiesAwaitingApproval?.length || 0}>
       {/* Outer container with padding and max width for Apple-style spaciousness */}
       <div className="mx-auto min-h-[80vh] w-full rounded-2xl bg-white shadow-md md:p-8">
         {/* Header section */}
@@ -58,15 +67,14 @@ export default function AwaitingApprovalStories() {
           List of Stories awaiting approval
         </p>
 
-        {/* Grid of FlipBook cards, matching the screenshot layout */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div className="flex flex-wrap gap-8">
           {/* Show loading skeleton or actual stories */}
           {isLoading ? (
             <div className="col-span-full py-12 text-center text-lg text-neutral-40">
               Loading...
             </div>
-          ) : data?.data?.length > 0 ? (
-            data.data.map((story: Story) => (
+          ) : storiesAwaitingApproval?.length > 0 ? (
+            storiesAwaitingApproval.map((story: Story) => (
               <FlipBook
                 key={story.id}
                 data={story}
