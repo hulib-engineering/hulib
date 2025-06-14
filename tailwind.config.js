@@ -94,6 +94,7 @@ module.exports = {
           900: '#1a202c',
         },
         blue: {
+          50: '#C9ECFF',
           100: '#ebf8ff',
           200: '#bee3f8',
           250: '#a8d5fe',
@@ -149,6 +150,7 @@ module.exports = {
         },
         red: {
           50: '#EE0038',
+          90: '#FFC9D5',
         },
         pink: {
           50: '#FF77BA',

@@ -125,6 +125,9 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
 const Header = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
   const renderNavbar = () => {
+    if (!user || user?.role?.id === Role.ADMIN) {
+      return null;
+    }
     return (
       <div className="flex items-center justify-between gap-x-2">
         {user && user?.id && (

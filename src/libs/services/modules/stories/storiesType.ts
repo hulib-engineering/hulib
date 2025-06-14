@@ -63,8 +63,7 @@ export interface StoryDetailsParams {
 }
 
 export enum StoryPublishStatus {
-  APPROVED = 'approved',
-  REJECTED = 'rejected',
+  DELETED = 'deleted',
   PUBLISHED = 'published',
   DRAFT = 'draft',
 }
