@@ -12,7 +12,7 @@ const NewestStories = () => {
   const {
     data: storiesPages,
     isLoading: loadingStories,
-    refetch: refetchStories,
+    // refetch: refetchStories,
   } = useGetStoriesQuery({
     page: 1,
     limit: 6,
@@ -25,7 +25,7 @@ const NewestStories = () => {
       stories={storiesPages?.data}
       isLoading={loadingStories}
       hasNextPage={storiesPages?.hasNextPage}
-      refetchStories={refetchStories}
+      // refetchStories={refetchStories}
       navigateToExplore
     />
   );
