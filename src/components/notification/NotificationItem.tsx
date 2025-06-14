@@ -7,6 +7,7 @@ import type { FC } from 'react';
 
 import useNotificationActions from '@/libs/hooks/useNotificationActions';
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
+import { NOTIFICATION_TYPES } from '@/libs/services/modules/notifications/notificationType';
 import { StatusEnum } from '@/types/common';
 import { getNotificationConfig } from '@/utils/notificationUtils';
 
@@ -52,6 +53,8 @@ const NotificationItem: FC<NotificationItemProps> = ({
       notification,
     );
 
+  const isReviewStory =
+    notification.type.name === NOTIFICATION_TYPES.REVIEW_STORY.name;
   return (
     <div
       className={clsx(
@@ -99,7 +102,15 @@ const NotificationItem: FC<NotificationItemProps> = ({
             />
           </div>
 
-          <p className="mt-1 text-xs text-gray-500">{formattedTime}</p>
+          <div className="relative mt-1">
+            <p className="text-sm text-gray-500">{formattedTime}</p>
+            {isReviewStory && notification.relatedEntity && (
+              <div className="absolute right-[80px] top-0 flex items-center gap-4 text-sm text-primary-50">
+                <span>{notification.relatedEntity.numOfRatings} rating</span>
+                <span>{notification.relatedEntity.numOfComments} comment</span>
+              </div>
+            )}
+          </div>
 
           {config.showActions && (
             <NotificationActions

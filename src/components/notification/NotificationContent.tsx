@@ -26,7 +26,7 @@ const NotificationContent: FC<NotificationContentProps> = ({
               <span className="font-bold">
                 {notification.sender.fullName ?? 'Unknown User'}
               </span>{' '}
-              would love to have a meeting...
+              would love to have a meeting with you.
             </p>
             {!hideDetails && (
               <button
@@ -42,27 +42,30 @@ const NotificationContent: FC<NotificationContentProps> = ({
 
       case NOTIFICATION_TYPES.REVIEW_STORY.name:
         return (
-          <p>
-            <span className="font-bold">{notification.sender.fullName}</span>{' '}
-            have also reviewed your story{' '}
-            {notification.relatedEntity?.title && (
-              <span className="font-medium text-blue-600">
-                {_.truncate(notification.relatedEntity.title, { length: 50 })}
-              </span>
-            )}
-          </p>
+          <div className="w-full">
+            <p>
+              <span className="font-bold">{notification.sender.fullName}</span>{' '}
+              have also reviewed your story{' '}
+              {notification.relatedEntity?.title && (
+                <span className="font-bold text-primary-60">
+                  &ldquo;
+                  {_.truncate(notification.relatedEntity.title, { length: 50 })}
+                  &rdquo;
+                </span>
+              )}
+            </p>
+          </div>
         );
-
       case NOTIFICATION_TYPES.PUBLISH_STORY.name:
         return (
           <p>
-            Your book{' '}
+            Your book,{' '}
             {notification.relatedEntity?.title && (
-              <span className="font-bold text-blue-600">
-                {notification.relatedEntity.title}
+              <span className="font-bold text-primary-60">
+                &ldquo;{notification.relatedEntity.title}&rdquo;
               </span>
             )}{' '}
-            has been successfully published.
+            ,has been successfully published.
           </p>
         );
 
