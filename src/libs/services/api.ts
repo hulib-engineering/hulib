@@ -101,7 +101,7 @@ const baseQueryWithInterceptor = async (
   }
 
   if (result.error && result.error.status === 422) {
-    throw new Error('validation_error');
+    return result;
   }
 
   if (result.error) {
