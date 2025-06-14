@@ -18,7 +18,7 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
     data: similarStoriesPages,
     isLoading,
     isFetching,
-    refetch: refetchStories,
+    // refetch: refetchStories,
   } = useGetSimilarStoriesQuery({
     page: 1,
     limit: 6,
@@ -32,7 +32,7 @@ const SimilarStory = ({ humanBookId, topicIds }: SimilarStoryProps) => {
       stories={similarStoriesPages?.data}
       isLoading={isLoading || isFetching}
       hasNextPage={similarStoriesPages?.hasNextPage}
-      refetchStories={refetchStories}
+      // refetchStories={refetchStories}
     />
   );
 };

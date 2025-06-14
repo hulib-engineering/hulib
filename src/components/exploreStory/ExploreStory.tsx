@@ -21,7 +21,7 @@ const ExploreStory = ({ topicIds }: ExploreStoryProps) => {
     data: storiesPages,
     isLoading,
     isFetching,
-    refetch: refetchStories,
+    // refetch: refetchStories,
   } = useGetStoriesQuery({
     page: 1,
     limit,
@@ -49,7 +49,7 @@ const ExploreStory = ({ topicIds }: ExploreStoryProps) => {
         isLoading={isLoading || isFetching}
         showTopics
         hasNextPage={storiesPages?.hasNextPage}
-        refetchStories={refetchStories}
+        // refetchStories={refetchStories}
         onSeeAllClick={onClickSeeAll}
         isExpandable
         isExpanded={isExpandList}

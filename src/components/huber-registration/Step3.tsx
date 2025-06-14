@@ -34,16 +34,16 @@ const Step3 = ({ next }: { next: () => void }) => {
   const [createStory] = useCreateStoryMutation();
   const [coverImages] = useState<any[]>([
     {
-      path: 'https://hulib-services.onrender.com/api/v1/files/d78998cddcb6baaa3589a.png',
-      id: '2bb6272d-1855-46b7-8765-e7dfea77af7a',
+      path: '/assets/images/cover-book/story_background_yellow.png',
+      id: 1,
     },
     {
-      path: 'https://hulib-services.onrender.com/api/v1/files/78998cddcb6baaa3589a6.png',
-      id: 'c68d508e-adb7-4a8c-b632-6b70381f0030',
+      path: '/assets/images/cover-book/story_background_red.png',
+      id: 2,
     },
     {
-      path: 'https://hulib-services.onrender.com/api/v1/files/8998cddcb6baaa3589a6e.png',
-      id: 'cddfe342-5075-4eef-95b8-80d56513c487',
+      path: '/assets/images/cover-book/story_background_blue.png',
+      id: 3,
     },
   ]);
   const [isSelected, setIsSelected] = useState(coverImages[0].id);
