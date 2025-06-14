@@ -60,14 +60,14 @@ export default function AwaitingApprovalStories() {
     // AdminLayout provides sidebar and main content area
     <AdminLayout pendingStoriesCount={storiesAwaitingApproval?.length || 0}>
       {/* Outer container with padding and max width for Apple-style spaciousness */}
-      <div className="mx-auto min-h-[80vh] w-full rounded-2xl bg-white shadow-md md:p-8">
+      <div className="mx-auto flex h-screen w-full flex-col md:p-8">
         {/* Header section */}
         <h1 className="mb-1 text-2xl font-bold">Awaiting approval - Stories</h1>
         <p className="mb-6 text-base text-neutral-40">
           List of Stories awaiting approval
         </p>
 
-        <div className="flex flex-wrap gap-8">
+        <div className="flex flex-1 flex-wrap gap-4">
           {/* Show loading skeleton or actual stories */}
           {isLoading ? (
             <div className="col-span-full py-12 text-center text-lg text-neutral-40">
@@ -90,11 +90,11 @@ export default function AwaitingApprovalStories() {
         </div>
 
         {/* Pagination component */}
-        {data?.data && data.data.length > 0 && (
+        {data?.data?.hasNextPage && (
           <div className="mt-10">
             <StoryPagination
               currentPage={currentPage}
-              totalPages={Math.ceil((data?.data?.length || 0) / 9)}
+              totalPages={data?.data?.totalPages || 0}
               onPageChange={handlePageChange}
             />
           </div>
