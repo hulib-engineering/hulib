@@ -30,9 +30,9 @@ const Page = () => {
   }
 
   return (
-    <CommonLayout className="bg-neutral-98">
+    <div>
       {roleUser === Role.ADMIN ? (
-        <AdminLayout>
+        <AdminLayout className="bg-neutral-98">
           <div className="flex-1">
             <div className="text-center">
               <div className="mb-2 flex justify-center gap-1">
@@ -45,13 +45,13 @@ const Page = () => {
           </div>
         </AdminLayout>
       ) : (
-        <>
+        <CommonLayout className="bg-neutral-98">
           <Banner />
           <ExploreStory topicIds={null} />
           <ShortDescription />
-        </>
+        </CommonLayout>
       )}
-    </CommonLayout>
+    </div>
   );
 };
 
