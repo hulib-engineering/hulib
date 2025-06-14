@@ -18,7 +18,7 @@ interface NotificationPopoverProps {
 const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
   const router = useRouter();
   const { notifications, isLoading, error } = useNotifications({
-    limit: 10,
+    limit: 3,
     enablePagination: false,
   });
 
@@ -68,14 +68,16 @@ const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
                 ))}
             </div>
 
-            <div className="p-2">
-              <Button
-                className="w-full border-2 border-gray-400 !bg-white py-2 text-center text-sm text-blue-500"
-                onClick={() => router.push('/notification')}
-              >
-                See all
-              </Button>
-            </div>
+            {!isLoading && !error && notifications.length > 0 && (
+              <div className="p-2">
+                <Button
+                  className="w-full border-2 border-gray-400 !bg-white py-2 text-center text-sm text-blue-500"
+                  onClick={() => router.push('/notification')}
+                >
+                  See all
+                </Button>
+              </div>
+            )}
           </Popover.Panel>
         </>
       )}
