@@ -25,7 +25,7 @@ interface StoriesListProps {
   isLoading: boolean;
   showTopics?: boolean;
   hasNextPage?: boolean;
-  refetchStories?: () => void;
+  // refetchStories?: () => void;
   onSeeAllClick?: () => void;
   isExpandable?: boolean;
   isExpanded?: boolean;
@@ -41,7 +41,7 @@ const StoriesList = ({
   isLoading,
   showTopics = false,
   hasNextPage = false,
-  refetchStories = () => {},
+  // refetchStories = () => {},
   onSeeAllClick,
   isExpandable = false,
   isExpanded = false,
@@ -60,9 +60,7 @@ const StoriesList = ({
     return stories?.map((story: StoryType) => {
       const isFavorite =
         favoriteStories &&
-        favoriteStories?.data.some(
-          (favorite: any) => favorite.storyId === story.id,
-        );
+        favoriteStories?.some((favorite: any) => favorite.storyId === story.id);
       return { ...story, isFavorite };
     });
   }, [stories, favoriteStories]);
@@ -75,7 +73,7 @@ const StoriesList = ({
         {title}
       </h3>
       {description && (
-        <p className="text-lg font-normal text-[#2E3032]">{description}</p>
+        <p className="text-lg font-normal text-neutral-20">{description}</p>
       )}
 
       {showTopics && <ListTopics />}
@@ -89,7 +87,7 @@ const StoriesList = ({
           )}
         >
           {storiesWithFavorites?.map((item: StoryType) => (
-            <FlipBook key={item.id} data={item} refetch={refetchStories} />
+            <FlipBook key={item.id} data={item} refetch={() => {}} />
           ))}
         </div>
       ) : (
