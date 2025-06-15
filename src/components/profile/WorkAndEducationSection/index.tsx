@@ -9,8 +9,8 @@ import Button from '@/components/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import Form from '@/components/form/Form';
 import TextInput from '@/components/textInput-v1/TextInput';
+import type { User } from '@/features/users/types';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
-import type { User } from '@/libs/services/modules/user/userType';
 
 import IconButtonEdit from '../IconButtonEdit';
 import CustomSelect from './CustomSelect';

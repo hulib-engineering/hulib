@@ -1,7 +1,8 @@
+import type { User } from '@/features/users/types';
+
 import type { FileType } from '../files/fileType';
 import type { StoryReview } from '../story-reviews/storyReviewsType';
 import type { Topic } from '../topics/topicType';
-import type { User } from '../user/userType';
 
 export interface SimilarStoriesParams {
   page: number;
