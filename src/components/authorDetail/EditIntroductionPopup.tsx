@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import Button from '@/components/button/Button';
 import Modal from '@/components/Modal';
-import type { User } from '@/libs/services/modules/user/userType';
+import type { User } from '@/features/users/types';
 
 import Input from '../input/Input';
 

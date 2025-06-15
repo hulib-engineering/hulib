@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-import type { User } from '../../../../libs/services/modules/user/userType';
+import type { User } from '@/features/users/types';
 
 interface UserAvatarProps {
   user: User;

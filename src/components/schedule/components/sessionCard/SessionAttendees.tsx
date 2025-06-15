@@ -1,9 +1,9 @@
 import { Users } from '@phosphor-icons/react';
 import React from 'react';
 
+import type { User } from '@/features/users/types';
 import { Role, ROLE_NAME } from '@/types/common';
 
-import type { User } from '../../../../libs/services/modules/user/userType';
 import { UserAvatar } from './UserAvatar';
 
 interface SessionAttendeesProps {

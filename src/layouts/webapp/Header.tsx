@@ -30,11 +30,13 @@ const AvatarPopoverMenuItems = [
     label: 'My profile',
     icon: <UserCircle size={20} color="primary-20" />,
     href: '/profile',
+    roles: [Role.LIBER, Role.HUBER],
   },
   {
     label: 'Change password',
     icon: <Gear size={20} color="primary-20" />,
     href: '/change-password',
+    roles: [Role.LIBER, Role.HUBER],
   },
   {
     label: 'Register to become human book',

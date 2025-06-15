@@ -29,29 +29,25 @@ const Page = () => {
     );
   }
 
-  return (
-    <div>
-      {roleUser === Role.ADMIN ? (
-        <AdminLayout className="bg-neutral-98">
-          <div className="flex-1">
-            <div className="text-center">
-              <div className="mb-2 flex justify-center gap-1">
-                <span className="text-2xl">💕</span>
-              </div>
-              <p className="text-lg font-medium text-neutral-20">
-                You have a warm heart
-              </p>
-            </div>
+  return roleUser === Role.ADMIN ? (
+    <AdminLayout className="h-full bg-neutral-98">
+      <div className="flex flex-1 items-center justify-center">
+        <div className="text-center">
+          <div className="mb-2 flex justify-center gap-1">
+            <span className="text-2xl">💕</span>
           </div>
-        </AdminLayout>
-      ) : (
-        <CommonLayout className="bg-neutral-98">
-          <Banner />
-          <ExploreStory topicIds={null} />
-          <ShortDescription />
-        </CommonLayout>
-      )}
-    </div>
+          <p className="text-lg font-medium text-neutral-20">
+            You have a warm heart
+          </p>
+        </div>
+      </div>
+    </AdminLayout>
+  ) : (
+    <CommonLayout className="bg-neutral-98">
+      <Banner />
+      <ExploreStory topicIds={null} />
+      <ShortDescription />
+    </CommonLayout>
   );
 };
 

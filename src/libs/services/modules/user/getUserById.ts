@@ -1,7 +1,7 @@
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinitions';
 
-import type { User } from './userType';
+import type { User } from '@/features/users/types';
 
 const getUsersById = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query<User, string>({

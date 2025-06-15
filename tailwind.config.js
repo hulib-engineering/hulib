@@ -150,7 +150,9 @@ module.exports = {
         },
         red: {
           50: '#EE0038',
+          70: '#FF5C82',
           90: '#FFC9D5',
+          98: '#FFF5F7',
         },
         pink: {
           50: '#FF77BA',
@@ -165,6 +167,12 @@ module.exports = {
         // lp: only for Landing Page
         lp: {
           'primary-blue': '#0061EF',
+        },
+        orange: {
+          50: '#FF8207',
+          70: '#FFAB67',
+          90: '#FFE4D1',
+          98: '#FFF9F5',
         },
       },
       boxShadow: {
