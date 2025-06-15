@@ -10,7 +10,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import Button from '@/components/button/Button';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
@@ -22,6 +22,7 @@ import SearchInput from '@/components/SearchInput';
 import NotificationButton from '@/layouts/webapp/NotificationIcon';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppSelector } from '@/libs/hooks';
+import { socket } from '@/libs/services/socket';
 import { Role } from '@/types/common';
 
 const AvatarPopoverMenuItems = [
@@ -125,6 +126,24 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
 
 const Header = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
+
+  useEffect(() => {
+    socket('').then((messageSocket) => {
+      messageSocket.connect();
+
+      messageSocket.on('error', (error) => {
+        console.log(error);
+      });
+
+      messageSocket.on('message', (message) => {
+        console.log(message);
+      });
+    });
+
+    // return () => {
+    //   messageSocket.disconnect();
+    // };
+  }, []);
 
   const renderNavbar = () => {
     if (!user || user?.role?.id === Role.ADMIN) {
