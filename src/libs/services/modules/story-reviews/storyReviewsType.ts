@@ -1,4 +1,4 @@
-import type { User } from '../user/userType';
+import type { User } from '@/features/users/types';
 
 export interface StoryReview {
   id: number;

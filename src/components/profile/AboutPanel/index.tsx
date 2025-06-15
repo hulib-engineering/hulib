@@ -9,7 +9,7 @@ import {
 } from '@phosphor-icons/react';
 import * as React from 'react';
 
-import type { User } from '@/libs/services/modules/user/userType';
+import type { User } from '@/features/users/types';
 import { Role, ROLE_NAME } from '@/types/common';
 
 import { ContactInformationSection } from '../ContactInformationSection';

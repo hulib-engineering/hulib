@@ -1,8 +1,10 @@
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinitions';
 
+import type { User } from '@/features/users/types';
+
 import type { PaginatedResponse } from '../../type';
-import type { GetUsersParams, User } from './userType';
+import type { GetUsersParams } from './userType';
 
 const getUsers = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query<PaginatedResponse<User>, GetUsersParams>({
