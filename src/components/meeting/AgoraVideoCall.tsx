@@ -30,6 +30,9 @@ export default function AgoraVideoCall({ appId }: Props) {
   // Thêm state để track trạng thái microphone của remote user
   const [remoteMicOn, setRemoteMicOn] = useState(true);
 
+  const [isSharingScreen, setIsSharingScreen] = useState(false);
+  const [screenTrack, setScreenTrack] = useState<any>(null);
+
   const urlParams = new URLSearchParams(window.location.search);
   const channel = urlParams.get('channel') || '';
   const sessionId = channel.split('-')[1];
@@ -40,7 +43,7 @@ export default function AgoraVideoCall({ appId }: Props) {
     },
     {
       skip: !sessionId,
-    },
+    }
   );
 
   // Xác định vai trò của user hiện tại
@@ -161,6 +164,89 @@ export default function AgoraVideoCall({ appId }: Props) {
     return cleanup;
   }, [ready, appId, channel, token]);
 
+  const toggleScreenShare = async () => {
+    if (!client) return;
+
+    if (!isSharingScreen) {
+      try {
+        // Tắt camera trước khi share
+        if (localTracks[1]) {
+          if (Array.isArray(localTracks[1])) {
+            await Promise.all(
+              localTracks[1].map(async (track) => {
+                await client.unpublish([track]);
+                track.stop();
+                track.close();
+              })
+            );
+          } else {
+            await client.unpublish([localTracks[1]]);
+            localTracks[1].stop();
+            localTracks[1].close();
+          }
+        }
+
+        // Tạo track từ màn hình
+        const sTrack = await AgoraRTC.createScreenVideoTrack({
+          encoderConfig: '1080p_1',
+        });
+
+        // Nếu trả về mảng, chỉ lấy video track
+        const videoTrack = Array.isArray(sTrack) ? sTrack[0] : sTrack;
+
+        // Hiển thị tại video local
+        if (localRef.current && videoTrack) {
+          videoTrack.play(localRef.current);
+        }
+
+        // Publish track màn hình
+        await client.publish([videoTrack]);
+        setScreenTrack(videoTrack);
+        setIsSharingScreen(true);
+
+        // Nếu người dùng dừng share từ phía OS
+        videoTrack.on('track-ended', async () => {
+          await client.unpublish([videoTrack]);
+          videoTrack.stop();
+          videoTrack.close();
+
+          setScreenTrack(null);
+          setIsSharingScreen(false);
+
+          // Tái khởi động camera
+          const newTracks = await AgoraRTC.createMicrophoneAndCameraTracks();
+
+          setLocalTracks(newTracks);
+          if (newTracks[1] && localRef.current) {
+            newTracks[1].play(localRef.current);
+          }
+          await client.publish(newTracks);
+        });
+      } catch (error) {
+        console.error('Share screen failed!', error);
+      }
+    } else {
+      // Nếu đang share mà tắt
+      if (screenTrack) {
+        await client.unpublish([screenTrack]);
+        screenTrack.stop();
+        screenTrack.close();
+
+        setScreenTrack(null);
+        setIsSharingScreen(false);
+      }
+
+      // Tái khởi động camera
+      const newTracks = await AgoraRTC.createMicrophoneAndCameraTracks();
+
+      setLocalTracks(newTracks);
+      if (newTracks[1] && localRef.current) {
+        newTracks[1].play(localRef.current);
+      }
+      await client.publish(newTracks);
+    }
+  };
+
   /**
    * Toggle camera on/off với improved error handling
    * tracks[1] là camera track, tracks[0] là microphone track
@@ -221,10 +307,9 @@ export default function AgoraVideoCall({ appId }: Props) {
       setTracksReady(false);
       setReady(false); // reset để tránh rejoin
 
-      // Sử dụng biến isVibing đã định nghĩa sẵn
       if (isVibing) {
         router.push(
-          `/after-meeting/${sessionId}?storyName=${readingSession.story.title}`,
+          `/after-meeting/${sessionId}?storyName=${readingSession.story.title}`
         );
       }
     } catch (error) {
@@ -341,13 +426,17 @@ export default function AgoraVideoCall({ appId }: Props) {
 
           {/* Share Screen Button (placeholder) */}
           <Image
-            src="/assets/icons/meeting/share-screen.svg"
+            src={
+              !isSharingScreen
+                ? '/assets/icons/meeting/share-screen.svg'
+                : '/assets/icons/meeting/stop-share-screen.svg'
+            }
             width={44}
             height={44}
             alt="share-screen-icon"
             loading="lazy"
             className="cursor-pointer"
-            onClick={() => {}}
+            onClick={toggleScreenShare}
             title="Share Screen (Coming Soon)"
           />
         </div>
@@ -367,7 +456,7 @@ export default function AgoraVideoCall({ appId }: Props) {
             {client?.remoteUsers
               ?.map(
                 (u: any) =>
-                  `${u.uid}(${u.hasVideo ? 'V' : ''}${u.hasAudio ? 'A' : ''})`,
+                  `${u.uid}(${u.hasVideo ? 'V' : ''}${u.hasAudio ? 'A' : ''})`
               )
               .join(', ') || 'None'}
           </div>
