@@ -69,6 +69,7 @@ export const MainScreen = ({
   const { data: bookedTime } = useGetHuberBookedSessionsQuery({
     id: Number(attendees.huber.id),
   });
+  console.log('Huber booked time', bookedTime);
 
   const filterTimeSlots: TimeSlot[] = React.useMemo(() => {
     return (
