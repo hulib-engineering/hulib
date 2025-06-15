@@ -53,7 +53,7 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
             Read all
           </Button>
         </div>
-        <div className="absolute h-full w-full origin-left bg-gray-200 transition-all duration-500 ease-[cubic-bezier(0.50,0.00,0.25,1.00)] transform-style-3d rotate-y-0 group-hover:rotate-y-180">
+        <div className="absolute h-full w-full origin-left rounded bg-gray-200 transition-all duration-500 ease-[cubic-bezier(0.50,0.00,0.25,1.00)] transform-style-3d rotate-y-0 group-hover:rotate-y-180">
           {/* Front Face */}
           <figure
             className="absolute m-0 h-full w-full bg-cover bg-no-repeat backface-hidden"
@@ -75,7 +75,7 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
           </figure>
           {/* Back Face */}
           <figure className="absolute m-0 flex h-full w-full flex-col justify-between gap-[10px] rounded bg-gradient-to-l from-[#b1b1b1] via-[#e3e3e3] via-5% to-[#f8f8f8] to-20% p-2 rotate-y-180 backface-hidden">
-            <h6 className="text-xl font-medium leading-7 text-primary-10">
+            <h6 className="line-clamp-2 text-xl font-medium leading-7 text-primary-10">
               {props.title}
             </h6>
             <p className="font-['DVN-Poppins] text-sm leading-5 tracking-wider text-neutral-30">
