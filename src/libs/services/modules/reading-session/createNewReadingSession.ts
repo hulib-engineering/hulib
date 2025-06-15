@@ -1,8 +1,9 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
+import type { User } from '@/features/users/types';
+
 import type { PaginatedResponse } from '../../type';
 import type { Story } from '../stories/storiesType';
-import type { User } from '../user/userType';
 
 export type FeedBack = {
   id: string;

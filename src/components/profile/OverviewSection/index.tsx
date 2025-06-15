@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 
 import Button from '@/components/button/Button';
 import { Chip } from '@/components/common/chip/Chip';
+import type { User } from '@/features/users/types';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
-import type { User } from '@/libs/services/modules/user/userType';
 
 import IconButtonEdit from '../IconButtonEdit';
 
