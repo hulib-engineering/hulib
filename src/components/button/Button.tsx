@@ -30,7 +30,6 @@ const Button = <C extends ElementType = 'button'>({
   animation,
   as,
   className,
-  shouldHover = true,
   ...rest
 }: Props<C> & { shouldHover?: boolean }) => {
   const hasAnimationContent =
@@ -40,6 +39,9 @@ const Button = <C extends ElementType = 'button'>({
 
   const onMouseEnter = useCallback(() => setIsHover(true), [setIsHover]);
   const onMouseLeave = useCallback(() => setIsHover(false), [setIsHover]);
+
+  // Only show the Hover component if we're not using custom hover classes
+  const hasCustomHoverClasses = className?.includes('hover:');
 
   return (
     <ButtonComponent
@@ -86,7 +88,7 @@ const Button = <C extends ElementType = 'button'>({
           {iconOnly}
         </>
       )}
-      {shouldHover && <Hover isHover={isHover} variant={variant} />}
+      {!hasCustomHoverClasses && <Hover isHover={isHover} variant={variant} />}
     </ButtonComponent>
   );
 };

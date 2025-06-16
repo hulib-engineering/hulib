@@ -9,8 +9,8 @@ import Button from '@/components/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import Form from '@/components/form/Form';
 import TextInput from '@/components/textInput-v1/TextInput';
+import type { User } from '@/features/users/types';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
-import type { User } from '@/libs/services/modules/user/userType';
 
 import IconButtonEdit from '../IconButtonEdit';
 import CustomSelect from './CustomSelect';
@@ -79,11 +79,15 @@ const WorkAndEducationSection = ({ data }: Props) => {
 
       // Create ISO date strings
       const educationStart = new Date(
-        `${formData.educationStart.fromYear}-${monthToNumber(formData.educationStart.fromMonth)}-01T00:00:00.000Z`,
+        `${formData.educationStart.fromYear}-${monthToNumber(
+          formData.educationStart.fromMonth,
+        )}-01T00:00:00.000Z`,
       ).toISOString();
 
       const educationEnd = new Date(
-        `${formData.educationEnd.toYear}-${monthToNumber(formData.educationEnd.toMonth)}-01T00:00:00.000Z`,
+        `${formData.educationEnd.toYear}-${monthToNumber(
+          formData.educationEnd.toMonth,
+        )}-01T00:00:00.000Z`,
       ).toISOString();
 
       await updateProfile({
@@ -100,7 +104,7 @@ const WorkAndEducationSection = ({ data }: Props) => {
   });
 
   return (
-    <div className="flex flex-col gap-y-4 py-5">
+    <div className="flex flex-col gap-y-4">
       <div className="flex flex-col gap-y-2">
         <div className="flex items-center justify-between">
           <span>Work Experience</span>
@@ -127,9 +131,13 @@ const WorkAndEducationSection = ({ data }: Props) => {
               <h3 className="text-neutral-20">{data?.education}</h3>
             </div>
             <p className="text-sm text-gray-600">
-              {`${formValues?.educationStart?.fromMonth} ${formValues?.educationStart?.fromYear || ''}`}{' '}
+              {`${formValues?.educationStart?.fromMonth} ${
+                formValues?.educationStart?.fromYear || ''
+              }`}{' '}
               -{' '}
-              {`${formValues?.educationEnd?.toMonth} ${formValues?.educationEnd?.toYear || ''}`}
+              {`${formValues?.educationEnd?.toMonth} ${
+                formValues?.educationEnd?.toYear || ''
+              }`}
             </p>
           </div>
         ) : (

@@ -23,31 +23,6 @@ const STEPS: Step[] = [
   { no: '03', value: 'Fist Story', num: 3 },
 ];
 
-const useStepManagement = () => {
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
-  const [currentStep, setCurrentStep] = React.useState(1);
-
-  useEffect(() => {
-    const savedStep = localStorage.getItem(
-      `huber_registration_step_${userInfo.id}`,
-    );
-    if (savedStep) {
-      setCurrentStep(Number(savedStep));
-    }
-  }, []);
-
-  const handleNextStep = () => {
-    setCurrentStep((prev) => prev + 1);
-  };
-  const handleBackStep = () => {
-    const prevStep = Math.max(1, currentStep - 1);
-    setCurrentStep(prevStep);
-    localStorage.setItem('huber_registration_step', prevStep.toString());
-  };
-
-  return { currentStep, handleNextStep, handleBackStep };
-};
-
 const ProgressBar = ({ currentStep }: { currentStep: number }) => (
   <div
     className={clsx(
@@ -138,7 +113,27 @@ const StepContent = ({
 };
 
 const Page = () => {
-  const { currentStep, handleNextStep } = useStepManagement();
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const [currentStep, setCurrentStep] = React.useState(1);
+
+  useEffect(() => {
+    if (userInfo && userInfo.id) {
+      const savedStep = localStorage.getItem(
+        `${userInfo.id}_huber_registration_step`,
+      );
+      if (savedStep) {
+        setCurrentStep(Number(savedStep));
+      }
+    }
+  }, [userInfo]);
+
+  const handleNextStep = () => {
+    setCurrentStep((prev) => prev + 1);
+    localStorage.setItem(
+      `${userInfo.id}_huber_registration_step`,
+      (currentStep + 1).toString(),
+    );
+  };
 
   return (
     <CommonLayout

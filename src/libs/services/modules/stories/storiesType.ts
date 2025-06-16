@@ -1,7 +1,8 @@
+import type { User } from '@/features/users/types';
+
 import type { FileType } from '../files/fileType';
 import type { StoryReview } from '../story-reviews/storyReviewsType';
 import type { Topic } from '../topics/topicType';
-import type { User } from '../user/userType';
 
 export interface SimilarStoriesParams {
   page: number;
@@ -62,6 +63,12 @@ export interface StoryDetailsParams {
   id: number;
 }
 
+export enum StoryPublishStatus {
+  DELETED = 'deleted',
+  PUBLISHED = 'published',
+  DRAFT = 'draft',
+}
+
 export interface Story {
   id: number;
   abstract: string;
@@ -71,9 +78,10 @@ export interface Story {
   rating: number;
   topics: Topic[];
   storyReview: StoryReview;
-  isFavorited: boolean;
   createdAt?: string | undefined;
   updatedAt?: string | undefined;
+  isFavorite?: boolean;
+  publishStatus: StoryPublishStatus;
 }
 
 export interface Histogram {

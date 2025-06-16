@@ -11,6 +11,28 @@ const backfaceVisibility = plugin(function ({ addUtilities }) {
     '.backface-hidden': {
       'backface-visibility': 'hidden',
     },
+    '.perspective-900': {
+      perspective: '900px',
+    },
+    '.preserve-3d': {
+      transformStyle: 'preserve-3d',
+    },
+    '.transition-transform-075s': {
+      transition: 'transform 0.75s ease',
+    },
+    '.rotate-y-30': {
+      transform: 'rotateY(-30deg)',
+    },
+    '.content-empty': {
+      content: '" "',
+    },
+    '.page-transform': {
+      transform:
+        'translateX(calc(200px - 50px / 2 - 3px)) rotateY(90deg) translateX(25px)',
+    },
+    '.back-cover-transform': {
+      transform: 'translateZ(-50px)',
+    },
   });
 });
 
@@ -72,6 +94,7 @@ module.exports = {
           900: '#1a202c',
         },
         blue: {
+          50: '#C9ECFF',
           100: '#ebf8ff',
           200: '#bee3f8',
           250: '#a8d5fe',
@@ -110,6 +133,7 @@ module.exports = {
           90: '#E3E4E5',
           98: '#F9F9F9',
           variant: {
+            80: '#C2C6CF',
             98: '#F3F4F6',
           },
         },
@@ -126,8 +150,12 @@ module.exports = {
         },
         red: {
           50: '#EE0038',
+          70: '#FF5C82',
+          90: '#FFC9D5',
+          98: '#FFF5F7',
         },
         pink: {
+          50: '#FF77BA',
           90: '#FFE4F1',
         },
         green: {
@@ -140,12 +168,22 @@ module.exports = {
         lp: {
           'primary-blue': '#0061EF',
         },
+        orange: {
+          50: '#FF8207',
+          70: '#FFAB67',
+          90: '#FFE4D1',
+          98: '#FFF9F5',
+        },
+      },
+      boxShadow: {
+        sm: '0 4px 5px 0 rgba(28, 30, 33, 0.1), 0 0px 4px 0 rgba(15, 15, 16, 0.06)',
       },
       rotate: {
         30: '30deg',
         60: '60deg',
         120: '120deg',
         150: '150deg',
+        180: '180deg',
         210: '210deg',
         240: '240deg',
         270: '270deg',
@@ -166,6 +204,13 @@ module.exports = {
       content: {
         flash: 'url("/assets/images/flash-vector.svg")',
       },
+      transformOrigin: {
+        right: 'right',
+      },
+      perspective: {
+        '1000px': '1000px',
+      },
+      transform: ['group-hover'],
       keyframes: {
         moveUp: {
           to: { transform: 'translateY(50px)' },

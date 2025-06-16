@@ -16,6 +16,7 @@ import { useCreateStoryMutation } from '@/libs/services/modules/stories';
 import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import { StoriesValidation } from '@/validations/StoriesValidation';
 
+import Button from '../button/Button';
 import CustomCoverBook from '../common/CustomCoverBook';
 import { pushError, pushSuccess } from '../CustomToastifyContainer';
 
@@ -34,8 +35,18 @@ const Step3 = ({ next }: { next: () => void }) => {
   const [coverImages] = useState<any[]>([
     {
       path: '/assets/images/cover-book/story_background_yellow.png',
+      id: 1,
+    },
+    {
+      path: '/assets/images/cover-book/story_background_red.png',
+      id: 2,
+    },
+    {
+      path: '/assets/images/cover-book/story_background_blue.png',
+      id: 3,
     },
   ]);
+  const [isSelected, setIsSelected] = useState(coverImages[0].id);
 
   const methods = useForm<z.infer<typeof StoriesValidation>>({
     resolver: zodResolver(StoriesValidation),
@@ -57,6 +68,11 @@ const Step3 = ({ next }: { next: () => void }) => {
 
   const selectedTopics = watch('topicIds') || [];
   const title = watch('title') || '';
+
+  const handleSelectedCoverImage = (coverId: any) => {
+    setIsSelected(coverId);
+    setValue('cover', coverImages.find((cover) => cover.id === coverId) || '');
+  };
 
   const handleTopicToggle = (topicId: number) => {
     const currentTopics = selectedTopics || [];
@@ -266,25 +282,35 @@ const Step3 = ({ next }: { next: () => void }) => {
             <div className="flex-1">
               <div className="flex flex-col gap-2">
                 <div className="text-sm font-medium text-black">
-                  Cover picture <span className="text-red-500">*</span>
+                  Cover for story <span className="text-red-500">*</span>
                   <div className="mt-2 flex justify-between gap-2 rounded-2xl bg-neutral-90 p-5">
                     <div className="flex cursor-pointer flex-col gap-4">
-                      <CustomCoverBook
-                        titleStory={title}
-                        authorName={userInfo?.fullName}
-                        widthImage={180}
-                        heightImage={255}
-                        srcImage={coverImages[0].path}
-                      />
-
-                      {/* <Button
-                  onClick={() => handleSelectedCoverImage(indexCoverImage)}
-                  className={`${
-                    isSelected ? 'bg-primary-90' : 'border-neutral-80 bg-white'
-                  } text-primary-50 hover:text-white`}
-                >
-                  {isSelected ? 'Custom' : `Style ${indexCoverImage + 1}`}
-                </Button> */}
+                      <div className="flex gap-2">
+                        {coverImages.map((cover, index) => (
+                          <div key={index} className="flex flex-col gap-2">
+                            <CustomCoverBook
+                              titleStory={title}
+                              authorName={userInfo?.fullName}
+                              widthImage={180}
+                              heightImage={255}
+                              srcImage={cover.path}
+                              active={isSelected === cover.id}
+                            />
+                            <Button
+                              onClick={() => handleSelectedCoverImage(cover.id)}
+                              className={`${
+                                isSelected === cover.id
+                                  ? 'bg-primary-90'
+                                  : 'border-neutral-80 bg-white'
+                              } text-primary-50 hover:text-white`}
+                            >
+                              {isSelected === cover.id
+                                ? 'Custom'
+                                : `Style ${index + 1}`}
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>

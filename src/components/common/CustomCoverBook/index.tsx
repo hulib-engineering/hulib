@@ -17,7 +17,7 @@ const CustomCoverBook = ({
   active = true,
   widthImage = 180,
   heightImage = 255,
-  srcImage = '/assets/images/cover-book/story_background_yellow.png',
+  srcImage = '',
 }: Props) => {
   return (
     <div

@@ -124,6 +124,7 @@ const StoriesTab = () => {
                 key={story?.id}
                 data={story}
                 renderActions={() => renderActions(story)}
+                refetch={refetch}
               />
             ))
           : null}

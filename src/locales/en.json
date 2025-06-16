@@ -18,6 +18,32 @@
     "log_in": "Log in",
     "sign_up": "Sign up"
   },
+  "Research": {
+    "tabs": {
+      "all": "All",
+      "story": "Story",
+      "huber": "Huber"
+    },
+    "results": {
+      "all_match": "results match keyword",
+      "story_match": "results match Story name",
+      "huber_match": "results match Huber name"
+    },
+    "stories": {
+      "title": "Stories",
+      "no_stories": "No stories found",
+      "read_all": "Read all"
+    },
+    "hubers": {
+      "title": "Hubers",
+      "no_hubers": "No hubers found"
+    },
+    "no_result": {
+      "title": "No Result Found",
+      "description": "We cannot find any result that matches your search. Please try search again."
+    }
+  },
+
   "Footer": {
     "footer_description": "There is a story and experience within each of us, so we are born to be somebody.",
     "copyright": "© 2025 HuLib. All rights reserved.",
@@ -386,7 +412,7 @@
     "step_1_title": "Register as a Huber",
     "general": "General"
   },
-  "ExporeStory": {
+  "ExploreStory": {
     "title": "Explore",
     "description": "Discover and find your perfect story",
     "view_more": "View More",
@@ -403,7 +429,10 @@
     "education": "Education",
     "similar_stories": "Similar Stories",
     "see_all": "See All",
-    "hide_all": "Hide All"
+    "hide_all": "Hide All",
+    "story_added_to_favorites": "Favorite added successfully",
+    "story_removed_from_favorites": "Favorite removed successfully",
+    "error_contact_admin": "An error occurred, please contact admin for support!"
   },
   "Huber": {
     "title": "Explore our Hubers",

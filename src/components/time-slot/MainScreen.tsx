@@ -3,6 +3,7 @@
 import { Globe } from '@phosphor-icons/react';
 import { isEmpty } from 'lodash';
 import * as React from 'react';
+import { useEffect } from 'react';
 
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
@@ -11,11 +12,35 @@ import {
   EVENING_TIME_START,
   MORNING_TIME_START,
 } from '@/libs/constants/date';
+import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
 import { useGetTimeSlotsHuberQuery } from '@/libs/services/modules/time-slots';
 import type { TimeSlot } from '@/libs/services/modules/time-slots/getAllTimeSlots';
+import { toLocaleISO } from '@/utils/dateUtils';
 
 import OneWeek from '../schedule/components/OneWeek';
 import ScheduleBasicInfo from './ScheduleBasicInfo';
+
+type ITimeItemProps = {
+  time: string;
+  isSelected: boolean;
+  isBooked: boolean;
+  onClick: (time: string) => void;
+};
+const TimeItem = ({ time, isSelected, isBooked, onClick }: ITimeItemProps) => (
+  <button
+    type="button"
+    className={mergeClassnames(
+      'rounded-full px-3 py-1 text-sm font-medium border hover:opacity-70',
+      isSelected
+        ? 'bg-primary-50 border-primary-50 text-white'
+        : 'bg-white border-neutral-90 text-neutral-10',
+      isBooked && 'invisible',
+    )}
+    onClick={() => onClick(time)}
+  >
+    {time}
+  </button>
+);
 
 export interface IAttendee {
   icon: string;
@@ -41,6 +66,10 @@ export const MainScreen = ({
   const { data: timeSlots } = useGetTimeSlotsHuberQuery({
     id: Number(attendees.huber.id),
   });
+  const { data: bookedTime } = useGetHuberBookedSessionsQuery({
+    id: Number(attendees.huber.id),
+  });
+  console.log('Huber booked time', bookedTime);
 
   const filterTimeSlots: TimeSlot[] = React.useMemo(() => {
     return (
@@ -51,34 +80,31 @@ export const MainScreen = ({
   }, [selectDate, timeSlots]);
 
   const morningTimeSlot = React.useMemo(() => {
-    const times = filterTimeSlots
+    return filterTimeSlots
       .filter(
         (time) =>
           Number(time.startTime.slice(0, 2)) >= MORNING_TIME_START &&
           Number(time.startTime.slice(0, 2)) < AFTERNOON_TIME_START,
       )
       .map((item) => item.startTime);
-    return times;
   }, [filterTimeSlots]);
 
   const afterNoonTimeSlot = React.useMemo(() => {
-    const times = filterTimeSlots
+    return filterTimeSlots
       .filter(
         (time) =>
           Number(time.startTime.slice(0, 2)) >= AFTERNOON_TIME_START &&
           Number(time.startTime.slice(0, 2)) < EVENING_TIME_START,
       )
       .map((item) => item.startTime);
-    return times;
   }, [filterTimeSlots]);
 
   const eveningTimeSlot = React.useMemo(() => {
-    const times = filterTimeSlots
+    return filterTimeSlots
       .filter(
         (time) => Number(time.startTime.slice(0, 2)) >= EVENING_TIME_START,
       )
       .map((item) => item.startTime);
-    return times;
   }, [filterTimeSlots]);
 
   const onClickDate = (day: Date) => {
@@ -99,28 +125,33 @@ export const MainScreen = ({
     if (list.length === 0) {
       return null;
     }
+
     return (
       <div className="flex w-full flex-wrap items-center gap-x-1 gap-y-2 xl:p-3">
-        {list.map((item) => (
-          <button
-            key={item}
-            type="button"
-            className={mergeClassnames(
-              'rounded-full px-3 py-1 text-sm font-medium border hover:opacity-70',
-              selectTime === item
-                ? 'bg-primary-50 border-primary-50 text-white'
-                : 'bg-white border-neutral-90 text-neutral-10',
-            )}
-            onClick={() => onClickTime(item)}
-          >
-            {item}
-          </button>
-        ))}
+        {list.map((item, index) => {
+          const hour = parseInt(item.split(':')[0] ?? '0', 10) ?? 0;
+          const minute = parseInt(item.split(':')[1] ?? '0', 10) ?? 0;
+          const timeObj = selectDate.setHours(hour, minute, 0, 0);
+          const isBooked =
+            bookedTime &&
+            bookedTime.length &&
+            bookedTime.includes(toLocaleISO(new Date(timeObj)));
+
+          return (
+            <TimeItem
+              key={index}
+              time={item}
+              isBooked={isBooked}
+              isSelected={selectTime === item}
+              onClick={onClickTime}
+            />
+          );
+        })}
       </div>
     );
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 

@@ -1,5 +1,6 @@
 import { api } from '../../api';
 import addStoryToFavorites from './addStoryToFavorites';
+import deleteFavoriteStory from './deleteStoryFavorites';
 import getFavoritesStory from './getFavoritesStory';
 
 const apiWithTag = api.enhanceEndpoints?.({
@@ -10,6 +11,7 @@ export const favStoriesApi = apiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
     addStoryToFavorites: addStoryToFavorites(build),
     getFavoritesStory: getFavoritesStory(build),
+    deleteFavoriteStory: deleteFavoriteStory(build),
   }),
   overrideExisting: false,
 });
@@ -17,4 +19,5 @@ export const favStoriesApi = apiWithTag.injectEndpoints({
 export const {
   useAddStoryToFavoritesMutation,
   useGetFavoritesStoryQuery,
+  useDeleteFavoriteStoryMutation,
 }: any = favStoriesApi;
