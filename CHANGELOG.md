@@ -1,3 +1,88 @@
+# [1.18.0](https://github.com/hulib-engineering/hulib/compare/v1.17.1...v1.18.0) (2025-05-30)
+
+
+### Features
+
+* enhance AgoraVideoCall to handle existing remote users and improve user info display ([b20e3df](https://github.com/hulib-engineering/hulib/commit/b20e3dfd19f817d43664cd0b41ec7d117d84b3f6))
+
+## [1.17.1](https://github.com/hulib-engineering/hulib/compare/v1.17.0...v1.17.1) (2025-05-30)
+
+
+### Bug Fixes
+
+* delete console ([a34d10b](https://github.com/hulib-engineering/hulib/commit/a34d10b3b80fc1162c722755b8b5d597b3c7cae8))
+* landing page ([1e24af0](https://github.com/hulib-engineering/hulib/commit/1e24af0b82bc3346d5e399d06e8dacecb9f6705e))
+* phone input ([a94e46c](https://github.com/hulib-engineering/hulib/commit/a94e46c5f77e89f48186d103422be264ca4f0fa1))
+
+# [1.17.0](https://github.com/hulib-engineering/hulib/compare/v1.16.0...v1.17.0) (2025-05-30)
+
+
+### Bug Fixes
+
+* **399043:** fixed joining reading room and processing token from ([ecccfc5](https://github.com/hulib-engineering/hulib/commit/ecccfc5ed0fec90492711db6dff0409693dbf4f3))
+* **AgoraVideoCall:** correct conditional logic for redirecting non-liber users after meeting ([09c4a01](https://github.com/hulib-engineering/hulib/commit/09c4a01ab9bcfc26f01d6ce892f1dde084c5a4ba))
+* rename file and add change language to FeedbackConfirmationPage ([0d418af](https://github.com/hulib-engineering/hulib/commit/0d418afb0452bd61356ec18db8308aa276c955ce))
+
+
+### Features
+
+* add new microphone icons and enhance AgoraVideoCall component ([272f207](https://github.com/hulib-engineering/hulib/commit/272f2078782578562b90cbe1020d97d2c6be9bc3))
+* **after-meeting:** add feedback form and integrate Agora SDK for enhanced user experience ([f3a3a40](https://github.com/hulib-engineering/hulib/commit/f3a3a404420a41ccc9a2f4bdf02d0220b9678ef8))
+* **after-meeting:** enhance after-meeting feedback flow with new UI components and ratings system ([30731bc](https://github.com/hulib-engineering/hulib/commit/30731bc91f0b52bc92b89bc6bb5d04d199db0274))
+* custom ui flow after metting ([1d51429](https://github.com/hulib-engineering/hulib/commit/1d514296d658a27f36249bedd64c0b299049471f))
+* enhance reading session functionality with survey integration ([1938bed](https://github.com/hulib-engineering/hulib/commit/1938bed76973f409945bfe6d1661ac2eb087dfb9))
+* implement survey form for mental well-being assessment ([9892c30](https://github.com/hulib-engineering/hulib/commit/9892c30391418f0507e385c7332bb48482e88424))
+
+# [1.16.0](https://github.com/hulib-engineering/hulib/compare/v1.15.1...v1.16.0) (2025-05-26)
+
+
+### Bug Fixes
+
+* api and add translate ([5e239c0](https://github.com/hulib-engineering/hulib/commit/5e239c0fe053c699f08c362f59b2135c95c07743))
+* **Auth:** fixed facebook & google oauth callback url ([e9b68f9](https://github.com/hulib-engineering/hulib/commit/e9b68f93ba8a0fa876c840df44af0446bb75875c))
+* **Auth:** fixed facebook & google oauth callback url ([70124cd](https://github.com/hulib-engineering/hulib/commit/70124cd38da4d28c74784cbee9687063fed47c0e))
+* bug and update sesionCard ([8fd9a9e](https://github.com/hulib-engineering/hulib/commit/8fd9a9e905db6521eefe7e1f24de727f2d85d530))
+* call api huber ([54fbf76](https://github.com/hulib-engineering/hulib/commit/54fbf768d6e2b49448ae13d8d4bcf2cd38d525d6))
+* card and availableCard UI ([45b2b4b](https://github.com/hulib-engineering/hulib/commit/45b2b4bb05a2284040b3ce524200dfbeaa3053ef))
+* custom Shimmer ([91e16b3](https://github.com/hulib-engineering/hulib/commit/91e16b31df5aed67e13d30cd85f82edcd3911128))
+* **header:** custom skeleton for user area when user changes language ([000d24f](https://github.com/hulib-engineering/hulib/commit/000d24fc3d412d7db4d1ab6920cfc249f5f9d34d))
+* hide tags when no topic ([65b3c87](https://github.com/hulib-engineering/hulib/commit/65b3c87ea05a2c5766d9bf9c31974f7dabee2a91))
+* **place-request:** startAt and endAt wrong ([77be122](https://github.com/hulib-engineering/hulib/commit/77be1226c0976992e2ecb8a4fd1b963a41754398))
+* time of session ([a842e7e](https://github.com/hulib-engineering/hulib/commit/a842e7ea82d3ffb86dfa7a3e14455c280af6e956))
+* **timeslot:** timeslot invalid date ([b8e6a10](https://github.com/hulib-engineering/hulib/commit/b8e6a10fca6beeed12a47e71bb4bc033968f2d34))
+* translate huber name ([d4f3707](https://github.com/hulib-engineering/hulib/commit/d4f37074d2812a7354dd1fc3d624477c17985748))
+* update video URL validation to be optional and improve error handling ([c12ef90](https://github.com/hulib-engineering/hulib/commit/c12ef90a9522daecfbe5353e5d803d724523f5b8))
+* updated skeleton ([3bbc58e](https://github.com/hulib-engineering/hulib/commit/3bbc58ea2cb3a3e79bd95a7fd6b4c31bdc16f949))
+* updated Skeleton because test is Erorr ([3231875](https://github.com/hulib-engineering/hulib/commit/3231875dffb2a7c346f38df69e91e06eaf7b0474))
+
+
+### Features
+
+* add api change status ([c087149](https://github.com/hulib-engineering/hulib/commit/c0871492a30a69c9c87946cb6a56bc534871b6bb))
+* add custom cover book component and integrate it into registration and flip book sections ([de15266](https://github.com/hulib-engineering/hulib/commit/de152667476de31f73f0cd6020506378ad09fd54))
+* create filter schedule ([14dd4cf](https://github.com/hulib-engineering/hulib/commit/14dd4cf79587fb051eae39b06300148f4df9b3f4))
+* enhance error handling and success messages with translations across multiple components ([35df123](https://github.com/hulib-engineering/hulib/commit/35df123a629285419151a7d51cd331766018faf5))
+* integrate user details in meeting scheduling and enhance reading session management ([38af9c0](https://github.com/hulib-engineering/hulib/commit/38af9c0ad5dfbb83617cfd395cea36c3c2b3d5d8))
+* liber profile ([2b7a93f](https://github.com/hulib-engineering/hulib/commit/2b7a93f177cc5f73871cadd69efc92ef7cacdb05))
+* liber profile ([8ea9212](https://github.com/hulib-engineering/hulib/commit/8ea9212366d668f4145c81888e32fd9f441ed00f))
+* meeting component ([af40537](https://github.com/hulib-engineering/hulib/commit/af4053762fd7b2ed7764f49b9b9985302d91e3b3))
+* meeting component ([6a54b82](https://github.com/hulib-engineering/hulib/commit/6a54b82776170ffa05be69d9e56a417de35ef763))
+* notification component ([7b2debf](https://github.com/hulib-engineering/hulib/commit/7b2debf0db21b19b407d95f1df147ee0d35df027))
+* notification component ([a717daf](https://github.com/hulib-engineering/hulib/commit/a717daf24cee767a13d0ecbd74685d509be183ca))
+* **profile:** add StoriesTab component and CreateStoryModal for story management ([415c2e4](https://github.com/hulib-engineering/hulib/commit/415c2e4fe863e2c669f6a930a8c28465d64e7969))
+* **profile:** bind api, improve about tab ui ([b59c70d](https://github.com/hulib-engineering/hulib/commit/b59c70d70805346efd6d6474d8167f35ef1a14a2))
+* **profile:** enhance AboutPanel and WorkAndEducationSection ([7664d04](https://github.com/hulib-engineering/hulib/commit/7664d045ec77e8dca10907e0ae9795c741777abd))
+* **profile:** improve contact infomation tab ([09a3466](https://github.com/hulib-engineering/hulib/commit/09a346628e2b150cee4029bd2d1f375e06e822c0))
+* refactor CustomCoverBook component and integrate it into Step3 and FlipBook components ([993196e](https://github.com/hulib-engineering/hulib/commit/993196e077dffaf42e268fef8a84342c078d694c))
+* refactor profile components and add new sections ([35af422](https://github.com/hulib-engineering/hulib/commit/35af422f8e1d5f4630a946594155cb21bd5a5b0f))
+* responsive ui for weekly schedule screen ([c9b1fe7](https://github.com/hulib-engineering/hulib/commit/c9b1fe750cf68f7664c660686f08ad3d41dbb944))
+* **schedule:** enhance BigSchedule component with SessionCard and improve reading session query ([ea5acd0](https://github.com/hulib-engineering/hulib/commit/ea5acd075ab9c9a23f2189cff826f9dc49a5509d))
+* **schedule:** implement hover functionality with PortalSessionCard and enhance calendar scroll ([0de92a6](https://github.com/hulib-engineering/hulib/commit/0de92a653f22dd714e6823d71bfea9d1cb438ebd))
+* **stories:** enhance story components with favorite functionality and editing capabilities ([85e3cec](https://github.com/hulib-engineering/hulib/commit/85e3ceca3ef22376915165661f9342ce8ee6dc74))
+* **stories:** implement delete story functionality and enhance modals ([c7883a7](https://github.com/hulib-engineering/hulib/commit/c7883a7bfc410cd599a056f791771a4a3b0c1f31))
+* update profile routing and enhance profile detail handling ([01d719e](https://github.com/hulib-engineering/hulib/commit/01d719e778f39b840ddccc9bc35800222626b6d3))
+* update ui ([4739f5b](https://github.com/hulib-engineering/hulib/commit/4739f5bfece49695c24edb29f78c6f66e0aacba1))
+
 ## [1.15.1](https://github.com/hulib-engineering/hulib/compare/v1.15.0...v1.15.1) (2025-05-20)
 
 
