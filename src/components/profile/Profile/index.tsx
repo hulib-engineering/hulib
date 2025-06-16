@@ -10,6 +10,7 @@ import type { ProfileMenuItem } from '@/components/core/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/core/NavBar/NavBar';
 import { pushError } from '@/components/CustomToastifyContainer';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
+import ProfileActionDropdown from '@/features/admin/components/ProfileActionDropdown';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { useUploadMutation } from '@/libs/services/modules/files';
@@ -39,6 +40,7 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 const Profile = () => {
   const searchParams = useSearchParams();
   const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const isAdmin = userInfo?.role?.id === Role.ADMIN;
   // isLiber: if user is a Liber, means user is a Liber
   const isLiber = userInfo?.role?.id === 3;
   // huberId: if Huber is not defined, means someone is viewing huber's profile
@@ -90,6 +92,9 @@ const Profile = () => {
               path: result?.file?.path,
             },
           }).unwrap();
+
+          // Refetch user data to update the UI with the new avatar
+          await refetch();
         }
       } catch (error: any) {
         pushError(`Error: ${error.message}`);
@@ -114,8 +119,15 @@ const Profile = () => {
             </p>
           </div>
         ),
-        component: <AboutPanel data={userDetail} onInvalidate={refetch} />,
+        component: (
+          <AboutPanel
+            isLiber={isLiber}
+            data={userDetail}
+            onInvalidate={refetch}
+          />
+        ),
       },
+
       // {
       //   type: MyProfilePanelIndex.MY_FAVORITE,
       //   label: (
@@ -193,6 +205,11 @@ const Profile = () => {
       <div>
         <div className="relative flex h-[99.99px] justify-end justify-items-end bg-[#A6D4FF] lg:h-[200px]">
           <div className="relative h-[99.99px] w-full lg:h-[200px]">
+            {isAdmin && userDetail ? (
+              <div className="absolute right-4 top-4 z-20">
+                <ProfileActionDropdown data={userDetail} />
+              </div>
+            ) : null}
             <Image
               src="/my-profile-banner.png"
               className="h-full object-cover"
@@ -212,10 +229,9 @@ const Profile = () => {
                 height={160}
                 className="h-[100px] w-[100px] rounded-full lg:h-[160px] lg:w-[160px]"
                 loading="lazy"
-                // src={
-                //   userDetail?.photo?.path || '/assets/images/user-avatar.jpeg'
-                // }
-                src="/assets/images/user-avatar.jpeg"
+                src={
+                  userDetail?.photo?.path ?? '/assets/images/icons/avatar.svg'
+                }
               />
 
               <div className="absolute bottom-0 left-20 opacity-0 transition-opacity duration-200 group-hover:opacity-100 lg:left-28 ">
@@ -229,7 +245,7 @@ const Profile = () => {
                   onChange={handleAvatarUpload}
                 />
                 <IconButtonEdit
-                  disabled
+                  disabled={!!huberId}
                   onClick={() =>
                     billUploader &&
                     billUploader?.current &&
@@ -241,24 +257,31 @@ const Profile = () => {
 
             <div className="relative left-4 mb-10 flex w-full flex-row items-center justify-between gap-2 lg:left-0 lg:ml-[210px] lg:mr-5">
               <div className="flex-col gap-y-1 lg:gap-y-1">
-                <p className="text-3xl font-medium text-[#000000]">
-                  {userDetail?.fullName ?? 'Not provided'}
-                </p>
+                <div className="flex items-center gap-2">
+                  <p className="text-3xl font-medium text-[#000000]">
+                    {userDetail?.fullName ?? ''}{' '}
+                  </p>
+                  {userDetail?.role?.name && (
+                    <span className="inline-flex items-center gap-2 rounded-full bg-primary-90 px-4 py-1 text-sm text-primary-40">
+                      {userDetail?.role?.name || '-'}
+                    </span>
+                  )}
+                </div>
                 <div className="flex items-center gap-x-10 text-sm text-neutral-20">
                   <LabelWithLeftIcon
                     label={userDetail?.address ?? 'Location'}
-                    icon={<MapPin size={20} />}
+                    icon={<MapPin size={20} className="text-primary-60" />}
                   />
                   {!isLiber && (
                     <LabelWithLeftIcon
                       label={`${menteeCount} liber`}
-                      icon={<Users size={20} />}
+                      icon={<Users size={20} className="text-primary-60" />}
                     />
                   )}
                   {!isLiber && (
                     <LabelWithLeftIcon
                       label={`${rating} rating`}
-                      icon={<Star size={20} />}
+                      icon={<Star size={20} className="text-pink-50" />}
                     />
                   )}
                 </div>

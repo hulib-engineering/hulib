@@ -18,6 +18,31 @@
     "log_in": "Đăng nhập",
     "sign_up": "Đăng kí ngay"
   },
+  "Research": {
+    "tabs": {
+      "all": "Tất cả",
+      "story": "Câu chuyện",
+      "huber": "Huber"
+    },
+    "results": {
+      "all_match": "kết quả khớp với từ khóa",
+      "story_match": "kết quả khớp với tên Câu chuyện",
+      "huber_match": "kết quả khớp với tên Huber"
+    },
+    "stories": {
+      "title": "Câu chuyện",
+      "no_stories": "Không tìm thấy câu chuyện nào",
+      "read_all": "Đọc tất cả"
+    },
+    "hubers": {
+      "title": "Huber",
+      "no_hubers": "Không tìm thấy Huber nào"
+    },
+    "no_result": {
+      "title": "Không tìm thấy kết quả",
+      "description": "Chúng tôi không tìm thấy kết quả nào phù hợp với tìm kiếm của bạn. Vui lòng thử tìm kiếm lại."
+    }
+  },
   "Footer": {
     "footer_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
     "copyright": "© 2025 HuLib. Đã đăng ký bản quyền.",
@@ -391,7 +416,7 @@
     "step_1_title": "Đăng ký Huber",
     "general": "General"
   },
-  "ExporeStory": {
+  "ExploreStory": {
     "title": "Khám phá",
     "description": "Khám phá và tìm câu chuyện hoàn hảo của bạn",
     "view_more": "Xem thêm",
@@ -408,7 +433,10 @@
     "education": "Giáo dục",
     "similar_stories": "Những câu chuyện tương tự",
     "see_all": "Xem tất cả",
-    "hide_all": "Ẩn tất cả"
+    "hide_all": "Ẩn tất cả",
+    "story_added_to_favorites": "Thêm vào danh sách yêu thích thành công",
+    "story_removed_from_favorites": "Xóa khỏi danh sách yêu thích thành công",
+    "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!"
   },
   "Huber": {
     "title": "Xem danh sách Huber",

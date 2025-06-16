@@ -10,7 +10,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import Button from '@/components/button/Button';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
@@ -19,37 +19,29 @@ import MenuItem from '@/components/menuItem/MenuItem';
 import Popover from '@/components/popover/Popover';
 import type { WithChildren } from '@/components/private/types';
 import SearchInput from '@/components/SearchInput';
+import NotificationButton from '@/layouts/webapp/NotificationIcon';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppSelector } from '@/libs/hooks';
-
-// const ButtonWithChip = ({
-//   children,
-//   value,
-// }: WithChildren<{ value: string }>) => (
-//   <div className="relative">
-//     <div className="absolute left-6 top-0.5 z-10 rounded-full border border-white bg-red-50 px-1 py-[0.5px] text-[10px] leading-3 text-white">
-//       {value}
-//     </div>
-//     {children}
-//   </div>
-// );
+import { Role } from '@/types/common';
 
 const AvatarPopoverMenuItems = [
   {
     label: 'My profile',
     icon: <UserCircle size={20} color="primary-20" />,
     href: '/profile',
+    roles: [Role.LIBER, Role.HUBER],
   },
   {
     label: 'Change password',
     icon: <Gear size={20} color="primary-20" />,
     href: '/change-password',
+    roles: [Role.LIBER, Role.HUBER],
   },
   {
     label: 'Register to become human book',
     icon: <Pencil size={20} color="primary-20" />,
     href: '/huber-registration',
-    roles: ['Liber'],
+    roles: [Role.LIBER],
   },
   {
     label: 'Sign out',
@@ -87,7 +79,7 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
     return (
       AvatarPopoverMenuItems.filter((item) => {
         if (item?.roles) {
-          return item.roles.includes(role?.name);
+          return item.roles.includes(role?.id as Role);
         }
         return true;
       }) || []
@@ -135,7 +127,26 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
 
 const Header = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
+
+  useEffect(() => {
+    // socket('').then((messageSocket) => {
+    //   messageSocket.connect();
+    //   messageSocket.on('error', (error: any) => {
+    //     console.log(error);
+    //   });
+    //   messageSocket.on('message', (message: any) => {
+    //     console.log(message);
+    //   });
+    // });
+    // return () => {
+    //   messageSocket.disconnect();
+    // };
+  }, []);
+
   const renderNavbar = () => {
+    if (!user || user?.role?.id === Role.ADMIN) {
+      return null;
+    }
     return (
       <div className="flex items-center justify-between gap-x-2">
         {user && user?.id && (
@@ -178,17 +189,11 @@ const Header = () => {
                   data-testid="button-messenger"
                   onClick={() => alert('click')}
                 />
-              </ButtonWithChip>
-              <NotificationPopover>
-                <ButtonWithChip value="10">
-                  <IconButton
-                    variant="ghost"
-                    icon={<Bell size={28} />}
-                    className="p-2"
-                    data-testid="button-notif"
-                  />
-                </ButtonWithChip>
-              </NotificationPopover> */}
+              </ButtonWithChip> */}
+              <NotificationButton
+                notificationCount="10"
+                notificationPath="/notification"
+              />
               <div className="relative ml-2">
                 <AvatarPopover>
                   <Image
@@ -196,12 +201,7 @@ const Header = () => {
                     width={44}
                     height={44}
                     loading="lazy"
-                    // src={
-                    //   !user || !user.photo || !user.photo.path
-                    //     ? '/assets/images/icons/avatar.svg'
-                    //     : user.photo.path
-                    // }
-                    src="/assets/images/icons/avatar.svg"
+                    src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
                     className="h-11 w-11 rounded-full object-contain"
                   />
                 </AvatarPopover>
@@ -213,10 +213,7 @@ const Header = () => {
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-2">
-          {/* <SearchEverything /> */}
-          {renderNavbar()}
-        </div>
+        <div className="flex flex-col gap-2">{renderNavbar()}</div>
       </header>
       <header className="hidden w-[100vw] items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
         <div className="flex items-center gap-6">
@@ -233,24 +230,18 @@ const Header = () => {
         ) : (
           <div className="flex items-center gap-2">
             {/* <ButtonWithChip value="10">
-              <IconButton
-                variant="ghost"
-                icon={<MessengerLogo size={28} />}
-                className="p-2"
-                data-testid="button-messenger"
-                onClick={() => alert('click')}
-              />
-            </ButtonWithChip>
-            <NotificationPopover>
-              <ButtonWithChip value="10">
                 <IconButton
                   variant="ghost"
-                  icon={<Bell size={28} />}
+                  icon={<MessengerLogo size={28} />}
                   className="p-2"
-                  data-testid="button-notif"
+                  data-testid="button-messenger"
+                  onClick={() => alert('click')}
                 />
-              </ButtonWithChip>
-            </NotificationPopover> */}
+              </ButtonWithChip> */}
+            <NotificationButton
+              notificationCount="10"
+              notificationPath="/notification"
+            />
             <div className="relative ml-2 h-11 w-11">
               <AvatarPopover>
                 <Image
@@ -258,12 +249,7 @@ const Header = () => {
                   layout="fill"
                   className="h-11 w-11 rounded-full object-contain"
                   loading="lazy"
-                  // src={
-                  //   !user || !user.photo || !user.photo.path
-                  //     ? '/assets/images/icons/avatar.svg'
-                  //     : user.photo.path
-                  // }
-                  src="/assets/images/icons/avatar.svg"
+                  src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
                 />
               </AvatarPopover>
               <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">

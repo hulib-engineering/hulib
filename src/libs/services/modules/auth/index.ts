@@ -1,7 +1,6 @@
 import { api } from '../../api';
 import changePassword from './changePassword';
 import checkEmail from './checkEmail';
-import checkRegisterHumanBook from './checkRegisterHumanBook';
 import confirmEmail from './confirmEmail';
 import forgotPassword from './forgotPassword';
 import getPersonalInfo from './getPersonalInfo';
@@ -62,7 +61,6 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
     changePassword: changePassword(build),
     updateProfile: updateProfile(build),
     registerHuber: registerHuber(build),
-    checkRegisterHumanBook: checkRegisterHumanBook(build),
   }),
   overrideExisting: false,
 });
