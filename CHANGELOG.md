@@ -1,3 +1,38 @@
+# [1.19.0](https://github.com/hulib-engineering/hulib/compare/v1.18.0...v1.19.0) (2025-06-16)
+
+
+### Bug Fixes
+
+* **383039:** modified hiding booked sessions when booking a new one ([0ed6945](https://github.com/hulib-engineering/hulib/commit/0ed69457cb91ae2b6110c3a0e0e50ccc13d94b82))
+* **399043:** modified flip book animation ([74f3d00](https://github.com/hulib-engineering/hulib/commit/74f3d004d2593657ce6bc816bf56089543848907))
+* **496834:** modified animated cover UI ([a4367d6](https://github.com/hulib-engineering/hulib/commit/a4367d6c2e824f9ee260b995df0a3d6b82ce827c))
+* **921500:** fixed validating all timeslots at the same time ([1167581](https://github.com/hulib-engineering/hulib/commit/1167581bc06b6bc42560d330cb990253ccca2857))
+* hidden button when no data ([f30247a](https://github.com/hulib-engineering/hulib/commit/f30247a7adbc44dcabe66662f197488ff30015b3))
+* ui  profile ([1a2dbeb](https://github.com/hulib-engineering/hulib/commit/1a2dbeb198ee98ae22e68a31431b2001cf6f2805))
+* ui detail story ([cdeccc9](https://github.com/hulib-engineering/hulib/commit/cdeccc95258b535b5cbf0e566cf5e9de184e51fe))
+
+
+### Features
+
+* **496834:** configured socket, handshake and made connection ([c3daf03](https://github.com/hulib-engineering/hulib/commit/c3daf03f745bee39313f0d6c659dd1a824b91aff))
+* **870514:** added flipping animation and flipping sound for abstract ([88a47af](https://github.com/hulib-engineering/hulib/commit/88a47af4d168c02a2ab126531f9b27cb399df20b))
+* **870514:** added flipping animation and flipping sound for abstract ([d64f637](https://github.com/hulib-engineering/hulib/commit/d64f63731036cf3124c84bcda1d94f756fd0f04c))
+* **870514:** modified stretched point ([5fa977b](https://github.com/hulib-engineering/hulib/commit/5fa977b38e02ba3edd78fd93d3ca8c7229025002))
+* **870514:** modified stretched point ([fa91c29](https://github.com/hulib-engineering/hulib/commit/fa91c29d253ddee01438ef360269f5cf3d512b41))
+* **870514:** rebased code ([0550127](https://github.com/hulib-engineering/hulib/commit/0550127c07e2377a03cc2b460213c00d78bc998c))
+* **870514:** rebased code ([d24f399](https://github.com/hulib-engineering/hulib/commit/d24f39949de192c0bed64e1017f60163a8d034f9))
+* **946174:** modified animation for story cover ([2eb987a](https://github.com/hulib-engineering/hulib/commit/2eb987aaef37bd4c258735d7bee7b1814f6949b0))
+* add API to add story to favorites and update UI on explore story page ([86d1366](https://github.com/hulib-engineering/hulib/commit/86d13664a8decf213dd05b644ab8b070175859e6))
+* add click handlers for notification ([00569e4](https://github.com/hulib-engineering/hulib/commit/00569e4c2e1063afaf5731b7e00a06861be135e9))
+* add navigation limits and date range display to OneWeek component ([c830573](https://github.com/hulib-engineering/hulib/commit/c8305733a62034b710b19b36f1e42514b35d2804))
+* add notification API integration ([0f56c79](https://github.com/hulib-engineering/hulib/commit/0f56c79aed198f93aa1a01b9c7f4e99ed5735ef4))
+* **admin:** add page to approve stories ([ccd3023](https://github.com/hulib-engineering/hulib/commit/ccd302315bd35d1c11aa2c166575a2c8fd636b17))
+* **admin:** add story approval details page and enhance button functionality ([26cc654](https://github.com/hulib-engineering/hulib/commit/26cc65440e49d31a52a53c1f8909aac2e9407826))
+* **admin:** enhance story approval workflow with new pages and modals ([c56fb85](https://github.com/hulib-engineering/hulib/commit/c56fb85f87fe9415dc7c29557248e10a28026b7f))
+* **admin:** implement AdminLayout and role-based rendering in home page ([1659db2](https://github.com/hulib-engineering/hulib/commit/1659db29d1e61556cc41f99762fbd4eb8df24986))
+* implement search functionality ([dbd3f58](https://github.com/hulib-engineering/hulib/commit/dbd3f588d277258ca106310c5a3380ca0c732031))
+* updated async/await and add api delete on UI ([3e199d1](https://github.com/hulib-engineering/hulib/commit/3e199d18295a7fbe67b81d5f49eada8db0a06b41))
+
 # [1.18.0](https://github.com/hulib-engineering/hulib/compare/v1.17.1...v1.18.0) (2025-05-30)
 
 
