@@ -22,7 +22,6 @@ import SearchInput from '@/components/SearchInput';
 import NotificationButton from '@/layouts/webapp/NotificationIcon';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppSelector } from '@/libs/hooks';
-import { socket } from '@/libs/services/socket';
 import { Role } from '@/types/common';
 
 const AvatarPopoverMenuItems = [
@@ -130,18 +129,15 @@ const Header = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
 
   useEffect(() => {
-    socket('').then((messageSocket) => {
-      messageSocket.connect();
-
-      messageSocket.on('error', (error) => {
-        console.log(error);
-      });
-
-      messageSocket.on('message', (message) => {
-        console.log(message);
-      });
-    });
-
+    // socket('').then((messageSocket) => {
+    //   messageSocket.connect();
+    //   messageSocket.on('error', (error: any) => {
+    //     console.log(error);
+    //   });
+    //   messageSocket.on('message', (message: any) => {
+    //     console.log(message);
+    //   });
+    // });
     // return () => {
     //   messageSocket.disconnect();
     // };
