@@ -3,8 +3,10 @@
 import Image from 'next/image';
 import type { FC } from 'react';
 
+import { useAppSelector } from '@/libs/hooks';
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
 import { NOTIFICATION_TYPES } from '@/libs/services/modules/notifications/notificationType';
+import { Role } from '@/types/common';
 
 interface NotificationAvatarProps {
   notification: Notification;
@@ -15,7 +17,12 @@ const NotificationAvatar: FC<NotificationAvatarProps> = ({
   notification,
   size = 56,
 }) => {
-  if (notification.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name) {
+  const { role } = useAppSelector((state) => state.auth.userInfo);
+
+  if (
+    notification.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name ||
+    (role.id === Role.ADMIN && notification.type.name === 'account')
+  ) {
     return (
       <div className="relative shrink-0">
         <Image
