@@ -17,6 +17,7 @@ interface NotificationPopoverProps {
 
 const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
   const router = useRouter();
+
   const { notifications, isLoading, error } = useNotifications({
     limit: 3,
     enablePagination: false,
