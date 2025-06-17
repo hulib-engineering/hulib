@@ -22,12 +22,12 @@ const ButtonWithChip = ({
 );
 
 interface NotificationButtonProps {
-  notificationCount?: string;
+  notificationCount?: number;
   notificationPath?: string;
 }
 
 const NotificationButton: React.FC<NotificationButtonProps> = ({
-  notificationCount = '10',
+  notificationCount = 10,
   notificationPath = '/notification',
 }) => {
   const { deviceType } = useDeviceType({ mobile: 768, desktop: 1024 });
@@ -41,7 +41,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
 
   if (deviceType === 'mobile') {
     return (
-      <ButtonWithChip value={notificationCount}>
+      <ButtonWithChip value={`${notificationCount}`}>
         <IconButton
           variant="ghost"
           icon={<Bell size={28} />}
@@ -55,7 +55,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
 
   return (
     <NotificationPopover>
-      <ButtonWithChip value={notificationCount}>
+      <ButtonWithChip value={`${notificationCount}`}>
         <IconButton
           variant="ghost"
           icon={<Bell size={28} />}

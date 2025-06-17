@@ -11,6 +11,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import React, { useEffect, useMemo } from 'react';
+import type { Socket } from 'socket.io-client';
 
 import Button from '@/components/button/Button';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
@@ -21,7 +22,10 @@ import type { WithChildren } from '@/components/private/types';
 import SearchInput from '@/components/SearchInput';
 import NotificationButton from '@/layouts/webapp/NotificationIcon';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
-import { useAppSelector } from '@/libs/hooks';
+import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import useNotifications from '@/libs/hooks/useNotifications';
+import { notificationApi } from '@/libs/services/modules/notifications';
+import { socket } from '@/libs/services/socket';
 import { Role } from '@/types/common';
 
 const AvatarPopoverMenuItems = [
@@ -126,21 +130,58 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
 );
 
 const Header = () => {
+  const { unseenNotificationsCount } = useNotifications({
+    limit: 3,
+    enablePagination: false,
+  });
+
   const user = useAppSelector((state) => state.auth.userInfo);
 
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    // socket('').then((messageSocket) => {
-    //   messageSocket.connect();
-    //   messageSocket.on('error', (error: any) => {
-    //     console.log(error);
-    //   });
-    //   messageSocket.on('message', (message: any) => {
-    //     console.log(message);
-    //   });
-    // });
-    // return () => {
-    //   messageSocket.disconnect();
-    // };
+    const handleNotifications = (notifications: any) => {
+      dispatch(
+        notificationApi.util.updateQueryData(
+          'getNotifications',
+          {},
+          (draft) => {
+            if (draft) {
+              Object.assign(draft, notifications);
+            }
+          },
+        ),
+      );
+    };
+
+    let messageSocketRef: Socket;
+
+    socket('notification').then((messageSocket) => {
+      messageSocketRef = messageSocket;
+
+      messageSocket.connect();
+
+      messageSocket.on('error', (error) => {
+        console.log(error);
+      });
+
+      messageSocket.on('message', (message) => {
+        console.log(message);
+      });
+
+      messageSocket.on('list', (notifList) => {
+        handleNotifications(notifList);
+      });
+    });
+
+    return () => {
+      if (messageSocketRef) {
+        messageSocketRef.off('error');
+        messageSocketRef.off('message');
+        messageSocketRef.off('list');
+        messageSocketRef.disconnect();
+      }
+    };
   }, []);
 
   const renderNavbar = () => {
@@ -191,7 +232,7 @@ const Header = () => {
                 />
               </ButtonWithChip> */}
               <NotificationButton
-                notificationCount="10"
+                notificationCount={unseenNotificationsCount ?? 0}
                 notificationPath="/notification"
               />
               <div className="relative ml-2">
@@ -239,7 +280,7 @@ const Header = () => {
                 />
               </ButtonWithChip> */}
             <NotificationButton
-              notificationCount="10"
+              notificationCount={unseenNotificationsCount ?? 0}
               notificationPath="/notification"
             />
             <div className="relative ml-2 h-11 w-11">

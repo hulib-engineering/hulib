@@ -3,8 +3,10 @@
 import _ from 'lodash';
 import type { FC } from 'react';
 
+import { useAppSelector } from '@/libs/hooks';
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
 import { NOTIFICATION_TYPES } from '@/libs/services/modules/notifications/notificationType';
+import { Role } from '@/types/common';
 
 interface NotificationContentProps {
   notification: Notification;
@@ -17,6 +19,8 @@ const NotificationContent: FC<NotificationContentProps> = ({
   hideDetails = false,
   onSeeDetail,
 }) => {
+  const { role } = useAppSelector((state) => state.auth.userInfo);
+
   const renderContent = () => {
     switch (notification.type.name) {
       case NOTIFICATION_TYPES.SESSION_REQUEST.name:
@@ -83,8 +87,41 @@ const NotificationContent: FC<NotificationContentProps> = ({
         return <p>New notification</p>;
     }
   };
+  const renderAdminNotifContent = () => {
+    switch (notification.type.name) {
+      // case NOTIFICATION_TYPES.PUBLISH_STORY.name:
+      //   return (
+      //     <p>
+      //       Your book,{' '}
+      //       {notification.relatedEntity?.title && (
+      //         <span className="font-bold text-primary-60">
+      //           &ldquo;{notification.relatedEntity.title}&rdquo;
+      //         </span>
+      //       )}{' '}
+      //       ,has been successfully published.
+      //     </p>
+      //   );
 
-  return <div className="w-full text-sm">{renderContent()}</div>;
+      case NOTIFICATION_TYPES.ACCOUNT.name:
+        return (
+          <p>
+            <span className="font-bold">
+              {`${notification.sender.fullName} `}
+            </span>
+            has submitted a request to become a Huber.
+          </p>
+        );
+
+      default:
+        return <p>New notification</p>;
+    }
+  };
+
+  return (
+    <div className="w-full text-sm">
+      {role.id === Role.ADMIN ? renderAdminNotifContent() : renderContent()}
+    </div>
+  );
 };
 
 export default NotificationContent;
