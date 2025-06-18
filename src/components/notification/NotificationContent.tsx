@@ -89,18 +89,20 @@ const NotificationContent: FC<NotificationContentProps> = ({
   };
   const renderAdminNotifContent = () => {
     switch (notification.type.name) {
-      // case NOTIFICATION_TYPES.PUBLISH_STORY.name:
-      //   return (
-      //     <p>
-      //       Your book,{' '}
-      //       {notification.relatedEntity?.title && (
-      //         <span className="font-bold text-primary-60">
-      //           &ldquo;{notification.relatedEntity.title}&rdquo;
-      //         </span>
-      //       )}{' '}
-      //       ,has been successfully published.
-      //     </p>
-      //   );
+      case NOTIFICATION_TYPES.PUBLISH_STORY.name:
+        return (
+          <p>
+            <span className="font-bold">
+              {`${notification.sender.fullName} `}
+            </span>
+            has sent a request to create a new Story{' '}
+            {notification.relatedEntity?.title && (
+              <span className="font-bold text-primary-60">
+                &ldquo;{notification.relatedEntity.title}&rdquo;
+              </span>
+            )}
+          </p>
+        );
 
       case NOTIFICATION_TYPES.ACCOUNT.name:
         return (
