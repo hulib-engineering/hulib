@@ -30,7 +30,7 @@ export const SessionDateTime: React.FC<SessionDateTimeProps> = ({
   };
 
   return (
-    <div className="mb-3 flex items-center text-black">
+    <div className="mb-3 flex items-center text-sm text-black">
       <Calendar size={16} className="mr-2" />
       <div>
         <span>

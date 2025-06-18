@@ -61,16 +61,32 @@ const UserCard = ({ data }: any) => {
           </>
         ) : null}
       </div>
-      <Button
-        iconLeft={<CaretCircleRight size={20} />}
-        variant="primary"
-        className="mt-auto rounded-full"
-        onClick={() => router.push(`/admin/users/approval/${data.id}`)}
-      >
-        {data.role.id === Role.HUBER && data.approval === 'Pending'
-          ? 'View Detail'
-          : 'Visit Profile'}
-      </Button>
+      {data.role.id === Role.HUBER ? (
+        <Button
+          iconLeft={<CaretCircleRight size={20} />}
+          variant="primary"
+          className="mt-auto rounded-full"
+          onClick={() => {
+            if (data.approval === 'Pending') {
+              window.open(`/admin/users/approval/${data.id}`, '_blank');
+            } else {
+              router.push(`/profile?huberId=${data.id}`);
+            }
+          }}
+        >
+          {data.approval === 'Pending' ? 'View Detail' : 'Visit Profile'}
+        </Button>
+      ) : null}
+      {data.role.id === Role.LIBER ? (
+        <Button
+          iconLeft={<CaretCircleRight size={20} />}
+          variant="primary"
+          className="mt-auto rounded-full"
+          onClick={() => router.push(`/admin/users/manage/${data.id}`)}
+        >
+          View Activity
+        </Button>
+      ) : null}
     </div>
   );
 };
