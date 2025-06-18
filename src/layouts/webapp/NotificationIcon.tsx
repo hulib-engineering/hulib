@@ -12,11 +12,13 @@ import { useDeviceType } from '@/libs/hooks';
 const ButtonWithChip = ({
   children,
   value,
-}: WithChildren<{ value: string }>) => (
+}: WithChildren<{ value: number }>) => (
   <div className="relative">
-    <div className="absolute left-6 top-0.5 z-10 rounded-full border border-white bg-red-50 px-1 py-[0.5px] text-[10px] leading-3 text-white">
-      {value}
-    </div>
+    {value > 0 && (
+      <div className="absolute left-6 top-0.5 z-10 rounded-full border border-white bg-red-50 px-1 py-[0.5px] text-[10px] leading-3 text-white">
+        {value}
+      </div>
+    )}
     {children}
   </div>
 );
@@ -41,7 +43,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
 
   if (deviceType === 'mobile') {
     return (
-      <ButtonWithChip value={`${notificationCount}`}>
+      <ButtonWithChip value={notificationCount}>
         <IconButton
           variant="ghost"
           icon={<Bell size={28} />}
@@ -55,7 +57,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
 
   return (
     <NotificationPopover>
-      <ButtonWithChip value={`${notificationCount}`}>
+      <ButtonWithChip value={notificationCount}>
         <IconButton
           variant="ghost"
           icon={<Bell size={28} />}

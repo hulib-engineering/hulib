@@ -62,3 +62,21 @@ export const getNotificationRoute = (notification: Notification): string => {
       return '/';
   }
 };
+
+export const getAdminNotificationRoute = (
+  notification: Notification,
+): string => {
+  const { type, relatedEntityId, sender } = notification;
+
+  switch (type.name) {
+    case NOTIFICATION_TYPES.ACCOUNT.name:
+      return `/admin/users/${sender.id}`;
+    case NOTIFICATION_TYPES.PUBLISH_STORY.name:
+    case NOTIFICATION_TYPES.REVIEW_STORY.name:
+      return relatedEntityId
+        ? `/admin/stories/approval/${relatedEntityId}`
+        : '/';
+    default:
+      return '/';
+  }
+};

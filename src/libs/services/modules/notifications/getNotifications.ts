@@ -8,7 +8,7 @@ const getNotifications = (
   build: EndpointBuilder<BaseQueryFn, string, string>,
 ) =>
   build.query<
-    PaginatedResponse<Notification>,
+    PaginatedResponse<Notification> & { unseenCount: number },
     { page?: number; limit?: number }
   >({
     query: (params) => ({
@@ -18,7 +18,7 @@ const getNotifications = (
         limit: params?.limit || 10,
       },
     }),
-    providesTags: [{ type: 'Notification' }],
+    providesTags: [{ type: 'Notification', id: 'LIST' }],
   });
 
 export default getNotifications;
