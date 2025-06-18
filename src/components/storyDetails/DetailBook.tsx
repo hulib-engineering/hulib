@@ -100,7 +100,7 @@ const paginateText = (
   return pages;
 };
 
-export function FlipBook({
+export function DetailBook({
   title,
   cover,
   abstract,

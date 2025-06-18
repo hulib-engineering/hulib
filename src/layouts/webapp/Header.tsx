@@ -3,6 +3,7 @@
 import {
   CaretDown,
   Gear,
+  House,
   Pencil,
   SignOut,
   UserCircle,
@@ -30,6 +31,12 @@ import { socket } from '@/libs/services/socket';
 import { Role } from '@/types/common';
 
 const AvatarPopoverMenuItems = [
+  {
+    label: 'Dashboard',
+    icon: <House size={20} color="primary-20" />,
+    href: '/home',
+    roles: [Role.ADMIN],
+  },
   {
     label: 'My profile',
     icon: <UserCircle size={20} color="primary-20" />,
