@@ -106,7 +106,6 @@ const useNotifications = ({
     currentPage: page,
     loadNextPage,
     resetNotifications,
-    unseenNotificationsCount: notificationsResponse?.unseenCount,
   };
 };
 

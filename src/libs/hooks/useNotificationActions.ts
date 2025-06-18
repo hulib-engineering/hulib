@@ -3,18 +3,24 @@
 import { useRouter } from 'next/navigation';
 
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import useAppSelector from '@/libs/hooks/useAppSelector';
 import { useUpdateNotificationMutation } from '@/libs/services/modules/notifications';
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
 import { NOTIFICATION_TYPES } from '@/libs/services/modules/notifications/notificationType';
 import { useUpdateReadingSessionMutation } from '@/libs/services/modules/reading-session';
 import type { StatusType } from '@/libs/services/modules/reading-session/createNewReadingSession';
+import { Role } from '@/types/common';
 import {
+  getAdminNotificationRoute,
   getNotificationConfig,
   getNotificationRoute,
 } from '@/utils/notificationUtils';
 
 const useNotificationActions = () => {
   const router = useRouter();
+
+  const role = useAppSelector((state) => state.auth.userInfo.role);
+
   const [updateStatus, { isLoading: isUpdatingStatus }] =
     useUpdateReadingSessionMutation();
   const [updateNotification] = useUpdateNotificationMutation();
@@ -56,7 +62,10 @@ const useNotificationActions = () => {
       await markAsSeen(notification.id.toString());
     }
 
-    const route = getNotificationRoute(notification);
+    const route =
+      role.id === Role.ADMIN
+        ? getAdminNotificationRoute(notification)
+        : getNotificationRoute(notification);
     router.push(route);
   };
 

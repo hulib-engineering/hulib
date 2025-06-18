@@ -131,7 +131,7 @@ const CreateStoryModal = ({
             id: userInfo?.id,
           },
           cover: formValues.cover,
-          publishStatus: 'published',
+          publishStatus: 'draft',
         }).unwrap();
         pushSuccess('Story created successfully');
       }
