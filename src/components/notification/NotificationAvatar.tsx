@@ -21,7 +21,7 @@ const NotificationAvatar: FC<NotificationAvatarProps> = ({
 
   if (
     notification.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name ||
-    (role.id === Role.ADMIN && notification.type.name === 'account')
+    role.id === Role.ADMIN
   ) {
     return (
       <div className="relative shrink-0">

@@ -9,9 +9,8 @@ import {
 } from '@phosphor-icons/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
+import { getSession, signOut } from 'next-auth/react';
 import React, { useEffect, useMemo } from 'react';
-import type { Socket } from 'socket.io-client';
 
 import Button from '@/components/button/Button';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
@@ -23,8 +22,10 @@ import SearchInput from '@/components/SearchInput';
 import NotificationButton from '@/layouts/webapp/NotificationIcon';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
-import useNotifications from '@/libs/hooks/useNotifications';
-import { notificationApi } from '@/libs/services/modules/notifications';
+import {
+  notificationApi,
+  useGetNotificationsQuery,
+} from '@/libs/services/modules/notifications';
 import { socket } from '@/libs/services/socket';
 import { Role } from '@/types/common';
 
@@ -130,59 +131,74 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
 );
 
 const Header = () => {
-  const { unseenNotificationsCount } = useNotifications({
-    limit: 3,
-    enablePagination: false,
-  });
+  const { data, isLoading } = useGetNotificationsQuery({ page: 1, limit: 5 });
 
   const user = useAppSelector((state) => state.auth.userInfo);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const handleNotifications = (notifications: any) => {
-      dispatch(
-        notificationApi.util.updateQueryData(
-          'getNotifications',
-          {},
-          (draft) => {
-            if (draft) {
+    let notificationSocket: ReturnType<typeof socket> | null = null;
+
+    const initializeSocket = async () => {
+      const session = await getSession();
+      // @ts-ignore
+      const accessToken = session?.accessToken as string | undefined;
+
+      if (!accessToken) {
+        console.error('No access token available');
+        return;
+      }
+
+      // const accessToken = (await getSession())?.accessToken;
+      notificationSocket = socket('notification', accessToken);
+      notificationSocket.connect();
+
+      notificationSocket.on('error', (error: Error) => {
+        // Proper error handling
+        console.error('Socket error:', error);
+      });
+      notificationSocket.on('message', console.log);
+
+      const handleNotifications = (notifications: any) => {
+        console.log('Received notifs', notifications);
+        dispatch(
+          notificationApi.util.updateQueryData(
+            'getNotifications',
+            { page: 1, limit: 5 },
+            (draft) => {
+              console.log('DRAFT BEFORE UPDATE', draft);
+              console.log('NOTIFICATIONS FROM SOCKET', notifications);
+
+              if (!draft) {
+                console.warn('No cache to update — query was never fetched.');
+                return;
+              }
+
               Object.assign(draft, notifications);
-            }
-          },
-        ),
-      );
+            },
+          ),
+        );
+      };
+
+      notificationSocket.on('list', (list) => {
+        handleNotifications(list);
+      });
     };
 
-    let messageSocketRef: Socket;
-
-    socket('notification').then((messageSocket) => {
-      messageSocketRef = messageSocket;
-
-      messageSocket.connect();
-
-      messageSocket.on('error', (error) => {
-        console.log(error);
-      });
-
-      messageSocket.on('message', (message) => {
-        console.log(message);
-      });
-
-      messageSocket.on('list', (notifList) => {
-        handleNotifications(notifList);
-      });
+    initializeSocket().catch((error) => {
+      console.error('Failed to initialize socket:', error);
     });
 
     return () => {
-      if (messageSocketRef) {
-        messageSocketRef.off('error');
-        messageSocketRef.off('message');
-        messageSocketRef.off('list');
-        messageSocketRef.disconnect();
+      if (notificationSocket) {
+        notificationSocket.off('error');
+        notificationSocket.off('message');
+        notificationSocket.off('list');
+        notificationSocket.disconnect();
       }
     };
-  }, []);
+  }, [dispatch]);
 
   const renderNavbar = () => {
     if (!user || user?.role?.id === Role.ADMIN) {
@@ -232,7 +248,7 @@ const Header = () => {
                 />
               </ButtonWithChip> */}
               <NotificationButton
-                notificationCount={unseenNotificationsCount ?? 0}
+                notificationCount={!isLoading && data ? data.unseenCount : 0}
                 notificationPath="/notification"
               />
               <div className="relative ml-2">
@@ -280,7 +296,7 @@ const Header = () => {
                 />
               </ButtonWithChip> */}
             <NotificationButton
-              notificationCount={unseenNotificationsCount ?? 0}
+              notificationCount={!isLoading && data ? data.unseenCount : 0}
               notificationPath="/notification"
             />
             <div className="relative ml-2 h-11 w-11">
