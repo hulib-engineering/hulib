@@ -63,9 +63,11 @@ const UserCard = ({ data }: any) => {
         iconLeft={<CaretCircleRight size={20} />}
         variant="primary"
         className="mt-auto rounded-full"
-        onClick={() => window.open(`/profile?huberId=${data.id}`, '_blank')}
+        onClick={() => window.open(`/admin/users/approval/${data.id}`)}
       >
-        View Profile
+        {data.role.id === Role.HUBER && data.approval === 'Pending'
+          ? 'View Detail'
+          : 'Visit Profile'}
       </Button>
     </div>
   );

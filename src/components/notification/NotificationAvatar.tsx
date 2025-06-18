@@ -18,7 +18,7 @@ const NotificationAvatar: FC<NotificationAvatarProps> = ({
   size = 56,
 }) => {
   const { role } = useAppSelector((state) => state.auth.userInfo);
-
+  console.log(role);
   if (
     notification.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name ||
     role.id === Role.ADMIN

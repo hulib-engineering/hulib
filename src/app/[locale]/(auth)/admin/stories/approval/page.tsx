@@ -1,5 +1,6 @@
 'use client';
 
+import { CaretCircleRight } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 
@@ -41,6 +42,7 @@ export default function AwaitingApprovalStories() {
       )}
     >
       <Button
+        iconLeft={<CaretCircleRight size={20} />}
         variant="primary"
         className="w-full rounded-full py-2 text-base font-medium"
         onClick={() => router.push(`/admin/stories/approval/${storyId}`)}
@@ -60,14 +62,14 @@ export default function AwaitingApprovalStories() {
     // AdminLayout provides sidebar and main content area
     <AdminLayout pendingStoriesCount={storiesAwaitingApproval?.length || 0}>
       {/* Outer container with padding and max width for Apple-style spaciousness */}
-      <div className="mx-auto flex h-screen w-full flex-col md:p-8">
+      <div className="mx-auto flex h-full w-full flex-col md:p-8">
         {/* Header section */}
         <h1 className="mb-1 text-2xl font-bold">Awaiting approval - Stories</h1>
         <p className="mb-6 text-base text-neutral-40">
           List of Stories awaiting approval
         </p>
 
-        <div className="flex flex-1 flex-wrap gap-4 overflow-y-scroll">
+        <div className="flex flex-1 flex-wrap gap-4">
           {/* Show loading skeleton or actual stories */}
           {isLoading ? (
             <div className="col-span-full py-12 text-center text-lg text-neutral-40">
