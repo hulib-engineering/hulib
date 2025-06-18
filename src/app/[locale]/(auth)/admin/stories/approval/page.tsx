@@ -67,7 +67,7 @@ export default function AwaitingApprovalStories() {
           List of Stories awaiting approval
         </p>
 
-        <div className="flex flex-1 flex-wrap gap-4">
+        <div className="flex flex-1 flex-wrap gap-4 overflow-y-scroll">
           {/* Show loading skeleton or actual stories */}
           {isLoading ? (
             <div className="col-span-full py-12 text-center text-lg text-neutral-40">
