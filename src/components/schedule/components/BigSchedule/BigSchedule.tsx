@@ -49,13 +49,7 @@ export default function BigCalendar() {
 
   useEffect(() => {
     if (readingSessions && !isLoading && userInfo?.id) {
-      const filteredSessions = readingSessions.filter(
-        (item: any) =>
-          item.sessionStatus !== StatusEnum.Canceled &&
-          item.sessionStatus !== StatusEnum.Rejected &&
-          (item.readerId === userInfo?.id || item.humanBookId === userInfo?.id),
-      );
-      const formattedEvents = formatEvents(filteredSessions);
+      const formattedEvents = formatEvents(readingSessions);
       setEvents(formattedEvents);
     }
   }, [readingSessions, isLoading, userInfo]);

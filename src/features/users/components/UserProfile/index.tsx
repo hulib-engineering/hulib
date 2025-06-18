@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
-import ProfileInfo from '@/features/users/components/ProfileInfo';
+import HeadearProfileInfo from '@/features/users/components/HeaderProfileInfo';
+
+import CompletedMeetings from '../CompletedMeetings';
+import DeclinedMeetings from '../DeclinedMeetings';
 
 const activityTabs = [
   { key: 'completed', label: 'Completed meeting', icon: '📅' },
@@ -8,7 +11,7 @@ const activityTabs = [
   { key: 'missed', label: 'Missed meeting', icon: '⚠️' },
 ];
 
-const ProfileLiber = ({ data }: any) => {
+const UserProfile = ({ data }: any) => {
   // State for selected activity tab
   const [selectedTab, setSelectedTab] = useState(
     activityTabs[0]?.key || 'completed',
@@ -23,18 +26,18 @@ const ProfileLiber = ({ data }: any) => {
           type="button"
           className="mr-2 text-primary-60 hover:underline focus:outline-none"
           onClick={() => window.history.back()}
-          aria-label="Back to data management"
+          aria-label="Back to User management"
         >
-          ← Back to data management
+          ← Back to User management
         </button>
       </div>
-      <ProfileInfo data={data} />
+      <HeadearProfileInfo data={data} />
 
       {/* Main Content Section */}
       <div className="mx-auto mt-8 flex w-full flex-col rounded-lg bg-white shadow-md lg:flex-row">
         {/* Sidebar Tabs */}
         <div className="mb-4 w-full max-w-xs shrink-0 lg:mb-0">
-          <div className="flex flex-col gap-2 border p-4">
+          <div className="flex flex-col gap-2 p-4">
             <span className="mb-2 text-sm font-semibold text-neutral-60">
               {data?.fullName || '-'}&rsquo;s Activities
             </span>
@@ -61,14 +64,12 @@ const ProfileLiber = ({ data }: any) => {
           <span className="text-base font-medium text-black">
             {activityTabs.find((t) => t.key === selectedTab)?.label}
           </span>
-          <div className="mt-4 text-neutral-60">
-            {/* TODO: Replace with real content for each activity */}
-            No data to display yet.
-          </div>
+          {selectedTab === 'completed' ? <CompletedMeetings /> : null}
+          {selectedTab === 'declined' ? <DeclinedMeetings /> : null}
         </div>
       </div>
     </div>
   );
 };
 
-export default ProfileLiber;
+export default UserProfile;

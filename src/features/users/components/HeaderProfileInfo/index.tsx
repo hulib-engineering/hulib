@@ -12,7 +12,7 @@ import ProfileActionDropdown from '../ProfileActionDropdown';
  * Props:
  *   - data: object containing user information
  */
-const ProfileInfo = ({ data }: { data: any }) => {
+const HeaderProfileInfo = ({ data }: { data: any }) => {
   return (
     <div className="mx-auto w-full rounded-lg bg-white shadow-md">
       {/* Banner Section - can be replaced with a real image if needed */}
@@ -37,6 +37,13 @@ const ProfileInfo = ({ data }: { data: any }) => {
         {/* Basic user info: role, name, location, mentee count, rating */}
         <div className="flex flex-col gap-2">
           {/* User role and name */}
+          {data?.approval === 'Pending' && (
+            <div className="mt-2">
+              <span className="rounded bg-orange-90 px-2 py-1 text-xs font-semibold text-orange-50">
+                Waiting for approval
+              </span>
+            </div>
+          )}
           <div className="flex items-center gap-2">
             <span className="rounded bg-primary-90 px-2 py-1 text-xs font-semibold text-primary-40">
               {ROLE_NAME[data?.role?.id as keyof typeof ROLE_NAME] || '-'}
@@ -66,4 +73,4 @@ const ProfileInfo = ({ data }: { data: any }) => {
   );
 };
 
-export default ProfileInfo;
+export default HeaderProfileInfo;

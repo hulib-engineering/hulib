@@ -1,11 +1,13 @@
 'use client';
 
-import { MapPin, Star, Users } from '@phosphor-icons/react';
+import { CaretCircleRight, MapPin, Star, Users } from '@phosphor-icons/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { ReactNode } from 'react';
 import * as React from 'react';
 
+import Button from '@/components/button/Button';
 import type { ProfileMenuItem } from '@/components/core/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/core/NavBar/NavBar';
 import { pushError } from '@/components/CustomToastifyContainer';
@@ -39,6 +41,7 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 const Profile = () => {
   const searchParams = useSearchParams();
   const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const isAdmin = userInfo?.role?.id === Role.ADMIN;
   // isLiber: if user is a Liber, means user is a Liber
   const isLiber = userInfo?.role?.id === 3;
   // huberId: if Huber is not defined, means someone is viewing huber's profile
@@ -162,8 +165,27 @@ const Profile = () => {
             component: <StoriesTab />,
           }
         : null,
+      huberId && isAdmin
+        ? {
+            type: MyProfilePanelIndex.STORY,
+            label: (
+              <div>
+                <p
+                  className={
+                    selectedMenuItem?.type === MyProfilePanelIndex.STORY
+                      ? 'border-b-2 border-primary-50 py-2 text-sm font-medium text-primary-50'
+                      : 'py-2 text-sm font-medium text-neutral-40'
+                  }
+                >
+                  Stories
+                </p>
+              </div>
+            ),
+            component: <div>WIP</div>,
+          }
+        : null,
     ].filter(Boolean) as ProfileMenuItem[];
-  }, [userDetail, selectedMenuItem?.type, huberId]);
+  }, [userDetail, selectedMenuItem?.type, huberId, isAdmin]);
 
   const getActiveMenuItemIndex = React.useCallback(
     (type: MyProfilePanelIndex | undefined) => {
@@ -279,6 +301,20 @@ const Profile = () => {
                   )}
                 </div>
               </div>
+              {isAdmin && (
+                <div className="px-8 lg:px-0">
+                  <Link href={`/admin/users/manage/${huberId}`}>
+                    <Button
+                      iconLeft={<CaretCircleRight size={20} />}
+                      variant="primary"
+                      className="mt-auto rounded-full"
+                      onClick={() => {}}
+                    >
+                      View Activity
+                    </Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
