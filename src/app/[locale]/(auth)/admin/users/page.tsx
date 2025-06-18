@@ -72,7 +72,7 @@ const UsersPage = () => {
 
   return (
     <AdminLayout pendingUsersCount={0}>
-      <div className="mx-auto flex w-full flex-col md:p-8">
+      <div className="mx-auto flex h-full w-full flex-col md:p-8">
         {/* Header section */}
         <h1 className="mb-1 text-2xl font-bold">User management</h1>
         <p className="mb-6 text-base text-neutral-40">List of Users</p>
@@ -92,7 +92,7 @@ const UsersPage = () => {
         </div>
         {/* User grid, filtered by selected role */}
         <div className="flex flex-1 flex-col gap-4">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {/* Filter users locally by selectedRole */}
             {userList.map((user: any) => (
               <UserCard key={user.id} data={user} />

@@ -1,16 +1,17 @@
 'use client';
 
-import { MapPin, Star, Users } from '@phosphor-icons/react';
+import { CaretCircleRight, MapPin, Star, Users } from '@phosphor-icons/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { ReactNode } from 'react';
 import * as React from 'react';
 
+import Button from '@/components/button/Button';
 import type { ProfileMenuItem } from '@/components/core/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/core/NavBar/NavBar';
 import { pushError } from '@/components/CustomToastifyContainer';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
-import ProfileActionDropdown from '@/features/admin/components/ProfileActionDropdown';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { useUploadMutation } from '@/libs/services/modules/files';
@@ -164,8 +165,27 @@ const Profile = () => {
             component: <StoriesTab />,
           }
         : null,
+      huberId && isAdmin
+        ? {
+            type: MyProfilePanelIndex.STORY,
+            label: (
+              <div>
+                <p
+                  className={
+                    selectedMenuItem?.type === MyProfilePanelIndex.STORY
+                      ? 'border-b-2 border-primary-50 py-2 text-sm font-medium text-primary-50'
+                      : 'py-2 text-sm font-medium text-neutral-40'
+                  }
+                >
+                  Stories
+                </p>
+              </div>
+            ),
+            component: <div>WIP</div>,
+          }
+        : null,
     ].filter(Boolean) as ProfileMenuItem[];
-  }, [userDetail, selectedMenuItem?.type, huberId]);
+  }, [userDetail, selectedMenuItem?.type, huberId, isAdmin]);
 
   const getActiveMenuItemIndex = React.useCallback(
     (type: MyProfilePanelIndex | undefined) => {
@@ -205,11 +225,6 @@ const Profile = () => {
       <div>
         <div className="relative flex h-[99.99px] justify-end justify-items-end bg-[#A6D4FF] lg:h-[200px]">
           <div className="relative h-[99.99px] w-full lg:h-[200px]">
-            {isAdmin && userDetail ? (
-              <div className="absolute right-4 top-4 z-20">
-                <ProfileActionDropdown data={userDetail} />
-              </div>
-            ) : null}
             <Image
               src="/my-profile-banner.png"
               className="h-full object-cover"
@@ -286,6 +301,20 @@ const Profile = () => {
                   )}
                 </div>
               </div>
+              {isAdmin && (
+                <div className="px-8 lg:px-0">
+                  <Link href={`/admin/users/manage/${huberId}`}>
+                    <Button
+                      iconLeft={<CaretCircleRight size={20} />}
+                      variant="primary"
+                      className="mt-auto rounded-full"
+                      onClick={() => {}}
+                    >
+                      View Activity
+                    </Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
