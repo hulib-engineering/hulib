@@ -4,6 +4,8 @@ import React from 'react';
 
 import { ROLE_NAME } from '@/types/common';
 
+import ProfileActionDropdown from '../ProfileActionDropdown';
+
 /**
  * ProfileInfo component
  * Displays the user's banner, avatar, and basic information (shared between huber and liber)
@@ -16,6 +18,9 @@ const ProfileInfo = ({ data }: { data: any }) => {
       {/* Banner Section - can be replaced with a real image if needed */}
       <div className="relative h-[200px] w-full rounded-t-lg bg-[#A6D4FF]">
         {/* Banner background, can be replaced with <Image /> if a banner image is available */}
+        <div className="absolute right-4 top-4 z-20">
+          <ProfileActionDropdown data={data} />
+        </div>
       </div>
       {/* Profile Info Row */}
       <div className="relative flex flex-row items-end px-8 pb-6">

@@ -10,7 +10,6 @@ import type { ProfileMenuItem } from '@/components/core/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/core/NavBar/NavBar';
 import { pushError } from '@/components/CustomToastifyContainer';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
-import ProfileActionDropdown from '@/features/admin/components/ProfileActionDropdown';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { useUploadMutation } from '@/libs/services/modules/files';
@@ -40,7 +39,6 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 const Profile = () => {
   const searchParams = useSearchParams();
   const userInfo = useAppSelector((state) => state.auth.userInfo);
-  const isAdmin = userInfo?.role?.id === Role.ADMIN;
   // isLiber: if user is a Liber, means user is a Liber
   const isLiber = userInfo?.role?.id === 3;
   // huberId: if Huber is not defined, means someone is viewing huber's profile
@@ -205,11 +203,6 @@ const Profile = () => {
       <div>
         <div className="relative flex h-[99.99px] justify-end justify-items-end bg-[#A6D4FF] lg:h-[200px]">
           <div className="relative h-[99.99px] w-full lg:h-[200px]">
-            {isAdmin && userDetail ? (
-              <div className="absolute right-4 top-4 z-20">
-                <ProfileActionDropdown data={userDetail} />
-              </div>
-            ) : null}
             <Image
               src="/my-profile-banner.png"
               className="h-full object-cover"

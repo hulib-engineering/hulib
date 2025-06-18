@@ -1,4 +1,3 @@
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 import ProfileInfo from '@/features/users/components/ProfileInfo';
@@ -10,7 +9,6 @@ const activityTabs = [
 ];
 
 const ProfileLiber = ({ data }: any) => {
-  const router = useRouter();
   // State for selected activity tab
   const [selectedTab, setSelectedTab] = useState(
     activityTabs[0]?.key || 'completed',
@@ -24,7 +22,7 @@ const ProfileLiber = ({ data }: any) => {
         <button
           type="button"
           className="mr-2 text-primary-60 hover:underline focus:outline-none"
-          onClick={() => router.push('/admin/users')}
+          onClick={() => window.history.back()}
           aria-label="Back to data management"
         >
           ← Back to data management

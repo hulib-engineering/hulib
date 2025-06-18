@@ -2,7 +2,7 @@
 
 import { CaretCircleRight } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import Button from '@/components/button/Button';
 import { FlipBook } from '@/components/flipBook/FlipBook';
@@ -10,10 +10,7 @@ import { mergeClassnames } from '@/components/private/utils';
 import StoryPagination from '@/components/storyDetails/StoryPagination';
 import AdminLayout from '@/layouts/AdminLayout';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
-import {
-  type Story,
-  StoryPublishStatus,
-} from '@/libs/services/modules/stories/storiesType';
+import { type Story } from '@/libs/services/modules/stories/storiesType';
 
 export default function AwaitingApprovalStories() {
   // Router for navigation
@@ -23,7 +20,7 @@ export default function AwaitingApprovalStories() {
   const [currentPage, setCurrentPage] = useState(0);
 
   // Fetch stories with pagination
-  const { data, isLoading } = useGetStoriesQuery({
+  const { data: storiesAwaitingApproval, isLoading } = useGetStoriesQuery({
     page: currentPage + 1, // API uses 1-based indexing
     limit: 6,
   });
@@ -52,15 +49,11 @@ export default function AwaitingApprovalStories() {
     </div>
   );
 
-  const storiesAwaitingApproval = useMemo(() => {
-    return data?.data?.filter(
-      (story: Story) => story.publishStatus === StoryPublishStatus.DRAFT,
-    );
-  }, [data]);
-
   return (
     // AdminLayout provides sidebar and main content area
-    <AdminLayout pendingStoriesCount={storiesAwaitingApproval?.length || 0}>
+    <AdminLayout
+      pendingStoriesCount={storiesAwaitingApproval?.data?.length || 0}
+    >
       {/* Outer container with padding and max width for Apple-style spaciousness */}
       <div className="mx-auto flex h-full w-full flex-col md:p-8">
         {/* Header section */}
@@ -75,8 +68,8 @@ export default function AwaitingApprovalStories() {
             <div className="col-span-full py-12 text-center text-lg text-neutral-40">
               Loading...
             </div>
-          ) : storiesAwaitingApproval?.length > 0 ? (
-            storiesAwaitingApproval.map((story: Story) => (
+          ) : storiesAwaitingApproval?.data?.length > 0 ? (
+            storiesAwaitingApproval?.data?.map((story: Story) => (
               <FlipBook
                 key={story.id}
                 data={story}
@@ -92,11 +85,11 @@ export default function AwaitingApprovalStories() {
         </div>
 
         {/* Pagination component */}
-        {data?.data?.hasNextPage && (
+        {storiesAwaitingApproval?.hasNextPage && (
           <div className="mt-10">
             <StoryPagination
               currentPage={currentPage}
-              totalPages={data?.data?.totalPages || 0}
+              totalPages={storiesAwaitingApproval?.data?.totalPages || 0}
               onPageChange={handlePageChange}
             />
           </div>
