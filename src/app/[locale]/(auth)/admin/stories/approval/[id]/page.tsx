@@ -7,7 +7,7 @@ import * as React from 'react';
 
 import Button from '@/components/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import Story from '@/components/storyDetails/Story';
+import { DetailBook } from '@/components/storyDetails/DetailBook';
 import StoryDetailsSkeleton from '@/components/storyDetails/StoryDetailsSkeleton';
 import {
   useGetStoryDetailQuery,
@@ -106,9 +106,11 @@ export default function Index() {
           </div>
         </div>
       </div>
-      <div>
-        <Story abstract={data?.abstract || ''} />
-      </div>
+      <DetailBook
+        title={data?.title || ''}
+        cover="/assets/images/user-avatar.jpeg"
+        abstract={data?.abstract || ''}
+      />
       {/* Approve/Declined buttons at the bottom */}
       <div className="mt-6 flex gap-4">
         <Button
