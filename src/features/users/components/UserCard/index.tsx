@@ -1,11 +1,13 @@
 import { CaretCircleRight } from '@phosphor-icons/react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 import Button from '@/components/button/Button';
 import { Role } from '@/types/common';
 
 const UserCard = ({ data }: any) => {
+  const router = useRouter();
   const t = useTranslations('ExploreStory');
 
   return (
@@ -63,7 +65,7 @@ const UserCard = ({ data }: any) => {
         iconLeft={<CaretCircleRight size={20} />}
         variant="primary"
         className="mt-auto rounded-full"
-        onClick={() => window.open(`/admin/users/approval/${data.id}`)}
+        onClick={() => router.push(`/admin/users/approval/${data.id}`)}
       >
         {data.role.id === Role.HUBER && data.approval === 'Pending'
           ? 'View Detail'

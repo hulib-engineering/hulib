@@ -1,6 +1,7 @@
 import { DotsThreeVertical, Hammer, Warning } from '@phosphor-icons/react';
 import { useState } from 'react';
 
+import { pushSuccess } from '@/components/CustomToastifyContainer';
 import Dropdown from '@/components/dropdown/Dropdown';
 import MenuItem from '@/components/menuItem/MenuItem';
 import type { User } from '@/features/users/types';
@@ -71,22 +72,32 @@ const ProfileActionDropdown = ({ data }: { data: User }) => {
       </Dropdown>
       {modal === 'warn' && (
         <ModalWarningAction
+          userId={data?.id?.toString() ?? ''}
           userImage={
             data?.photo?.path ?? '/assets/images/huber/cover-huber.png'
           }
           userName={data?.fullName ?? ''}
           userRole={data?.role?.name ?? ''}
           onCancel={handleClose}
+          onConfirm={() => {
+            setModal(null);
+            pushSuccess('User warned. Out.');
+          }}
         />
       )}
       {modal === 'ban' && (
         <ModalBanningAction
+          userId={data?.id?.toString() ?? ''}
           userImage={
             data?.photo?.path ?? '/assets/images/huber/cover-huber.png'
           }
           userName={data?.fullName ?? ''}
           userRole={data?.role?.name ?? ''}
           onCancel={handleClose}
+          onConfirm={() => {
+            setModal(null);
+            pushSuccess('User banned. Out.');
+          }}
         />
       )}
     </>
