@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
 
+import ChatPage from './ChatPage';
 import VideoComponent from './Video';
 
 type Props = {
@@ -316,6 +317,10 @@ export default function AgoraVideoCall({ appId }: Props) {
       // Silent error handling - could be replaced with proper error reporting
     }
   };
+  console.log('env', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  console.log('env', process.env.NEXT_PUBLIC_SUPABASE_URL);
+
+  const [isShowChatBlock, setIsShowChatBlock] = useState(true);
 
   return (
     <div className="m-4 size-full rounded-lg bg-[#FFFFFF] p-6 shadow-lg">
@@ -343,34 +348,42 @@ export default function AgoraVideoCall({ appId }: Props) {
           alt="chat-icon"
           loading="lazy"
           className="cursor-pointer"
-          onClick={() => {}}
+          onClick={() => setIsShowChatBlock(!isShowChatBlock)}
         />
       </div>
 
-      {/* Video display area */}
-      <div className="relative mt-4">
-        {/* Main video (local) - luôn là video của chính user hiện tại */}
-        <VideoComponent
-          localRef={localRef}
-          isShowWaitingText
-          isSelf // Local video luôn là của chính user
-          isVibing={isVibing}
-          isMicOn={isMicOn} // Trạng thái mic của user hiện tại
-          showMicIndicator // Luôn hiển thị indicator cho local video
-        />
-
-        {/* Picture-in-picture video (remote) - là video của người kia */}
-        <div className="absolute right-2 top-2 h-[181px] w-[297px]">
+      <div className="flex w-full gap-4">
+        {/* Video display area */}
+        <div className="relative mt-4 w-full">
+          {/* Main video (local) - luôn là video của chính user hiện tại */}
           <VideoComponent
-            localRef={remoteRef}
-            isShowWaitingText={false}
-            height={181}
-            isSelf={false} // Remote video luôn là của người kia
+            localRef={localRef}
+            isShowWaitingText
+            isSelf // Local video luôn là của chính user
             isVibing={isVibing}
-            isMicOn={remoteMicOn} // Trạng thái mic của remote user
-            showMicIndicator // Hiển thị indicator cho remote video
+            isMicOn={isMicOn} // Trạng thái mic của user hiện tại
+            showMicIndicator // Luôn hiển thị indicator cho local video
           />
+
+          {/* Picture-in-picture video (remote) - là video của người kia */}
+          <div className="absolute right-2 top-2 h-[181px] w-[297px]">
+            <VideoComponent
+              localRef={remoteRef}
+              isShowWaitingText={false}
+              height={181}
+              isSelf={false} // Remote video luôn là của người kia
+              isVibing={isVibing}
+              isMicOn={remoteMicOn} // Trạng thái mic của remote user
+              showMicIndicator // Hiển thị indicator cho remote video
+            />
+          </div>
         </div>
+
+        {isShowChatBlock && (
+          <div className="mt-4">
+            <ChatPage />
+          </div>
+        )}
       </div>
 
       {/* Control panel */}
