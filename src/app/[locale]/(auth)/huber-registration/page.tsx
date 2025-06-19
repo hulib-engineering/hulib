@@ -19,8 +19,8 @@ interface Step {
 
 const STEPS: Step[] = [
   { no: '01', value: 'Info', num: 1 },
-  { no: '02', value: 'Chose Available slot', num: 2 },
-  { no: '03', value: 'Fist Story', num: 3 },
+  { no: '02', value: 'Choose Available slot', num: 2 },
+  { no: '03', value: 'First Story', num: 3 },
 ];
 
 const ProgressBar = ({ currentStep }: { currentStep: number }) => (
