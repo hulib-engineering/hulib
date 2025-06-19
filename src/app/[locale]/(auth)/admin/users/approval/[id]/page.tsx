@@ -6,14 +6,20 @@ import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
 
 import Button from '@/components/button/Button';
+import { pushError } from '@/components/CustomToastifyContainer';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 import { ContactInformationSection } from '@/components/profile/ContactInformationSection';
 import OverviewSection from '@/components/profile/OverviewSection';
 import WorkAndEducationSection from '@/components/profile/WorkAndEducationSection';
 import HeaderProfileInfo from '@/features/users/components/HeaderProfileInfo';
+import ModalApprovalHuber from '@/features/users/components/ModalApprovalHuber';
 import StorySession from '@/features/users/components/StorySession';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
-import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
+import {
+  useGetUsersByIdQuery,
+  useUpgradeUserMutation,
+} from '@/libs/services/modules/user';
+import { Role, ROLE_NAME } from '@/types/common';
 
 // --- Sidebar section definitions ---
 const SIDEBAR_SECTIONS = [
@@ -50,6 +56,44 @@ const UserApprovalPage = () => {
   // Sidebar state: which section is selected
   const [selectedSection, setSelectedSection] = useState('overview');
 
+  // Modal state and mutation
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState({
+    isOpen: false,
+    type: '',
+  });
+  const [upgradeUser, { isLoading: isUpgrading }] = useUpgradeUserMutation();
+
+  // Handle approve action
+  const handleApprove = async () => {
+    try {
+      await upgradeUser({
+        id: String(id),
+        body: { action: 'accept' },
+      }).unwrap();
+      setIsConfirmModalOpen((prev) => ({
+        ...prev,
+        type: 'approve-success',
+      }));
+    } catch (error) {
+      pushError('Failed to approve Huber. Please try again.');
+    }
+  };
+
+  const handleDecline = async (reason: string) => {
+    try {
+      await upgradeUser({
+        id: String(id),
+        body: { action: 'reject', reason },
+      }).unwrap();
+      setIsConfirmModalOpen((prev) => ({
+        ...prev,
+        type: 'decline-success',
+      }));
+    } catch (error) {
+      pushError('Failed to decline Huber. Please try again.');
+    }
+  };
+
   // Show loading skeleton if either user or current user info is loading
   if (isUserLoading || isCurrentUserLoading) {
     return (
@@ -64,6 +108,18 @@ const UserApprovalPage = () => {
     return (
       <div className="flex h-full w-full items-center justify-center text-lg text-neutral-60">
         You cannot approve your own account.
+      </div>
+    );
+  }
+
+  if (
+    user.role.id === Role.HUBER &&
+    user.approval &&
+    user.approval !== 'Pending'
+  ) {
+    return (
+      <div className="my-20 flex h-full w-full items-center justify-center text-lg text-neutral-60">
+        This user is already a Huber and has been approved or rejected.
       </div>
     );
   }
@@ -133,19 +189,60 @@ const UserApprovalPage = () => {
             iconLeft={<Check size={16} />}
             variant="primary"
             className="h-[44px] w-[240px] px-8 py-2"
-            onClick={() => {}}
+            onClick={() =>
+              setIsConfirmModalOpen((prev) => ({
+                ...prev,
+                isOpen: true,
+                type: 'approve',
+              }))
+            }
+            disabled={isUpgrading}
           >
-            Approve
+            {isUpgrading ? 'Approving...' : 'Approve'}
           </Button>
           <Button
             iconLeft={<X size={16} />}
             className="h-[44px] w-[240px] bg-red-90 px-8 py-2 text-red-50 hover:bg-white hover:text-red-90"
-            onClick={() => {}}
+            onClick={() =>
+              setIsConfirmModalOpen((prev) => ({
+                ...prev,
+                isOpen: true,
+                type: 'decline',
+              }))
+            }
           >
             Declined
           </Button>
         </div>
       </div>
+
+      {isConfirmModalOpen.isOpen && (
+        <ModalApprovalHuber
+          userName={user?.fullName}
+          userRole={ROLE_NAME[user?.role as keyof typeof ROLE_NAME]}
+          isLoading={isUpgrading}
+          onConfirm={(reason?: string) => {
+            if (isConfirmModalOpen.type === 'approve') {
+              handleApprove();
+            } else {
+              handleDecline(reason || '');
+            }
+          }}
+          type={
+            isConfirmModalOpen.type as
+              | 'approve'
+              | 'decline'
+              | 'approve-success'
+              | 'decline-success'
+          }
+          onCancel={() =>
+            setIsConfirmModalOpen((prev) => ({
+              ...prev,
+              isOpen: false,
+            }))
+          }
+        />
+      )}
     </div>
   );
 };

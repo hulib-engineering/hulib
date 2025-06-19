@@ -122,8 +122,8 @@ const SponsorList = [
   //   refUrl: 'https://jci.vn/category/chapters/jci-danang',
   // },
   {
-    name: 'UNESCO',
-    logoUrl: '/assets/images/sponsors/UNESCO.png',
+    name: 'DIAMOND',
+    logoUrl: '/assets/images/sponsors/DIAMOND.png',
     type: 'diamond-sponsor',
     tooltipKey: 'diamond_sponsor',
     refUrl:
