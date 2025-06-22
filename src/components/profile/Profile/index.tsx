@@ -21,6 +21,7 @@ import { Role } from '@/types/common';
 import FormDataBuilder from '@/utils/FormDataBuilder';
 
 import AboutPanel from '../AboutPanel';
+import FavoriteTab from '../FavoriteTab';
 import IconButtonEdit from '../IconButtonEdit';
 import StoriesTab from '../StoriesTab';
 
@@ -70,21 +71,21 @@ const Profile = () => {
   };
 
   const handleAvatarUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement>
   ): Promise<void> => {
     if (event.target.files && event.target.files.length > 0) {
       dispatch(
         setAvatarUrl({
           path: URL.createObjectURL(event.target.files[0] as Blob),
-        }),
+        })
       );
       try {
         const result = await upload(
-          FormDataBuilder({ file: event.target.files[0] }),
+          FormDataBuilder({ file: event.target.files[0] })
         ).unwrap();
         if (result?.file) {
           dispatch(
-            setAvatarUrl({ id: result?.file?.id, path: result?.file?.path }),
+            setAvatarUrl({ id: result?.file?.id, path: result?.file?.path })
           );
 
           await updateProfile({
@@ -129,23 +130,6 @@ const Profile = () => {
         ),
       },
 
-      // {
-      //   type: MyProfilePanelIndex.MY_FAVORITE,
-      //   label: (
-      //     <div>
-      //       <p
-      //         className={
-      //           selectedMenuItem?.type === MyProfilePanelIndex.MY_FAVORITE
-      //             ? 'border-b-2 border-primary-50 py-2 text-sm font-medium text-primary-50'
-      //             : 'py-2 text-sm font-medium text-neutral-40'
-      //         }
-      //       >
-      //         My Favorite
-      //       </p>
-      //     </div>
-      //   ),
-      //   component: <FavoriteTab />,
-      // },
       !huberId && userDetail?.role?.id === Role.HUBER
         ? {
             type: MyProfilePanelIndex.STORY,
@@ -184,6 +168,26 @@ const Profile = () => {
             component: <div>WIP</div>,
           }
         : null,
+
+      !huberId && userDetail?.role?.id === Role.HUBER
+        ? {
+            type: MyProfilePanelIndex.MY_FAVORITE,
+            label: (
+              <div>
+                <p
+                  className={
+                    selectedMenuItem?.type === MyProfilePanelIndex.MY_FAVORITE
+                      ? 'border-b-2 border-primary-50 py-2 text-sm font-medium text-primary-50'
+                      : 'py-2 text-sm font-medium text-neutral-40'
+                  }
+                >
+                  My Favorite
+                </p>
+              </div>
+            ),
+            component: <FavoriteTab />,
+          }
+        : ' null,',
     ].filter(Boolean) as ProfileMenuItem[];
   }, [userDetail, selectedMenuItem?.type, huberId, isAdmin]);
 
@@ -192,7 +196,7 @@ const Profile = () => {
       if (!type) return 0;
       return tabsRender.findIndex((o) => o.type === type) ?? 0;
     },
-    [tabsRender],
+    [tabsRender]
   );
 
   const selectedItemIndex = React.useMemo(() => {
