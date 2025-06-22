@@ -10,12 +10,13 @@ type NotificationConfig = {
 
 export const getNotificationConfig = (
   notificationType: string,
+  sessionStatus?: string,
 ): NotificationConfig => {
   const configs: Record<string, NotificationConfig> = {
     [NOTIFICATION_TYPES.SESSION_REQUEST.name]: {
       isClickable: true,
       showAvatar: true,
-      showActions: true,
+      showActions: sessionStatus === 'pending',
       avatarType: 'user',
     },
     [NOTIFICATION_TYPES.REVIEW_STORY.name]: {

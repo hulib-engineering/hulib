@@ -21,6 +21,7 @@ const NotificationAvatar: FC<NotificationAvatarProps> = ({
 
   if (
     notification.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name ||
+    notification.type.name === NOTIFICATION_TYPES.REVIEW_STORY.name ||
     role.id === Role.ADMIN
   ) {
     return (
