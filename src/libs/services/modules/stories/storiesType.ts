@@ -82,6 +82,7 @@ export interface Story {
   updatedAt?: string | undefined;
   isFavorite?: boolean;
   publishStatus: StoryPublishStatus;
+  storyId?: number;
 }
 
 export interface Histogram {
