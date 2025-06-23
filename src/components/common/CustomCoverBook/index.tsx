@@ -33,7 +33,9 @@ const CustomCoverBook = ({
         {`_${authorName || 'author name'}_`}
       </div>
       <Image
-        src={srcImage}
+        src={
+          srcImage || '/assets/images/cover-book/story_background_yellow.png'
+        }
         alt={`${titleStory} - ${authorName}`}
         width={widthImage}
         height={heightImage}
