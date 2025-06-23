@@ -41,13 +41,13 @@ const ExploreStory = ({ topicIds }: ExploreStoryProps) => {
   }, [isExpandList]);
 
   return (
-    <div className="mx-auto h-full w-full max-w-[1216px] rounded-lg">
+    <div className="mx-auto h-full w-full rounded-lg">
       <StoriesList
         title={t('title')}
         description={t('description')}
         stories={storiesPages?.data}
         isLoading={isLoading || isFetching}
-        showTopics
+        showTopics={!!topicIds}
         hasNextPage={storiesPages?.hasNextPage}
         // refetchStories={refetchStories}
         onSeeAllClick={onClickSeeAll}
