@@ -19,7 +19,7 @@ const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
   const router = useRouter();
 
   const { notifications, isLoading, error } = useNotifications({
-    limit: 3,
+    limit: 5,
     enablePagination: false,
   });
 
@@ -39,45 +39,51 @@ const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
               'right-[-150px] h-[100vh] w-[100vw] md:right-0 md:h-auto md:w-80',
             )}
           >
-            <div className="border-b p-3">
-              <h2 className="text-lg font-medium">Notifications</h2>
-            </div>
-
-            <div className="max-h-96 overflow-y-auto">
-              {isLoading && <NotificationSkeleton count={3} />}
-
-              {error && (
-                <div className="p-4 text-center text-red-500">
-                  Failed to load notifications
+            {({ close }) => (
+              <>
+                <div className="border-b p-3">
+                  <h2 className="text-lg font-medium">Notifications</h2>
                 </div>
-              )}
 
-              {!isLoading && !error && notifications.length === 0 && (
-                <div className="p-4 text-center text-gray-500">
-                  No notifications
+                <div className="max-h-96 overflow-y-auto">
+                  {isLoading && <NotificationSkeleton count={3} />}
+
+                  {error && (
+                    <div className="p-4 text-center text-red-500">
+                      Failed to load notifications
+                    </div>
+                  )}
+
+                  {!isLoading && !error && notifications.length === 0 && (
+                    <div className="p-4 text-center text-gray-500">
+                      No notifications
+                    </div>
+                  )}
+
+                  {!isLoading &&
+                    !error &&
+                    notifications.map((notification) => (
+                      <NotificationItem
+                        key={notification.id}
+                        notification={notification}
+                        hideDetails
+                        onClick={close}
+                      />
+                    ))}
                 </div>
-              )}
 
-              {!isLoading &&
-                !error &&
-                notifications.map((notification) => (
-                  <NotificationItem
-                    key={notification.id}
-                    notification={notification}
-                    hideDetails
-                  />
-                ))}
-            </div>
-
-            {!isLoading && !error && notifications.length > 0 && (
-              <div className="p-2">
-                <Button
-                  className="w-full border-2 border-gray-400 !bg-white py-2 text-center text-sm text-blue-500"
-                  onClick={() => router.push('/notification')}
-                >
-                  See all
-                </Button>
-              </div>
+                {!isLoading && !error && notifications.length > 0 && (
+                  <div className="p-2">
+                    <Popover.Button
+                      as={Button}
+                      className="w-full border-2 border-gray-400 !bg-white py-2 text-center text-sm text-blue-500"
+                      onClick={() => router.push('/notification')}
+                    >
+                      See all
+                    </Popover.Button>
+                  </div>
+                )}
+              </>
             )}
           </Popover.Panel>
         </>
