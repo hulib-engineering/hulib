@@ -13,7 +13,7 @@ const UserCard = ({ data }: any) => {
   return (
     <div className="flex h-full flex-col gap-2">
       <div className="relative h-[196px] w-[196px] overflow-hidden">
-        {data.approval === 'Pending' && data.role.id === Role.HUBER && (
+        {data.approval === 'Pending' && (
           <span className="absolute bottom-4 left-5 rounded-lg bg-orange-90 px-2 py-1 text-sm text-orange-50">
             Waiting for approval
           </span>
@@ -61,7 +61,7 @@ const UserCard = ({ data }: any) => {
           </>
         ) : null}
       </div>
-      {data.role.id === Role.HUBER ? (
+      {data.role.id === Role.LIBER ? (
         <Button
           iconLeft={<CaretCircleRight size={20} />}
           variant="primary"
@@ -77,7 +77,7 @@ const UserCard = ({ data }: any) => {
           {data.approval === 'Pending' ? 'View Detail' : 'Visit Profile'}
         </Button>
       ) : null}
-      {data.role.id === Role.LIBER ? (
+      {data.role.id === Role.HUBER ? (
         <Button
           iconLeft={<CaretCircleRight size={20} />}
           variant="primary"

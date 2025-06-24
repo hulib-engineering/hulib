@@ -113,7 +113,7 @@ const UserApprovalPage = () => {
   }
 
   if (
-    user.role.id === Role.HUBER &&
+    user.role.id === Role.LIBER &&
     user.approval &&
     user.approval !== 'Pending'
   ) {
@@ -179,7 +179,14 @@ const UserApprovalPage = () => {
             {selectedSection === 'contact' && (
               <ContactInformationSection data={user} />
             )}
-            {selectedSection === 'story' && <StorySession />}
+            {selectedSection === 'story' && (
+              <StorySession
+                data={{
+                  ...user?.firstStory,
+                  humanBook: user,
+                }}
+              />
+            )}
           </div>
         </div>
 
