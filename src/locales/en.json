@@ -49,13 +49,15 @@
     "copyright": "© 2025 HuLib. All rights reserved.",
     "privacy_policy": "privacy policy",
     "term_of_service": "term of service",
-    "cookie_settings": "cookie settings"
+    "cookie_settings": "cookie settings",
+    "community_guidelines": "community guidelines"
   },
   "FooterWebApp": {
     "footer_description": "Promote happiness values ​by connecting very personal stories with human books.",
     "copyright": "© 2025 HuLib. All rights reserved.",
     "privacy_policy": "Privacy policy",
     "term_of_service": "Term of service",
+    "community_guidelines": "Community guidelines",
     "cookie_settings": "Cookie settings",
     "site": "Site",
     "my_schedule": "My Schedule",
@@ -236,7 +238,8 @@
       "index_4": "5. USERS",
       "index_5": "6. INTELLECTUAL PROPERTY",
       "index_6": "7. TERMINATION",
-      "index_7": "8. DISPUTE RESOLUTION"
+      "index_7": "8. DISPUTE RESOLUTION",
+      "index_8": "9. DISCLAIMER"
     },
     "term_of_use_sections": {
       "index_0": {
@@ -304,6 +307,42 @@
           "index_1": {
             "heading": "8.2 Contact us",
             "content": "We will make an effort to provide online support for Users. To request online support, you need to contact us through the \"Contact Us\" page on the Platform or by sending an email to the specified email address on that page. <br></br> Although HuLib will attempt to respond to all online support requests, HuLib does not guarantee the resolution of every issue or all issues, nor does it promise to do so within a specific timeframe."
+          }
+        }
+      },
+      "index_8": {
+        "heading": "9. DISCLAIMER",
+        "content": "HuLib is a space built for genuine human connection and shared experiences. All content, information, and images posted on the platform are voluntarily provided by users, who take full responsibility for what they share.<br></br><br></br>We encourage you to be mindful when disclosing personal information (such as your full name, address, phone number, or ID documents), as anything shared online may be copied, misused, or distributed without your consent. HuLib is not liable for any risks or damages resulting from the use or exposure of such information.<br></br><br></br>As an open community, we do not moderate or control all user-generated content or behavior (including inappropriate, misleading, offensive, illegal, or controversial material). Therefore, we do not guarantee the accuracy or reliability of such content. Everything shared on HuLib is for personal reference only and should not be treated as professional or verified advice.<br></br><br></br>HuLib may include links to third-party websites, which are beyond our control and responsibility. We are not accountable for the content or risks associated with visiting or interacting with those external sites.<br></br><br></br>HuLib does not represent, endorse, or promote any paid courses or programs offered outside the platform. If a user, including hubers, approaches you with such offers, please assess carefully before engaging. We are not responsible for any financial losses or consequences arising from off-platform transactions. Any abuse of trust, lack of transparency, or suspected scams can be reported to <strong>hulibvietnam@gmail.com</strong> for review and appropriate action.<br></br><br></br>If you come across content that violates community standards, is offensive, or infringes on personal rights, please report it directly or contact us via email. We take all reports seriously as we strive to maintain a safe, respectful, and supportive environment for everyone."
+      }
+    },
+    "community_guidelines_title": "HuLib Community Guidelines",
+    "community_guidelines_sections": {
+      "index_3": {
+        "heading": "Acknowledgment",
+        "content": "<ul><li>By being part of HuLib, you agree to abide by these guidelines and contribute to our shared mission.</li><li>All sessions are voluntary, and both Hubers and Libers have the right to pause or end a conversation immediately.</li></ul>"
+      },
+      "index_0": {
+        "heading": "General",
+        "content": "<ul><li>Once you have signed up with HuLib, it is important to recognize what we are and what we are not. This enables us to manage our expectations and deliver on our responsibilities.</li><li>We are not an emergency service or crisis helpline. Hubers & HuLib staff are not available for support 24/7.</li><li>If we have concerns about your well-being and safety, we might need to contact a crisis service to support you.</li><li>We provide Hubers to listen, inspire, and support you through your personal challenges.</li><li>Hubers share relatable stories and appropriate knowledge but do not provide professional or specialist advice.</li><li>Our platform bridges the gap between silence and storytellers.</li><li>All conversations are confidential but monitored by our Board of Directors to ensure the right support is provided.</li><li>If a safety concern arises, emergency services may be contacted.</li><li>Prohibited discussions include unhealthy personal relationships, unlawful activities, and inappropriate topics.</li></ul>"
+      },
+      "index_1": {
+        "heading": "Enforcement",
+        "content": "<ul><li>We are not a crisis helpline – crisis service contacts are available on the app and website.</li><li>No harassment, hate speech, bullying, or targeted attacks.</li><li>No spam, scams, or catfishing.</li><li>No sharing of personal information.</li><li>No offensive language or behavior.</li><li>HuLib is not responsible for misinformation provided by users.</li><li>HuLib content cannot be used for commercial purposes.</li></ul>"
+      },
+      "index_2": {
+        "heading": "For Hubers",
+        "content_sections": {
+          "index_0": {
+            "heading": "A. Before Signing Up",
+            "content": "<ul><li>All communication must take place on the app.</li><li>Do not communicate with a Liber outside of HuLib.</li><li>Report any life-threatening situations.</li><li>Meeting schedules should be followed, and changes should be communicated in advance.</li><li>Protect your mental health and well-being. You can withdraw from conversations if needed.</li></ul>"
+          },
+          "index_1": {
+            "heading": "B. In the Session",
+            "content": "<ul><li>Respect everyone's story.</li><li>Be kind and considerate.</li><li>Maintain a safe and supportive space.</li><li>Protect confidentiality and avoid sharing harmful content.</li><li>Engage with purpose and uphold integrity.</li><li>Share responsibly and avoid spreading misinformation.</li><li>Participation is entirely voluntary. Both Hubers and Libers can pause or end a conversation at any time.</li></ul>"
+          },
+          "index_2": {
+            "heading": "C. Addressing Violations",
+            "content": "<ul><li>First violation: Friendly reminder.</li><li>Second violation: Temporary suspension.</li><li>Repeated or serious violations: Permanent removal from HuLib.</li><li>If you believe a decision was made in error, you may communicate with our team.</li></ul>"
           }
         }
       }
