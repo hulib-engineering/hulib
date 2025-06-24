@@ -8,7 +8,6 @@ import DeclinedMeetings from '../DeclinedMeetings';
 const activityTabs = [
   { key: 'completed', label: 'Completed meeting', icon: '📅' },
   { key: 'declined', label: 'Declined meeting', icon: '🚫' },
-  { key: 'missed', label: 'Missed meeting', icon: '⚠️' },
 ];
 
 const UserProfile = ({ data }: any) => {
