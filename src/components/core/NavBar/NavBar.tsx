@@ -3,11 +3,11 @@
 import * as React from 'react';
 
 export enum MyProfilePanelIndex {
-  ABOUT = 'About',
-  WHAT_MENTEE_SAYS = 'WhatMenteeSays',
-  AVAILABLE_SLOT = 'AvailableSlot',
-  MY_FAVORITE = 'MyFavorite',
-  STORY = 'My Stories',
+  ABOUT = 'about',
+  WHAT_MENTEE_SAYS = 'what-mentee-says',
+  AVAILABLE_SLOT = 'available-slot',
+  MY_FAVORITE = 'my-favorite',
+  STORY = 'my-stories',
 }
 
 export type ProfileMenuItem = {

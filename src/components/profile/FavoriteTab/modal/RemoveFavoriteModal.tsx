@@ -33,12 +33,14 @@ const RemoveFavoriteModal = (props: Props) => {
           </div>
 
           <div className="flex w-full items-center justify-center">
-            <FlipBook
-              key={data?.storyId}
-              data={data}
-              refetch={() => {}}
-              renderActions={() => renderActions()}
-            />
+            {data && (
+              <FlipBook
+                key={data.storyId}
+                data={data}
+                refetch={() => {}}
+                renderActions={() => renderActions()}
+              />
+            )}
           </div>
 
           <div className="flex w-full items-center gap-3">
