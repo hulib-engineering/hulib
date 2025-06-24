@@ -3,7 +3,7 @@
 import { CaretCircleRight, MapPin, Star, Users } from '@phosphor-icons/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { ReactNode } from 'react';
 import * as React from 'react';
 
@@ -64,9 +64,17 @@ const Profile = () => {
     ProfileMenuItem | undefined
   >();
 
+  const router = useRouter();
+  const pathname = usePathname();
+
   const handleChangeSelectedMenu = (item: ProfileMenuItem | undefined) => {
     if (item) {
       setSelectedMenuItem(item);
+
+      // Update the URL query param
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('tab', item.type.toString()); // Ensure item.type is string
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
     }
   };
 
@@ -191,6 +199,23 @@ const Profile = () => {
     ].filter(Boolean) as ProfileMenuItem[];
   }, [userDetail, selectedMenuItem?.type, huberId, isAdmin]);
 
+  React.useEffect(() => {
+    const tabParam = searchParams.get('tab'); // lấy từ ?tab=...
+
+    if (tabParam && tabsRender.length > 0) {
+      const foundItem = tabsRender.find((item) => item.type === tabParam);
+      if (foundItem) {
+        setSelectedMenuItem(foundItem);
+        return;
+      }
+    }
+
+    // fallback mặc định
+    if (tabsRender.length > 0 && !selectedMenuItem) {
+      setSelectedMenuItem(tabsRender[0]);
+    }
+  }, [searchParams, tabsRender]);
+
   const getActiveMenuItemIndex = React.useCallback(
     (type: MyProfilePanelIndex | undefined) => {
       if (!type) return 0;
@@ -202,13 +227,6 @@ const Profile = () => {
   const selectedItemIndex = React.useMemo(() => {
     return getActiveMenuItemIndex(selectedMenuItem?.type);
   }, [getActiveMenuItemIndex, selectedMenuItem?.type]);
-
-  React.useEffect(() => {
-    const selectedItem = tabsRender?.[selectedItemIndex];
-    if (selectedItem) {
-      setSelectedMenuItem(selectedItem);
-    }
-  }, [selectedItemIndex, tabsRender]);
 
   if (isLoading) {
     return (
