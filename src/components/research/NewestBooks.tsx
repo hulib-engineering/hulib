@@ -104,9 +104,7 @@ const NewestBooks: React.FC<NewestBooksProps> = ({
         {t('stories.title')}
       </h3>
       {loadingStories ? (
-        <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-2 2xl:grid-cols-3">
-          <StoriesSkeleton />
-        </div>
+        <StoriesSkeleton />
       ) : stories?.length > 0 ? (
         <div className="relative mt-4 flex flex-wrap items-center justify-center gap-8 xl:justify-start 2xl:gap-12">
           {stories.map((item) => (

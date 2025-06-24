@@ -1,73 +1,33 @@
+import { useParams } from 'next/navigation';
 import React from 'react';
 
+import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 import { SessionAttendees } from '@/components/schedule/components/sessionCard/SessionAttendees';
 import { SessionDateTime } from '@/components/schedule/components/sessionCard/SessionDateTime';
+import { useGetReadingSessionOfUserQuery } from '@/libs/services/modules/user';
+import type { SessionStatus } from '@/libs/services/modules/user/getReadingSessionOfUser';
 
 const DeclinedMeetings = () => {
-  const declinedSessions = [
+  const { id } = useParams();
+  const { data: declinedSessions, isLoading } = useGetReadingSessionOfUserQuery(
     {
-      id: '1',
-      startedAt: '2021-01-01',
-      startTime: '10:00',
-      endTime: '11:00',
-      humanBook: {
-        id: 1,
-        fullName: 'John Doe',
-        birthday: '1990-01-01',
-        gender: { id: 1, name: 'male' },
-        role: { id: 1, name: 'huber' },
-        status: { id: 1, name: 'active' },
-        photo: { id: 1, path: '' },
-        createdAt: '2021-01-01',
-        updatedAt: '2021-01-01',
-        deletedAt: '2021-01-01',
-        address: '123 Main St, Anytown, USA',
-        phoneNumber: '123-456-7890',
-        parentPhoneNumber: '123-456-7890',
-        parentName: 'Jane Doe',
-        parentEmail: 'jane@example.com',
-        bio: 'I am a human book',
-        videoUrl: '',
-        education: 'Bachelor of Science',
-        educationStart: '2021-01-01',
-        educationEnd: '2021-01-01',
-        educationDescription: 'I am a human book',
-        email: 'john@example.com',
-        topics: [],
-      },
-      reader: {
-        id: 1,
-        fullName: 'Jane Doe',
-        birthday: '1990-01-01',
-        gender: { id: 1, name: 'male' },
-        role: { id: 1, name: 'liber' },
-        status: { id: 1, name: 'active' },
-        photo: { id: 1, path: '' },
-        createdAt: '2021-01-01',
-        updatedAt: '2021-01-01',
-        deletedAt: '2021-01-01',
-        address: '123 Main St, Anytown, USA',
-        phoneNumber: '123-456-7890',
-        parentPhoneNumber: '123-456-7890',
-        parentName: 'Jane Doe',
-        parentEmail: 'jane@example.com',
-        bio: 'I am a human book',
-        videoUrl: '',
-        education: 'Bachelor of Science',
-        educationStart: '2021-01-01',
-        educationEnd: '2021-01-01',
-        educationDescription: 'I am a human book',
-        email: 'jane@example.com',
-        topics: [],
-      },
-      isVibing: true,
+      id: id as string,
+      sessionStatus: 'rejected' as SessionStatus,
     },
-  ];
+  );
+
+  if (isLoading) {
+    return (
+      <div className="flex h-full w-full justify-center px-[10%]">
+        <LoadingSkeleton />
+      </div>
+    );
+  }
 
   return (
     <div className="mt-4 grid grid-cols-2 gap-4 text-neutral-60">
-      {declinedSessions?.length > 0 ? (
-        declinedSessions.map((session) => (
+      {declinedSessions?.data?.length > 0 ? (
+        declinedSessions?.data.map((session: any) => (
           <div
             key={session.id}
             className="rounded-lg bg-red-98 px-3 py-4 shadow-md"
@@ -81,14 +41,13 @@ const DeclinedMeetings = () => {
               humanBook={session.humanBook}
               reader={session.reader}
               isVibing={session.isVibing}
+              isAdmin
             />
             <p className="text-sm text-red-50">Reason: WIP</p>
           </div>
         ))
       ) : (
-        <span className="col-span-2 text-center text-neutral-40">
-          No declined meetings found.
-        </span>
+        <span className="text-neutral-40">No declined meetings found.</span>
       )}
     </div>
   );

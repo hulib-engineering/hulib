@@ -1,6 +1,7 @@
 import { api } from '@/libs/services/api';
 import getAuthorDetail from '@/libs/services/modules/user/getAuthorDetail';
 
+import getReadingSessionOfUser from './getReadingSessionOfUser';
 import getUsersById from './getUserById';
 import getUsers from './getUsers';
 import updateUserStatus from './updateUserStatus';
@@ -17,6 +18,7 @@ export const userApi = authenticationApiWithTag.injectEndpoints({
     getUsersById: getUsersById(build),
     updateUserStatus: updateUserStatus(build),
     upgradeUser: upgradeUser(build),
+    getReadingSessionOfUser: getReadingSessionOfUser(build),
   }),
   overrideExisting: false,
 });
@@ -27,4 +29,5 @@ export const {
   useGetUsersByIdQuery,
   useUpdateUserStatusMutation,
   useUpgradeUserMutation,
+  useGetReadingSessionOfUserQuery,
 }: any = userApi;
