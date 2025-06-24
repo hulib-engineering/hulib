@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Button from '@/components/button/Button';
 import UserCard from '@/features/users/components/UserCard';
@@ -37,30 +37,25 @@ const RoleBadge = ({
 };
 
 const UsersPage = () => {
-  // Local state for selected role filter (Huber or Liber)
-  const [selectedRole, setSelectedRole] = React.useState<Role>(Role.HUBER);
+  const [selectedRole, setSelectedRole] = React.useState<Role>(Role.LIBER);
 
-  const { data: users, isLoading } = useGetUsersQuery({
+  const {
+    data: users,
+    isLoading,
+    refetch,
+  } = useGetUsersQuery({
     page: 1,
-    limit: 200,
+    limit: 50,
+    role: ROLE_NAME[selectedRole].toLowerCase() || '',
   });
 
-  // Always call hooks at the top level, before any early returns
-  const userList = React.useMemo(() => {
-    // Filter by selected role
-    let filtered =
-      users?.data?.filter((user: any) => user.role?.id === selectedRole) || [];
-    // If Huber, sort so approval 'Pending' comes first
-    if (selectedRole === Role.HUBER) {
-      filtered = filtered.slice().sort((a: any, b: any) => {
-        // Place 'Pending' approval first
-        if (a.approval === 'Pending' && b.approval !== 'Pending') return -1;
-        if (a.approval !== 'Pending' && b.approval === 'Pending') return 1;
-        return 0;
-      });
-    }
-    return filtered;
-  }, [users, selectedRole]);
+  const handleChangeRole = (role: Role) => {
+    setSelectedRole(role);
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [selectedRole]);
 
   if (isLoading) {
     return (
@@ -80,21 +75,21 @@ const UsersPage = () => {
         <div className="mb-6 flex gap-2">
           {/* Huber badge */}
           <RoleBadge
-            role={Role.HUBER}
-            selectedRole={selectedRole}
-            setSelectedRole={setSelectedRole}
-          />
-          <RoleBadge
             role={Role.LIBER}
             selectedRole={selectedRole}
-            setSelectedRole={setSelectedRole}
+            setSelectedRole={handleChangeRole}
+          />
+          <RoleBadge
+            role={Role.HUBER}
+            selectedRole={selectedRole}
+            setSelectedRole={handleChangeRole}
           />
         </div>
         {/* User grid, filtered by selected role */}
         <div className="flex flex-1 flex-col gap-4">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {/* Filter users locally by selectedRole */}
-            {userList.map((user: any) => (
+            {users?.data?.map((user: any) => (
               <UserCard key={user.id} data={user} />
             ))}
           </div>

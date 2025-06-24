@@ -15,6 +15,7 @@ const getUsers = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
         limit: params?.limit,
         filter: params?.filter || '',
         sort: params?.sort || '',
+        role: params?.role || '',
       },
     }),
     serializeQueryArgs: ({ endpointName, queryArgs }) => {
