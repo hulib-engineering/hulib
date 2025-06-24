@@ -1,22 +1,9 @@
 import Image from 'next/image';
 
 import { DetailBook } from '@/components/storyDetails/DetailBook';
-import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
 import type { Topic } from '@/libs/services/modules/user/userType';
 
-const StorySession = () => {
-  const { data, isLoading } = useGetStoryDetailQuery({
-    id: Number(22), // id is a string, so we need to convert it to a number
-  });
-
-  if (isLoading) {
-    return (
-      <div className="flex h-full w-full justify-center px-[10%]">
-        Loading...
-      </div>
-    );
-  }
-
+const StorySession = ({ data }: any) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="mb-5 flex h-[210px] w-full gap-3 rounded-2xl bg-white p-2">
@@ -40,10 +27,10 @@ const StorySession = () => {
             />
             <div className="flex flex-col">
               <span className="text-sm text-neutral-40">
-                {data?.humanBook?.fullName}
+                {data?.humanBook?.fullName || ''}
               </span>
               <span className="text-sm text-neutral-40">
-                {`${data.topics?.length} sessions`}
+                {`${data.topics?.length || 0} sessions`}
               </span>
             </div>
           </div>

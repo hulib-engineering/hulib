@@ -22,7 +22,7 @@ export default function AwaitingApprovalStories() {
   // Fetch stories with pagination
   const { data: storiesAwaitingApproval, isLoading } = useGetStoriesQuery({
     page: currentPage + 1, // API uses 1-based indexing
-    limit: 200,
+    limit: 50,
   });
 
   // Handle page change

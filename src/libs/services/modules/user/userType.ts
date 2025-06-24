@@ -8,6 +8,7 @@ export interface GetUsersParams {
   limit?: number;
   filter?: string;
   sort?: string;
+  role?: string;
 }
 
 // Allowed user status values for update
