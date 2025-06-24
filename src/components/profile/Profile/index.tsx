@@ -3,7 +3,7 @@
 import { CaretCircleRight, MapPin, Star, Users } from '@phosphor-icons/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { ReactNode } from 'react';
 import * as React from 'react';
 
@@ -21,6 +21,7 @@ import { Role } from '@/types/common';
 import FormDataBuilder from '@/utils/FormDataBuilder';
 
 import AboutPanel from '../AboutPanel';
+import FavoriteTab from '../FavoriteTab';
 import IconButtonEdit from '../IconButtonEdit';
 import StoriesTab from '../StoriesTab';
 
@@ -63,28 +64,36 @@ const Profile = () => {
     ProfileMenuItem | undefined
   >();
 
+  const router = useRouter();
+  const pathname = usePathname();
+
   const handleChangeSelectedMenu = (item: ProfileMenuItem | undefined) => {
     if (item) {
       setSelectedMenuItem(item);
+
+      // Update the URL query param
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('tab', item.type.toString()); // Ensure item.type is string
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
     }
   };
 
   const handleAvatarUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement>
   ): Promise<void> => {
     if (event.target.files && event.target.files.length > 0) {
       dispatch(
         setAvatarUrl({
           path: URL.createObjectURL(event.target.files[0] as Blob),
-        }),
+        })
       );
       try {
         const result = await upload(
-          FormDataBuilder({ file: event.target.files[0] }),
+          FormDataBuilder({ file: event.target.files[0] })
         ).unwrap();
         if (result?.file) {
           dispatch(
-            setAvatarUrl({ id: result?.file?.id, path: result?.file?.path }),
+            setAvatarUrl({ id: result?.file?.id, path: result?.file?.path })
           );
 
           await updateProfile({
@@ -129,23 +138,6 @@ const Profile = () => {
         ),
       },
 
-      // {
-      //   type: MyProfilePanelIndex.MY_FAVORITE,
-      //   label: (
-      //     <div>
-      //       <p
-      //         className={
-      //           selectedMenuItem?.type === MyProfilePanelIndex.MY_FAVORITE
-      //             ? 'border-b-2 border-primary-50 py-2 text-sm font-medium text-primary-50'
-      //             : 'py-2 text-sm font-medium text-neutral-40'
-      //         }
-      //       >
-      //         My Favorite
-      //       </p>
-      //     </div>
-      //   ),
-      //   component: <FavoriteTab />,
-      // },
       !huberId && userDetail?.role?.id === Role.HUBER
         ? {
             type: MyProfilePanelIndex.STORY,
@@ -184,27 +176,57 @@ const Profile = () => {
             component: <div>WIP</div>,
           }
         : null,
+
+      !huberId && userDetail?.role?.id === Role.HUBER
+        ? {
+            type: MyProfilePanelIndex.MY_FAVORITE,
+            label: (
+              <div>
+                <p
+                  className={
+                    selectedMenuItem?.type === MyProfilePanelIndex.MY_FAVORITE
+                      ? 'border-b-2 border-primary-50 py-2 text-sm font-medium text-primary-50'
+                      : 'py-2 text-sm font-medium text-neutral-40'
+                  }
+                >
+                  My Favorite
+                </p>
+              </div>
+            ),
+            component: <FavoriteTab />,
+          }
+        : ' null,',
     ].filter(Boolean) as ProfileMenuItem[];
   }, [userDetail, selectedMenuItem?.type, huberId, isAdmin]);
+
+  React.useEffect(() => {
+    const tabParam = searchParams.get('tab'); // lấy từ ?tab=...
+
+    if (tabParam && tabsRender.length > 0) {
+      const foundItem = tabsRender.find((item) => item.type === tabParam);
+      if (foundItem) {
+        setSelectedMenuItem(foundItem);
+        return;
+      }
+    }
+
+    // fallback mặc định
+    if (tabsRender.length > 0 && !selectedMenuItem) {
+      setSelectedMenuItem(tabsRender[0]);
+    }
+  }, [searchParams, tabsRender]);
 
   const getActiveMenuItemIndex = React.useCallback(
     (type: MyProfilePanelIndex | undefined) => {
       if (!type) return 0;
       return tabsRender.findIndex((o) => o.type === type) ?? 0;
     },
-    [tabsRender],
+    [tabsRender]
   );
 
   const selectedItemIndex = React.useMemo(() => {
     return getActiveMenuItemIndex(selectedMenuItem?.type);
   }, [getActiveMenuItemIndex, selectedMenuItem?.type]);
-
-  React.useEffect(() => {
-    const selectedItem = tabsRender?.[selectedItemIndex];
-    if (selectedItem) {
-      setSelectedMenuItem(selectedItem);
-    }
-  }, [selectedItemIndex, tabsRender]);
 
   if (isLoading) {
     return (
