@@ -2,9 +2,11 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 
 import Button from '@/components/button/Button';
+import { useUpdateUserStatusMutation } from '@/libs/services/modules/user';
 
 // Props for the modal component
 interface ModalBanningActionProps {
+  userId: string; // User ID to ban
   userImage?: string; // URL for the user's profile image
   userName?: string;
   userRole?: string;
@@ -18,6 +20,7 @@ interface ModalBanningActionProps {
  * Apple HIG-inspired, modern, minimal, and accessible.
  */
 const ModalBanningAction: React.FC<ModalBanningActionProps> = ({
+  userId,
   userImage = '',
   userName = '',
   userRole = '',
@@ -27,9 +30,23 @@ const ModalBanningAction: React.FC<ModalBanningActionProps> = ({
   // State for the banning reason textarea
   const [reason, setReason] = useState('');
 
+  // --- Mutation hook for updating user status (ban) ---
+  const [updateUserStatus, { isLoading, error }] =
+    useUpdateUserStatusMutation();
+
   // Handle confirm button click
-  const handleConfirm = () => {
-    if (onConfirm) onConfirm(reason);
+  const handleConfirm = async () => {
+    try {
+      // Call mutation to set user status to 'inactive' (ban)
+      await updateUserStatus({
+        id: userId,
+        body: { status: 'inactive' },
+      }).unwrap();
+      // Optionally, call onConfirm with reason for extensibility
+      if (onConfirm) onConfirm(reason);
+    } catch (e) {
+      // Error is handled below in UI
+    }
   };
 
   // Handle cancel button click
@@ -77,14 +94,32 @@ const ModalBanningAction: React.FC<ModalBanningActionProps> = ({
         {/* Subtle banning text: muted red, centered, margin for separation */}
         <div className="mb-6 text-center text-sm font-medium text-red-70">
           Are you sure you want to ban this account?
+          {/* Show error if mutation fails */}
+          {error && (
+            <div className="mt-2 text-xs text-red-500">
+              {typeof error === 'string'
+                ? error
+                : 'Failed to ban user. Please try again.'}
+            </div>
+          )}
         </div>
         {/* Action buttons: row, full width, spacing, Apple HIG style */}
         <div className="flex w-full justify-between gap-2">
-          <Button variant="outline" onClick={handleCancel} className="flex-1">
+          <Button
+            variant="outline"
+            onClick={handleCancel}
+            className="flex-1"
+            disabled={isLoading}
+          >
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleConfirm} className="flex-1">
-            Confirm
+          <Button
+            variant="primary"
+            onClick={handleConfirm}
+            className="flex-1"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Banning...' : 'Confirm'}
           </Button>
         </div>
       </div>

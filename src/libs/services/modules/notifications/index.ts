@@ -7,7 +7,7 @@ const apiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['Notification'],
 });
 
-const notificationApi = apiWithTag.injectEndpoints({
+export const notificationApi = apiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
     createNotification: createNotification(build),
     getNotifications: getNotifications(build),

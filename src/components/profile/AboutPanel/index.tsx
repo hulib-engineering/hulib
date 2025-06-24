@@ -35,7 +35,7 @@ const AboutPanel = ({ isLiber, data, onInvalidate }: Props) => {
   const sectionMenu: AboutSectionMenu[] = [
     {
       type: 'liberOverview',
-      label: 'Liber Overview',
+      label: isLiber ? 'Liber Overview' : 'Huber Overview',
       icon: <Books size={20} />,
       component: (
         <OverviewSection

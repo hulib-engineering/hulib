@@ -10,12 +10,13 @@ type NotificationConfig = {
 
 export const getNotificationConfig = (
   notificationType: string,
+  sessionStatus?: string,
 ): NotificationConfig => {
   const configs: Record<string, NotificationConfig> = {
     [NOTIFICATION_TYPES.SESSION_REQUEST.name]: {
       isClickable: true,
       showAvatar: true,
-      showActions: true,
+      showActions: sessionStatus === 'pending',
       avatarType: 'user',
     },
     [NOTIFICATION_TYPES.REVIEW_STORY.name]: {
@@ -58,6 +59,24 @@ export const getNotificationRoute = (notification: Notification): string => {
     case NOTIFICATION_TYPES.PUBLISH_STORY.name:
     case NOTIFICATION_TYPES.REVIEW_STORY.name:
       return relatedEntityId ? `/explore-story/${relatedEntityId}` : '/';
+    default:
+      return '/';
+  }
+};
+
+export const getAdminNotificationRoute = (
+  notification: Notification,
+): string => {
+  const { type, relatedEntityId, sender } = notification;
+
+  switch (type.name) {
+    case NOTIFICATION_TYPES.ACCOUNT.name:
+      return `/admin/users/${sender.id}`;
+    case NOTIFICATION_TYPES.PUBLISH_STORY.name:
+    case NOTIFICATION_TYPES.REVIEW_STORY.name:
+      return relatedEntityId
+        ? `/admin/stories/approval/${relatedEntityId}`
+        : '/';
     default:
       return '/';
   }
