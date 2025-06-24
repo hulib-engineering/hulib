@@ -123,7 +123,7 @@ const SponsorList = [
   // },
   {
     name: 'DIAMOND',
-    logoUrl: '/assets/images/sponsors/DIAMOND.png',
+    logoUrl: '/assets/images/sponsors/DIAMOND_NEW.png',
     type: 'diamond-sponsor',
     tooltipKey: 'diamond_sponsor',
     refUrl:
