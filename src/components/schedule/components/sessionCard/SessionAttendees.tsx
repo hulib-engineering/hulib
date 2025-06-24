@@ -10,12 +10,14 @@ interface SessionAttendeesProps {
   humanBook: User;
   reader: User;
   isVibing: boolean;
+  isAdmin?: boolean;
 }
 
 export const SessionAttendees: React.FC<SessionAttendeesProps> = ({
   humanBook,
   reader,
   isVibing,
+  isAdmin = false,
 }) => {
   return (
     <div className="mb-3">
@@ -39,7 +41,7 @@ export const SessionAttendees: React.FC<SessionAttendeesProps> = ({
             </span>
             <span className="text-sm font-medium text-black">
               {humanBook?.fullName || 'Unnamed'}
-              {!isVibing && ' (You)'}
+              {!isVibing && !isAdmin && ' (You)'}
             </span>
           </div>
         </div>
