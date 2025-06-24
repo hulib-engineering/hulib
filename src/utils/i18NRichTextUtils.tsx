@@ -77,3 +77,10 @@ export const customExternalLink = (href: string): (() => ReactNode) => {
     );
   };
 };
+
+export const strongMessage = (): (() => ReactNode) => {
+  // eslint-disable-next-line react/display-name
+  return (...chunks: ReactNode[]): ReactNode => {
+    return <strong>{chunks}</strong>;
+  };
+};
