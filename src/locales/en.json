@@ -391,6 +391,16 @@
     "upload": "upload photo",
     "delete_ava": "delete avatar"
   },
+  "MyFavorites": {
+    "choose_all": "Choose all",
+    "remove": "Remove",
+    "delete_confirm": "Are you sure want to remove this story from your favorite list ?",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete_confirm_all": "Are you sure want to remove all stories from your favorite list ?",
+    "no_favorite_story": "No favorite story",
+    "explore_stories": "Your favorite list is empty! Browse stories and mark your favorites to keep them handy."
+  },
   "HumanBookRegister": {
     "register_as_a_human_book": "Register as a Human Book",
     "register_confirm_message": "Are you sure you to register as a Human Book?",

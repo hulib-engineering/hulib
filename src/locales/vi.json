@@ -390,6 +390,16 @@
     "upload": "tải ảnh đại diện",
     "delete_ava": "xoá ảnh đại diện"
   },
+  "MyFavorites": {
+    "choose_all": "Chọn tất cả",
+    "remove": "Xoá",
+    "delete_confirm": "Bạn có chắc chắn muốn xoá ảnh đại diện của mình không?",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận",
+    "delete_confirm_all": "Bạn có chắc chắn muốn xoá tất cả ảnh đại diện của mình không?",
+    "no_favorite_story": "Không có câu chuyện yêu thích nào",
+    "explore_stories": "Khám phá các câu chuyện"
+  },
   "HumanBookRegister": {
     "register_as_a_human_book": "Đăng ký làm Người Sách",
     "register_confirm_message": "Bạn có chắc chắn đăng ký làm Human Book không?",
