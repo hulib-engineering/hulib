@@ -1,3 +1,24 @@
+# [1.20.0](https://github.com/hulib-engineering/hulib/compare/v1.19.0...v1.20.0) (2025-06-24)
+
+
+### Bug Fixes
+
+* **sponsors:** correct file extension for DIAMOND logo in SponsorList ([805f0a2](https://github.com/hulib-engineering/hulib/commit/805f0a2b8271ce6b7a0eade787fe472f4181bed8))
+
+
+### Features
+
+* **150475:** modified notification popover UI and manual fetching data API caching ([9261843](https://github.com/hulib-engineering/hulib/commit/92618432a871d700d4013c5035363cec708de3a7))
+* **150475:** modified updating cache manually and handled notif UI for admin ([fbf4795](https://github.com/hulib-engineering/hulib/commit/fbf4795a47832a84fb5eeeeb2e6b583dfaac12d0))
+* **945310:** added manual cache and socket event listener for huber registration pushed notif ([13c796c](https://github.com/hulib-engineering/hulib/commit/13c796c80f3f1843bd8c5fb24418f0ff24af8813))
+* **sponsors:** replace UNESCO logo with new DIAMOND logo and update sponsor details ([5503577](https://github.com/hulib-engineering/hulib/commit/5503577d88a8a72da849103ebb1a47b9a38d6ed7))
+* **sponsors:** update DIAMOND logo to new version in SponsorList ([a766b05](https://github.com/hulib-engineering/hulib/commit/a766b058651b21d5703e8e4e57326ba240ad6823))
+* **story-details:** introduce DetailBook component and refactor story display ([5558f70](https://github.com/hulib-engineering/hulib/commit/5558f70ad53c5927d0e8b266db8398044aaee72d))
+* **users:** added ProfileHuber and ProfileLiber components ([581ca89](https://github.com/hulib-engineering/hulib/commit/581ca89630e14587ed07d88ed730da5799047d4f))
+* **users:** enhance user approval process with modal and upgrade functionality ([6b7505f](https://github.com/hulib-engineering/hulib/commit/6b7505f9a3505656e119b7c1e1c40afdf90ed7ce))
+* **users:** implement user status management modals and dropdown actions ([1088d0e](https://github.com/hulib-engineering/hulib/commit/1088d0e27305851cf93b0195cec3989cb5184af3))
+* **users:** refactor user approval page and add user management features ([b7cbd3f](https://github.com/hulib-engineering/hulib/commit/b7cbd3f9d41598870dbe06e60d3c8316d7b75630))
+
 # [1.19.0](https://github.com/hulib-engineering/hulib/compare/v1.18.0...v1.19.0) (2025-06-16)
 
 
