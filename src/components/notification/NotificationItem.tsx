@@ -1,10 +1,10 @@
 'use client';
 
-import clsx from 'clsx';
 import { format } from 'date-fns';
 import Image from 'next/image';
 import type { FC } from 'react';
 
+import { mergeClassnames } from '@/components/private/utils';
 import useNotificationActions from '@/libs/hooks/useNotificationActions';
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
 import { NOTIFICATION_TYPES } from '@/libs/services/modules/notifications/notificationType';
@@ -18,13 +18,18 @@ import NotificationContent from './NotificationContent';
 interface NotificationItemProps {
   notification: Notification;
   hideDetails?: boolean;
+  onClick?: () => void;
 }
 
 const NotificationItem: FC<NotificationItemProps> = ({
   notification,
   hideDetails = false,
+  onClick,
 }) => {
-  const config = getNotificationConfig(notification.type.name);
+  const config = getNotificationConfig(
+    notification.type.name,
+    notification.relatedEntity?.sessionStatus,
+  );
   const {
     handleNotificationClick,
     handleStatusChange,
@@ -37,7 +42,12 @@ const NotificationItem: FC<NotificationItemProps> = ({
     'EEE d MMM HH:mm',
   );
 
-  const onItemClick = () => handleNotificationClick(notification);
+  const onItemClick = async () => {
+    await handleNotificationClick(notification);
+    if (onClick) {
+      onClick();
+    }
+  };
 
   const onSeeDetailClick = () => handleSeeDetail(notification);
   const onAccept = () =>
@@ -57,7 +67,7 @@ const NotificationItem: FC<NotificationItemProps> = ({
     notification.type.name === NOTIFICATION_TYPES.REVIEW_STORY.name;
   return (
     <div
-      className={clsx(
+      className={mergeClassnames(
         'relative border-b p-3 last:border-b-0',
         !notification.seen && 'bg-green-90 md:bg-transparent',
         config.isClickable && 'cursor-pointer',
@@ -67,10 +77,10 @@ const NotificationItem: FC<NotificationItemProps> = ({
             role: 'button',
             tabIndex: 0,
             onClick: onItemClick,
-            onKeyDown: (e) => {
+            onKeyDown: async (e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                onItemClick();
+                await onItemClick();
               }
             },
           }

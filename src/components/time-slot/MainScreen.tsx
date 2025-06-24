@@ -15,7 +15,6 @@ import {
 import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
 import { useGetTimeSlotsHuberQuery } from '@/libs/services/modules/time-slots';
 import type { TimeSlot } from '@/libs/services/modules/time-slots/getAllTimeSlots';
-import { toLocaleISO } from '@/utils/dateUtils';
 
 import OneWeek from '../schedule/components/OneWeek';
 import ScheduleBasicInfo from './ScheduleBasicInfo';
@@ -69,7 +68,6 @@ export const MainScreen = ({
   const { data: bookedTime } = useGetHuberBookedSessionsQuery({
     id: Number(attendees.huber.id),
   });
-  console.log('Huber booked time', bookedTime);
 
   const filterTimeSlots: TimeSlot[] = React.useMemo(() => {
     return (
@@ -135,7 +133,7 @@ export const MainScreen = ({
           const isBooked =
             bookedTime &&
             bookedTime.length &&
-            bookedTime.includes(toLocaleISO(new Date(timeObj)));
+            bookedTime.includes(new Date(timeObj).toISOString());
 
           return (
             <TimeItem

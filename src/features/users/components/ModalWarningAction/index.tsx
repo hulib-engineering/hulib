@@ -2,9 +2,11 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 
 import Button from '@/components/button/Button';
+import { useUpdateUserStatusMutation } from '@/libs/services/modules/user';
 
 // Props for the modal component
 interface ModalWarningActionProps {
+  userId: string; // User ID to warn
   userImage?: string; // URL for the user's profile image
   userName?: string;
   userRole?: string;
@@ -18,6 +20,7 @@ interface ModalWarningActionProps {
  * Apple HIG-inspired, modern, minimal, and accessible.
  */
 const ModalWarningAction: React.FC<ModalWarningActionProps> = ({
+  userId,
   userImage = '/assets/images/huber/cover-huber.png',
   userName = '',
   userRole = '',
@@ -27,9 +30,23 @@ const ModalWarningAction: React.FC<ModalWarningActionProps> = ({
   // State for the warning reason textarea
   const [reason, setReason] = useState('');
 
+  // --- Mutation hook for updating user status (warn) ---
+  const [updateUserStatus, { isLoading, error }] =
+    useUpdateUserStatusMutation();
+
   // Handle confirm button click
-  const handleConfirm = () => {
-    if (onConfirm) onConfirm(reason);
+  const handleConfirm = async () => {
+    try {
+      // Call mutation to set user status to 'under_warning'
+      await updateUserStatus({
+        id: userId,
+        body: { status: 'under_warning' },
+      }).unwrap();
+      // Optionally, call onConfirm with reason for extensibility
+      if (onConfirm) onConfirm(reason);
+    } catch (e) {
+      // Error is handled below in UI
+    }
   };
 
   // Handle cancel button click
@@ -78,14 +95,32 @@ const ModalWarningAction: React.FC<ModalWarningActionProps> = ({
         {/* Subtle warning text: muted orange, centered, margin for separation */}
         <div className="mb-6 text-center text-sm font-medium text-orange-70">
           Are you sure you want to send a warning to this account?
+          {/* Show error if mutation fails */}
+          {error && (
+            <div className="mt-2 text-xs text-red-50">
+              {typeof error === 'string'
+                ? error
+                : 'Failed to warn user. Please try again.'}
+            </div>
+          )}
         </div>
         {/* Action buttons: row, full width, spacing, Apple HIG style */}
         <div className="flex w-full justify-between gap-2">
-          <Button variant="outline" onClick={handleCancel} className="flex-1">
+          <Button
+            variant="outline"
+            onClick={handleCancel}
+            className="flex-1"
+            disabled={isLoading}
+          >
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleConfirm} className="flex-1">
-            Confirm
+          <Button
+            variant="primary"
+            onClick={handleConfirm}
+            className="flex-1"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Warning...' : 'Confirm'}
           </Button>
         </div>
       </div>

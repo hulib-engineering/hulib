@@ -3,13 +3,14 @@
 import {
   CaretDown,
   Gear,
+  House,
   Pencil,
   SignOut,
   UserCircle,
 } from '@phosphor-icons/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
+import { getSession, signOut } from 'next-auth/react';
 import React, { useEffect, useMemo } from 'react';
 
 import Button from '@/components/button/Button';
@@ -21,10 +22,21 @@ import type { WithChildren } from '@/components/private/types';
 import SearchInput from '@/components/SearchInput';
 import NotificationButton from '@/layouts/webapp/NotificationIcon';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
-import { useAppSelector } from '@/libs/hooks';
+import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import {
+  notificationApi,
+  useGetNotificationsQuery,
+} from '@/libs/services/modules/notifications';
+import { socket } from '@/libs/services/socket';
 import { Role } from '@/types/common';
 
 const AvatarPopoverMenuItems = [
+  {
+    label: 'Dashboard',
+    icon: <House size={20} color="primary-20" />,
+    href: '/home',
+    roles: [Role.ADMIN],
+  },
   {
     label: 'My profile',
     icon: <UserCircle size={20} color="primary-20" />,
@@ -126,22 +138,74 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
 );
 
 const Header = () => {
+  const { data, isLoading } = useGetNotificationsQuery({ page: 1, limit: 5 });
+
   const user = useAppSelector((state) => state.auth.userInfo);
 
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    // socket('').then((messageSocket) => {
-    //   messageSocket.connect();
-    //   messageSocket.on('error', (error: any) => {
-    //     console.log(error);
-    //   });
-    //   messageSocket.on('message', (message: any) => {
-    //     console.log(message);
-    //   });
-    // });
-    // return () => {
-    //   messageSocket.disconnect();
-    // };
-  }, []);
+    let notificationSocket: ReturnType<typeof socket> | null = null;
+
+    const initializeSocket = async () => {
+      const session = await getSession();
+      // @ts-ignore
+      const accessToken = session?.accessToken as string | undefined;
+
+      if (!accessToken) {
+        console.error('No access token available');
+        return;
+      }
+
+      // const accessToken = (await getSession())?.accessToken;
+      notificationSocket = socket('notification', accessToken);
+      notificationSocket.connect();
+
+      notificationSocket.on('error', (error: Error) => {
+        // Proper error handling
+        console.error('Socket error:', error);
+      });
+      notificationSocket.on('message', console.log);
+
+      const handleNotifications = (notifications: any) => {
+        console.log('Received notifs', notifications);
+        dispatch(
+          notificationApi.util.updateQueryData(
+            'getNotifications',
+            { page: 1, limit: 5 },
+            (draft) => {
+              console.log('DRAFT BEFORE UPDATE', draft);
+              console.log('NOTIFICATIONS FROM SOCKET', notifications);
+
+              if (!draft) {
+                console.warn('No cache to update — query was never fetched.');
+                return;
+              }
+
+              Object.assign(draft, notifications);
+            },
+          ),
+        );
+      };
+
+      notificationSocket.on('list', (list) => {
+        handleNotifications(list);
+      });
+    };
+
+    initializeSocket().catch((error) => {
+      console.error('Failed to initialize socket:', error);
+    });
+
+    return () => {
+      if (notificationSocket) {
+        notificationSocket.off('error');
+        notificationSocket.off('message');
+        notificationSocket.off('list');
+        notificationSocket.disconnect();
+      }
+    };
+  }, [dispatch]);
 
   const renderNavbar = () => {
     if (!user || user?.role?.id === Role.ADMIN) {
@@ -191,7 +255,7 @@ const Header = () => {
                 />
               </ButtonWithChip> */}
               <NotificationButton
-                notificationCount="10"
+                notificationCount={!isLoading && data ? data.unseenCount : 0}
                 notificationPath="/notification"
               />
               <div className="relative ml-2">
@@ -239,7 +303,7 @@ const Header = () => {
                 />
               </ButtonWithChip> */}
             <NotificationButton
-              notificationCount="10"
+              notificationCount={!isLoading && data ? data.unseenCount : 0}
               notificationPath="/notification"
             />
             <div className="relative ml-2 h-11 w-11">

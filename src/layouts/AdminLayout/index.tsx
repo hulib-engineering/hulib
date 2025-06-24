@@ -45,8 +45,10 @@ const AdminLayout = ({
     <section className="w-full">
       <div
         className={clsx(
-          `${className} w-full justify-between rounded-md p-0 px-4  py-[-2rem] lg:flex-row `,
-          'md:px-28 md:py-12',
+          `${
+            className || ''
+          } w-full justify-between rounded-md p-0 px-4 py-[-2rem] lg:flex-row `,
+          'lg:px-28 lg:py-12',
         )}
       >
         <div className="rounded-lg bg-white shadow-md">
