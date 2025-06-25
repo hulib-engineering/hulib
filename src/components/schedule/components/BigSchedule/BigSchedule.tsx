@@ -13,7 +13,25 @@ import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-sess
 import { Role, ROLE_NAME, StatusEnum } from '@/types/common';
 
 export default function BigCalendar() {
-  const { data: readingSessions, isLoading } = useGetReadingSessionsQuery();
+  const getCurrentWeekRange = () => {
+    const now = new Date();
+    const currentDay = now.getDay();
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - currentDay);
+    startOfWeek.setHours(0, 0, 0, 0);
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    endOfWeek.setHours(23, 59, 59, 999);
+    return {
+      startedAt: startOfWeek.toISOString(),
+      endedAt: endOfWeek.toISOString(),
+    };
+  };
+  const { startedAt, endedAt } = getCurrentWeekRange();
+  const { data: readingSessions, isLoading } = useGetReadingSessionsQuery({
+    startedAt,
+    endedAt,
+  });
   const [events, setEvents] = useState<
     { title: string; start: any; end: any; extendedProps: any }[]
   >([]);
@@ -171,27 +189,26 @@ export default function BigCalendar() {
       </div>
       {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
       <div className="calendar-scroll-wrapper">
-        {events?.length > 0 && (
-          <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin]}
-            initialView="timeGridWeek"
-            headerToolbar={{ left: '', center: '', right: '' }}
-            views={{
-              timeGridWeek: {
-                titleFormat: { year: 'numeric', month: 'long' },
-              },
-            }}
-            slotLabelContent={slotLabelContent}
-            height="auto"
-            contentHeight="auto"
-            slotMinTime="6:00:00"
-            slotMaxTime="24:00:00"
-            slotDuration="01:00:00"
-            dayHeaderContent={dayHeaderContent}
-            events={events}
-            eventContent={renderEventContent}
-          />
-        )}
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin]}
+          initialView="timeGridWeek"
+          headerToolbar={{ left: '', center: '', right: '' }}
+          views={{
+            timeGridWeek: {
+              titleFormat: { year: 'numeric', month: 'long' },
+            },
+          }}
+          slotLabelContent={slotLabelContent}
+          height="auto"
+          contentHeight="auto"
+          slotMinTime="6:00:00"
+          slotMaxTime="24:00:00"
+          slotDuration="01:00:00"
+          dayHeaderContent={dayHeaderContent}
+          events={events}
+          eventContent={renderEventContent}
+        />
+
         {hoveredSession && (
           <div onMouseEnter={handlePopupMouseEnter}>
             <PortalSessionCard

@@ -515,6 +515,14 @@
   "Meeting": {
     "cancel_meeting": "Tôi không muốn gặp nữa"
   },
+  "Schedule": {
+    "no_meetings": {
+      "huber_description": "Chưa có cuộc hẹn nào? Bạn có thể bắt đầu bằng cách chia sẻ câu chuyện của mình để người khác tìm thấy và đặt lịch gặp, hoặc khám phá các câu chuyện khác và đặt lịch hẹn.",
+      "user_description": "Bạn chưa tham gia cuộc hẹn nào. Hãy dành thời gian khám phá, đọc một số câu chuyện và kết nối với Huber.",
+      "share_story_btn": "Chia sẻ câu chuyện",
+      "explore_story_btn": "Khám phá câu chuyện"
+    }
+  },
   "Home": {
     "banner": {
       "title": "Xin chào!",
