@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import React, { Fragment, useState } from 'react';
 
+import CommunityGuidelinesModal from '@/components/CommunityGuidelinesModal';
 import { Logo } from '@/components/Logo';
 import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
 import TermOfUseModal from '@/components/TermOfUseModal';
@@ -70,6 +71,7 @@ const FooterWebApp = () => {
       items: [
         { title: t('privacy_policy'), modalName: 'privacy_policy' },
         { title: t('term_of_service'), modalName: 'term_of_service' },
+        { title: t('community_guidelines'), modalName: 'community_guidelines' },
         // { title: t('cookie_settings') },
       ],
     },
@@ -209,6 +211,12 @@ const FooterWebApp = () => {
             onClose={() => setIsModalOpen(false)}
           />
         )}
+        {currentModalRef === 'community_guidelines' && (
+          <CommunityGuidelinesModal
+            open={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
+        )}
       </>
     );
   }
@@ -335,6 +343,12 @@ const FooterWebApp = () => {
       )}
       {currentModalRef === 'term_of_service' && (
         <TermOfUseModal
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
+      {currentModalRef === 'community_guidelines' && (
+        <CommunityGuidelinesModal
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
         />

@@ -13,7 +13,6 @@ import Link from 'next/link';
 import { getSession, signOut } from 'next-auth/react';
 import React, { useEffect, useMemo } from 'react';
 
-import Button from '@/components/button/Button';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import MenuItem from '@/components/menuItem/MenuItem';
@@ -214,21 +213,18 @@ const Header = () => {
     return (
       <div className="flex items-center justify-between gap-x-2">
         {user && user?.id && (
-          <Link href="/schedule-meeting/weekly-schedule">
-            <Button variant="ghost" size="lg" className="text-neutral-10">
-              My schedule
-            </Button>
+          <Link
+            href="/schedule-meeting/weekly-schedule"
+            className="mx-2 text-neutral-10"
+          >
+            My schedule
           </Link>
         )}
-        <Link href="/explore-story">
-          <Button variant="ghost" size="lg" className="text-neutral-10">
-            Stories
-          </Button>
+        <Link href="/explore-story" className="mx-2 text-neutral-10">
+          Stories
         </Link>
-        <Link href="/explore-huber">
-          <Button variant="ghost" size="lg" className="text-neutral-10">
-            Hubers
-          </Button>
+        <Link href="/explore-huber" className="mx-2 text-neutral-10">
+          Hubers
         </Link>
       </div>
     );

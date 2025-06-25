@@ -24,7 +24,7 @@ export type BookCommonProps = {
 export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
   const userInfo = useAppSelector((state) => state.auth.userInfo);
   const userId = userInfo?.id;
-  const { title } = data;
+  const { title } = data || {};
   const t = useTranslations('ExploreStory');
   const [isFavorite, setIsFavorite] = useState(data?.isFavorite);
 
@@ -66,14 +66,14 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
       <div
         className={mergeClassnames(
           'flex w-full items-center gap-2 justify-self-end mt-3 absolute bottom-[10px]',
-          'md:flex-row md:mt-2 md:px-3 md:pl-0',
+          'md:flex-row md:mt-2 md:px-3 md:pl-0'
         )}
       >
         <Button
           variant="primary"
           className={mergeClassnames(
             'text-base h-8 max-h-8 w-[120px] flex-none rounded-full px-[12px] py-[12px]',
-            'md:h-[44px] md:max-h-[44px] md:w-[105px]',
+            'md:h-[44px] md:max-h-[44px] md:w-[105px]'
           )}
           onClick={() => router.push(`/explore-story/${storyId}`)}
         >
@@ -83,10 +83,12 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
           variant="outline"
           className={mergeClassnames(
             'w-full h-8',
-            'md:size-10 md:min-h-10 md:min-w-10 bg-white border-neutral-variant',
+            'md:size-10 md:min-h-10 md:min-w-10 bg-white border-neutral-variant'
           )}
           iconOnly
-          onClick={() => handleAddToFavorites(storyId)}
+          onClick={() => {
+            handleAddToFavorites(storyId);
+          }}
         >
           <BookmarkSimple
             size={20}
@@ -102,7 +104,7 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
     <div
       className={mergeClassnames(
         'relative flex w-full flex-row bg-pink-100 p-4 rounded-xl shadow-sm',
-        'h-[287px] w-[392px]',
+        'h-[287px] w-[392px]'
       )}
       // onMouseLeave={!isMobile ? handleMouseLeave : undefined}
     >
@@ -110,21 +112,21 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
       <div
         className={mergeClassnames(
           'absolute inset-0 flex flex-row bg-white p-3 rounded-2xl transition-transform duration-500 transform-gpu',
-          'md:[transform-style:preserve-3d] md:[backface-visibility:hidden]',
+          'md:[transform-style:preserve-3d] md:[backface-visibility:hidden]'
           // isFlipped ? 'md:rotate-y-180' : 'md:rotate-y-0',
         )}
       >
         <div
           className={mergeClassnames(
             'flex w-1/2 flex-col pt-3 relative',
-            'md:h-full',
+            'md:h-full'
           )}
         >
           <div className={mergeClassnames('flex flex-col gap-2')}>
             <h2
               className={mergeClassnames(
                 'text-base font-medium leading-6 text-primary-10 line-clamp-3 capitalize',
-                'md:text-[18px] md:leading-7',
+                'md:text-[18px] md:leading-7'
               )}
             >
               {data?.title.toLowerCase()}
@@ -144,7 +146,7 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
                   <span
                     className={mergeClassnames(
                       'text-xs font-medium leading-4 text-[#73787C] line-clamp-1',
-                      'md:text-sm',
+                      'md:text-sm'
                     )}
                   >
                     {data?.humanBook?.fullName}
@@ -164,7 +166,7 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
               <p
                 className={mergeClassnames(
                   'text-xs font-medium leading-4 text-neutral-20',
-                  'md:text-sm',
+                  'md:text-sm'
                 )}
               >
                 {data?.storyReview?.rating || 0}
@@ -172,7 +174,7 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
               <p
                 className={mergeClassnames(
                   'text-[0.625rem] font-normal text-neutral-40',
-                  'md:text-xs',
+                  'md:text-xs'
                 )}
               >
                 {`(${data?.storyReview?.numberOfReviews || 0} ${t('ratings')})`}
@@ -183,7 +185,7 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
               <h3
                 className={mergeClassnames(
                   'text-sm font-medium leading-5 mb text-primary-10',
-                  'md:text-base',
+                  'md:text-base'
                 )}
               >
                 {t('abstract')}
@@ -191,7 +193,7 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
               <p
                 className={mergeClassnames(
                   'mt-1 line-clamp-3 text-sm font-normal mb-3 leading-6 text-[#45484A]',
-                  'md:text-base md:line-clamp-5',
+                  'md:text-base md:line-clamp-5'
                 )}
                 style={{ letterSpacing: '0.005rem' }}
               >
@@ -199,13 +201,15 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
               </p>
             </div>
 
-            {renderActions ? renderActions() : renderActionsRead(data?.id)}
+            {renderActions
+              ? renderActions()
+              : renderActionsRead(data?.id || data?.storyId || 0)}
           </div>
         </div>
         <div
           className={mergeClassnames(
             'h-full w-1/2 rounded-2xl relative',
-            'md:h-full',
+            'md:h-full'
           )}
         >
           <AnimatedCover

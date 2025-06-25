@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
+import CommunityGuidelinesModal from '@/components/CommunityGuidelinesModal';
 import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
 import { mergeClassnames } from '@/components/private/utils';
 import TermOfUseModal from '@/components/TermOfUseModal';
@@ -48,6 +49,7 @@ const Footer = () => {
   const Links = [
     { content: t('privacy_policy'), modalName: 'privacy_policy' },
     { content: t('term_of_service'), modalName: 'term_of_service' },
+    { content: t('community_guidelines'), modalName: 'community_guidelines' },
   ];
 
   return (
@@ -144,6 +146,12 @@ const Footer = () => {
       )}
       {currentModalRef === 'term_of_service' && (
         <TermOfUseModal
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
+      {currentModalRef === 'community_guidelines' && (
+        <CommunityGuidelinesModal
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
         />
