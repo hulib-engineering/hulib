@@ -8,6 +8,7 @@ import {
   customInternalLink,
   listMessageItem,
   newLineMessage,
+  strongMessage,
   unorderedMessageList,
 } from '@/utils/i18NRichTextUtils';
 
@@ -21,6 +22,7 @@ const TermOfUseModal = ({ open, onClose }: Omit<IPolicyModalProps, 'type'>) => {
     'index_5',
     'index_6',
     'index_7',
+    'index_8',
   ] as const;
 
   const t = useTranslations('Index');
@@ -46,16 +48,19 @@ const TermOfUseModal = ({ open, onClose }: Omit<IPolicyModalProps, 'type'>) => {
           <h2 className="mb-1 text-xl font-semibold uppercase text-gray-800">
             {t(`term_of_use_sections.${index}.heading`)}
           </h2>
-          {index !== 'index_4' && index !== 'index_6' && (
-            <p>
-              {t.rich(`term_of_use_sections.${index}.content`, {
-                br: newLineMessage(),
-                ul: unorderedMessageList('list-disc pl-6'),
-                li: listMessageItem(),
-                linkToPrivacy: customInternalLink('#privacy-policy-0'),
-              })}
-            </p>
-          )}
+          {index !== 'index_4' &&
+            index !== 'index_6' &&
+            index !== 'index_7' && (
+              <p>
+                {t.rich(`term_of_use_sections.${index}.content`, {
+                  br: newLineMessage(),
+                  ul: unorderedMessageList('list-disc pl-6'),
+                  li: listMessageItem(),
+                  linkToPrivacy: customInternalLink('#privacy-policy-0'),
+                  strong: strongMessage(),
+                })}
+              </p>
+            )}
           {index === 'index_4' &&
             [
               'index_0' as const,
