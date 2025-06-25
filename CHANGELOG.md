@@ -1,3 +1,12 @@
+# [1.21.0](https://github.com/hulib-engineering/hulib/compare/v1.20.0...v1.21.0) (2025-06-25)
+
+
+### Features
+
+* add Community guidelines ([f045055](https://github.com/hulib-engineering/hulib/commit/f04505588132278abe5527fe5176b4ab76ddd7b4))
+* **admin:** bind api get reading session of user ([77413a6](https://github.com/hulib-engineering/hulib/commit/77413a616a3aa23977125dda069f62d0f691c6cd))
+* **localization:** expand Vietnamese localization with community guidelines and related sections ([0a47f3a](https://github.com/hulib-engineering/hulib/commit/0a47f3a82b4d1749805e90005caafbc9bd7ebeda))
+
 # [1.20.0](https://github.com/hulib-engineering/hulib/compare/v1.19.0...v1.20.0) (2025-06-24)
 
 
