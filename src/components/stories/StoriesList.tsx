@@ -81,8 +81,9 @@ const StoriesList = ({
       {stories?.length > 0 ? (
         <div
           className={mergeClassnames(
-            'mt-6 grid grid-cols-1 gap-8 rounded-lg',
-            'md:grid-cols-2',
+            'mt-6 grid grid-cols-1 gap-4 px-2 rounded-lg',
+            'sm:gap-6 sm:px-4',
+            'md:grid-cols-2 md:gap-8 md:px-0',
             'xl:grid-cols-3',
           )}
         >

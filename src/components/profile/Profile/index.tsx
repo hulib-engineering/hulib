@@ -79,21 +79,21 @@ const Profile = () => {
   };
 
   const handleAvatarUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ): Promise<void> => {
     if (event.target.files && event.target.files.length > 0) {
       dispatch(
         setAvatarUrl({
           path: URL.createObjectURL(event.target.files[0] as Blob),
-        })
+        }),
       );
       try {
         const result = await upload(
-          FormDataBuilder({ file: event.target.files[0] })
+          FormDataBuilder({ file: event.target.files[0] }),
         ).unwrap();
         if (result?.file) {
           dispatch(
-            setAvatarUrl({ id: result?.file?.id, path: result?.file?.path })
+            setAvatarUrl({ id: result?.file?.id, path: result?.file?.path }),
           );
 
           await updateProfile({
@@ -177,7 +177,7 @@ const Profile = () => {
           }
         : null,
 
-      !huberId && userDetail?.role?.id === Role.HUBER
+      !huberId
         ? {
             type: MyProfilePanelIndex.MY_FAVORITE,
             label: (
@@ -221,7 +221,7 @@ const Profile = () => {
       if (!type) return 0;
       return tabsRender.findIndex((o) => o.type === type) ?? 0;
     },
-    [tabsRender]
+    [tabsRender],
   );
 
   const selectedItemIndex = React.useMemo(() => {
