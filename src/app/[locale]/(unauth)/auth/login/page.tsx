@@ -1,8 +1,11 @@
+import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 import { AuthLayout } from '@/layouts/AuthLayout';
 import { LoginWithSession } from '@/layouts/LoginForm';
+import { authOptions } from '@/libs/NextAuthOption';
 
 export async function generateMetadata({
   params: { locale },
@@ -17,7 +20,13 @@ export async function generateMetadata({
   };
 }
 
-export default function Index() {
+export default async function Index() {
+  const session = await getServerSession(authOptions);
+
+  if (session) {
+    redirect('/home');
+  }
+
   return (
     <AuthLayout
       illustrationImage="/assets/images/login-illustration.svg"

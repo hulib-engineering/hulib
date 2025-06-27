@@ -112,7 +112,7 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
       {/* Front-Card */}
       <div
         className={mergeClassnames(
-          'absolute inset-0 flex flex-row bg-white p-2 rounded-2xl transition-transform duration-500 transform-gpu',
+          'absolute inset-0 flex flex-row gap-2 bg-white p-2 rounded-2xl transition-transform duration-500 transform-gpu',
           'sm:p-3',
           'md:p-4 md:[transform-style:preserve-3d] md:[backface-visibility:hidden]',
         )}
