@@ -11,7 +11,12 @@
     "sign_up": "Đăng kí",
     "clear": "Xoá",
     "recent_searches": "Tìm kiếm gần đây:",
-    "search_by_keyword": "Tìm kiếm bởi từ khoá"
+    "search_by_keyword": "Tìm kiếm bởi từ khoá",
+    "dashboard": "Bảng điều khiển",
+    "my_profile": "Hồ sơ của tôi",
+    "change_password": "Đổi mật khẩu",
+    "register_huber": "Đăng kí trở thành Huber",
+    "sign_out": "Đăng xuất"
   },
   "HumanBookBanner": {
     "explore_now": "Khám phá tủ sách Human Book ngay",
@@ -543,7 +548,6 @@
     },
     "short_descriptions": {
       "title": "Trở thành Huber của chúng tôi",
-      "description": "Mô tả ngắn",
       "btn": "Tham gia với tư cách Huber"
     },
     "no_data": "Không có dữ liệu",

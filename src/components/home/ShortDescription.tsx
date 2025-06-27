@@ -22,9 +22,6 @@ const ShortDescription = () => {
       />
       <div className="absolute bottom-8 left-8">
         <div className="flex flex-col items-start justify-center gap-2">
-          <p className="text-xs font-medium leading-[1.125rem] text-primary-10 md:text-xl md:leading-7">
-            {t('short_descriptions.description')}
-          </p>
           <h3 className="text-base font-medium leading-[2.9375rem] text-primary-10 md:text-[2.25rem] md:leading-[2.75rem]">
             {t('short_descriptions.title')}
           </h3>
