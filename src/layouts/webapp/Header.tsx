@@ -11,6 +11,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { getSession, signOut } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import React, { useEffect, useMemo } from 'react';
 
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
@@ -29,38 +30,6 @@ import {
 import { socket } from '@/libs/services/socket';
 import { Role } from '@/types/common';
 
-const AvatarPopoverMenuItems = [
-  {
-    label: 'Dashboard',
-    icon: <House size={20} color="primary-20" />,
-    href: '/home',
-    roles: [Role.ADMIN],
-  },
-  {
-    label: 'My profile',
-    icon: <UserCircle size={20} color="primary-20" />,
-    href: '/profile',
-    roles: [Role.LIBER, Role.HUBER],
-  },
-  {
-    label: 'Change password',
-    icon: <Gear size={20} color="primary-20" />,
-    href: '/change-password',
-    roles: [Role.LIBER, Role.HUBER],
-  },
-  {
-    label: 'Register to become human book',
-    icon: <Pencil size={20} color="primary-20" />,
-    href: '/huber-registration',
-    roles: [Role.LIBER],
-  },
-  {
-    label: 'Sign out',
-    icon: <SignOut size={20} color="primary-20" />,
-    onClick: () => signOut({ callbackUrl: '/auth/login' }),
-  },
-];
-
 interface AvatarPopoverMenuItem {
   label: string;
   icon: React.ReactNode;
@@ -78,6 +47,7 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
   close,
 }: RenderProps) => {
   const { role } = useAppSelector((state) => state.auth.userInfo);
+  const t = useTranslations('HeaderWebApp');
 
   const handleClick = (item: AvatarPopoverMenuItem) => {
     if (open) {
@@ -85,6 +55,41 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
     }
     item.onClick?.();
   };
+
+  const AvatarPopoverMenuItems = useMemo(
+    () => [
+      {
+        label: t('dashboard'),
+        icon: <House size={20} color="primary-20" />,
+        href: '/home',
+        roles: [Role.ADMIN],
+      },
+      {
+        label: t('my_profile'),
+        icon: <UserCircle size={20} color="primary-20" />,
+        href: '/profile',
+        roles: [Role.LIBER, Role.HUBER],
+      },
+      {
+        label: t('change_password'),
+        icon: <Gear size={20} color="primary-20" />,
+        href: '/change-password',
+        roles: [Role.LIBER, Role.HUBER],
+      },
+      {
+        label: t('register_huber'),
+        icon: <Pencil size={20} color="primary-20" />,
+        href: '/huber-registration',
+        roles: [Role.LIBER],
+      },
+      {
+        label: t('sign_out'),
+        icon: <SignOut size={20} color="primary-20" />,
+        onClick: () => signOut({ callbackUrl: '/auth/login' }),
+      },
+    ],
+    [t],
+  );
 
   const menuItemsByRole = useMemo(() => {
     return (
@@ -137,6 +142,8 @@ const AvatarPopover = ({ children }: WithChildren<{}>) => (
 );
 
 const Header = () => {
+  const t = useTranslations('HeaderWebApp');
+
   const { data, isLoading } = useGetNotificationsQuery({ page: 1, limit: 5 });
 
   const user = useAppSelector((state) => state.auth.userInfo);
@@ -164,20 +171,13 @@ const Header = () => {
         // Proper error handling
         console.error('Socket error:', error);
       });
-      notificationSocket.on('message', console.log);
-
       const handleNotifications = (notifications: any) => {
-        console.log('Received notifs', notifications);
         dispatch(
           notificationApi.util.updateQueryData(
             'getNotifications',
             { page: 1, limit: 5 },
             (draft) => {
-              console.log('DRAFT BEFORE UPDATE', draft);
-              console.log('NOTIFICATIONS FROM SOCKET', notifications);
-
               if (!draft) {
-                console.warn('No cache to update — query was never fetched.');
                 return;
               }
 
@@ -217,14 +217,14 @@ const Header = () => {
             href="/schedule-meeting/weekly-schedule"
             className="mx-2 text-neutral-10"
           >
-            My schedule
+            {t('my_schedule')}
           </Link>
         )}
         <Link href="/explore-story" className="mx-2 text-neutral-10">
-          Stories
+          {t('books')}
         </Link>
         <Link href="/explore-huber" className="mx-2 text-neutral-10">
-          Hubers
+          {t('mentors')}
         </Link>
       </div>
     );

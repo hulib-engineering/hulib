@@ -30,7 +30,7 @@ const socialLinks = [
   },
   {
     iconUrl: '/assets/images/icons/threads-icon.svg',
-    link: 'https://www.threads.net/@hulibofficial?is_from_webapp=1&sender_device=pc',
+    link: 'https://www.threads.com/@hulibvn?igshid=NTc4MTIwNjQ2YQ%3D%3D',
     name: 'Threads',
   },
 ];

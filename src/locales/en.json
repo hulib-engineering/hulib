@@ -11,7 +11,12 @@
     "sign_up": "Sign up",
     "clear": "Clear",
     "recent_searches": "Recent Searches:",
-    "search_by_keyword": "Search by keyword"
+    "search_by_keyword": "Search by keyword",
+    "dashboard": "Dashboard",
+    "my_profile": "My profile",
+    "change_password": "Change password",
+    "register_huber": "Register to become human book",
+    "sign_out": "Sign out"
   },
   "HumanBookBanner": {
     "explore_now": "Explore the Human Book bookshelf now",
@@ -539,7 +544,6 @@
     },
     "short_descriptions": {
       "title": "Become our Huber",
-      "description": "Short Description",
       "btn": "Join as Huber"
     },
     "no_data": "No Data"
