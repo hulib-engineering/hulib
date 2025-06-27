@@ -45,11 +45,14 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
   return (
     <div className="h-full w-full bg-cover bg-no-repeat perspective-[1000px]">
       <div className="group relative h-full w-full">
-        <div className="absolute m-0 flex h-full w-full flex-col items-center justify-between gap-[10px] rounded-[5px] bg-gradient-to-r from-[#9C9C9C] via-[#D5D5D5] via-5% to-[#f8f8f8] to-20% p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)]  group-hover:z-10">
-          <p className="font-['DVN-Poppins] text-sm leading-5 tracking-wider text-neutral-30">
+        <div className="absolute m-0 flex h-full w-full flex-col items-center justify-between gap-[10px] rounded-[5px] bg-gradient-to-r from-[#9C9C9C] via-[#D5D5D5] via-5% to-[#f8f8f8] to-20% p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)] group-hover:z-10">
+          <p className="font-['DVN-Poppins] text-xs leading-5 tracking-wider text-neutral-30 sm:text-sm">
             {`${abstractPages[1]}...`}
           </p>
-          <Button onClick={props.onClick} className="w-11/12">
+          <Button
+            onClick={props.onClick}
+            className="w-11/12 text-sm sm:text-base"
+          >
             Read all
           </Button>
         </div>
@@ -65,20 +68,20 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
             }}
           >
             <div
-              className={`absolute left-0 top-[8px] line-clamp-3 w-full max-w-[180px] text-wrap px-5 text-center text-[22px] text-primary-50 ${svnRio.className} whitespace-pre-line`}
+              className={`absolute left-0 top-[8px] line-clamp-3 w-full max-w-[180px] text-wrap px-3 text-center text-lg text-primary-50 sm:px-5 sm:text-[22px] ${svnRio.className} whitespace-pre-line`}
             >
               {props.title}
             </div>
-            <div className="absolute bottom-[8px] left-0 line-clamp-3 w-full max-w-[180px] text-wrap px-5 text-center text-xs font-bold italic text-primary-50">
+            <div className="absolute bottom-[8px] left-0 line-clamp-3 w-full max-w-[180px] text-wrap px-3 text-center text-[10px] font-bold italic text-primary-50 sm:px-5 sm:text-xs">
               {`_${props.authorName}_`}
             </div>
           </figure>
           {/* Back Face */}
           <figure className="absolute m-0 flex h-full w-full flex-col justify-between gap-[10px] rounded bg-gradient-to-l from-[#b1b1b1] via-[#e3e3e3] via-5% to-[#f8f8f8] to-20% p-2 rotate-y-180 backface-hidden">
-            <h6 className="line-clamp-2 text-xl font-medium leading-7 text-primary-10">
+            <h6 className="line-clamp-2 text-lg font-medium leading-6 text-primary-10 sm:text-xl sm:leading-7">
               {props.title}
             </h6>
-            <p className="font-['DVN-Poppins] text-sm leading-5 tracking-wider text-neutral-30">
+            <p className="font-['DVN-Poppins] text-xs leading-5 tracking-wider text-neutral-30 sm:text-sm">
               {abstractPages[0]}
             </p>
           </figure>
