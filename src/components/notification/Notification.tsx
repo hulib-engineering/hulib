@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import NotificationItem from '@/components/notification/NotificationItem';
 import NotificationSkeleton from '@/components/notification/NotificationSkeleton';
@@ -9,6 +10,8 @@ import useNotifications from '@/libs/hooks/useNotifications';
 import Button from '../button/Button';
 
 const NotificationPage = () => {
+  const t = useTranslations('notifications');
+
   const {
     notifications,
     isLoading,
@@ -23,20 +26,21 @@ const NotificationPage = () => {
   return (
     <div className="max-w-[100vw]">
       <div className="border-b p-1">
-        <h2 className="ml-3 text-[28px] font-bold">Notification</h2>
+        <h2 className="ml-3 text-[28px] font-bold">{t('title')}</h2>
       </div>
-
       <div className="overflow-y-auto">
         {isLoading && currentPage === 1 && <NotificationSkeleton count={5} />}
 
         {error && (
           <div className="p-4 text-center text-red-500">
-            Failed to load notifications
+            {t('loadingFailed')}
           </div>
         )}
 
         {!isLoading && !error && notifications.length === 0 && (
-          <div className="p-4 text-center text-gray-500">No notifications</div>
+          <div className="p-4 text-center text-gray-500">
+            {t('noNotifications')}
+          </div>
         )}
 
         {!isLoading &&
@@ -61,8 +65,8 @@ const NotificationPage = () => {
           disabled={!hasNextPage || isLoading}
         >
           {isLoading && currentPage > 1
-            ? 'Loading...'
-            : 'See previous notifications'}
+            ? t('loading')
+            : t('seePreviousNotifications')}
         </Button>
       </div>
     </div>
