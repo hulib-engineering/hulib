@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { isNaN } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
@@ -27,6 +28,7 @@ interface UpComingEventProps {
   isHuber: boolean;
 }
 const UpComingEvent: React.FC<UpComingEventProps> = ({ isHuber }) => {
+  const t = useTranslations('Schedule');
   const { data: readingSessions, isLoading: isLoadingReadingSessions } =
     useGetReadingSessionsQuery({ upcoming: true });
   const [data, setData] = useState<any>({});
@@ -51,7 +53,7 @@ const UpComingEvent: React.FC<UpComingEventProps> = ({ isHuber }) => {
                 isHuber ? '' : 'text-primary-50'
               }`}
             >
-              Meeting with{' '}
+              {t('upcoming.meeting_with')}{' '}
               <span className={isHuber ? 'text-[#DBAE0A]' : 'text-primary-50'}>
                 {isHuber ? 'Reader' : 'Huber'}
               </span>

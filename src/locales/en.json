@@ -517,11 +517,52 @@
     "cancel_meeting": "I don't want to meeting anymore"
   },
   "Schedule": {
+    "appointment_schedule": "Appointment schedule",
+    "type_meeting": "Type of meeting",
+    "waiting": "Waiting",
+    "upcoming": {
+      "meeting_with": "Meeting with"
+    },
     "no_meetings": {
       "huber_description": "No meetings yet? You can start by sharing your own story so others can find and meet you, or browse stories from others and book a meeting.",
       "user_description": "You haven't joined a meeting yet. Take a moment to explore, read some stories, and connect with a Huber.",
       "share_story_btn": "Share my story",
       "explore_story_btn": "Explore story"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "unknownUser": "Unknown User",
+    "seeDetail": "See detail",
+    "seeAll": "See all",
+    "newNotification": "New notification",
+    "noNotifications": "No notifications",
+    "loadingFailed": "Failed to load notifications",
+    "loading": "Loading...",
+    "seePreviousNotifications": "See previous notifications",
+    "sessionRequest": {
+      "message": "would love to have a meeting with you."
+    },
+    "reviewStory": {
+      "message": "have also reviewed your story"
+    },
+    "publishStory": {
+      "user": {
+        "prefix": "Your book,",
+        "suffix": ",has been successfully published."
+      },
+      "admin": {
+        "message": "has sent a request to create a new Story"
+      }
+    },
+    "account": {
+      "user": {
+        "prefix": "Your registration to become a Huber",
+        "suffix": "has been accepted. Welcome onboard!"
+      },
+      "admin": {
+        "message": "has submitted a request to become a Huber."
+      }
     }
   },
   "Home": {
