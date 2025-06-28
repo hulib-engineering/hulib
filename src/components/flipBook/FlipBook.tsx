@@ -103,7 +103,7 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
   return (
     <div
       className={mergeClassnames(
-        'relative flex w-full flex-row bg-pink-100 p-2 rounded-xl shadow-sm',
+        'relative flex w-full flex-row bg-pink-100 p-2 rounded-xl shadow-sm max-w-[400px]',
         'min-h-[250px]',
         'sm:p-3 sm:min-h-[270px]',
         'md:p-4 md:min-h-[287px]',
