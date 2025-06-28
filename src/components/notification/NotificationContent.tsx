@@ -1,6 +1,7 @@
 'use client';
 
 import _ from 'lodash';
+import { useTranslations } from 'next-intl';
 import type { FC } from 'react';
 
 import { useAppSelector } from '@/libs/hooks';
@@ -20,6 +21,7 @@ const NotificationContent: FC<NotificationContentProps> = ({
   onSeeDetail,
 }) => {
   const { role } = useAppSelector((state) => state.auth.userInfo);
+  const t = useTranslations('notifications');
 
   const renderContent = () => {
     switch (notification.type.name) {
@@ -28,9 +30,9 @@ const NotificationContent: FC<NotificationContentProps> = ({
           <div className="flex w-full flex-col md:flex-row md:items-center md:justify-between md:gap-2">
             <p>
               <span className="font-bold">
-                {notification.sender.fullName ?? 'Unknown User'}
+                {notification.sender.fullName ?? t('unknownUser')}
               </span>{' '}
-              would love to have a meeting with you.
+              {t('sessionRequest.message')}
             </p>
             {!hideDetails && (
               <button
@@ -38,7 +40,7 @@ const NotificationContent: FC<NotificationContentProps> = ({
                 className="mt-1 text-xs text-primary-60 underline md:mt-0"
                 onClick={onSeeDetail}
               >
-                See detail
+                {t('seeDetail')}
               </button>
             )}
           </div>
@@ -49,7 +51,7 @@ const NotificationContent: FC<NotificationContentProps> = ({
           <div className="w-full">
             <p>
               <span className="font-bold">{notification.sender.fullName}</span>{' '}
-              have also reviewed your story{' '}
+              {t('reviewStory.message')}{' '}
               {notification.relatedEntity?.title && (
                 <span className="font-bold text-primary-60">
                   &ldquo;
@@ -60,33 +62,33 @@ const NotificationContent: FC<NotificationContentProps> = ({
             </p>
           </div>
         );
+
       case NOTIFICATION_TYPES.PUBLISH_STORY.name:
         return (
           <p>
-            Your book,{' '}
+            {t('publishStory.user.prefix')}{' '}
             {notification.relatedEntity?.title && (
               <span className="font-bold text-primary-60">
                 &ldquo;{notification.relatedEntity.title}&rdquo;
               </span>
             )}{' '}
-            ,has been successfully published.
+            {t('publishStory.user.suffix')}
           </p>
         );
 
       case NOTIFICATION_TYPES.ACCOUNT.name:
         return (
           <p>
-            <span className="font-bold">
-              Your registration to become a Huber{' '}
-            </span>
-            has been accepted. Welcome onboard!
+            <span className="font-bold">{t('account.user.prefix')} </span>
+            {t('account.user.suffix')}
           </p>
         );
 
       default:
-        return <p>New notification</p>;
+        return <p>{t('newNotification')}</p>;
     }
   };
+
   const renderAdminNotifContent = () => {
     switch (notification.type.name) {
       case NOTIFICATION_TYPES.PUBLISH_STORY.name:
@@ -95,7 +97,7 @@ const NotificationContent: FC<NotificationContentProps> = ({
             <span className="font-bold">
               {`${notification.sender.fullName} `}
             </span>
-            has sent a request to create a new Story{' '}
+            {t('publishStory.admin.message')}{' '}
             {notification.relatedEntity?.title && (
               <span className="font-bold text-primary-60">
                 &ldquo;{notification.relatedEntity.title}&rdquo;
@@ -110,12 +112,12 @@ const NotificationContent: FC<NotificationContentProps> = ({
             <span className="font-bold">
               {`${notification.sender.fullName} `}
             </span>
-            has submitted a request to become a Huber.
+            {t('account.admin.message')}
           </p>
         );
 
       default:
-        return <p>New notification</p>;
+        return <p>{t('newNotification')}</p>;
     }
   };
 
