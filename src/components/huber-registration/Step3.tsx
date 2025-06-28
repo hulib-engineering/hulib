@@ -102,7 +102,8 @@ const Step3 = ({ next }: { next: () => void }) => {
         humanBook: {
           id: userInfo?.id,
         },
-        cover: formValues.cover,
+        // cover: formValues.cover,
+        cover: undefined,
         publishStatus: 'draft',
       }).unwrap();
       const userKey = `${userInfo.id}_huber_registration_step`;
