@@ -521,11 +521,52 @@
     "cancel_meeting": "Tôi không muốn gặp nữa"
   },
   "Schedule": {
+    "appointment_schedule": "Lịch trò chuyện tháng",
+    "type_meeting": "Loại cuộc hẹn",
+    "waiting": "Chờ phản hổi",
+    "upcoming": {
+      "meeting_with": "Cuộc hẹn với"
+    },
     "no_meetings": {
       "huber_description": "Chưa có cuộc hẹn nào? Bạn có thể bắt đầu bằng cách chia sẻ câu chuyện của mình để người khác tìm thấy và đặt lịch gặp, hoặc khám phá các câu chuyện khác và đặt lịch hẹn.",
       "user_description": "Bạn chưa tham gia cuộc hẹn nào. Hãy dành thời gian khám phá, đọc một số câu chuyện và kết nối với Huber.",
       "share_story_btn": "Chia sẻ câu chuyện",
       "explore_story_btn": "Khám phá câu chuyện"
+    }
+  },
+  "notifications": {
+    "title": "Thông báo",
+    "unknownUser": "Người dùng không xác định",
+    "seeDetail": "Xem chi tiết",
+    "seeAll": "Xem tất cả",
+    "newNotification": "Thông báo mới",
+    "noNotifications": "Không có thông báo",
+    "loadingFailed": "Tải thông báo thất bại",
+    "loading": "Đang tải...",
+    "seePreviousNotifications": "Xem thông báo trước đó",
+    "sessionRequest": {
+      "message": "muốn có một cuộc họp với bạn."
+    },
+    "reviewStory": {
+      "message": "cũng đã đánh giá câu chuyện của bạn"
+    },
+    "publishStory": {
+      "user": {
+        "prefix": "Cuốn sách của bạn,",
+        "suffix": ", đã được xuất bản thành công."
+      },
+      "admin": {
+        "message": "đã gửi yêu cầu tạo một Câu chuyện mới"
+      }
+    },
+    "account": {
+      "user": {
+        "prefix": "Đăng ký trở thành Huber của bạn",
+        "suffix": "đã được chấp nhận. Chào mừng bạn!"
+      },
+      "admin": {
+        "message": "đã gửi yêu cầu trở thành Huber."
+      }
     }
   },
   "Home": {

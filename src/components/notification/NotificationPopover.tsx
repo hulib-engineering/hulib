@@ -3,6 +3,7 @@
 import { Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import type { FC, ReactNode } from 'react';
 
 import NotificationItem from '@/components/notification/NotificationItem';
@@ -17,6 +18,7 @@ interface NotificationPopoverProps {
 
 const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
   const router = useRouter();
+  const t = useTranslations('notifications');
 
   const { notifications, isLoading, error } = useNotifications({
     limit: 5,
@@ -42,7 +44,7 @@ const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
             {({ close }) => (
               <>
                 <div className="border-b p-3">
-                  <h2 className="text-lg font-medium">Notifications</h2>
+                  <h2 className="text-lg font-medium">{t('title')}</h2>
                 </div>
 
                 <div className="max-h-96 overflow-y-auto">
@@ -50,13 +52,13 @@ const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
 
                   {error && (
                     <div className="p-4 text-center text-red-500">
-                      Failed to load notifications
+                      {t('loadingFailed')}
                     </div>
                   )}
 
                   {!isLoading && !error && notifications.length === 0 && (
                     <div className="p-4 text-center text-gray-500">
-                      No notifications
+                      {t('noNotifications')}
                     </div>
                   )}
 
@@ -79,7 +81,7 @@ const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
                       className="w-full border-2 border-gray-400 !bg-white py-2 text-center text-sm text-blue-500"
                       onClick={() => router.push('/notification')}
                     >
-                      See all
+                      {t('seeAll')}
                     </Popover.Button>
                   </div>
                 )}
