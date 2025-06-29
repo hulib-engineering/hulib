@@ -1,4 +1,5 @@
 import { CaretDown } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import Input from '@/components/input/Input';
@@ -49,23 +50,26 @@ const ScheduleFilterPopoverContent: React.FC<RenderProps> = () => {
   );
 };
 
-export const ScheduleFilterPopover = () => (
-  <Popover position="bottom-end">
-    <Popover.Trigger
-      data-testid="popover-trigger-arrow"
-      {...{
-        className: 'h-full',
-      }}
-    >
-      <div className="flex items-center gap-x-2 rounded-lg border border-[#ABAEB1] px-4 py-1 text-sm text-neutral-40">
-        Type of meeting
-        <CaretDown size={16} />
-      </div>
-    </Popover.Trigger>
-    <Popover.Panel className="flex h-fit w-[165px] flex-col">
-      {({ open = false, close }) => (
-        <ScheduleFilterPopoverContent close={close} open={open} />
-      )}
-    </Popover.Panel>
-  </Popover>
-);
+export const ScheduleFilterPopover = () => {
+  const t = useTranslations('Schedule');
+  return (
+    <Popover position="bottom-end">
+      <Popover.Trigger
+        data-testid="popover-trigger-arrow"
+        {...{
+          className: 'h-full',
+        }}
+      >
+        <div className="flex items-center gap-x-2 rounded-lg border border-[#ABAEB1] px-4 py-1 text-sm text-neutral-40">
+          {t('type_meeting')}
+          <CaretDown size={16} />
+        </div>
+      </Popover.Trigger>
+      <Popover.Panel className="flex h-fit w-[165px] flex-col">
+        {({ open = false, close }) => (
+          <ScheduleFilterPopoverContent close={close} open={open} />
+        )}
+      </Popover.Panel>
+    </Popover>
+  );
+};

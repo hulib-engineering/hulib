@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
+import { signOut } from 'next-auth/react';
 import type { z } from 'zod';
 
 import type { ProfileValidation } from '@/validations/ProfileValidation';
@@ -29,6 +30,8 @@ const slice = createSlice({
       Cookies.set('NEXT_LOCALE', 'vi');
       Cookies.remove('defaultLocale');
       Cookies.remove('locales');
+      // Sign out and redirect to login page
+      signOut({ callbackUrl: '/auth/login' });
     },
     setAvatarUrl: (state, action) => {
       const { path, id } = action.payload;

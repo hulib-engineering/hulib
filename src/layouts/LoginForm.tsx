@@ -17,7 +17,6 @@ import SocialButton from '@/components/SocialButton';
 import TextInput from '@/components/textInput/TextInput';
 import type { EmailLoginResponse } from '@/libs/services/modules/auth';
 import { useLoginAsManagerMutation } from '@/libs/services/modules/auth';
-import FacebookIcon from '@/public/assets/icons/facebook-icon.svg';
 import GoogleIcon from '@/public/assets/icons/google-icon.svg';
 import { LoginValidation } from '@/validations/LoginValidation';
 
@@ -133,7 +132,7 @@ const LoginForm = () => {
         <div className="text-center tracking-tight text-neutral-30">Or</div>
         <div className="h-[1px] w-full shrink grow basis-0 bg-neutral-90" />
       </div>
-      <div className="w-full space-y-2">
+      <div className="w-full">
         <SocialButton
           iconUrl={GoogleIcon}
           className="w-full"
@@ -141,13 +140,13 @@ const LoginForm = () => {
         >
           Log in with Google
         </SocialButton>
-        <SocialButton
+        {/* <SocialButton
           iconUrl={FacebookIcon}
           className="w-full"
           onClick={() => signIn('facebook', { callbackUrl: '/home' })}
         >
           Log in with Facebook
-        </SocialButton>
+        </SocialButton> */}
       </div>
       <div className="inline-flex items-center justify-center gap-4 py-3">
         <div className="tracking-tight text-neutral-30">New to HuLib?</div>

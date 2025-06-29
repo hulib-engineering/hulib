@@ -3,9 +3,11 @@
 import React from 'react';
 
 import { useAppSelector } from '@/libs/hooks';
+import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 import { useGetTimeSlotsHuberQuery } from '@/libs/services/modules/time-slots';
 
 import BigSchedule from './components/BigSchedule/BigSchedule';
+import EmptyMeetingsState from './components/EmptyMeetingsState';
 import MiniSchedule from './components/MiniSchedule';
 import TimeSlot from './components/TimeSlot';
 import UpComingEvent from './components/UpComingEvent';
@@ -13,6 +15,7 @@ import UpComingEvent from './components/UpComingEvent';
 const WeeklySchedule = () => {
   const user = useAppSelector((state) => state.auth.userInfo);
   const isHuber = user?.role?.name === 'Huber';
+
   const { data: timeSlotHuber, isLoading: isLoadingTimeSlots } =
     useGetTimeSlotsHuberQuery(
       { id: user?.id },
@@ -21,10 +24,20 @@ const WeeklySchedule = () => {
       },
     );
 
+  const { data: readingSessions, isLoading: isLoadingReadingSessions } =
+    useGetReadingSessionsQuery({ upcoming: true });
+  const hasUpcomingEvent = readingSessions && readingSessions.length > 0;
+
   return (
     <div className="flex h-max flex-col pt-0 lg:flex-row lg:pl-[20px]">
       <div className="w-full lg:w-[344px]">
-        <UpComingEvent />
+        {!isLoadingReadingSessions &&
+          (hasUpcomingEvent ? (
+            <UpComingEvent isHuber={isHuber} />
+          ) : (
+            <EmptyMeetingsState isHuber={isHuber} />
+          ))}
+
         <MiniSchedule />
         {isHuber && !isLoadingTimeSlots && (
           <TimeSlot timeSlots={timeSlotHuber} />

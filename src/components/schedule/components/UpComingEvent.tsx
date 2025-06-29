@@ -5,9 +5,11 @@ import { format } from 'date-fns';
 import { isNaN } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
+
 // import avatar from './assets/images/icons/avatar.svg'
 
 const formatTime = (isoString: string): string => {
@@ -22,7 +24,11 @@ const formatTime = (isoString: string): string => {
   }
 };
 
-function UpComingEvent() {
+interface UpComingEventProps {
+  isHuber: boolean;
+}
+const UpComingEvent: React.FC<UpComingEventProps> = ({ isHuber }) => {
+  const t = useTranslations('Schedule');
   const { data: readingSessions, isLoading: isLoadingReadingSessions } =
     useGetReadingSessionsQuery({ upcoming: true });
   const [data, setData] = useState<any>({});
@@ -42,8 +48,15 @@ function UpComingEvent() {
             <div className="inline-flex h-[24px] items-center justify-center rounded-[4px] bg-[#0858FA] p-[2px]">
               <VideoCamera size={20} color="#ffffff" weight="fill" />
             </div>
-            <div className="mx-[8px] text-[16px] font-normal leading-[24px]">
-              Meeting with <span className="text-[#DBAE0A]">Reader</span>
+            <div
+              className={`mx-[8px] text-[16px] font-normal leading-[24px] ${
+                isHuber ? '' : 'text-primary-50'
+              }`}
+            >
+              {t('upcoming.meeting_with')}{' '}
+              <span className={isHuber ? 'text-[#DBAE0A]' : 'text-primary-50'}>
+                {isHuber ? 'Reader' : 'Huber'}
+              </span>
             </div>
             <div>
               <Image
@@ -88,6 +101,6 @@ function UpComingEvent() {
       )}
     </div>
   );
-}
+};
 
 export default UpComingEvent;

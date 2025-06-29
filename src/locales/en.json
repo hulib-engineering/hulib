@@ -11,7 +11,12 @@
     "sign_up": "Sign up",
     "clear": "Clear",
     "recent_searches": "Recent Searches:",
-    "search_by_keyword": "Search by keyword"
+    "search_by_keyword": "Search by keyword",
+    "dashboard": "Dashboard",
+    "my_profile": "My profile",
+    "change_password": "Change password",
+    "register_huber": "Register to become human book",
+    "sign_out": "Sign out"
   },
   "HumanBookBanner": {
     "explore_now": "Explore the Human Book bookshelf now",
@@ -216,7 +221,7 @@
       },
       "index_8": {
         "heading": "9. What are your privacy rights?",
-        "content": "You have rights that allow you greater access to and control over your personal information. You may review, change, or terminate your account at any time. These may include the right: <ul><li><important>Withdrawing your consent:</important> If we are relying on your consent to process your personal information, which may be express and/or implied consent depending on the applicable law, you have the right to withdraw your consent at any time. You can withdraw your consent at any time by contacting us by using the contact details provided in the section \"HOW CAN YOU CONTACT US ABOUT THIS NOTICE?\" below. However, please note that this will not affect the lawfulness of the processing before its withdrawal..</li> <li><important>Opting out of marketing and promotional communications:</important> You can unsubscribe from our marketing and promotional communications at any time by clicking on the unsubscribe link in the emails that we send, or by contacting us using the details provided in the section \"HOW CAN YOU CONTACT US ABOUT THIS NOTICE?\" below. You will then be removed from the marketing lists. However, we may still communicate with you, for example, to send you service-related messages that are necessary for the administration and use of your account, to respond to service requests, or for other non-marketing purposes.</li> <li><important>Account Information:</important> If you would at any time like to review or change the information in your account or terminate your account, you can: Log in to your account settings and update your user account. Upon your request to terminate your account, we will deactivate or delete your account and information from our active databases. However, we may retain some information in our files to prevent fraud, troubleshoot problems, assist with any investigations, and/or comply with applicable legal requirements.</li> <li><important>Cookies and similar technologies:</important> Most Web browsers are set to accept cookies by default. If you prefer, you can usually choose to set your browser to remove cookies and to reject cookies. If you choose to remove cookies or reject cookies, this could affect certain features or services of our Service. If you have questions or comments about your privacy rights, you may email us at <sendEmail>hulibvietnam@gmail.com</sendEmail>.</li></ul>"
+        "content": "You have rights that allow you greater access to and control over your personal information. You may review, change, or terminate your account at any time. These may include the right: <ul><li><important>Withdrawing your consent:</important> If we are relying on your consent to process your personal information, which may be express and/or implied consent depending on the applicable law, you have the right to withdraw your consent at any time. You can withdraw your consent at any time by contacting us by using the contact details provided in the section \"HOW CAN YOU CONTACT US ABOUT THIS NOTICE?\" below. However, please note that this will not affect the lawfulness of the processing before its withdrawal.</li> <li><important>Opting out of marketing and promotional communications:</important> You can unsubscribe from our marketing and promotional communications at any time by clicking on the unsubscribe link in the emails that we send, or by contacting us using the details provided in the section \"HOW CAN YOU CONTACT US ABOUT THIS NOTICE?\" below. You will then be removed from the marketing lists. However, we may still communicate with you, for example, to send you service-related messages that are necessary for the administration and use of your account, to respond to service requests, or for other non-marketing purposes.</li> <li><important>Account Information:</important> If you would at any time like to review or change the information in your account or terminate your account, you can: Log in to your account settings and update your user account. Upon your request to terminate your account, we will deactivate or delete your account and information from our active databases. However, we may retain some information in our files to prevent fraud, troubleshoot problems, assist with any investigations, and/or comply with applicable legal requirements.</li> <li><important>Cookies and similar technologies:</important> Most Web browsers are set to accept cookies by default. If you prefer, you can usually choose to set your browser to remove cookies and to reject cookies. If you choose to remove cookies or reject cookies, this could affect certain features or services of our Service. If you have questions or comments about your privacy rights, you may email us at <sendEmail>hulibvietnam@gmail.com</sendEmail>.</li></ul>"
       },
       "index_9": {
         "heading": "10. Do we make updates to this notice?",
@@ -271,7 +276,7 @@
           },
           "index_2": {
             "heading": "5.3 Your commitments as a User",
-            "content": "You agree:<ul><li>(a)    that you have legal authority, and will continue to have such legal authority at all times during your registration, to enter into this Agreement;</li> <li>(b)     to only communicate information (including photographs and videos) that you have all necessary rights to;</li> <li>(c)    to compensate HuLib fully for any loss or damage that HuLib suffers as a result of any claims made or brought by a third party against HuLib due to your breach of this Agreement;</li> <li>(d)    to obtain all moral rights and intellectual property waivers and consents necessary to allow HuLib to freely use, modify and exploit the User Material (whether such use, modification or exploitation occurred before or after the waiver or consent is given) as permitted by this Agreement, and provide such waivers and consents to HuLib promptly on HuLib’s request;</li> <li>(e)      not to infringe any Intellectual Property Rights or Moral Rights of any person (including human books), and to obtain any required consents to use any soundtrack or other work subject to copyright featured on any videos, photos or stories;</li> <li>(f)    to only depict individuals in a Story with their consent;</li> <li>(g)      that you may only be a User for your own personal use and in your personal capacity, and not for any commercial or other capacity;</li> <li>(h)      not to bring any claim against HuLib in relation to any act or omission occurring in relation to the Platform, except that the foregoing does not limit your ability to bring a claim against HuLib for its negligence or other breach of this Agreement;</li> <li>(i)     to assume all liability for any risk arising from any Story that you upload or view, or from your use of any information on the Platform;</li> <li>(k)      that uploading a Story will not breach any agreements that you have entered into;</li> <li>(j)   to comply with the HuLib community values (as notified by us from time to time);</li> <li>(l)    to cooperate with HuLib in good faith, and to assist with any reasonable requests for the purposes of an investigation undertaken by HuLib or a legal authority regarding misuse of the Platform;</li> <li>(m)    not to provide any false, incomplete or misleading information, including information provided in your personal details;</li> <li>(n)    not to upload any content or use language that is inappropriate, profane, defamatory, infringing, obscene, indecent, unlawful, likely to offend, insult or humiliate others based on ethnicity, race, gender, sexuality, age or any disability or otherwise vilifies any person or incites violence or hatred;</li> <li>(o)      not to defame, abuse, stalk, harass, threaten or otherwise violate the legal rights of others, including rights relating to privacy and publicity;</li> <li>(p)      not to use the Platform to sell or advertise any goods or services;</li> <li>(q)     not to transfer your registration to another person.You must have all necessary consents, permissions, licences and approvals to enter into this Agreement and perform your obligations under it.</li> <li>(r)  if you are not satisfied with the human book or the mentor has any inappropriate behaviour, you need to contact the email in section 8.2</li></ul> If you believe that another User has provided fraudulent or incorrect information on the Platform, you must immediately inform HuLib.  HuLib is not responsible for any loss arising out of or in connection with any such fraudulent or incorrect information."
+            "content": "You agree:<ul><li>(a)    that you have legal authority, and will continue to have such legal authority at all times during your registration, to enter into this Agreement;</li> <li>(b)     to only communicate information (including photographs and videos) that you have all necessary rights to;</li> <li>(c)    to compensate HuLib fully for any loss or damage that HuLib suffers as a result of any claims made or brought by a third party against HuLib due to your breach of this Agreement;</li> <li>(d)    to obtain all moral rights and intellectual property waivers and consents necessary to allow HuLib to freely use, modify and exploit the User Material (whether such use, modification or exploitation occurred before or after the waiver or consent is given) as permitted by this Agreement, and provide such waivers and consents to HuLib promptly on HuLib’s request;</li> <li>(e)      not to infringe any Intellectual Property Rights or Moral Rights of any person (including human books), and to obtain any required consents to use any soundtrack or other work subject to copyright featured on any videos, photos or stories;</li> <li>(f)    to only depict individuals in a Story with their consent;</li> <li>(g)      that you may only be a User for your own personal use and in your personal capacity, and not for any commercial or other capacity;</li> <li>(h)      not to bring any claim against HuLib in relation to any act or omission occurring in relation to the Platform, except that the foregoing does not limit your ability to bring a claim against HuLib for its negligence or other breach of this Agreement;</li> <li>(i)     to assume all liability for any risk arising from any Story that you upload or view, or from your use of any information on the Platform;</li> <li>(j)      that uploading a Story will not breach any agreements that you have entered into;</li> <li>(k)   to comply with the HuLib community values (as notified by us from time to time);</li> <li>(l)    to cooperate with HuLib in good faith, and to assist with any reasonable requests for the purposes of an investigation undertaken by HuLib or a legal authority regarding misuse of the Platform;</li> <li>(m)    not to provide any false, incomplete or misleading information, including information provided in your personal details;</li> <li>(n)    not to upload any content or use language that is inappropriate, profane, defamatory, infringing, obscene, indecent, unlawful, likely to offend, insult or humiliate others based on ethnicity, race, gender, sexuality, age or any disability or otherwise vilifies any person or incites violence or hatred;</li> <li>(o)      not to defame, abuse, stalk, harass, threaten or otherwise violate the legal rights of others, including rights relating to privacy and publicity;</li> <li>(p)      not to use the Platform to sell or advertise any goods or services;</li> <li>(q)     not to transfer your registration to another person.You must have all necessary consents, permissions, licences and approvals to enter into this Agreement and perform your obligations under it.</li> <li>(r)  if you are not satisfied with the human book or the mentor has any inappropriate behaviour, you need to contact the email in section 8.2</li></ul> If you believe that another User has provided fraudulent or incorrect information on the Platform, you must immediately inform HuLib.  HuLib is not responsible for any loss arising out of or in connection with any such fraudulent or incorrect information."
           },
           "index_3": {
             "heading": "5.4 Security of your information",
@@ -511,6 +516,55 @@
   "Meeting": {
     "cancel_meeting": "I don't want to meeting anymore"
   },
+  "Schedule": {
+    "appointment_schedule": "Appointment schedule",
+    "type_meeting": "Type of meeting",
+    "waiting": "Waiting",
+    "upcoming": {
+      "meeting_with": "Meeting with"
+    },
+    "no_meetings": {
+      "huber_description": "No meetings yet? You can start by sharing your own story so others can find and meet you, or browse stories from others and book a meeting.",
+      "user_description": "You haven't joined a meeting yet. Take a moment to explore, read some stories, and connect with a Huber.",
+      "share_story_btn": "Share my story",
+      "explore_story_btn": "Explore story"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "unknownUser": "Unknown User",
+    "seeDetail": "See detail",
+    "seeAll": "See all",
+    "newNotification": "New notification",
+    "noNotifications": "No notifications",
+    "loadingFailed": "Failed to load notifications",
+    "loading": "Loading...",
+    "seePreviousNotifications": "See previous notifications",
+    "sessionRequest": {
+      "message": "would love to have a meeting with you."
+    },
+    "reviewStory": {
+      "message": "have also reviewed your story"
+    },
+    "publishStory": {
+      "user": {
+        "prefix": "Your book,",
+        "suffix": ",has been successfully published."
+      },
+      "admin": {
+        "message": "has sent a request to create a new Story"
+      }
+    },
+    "account": {
+      "user": {
+        "prefix": "Your registration to become a Huber",
+        "suffix": "has been accepted. Welcome onboard!"
+      },
+      "admin": {
+        "message": "has submitted a request to become a Huber."
+      }
+    }
+  },
   "Home": {
     "banner": {
       "title": "Hi!",
@@ -539,7 +593,6 @@
     },
     "short_descriptions": {
       "title": "Become our Huber",
-      "description": "Short Description",
       "btn": "Join as Huber"
     },
     "no_data": "No Data"

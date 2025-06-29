@@ -4,6 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import Image from 'next/image';
+import { useLocale, useTranslations } from 'next-intl';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { ScheduleFilterPopover } from '@/components/schedule/components/ScheduleFilter/ScheduleFilter';
@@ -13,15 +14,42 @@ import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-sess
 import { Role, ROLE_NAME, StatusEnum } from '@/types/common';
 
 export default function BigCalendar() {
-  const { data: readingSessions, isLoading } = useGetReadingSessionsQuery();
+  const t = useTranslations('Schedule');
+  const locale = useLocale();
+
+  const getCurrentWeekRange = () => {
+    const now = new Date();
+    const currentDay = now.getDay();
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - currentDay);
+    startOfWeek.setHours(0, 0, 0, 0);
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    endOfWeek.setHours(23, 59, 59, 999);
+    return {
+      startedAt: startOfWeek.toISOString(),
+      endedAt: endOfWeek.toISOString(),
+    };
+  };
+
+  const { startedAt, endedAt } = getCurrentWeekRange();
+  const { data: readingSessions, isLoading } = useGetReadingSessionsQuery({
+    startedAt,
+    endedAt,
+  });
   const [events, setEvents] = useState<
     { title: string; start: any; end: any; extendedProps: any }[]
   >([]);
   const userInfo = useAppSelector((state) => state.auth.userInfo);
-  const currentMonthYear = new Date().toLocaleString('en-US', {
-    month: 'long',
-    year: 'numeric',
-  });
+  const currentDate = new Date();
+  const formatMonthYear = (date: Date, currentLocale: string) => {
+    const month = date.toLocaleString(currentLocale, { month: 'long' });
+    const year = date.getFullYear();
+    return `${month} ${year}`;
+  };
+
+  const currentMonthYear = formatMonthYear(currentDate, locale);
+
   const [hoveredSession, setHoveredSession] = useState<any>(null);
   const [popupPosition, setPopupPosition] = useState<{
     top: number;
@@ -73,6 +101,7 @@ export default function BigCalendar() {
       setHoveredSession(null);
     }, 300);
   };
+
   const handlePopupMouseEnter = () => {
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
@@ -104,7 +133,7 @@ export default function BigCalendar() {
           >
             {isPending && (
               <span className=" inline-block h-[24px] w-[80px] self-end rounded-[100px] border-l-[#fff] bg-[#FFEDD5] p-[7px] text-right text-[12px] font-[500] leading-[16px] text-[#F97316]">
-                Waiting...
+                {t('waiting')}...
               </span>
             )}
             <div className="flex items-center">
@@ -146,7 +175,7 @@ export default function BigCalendar() {
   const dayHeaderContent = (arg: { date: Date }) => {
     const date = new Date(arg.date);
     const dayName = date
-      .toLocaleDateString('en-US', { weekday: 'short' })
+      .toLocaleDateString(locale, { weekday: 'short' })
       .toUpperCase();
     const dayNumber = date.getDate();
     return (
@@ -162,7 +191,7 @@ export default function BigCalendar() {
     <div className="bg-white p-4">
       <div className="flex w-full items-center justify-between">
         <h2 className="flex-1 rounded-md bg-white p-2 text-[28px] font-[500] leading-[36px] text-[#010D26]">
-          Appointment schedule {currentMonthYear}
+          {t('appointment_schedule')} {currentMonthYear}
         </h2>
         <div className="flex items-center gap-x-2">
           <span>View:</span>
@@ -171,27 +200,26 @@ export default function BigCalendar() {
       </div>
       {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
       <div className="calendar-scroll-wrapper">
-        {events?.length > 0 && (
-          <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin]}
-            initialView="timeGridWeek"
-            headerToolbar={{ left: '', center: '', right: '' }}
-            views={{
-              timeGridWeek: {
-                titleFormat: { year: 'numeric', month: 'long' },
-              },
-            }}
-            slotLabelContent={slotLabelContent}
-            height="auto"
-            contentHeight="auto"
-            slotMinTime="6:00:00"
-            slotMaxTime="24:00:00"
-            slotDuration="01:00:00"
-            dayHeaderContent={dayHeaderContent}
-            events={events}
-            eventContent={renderEventContent}
-          />
-        )}
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin]}
+          initialView="timeGridWeek"
+          headerToolbar={{ left: '', center: '', right: '' }}
+          views={{
+            timeGridWeek: {
+              titleFormat: { year: 'numeric', month: 'long' },
+            },
+          }}
+          slotLabelContent={slotLabelContent}
+          height="auto"
+          contentHeight="auto"
+          slotMinTime="6:00:00"
+          slotMaxTime="24:00:00"
+          slotDuration="01:00:00"
+          dayHeaderContent={dayHeaderContent}
+          events={events}
+          eventContent={renderEventContent}
+        />
+
         {hoveredSession && (
           <div onMouseEnter={handlePopupMouseEnter}>
             <PortalSessionCard
