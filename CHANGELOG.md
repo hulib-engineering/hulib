@@ -1,3 +1,18 @@
+# [1.22.0](https://github.com/hulib-engineering/hulib/compare/v1.21.0...v1.22.0) (2025-06-29)
+
+
+### Bug Fixes
+
+* **story:** fix ui ([e0f1df2](https://github.com/hulib-engineering/hulib/commit/e0f1df2a16689e2ccc7036a9d1ada398815e5e77))
+* **translation:** fix text incorrect ([e4fa22f](https://github.com/hulib-engineering/hulib/commit/e4fa22fc9f9f68119ea5910b78262caa418469a0))
+
+
+### Features
+
+* add internationalization support to notification components ([7233142](https://github.com/hulib-engineering/hulib/commit/72331425dcc6cdda9a27ce98bd403888a0f56d92))
+* add schedule blank ([7567c5f](https://github.com/hulib-engineering/hulib/commit/7567c5f37fd2f57575328503a4aca5d5361cf771))
+* **auth:** implement session check on login page and enhance UI components ([6806041](https://github.com/hulib-engineering/hulib/commit/680604102223791d7ba9b635ac4de582101d7ab9))
+
 # [1.21.0](https://github.com/hulib-engineering/hulib/compare/v1.20.0...v1.21.0) (2025-06-25)
 
 
