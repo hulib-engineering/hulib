@@ -11,7 +11,12 @@
     "sign_up": "Đăng kí",
     "clear": "Xoá",
     "recent_searches": "Tìm kiếm gần đây:",
-    "search_by_keyword": "Tìm kiếm bởi từ khoá"
+    "search_by_keyword": "Tìm kiếm bởi từ khoá",
+    "dashboard": "Bảng điều khiển",
+    "my_profile": "Hồ sơ của tôi",
+    "change_password": "Đổi mật khẩu",
+    "register_huber": "Đăng kí trở thành Huber",
+    "sign_out": "Đăng xuất"
   },
   "HumanBookBanner": {
     "explore_now": "Khám phá tủ sách Human Book ngay",
@@ -207,7 +212,7 @@
       },
       "index_6": {
         "heading": "7. Chúng tôi lưu giữ thông tin của bạn trong bao lâu?",
-        "content": "Chúng tôi lưu trữ thông tin của bạn trong thời gian cần thiết để đáp ứng các mục đích được mô tả trong chính sách quyền riêng tư này, trừ khi có yêu cầu khác liên quan tới vấn đề pháp lý. <ul><li>Chúng tôi chỉ lưu thông tin cá nhân của bạn trong thời gian cần thiết cho các mục đích được đề cập trong chính sách quyền riêng tư này.</li> <li>Không có mục đích nào được nêu trong chính sách này yêu cầu chúng tôi giữ thông tin cá nhân của bạn lâu hơn so với thời gian mà bạn có tài khoản trên nền tảng của chúng tôi.</li></ul> When we have no ongoing legitimate business need to process your personal information, we will either delete or anonymize such information, or, if this is not possible (for example, because your personal information has been stored in backup archives), then we will securely store your personal information and isolate it from any further processing until deletion is possible."
+        "content": "Chúng tôi lưu trữ thông tin của bạn trong thời gian cần thiết để đáp ứng các mục đích được mô tả trong chính sách quyền riêng tư này, trừ khi có yêu cầu khác liên quan tới vấn đề pháp lý.<ul> <li>Chúng tôi chỉ lưu thông tin cá nhân của bạn trong thời gian cần thiết cho các mục đích được đề cập trong chính sách quyền riêng tư này.</li> <li>Không có mục đích nào được nêu trong chính sách này yêu cầu chúng tôi giữ thông tin cá nhân của bạn lâu hơn so với thời gian mà bạn có tài khoản trên nền tảng của chúng tôi.</li> </ul> Khi chúng tôi không còn nhu cầu kinh doanh hợp pháp để tiếp tục xử lý thông tin cá nhân của bạn, chúng tôi sẽ xóa hoặc ẩn danh thông tin đó. Nếu điều này không thể thực hiện được (ví dụ như thông tin cá nhân của bạn được lưu trữ trong các bản sao lưu), chúng tôi sẽ lưu trữ thông tin cá nhân của bạn một cách an toàn và cách ly khỏi bất kỳ hoạt động xử lý nào khác cho đến khi có thể xóa bỏ."
       },
       "index_7": {
         "heading": "8. Chúng tôi bảo vệ thông tin của bạn như thế nào?",
@@ -243,7 +248,7 @@
     "term_of_use_sections": {
       "index_0": {
         "heading": "1. sự đồng thuận",
-        "content": "Thỏa thuận này là giữa HuLib (“HuLib”, “chúng tôi”, và “của chúng tôi”) và người dùng ứng dụng HuLib (“bạn” và “của bạn”). Thỏa thuận này bao gồm các điều khoản và bất kỳ tài liệu nào khác được quy định trong Điều khoản sử dụng (“Thỏa thuận”). Thỏa thuận này quản lý quyền và nghĩa vụ giữa HuLib và bạn, điều chỉnh quyền hạn chúng tôi và việc bạn sử dụng dịch vụ, ứng dụng web hoặc phần mềm khác được cung cấp cũng như mọi tài liệu, thông tin liên lạc, liên kết hoặc thông tin cđược cung cấp thông qua dịch vụ của chúng tôi. Ứng dụng web HuLib và Dịch vụ kèm theo tạo thành “Nền tảng”.<br></br> <br></br> Khi đăng ký trên nền tảng, người dùng thừa nhận đã đọc và đồng ý tuân thủ theo Thỏa thuận này cũng như Chính sách Riêng tư của HuLib (xem tại <linkToPrivacy>www.huLib.com.au/privacy-policy/</linkToPrivacy>).<br></br> <br></br> Nếu bạn không đồng ý với Thỏa thuận và Chính sách Riêng tư của chúng tôi, bạn phải chấm dứt việc sử dụng dịch vụ của HuLib."
+        "content": "Thỏa thuận này là giữa HuLib (“HuLib”, “chúng tôi”, và “của chúng tôi”) và người dùng ứng dụng HuLib (“bạn” và “của bạn”). Thỏa thuận này bao gồm các điều khoản và bất kỳ tài liệu nào khác được quy định trong Điều khoản sử dụng (“Thỏa thuận”). Thỏa thuận này quản lý quyền và nghĩa vụ giữa HuLib và bạn, điều chỉnh quyền hạn chúng tôi và việc bạn sử dụng dịch vụ, ứng dụng web hoặc phần mềm khác được cung cấp cũng như mọi tài liệu, thông tin liên lạc, liên kết hoặc thông tin được cung cấp thông qua dịch vụ của chúng tôi. Ứng dụng web HuLib và Dịch vụ kèm theo tạo thành “Nền tảng”.<br></br> <br></br> Khi đăng ký trên nền tảng, người dùng thừa nhận đã đọc và đồng ý tuân thủ theo Thỏa thuận này cũng như Chính sách Riêng tư của HuLib (xem tại <linkToPrivacy>www.huLib.com.au/privacy-policy/</linkToPrivacy>).<br></br> <br></br> Nếu bạn không đồng ý với Thỏa thuận và Chính sách Riêng tư của chúng tôi, bạn phải chấm dứt việc sử dụng dịch vụ của HuLib."
       },
       "index_1": {
         "heading": "2. thay đổi của thoả thuận",
@@ -515,6 +520,55 @@
   "Meeting": {
     "cancel_meeting": "Tôi không muốn gặp nữa"
   },
+  "Schedule": {
+    "appointment_schedule": "Lịch trò chuyện tháng",
+    "type_meeting": "Loại cuộc hẹn",
+    "waiting": "Chờ phản hổi",
+    "upcoming": {
+      "meeting_with": "Cuộc hẹn với"
+    },
+    "no_meetings": {
+      "huber_description": "Chưa có cuộc hẹn nào? Bạn có thể bắt đầu bằng cách chia sẻ câu chuyện của mình để người khác tìm thấy và đặt lịch gặp, hoặc khám phá các câu chuyện khác và đặt lịch hẹn.",
+      "user_description": "Bạn chưa tham gia cuộc hẹn nào. Hãy dành thời gian khám phá, đọc một số câu chuyện và kết nối với Huber.",
+      "share_story_btn": "Chia sẻ câu chuyện",
+      "explore_story_btn": "Khám phá câu chuyện"
+    }
+  },
+  "notifications": {
+    "title": "Thông báo",
+    "unknownUser": "Người dùng không xác định",
+    "seeDetail": "Xem chi tiết",
+    "seeAll": "Xem tất cả",
+    "newNotification": "Thông báo mới",
+    "noNotifications": "Không có thông báo",
+    "loadingFailed": "Tải thông báo thất bại",
+    "loading": "Đang tải...",
+    "seePreviousNotifications": "Xem thông báo trước đó",
+    "sessionRequest": {
+      "message": "muốn có một cuộc họp với bạn."
+    },
+    "reviewStory": {
+      "message": "cũng đã đánh giá câu chuyện của bạn"
+    },
+    "publishStory": {
+      "user": {
+        "prefix": "Cuốn sách của bạn,",
+        "suffix": ", đã được xuất bản thành công."
+      },
+      "admin": {
+        "message": "đã gửi yêu cầu tạo một Câu chuyện mới"
+      }
+    },
+    "account": {
+      "user": {
+        "prefix": "Đăng ký trở thành Huber của bạn",
+        "suffix": "đã được chấp nhận. Chào mừng bạn!"
+      },
+      "admin": {
+        "message": "đã gửi yêu cầu trở thành Huber."
+      }
+    }
+  },
   "Home": {
     "banner": {
       "title": "Xin chào!",
@@ -543,7 +597,6 @@
     },
     "short_descriptions": {
       "title": "Trở thành Huber của chúng tôi",
-      "description": "Mô tả ngắn",
       "btn": "Tham gia với tư cách Huber"
     },
     "no_data": "Không có dữ liệu",

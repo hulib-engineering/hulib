@@ -17,7 +17,7 @@ export async function generateMetadata({
   };
 }
 
-export default function Index() {
+export default async function Index() {
   return (
     <AuthLayout
       illustrationImage="/assets/images/login-illustration.svg"

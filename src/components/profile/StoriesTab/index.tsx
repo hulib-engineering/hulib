@@ -9,10 +9,8 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { FlipBook } from '@/components/flipBook/FlipBook';
 import { mergeClassnames } from '@/components/private/utils';
 import { useAppSelector } from '@/libs/hooks';
-import {
-  useDeleteStoryMutation,
-  useGetStoriesQuery,
-} from '@/libs/services/modules/stories';
+import { useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
+import { useDeleteStoryMutation } from '@/libs/services/modules/stories';
 import { Role } from '@/types/common';
 
 import CreateStoryModal from './CreateStoryModal';
@@ -26,9 +24,9 @@ const StoriesTab = () => {
     data: stories,
     isLoading,
     refetch,
-  } = useGetStoriesQuery(
+  } = useGetHuberStoriesQuery(
     {
-      humanBookId: isHuber ? Number(userInfo?.id) : undefined,
+      huberId: isHuber ? Number(userInfo?.id) : undefined,
     },
     {
       skip: !isHuber && !userInfo?.id,
