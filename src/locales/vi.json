@@ -393,7 +393,20 @@
     "meta_title": "HuLib | Thông tin của tôi",
     "meta_description": "Quản lý hồ sơ của bạn một cách hiệu quả",
     "upload": "tải ảnh đại diện",
-    "delete_ava": "xoá ảnh đại diện"
+    "delete_ava": "xoá ảnh đại diện",
+    "tabs": {
+      "about": "Giới thiệu",
+      "my_stories": "Câu chuyện của tôi",
+      "stories": "Câu chuyện",
+      "my_favorite": "Yêu thích"
+    },
+    "about_panel": {
+      "title": "Giới thiệu",
+      "liber_overview": "Tổng quan Liber",
+      "huber_overview": "Tổng quan Huber",
+      "work_and_education": "Công việc và Học vấn",
+      "contact_information": "Thông tin liên hệ"
+    }
   },
   "MyFavorites": {
     "choose_all": "Chọn tất cả",
