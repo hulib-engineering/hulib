@@ -394,7 +394,20 @@
     "meta_title": "HuLib | My Profile",
     "meta_description": "Manage your profile effectively",
     "upload": "upload photo",
-    "delete_ava": "delete avatar"
+    "delete_ava": "delete avatar",
+    "tabs": {
+      "about": "About",
+      "my_stories": "My Stories",
+      "stories": "Stories",
+      "my_favorite": "My Favorite"
+    },
+    "about_panel": {
+      "title": "About",
+      "liber_overview": "Liber Overview",
+      "huber_overview": "Huber Overview",
+      "work_and_education": "Work and Education",
+      "contact_information": "Contact Information"
+    }
   },
   "MyFavorites": {
     "choose_all": "Choose all",
