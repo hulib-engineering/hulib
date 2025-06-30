@@ -7,6 +7,7 @@ import {
   Suitcase,
   Users,
 } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 import * as React from 'react';
 
 import type { User } from '@/features/users/types';
@@ -31,11 +32,12 @@ type AboutSectionMenu = {
 };
 
 const AboutPanel = ({ isLiber, data, onInvalidate }: Props) => {
+  const t = useTranslations('MyProfile.about_panel');
   const [activeSection, setActiveSection] = React.useState('liberOverview');
   const sectionMenu: AboutSectionMenu[] = [
     {
       type: 'liberOverview',
-      label: isLiber ? 'Liber Overview' : 'Huber Overview',
+      label: isLiber ? t('liber_overview') : t('huber_overview'),
       icon: <Books size={20} />,
       component: (
         <OverviewSection
@@ -48,14 +50,14 @@ const AboutPanel = ({ isLiber, data, onInvalidate }: Props) => {
     },
     {
       type: 'workAndEducation',
-      label: 'Work and Education',
+      label: t('work_and_education'),
       icon: <Suitcase size={20} />,
       component: <WorkAndEducationSection data={data} />,
       isShow: data?.role?.name === ROLE_NAME[Role.HUBER],
     },
     {
       type: 'contactInformation',
-      label: 'Contact Information',
+      label: t('contact_information'),
       icon: <Users size={20} />,
       component: <ContactInformationSection data={data} />,
       isShow: true,
