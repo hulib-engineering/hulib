@@ -43,7 +43,7 @@ export default function AgoraVideoCall({ appId }: Props) {
     },
     {
       skip: !sessionId,
-    }
+    },
   );
 
   // Xác định vai trò của user hiện tại
@@ -177,7 +177,7 @@ export default function AgoraVideoCall({ appId }: Props) {
                 await client.unpublish([track]);
                 track.stop();
                 track.close();
-              })
+              }),
             );
           } else {
             await client.unpublish([localTracks[1]]);
@@ -309,7 +309,7 @@ export default function AgoraVideoCall({ appId }: Props) {
 
       if (isVibing) {
         router.push(
-          `/after-meeting/${sessionId}?storyName=${readingSession.story.title}`
+          `/after-meeting/${sessionId}?storyName=${readingSession.story.title}`,
         );
       }
     } catch (error) {
@@ -456,7 +456,7 @@ export default function AgoraVideoCall({ appId }: Props) {
             {client?.remoteUsers
               ?.map(
                 (u: any) =>
-                  `${u.uid}(${u.hasVideo ? 'V' : ''}${u.hasAudio ? 'A' : ''})`
+                  `${u.uid}(${u.hasVideo ? 'V' : ''}${u.hasAudio ? 'A' : ''})`,
               )
               .join(', ') || 'None'}
           </div>
