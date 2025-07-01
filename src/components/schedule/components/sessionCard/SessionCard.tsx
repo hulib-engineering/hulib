@@ -19,11 +19,13 @@ import { UserAvatar } from './UserAvatar';
 interface SessionCardProps {
   session: ReadingSession;
   expanded?: boolean;
+  showCancelDialogProp?: boolean;
 }
 
 export const SessionCard: React.FC<SessionCardProps> = ({
   session,
   expanded = false,
+  showCancelDialogProp = false,
 }) => {
   const [isExpanded, setIsExpanded] = useState(expanded);
   const userId = useAppSelector((state) => state.auth.userInfo?.id);
@@ -144,6 +146,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
             status={session.sessionStatus}
             isVibing={isVibing}
             sessionId={session.id}
+            showCancelDialogProp={showCancelDialogProp}
           />
         </div>
       )}

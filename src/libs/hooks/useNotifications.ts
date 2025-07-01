@@ -33,10 +33,6 @@ const useNotifications = ({
   // Filter logic extracted to separate function
   const filterNotifications = useCallback((notifications: Notification[]) => {
     return notifications.filter((notification) => {
-      if (notification.type.id === NOTIFICATION_TYPES.OTHER.id) {
-        return false;
-      }
-
       if (notification.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name) {
         return notification.relatedEntity?.sessionStatus === StatusEnum.Pending;
       }
