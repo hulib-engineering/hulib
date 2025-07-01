@@ -4,7 +4,7 @@ import type { PaginatedResponse } from '../../type';
 import type { Story } from '../stories/storiesType';
 
 const deleteAllFavoriteStory = (
-  build: EndpointBuilder<BaseQueryFn, string, string>
+  build: EndpointBuilder<BaseQueryFn, string, string>,
 ) =>
   build.mutation<PaginatedResponse<Story>, { userId: number }>({
     query: ({ userId }) => ({
