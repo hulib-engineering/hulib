@@ -18,11 +18,13 @@ import NotificationContent from './NotificationContent';
 interface NotificationItemProps {
   notification: Notification;
   hideDetails?: boolean;
+  hideRateNumber?: boolean;
   onClick?: () => void;
 }
 
 const NotificationItem: FC<NotificationItemProps> = ({
   notification,
+  hideRateNumber = false,
   hideDetails = false,
   onClick,
 }) => {
@@ -114,7 +116,7 @@ const NotificationItem: FC<NotificationItemProps> = ({
 
           <div className="relative mt-1">
             <p className="text-sm text-gray-500">{formattedTime}</p>
-            {isReviewStory && notification.relatedEntity && (
+            {isReviewStory && !hideRateNumber && notification.relatedEntity && (
               <div className="absolute right-[80px] top-0 flex items-center gap-4 text-sm text-primary-50">
                 <span>{notification.relatedEntity.numOfRatings} rating</span>
                 <span>{notification.relatedEntity.numOfComments} comment</span>
@@ -127,6 +129,8 @@ const NotificationItem: FC<NotificationItemProps> = ({
               onAccept={onAccept}
               onReject={onReject}
               isLoading={isUpdatingStatus}
+              notificationType={notification.type.name}
+              sessionId={notification.relatedEntityId}
             />
           )}
         </div>

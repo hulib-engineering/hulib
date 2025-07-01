@@ -69,6 +69,7 @@ const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
                         key={notification.id}
                         notification={notification}
                         hideDetails
+                        hideRateNumber
                         onClick={close}
                       />
                     ))}
