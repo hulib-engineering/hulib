@@ -580,6 +580,13 @@
       "admin": {
         "message": "đã gửi yêu cầu trở thành Huber."
       }
+    },
+    "upComming": {
+      "title": "Đã đến giờ cho buổi họp của bạn",
+      "meetingWith": "Cuộc họp với",
+      "startingNow": "đang bắt đầu.",
+      "encouragement": "Nhanh chóng tham gia để tạo nên một buổi họp tuyệt vời.",
+      "callToAction": "Nhấn vào bên dưới để tham gia."
     }
   },
   "Home": {

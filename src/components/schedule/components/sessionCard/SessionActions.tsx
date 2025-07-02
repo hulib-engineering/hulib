@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { useUpdateReadingSessionMutation } from '@/libs/services/modules/reading-session';
@@ -10,6 +10,7 @@ interface SessionActionsProps {
   sessionId: string;
   status: string;
   isVibing: boolean;
+  showCancelDialogProp?: boolean;
   onStatusChange?: (newStatus: StatusType) => void;
 }
 
@@ -17,6 +18,7 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
   sessionId,
   status,
   isVibing,
+  showCancelDialogProp = false,
   onStatusChange,
 }) => {
   const [updateStatus, { isLoading }] = useUpdateReadingSessionMutation();
@@ -24,6 +26,10 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
   const t = useTranslations('Meeting');
   const defaultCancelReason = t('cancel_meeting');
   const [cancelReason, setCancelReason] = useState(defaultCancelReason);
+
+  useEffect(() => {
+    setShowCancelDialog(showCancelDialogProp);
+  }, [showCancelDialogProp]);
 
   const handleStatusChange = async (newStatus: StatusType, reason?: string) => {
     try {
@@ -52,6 +58,7 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
       pushError('Failed to update status. Please try again.');
     }
   };
+
   const handleCancelRequest = () => {
     setShowCancelDialog(true);
   };
@@ -110,7 +117,7 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
   };
 
   const renderActionButtons = () => {
-    if (showCancelDialog) {
+    if (showCancelDialog || showCancelDialogProp) {
       return renderCancelDialog();
     }
 

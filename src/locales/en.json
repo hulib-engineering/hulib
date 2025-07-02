@@ -576,6 +576,13 @@
       "admin": {
         "message": "has submitted a request to become a Huber."
       }
+    },
+    "upComming": {
+      "title": "It's time for your session",
+      "meetingWith": "Meeting with",
+      "startingNow": "is starting now.",
+      "encouragement": "Hurry up to make it happen with a great soul.",
+      "callToAction": "Click below to join."
     }
   },
   "Home": {
