@@ -1,6 +1,13 @@
 'use client';
 
-import { Check, X } from '@phosphor-icons/react';
+import {
+  BookBookmark,
+  Books,
+  Check,
+  Suitcase,
+  User,
+  X,
+} from '@phosphor-icons/react';
 import clsx from 'clsx';
 import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
@@ -26,18 +33,22 @@ const SIDEBAR_SECTIONS = [
   {
     key: 'overview',
     label: 'Huber Overview',
+    icon: BookBookmark,
   },
   {
     key: 'work',
     label: 'Work and Education',
+    icon: Suitcase,
   },
   {
     key: 'contact',
     label: 'Contact Information',
+    icon: User,
   },
   {
     key: 'story',
     label: 'Story',
+    icon: Books,
   },
 ];
 // --- Main UserApprovalPage Component ---
@@ -163,7 +174,8 @@ const UserApprovalPage = () => {
                 )}
                 onClick={() => setSelectedSection(section.key)}
               >
-                {section.label}
+                <section.icon size={20} />{' '}
+                <span className="pl-2">{section.label}</span>
               </button>
             ))}
           </div>
