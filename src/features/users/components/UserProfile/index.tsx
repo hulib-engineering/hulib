@@ -1,13 +1,20 @@
+import { VideoConference, WarningCircle, XSquare } from '@phosphor-icons/react';
 import React, { useState } from 'react';
 
 import HeadearProfileInfo from '@/features/users/components/HeaderProfileInfo';
 
+import ApprovalMeetings from '../ApprovalMeetings';
 import CompletedMeetings from '../CompletedMeetings';
 import DeclinedMeetings from '../DeclinedMeetings';
 
 const activityTabs = [
-  { key: 'completed', label: 'Completed meeting', icon: '📅' },
-  { key: 'declined', label: 'Declined meeting', icon: '🚫' },
+  {
+    key: 'pending',
+    label: 'Awaiting approval meetings',
+    icon: WarningCircle,
+  },
+  { key: 'completed', label: 'Completed meeting', icon: VideoConference },
+  { key: 'declined', label: 'Declined meeting', icon: XSquare },
 ];
 
 const UserProfile = ({ data }: any) => {
@@ -51,7 +58,7 @@ const UserProfile = ({ data }: any) => {
                 }`}
                 onClick={() => setSelectedTab(tab.key)}
               >
-                <span>{tab.icon}</span>
+                <tab.icon size={20} />
                 {tab.label}
               </button>
             ))}
@@ -63,6 +70,7 @@ const UserProfile = ({ data }: any) => {
           <span className="text-base font-medium text-black">
             {activityTabs.find((t) => t.key === selectedTab)?.label}
           </span>
+          {selectedTab === 'pending' ? <ApprovalMeetings /> : null}
           {selectedTab === 'completed' ? <CompletedMeetings /> : null}
           {selectedTab === 'declined' ? <DeclinedMeetings /> : null}
         </div>
