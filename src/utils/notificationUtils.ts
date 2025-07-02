@@ -77,7 +77,7 @@ export const getAdminNotificationRoute = (
 
   switch (type.name) {
     case NOTIFICATION_TYPES.ACCOUNT.name:
-      return `/admin/users/${sender.id}`;
+      return `/admin/users/approval/${sender.id}`;
     case NOTIFICATION_TYPES.PUBLISH_STORY.name:
     case NOTIFICATION_TYPES.REVIEW_STORY.name:
       return relatedEntityId
