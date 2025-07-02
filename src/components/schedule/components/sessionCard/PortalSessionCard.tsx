@@ -8,6 +8,7 @@ interface PortalSessionCardProps {
   expanded?: boolean;
   position: { top: number; left: number };
   onClose?: () => void;
+  showCancelDialogProp?: boolean;
 }
 
 export const PortalSessionCard: React.FC<PortalSessionCardProps> = ({
@@ -15,6 +16,7 @@ export const PortalSessionCard: React.FC<PortalSessionCardProps> = ({
   expanded = true,
   position,
   onClose,
+  showCancelDialogProp,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -110,7 +112,11 @@ export const PortalSessionCard: React.FC<PortalSessionCardProps> = ({
       style={getCardStyle() as React.CSSProperties}
       onMouseLeave={isMobile ? undefined : onClose}
     >
-      <SessionCard session={session} expanded={expanded} />
+      <SessionCard
+        session={session}
+        expanded={expanded}
+        showCancelDialogProp={showCancelDialogProp}
+      />
     </div>,
     typeof window !== 'undefined' ? document.body : (null as any),
   );

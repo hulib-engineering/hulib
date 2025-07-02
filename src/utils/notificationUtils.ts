@@ -37,6 +37,12 @@ export const getNotificationConfig = (
       showActions: false,
       avatarType: 'system',
     },
+    [NOTIFICATION_TYPES.OTHER.name]: {
+      isClickable: false,
+      showAvatar: true,
+      showActions: true,
+      avatarType: 'system',
+    },
   };
 
   return (

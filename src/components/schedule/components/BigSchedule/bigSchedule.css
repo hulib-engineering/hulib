@@ -114,6 +114,10 @@ table table thead tr th:first-child(1) {
   letter-spacing: 0%;
 }
 
+.fc-timegrid-event-harness {
+  left: 0 !important; 
+}
+
 .fc-theme-standard td:nth-child(1) {
   border: none !important;
 }
