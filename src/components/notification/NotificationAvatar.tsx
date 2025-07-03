@@ -44,6 +44,27 @@ const NotificationAvatar: FC<NotificationAvatarProps> = ({
     );
   }
 
+  if (notification.type.name === NOTIFICATION_TYPES.OTHER.name) {
+    return (
+      <div className="relative shrink-0">
+        <Image
+          src="/assets/images/meeting-icon.png"
+          alt="Meeting icon"
+          className="rounded-lg"
+          width={36}
+          height={36}
+        />
+        <Image
+          src="/assets/icons/notification/Alarm.svg"
+          alt="Alarm"
+          className="absolute -bottom-2 -right-2 rounded-sm"
+          width={20}
+          height={20}
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className="flex shrink-0 items-center justify-center rounded-full border-2 border-blue-500 bg-blue-100 p-1 text-white"

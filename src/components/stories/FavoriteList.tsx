@@ -34,13 +34,13 @@ interface FavoriteListProps {
 }
 
 const FavoriteList = ({
-  title,
-  description,
-  stories = [],
+  title: _title,
+  description: _description,
+  stories: _stories = [],
   isLoading,
   showTopics = false,
   // refetchStories = () => {},
-  onSeeAllClick,
+  onSeeAllClick: _onSeeAllClick,
 }: FavoriteListProps) => {
   const tExplore = useTranslations('ExploreStory');
   const tMyFavorites = useTranslations('MyFavorites');
@@ -59,7 +59,7 @@ const FavoriteList = ({
     userInfo?.id,
     {
       skip: !userInfo?.id,
-    }
+    },
   );
 
   const [deleteFavoriteStory] = useDeleteFavoriteStoryMutation();
@@ -78,7 +78,7 @@ const FavoriteList = ({
       setCurrentStoryData(null);
 
       pushSuccess(
-        response?.message || tExplore('story_removed_from_favorites')
+        response?.message || tExplore('story_removed_from_favorites'),
       );
     } catch (error) {
       console.error('Error removing favorite story:', error);
@@ -102,14 +102,14 @@ const FavoriteList = ({
       <div
         className={mergeClassnames(
           'flex w-full items-center gap-2 justify-self-end mt-3 absolute bottom-[10px]',
-          'md:flex-row md:mt-2 md:px-3 md:pl-0'
+          'md:flex-row md:mt-2 md:px-3 md:pl-0',
         )}
       >
         <Button
           variant="primary"
           className={mergeClassnames(
             'text-base h-8 max-h-8 w-[120px] flex-none rounded-full px-[12px] py-[12px]',
-            'md:h-[44px] md:max-h-[44px] md:w-[105px]'
+            'md:h-[44px] md:max-h-[44px] md:w-[105px]',
           )}
           onClick={() => router.push(`/explore-story/${item?.storyId}`)}
         >
@@ -119,7 +119,7 @@ const FavoriteList = ({
           variant="outline"
           className={mergeClassnames(
             'w-full h-8',
-            'md:size-10 md:min-h-10 md:min-w-10 bg-white border-neutral-variant'
+            'md:size-10 md:min-h-10 md:min-w-10 bg-white border-neutral-variant',
           )}
           iconOnly
           onClick={() => {
@@ -169,7 +169,7 @@ const FavoriteList = ({
           className={mergeClassnames(
             'mt-6 grid grid-cols-1 gap-8 rounded-lg',
             'md:grid-cols-2',
-            'xl:grid-cols-3'
+            'xl:grid-cols-3',
           )}
         >
           {favoriteStories?.map((item: StoryType) => (

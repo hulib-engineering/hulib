@@ -1,5 +1,3 @@
-'use client';
-
 import {
   ArrowLeft,
   ArrowRight,
@@ -92,7 +90,7 @@ export const PlaceRequestScreen = ({
       <div className="flex w-full flex-col gap-y-4 md:w-[480px]">
         <button
           type="button"
-          className="flex items-center gap-x-2 text-[#000000]"
+          className="flex items-center gap-x-2 text-black"
           onClick={backStep}
         >
           <ArrowLeft size={20} />

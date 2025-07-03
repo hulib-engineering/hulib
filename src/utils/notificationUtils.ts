@@ -37,6 +37,12 @@ export const getNotificationConfig = (
       showActions: false,
       avatarType: 'system',
     },
+    [NOTIFICATION_TYPES.OTHER.name]: {
+      isClickable: false,
+      showAvatar: true,
+      showActions: true,
+      avatarType: 'system',
+    },
   };
 
   return (
@@ -71,7 +77,7 @@ export const getAdminNotificationRoute = (
 
   switch (type.name) {
     case NOTIFICATION_TYPES.ACCOUNT.name:
-      return `/admin/users/${sender.id}`;
+      return `/admin/users/approval/${sender.id}`;
     case NOTIFICATION_TYPES.PUBLISH_STORY.name:
     case NOTIFICATION_TYPES.REVIEW_STORY.name:
       return relatedEntityId
