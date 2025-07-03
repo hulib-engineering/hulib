@@ -4,6 +4,7 @@ import { CaretCircleRight, MapPin, Star, Users } from '@phosphor-icons/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import * as React from 'react';
 
@@ -40,6 +41,7 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 };
 
 const Profile = () => {
+  const t = useTranslations('MyProfile');
   const searchParams = useSearchParams();
   const userInfo = useAppSelector((state) => state.auth.userInfo);
   const isAdmin = userInfo?.role?.id === Role.ADMIN;
@@ -125,7 +127,7 @@ const Profile = () => {
                   : 'py-2 text-sm font-medium text-neutral-40'
               }
             >
-              About
+              {t('tabs.about')}
             </p>
           </div>
         ),
@@ -150,7 +152,7 @@ const Profile = () => {
                       : 'py-2 text-sm font-medium text-neutral-40'
                   }
                 >
-                  My Stories
+                  {t('tabs.my_stories')}
                 </p>
               </div>
             ),
@@ -169,7 +171,7 @@ const Profile = () => {
                       : 'py-2 text-sm font-medium text-neutral-40'
                   }
                 >
-                  Stories
+                  {t('tabs.stories')}
                 </p>
               </div>
             ),
@@ -189,7 +191,7 @@ const Profile = () => {
                       : 'py-2 text-sm font-medium text-neutral-40'
                   }
                 >
-                  My Favorite
+                  {t('tabs.my_favorite')}
                 </p>
               </div>
             ),
