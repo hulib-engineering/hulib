@@ -80,15 +80,15 @@
     "hero_motto": "Explore the Human Book bookshelf now",
     "hero_description": "There is a story and experience within each of us, so we are born to be somebody.",
     "hero_call_to_action": "Learn more",
-    "hero_message_1": "”There is <important>a crack</important> in everything, that’s how <important>the light</important> gets in.”",
-    "hero_message_2": "“You are <important>not alone</important> in your <important>struggles</important>.”",
+    "hero_message_1": "'There is <important>a crack</important> in everything, that's how <important>the light</important> gets in.'",
+    "hero_message_2": "'You are <important>not alone</important> in your <important>struggles</important>.'",
     "hero_mentor_quantity": "100+ <normal>Experienced Human Books</normal>",
     "event_title": "upcoming event on December 14, 2024",
-    "event_description": "Join us for “Work or Study” Event, focused on different stories and backgrounds to pursue our dreams.",
+    "event_description": "Join us for 'Work or Study' Event, focused on different stories and backgrounds to pursue our dreams.",
     "event_call_to_action": "register",
     "feature_peers": {
       "title": "People with the same stories",
-      "description": "100+ human books and volunteers having personal experience with the same problem you’re into."
+      "description": "100+ human books and volunteers having personal experience with the same problem you're into."
     },
     "feature_online_meetings": {
       "title": "Online Meeting",
@@ -229,7 +229,7 @@
       },
       "index_10": {
         "heading": "11. How can you contact us about this notice?",
-        "content": "If you have questions or comments about this notice, you may email us at <sendEmail>hulibvietnam@gmail.com</sendEmail> or contact us by HuLib Admin: <call>(+84) 905 440 322</call>"
+        "content": "If you have questions or comments about this notice, you may email us at <sendEmail>hulibvietnam@gmail.com</sendEmail> or contact us by HuLib Admin: <call>(+84) 905 440 322"
       }
     },
     "txt_accept": "accept",
@@ -249,7 +249,7 @@
     "term_of_use_sections": {
       "index_0": {
         "heading": "1. ABOUT THIS AGREEMENT",
-        "content": "This agreement is between HuLib (“HuLib”, “we”, “us” and “our”) and the person signing up to be a User of the HuLib application (“you” and “your”). This agreement comprises these terms of use and any other document specified in these Terms of Use (“Agreement”). This Agreement governs the rights and obligations between HuLib and you, governing our provision and your use of our Services, web app or other software provided, and any material, communications, links or information contained on, or made available through, our Services. Together, the web app and Services provided comprise the “Platform”. <br></br> By signing up to the Platform, you acknowledge that you have read and agree to comply with and be bound by this Agreement (including any variations HuLib makes from time to time) and by HuLib’s Privacy Policy (available at <linkToPrivacy>www.huLib.com.au/privacy-policy/</linkToPrivacy>). If you do not agree to this Agreement and the Privacy Policy, you must terminate your registration as a User."
+        "content": "This agreement is between HuLib (“HuLib”, “we”, “us” and “our”) and the person signing up to be a User of the HuLib application (“you” and “your”). This agreement comprises these terms of use and any other document specified in these Terms of Use (“Agreement”). This Agreement governs the rights and obligations between HuLib and you, governing our provision and your use of our Services, web app or other software provided, and any material, communications, links or information contained on, or made available through, our Services. Together, the web app and Services provided comprise the “Platform”. <br></br> By signing up to the Platform, you acknowledge that you have read and agree to comply with and be bound by this Agreement (including any variations HuLib makes from time to time) and by HuLib's Privacy Policy (available at <linkToPrivacy>www.huLib.com.au/privacy-policy/</linkToPrivacy>). If you do not agree to this Agreement and the Privacy Policy, you must terminate your registration as a User."
       },
       "index_1": {
         "heading": "2. CHANGES TO THIS AGREEMENT",
@@ -276,7 +276,7 @@
           },
           "index_2": {
             "heading": "5.3 Your commitments as a User",
-            "content": "You agree:<ul><li>(a)    that you have legal authority, and will continue to have such legal authority at all times during your registration, to enter into this Agreement;</li> <li>(b)     to only communicate information (including photographs and videos) that you have all necessary rights to;</li> <li>(c)    to compensate HuLib fully for any loss or damage that HuLib suffers as a result of any claims made or brought by a third party against HuLib due to your breach of this Agreement;</li> <li>(d)    to obtain all moral rights and intellectual property waivers and consents necessary to allow HuLib to freely use, modify and exploit the User Material (whether such use, modification or exploitation occurred before or after the waiver or consent is given) as permitted by this Agreement, and provide such waivers and consents to HuLib promptly on HuLib’s request;</li> <li>(e)      not to infringe any Intellectual Property Rights or Moral Rights of any person (including human books), and to obtain any required consents to use any soundtrack or other work subject to copyright featured on any videos, photos or stories;</li> <li>(f)    to only depict individuals in a Story with their consent;</li> <li>(g)      that you may only be a User for your own personal use and in your personal capacity, and not for any commercial or other capacity;</li> <li>(h)      not to bring any claim against HuLib in relation to any act or omission occurring in relation to the Platform, except that the foregoing does not limit your ability to bring a claim against HuLib for its negligence or other breach of this Agreement;</li> <li>(i)     to assume all liability for any risk arising from any Story that you upload or view, or from your use of any information on the Platform;</li> <li>(j)      that uploading a Story will not breach any agreements that you have entered into;</li> <li>(k)   to comply with the HuLib community values (as notified by us from time to time);</li> <li>(l)    to cooperate with HuLib in good faith, and to assist with any reasonable requests for the purposes of an investigation undertaken by HuLib or a legal authority regarding misuse of the Platform;</li> <li>(m)    not to provide any false, incomplete or misleading information, including information provided in your personal details;</li> <li>(n)    not to upload any content or use language that is inappropriate, profane, defamatory, infringing, obscene, indecent, unlawful, likely to offend, insult or humiliate others based on ethnicity, race, gender, sexuality, age or any disability or otherwise vilifies any person or incites violence or hatred;</li> <li>(o)      not to defame, abuse, stalk, harass, threaten or otherwise violate the legal rights of others, including rights relating to privacy and publicity;</li> <li>(p)      not to use the Platform to sell or advertise any goods or services;</li> <li>(q)     not to transfer your registration to another person.You must have all necessary consents, permissions, licences and approvals to enter into this Agreement and perform your obligations under it.</li> <li>(r)  if you are not satisfied with the human book or the mentor has any inappropriate behaviour, you need to contact the email in section 8.2</li></ul> If you believe that another User has provided fraudulent or incorrect information on the Platform, you must immediately inform HuLib.  HuLib is not responsible for any loss arising out of or in connection with any such fraudulent or incorrect information."
+            "content": "You agree:<ul><li>(a)    that you have legal authority, and will continue to have such legal authority at all times during your registration, to enter into this Agreement;</li> <li>(b)     to only communicate information (including photographs and videos) that you have all necessary rights to;</li> <li>(c)    to compensate HuLib fully for any loss or damage that HuLib suffers as a result of any claims made or brought by a third party against HuLib due to your breach of this Agreement;</li> <li>(d)    to obtain all moral rights and intellectual property waivers and consents necessary to allow HuLib to freely use, modify and exploit the User Material (whether such use, modification or exploitation occurred before or after the waiver or consent is given) as permitted by this Agreement, and provide such waivers and consents to HuLib promptly on HuLib's request;</li> <li>(e)      not to infringe any Intellectual Property Rights or Moral Rights of any person (including human books), and to obtain any required consents to use any soundtrack or other work subject to copyright featured on any videos, photos or stories;</li> <li>(f)    to only depict individuals in a Story with their consent;</li> <li>(g)      that you may only be a User for your own personal use and in your personal capacity, and not for any commercial or other capacity;</li> <li>(h)      not to bring any claim against HuLib in relation to any act or omission occurring in relation to the Platform, except that the foregoing does not limit your ability to bring a claim against HuLib for its negligence or other breach of this Agreement;</li> <li>(i)     to assume all liability for any risk arising from any Story that you upload or view, or from your use of any information on the Platform;</li> <li>(j)      that uploading a Story will not breach any agreements that you have entered into;</li> <li>(k)   to comply with the HuLib community values (as notified by us from time to time);</li> <li>(l)    to cooperate with HuLib in good faith, and to assist with any reasonable requests for the purposes of an investigation undertaken by HuLib or a legal authority regarding misuse of the Platform;</li> <li>(m)    not to provide any false, incomplete or misleading information, including information provided in your personal details;</li> <li>(n)    not to upload any content or use language that is inappropriate, profane, defamatory, infringing, obscene, indecent, unlawful, likely to offend, insult or humiliate others based on ethnicity, race, gender, sexuality, age or any disability or otherwise vilifies any person or incites violence or hatred;</li> <li>(o)      not to defame, abuse, stalk, harass, threaten or otherwise violate the legal rights of others, including rights relating to privacy and publicity;</li> <li>(p)      not to use the Platform to sell or advertise any goods or services;</li> <li>(q)     not to transfer your registration to another person.You must have all necessary consents, permissions, licences and approvals to enter into this Agreement and perform your obligations under it.</li> <li>(r)  if you are not satisfied with the human book or the mentor has any inappropriate behaviour, you need to contact the email in section 8.2</li></ul> If you believe that another User has provided fraudulent or incorrect information on the Platform, you must immediately inform HuLib.  HuLib is not responsible for any loss arising out of or in connection with any such fraudulent or incorrect information."
           },
           "index_3": {
             "heading": "5.4 Security of your information",
@@ -385,8 +385,8 @@
     "female": "Female",
     "other": "Other",
     "enter_otp": "Enter verification code",
-    "support_otp": "It’s almost done. please enter the 6-digit verification code we just sent to",
-    "not_receive_otp": "Haven’t receive the email?",
+    "support_otp": "It's almost done. please enter the 6-digit verification code we just sent to",
+    "not_receive_otp": "Haven't receive the email?",
     "resend": "Resend",
     "contact_us": "If you need help, contact us via email"
   },
@@ -520,7 +520,7 @@
     "time_slots": "Time Slots",
     "available_time_slots": "My available slots",
     "available_time_slots_description": "Wow below are slots you chose",
-    "select_time_slots": "Select the times you’re available for Liber!",
+    "select_time_slots": "Select the times you're available for Liber!",
     "update_time_slots": "Update My Slots",
     "select_time_slots_description": "Select the time slots you are available for the session",
     "error_time_slots": "An error has occurred. Please check your time slots and try again.",
@@ -541,6 +541,16 @@
       "user_description": "You haven't joined a meeting yet. Take a moment to explore, read some stories, and connect with a Huber.",
       "share_story_btn": "Share my story",
       "explore_story_btn": "Explore story"
+    },
+    "MainScreen": {
+      "title": "Schedule your meeting",
+      "subtitle": "Choose your meeting time",
+      "huber_timezone": "Huber's time zone",
+      "choose_time": "Please choose a time",
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "night": "Night",
+      "next": "Next"
     }
   },
   "notifications": {
@@ -592,10 +602,6 @@
     },
     "newest_stories": {
       "title": "Newest Stories",
-      "btn1": "See all"
-    },
-    "newest_books": {
-      "title": "Newest Books",
       "btn1": "See all"
     },
     "recommended_hubers": {
@@ -658,5 +664,15 @@
     "feedback_value": "Your feedback is valuable to us. This content need to be modify",
     "go_to_schedule": "Go to schedule",
     "back_to_home": "Back to Home"
+  },
+  "ScheduleBasicInfo": {
+    "topics": "topics",
+    "rating": "rating",
+    "duration": "Duration",
+    "duration_time": "(30 mins)",
+    "notice": "Notice",
+    "notice_text": "Please make sure you select the correct time slot for your schedule. The time shown is in your local timezone.",
+    "support_text": "If you need any support, please",
+    "click_here": "click here"
   }
 }
