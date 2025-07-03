@@ -1,3 +1,13 @@
+# [1.23.0](https://github.com/hulib-engineering/hulib/compare/v1.22.0...v1.23.0) (2025-07-03)
+
+
+### Features
+
+* add localized success and error messages for newsletter subscription ([ccea02e](https://github.com/hulib-engineering/hulib/commit/ccea02e02891005815006efc3c51e5820186be1f))
+* add notification for upcoming meetings ([6b129bf](https://github.com/hulib-engineering/hulib/commit/6b129bf4b32079dcfab4366c0c10273efcc7b490))
+* **admin:** enhance user approval interface and add pending meetings section ([e033cdf](https://github.com/hulib-engineering/hulib/commit/e033cdf8ca0a0c235107b8fa943059add0f68fee))
+* implement internationalization for time slot screens ([3b721da](https://github.com/hulib-engineering/hulib/commit/3b721da0d1b8b6f07765c73212a38848047dbb6a))
+
 # [1.22.0](https://github.com/hulib-engineering/hulib/compare/v1.21.0...v1.22.0) (2025-06-29)
 
 
