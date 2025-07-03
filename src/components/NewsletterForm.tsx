@@ -39,11 +39,9 @@ const NewsletterForm = () => {
         },
         Env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
       );
-      pushSuccess(
-        '"Welcome aboard! 🌟 Your journey to wellness starts now. Keep an eye on your inbox for updates and exclusive content. Let\'s thrive together!" 📩🌿',
-      );
+      pushSuccess(t('newsletter_success_message'));
     } catch (error: any) {
-      pushError(`Error: ${error.message}`);
+      pushError(t('newsletter_error_message'));
     } finally {
       setIsLoading(false);
     }
