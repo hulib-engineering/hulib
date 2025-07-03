@@ -3,13 +3,27 @@
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Session } from 'next-auth';
+import { getSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 
 import { mergeClassnames } from '@/components/private/utils';
 import { publicRoutes } from '@/libs/constants';
 
 const HumanBookBanner = () => {
   const t = useTranslations('HumanBookBanner');
+
+  const [session, setSession] = useState<Session | null>(null);
+  useEffect(() => {
+    const checkSession = async () => {
+      const sessionData = await getSession();
+
+      setSession(sessionData);
+    };
+
+    checkSession();
+  }, []);
 
   return (
     // eslint-disable-next-line tailwindcss/no-contradicting-classname
@@ -21,13 +35,13 @@ const HumanBookBanner = () => {
         )}
       >
         <div className="flex flex-row items-center gap-3">
-          <Link
-            href={publicRoutes.LOGIN}
-            className="cursor-pointer text-xl font-medium text-white hover:opacity-70"
-          >
+          <div className="cursor-pointer text-xl font-medium text-white hover:opacity-70">
             {t('explore_now')}
+          </div>
+
+          <Link href={session?.user?.name ? '/home' : publicRoutes.LOGIN}>
+            <ArrowRight size={20} color="#fff" />
           </Link>
-          <ArrowRight size={20} color="#fff" />
         </div>
         <div className="hidden shrink-0 lg:block">
           <Image
@@ -38,20 +52,22 @@ const HumanBookBanner = () => {
           />
         </div>
 
-        <div className="flex w-full max-w-[288px] flex-row-reverse gap-4 md:flex-row">
-          <Link
-            href={publicRoutes.LOGIN}
-            className="flex cursor-pointer items-center justify-center whitespace-nowrap rounded-full bg-transparent px-4 py-2 text-center text-xs font-medium leading-4 text-white underline hover:opacity-70"
-          >
-            {t('log_in')}
-          </Link>
-          <Link
-            href={publicRoutes.REGISTER}
-            className="flex-1 cursor-pointer items-center justify-center whitespace-nowrap rounded-full bg-white px-4 py-2 text-center text-xs font-medium leading-4 text-primary-60 hover:opacity-70"
-          >
-            {t('sign_up')}
-          </Link>
-        </div>
+        {!session?.user?.name && (
+          <div className="flex w-full max-w-[288px] flex-row-reverse gap-4 md:flex-row">
+            <Link
+              href={publicRoutes.LOGIN}
+              className="flex cursor-pointer items-center justify-center whitespace-nowrap rounded-full bg-transparent px-4 py-2 text-center text-xs font-medium leading-4 text-white underline hover:opacity-70"
+            >
+              {t('log_in')}
+            </Link>
+            <Link
+              href={publicRoutes.REGISTER}
+              className="flex-1 cursor-pointer items-center justify-center whitespace-nowrap rounded-full bg-white px-4 py-2 text-center text-xs font-medium leading-4 text-primary-60 hover:opacity-70"
+            >
+              {t('sign_up')}
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
