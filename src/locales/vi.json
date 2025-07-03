@@ -5,8 +5,8 @@
   "HeaderWebApp": {
     "contact_us": "liên hệ",
     "my_schedule": "Lịch trình của tôi",
-    "books": "Sách",
-    "mentors": "Cố vấn",
+    "books": "Câu chuyện",
+    "mentors": "Huber",
     "log_in": "Đăng nhập",
     "sign_up": "Đăng kí",
     "clear": "Xoá",
@@ -65,7 +65,7 @@
     "cookie_settings": "Cài đặt cookie",
     "site": "Trang web",
     "my_schedule": "Lịch trình của tôi",
-    "books": "Sách",
+    "books": "Câu chuyện",
     "profile": "Hồ sơ",
     "help": "Trợ giúp",
     "contact": "Liên hệ",
@@ -79,14 +79,14 @@
     "hero_motto": "Khám phá tủ sách Human Book ngay",
     "hero_description": "Mỗi người đều có một câu chuyện và trải nghiệm riêng nên chúng ta sinh ra để trở thành một ai đó, phần đặc biệt của thế giới này.",
     "hero_call_to_action": "Tìm hiểu thêm",
-    "hero_message_1": "”Vạn vật ẩn dấu <important>các vết nứt</important>, đó là nơi <important>ánh sáng</important> chiếu rọi.”",
-    "hero_message_2": "“Bạn <important>không đơn độc</important> trước <important>những rào cản</important> của chính mình.”",
+    "hero_message_1": "Vạn vật ẩn dấu <important>các vết nứt</important>, đó là nơi <important>ánh sáng</important> chiếu rọi.",
+    "hero_message_2": "Bạn <important>không đơn độc</important> trước <important>những rào cản</important> của chính mình.",
     "hero_mentor_quantity": "100+ <normal>Human Book (Sách Sống) với nhiều trải nghiệm phong phú</normal>",
     "event_title": "đón chờ sự kiện mới toanh  -  14/12/2024",
-    "event_description": "Hãy tham gia “Đi học - Đi làm. Hướng nào dễ hơn ?”, để cùng lắng nghe những câu chuyện nửa cuộc đời của anh chị em Human Books nhà HuLib nha.",
+    "event_description": "Hãy tham gia &quot;Đi học - Đi làm. Hướng nào dễ hơn ?&quot;, để cùng lắng nghe những câu chuyện nửa cuộc đời của anh chị em Human Books nhà HuLib nha.",
     "event_call_to_action": "đăng ký ngay",
     "feature_peers": {
-      "title": "Cộng đồng với những câu chuyện \"không của riêng ai\"",
+      "title": "Cộng đồng với những câu chuyện &quot;không của riêng ai&quot;",
       "description": "Hơn 100 human book (sách sống) và tình nguyện viên có trải nghiệm phù hợp mà bạn đang tìm kiếm."
     },
     "feature_online_meetings": {
@@ -248,7 +248,7 @@
     "term_of_use_sections": {
       "index_0": {
         "heading": "1. sự đồng thuận",
-        "content": "Thỏa thuận này là giữa HuLib (“HuLib”, “chúng tôi”, và “của chúng tôi”) và người dùng ứng dụng HuLib (“bạn” và “của bạn”). Thỏa thuận này bao gồm các điều khoản và bất kỳ tài liệu nào khác được quy định trong Điều khoản sử dụng (“Thỏa thuận”). Thỏa thuận này quản lý quyền và nghĩa vụ giữa HuLib và bạn, điều chỉnh quyền hạn chúng tôi và việc bạn sử dụng dịch vụ, ứng dụng web hoặc phần mềm khác được cung cấp cũng như mọi tài liệu, thông tin liên lạc, liên kết hoặc thông tin được cung cấp thông qua dịch vụ của chúng tôi. Ứng dụng web HuLib và Dịch vụ kèm theo tạo thành “Nền tảng”.<br></br> <br></br> Khi đăng ký trên nền tảng, người dùng thừa nhận đã đọc và đồng ý tuân thủ theo Thỏa thuận này cũng như Chính sách Riêng tư của HuLib (xem tại <linkToPrivacy>www.huLib.com.au/privacy-policy/</linkToPrivacy>).<br></br> <br></br> Nếu bạn không đồng ý với Thỏa thuận và Chính sách Riêng tư của chúng tôi, bạn phải chấm dứt việc sử dụng dịch vụ của HuLib."
+        "content": "Thỏa thuận này là giữa HuLib (&quot;HuLib&quot;, &quot;chúng tôi&quot;, và &quot;của chúng tôi&quot;) và người dùng ứng dụng HuLib (&quot;bạn&quot; và &quot;của bạn&quot;). Thỏa thuận này bao gồm các điều khoản và bất kỳ tài liệu nào khác được quy định trong Điều khoản sử dụng (&quot;Thỏa thuận&quot;). Thỏa thuận này quản lý quyền và nghĩa vụ giữa HuLib và bạn, điều chỉnh quyền hạn chúng tôi và việc bạn sử dụng dịch vụ, ứng dụng web hoặc phần mềm khác được cung cấp cũng như mọi tài liệu, thông tin liên lạc, liên kết hoặc thông tin được cung cấp thông qua dịch vụ của chúng tôi. Ứng dụng web HuLib và Dịch vụ kèm theo tạo thành &quot;Nền tảng&quot;.<br></br> <br></br> Khi đăng ký trên nền tảng, người dùng thừa nhận đã đọc và đồng ý tuân thủ theo Thỏa thuận này cũng như Chính sách Riêng tư của HuLib (xem tại <linkToPrivacy>www.huLib.com.au/privacy-policy/</linkToPrivacy>).<br></br> <br></br> Nếu bạn không đồng ý với Thỏa thuận và Chính sách Riêng tư của chúng tôi, bạn phải chấm dứt việc sử dụng dịch vụ của HuLib."
       },
       "index_1": {
         "heading": "2. thay đổi của thoả thuận",
@@ -256,11 +256,11 @@
       },
       "index_2": {
         "heading": "3. nền tảng",
-        "content": "Nền tảng được thiết kế để cung cấp cho bạn một không gian để xem và/hoặc nghe những câu chuyện cá nhân về việc vượt qua khó khăn từ các human book (sách sống), thông qua các đoạn video hoặc tệp âm thanh, hình ảnh hoặc bài viết được tải lên Nền tảng (mỗi bản tải lên được gọi là \"Story\"). Nền tảng cũng kết nối bạn với những người trẻ khác."
+        "content": "Nền tảng được thiết kế để cung cấp cho bạn một không gian để xem và/hoặc nghe những câu chuyện cá nhân về việc vượt qua khó khăn từ các human book (sách sống), thông qua các đoạn video hoặc tệp âm thanh, hình ảnh hoặc bài viết được tải lên Nền tảng (mỗi bản tải lên được gọi là &quot;Story&quot;). Nền tảng cũng kết nối bạn với những người trẻ khác."
       },
       "index_3": {
         "heading": "4. cam kết của chúng tôi",
-        "content": "<ul><li>Các nhân sự chất lượng HuLib sẽ đảm bảo rằng bạn sẽ nhận được sự quan tâm đầy đủ.</li> <li>Chúng tôi không đảm bảo rằng Nền tảng sẽ không có lỗi, không có virus hoặc tương thích với thiết bị của bạn.</li> <li>HuLib có thể thêm, thay đổi hoặc loại bỏ bất kỳ tính năng và chức năng nào của Nền tảng bất cứ lúc nào (có hoặc không thông báo cho bạn).</li> <li>HuLib không bảo đảm rằng Nền tảng sẽ không bị mất, hỏng, can thiệp, bị tấn công hoặc xâm phạm bởi sự xâm nhập khác (\"Sự cố An ninh\")</li> <li>Chúng tôi không chịu bất kỳ trách nhiệm nào liên quan đến bất kỳ Sự cố An ninh bất khả kháng.</li></ul>"
+        "content": "<ul><li>Các nhân sự chất lượng HuLib sẽ đảm bảo rằng bạn sẽ nhận được sự quan tâm đầy đủ.</li> <li>Chúng tôi không đảm bảo rằng Nền tảng sẽ không có lỗi, không có virus hoặc tương thích với thiết bị của bạn.</li> <li>HuLib có thể thêm, thay đổi hoặc loại bỏ bất kỳ tính năng và chức năng nào của Nền tảng bất cứ lúc nào (có hoặc không thông báo cho bạn).</li> <li>HuLib không bảo đảm rằng Nền tảng sẽ không bị mất, hỏng, can thiệp, bị tấn công hoặc xâm phạm bởi sự xâm nhập khác (&quot;Sự cố An ninh&quot;)</li> <li>Chúng tôi không chịu bất kỳ trách nhiệm nào liên quan đến bất kỳ Sự cố An ninh bất khả kháng.</li></ul>"
       },
       "index_4": {
         "heading": "5. người dùng",
@@ -545,6 +545,16 @@
       "user_description": "Bạn chưa tham gia cuộc hẹn nào. Hãy dành thời gian khám phá, đọc một số câu chuyện và kết nối với Huber.",
       "share_story_btn": "Chia sẻ câu chuyện",
       "explore_story_btn": "Khám phá câu chuyện"
+    },
+    "MainScreen": {
+      "title": "Đặt lịch trò chuyện",
+      "subtitle": "Chọn thời gian trò chuyện",
+      "huber_timezone": "Múi giờ của Huber",
+      "choose_time": "Vui lòng chọn thời gian",
+      "morning": "Buổi sáng",
+      "afternoon": "Buổi chiều",
+      "night": "Buổi tối",
+      "next": "Tiếp tục"
     }
   },
   "notifications": {
@@ -596,10 +606,6 @@
     },
     "newest_stories": {
       "title": "Câu chuyện mới nhất",
-      "btn1": "Xem tất cả"
-    },
-    "newest_books": {
-      "title": "Sách mới nhất",
       "btn1": "Xem tất cả"
     },
     "recommended_hubers": {
@@ -662,5 +668,15 @@
     "feedback_value": "Phản hồi của bạn rất có giá trị đối với chúng tôi. Nội dung này cần được chỉnh sửa",
     "go_to_schedule": "Đi đến lịch trình",
     "back_to_home": "Trở về Trang chủ"
+  },
+  "ScheduleBasicInfo": {
+    "topics": "Chủ đề",
+    "rating": "Đánh giá",
+    "duration": "Thời lượng",
+    "duration_time": "(30 phút)",
+    "notice": "Lưu ý",
+    "notice_text": "Vui lòng đảm bảo bạn chọn đúng khung giờ cho lịch hẹn của mình. Thời gian hiển thị là theo múi giờ địa phương của bạn.",
+    "support_text": "Nếu bạn cần hỗ trợ, vui lòng",
+    "click_here": "nhấn vào đây"
   }
 }
