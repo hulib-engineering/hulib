@@ -422,6 +422,11 @@
   "HumanBookRegister": {
     "register_as_a_human_book": "Register as a Human Book",
     "register_confirm_message": "Are you sure you to register as a Human Book?",
+    "select_topics": "What do you want to tag Huber as? (Optional)",
+    "placeholder_topics": "Search topics...",
+    "add_more_topics": "Add more topics...",
+    "no_topics_found": "No topics found",
+    "all_topics_selected": "All topics selected",
     "About": "About",
     "placeholder_about": "Tell us about yourself...",
     "Session": "Session",
