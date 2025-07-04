@@ -421,6 +421,11 @@
   "HumanBookRegister": {
     "register_as_a_human_book": "Đăng ký làm Người Sách",
     "register_confirm_message": "Bạn có chắc chắn đăng ký làm Human Book không?",
+    "select_topics": "Bạn muốn gắn thẻ Huber như thế nào? (Tùy chọn)",
+    "placeholder_topics": "Chọn thể loại...",
+    "add_more_topics": "Thêm thể loại...",
+    "no_topics_found": "Không tìm thấy thể loại nào",
+    "all_topics_selected": "Tất cả thể loại đã được chọn",
     "About": "Giới thiệu",
     "placeholder_about": "Hãy kể về bản thân bạn...",
     "Session": "Phiên",
