@@ -10,6 +10,14 @@ export const HuberStep1Validation = (t: any) => {
       .refine((val) => !val || z.string().url().safeParse(val).success, {
         message: t('validation.invalid_url'),
       }),
+    topics: z
+      .array(
+        z.object({
+          id: z.number(),
+        }),
+      )
+      .optional()
+      .default([]),
     isConfirmed: z.boolean().refine((val) => val === true, {
       message: t('validation.terms_required'),
     }),
