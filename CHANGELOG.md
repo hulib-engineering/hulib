@@ -1,3 +1,16 @@
+# [1.24.0](https://github.com/hulib-engineering/hulib/compare/v1.23.0...v1.24.0) (2025-07-05)
+
+
+### Bug Fixes
+
+* update notification configuration to disable action display for OTHER type notifications ([fb1ce96](https://github.com/hulib-engineering/hulib/commit/fb1ce96e26a493333a0d1aa23a3af90c708c2c19))
+
+
+### Features
+
+* add searchable topic selection to step 1 registration ([1b217c9](https://github.com/hulib-engineering/hulib/commit/1b217c9223a75d741f650487bf87e6febd6253a3))
+* update ui ([2cd2460](https://github.com/hulib-engineering/hulib/commit/2cd246004102d2a1566621913795010906d6b055))
+
 # [1.23.0](https://github.com/hulib-engineering/hulib/compare/v1.22.0...v1.23.0) (2025-07-03)
 
 
