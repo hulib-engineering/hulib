@@ -124,7 +124,7 @@ const UserApprovalPage = () => {
   }
 
   if (
-    user.role.id === Role.LIBER &&
+    user.role.id === Role.HUBER &&
     user.approval &&
     user.approval !== 'Pending'
   ) {

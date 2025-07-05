@@ -34,7 +34,6 @@ import {
   useRegisterMutation,
   useResendOTPMutation,
 } from '@/libs/services/modules/auth';
-import FacebookIcon from '@/public/assets/icons/facebook-icon.svg';
 import GoogleIcon from '@/public/assets/icons/google-icon.svg';
 import {
   RegisterStep1Validation,
@@ -564,10 +563,10 @@ const RegistrationForm = () => {
         <div className="h-[1px] w-full shrink grow basis-0 bg-neutral-90" />
       </div>
       <div className="flex items-center justify-center gap-2">
-        <SocialButton
+        {/* <SocialButton
           iconUrl={FacebookIcon}
           onClick={() => signIn('facebook', { callbackUrl: '/home' })}
-        />
+        /> */}
         <SocialButton
           iconUrl={GoogleIcon}
           onClick={() => signIn('google', { callbackUrl: '/home' })}
