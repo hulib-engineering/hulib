@@ -32,7 +32,7 @@ const HumanBookBanner = () => {
       <div
         className={mergeClassnames(
           'max-w-xs mx-auto flex w-full flex-col items-center justify-between gap-6 py-2',
-          'lg:flex-row lg:gap-0 lg:px-[90px] lg:max-w-screen-xxl lg:py-0'
+          'lg:flex-row lg:gap-0 lg:px-[90px] lg:max-w-screen-xxl lg:py-0',
         )}
       >
         <div className="flex flex-row items-center gap-3">
@@ -40,7 +40,7 @@ const HumanBookBanner = () => {
             {t('explore_now')}
           </div>
 
-          <Link href={session?.user?.name ? '/home' : publicRoutes.LOGIN}>
+          <Link href={session ? '/home' : publicRoutes.LOGIN}>
             <ArrowRight size={20} color="#fff" />
           </Link>
         </div>
@@ -53,7 +53,7 @@ const HumanBookBanner = () => {
           />
         </div>
 
-        {!session?.user?.name && (
+        {!session && (
           <div className="flex w-full max-w-[288px] flex-row-reverse gap-4 md:flex-row">
             <Link
               href={publicRoutes.LOGIN}
