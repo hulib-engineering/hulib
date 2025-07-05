@@ -2,6 +2,8 @@ import { IconButton } from '@mui/material';
 import { PencilSimple } from '@phosphor-icons/react';
 import { useSearchParams } from 'next/navigation';
 
+import { useAppSelector } from '@/libs/hooks';
+
 type Props = {
   onClick: () => void;
   disabled?: boolean;
@@ -13,9 +15,11 @@ const IconButtonEdit = ({
   disabled = false,
   isHidden = false,
 }: Props) => {
+  const user = useAppSelector((state) => state.auth.userInfo);
+  const isAdmin = user?.role?.id === 1;
   const searchParams = useSearchParams();
   const huberId = searchParams.get('huberId');
-  if (huberId || isHidden) return null;
+  if (huberId || isHidden || isAdmin) return null;
 
   return (
     <div className="rounded-full bg-primary-90 ">
