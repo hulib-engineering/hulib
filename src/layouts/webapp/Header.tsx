@@ -88,7 +88,7 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
         onClick: () => signOut({ callbackUrl: '/auth/login' }),
       },
     ],
-    [t],
+    [t]
   );
 
   const menuItemsByRole = useMemo(() => {
@@ -117,7 +117,7 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
             {item.icon}
             <MenuItem.Title>{item.label}</MenuItem.Title>
           </MenuItem>
-        ),
+        )
       )}
     </div>
   );
@@ -145,7 +145,6 @@ const Header = () => {
   const t = useTranslations('HeaderWebApp');
 
   const { data, isLoading } = useGetNotificationsQuery({ page: 1, limit: 5 });
-
   const user = useAppSelector((state) => state.auth.userInfo);
 
   const dispatch = useAppDispatch();
@@ -182,8 +181,8 @@ const Header = () => {
               }
 
               Object.assign(draft, notifications);
-            },
-          ),
+            }
+          )
         );
       };
 
@@ -279,7 +278,7 @@ const Header = () => {
       </header>
       <header className="hidden w-[100vw] items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
         <div className="flex items-center gap-6">
-          <Link href="/">
+          <Link href={user?.id ? '/home' : '/'}>
             <Logo size="small" />
           </Link>
           {renderNavbar()}
