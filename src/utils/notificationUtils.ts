@@ -40,7 +40,7 @@ export const getNotificationConfig = (
     [NOTIFICATION_TYPES.OTHER.name]: {
       isClickable: false,
       showAvatar: true,
-      showActions: true,
+      showActions: false,
       avatarType: 'system',
     },
   };
