@@ -58,7 +58,6 @@ const LoginForm = () => {
         });
       }
     } catch (error: any) {
-      console.log(error);
       setError('password', {
         type: 'custom',
         message: 'Incorrect password, please try again.',
