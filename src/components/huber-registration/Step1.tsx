@@ -1,9 +1,10 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { X } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
@@ -12,10 +13,16 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import TermAndCondition from '@/components/huber-registration/TermAndCondition';
 import { useAppSelector } from '@/libs/hooks';
 import { useRegisterHuberMutation } from '@/libs/services/modules/auth';
+import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import { HuberStep1Validation } from '@/validations/HuberValidation';
 
 interface Props {
   next: any;
+}
+
+interface Topic {
+  id: number;
+  name: string;
 }
 
 type FormData = z.infer<ReturnType<typeof HuberStep1Validation>>;
@@ -28,9 +35,17 @@ const Step1 = (props: Props) => {
   const [registerHuber, { isLoading }] = useRegisterHuberMutation();
   const userInfo = useAppSelector((state) => state.auth.userInfo);
 
+  const [isTopicDropdownOpen, setIsTopicDropdownOpen] = useState(false);
+  const [topicSearchQuery, setTopicSearchQuery] = useState('');
+  const topicDropdownRef = useRef<HTMLDivElement>(null);
+  const topicInputRef = useRef<HTMLInputElement>(null);
+  const { data: topicsPages, isLoading: isTopicsLoading } = useGetTopicsQuery();
+
   const {
     control,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(HuberStep1Validation(t)),
@@ -38,9 +53,12 @@ const Step1 = (props: Props) => {
     defaultValues: {
       bio: '',
       videoUrl: '',
+      topics: [],
       isConfirmed: false,
     },
   });
+
+  const selectedTopics = watch('topics') || [];
 
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
@@ -53,10 +71,72 @@ const Step1 = (props: Props) => {
     }
   }, [errors]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        topicDropdownRef.current &&
+        !topicDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsTopicDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleTopicToggle = (topicId: number) => {
+    const currentTopics = selectedTopics || [];
+    const topicIds = currentTopics.map((topic: any) => topic.id);
+
+    if (topicIds.includes(topicId)) {
+      setValue(
+        'topics',
+        currentTopics.filter((topic: any) => topic.id !== topicId),
+      );
+    } else {
+      setValue('topics', [...currentTopics, { id: topicId }]);
+    }
+
+    setTopicSearchQuery('');
+    setTimeout(() => {
+      if (topicInputRef.current) {
+        topicInputRef.current.focus();
+      }
+    }, 0);
+  };
+
+  const handleTopicRemove = (topicId: number) => {
+    setValue(
+      'topics',
+      selectedTopics.filter((topic: any) => topic.id !== topicId),
+    );
+  };
+
+  const filteredTopics = (topicsPages?.data || []).filter((topic: Topic) => {
+    const isAlreadySelected = selectedTopics.some(
+      (selectedTopic: any) => selectedTopic.id === topic.id,
+    );
+    const matchesSearch = topic.name
+      .toLowerCase()
+      .includes(topicSearchQuery.toLowerCase());
+    return !isAlreadySelected && matchesSearch;
+  });
+
+  const handleTopicInputFocus = () => {
+    setIsTopicDropdownOpen(true);
+  };
+
+  const handleTopicInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTopicSearchQuery(e.target.value);
+    setIsTopicDropdownOpen(true);
+  };
+
   const onSubmit = async (formData: FormData) => {
     try {
       await registerHuber(formData).unwrap();
-      // Store registration step with user ID and name from auth state
       const userKey = `${userInfo.id}_huber_registration_step`;
       localStorage.setItem(userKey, '2');
       pushSuccess('Registration successful!');
@@ -87,6 +167,7 @@ const Step1 = (props: Props) => {
       <p className="self-start text-xl font-medium leading-[2.75rem] text-neutral-10 md:text-[2.25rem]">
         {t('step_1_title')}
       </p>
+
       <label className="mt-6 flex w-full flex-col gap-2" htmlFor="bio">
         <span className="text-sm leading-4 text-neutral-10">
           {t('bio.text')} <span className="text-red-50">*</span>
@@ -143,6 +224,80 @@ const Step1 = (props: Props) => {
         />
       </label>
 
+      <div className="mt-6 flex w-full flex-col gap-2">
+        <span className="text-sm leading-4 text-neutral-10">
+          {t('select_topics')}
+        </span>
+        <div className="relative" ref={topicDropdownRef}>
+          <div className="flex min-h-[40px] w-full flex-wrap items-center gap-2 rounded-lg border bg-neutral-98 px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
+            {selectedTopics?.map((selectedTopic: any) => {
+              const topic = (topicsPages?.data || []).find(
+                (i: Topic) => i.id === selectedTopic.id,
+              );
+              if (!topic) return null;
+              return (
+                <div
+                  key={topic.id}
+                  className="inline-flex items-center gap-2 rounded-full bg-primary-90 px-3 py-1 text-sm text-primary-40"
+                >
+                  {topic.name}
+                  <X
+                    size={14}
+                    className="cursor-pointer text-primary-40 hover:text-primary-30"
+                    onClick={() => handleTopicRemove(topic.id)}
+                  />
+                </div>
+              );
+            })}
+
+            <input
+              ref={topicInputRef}
+              type="text"
+              value={topicSearchQuery}
+              onChange={handleTopicInputChange}
+              onFocus={handleTopicInputFocus}
+              placeholder={
+                selectedTopics?.length > 0
+                  ? t('add_more_topics')
+                  : t('placeholder_topics')
+              }
+              className="min-w-[120px] flex-1 bg-transparent text-sm outline-none placeholder:text-gray-500"
+              disabled={isFormDisabled}
+            />
+          </div>
+
+          {isTopicDropdownOpen && !isTopicsLoading && (
+            <div className="absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-lg border bg-white shadow-lg">
+              <div className="p-2">
+                {filteredTopics.length > 0 ? (
+                  filteredTopics.map((topic: Topic) => (
+                    <button
+                      key={topic.id}
+                      type="button"
+                      className="mb-1 w-full cursor-pointer rounded px-3 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-primary-90 hover:text-primary-50"
+                      onClick={() => handleTopicToggle(topic.id)}
+                    >
+                      {topic.name}
+                    </button>
+                  ))
+                ) : (
+                  <div className="px-3 py-2 text-sm text-gray-500">
+                    {topicSearchQuery
+                      ? t('no_topics_found')
+                      : t('all_topics_selected')}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+        {errors?.topics && (
+          <span className="text-sm text-red-500">
+            {errors?.topics?.message}
+          </span>
+        )}
+      </div>
+
       <div className="mt-6 flex w-full flex-col gap-2 rounded-lg bg-neutral-98 p-5">
         <span className="text-sm leading-4 text-neutral-10">
           {`${t('read_community')} `}
@@ -179,6 +334,7 @@ const Step1 = (props: Props) => {
           )}
         />
       </div>
+
       <div className="flex w-full items-center gap-3">
         <Button
           className="w-full"
