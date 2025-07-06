@@ -15,7 +15,6 @@ const HumanBookBanner = () => {
   const t = useTranslations('HumanBookBanner');
 
   const [session, setSession] = useState<Session | null>(null);
-  console.log('session', session);
   useEffect(() => {
     const checkSession = async () => {
       const sessionData = await getSession();
@@ -53,22 +52,24 @@ const HumanBookBanner = () => {
           />
         </div>
 
-        {!session && (
-          <div className="flex w-full max-w-[288px] flex-row-reverse gap-4 md:flex-row">
-            <Link
-              href={publicRoutes.LOGIN}
-              className="flex cursor-pointer items-center justify-center whitespace-nowrap rounded-full bg-transparent px-4 py-2 text-center text-xs font-medium leading-4 text-white underline hover:opacity-70"
-            >
-              {t('log_in')}
-            </Link>
-            <Link
-              href={publicRoutes.REGISTER}
-              className="flex-1 cursor-pointer items-center justify-center whitespace-nowrap rounded-full bg-white px-4 py-2 text-center text-xs font-medium leading-4 text-primary-60 hover:opacity-70"
-            >
-              {t('sign_up')}
-            </Link>
-          </div>
-        )}
+        <div
+          className={`${
+            session ? 'invisible' : 'visible'
+          } flex w-full max-w-[288px] flex-row-reverse gap-4 md:flex-row`}
+        >
+          <Link
+            href={publicRoutes.LOGIN}
+            className="flex cursor-pointer items-center justify-center whitespace-nowrap rounded-full bg-transparent px-4 py-2 text-center text-xs font-medium leading-4 text-white underline hover:opacity-70"
+          >
+            {t('log_in')}
+          </Link>
+          <Link
+            href={publicRoutes.REGISTER}
+            className="flex-1 cursor-pointer items-center justify-center whitespace-nowrap rounded-full bg-white px-4 py-2 text-center text-xs font-medium leading-4 text-primary-60 hover:opacity-70"
+          >
+            {t('sign_up')}
+          </Link>
+        </div>
       </div>
     </div>
   );
