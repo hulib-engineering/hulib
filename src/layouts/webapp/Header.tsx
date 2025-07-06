@@ -88,7 +88,7 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
         onClick: () => signOut({ callbackUrl: '/auth/login' }),
       },
     ],
-    [t]
+    [t],
   );
 
   const menuItemsByRole = useMemo(() => {
@@ -117,7 +117,7 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
             {item.icon}
             <MenuItem.Title>{item.label}</MenuItem.Title>
           </MenuItem>
-        )
+        ),
       )}
     </div>
   );
@@ -181,8 +181,8 @@ const Header = () => {
               }
 
               Object.assign(draft, notifications);
-            }
-          )
+            },
+          ),
         );
       };
 
