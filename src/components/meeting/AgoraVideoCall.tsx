@@ -43,7 +43,7 @@ export default function AgoraVideoCall({ appId }: Props) {
     },
     {
       skip: !sessionId,
-    },
+    }
   );
 
   // Xác định vai trò của user hiện tại
@@ -177,7 +177,7 @@ export default function AgoraVideoCall({ appId }: Props) {
                 await client.unpublish([track]);
                 track.stop();
                 track.close();
-              }),
+              })
             );
           } else {
             await client.unpublish([localTracks[1]]);
@@ -309,7 +309,7 @@ export default function AgoraVideoCall({ appId }: Props) {
 
       if (isVibing) {
         router.push(
-          `/after-meeting/${sessionId}?storyName=${readingSession.story.title}`,
+          `/after-meeting/${sessionId}?storyName=${readingSession.story.title}`
         );
       }
     } catch (error) {
@@ -353,22 +353,20 @@ export default function AgoraVideoCall({ appId }: Props) {
         <VideoComponent
           localRef={localRef}
           isShowWaitingText
-          isSelf // Local video luôn là của chính user
-          isVibing={isVibing}
           isMicOn={isMicOn} // Trạng thái mic của user hiện tại
           showMicIndicator // Luôn hiển thị indicator cho local video
+          roleLabel="You"
         />
 
         {/* Picture-in-picture video (remote) - là video của người kia */}
-        <div className="absolute right-2 top-2 h-[181px] w-[297px]">
+        <div className="absolute right-2 top-2 h-[181px] w-[135px] rounded-lg border border-gray-300 bg-white shadow-lg md:h-[181px] md:w-[297px]">
           <VideoComponent
             localRef={remoteRef}
             isShowWaitingText={false}
             height={181}
-            isSelf={false} // Remote video luôn là của người kia
-            isVibing={isVibing}
             isMicOn={remoteMicOn} // Trạng thái mic của remote user
             showMicIndicator // Hiển thị indicator cho remote video
+            roleLabel={isVibing ? 'Huber' : 'Liber'}
           />
         </div>
       </div>
@@ -456,7 +454,7 @@ export default function AgoraVideoCall({ appId }: Props) {
             {client?.remoteUsers
               ?.map(
                 (u: any) =>
-                  `${u.uid}(${u.hasVideo ? 'V' : ''}${u.hasAudio ? 'A' : ''})`,
+                  `${u.uid}(${u.hasVideo ? 'V' : ''}${u.hasAudio ? 'A' : ''})`
               )
               .join(', ') || 'None'}
           </div>
