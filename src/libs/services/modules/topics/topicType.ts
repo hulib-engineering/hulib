@@ -10,3 +10,7 @@ export interface GetTopicsParams {
   limit?: number;
   name?: string;
 }
+
+export interface CreateTopicParams {
+  name: string;
+}

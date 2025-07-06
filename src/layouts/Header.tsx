@@ -1,5 +1,9 @@
+'use client';
+
 import Link from 'next/link';
+import { getSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
@@ -7,6 +11,17 @@ import { mergeClassnames } from '@/components/private/utils';
 
 const Header = () => {
   const t = useTranslations('Header');
+  const [session, setSession] = useState<any>(null);
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const sessionData = await getSession();
+
+      setSession(sessionData);
+    };
+
+    checkSession();
+  }, []);
 
   return (
     <header
@@ -22,12 +37,12 @@ const Header = () => {
         )}
       >
         <div className="relative hidden flex-1 grow items-start sm:flex">
-          <Link href="/">
+          <Link href={session ? '/home' : '/'}>
             <Logo />
           </Link>
         </div>
         <div className="relative flex flex-1 grow items-start sm:hidden">
-          <Link href="/">
+          <Link href={session ? '/home' : '/'}>
             <Logo size="small" />
           </Link>
         </div>
