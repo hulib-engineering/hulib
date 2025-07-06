@@ -13,7 +13,10 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import TermAndCondition from '@/components/huber-registration/TermAndCondition';
 import { useAppSelector } from '@/libs/hooks';
 import { useRegisterHuberMutation } from '@/libs/services/modules/auth';
-import { useGetTopicsQuery } from '@/libs/services/modules/topics';
+import {
+  useGetTopicsQuery,
+  usePostTopicsMutation,
+} from '@/libs/services/modules/topics';
 import { HuberStep1Validation } from '@/validations/HuberValidation';
 
 interface Props {
@@ -33,13 +36,16 @@ const Step1 = (props: Props) => {
   const tCommon = useTranslations('Common');
   const router = useRouter();
   const [registerHuber, { isLoading }] = useRegisterHuberMutation();
+  const [createTopic, { isLoading: isCreatingTopic }] = usePostTopicsMutation();
   const userInfo = useAppSelector((state) => state.auth.userInfo);
 
   const [isTopicDropdownOpen, setIsTopicDropdownOpen] = useState(false);
   const [topicSearchQuery, setTopicSearchQuery] = useState('');
   const topicDropdownRef = useRef<HTMLDivElement>(null);
   const topicInputRef = useRef<HTMLInputElement>(null);
-  const { data: topicsPages, isLoading: isTopicsLoading } = useGetTopicsQuery();
+  const { data: topicsPages, isLoading: isTopicsLoading } = useGetTopicsQuery({
+    limit: 100,
+  });
 
   const {
     control,
@@ -115,6 +121,22 @@ const Step1 = (props: Props) => {
     );
   };
 
+  const handleCreateNewTopic = async () => {
+    const trimmedQuery = topicSearchQuery.trim();
+    if (!trimmedQuery || trimmedQuery.length > 30) return;
+
+    try {
+      const newTopic = await createTopic({ name: trimmedQuery }).unwrap();
+      setValue('topics', [...selectedTopics, { id: newTopic.id }]);
+      setTopicSearchQuery('');
+      setIsTopicDropdownOpen(false);
+      setTimeout(() => topicInputRef.current?.focus(), 0);
+      pushSuccess('Topic created successfully!');
+    } catch (error: any) {
+      pushError(tCommon(error?.message || 'error_contact_admin'));
+    }
+  };
+
   const filteredTopics = (topicsPages?.data || []).filter((topic: Topic) => {
     const isAlreadySelected = selectedTopics.some(
       (selectedTopic: any) => selectedTopic.id === topic.id,
@@ -124,6 +146,16 @@ const Step1 = (props: Props) => {
       .includes(topicSearchQuery.toLowerCase());
     return !isAlreadySelected && matchesSearch;
   });
+
+  const hasExactMatch = filteredTopics.some(
+    (topic: Topic) =>
+      topic.name.toLowerCase() === topicSearchQuery.toLowerCase(),
+  );
+
+  const showAddNewOption =
+    topicSearchQuery.trim() &&
+    !hasExactMatch &&
+    topicSearchQuery.trim().length <= 30;
 
   const handleTopicInputFocus = () => {
     setIsTopicDropdownOpen(true);
@@ -263,28 +295,45 @@ const Step1 = (props: Props) => {
               }
               className="min-w-[120px] flex-1 bg-transparent text-sm outline-none placeholder:text-gray-500"
               disabled={isFormDisabled}
+              maxLength={30}
             />
           </div>
 
           {isTopicDropdownOpen && !isTopicsLoading && (
             <div className="absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-lg border bg-white shadow-lg">
               <div className="p-2">
-                {filteredTopics.length > 0 ? (
-                  filteredTopics.map((topic: Topic) => (
-                    <button
-                      key={topic.id}
-                      type="button"
-                      className="mb-1 w-full cursor-pointer rounded px-3 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-primary-90 hover:text-primary-50"
-                      onClick={() => handleTopicToggle(topic.id)}
-                    >
-                      {topic.name}
-                    </button>
-                  ))
-                ) : (
+                {filteredTopics.map((topic: Topic) => (
+                  <button
+                    key={topic.id}
+                    type="button"
+                    className="mb-1 w-full cursor-pointer rounded px-3 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-primary-90 hover:text-primary-50"
+                    onClick={() => handleTopicToggle(topic.id)}
+                  >
+                    {topic.name}
+                  </button>
+                ))}
+
+                {showAddNewOption && (
+                  <div className="border-t pt-2">
+                    <div className="flex items-center gap-2 px-3 py-1">
+                      <button
+                        type="button"
+                        className="rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-700 hover:bg-blue-200 disabled:opacity-50"
+                        onClick={handleCreateNewTopic}
+                        disabled={isCreatingTopic}
+                      >
+                        {isCreatingTopic ? 'Creating...' : 'Add new'}
+                      </button>
+                      <span className="text-sm text-blue-700">
+                        {topicSearchQuery}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {filteredTopics.length === 0 && !showAddNewOption && (
                   <div className="px-3 py-2 text-sm text-gray-500">
-                    {topicSearchQuery
-                      ? t('no_topics_found')
-                      : t('all_topics_selected')}
+                    {t('all_topics_selected')}
                   </div>
                 )}
               </div>
