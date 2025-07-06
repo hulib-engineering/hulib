@@ -272,17 +272,6 @@ const Step1 = (props: Props) => {
           {isTopicDropdownOpen && !isTopicsLoading && (
             <div className="absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-lg border bg-white shadow-lg">
               <div className="p-2">
-                {filteredTopics.map((topic: Topic) => (
-                  <button
-                    key={topic.id}
-                    type="button"
-                    className="mb-1 w-full cursor-pointer rounded px-3 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-primary-90 hover:text-primary-50"
-                    onClick={() => handleTopicToggle(topic.id)}
-                  >
-                    {topic.name}
-                  </button>
-                ))}
-
                 {showAddNewOption && (
                   <div className="border-t pt-2">
                     <div className="flex items-center gap-2 px-3 py-1">
@@ -300,6 +289,16 @@ const Step1 = (props: Props) => {
                     </div>
                   </div>
                 )}
+                {filteredTopics.map((topic: Topic) => (
+                  <button
+                    key={topic.id}
+                    type="button"
+                    className="mb-1 w-full cursor-pointer rounded px-3 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-primary-90 hover:text-primary-50"
+                    onClick={() => handleTopicToggle(topic.id)}
+                  >
+                    {topic.name}
+                  </button>
+                ))}
 
                 {filteredTopics.length === 0 && !showAddNewOption && (
                   <div className="px-3 py-2 text-sm text-gray-500">
