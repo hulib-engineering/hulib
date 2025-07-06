@@ -1,3 +1,12 @@
+# [1.25.0](https://github.com/hulib-engineering/hulib/compare/v1.24.0...v1.25.0) (2025-07-06)
+
+
+### Features
+
+* add create new topic functionality in topic selector ([70e760d](https://github.com/hulib-engineering/hulib/commit/70e760d445b9deaeb28468b7530150cee1ebd111))
+* add create new topic functionality in topic selector ([be2f7cd](https://github.com/hulib-engineering/hulib/commit/be2f7cdc360c1af4ababf55d8a12d8e311b8f7be))
+* enhance session management in Header and HumanBookBanner components ([c9d8161](https://github.com/hulib-engineering/hulib/commit/c9d81617f3c3c0c31fa8d4dd6e92c00e056508a1))
+
 # [1.24.0](https://github.com/hulib-engineering/hulib/compare/v1.23.0...v1.24.0) (2025-07-05)
 
 
