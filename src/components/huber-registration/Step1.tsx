@@ -226,36 +226,6 @@ const Step1 = (props: Props) => {
         />
       </label>
 
-      <label className="mt-6 flex w-full flex-col gap-2" htmlFor="videoUrl">
-        <span className="text-sm leading-4 text-neutral-10">
-          {t('intro_video.text')}
-        </span>
-        <Controller
-          name="videoUrl"
-          control={control}
-          render={({ field, fieldState: { error } }) => (
-            <>
-              <input
-                id="videoUrl"
-                placeholder={t('intro_video.placeholder')}
-                className={`h-10 bg-neutral-98 ${getInputClassName(
-                  'videoUrl',
-                )}`}
-                disabled={isFormDisabled}
-                {...field}
-              />
-              {error && (
-                <span className="text-sm text-red-500">
-                  {error.type === 'url'
-                    ? t('validation.invalid_url')
-                    : error.message}
-                </span>
-              )}
-            </>
-          )}
-        />
-      </label>
-
       <div className="mt-6 flex w-full flex-col gap-2">
         <span className="text-sm leading-4 text-neutral-10">
           {t('select_topics')}
@@ -346,6 +316,36 @@ const Step1 = (props: Props) => {
           </span>
         )}
       </div>
+
+      <label className="mt-6 flex w-full flex-col gap-2" htmlFor="videoUrl">
+        <span className="text-sm leading-4 text-neutral-10">
+          {t('intro_video.text')}
+        </span>
+        <Controller
+          name="videoUrl"
+          control={control}
+          render={({ field, fieldState: { error } }) => (
+            <>
+              <input
+                id="videoUrl"
+                placeholder={t('intro_video.placeholder')}
+                className={`h-10 bg-neutral-98 ${getInputClassName(
+                  'videoUrl',
+                )}`}
+                disabled={isFormDisabled}
+                {...field}
+              />
+              {error && (
+                <span className="text-sm text-red-500">
+                  {error.type === 'url'
+                    ? t('validation.invalid_url')
+                    : error.message}
+                </span>
+              )}
+            </>
+          )}
+        />
+      </label>
 
       <div className="mt-6 flex w-full flex-col gap-2 rounded-lg bg-neutral-98 p-5">
         <span className="text-sm leading-4 text-neutral-10">
