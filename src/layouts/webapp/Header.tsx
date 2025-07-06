@@ -88,7 +88,7 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
         onClick: () => signOut({ callbackUrl: '/auth/login' }),
       },
     ],
-    [t]
+    [t],
   );
 
   const menuItemsByRole = useMemo(() => {
@@ -117,7 +117,7 @@ const AvatarPopoverContent: React.FC<RenderProps> = ({
             {item.icon}
             <MenuItem.Title>{item.label}</MenuItem.Title>
           </MenuItem>
-        )
+        ),
       )}
     </div>
   );
@@ -181,8 +181,8 @@ const Header = () => {
               }
 
               Object.assign(draft, notifications);
-            }
-          )
+            },
+          ),
         );
       };
 
@@ -233,7 +233,7 @@ const Header = () => {
     <>
       <header className="flex w-screen flex-col gap-5 bg-white px-4 pb-2 pt-4 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:hidden">
         <div className="flex items-center justify-between">
-          <Link href="/">
+          <Link href={user?.id ? '/home' : '/'}>
             <Logo size="small" />
           </Link>
           {!user || !user?.id ? (
