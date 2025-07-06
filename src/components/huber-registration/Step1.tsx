@@ -322,7 +322,7 @@ const Step1 = (props: Props) => {
                         onClick={handleCreateNewTopic}
                         disabled={isCreatingTopic}
                       >
-                        {isCreatingTopic ? 'Creating...' : 'Add new'}
+                        {isCreatingTopic ? t('creating') : t('add_new')}
                       </button>
                       <span className="text-sm text-blue-700">
                         {topicSearchQuery}
