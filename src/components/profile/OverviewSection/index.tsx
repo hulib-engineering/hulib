@@ -41,11 +41,11 @@ const OverviewSection = ({ isLiber, data, onInvalidate }: Props) => {
   };
   return (
     <div className="mb-3 flex flex-col gap-y-4 rounded-xl  font-light">
-      {!isLiber && data?.topics && (
+      {!isLiber && data?.humanBookTopic && data?.humanBookTopic?.length > 0 && (
         <div className="flex flex-col gap-y-2">
           <span className="font-medium">Topic</span>
           <div className="flex flex-row gap-x-2">
-            {data?.topics.map((topic) => (
+            {data?.humanBookTopic?.map((topic) => (
               <Chip
                 key={topic?.id}
                 className="h-full rounded-full border border-primary-60 bg-primary-90 px-3 py-2 text-primary-60"
