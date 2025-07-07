@@ -31,7 +31,7 @@ const HumanBookBanner = () => {
       <div
         className={mergeClassnames(
           'max-w-xs mx-auto flex w-full flex-col items-center justify-between gap-6 py-2',
-          'lg:flex-row lg:gap-0 lg:px-[90px] lg:max-w-screen-xxl lg:py-0',
+          'lg:flex-row lg:gap-0 lg:px-[90px] lg:max-w-screen-xxl lg:py-0'
         )}
       >
         <div className="flex flex-row items-center gap-3">
