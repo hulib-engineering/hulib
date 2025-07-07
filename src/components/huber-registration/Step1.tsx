@@ -302,6 +302,26 @@ const Step1 = (props: Props) => {
           {isTopicDropdownOpen && !isTopicsLoading && (
             <div className="absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-lg border bg-white shadow-lg">
               <div className="p-2">
+                {showAddNewOption && (
+                  <div
+                    className={`flex items-center gap-2 px-3 py-1 ${
+                      filteredTopics.length > 0 ? 'border-b pb-2' : ''
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      className="rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-700 hover:bg-blue-200 disabled:opacity-50"
+                      onClick={handleCreateNewTopic}
+                      disabled={isCreatingTopic}
+                    >
+                      {isCreatingTopic ? t('creating') : t('add_new')}
+                    </button>
+                    <span className="text-sm text-blue-700">
+                      {topicSearchQuery}
+                    </span>
+                  </div>
+                )}
+
                 {filteredTopics.map((topic: Topic) => (
                   <button
                     key={topic.id}
@@ -312,24 +332,6 @@ const Step1 = (props: Props) => {
                     {topic.name}
                   </button>
                 ))}
-
-                {showAddNewOption && (
-                  <div className="border-t pt-2">
-                    <div className="flex items-center gap-2 px-3 py-1">
-                      <button
-                        type="button"
-                        className="rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-700 hover:bg-blue-200 disabled:opacity-50"
-                        onClick={handleCreateNewTopic}
-                        disabled={isCreatingTopic}
-                      >
-                        {isCreatingTopic ? t('creating') : t('add_new')}
-                      </button>
-                      <span className="text-sm text-blue-700">
-                        {topicSearchQuery}
-                      </span>
-                    </div>
-                  </div>
-                )}
 
                 {filteredTopics.length === 0 && !showAddNewOption && (
                   <div className="px-3 py-2 text-sm text-gray-500">
