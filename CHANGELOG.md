@@ -1,3 +1,10 @@
+# [1.26.0](https://github.com/hulib-engineering/hulib/compare/v1.25.0...v1.26.0) (2025-07-07)
+
+
+### Features
+
+* enhance topic selection UI and improve terms and conditions layout ([7a68333](https://github.com/hulib-engineering/hulib/commit/7a683338ff864c449c0a44d3d57826ff2d7f743a))
+
 # [1.25.0](https://github.com/hulib-engineering/hulib/compare/v1.24.0...v1.25.0) (2025-07-06)
 
 
