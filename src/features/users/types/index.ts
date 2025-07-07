@@ -32,5 +32,6 @@ export interface User {
   educationStart: string | null;
   educationEnd: string | null;
   email: string | null;
-  topics: Topic[];
+  humanBookTopic: Topic[];
+  humanBookTopicId: Topic[];
 }
