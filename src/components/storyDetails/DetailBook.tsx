@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
@@ -118,6 +119,9 @@ export function DetailBook({
   const [containerWidth, setContainerWidth] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
 
+  const [flipBookWidth, setFlipBookWidth] = useState(458);
+  const [flipBookHeight, setFlipBookHeight] = useState(616);
+
   // @ts-ignore
   const pagesRender: PageContentData[] = useMemo(() => {
     const newPages = [{ title, cover, first: true }, ...pages];
@@ -129,16 +133,40 @@ export function DetailBook({
   }, [title, cover, pages]);
 
   useEffect(() => {
-    if (contentRef.current) {
-      setContainerWidth(
-        contentRef.current.getBoundingClientRect().width / 2 - 56,
-      );
-      setContainerHeight(
-        contentRef.current.getBoundingClientRect().height + 200,
-      );
-    }
+    const updateDimensions = () => {
+      if (contentRef.current) {
+        // const containerRect = contentRef.current.getBoundingClientRect();
+        const screenWidth = window.innerWidth;
+
+        let dynamicWidth;
+        if (screenWidth <= 350) {
+          dynamicWidth = Math.min(320, screenWidth - 40);
+        } else if (screenWidth <= 768) {
+          dynamicWidth = Math.min(400, screenWidth - 60);
+        } else {
+          dynamicWidth = 458;
+        }
+
+        const aspectRatio = 616 / 458;
+        const dynamicHeight = dynamicWidth * aspectRatio;
+
+        setFlipBookWidth(dynamicWidth);
+        setFlipBookHeight(dynamicHeight);
+
+        setContainerWidth(dynamicWidth / 2 - 56);
+        setContainerHeight(dynamicHeight + 200);
+      }
+    };
+
+    updateDimensions();
+
+    window.addEventListener('resize', updateDimensions);
 
     flipSound.current = new Audio('/assets/media/flip.mp3');
+
+    return () => {
+      window.removeEventListener('resize', updateDimensions);
+    };
   }, []);
 
   useEffect(() => {
@@ -179,24 +207,27 @@ export function DetailBook({
 
   return (
     <div className="flex flex-col items-center">
-      <div className="h-[616px] w-full overflow-hidden" id="demoBlock">
+      <div
+        className="w-full overflow-hidden"
+        style={{ height: flipBookHeight }}
+        id="demoBlock"
+      >
         <div
-          className="relative z-50 m-auto h-full max-h-[616px] w-full max-w-[916px] overflow-visible"
+          className="relative z-50 m-auto flex h-full w-full justify-center overflow-visible"
           ref={contentRef}
         >
           {/* @ts-ignore */}
           <HTMLFlipBook
-            width={458}
-            height={616}
-            size="stretch"
-            minWidth={458}
-            maxWidth={1000}
-            minHeight={616}
-            maxHeight={1533}
+            width={flipBookWidth}
+            height={flipBookHeight}
+            minWidth={flipBookWidth}
+            maxWidth={flipBookWidth}
+            minHeight={flipBookHeight}
+            maxHeight={flipBookHeight}
             maxShadowOpacity={0.5}
             drawShadow={false}
             showCover={false}
-            className="z-[100] m-auto overflow-visible bg-cover perspective-[1500px]"
+            className="z-[100] m-auto h-full overflow-visible bg-cover perspective-[1500px]"
             flippingTime={2400}
             ref={(el) => {
               if (el) {
@@ -210,7 +241,14 @@ export function DetailBook({
               <Page key={i} title={title} number={i + 1}>
                 {page.first ? (
                   <div className="flex flex-col gap-2">
-                    <h2 className="text-[36px] font-bold">
+                    <h2
+                      className={clsx(
+                        'font-bold',
+                        'text-2xl', // Mobile: 24px
+                        'sm:text-3xl', // Small screens: 30px
+                        'md:text-[36px]', // Medium+ screens: 36px
+                      )}
+                    >
                       {page?.title ?? ''}
                     </h2>
                     <Image
