@@ -5,11 +5,10 @@ type VideoProps = {
   height?: number;
   waitingText?: string;
   isShowWaitingText?: boolean;
-  isSelf?: boolean;
   customClass?: string;
-  isVibing?: boolean;
   isMicOn?: boolean;
   showMicIndicator?: boolean;
+  roleLabel?: 'You' | 'Liber' | 'Huber';
 };
 
 const VideoComponent = (props: VideoProps) => {
@@ -18,11 +17,10 @@ const VideoComponent = (props: VideoProps) => {
     height = 700,
     waitingText = 'Waiting for partner to join...',
     isShowWaitingText = false,
-    isSelf,
     customClass = '',
-    isVibing,
     isMicOn,
     showMicIndicator,
+    roleLabel = 'You',
   } = props;
 
   return (
@@ -35,9 +33,11 @@ const VideoComponent = (props: VideoProps) => {
         className="relative flex size-full items-center justify-center rounded-lg bg-[#2E3032] text-[#0858FA]"
       >
         <div className="absolute left-2 top-2 z-[12312] flex gap-2">
-          <div className="rounded-[100px] bg-[#FFFDF5] px-4 py-2 text-[#F3C00C]">
-            {isSelf ? 'You' : isVibing ? 'Liber' : 'Huber'}
-          </div>
+          {roleLabel && (
+            <div className="rounded-[100px] bg-[#FFFDF5] px-4 py-2 text-[#F3C00C]">
+              {roleLabel}
+            </div>
+          )}
         </div>
 
         <div className="absolute bottom-1/2 left-1/2 flex flex-col items-center gap-4 -translate-x-1/2">

@@ -192,7 +192,7 @@ const Step3 = ({ next }: { next: () => void }) => {
                           </button>
                           {isOpen && !isLoading && (
                             <div className="absolute z-10 mt-1 w-full rounded-lg border bg-white shadow-lg">
-                              <div className="p-2">
+                              <div className="max-h-60 overflow-y-auto p-2">
                                 {(topicsPages?.data || []).map(
                                   (topic: Topic) => (
                                     <button
