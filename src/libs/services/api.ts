@@ -53,7 +53,8 @@ const baseQueryWithInterceptor = async (
     }
   }
 
-  const result = await baseQuery(args, api, extraOptions);
+  let result = await baseQuery(args, api, extraOptions);
+
   if (
     api.endpoint !== 'loginAsAdmin' &&
     api.endpoint !== 'loginAsUser' &&
@@ -65,38 +66,47 @@ const baseQueryWithInterceptor = async (
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
       const hasLoggedIn = localStorage.getItem('hasLoggedIn');
-      if (hasLoggedIn) {
-        const refreshRoute =
-          localStorage.getItem('role') === 'admin'
-            ? 'admin/profile/refresh'
-            : 'profile/refresh';
-        try {
+
+      try {
+        if (hasLoggedIn) {
+          const refreshRoute =
+            localStorage.getItem('role') === 'admin'
+              ? 'admin/profile/refresh'
+              : 'profile/refresh';
+
           const refreshResult = await baseQuery(
             refreshRoute,
             api,
             extraOptions,
           );
+
           if (refreshResult.data) {
-            // resto the new token
+            // Store the new token
             api.dispatch(refreshAccessToken(refreshResult.data));
-            // retry the initial query
-            await baseQuery(args, api, extraOptions);
+            // Retry the initial query
+            result = await baseQuery(args, api, extraOptions);
           } else {
-            // retry the initial query
+            // If refresh token fails, logout
             api.dispatch(logout());
+            return result;
           }
-        } catch (err) {
-          // console.log(err);
+        } else {
+          // If not logged in, logout
           api.dispatch(logout());
-        } finally {
-          // release must be called once the mutex should be released again.
-          release();
+          return result;
         }
+      } catch (err) {
+        // If any error occurs during refresh, logout
+        api.dispatch(logout());
+        return result;
+      } finally {
+        // release must be called once the mutex should be released again.
+        release();
       }
     } else {
       // wait until the mutex is available without locking it
       await mutex.waitForUnlock();
-      baseQuery(args, api, extraOptions);
+      result = await baseQuery(args, api, extraOptions);
     }
   }
 
