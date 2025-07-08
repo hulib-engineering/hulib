@@ -146,6 +146,7 @@ module.exports = {
           40: '#033599',
           50: '#0442BF',
           60: '#0858FA',
+          70: '#4682FB',
           80: '#84ACFC',
           90: '#CDDDFE',
           98: '#F0F5FF',
@@ -163,6 +164,7 @@ module.exports = {
         green: {
           30: '#2A8010',
           50: '#46D51B',
+          60: '#66E73F',
           90: '#D9F9CF',
           98: '#FBFEFA',
         },
@@ -179,6 +181,11 @@ module.exports = {
       },
       boxShadow: {
         sm: '0 4px 5px 0 rgba(28, 30, 33, 0.1), 0 0px 4px 0 rgba(15, 15, 16, 0.06)',
+        popover: '0 6px 10px -1px #1C1E2124, 0 0 4px 0 #0F0F1014',
+        popup: '0 8px 18px -1px #1C1E2124, 0 0 4px 0 #0F0F1014',
+        'focus-input': '0 0 0 4px rgba(205, 221, 254)',
+        tooltip:
+          '0 4px 5px 0 rgba(28, 30, 33, 0.10), 0 0 4px 0 rgba(15, 15, 16, 0.06)',
       },
       rotate: {
         30: '30deg',

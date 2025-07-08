@@ -37,13 +37,17 @@ export default withSentryConfig(
 
         return config;
       },
+      experimental: {
+        // Use Turbo if available
+        turbo: true,
+      },
       images: {
         domains: ['example.com'],
         remotePatterns: [
           {
             protocol: 'http',
             hostname: 'localhost',
-            port: '3000',
+            port: '3001',
             pathname: '/api/v1/files/**',
             search: '',
           },

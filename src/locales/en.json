@@ -221,7 +221,7 @@
       },
       "index_8": {
         "heading": "9. What are your privacy rights?",
-        "content": "You have rights that allow you greater access to and control over your personal information. You may review, change, or terminate your account at any time. These may include the right: <ul><li><important>Withdrawing your consent:</important> If we are relying on your consent to process your personal information, which may be express and/or implied consent depending on the applicable law, you have the right to withdraw your consent at any time. You can withdraw your consent at any time by contacting us by using the contact details provided in the section \"HOW CAN YOU CONTACT US ABOUT THIS NOTICE?\" below. However, please note that this will not affect the lawfulness of the processing before its withdrawal.</li> <li><important>Opting out of marketing and promotional communications:</important> You can unsubscribe from our marketing and promotional communications at any time by clicking on the unsubscribe link in the emails that we send, or by contacting us using the details provided in the section \"HOW CAN YOU CONTACT US ABOUT THIS NOTICE?\" below. You will then be removed from the marketing lists. However, we may still communicate with you, for example, to send you service-related messages that are necessary for the administration and use of your account, to respond to service requests, or for other non-marketing purposes.</li> <li><important>Account Information:</important> If you would at any time like to review or change the information in your account or terminate your account, you can: Log in to your account settings and update your user account. Upon your request to terminate your account, we will deactivate or delete your account and information from our active databases. However, we may retain some information in our files to prevent fraud, troubleshoot problems, assist with any investigations, and/or comply with applicable legal requirements.</li> <li><important>Cookies and similar technologies:</important> Most Web browsers are set to accept cookies by default. If you prefer, you can usually choose to set your browser to remove cookies and to reject cookies. If you choose to remove cookies or reject cookies, this could affect certain features or services of our Service. If you have questions or comments about your privacy rights, you may email us at <sendEmail>hulibvietnam@gmail.com</sendEmail>.</li></ul>"
+        "content": "You have rights that allow you greater access to and control over your personal information. You may review, change, or terminate your account at any time. These may include the right: <ul><li><important>Withdrawing your consent:</important> If we are relying on your consent to process your personal information, which may be express and/or implied consent depending on the applicable law, you have the right to withdraw your consent at any time. You can withdraw your consent at any time by contacting us by using the contact details provided in the section \"HOW CAN YOU CONTACT US ABOUT THIS NOTICE?\" below. However, please note that this will not affect the lawfulness of the processing before its withdrawal..</li> <li><important>Opting out of marketing and promotional communications:</important> You can unsubscribe from our marketing and promotional communications at any time by clicking on the unsubscribe link in the emails that we send, or by contacting us using the details provided in the section \"HOW CAN YOU CONTACT US ABOUT THIS NOTICE?\" below. You will then be removed from the marketing lists. However, we may still communicate with you, for example, to send you service-related messages that are necessary for the administration and use of your account, to respond to service requests, or for other non-marketing purposes.</li> <li><important>Account Information:</important> If you would at any time like to review or change the information in your account or terminate your account, you can: Log in to your account settings and update your user account. Upon your request to terminate your account, we will deactivate or delete your account and information from our active databases. However, we may retain some information in our files to prevent fraud, troubleshoot problems, assist with any investigations, and/or comply with applicable legal requirements.</li> <li><important>Cookies and similar technologies:</important> Most Web browsers are set to accept cookies by default. If you prefer, you can usually choose to set your browser to remove cookies and to reject cookies. If you choose to remove cookies or reject cookies, this could affect certain features or services of our Service. If you have questions or comments about your privacy rights, you may email us at <sendEmail>hulibvietnam@gmail.com</sendEmail>.</li></ul>"
       },
       "index_9": {
         "heading": "10. Do we make updates to this notice?",
@@ -229,7 +229,7 @@
       },
       "index_10": {
         "heading": "11. How can you contact us about this notice?",
-        "content": "If you have questions or comments about this notice, you may email us at <sendEmail>hulibvietnam@gmail.com</sendEmail> or contact us by HuLib Admin: <call>(+84) 905 440 322"
+        "content": "If you have questions or comments about this notice, you may email us at <sendEmail>hulibvietnam@gmail.com</sendEmail> or contact us by HuLib Admin: <call>(+84) 905 440 322</call>"
       }
     },
     "txt_accept": "accept",
@@ -243,8 +243,7 @@
       "index_4": "5. USERS",
       "index_5": "6. INTELLECTUAL PROPERTY",
       "index_6": "7. TERMINATION",
-      "index_7": "8. DISPUTE RESOLUTION",
-      "index_8": "9. DISCLAIMER"
+      "index_7": "8. DISPUTE RESOLUTION"
     },
     "term_of_use_sections": {
       "index_0": {
@@ -385,8 +384,8 @@
     "female": "Female",
     "other": "Other",
     "enter_otp": "Enter verification code",
-    "support_otp": "It's almost done. please enter the 6-digit verification code we just sent to",
-    "not_receive_otp": "Haven't receive the email?",
+    "support_otp": "It’s almost done. please enter the 6-digit verification code we just sent to",
+    "not_receive_otp": "Haven’t receive the email?",
     "resend": "Resend",
     "contact_us": "If you need help, contact us via email"
   },
@@ -528,7 +527,7 @@
     "time_slots": "Time Slots",
     "available_time_slots": "My available slots",
     "available_time_slots_description": "Wow below are slots you chose",
-    "select_time_slots": "Select the times you're available for Liber!",
+    "select_time_slots": "Select the times you’re available for Liber!",
     "update_time_slots": "Update My Slots",
     "select_time_slots_description": "Select the time slots you are available for the session",
     "error_time_slots": "An error has occurred. Please check your time slots and try again.",
@@ -682,5 +681,9 @@
     "notice_text": "Please make sure you select the correct time slot for your schedule. The time shown is in your local timezone.",
     "support_text": "If you need any support, please",
     "click_here": "click here"
+  },
+  "Messages": {
+    "meta_title": "Messenger | HuLib",
+    "meta_description": ""
   }
 }

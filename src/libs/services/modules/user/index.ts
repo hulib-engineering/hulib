@@ -27,6 +27,7 @@ export const {
   useGetAuthorDetailQuery,
   useGetUsersQuery,
   useGetUsersByIdQuery,
+  useLazyGetUsersByIdQuery,
   useUpdateUserStatusMutation,
   useUpgradeUserMutation,
   useGetReadingSessionOfUserQuery,

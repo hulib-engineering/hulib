@@ -8,6 +8,7 @@ import type { ChipPolymorphicProps } from './private/type';
 import { getActive, getDisabled, getPadding } from './private/utils';
 
 const Chip = forwardRef(
+  // @ts-ignore
   <C extends ElementType = 'button'>(
     {
       children,

@@ -1,5 +1,4 @@
-import type { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
-import type { BaseQueryFn } from '@reduxjs/toolkit/query';
+import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 import type { z } from 'zod';
 
 import type { LoginValidation } from '@/validations/LoginValidation';
