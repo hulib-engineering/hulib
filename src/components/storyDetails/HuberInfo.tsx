@@ -8,9 +8,16 @@ import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 import { useAppSelector } from '@/libs/hooks';
+import {
+  useAddStoryToFavoritesMutation,
+  useDeleteFavoriteStoryMutation,
+  useGetFavoritesStoryQuery,
+} from '@/libs/services/modules/fav-stories';
+import type { Story } from '@/libs/services/modules/stories/storiesType';
 import type { Topic as TopicType } from '@/libs/services/modules/topics/topicType';
 
 import CustomCoverBook from '../common/CustomCoverBook';
+import { pushError, pushSuccess } from '../CustomToastifyContainer';
 import IconButton from '../iconButton/IconButton';
 import { mergeClassnames } from '../private/utils';
 
@@ -48,8 +55,46 @@ const HumanBookInfo = ({
     setImgError(true);
   };
 
+  const [addStoryToFavorites] = useAddStoryToFavoritesMutation();
+  const [deleteFavoriteStory] = useDeleteFavoriteStoryMutation();
+  const userId = userInfo?.id;
+
+  const [isFavorite, setIsFavorite] = useState(false);
   const handleNameClick = () => {
     router.push(`/profile?huberId=${humanBook.id}`);
+  };
+
+  const { data: stories } = useGetFavoritesStoryQuery(userInfo?.id, {
+    skip: !userInfo?.id,
+  });
+
+  React.useEffect(() => {
+    if (stories) {
+      const isFav = stories.some((story: Story) => story.storyId === storyId);
+      setIsFavorite(isFav);
+    }
+  }, [stories, storyId]);
+
+  const handleAddToFavorites = async () => {
+    try {
+      if (isFavorite) {
+        const response = await deleteFavoriteStory({
+          storyId,
+          userId,
+        }).unwrap();
+        pushSuccess(response?.message || t('remove_from_saved_for_later'));
+        setIsFavorite(false);
+      } else {
+        const response = await addStoryToFavorites({
+          storyId,
+          userId,
+        }).unwrap();
+        pushSuccess(response?.message || t('saved_for_later_success'));
+        setIsFavorite(true);
+      }
+    } catch (err: any) {
+      pushError(err?.data?.message || t('error_contact_admin'));
+    }
   };
 
   return (
@@ -91,7 +136,7 @@ const HumanBookInfo = ({
             <p
               className={mergeClassnames(
                 'text-xs font-medium leading-4 text-neutral-20',
-                'md:text-sm',
+                'md:text-sm'
               )}
             >
               {storyReview?.rating || 0}
@@ -99,7 +144,7 @@ const HumanBookInfo = ({
             <p
               className={mergeClassnames(
                 'text-[0.625rem] font-normal text-neutral-40',
-                'md:text-xs',
+                'md:text-xs'
               )}
             >
               {`(${storyReview?.numberOfReviews || 0} ${t('ratings')})`}
@@ -137,14 +182,23 @@ const HumanBookInfo = ({
               className="w-full px-4 text-base text-white "
               disabled={Number(humanBook?.id) === Number(userInfo?.id)}
             >
-              Schedule a Meeting
+              {t('schedule_meeting')}
             </IconButton>
           </Link>
           <IconButton
-            icon={<BookmarkSimple size={16} />}
+            icon={
+              <BookmarkSimple
+                weight={isFavorite ? 'fill' : 'regular'}
+                color={isFavorite ? '#F6CE3C' : '#0442BF'}
+                size={16}
+              />
+            }
             className="w-full border border-solid  border-neutral-variant-80 bg-transparent text-base text-primary-50"
+            onClick={() => {
+              handleAddToFavorites();
+            }}
           >
-            Save to Later
+            {t('save_for_late')}
           </IconButton>
         </div>
       </div>
