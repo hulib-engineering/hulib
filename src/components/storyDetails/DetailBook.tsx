@@ -244,9 +244,9 @@ export function DetailBook({
                     <h2
                       className={clsx(
                         'font-bold',
-                        'text-2xl', // Mobile: 24px
-                        'sm:text-3xl', // Small screens: 30px
-                        'md:text-[36px]', // Medium+ screens: 36px
+                        'text-xl',
+                        'sm:text-2xl',
+                        'md:text-[36px]',
                       )}
                     >
                       {page?.title ?? ''}
@@ -260,7 +260,12 @@ export function DetailBook({
                     />
                   </div>
                 ) : (
-                  <div className="whitespace-pre-line text-base leading-6 tracking-wider text-[#45484A]">
+                  <div
+                    className={clsx(
+                      'whitespace-pre-line text-sm leading-5 tracking-wider text-[#45484A]',
+                      'md:text-base md:leading-6',
+                    )}
+                  >
                     {page?.content ?? ''}
                   </div>
                 )}
