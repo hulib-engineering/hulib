@@ -507,7 +507,11 @@
     "hide_all": "Hide All",
     "story_added_to_favorites": "Favorite added successfully",
     "story_removed_from_favorites": "Favorite removed successfully",
-    "error_contact_admin": "An error occurred, please contact admin for support!"
+    "error_contact_admin": "An error occurred, please contact admin for support!",
+    "save_for_late": "Save for later",
+    "schedule_meeting": "Schedule a meeting",
+    "saved_for_later_success": "Story saved for later successfully",
+    "remove_from_saved_for_later": "Remove from saved for later"
   },
   "Huber": {
     "title": "Explore our Hubers",

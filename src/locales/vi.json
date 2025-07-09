@@ -510,7 +510,11 @@
     "hide_all": "Ẩn tất cả",
     "story_added_to_favorites": "Thêm vào danh sách yêu thích thành công",
     "story_removed_from_favorites": "Xóa khỏi danh sách yêu thích thành công",
-    "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!"
+    "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
+    "save_for_late": "Lưu lại để đọc sau",
+    "schedule_meeting": "Đặt lịch hẹn",
+    "saved_for_later_success": "Đã lưu truyện thành công",
+    "remove_from_saved_for_later": "Xoá khỏi danh sách đã lưu"
   },
   "Huber": {
     "title": "Xem danh sách Huber",
