@@ -1,11 +1,9 @@
 import dynamic from 'next/dynamic';
 import { getTranslations } from 'next-intl/server';
 
-// Import các component cần thiết ngay lập tức
 import Hero from '@/layouts/hero/index';
 import HumanBookBanner from '@/layouts/HumanBookBanner';
 
-// Dynamic imports cho các component không cần thiết ngay lập tức
 const Features = dynamic(() => import('@/layouts/Features'), {
   loading: () => <div>Loading...</div>,
   ssr: false,
