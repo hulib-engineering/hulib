@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/hulib-engineering/hulib/compare/v1.26.0...v1.27.0) (2025-07-09)
+
+
+### Features
+
+* add react-jwt for improved session handling and update HumanBookBanner logic ([359a9b3](https://github.com/hulib-engineering/hulib/commit/359a9b3b13c6e2dbeae16ad9896f2ed0b04e6d79))
+
 # [1.26.0](https://github.com/hulib-engineering/hulib/compare/v1.25.0...v1.26.0) (2025-07-07)
 
 
