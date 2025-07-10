@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [ 20.x ]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     name: Build with ${{ matrix.node-version }}
@@ -24,12 +24,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci
-      - run: npx next build
+      - run: npm run build
 
   test:
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [ 18.x ]
 
     name: Run all tests
     runs-on: ubuntu-latest
@@ -44,6 +44,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci
+
+      - name: Build Next.js for E2E tests
+        run: npm run build
 
       - if: github.event_name == 'pull_request'
         name: Validate all commits from PR
@@ -69,11 +72,11 @@ jobs:
       - name: Run storybook tests
         run: npm run test-storybook:ci
 
-# No e2e tests yet
-#      - name: Run E2E tests
-#        run: npx percy exec -- npm run test:e2e
-#        env:
-#          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+      # No e2e tests yet
+      #      - name: Run E2E tests
+      #        run: npx percy exec -- npm run test:e2e
+      #        env:
+      #          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
 
       - uses: actions/upload-artifact@v4
         if: always()
