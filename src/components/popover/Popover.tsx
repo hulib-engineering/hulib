@@ -1,4 +1,5 @@
 import { Popover as HeadlessPopover } from '@headlessui/react';
+import type { ReactNode } from 'react';
 import React, { Children, useEffect, useMemo, useState } from 'react';
 import { usePopper } from 'react-popper';
 
@@ -76,10 +77,10 @@ const PopoverRoot = ({
   return (
     <PopoverContext.Provider value={values}>
       <HeadlessPopover className={mergeClassnames('relative', className)}>
-        {({ open }) =>
+        {({ open, close }) =>
           typeof children === 'function' ? (
             // eslint-disable-next-line react/jsx-no-useless-fragment
-            <>{callableChildren ? callableChildren({ open }) : null}</>
+            <>{callableChildren ? callableChildren({ open, close }) : null}</>
           ) : (
             <>{childArray.map((ch) => ch)}</>
           )
@@ -94,7 +95,7 @@ const Trigger = ({
   role = 'button',
   ...rest
 }: {
-  children?: React.ReactNode;
+  children?: ReactNode;
   role?: string;
 }) => {
   const { popper } = usePopoverContext('Popover.Trigger');
@@ -170,7 +171,7 @@ const Arrow = ({ className }: { className?: string }) => {
       style={popper?.styles?.arrow}
       data-placement={placement}
     >
-      <div className="relative block h-3 w-3 rounded-sm bg-white rotate-45" />
+      <div className="relative block size-3 rounded-sm bg-white rotate-45" />
     </div>
   );
 };

@@ -8,6 +8,7 @@ import type { MenuItemPolymorphicProps } from './private/types';
 import { MenuItemContext, useMenuItemContext } from './private/utils';
 
 const MenuItemRoot = forwardRef(
+  // @ts-ignore
   <C extends ElementType = 'button'>(
     {
       as,
