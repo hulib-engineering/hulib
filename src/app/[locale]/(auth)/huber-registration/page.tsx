@@ -2,6 +2,7 @@
 
 import { Check } from '@phosphor-icons/react';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react';
 
 import { SuccessScreen } from '@/components/common/SuccessScreen';
@@ -87,9 +88,11 @@ const ProgressBar = ({ currentStep }: { currentStep: number }) => (
 const StepContent = ({
   currentStep,
   onNext,
+  t,
 }: {
   currentStep: number;
   onNext: () => void;
+  t: ReturnType<typeof useTranslations>;
 }) => {
   switch (currentStep) {
     case 1:
@@ -101,9 +104,9 @@ const StepContent = ({
     case 4:
       return (
         <SuccessScreen
-          title="Summited"
-          notification="Thanks for your story! HuLib will keep you informed when our process completes. We look forward to your participation as a Huber!"
-          nameButton="Explore"
+          title={t('title_notification')}
+          notification={t('notification')}
+          nameButton={t('btn_name_notification')}
           linkButton="/explore-story"
         />
       );
@@ -113,6 +116,7 @@ const StepContent = ({
 };
 
 const Page = () => {
+  const t = useTranslations('Common');
   const userInfo = useAppSelector((state) => state.auth.userInfo);
   const [currentStep, setCurrentStep] = React.useState(1);
 
@@ -150,7 +154,7 @@ const Page = () => {
           currentStep !== 3 ? clsx('w-full', 'md:w-[37.5rem]') : 'w-full',
         )}
       >
-        <StepContent currentStep={currentStep} onNext={handleNextStep} />
+        <StepContent currentStep={currentStep} onNext={handleNextStep} t={t} />
       </div>
     </CommonLayout>
   );

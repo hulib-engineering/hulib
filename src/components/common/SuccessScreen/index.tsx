@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import imageSuccess from 'public/assets/images/schedule-success.svg';
 import * as React from 'react';
 
@@ -19,6 +20,7 @@ export const SuccessScreen = ({
   nameButton: string;
   linkButton: string;
 }) => {
+  const t = useTranslations('Common');
   const router = useRouter();
   const handleBackToHome = () => {
     router.push('/home');
@@ -44,7 +46,7 @@ export const SuccessScreen = ({
             className="w-full"
             onClick={handleBackToHome}
           >
-            Back to Homepage
+            {t('back_to_home')}
           </Button>
           <Link href={linkButton}>
             <Button variant="primary" className="w-full">
