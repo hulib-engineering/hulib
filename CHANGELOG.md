@@ -1,3 +1,16 @@
+# [1.28.0](https://github.com/hulib-engineering/hulib/compare/v1.27.0...v1.28.0) (2025-07-10)
+
+
+### Bug Fixes
+
+* make FlipBook responsive on mobile screens ([ec7ae99](https://github.com/hulib-engineering/hulib/commit/ec7ae991b1008d1518fc91e95fa3c6846e788356))
+* translate page create first story ([ce82369](https://github.com/hulib-engineering/hulib/commit/ce823692f7db36c775bec8048090cae25975ad99))
+
+
+### Features
+
+* add responsive font size for mobile ([4420591](https://github.com/hulib-engineering/hulib/commit/442059156d89187c258521be5c701ae6cfab65ab))
+
 # [1.27.0](https://github.com/hulib-engineering/hulib/compare/v1.26.0...v1.27.0) (2025-07-09)
 
 
