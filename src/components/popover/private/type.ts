@@ -30,12 +30,14 @@ interface PopoverRootProps
   position?: Placement;
   autoPositionDisable?: boolean;
   className?: string;
-  children?: ReactNode | ((data: { open?: boolean }) => ReactNode);
+  children?:
+    | ReactNode
+    | ((data: { open?: boolean; close?: () => void }) => ReactNode);
 }
 
 type CallableChildren = (data: {
-  open?: boolean;
-  close?: (
+  open: boolean;
+  close: (
     focusableElement?:
       | HTMLElement
       | MutableRefObject<HTMLElement | null>

@@ -15,6 +15,7 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   type: TextInputTypes | string;
   label?: ReactNode;
   placeholder?: string;
+  icon?: ReactNode;
   hintText?: ReactNode;
   isError?: boolean;
   dir?: 'ltr' | 'rtl' | 'auto';
