@@ -135,7 +135,7 @@ const Step3 = ({ next }: { next: () => void }) => {
     <FormProvider {...methods}>
       <div className="rounded-lg bg-white/100 p-5">
         <p className="text-[36px] leading-[44px] tracking-[-0.02em]">
-          Create First Story
+          {t('create_first_story')}
         </p>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="my-8 flex flex-col gap-4 lg:flex-row">
@@ -146,7 +146,7 @@ const Step3 = ({ next }: { next: () => void }) => {
                     <div className="flex flex-col gap-2">
                       <div className="relative">
                         <div className="mb-2 block text-sm font-medium text-black">
-                          Topics <span className="text-red-500">*</span>
+                          {t('topics')} <span className="text-red-500">*</span>
                         </div>
                         <div className="relative" ref={dropdownRef}>
                           <button
@@ -179,7 +179,7 @@ const Step3 = ({ next }: { next: () => void }) => {
                                 })
                               ) : (
                                 <span className="text-sm text-gray-700">
-                                  Select Topics
+                                  {t('select_topics')}
                                 </span>
                               )}
                             </div>
@@ -234,10 +234,11 @@ const Step3 = ({ next }: { next: () => void }) => {
                           {...field}
                           type="text"
                           className="text-sm"
-                          placeholder="Please enter your story's name"
+                          placeholder={t('placeholder_title')}
                           label={
                             <p className="text-sm text-neutral-10">
-                              Title <span className="text-red-500">*</span>
+                              {t('title')}{' '}
+                              <span className="text-red-500">*</span>
                             </p>
                           }
                           isError={!!errors.title}
@@ -254,7 +255,7 @@ const Step3 = ({ next }: { next: () => void }) => {
                 <Form.Item className="flex flex-col gap-2 lg:flex-row">
                   <fieldset className="w-full">
                     <div className="text-sm font-medium text-black">
-                      Abstract <span className="text-red-500">*</span>
+                      {t('abstract')} <span className="text-red-500">*</span>
                     </div>
                     <Controller
                       name="abstract"
@@ -265,7 +266,7 @@ const Step3 = ({ next }: { next: () => void }) => {
                             {...field}
                             rows={7}
                             error={!!errors.abstract}
-                            placeholder="Please enter your story"
+                            placeholder={t('placeholder_abstract')}
                             className="text-sm"
                           />
                           {errors.abstract && (
@@ -283,7 +284,7 @@ const Step3 = ({ next }: { next: () => void }) => {
             <div className="flex-1">
               <div className="flex flex-col gap-2">
                 <div className="text-sm font-medium text-black">
-                  Cover for story <span className="text-red-500">*</span>
+                  {t('cover_picture')} <span className="text-red-500">*</span>
                   <div className="mt-2 flex justify-between gap-2 rounded-2xl bg-neutral-90 p-5">
                     <div className="flex cursor-pointer flex-col gap-4">
                       <div className="flex gap-2">
@@ -306,8 +307,8 @@ const Step3 = ({ next }: { next: () => void }) => {
                               } text-primary-50 hover:text-white`}
                             >
                               {isSelected === cover.id
-                                ? 'Custom'
-                                : `Style ${index + 1}`}
+                                ? t('custom')
+                                : `${t('style')} ${index + 1}`}
                             </Button>
                           </div>
                         ))}
@@ -328,14 +329,14 @@ const Step3 = ({ next }: { next: () => void }) => {
                 router.reload();
               }}
             >
-              Back
+              {t('back')}
             </button>
             <button
               type="submit"
               className="flex-1 rounded-full bg-primary-50 px-6 py-2 text-center text-white transition-colors hover:bg-blue-700"
               disabled={isSubmitting}
             >
-              Submit
+              {t('submit')}
             </button>
           </div>
         </Form>
