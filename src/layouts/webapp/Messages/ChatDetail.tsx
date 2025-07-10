@@ -9,6 +9,7 @@ import { mergeClassnames } from '@/components/private/utils';
 import StatusBadge from '@/components/StatusBadge';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
+import { logger } from '@/libs/Logger';
 import { chatApi, useGetConversationQuery } from '@/libs/services/modules/chat';
 import type { TransformedMessage } from '@/libs/services/modules/chat/getConversation';
 
@@ -65,7 +66,7 @@ export default function ChatDetail() {
   const playSentMessageSound = () => {
     const audio = new Audio('/assets/media/message-sent.mp3');
     audio.play().catch((e) => {
-      console.warn('Audio play blocked:', e);
+      logger.warn('Audio play blocked:', e);
     });
   };
   const handleSendMessage = async (
@@ -76,7 +77,7 @@ export default function ChatDetail() {
     if (!text.trim()) return;
 
     if (!isConnected) {
-      console.warn('[Chat] Cannot send — not connected');
+      logger.warn('[Chat] Cannot send — not connected');
       return;
     }
     emit('send', { recipientId: id, message: text, chatType: type ?? 'txt' });

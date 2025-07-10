@@ -16,7 +16,8 @@ import Button from '@/components/button/Button';
 import { Chip } from '@/components/common/chip/Chip';
 import { mergeClassnames } from '@/components/private/utils';
 import TextInput from '@/components/textInput/TextInput';
-import { auth } from '@/libs/firebase';
+import { auth } from '@/libs/Firebase';
+import { logger } from '@/libs/Logger';
 import { PhoneNumberValidation } from '@/validations/RegisterValidation';
 
 const VerifiedPhoneNumberInput = ({
@@ -74,7 +75,7 @@ const VerifiedPhoneNumberInput = ({
         setVerifiedNumber(watch('parentPhoneNumber'));
         setValue('isVerified', true);
       } catch (error) {
-        console.error('OTP Verification Error:', error);
+        logger.error('OTP Verification Error:', error);
         setError('verificationCode', {
           type: 'unverified',
           message: 'Invalid OTP. Please try again.',
@@ -122,10 +123,8 @@ const VerifiedPhoneNumberInput = ({
       );
 
       setConfirmationResponse(confirmationResult);
-      console.log('🔥 OTP sent:', confirmationResult);
     } catch (error: any) {
-      console.error('🚨 Firebase Error:', error.message);
-      alert(`Firebase Error: ${error.message}`);
+      logger.error('🚨 Firebase Error:', error.message);
     }
   };
 

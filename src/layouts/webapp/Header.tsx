@@ -29,6 +29,7 @@ import NotificationButton from '@/layouts/webapp/NotificationIcon';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
+import { logger } from '@/libs/Logger';
 import {
   chatApi,
   type Contact,
@@ -281,7 +282,7 @@ const Header = () => {
   const playReceivedMessageSound = () => {
     const audio = new Audio('/assets/media/message-received.mp3');
     audio.play().catch((e) => {
-      console.warn('Audio play blocked:', e);
+      logger.warn('Audio play blocked:', e);
     });
   };
   const handleIncomingMessage = useCallback(

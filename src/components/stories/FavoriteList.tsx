@@ -9,6 +9,7 @@ import React from 'react';
 import { FlipBook } from '@/components/flipBook/FlipBook';
 import { mergeClassnames } from '@/components/private/utils';
 import { useAppSelector } from '@/libs/hooks';
+import { logger } from '@/libs/Logger';
 import {
   useDeleteAllFavoriteStoriesMutation,
   useDeleteFavoriteStoryMutation,
@@ -81,7 +82,7 @@ const FavoriteList = ({
         response?.message || tExplore('story_removed_from_favorites'),
       );
     } catch (error) {
-      console.error('Error removing favorite story:', error);
+      logger.error('Error removing favorite story:', error);
     }
   };
 
@@ -93,7 +94,7 @@ const FavoriteList = ({
         userId: userInfo?.id,
       }).unwrap();
     } catch (error) {
-      console.error('Error removing all favorites:', error);
+      logger.error('Error removing all favorites:', error);
     }
   };
 
