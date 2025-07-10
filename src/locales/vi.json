@@ -632,14 +632,30 @@
       "title": "Trở thành Huber của chúng tôi",
       "btn": "Tham gia với tư cách Huber"
     },
+    "no_data": "Không có dữ liệu"
+  },
+  "Common": {
     "no_data": "Không có dữ liệu",
-    "Common": {
-      "no_data": "Không có dữ liệu",
-      "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
-      "validation_error": "Dữ liệu không hợp lệ",
-      "update_failed": "Cập nhật thất bại",
-      "update_successfully": "Cập nhật thành công"
-    }
+    "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
+    "validation_error": "Dữ liệu không hợp lệ",
+    "update_failed": "Cập nhật thất bại",
+    "update_successfully": "Cập nhật thành công",
+    "create_first_story": "Tạo câu chuyện đầu tiên",
+    "topics": "Chủ đề",
+    "title": "Tiêu đề",
+    "abstract": "Tóm tắt",
+    "cover_picture": "Ảnh bìa",
+    "select_topics": "Chọn chủ đề",
+    "custom": "Chỉnh sửa",
+    "style": "Mẫu",
+    "back": "Quay lại",
+    "submit": "Hoàn thành",
+    "placeholder_title": "Nhập tiêu đề câu chuyện của bạn",
+    "placeholder_abstract": "Nhập tóm tắt câu chuyện của bạn",
+    "title_notification": "Hoàn tất đăng kí",
+    "notification": "Cảm ơn bạn đã gửi câu chuyện! Hẹn gặp bạn trong suốt hành trình làm Huber nhé!",
+    "btn_name_notification": "Khắm phá thêm",
+    "back_to_home": "Trở lại trang chủ"
   },
   "feedback_form": {
     "session_feedback": "Phản hồi cho buổi học",
