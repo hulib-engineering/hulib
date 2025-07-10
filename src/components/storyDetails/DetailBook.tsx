@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
@@ -115,8 +116,9 @@ export function DetailBook({
 
   const [index, setIndex] = useState(0);
   const [pages, setPages] = useState<{ content: string }[]>([]);
-  const [containerWidth, setContainerWidth] = useState(0);
-  const [containerHeight, setContainerHeight] = useState(0);
+
+  const [flipBookWidth, setFlipBookWidth] = useState(0);
+  const [flipBookHeight, setFlipBookHeight] = useState(0);
 
   // @ts-ignore
   const pagesRender: PageContentData[] = useMemo(() => {
@@ -129,32 +131,55 @@ export function DetailBook({
   }, [title, cover, pages]);
 
   useEffect(() => {
-    if (contentRef.current) {
-      setContainerWidth(
-        contentRef.current.getBoundingClientRect().width / 2 - 56,
-      );
-      setContainerHeight(
-        contentRef.current.getBoundingClientRect().height + 200,
-      );
-    }
+    const updateDimensions = () => {
+      if (contentRef.current) {
+        const containerRect = contentRef.current.getBoundingClientRect();
+        const containerWidth = containerRect.width;
+        const aspectRatio = 4 / 3;
+
+        // If container width is >= 768, we should render 2 pages
+        if (containerWidth >= 768) {
+          const dynamicWidth = containerWidth / 2;
+          const dynamicHeight = dynamicWidth * aspectRatio;
+
+          setFlipBookWidth(dynamicWidth);
+          setFlipBookHeight(dynamicHeight);
+        } else {
+          const dynamicWidth = containerWidth;
+          const dynamicHeight = dynamicWidth * aspectRatio;
+
+          setFlipBookWidth(dynamicWidth);
+          setFlipBookHeight(dynamicHeight);
+        }
+      }
+    };
+
+    updateDimensions();
+
+    window.addEventListener('resize', updateDimensions);
 
     flipSound.current = new Audio('/assets/media/flip.mp3');
+
+    return () => {
+      window.removeEventListener('resize', updateDimensions);
+    };
   }, []);
 
   useEffect(() => {
-    if (containerHeight && containerWidth) {
+    if (flipBookHeight && flipBookWidth) {
       const paginatedResult = paginateText(
         abstract ?? '',
-        containerWidth,
-        containerHeight,
+        flipBookWidth,
+        flipBookHeight,
       );
+
       if (paginatedResult.length > 0) {
         setPages(paginatedResult);
       } else {
         setPages([]);
       }
     }
-  }, [abstract, containerHeight, containerWidth]);
+  }, [abstract, flipBookHeight, flipBookWidth]);
 
   const goToNextPage = () => {
     flipBookRef.current?.pageFlip().flipNext();
@@ -179,24 +204,23 @@ export function DetailBook({
 
   return (
     <div className="flex flex-col items-center">
-      <div className="h-[616px] w-full overflow-hidden" id="demoBlock">
+      <div className="w-full overflow-hidden" id="demoBlock">
         <div
-          className="relative z-50 m-auto h-full max-h-[616px] w-full max-w-[916px] overflow-visible"
+          className="relative z-50 m-auto flex h-full w-full justify-center overflow-visible"
           ref={contentRef}
         >
           {/* @ts-ignore */}
           <HTMLFlipBook
-            width={458}
-            height={616}
-            size="stretch"
-            minWidth={458}
-            maxWidth={1000}
-            minHeight={616}
-            maxHeight={1533}
+            width={flipBookWidth}
+            height={flipBookHeight}
+            minWidth={flipBookWidth}
+            maxWidth={flipBookWidth}
+            minHeight={flipBookHeight}
+            maxHeight={flipBookHeight}
             maxShadowOpacity={0.5}
             drawShadow={false}
             showCover={false}
-            className="z-[100] m-auto overflow-visible bg-cover perspective-[1500px]"
+            className="z-[100] m-auto h-full overflow-visible bg-cover perspective-[1500px]"
             flippingTime={2400}
             ref={(el) => {
               if (el) {
@@ -210,7 +234,14 @@ export function DetailBook({
               <Page key={i} title={title} number={i + 1}>
                 {page.first ? (
                   <div className="flex flex-col gap-2">
-                    <h2 className="text-[36px] font-bold">
+                    <h2
+                      className={clsx(
+                        'font-bold',
+                        'text-xl',
+                        'sm:text-2xl',
+                        'md:text-[36px]',
+                      )}
+                    >
                       {page?.title ?? ''}
                     </h2>
                     <Image
@@ -222,7 +253,12 @@ export function DetailBook({
                     />
                   </div>
                 ) : (
-                  <div className="whitespace-pre-line text-base leading-6 tracking-wider text-[#45484A]">
+                  <div
+                    className={clsx(
+                      'whitespace-pre-line text-sm leading-5 tracking-wider text-[#45484A]',
+                      'md:text-base md:leading-6',
+                    )}
+                  >
                     {page?.content ?? ''}
                   </div>
                 )}
