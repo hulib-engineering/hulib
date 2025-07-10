@@ -22,7 +22,6 @@ const TermOfUseModal = ({ open, onClose }: Omit<IPolicyModalProps, 'type'>) => {
     'index_5',
     'index_6',
     'index_7',
-    'index_8',
   ] as const;
 
   const t = useTranslations('Index');
@@ -43,7 +42,7 @@ const TermOfUseModal = ({ open, onClose }: Omit<IPolicyModalProps, 'type'>) => {
           ))}
         </ul>
       </div>
-      {contentIndexes.map((index, i) => (
+      {[...contentIndexes, 'index_8' as const].map((index, i) => (
         <section key={index} id={`term-of-use-${i}`}>
           <h2 className="mb-1 text-xl font-semibold uppercase text-gray-800">
             {t(`term_of_use_sections.${index}.heading`)}
