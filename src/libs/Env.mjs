@@ -16,6 +16,7 @@ export const Env = createEnv({
     GOOGLE_ID: z.string().min(1),
     GOOGLE_SECRET: z.string().min(1),
     NEXTAUTH_SECRET: z.string().min(1),
+    LOGTAIL_SOURCE_TOKEN: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_REACT_APP_BACKEND_VERSION: z.string().trim().min(1),
@@ -58,5 +59,6 @@ export const Env = createEnv({
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
       process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
     NEXT_PUBLIC_UPLOAD_PRESET: process.env.NEXT_PUBLIC_UPLOAD_PRESET,
+    LOGTAIL_SOURCE_TOKEN: process.env.LOGTAIL_SOURCE_TOKEN,
   },
 });

@@ -4,6 +4,8 @@ import type { Socket } from 'socket.io-client';
 
 import { socket as createSocket } from '@/libs/services/socket';
 
+import { logger } from '../Logger';
+
 interface UseSocketOptions<TEvents> {
   namespace: 'notification' | 'chat';
   listeners?: Partial<{ [K in keyof TEvents]: (payload: TEvents[K]) => void }>;
@@ -50,26 +52,26 @@ export const useSocket = <TEvents = Record<string, any>>({
       });
 
       socketInstance.on('disconnect', () => {
-        console.warn(`[${namespace}] disconnected`);
+        logger.warn(`[${namespace}] disconnected`);
         setIsConnected(false);
       });
 
       socketInstance.on('error', (err: Error) => {
-        console.error(`[${namespace}] Socket error:`, err);
+        logger.error(`[${namespace}] Socket error:`, err);
       });
 
       socketInstance.on('message', (msg) => {
-        console.log(`[${namespace}] Default message:`, msg);
+        logger.info(`[${namespace}] Default message:`, msg);
       });
 
       socketInstance.onAny((event, ...args) => {
-        console.debug(`[${namespace}] [onAny] ${event}`, ...args);
+        logger.debug(`[${namespace}] [onAny] ${event}`, ...args);
       });
 
       socketInstance.io.on('reconnect_attempt', () => {
         retryCountRef.current += 1;
         if (retryCountRef.current > maxRetries) {
-          console.warn(`[${namespace}] Max retries exceeded. Disconnecting.`);
+          logger.warn(`[${namespace}] Max retries exceeded. Disconnecting.`);
           socketInstance.disconnect();
         }
       });
@@ -102,10 +104,10 @@ export const useSocket = <TEvents = Record<string, any>>({
     (event: string, ...args: any[]) => {
       const socket = socketRef.current;
       if (!socket || !socket.connected) {
-        console.warn(`[${namespace}] Emit failed. Socket not connected.`);
+        logger.warn(`[${namespace}] Emit failed. Socket not connected.`);
         return;
       }
-      console.log(`[${namespace}] Emit: "${event}"`, args);
+      logger.info(`[${namespace}] Emit: "${event}"`, args);
       socket.emit(event, ...args);
     },
     [namespace],

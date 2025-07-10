@@ -25,6 +25,12 @@ export default withSentryConfig(
       poweredByHeader: false,
       reactStrictMode: true,
       transpilePackages: ['@wavesurfer/react'],
+      experimental: {
+        // Related to Pino error with RSC: https://github.com/orgs/vercel/discussions/3150
+        serverComponentsExternalPackages: ['pino'],
+        // Use Turbo if available
+        turbo: true,
+      },
       webpack: (config) => {
         // config.externals is needed to resolve the following errors:
         // Module not found: Can't resolve 'bufferutil'
@@ -36,10 +42,6 @@ export default withSentryConfig(
         });
 
         return config;
-      },
-      experimental: {
-        // Use Turbo if available
-        turbo: true,
       },
       images: {
         domains: ['example.com'],

@@ -11,6 +11,7 @@ import StatusBadge from '@/components/StatusBadge';
 import Tooltip from '@/components/tooltip/Tooltip';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
+import { logger } from '@/libs/Logger';
 import type { MessageResponse } from '@/libs/services/modules/chat';
 import { chatApi, useGetConversationQuery } from '@/libs/services/modules/chat';
 import type { TransformedMessage } from '@/libs/services/modules/chat/getConversation';
@@ -198,7 +199,7 @@ export default function MessengerWidget() {
   const playSentMessageSound = () => {
     const audio = new Audio('/assets/media/message-sent.mp3');
     audio.play().catch((e) => {
-      console.warn('Audio play blocked:', e);
+      logger.warn('Audio play blocked:', e);
     });
   };
   const handleSendMessage = async (
@@ -209,7 +210,7 @@ export default function MessengerWidget() {
     if (!text.trim()) return;
 
     if (!isConnected) {
-      console.warn('[Chat] Cannot send — not connected');
+      logger.warn('[Chat] Cannot send — not connected');
       return;
     }
     emit('send', { recipientId: id, message: text, chatType: type ?? 'txt' });
