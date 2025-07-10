@@ -116,11 +116,9 @@ export function DetailBook({
 
   const [index, setIndex] = useState(0);
   const [pages, setPages] = useState<{ content: string }[]>([]);
-  const [containerWidth, setContainerWidth] = useState(0);
-  const [containerHeight, setContainerHeight] = useState(0);
 
-  const [flipBookWidth, setFlipBookWidth] = useState(458);
-  const [flipBookHeight, setFlipBookHeight] = useState(616);
+  const [flipBookWidth, setFlipBookWidth] = useState(0);
+  const [flipBookHeight, setFlipBookHeight] = useState(0);
 
   // @ts-ignore
   const pagesRender: PageContentData[] = useMemo(() => {
@@ -135,26 +133,24 @@ export function DetailBook({
   useEffect(() => {
     const updateDimensions = () => {
       if (contentRef.current) {
-        // const containerRect = contentRef.current.getBoundingClientRect();
-        const screenWidth = window.innerWidth;
+        const containerRect = contentRef.current.getBoundingClientRect();
+        const containerWidth = containerRect.width;
+        const aspectRatio = 4 / 3;
 
-        let dynamicWidth;
-        if (screenWidth <= 350) {
-          dynamicWidth = Math.min(320, screenWidth - 40);
-        } else if (screenWidth <= 768) {
-          dynamicWidth = Math.min(400, screenWidth - 60);
+        // If container width is >= 768, we should render 2 pages
+        if (containerWidth >= 768) {
+          const dynamicWidth = containerWidth / 2;
+          const dynamicHeight = dynamicWidth * aspectRatio;
+
+          setFlipBookWidth(dynamicWidth);
+          setFlipBookHeight(dynamicHeight);
         } else {
-          dynamicWidth = 458;
+          const dynamicWidth = containerWidth;
+          const dynamicHeight = dynamicWidth * aspectRatio;
+
+          setFlipBookWidth(dynamicWidth);
+          setFlipBookHeight(dynamicHeight);
         }
-
-        const aspectRatio = 616 / 458;
-        const dynamicHeight = dynamicWidth * aspectRatio;
-
-        setFlipBookWidth(dynamicWidth);
-        setFlipBookHeight(dynamicHeight);
-
-        setContainerWidth(dynamicWidth / 2 - 56);
-        setContainerHeight(dynamicHeight + 200);
       }
     };
 
@@ -170,19 +166,20 @@ export function DetailBook({
   }, []);
 
   useEffect(() => {
-    if (containerHeight && containerWidth) {
+    if (flipBookHeight && flipBookWidth) {
       const paginatedResult = paginateText(
         abstract ?? '',
-        containerWidth,
-        containerHeight,
+        flipBookWidth,
+        flipBookHeight,
       );
+
       if (paginatedResult.length > 0) {
         setPages(paginatedResult);
       } else {
         setPages([]);
       }
     }
-  }, [abstract, containerHeight, containerWidth]);
+  }, [abstract, flipBookHeight, flipBookWidth]);
 
   const goToNextPage = () => {
     flipBookRef.current?.pageFlip().flipNext();
@@ -207,11 +204,7 @@ export function DetailBook({
 
   return (
     <div className="flex flex-col items-center">
-      <div
-        className="w-full overflow-hidden"
-        style={{ height: flipBookHeight }}
-        id="demoBlock"
-      >
+      <div className="w-full overflow-hidden" id="demoBlock">
         <div
           className="relative z-50 m-auto flex h-full w-full justify-center overflow-visible"
           ref={contentRef}
