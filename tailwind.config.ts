@@ -1,7 +1,8 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-const colors = require('tailwindcss/colors');
-// eslint-disable-next-line import/no-extraneous-dependencies
-const plugin = require('tailwindcss');
+import type { Config } from 'tailwindcss';
+import colors from 'tailwindcss/colors';
+import plugin from 'tailwindcss/plugin';
+import tailwind3d from 'tailwindcss-3d';
+import animationDelay from 'tailwindcss-animation-delay';
 
 const backfaceVisibility = plugin(function ({ addUtilities }) {
   addUtilities({
@@ -36,8 +37,7 @@ const backfaceVisibility = plugin(function ({ addUtilities }) {
   });
 });
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     data: {
@@ -465,11 +465,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    backfaceVisibility,
-    // eslint-disable-next-line global-require,import/no-extraneous-dependencies
-    require('tailwindcss-3d')({ legacy: true }),
-    // eslint-disable-next-line global-require,import/no-extraneous-dependencies
-    require('tailwindcss-animation-delay'),
-  ],
-};
+  plugins: [backfaceVisibility, tailwind3d({ legacy: true }), animationDelay],
+} satisfies Config;
