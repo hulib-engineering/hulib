@@ -15,11 +15,12 @@ export type HuberCommonProps = {
   data: HuberType;
   topics: Topic[];
 };
+
 const Huber = ({ data: huber, topics }: HuberCommonProps) => {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
   const t = useTranslations('Huber.card');
-  // Tạo topicMap để tra cứu topicName từ topicId
+
   const topicMap = useMemo(() => {
     const map = new Map<number, string>();
     topics.forEach((topic) => {
@@ -28,7 +29,6 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
     return map;
   }, [topics]);
 
-  // Lấy danh sách tên topic từ humanBookTopic
   const topicNames = huber.humanBookTopic
     .map((item) => topicMap.get(item.topicId) || 'Unknown Topic')
     .join(', ');
@@ -40,15 +40,17 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative overflow-hidden rounded-lg">
-        <Image
-          src={huber.photo?.path ?? '/assets/images/huber/cover-huber.png'}
-          alt={huber.fullName}
-          width={0}
-          height={0}
-          sizes="100vw"
-          className="w-full rounded-lg object-cover"
-        />
-        <div className="absolute inset-0 m-[20px] rounded-lg ">
+        <div className="relative aspect-square w-full">
+          <Image
+            src={huber.photo?.path ?? '/assets/images/huber/cover-huber.png'}
+            alt={huber.fullName}
+            fill
+            sizes="(min-width: 768px) 25vw, 100vw"
+            className="rounded-lg object-cover"
+          />
+        </div>
+
+        <div className="absolute inset-0 m-[20px] rounded-lg">
           <div
             className={`top-[10%] flex flex-wrap gap-2 transition-opacity duration-300 md:opacity-0 ${
               isHovered ? 'md:opacity-100' : ''
@@ -94,11 +96,10 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
 
           <div
             className={`
-          absolute inset-x-0 bottom-0 top-1/2 hidden max-h-[35%]
-           text-white opacity-0
-          transition-all duration-300 ease-in-out
-          md:block md:opacity-0 md:translate-y-8
-          ${isHovered ? 'rounded-lg md:opacity-100 md:translate-y-0' : ''}
+              absolute inset-x-0 bottom-0 top-1/2 hidden max-h-[35%]
+              text-white opacity-0 transition-all duration-300 ease-in-out
+              md:block md:opacity-0 md:translate-y-8
+              ${isHovered ? 'rounded-lg md:opacity-100 md:translate-y-0' : ''}
             `}
           >
             <p
@@ -126,11 +127,9 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
         </h3>
         <p className="my-1 text-base font-normal text-neutral-30 md:text-lg">
           {/* {huber.role} */}
-          {/* {huber.humanBookTopic.length} */}
         </p>
         <div className="flex items-center text-sm text-gray-500">
           <span className="text-xs leading-[0.875rem] text-neutral-20">
-            {/* {`${huber.topics}`}{' '} */}
             {huber.humanBookTopic.length}
             <span className="text-[0.625rem] leading-3 text-neutral-40">
               {t('topics')}

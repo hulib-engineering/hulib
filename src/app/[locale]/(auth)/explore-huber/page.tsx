@@ -10,14 +10,18 @@ import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 
 const ExploreHuber = () => {
   const searchParams = useSearchParams();
-  const { data: topicsPages, isLoading } = useGetTopicsQuery();
+  const { data: topicsPages, isLoading } = useGetTopicsQuery({
+    page: 1,
+    limit: 100,
+    name: '',
+  });
   const topicIds = searchParams.get('topicIds')?.split(',') || []; // Convert topicIds to an array
   const t = useTranslations('Huber');
   return (
     <div
       className={mergeClassnames(
         'mx-auto h-full w-full  px-5 py-12 rounded-lg',
-        'md:px-28 ',
+        'md:px-28 '
       )}
     >
       <div className="h-full w-full max-w-[1216px] rounded-lg text-[40px] font-bold">
