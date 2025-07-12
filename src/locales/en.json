@@ -547,11 +547,19 @@
     "upcoming": {
       "meeting_with": "Meeting with"
     },
+    "tabs_all":"All",
+    "meeting_status":{
+      "meetings_today": "Meetings today",
+      "next_meetings": "Next meetings",
+      "done_meetings": "Done meetings"
+    },
+    "this_week": "This week",
     "no_meetings": {
       "huber_description": "No meetings yet? You can start by sharing your own story so others can find and meet you, or browse stories from others and book a meeting.",
       "user_description": "You haven't joined a meeting yet. Take a moment to explore, read some stories, and connect with a Huber.",
       "share_story_btn": "Share my story",
-      "explore_story_btn": "Explore story"
+      "explore_story_btn": "Explore story",
+      "noMeetingsFound": "No meetings found"
     },
     "MainScreen": {
       "title": "Schedule your meeting",
