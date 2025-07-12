@@ -20,12 +20,16 @@ interface SessionCardProps {
   session: ReadingSession;
   expanded?: boolean;
   showCancelDialogProp?: boolean;
+  isMobile?: boolean;
+  isMeetingToday?: boolean;
 }
 
 export const SessionCard: React.FC<SessionCardProps> = ({
   session,
   expanded = false,
   showCancelDialogProp = false,
+  isMobile = false,
+  isMeetingToday = false,
 }) => {
   const [isExpanded, setIsExpanded] = useState(expanded);
   const userId = useAppSelector((state) => state.auth.userInfo?.id);
@@ -36,6 +40,13 @@ export const SessionCard: React.FC<SessionCardProps> = ({
   const cardBackgroundColor = isVibing
     ? 'rgba(240, 245, 255, 1)'
     : 'rgba(255, 249, 245, 1)';
+
+  // Get border class based on isMeetingToday and isVibing
+  const getBorderClass = () => {
+    if (!isMeetingToday) return '';
+    return isVibing ? 'border border-primary-60' : 'border border-yellow-98';
+  };
+
   const renderStatusBadge = useMemo(() => {
     const statusMap: Record<ReadingSession['sessionStatus'], StatusType> = {
       finished: 'finished',
@@ -82,7 +93,9 @@ export const SessionCard: React.FC<SessionCardProps> = ({
 
   return (
     <div
-      className="mb-4 w-[396px] overflow-hidden rounded-2xl p-3 shadow-md"
+      className={`mb-4 overflow-hidden rounded-2xl p-3 shadow-md ${
+        isMobile ? 'w-full' : 'w-[396px]'
+      } ${getBorderClass()}`}
       style={{ backgroundColor: cardBackgroundColor }}
     >
       <div
