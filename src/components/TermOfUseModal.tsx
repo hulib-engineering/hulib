@@ -33,11 +33,11 @@ const TermOfUseModal = ({ open, onClose }: Omit<IPolicyModalProps, 'type'>) => {
         <h2 className="text-xl font-semibold text-gray-800">
           {t('term_of_use_table_of_content.title')}
         </h2>
-        <ul className="text-primary block list-none uppercase">
+        <ul className="block list-none uppercase text-primary-50">
           {contentIndexes.map((index, i) => (
             <li key={index}>
               <Link href={`#term-of-use-${i}`}>
-                {t(`term_of_use_table_of_content.${index}`)}
+                {t(`term_of_use_table_of_content.${index}` as any)}
               </Link>
             </li>
           ))}

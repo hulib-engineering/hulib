@@ -175,7 +175,7 @@ const Profile = () => {
                 </p>
               </div>
             ),
-            component: <div>WIP</div>,
+            component: <div>abc abacb</div>,
           }
         : null,
 
