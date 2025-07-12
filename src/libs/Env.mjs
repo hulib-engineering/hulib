@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { createEnv } from '@t3-oss/env-nextjs';
 import { z } from 'zod';
 
@@ -30,6 +29,9 @@ export const Env = createEnv({
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().trim().min(9),
     NEXT_PUBLIC_UPLOAD_PRESET: z.string().trim().min(9),
   },
+  shared: {
+    NODE_ENV: z.enum(['development', 'production']),
+  },
   // You need to destructure all the keys manually
   runtimeEnv: {
     CLIENT_EMAIL: process.env.CLIENT_EMAIL,
@@ -60,5 +62,6 @@ export const Env = createEnv({
       process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
     NEXT_PUBLIC_UPLOAD_PRESET: process.env.NEXT_PUBLIC_UPLOAD_PRESET,
     LOGTAIL_SOURCE_TOKEN: process.env.LOGTAIL_SOURCE_TOKEN,
+    NODE_ENV: process.env.NODE_ENV,
   },
 });
