@@ -1,3 +1,4 @@
+/* eslint-disable jsonc/sort-keys */
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -60,6 +61,7 @@
     ".next/types/**/*.ts",
     "src/libs/Env.mjs",
     "knip.config.ts",
-    "types/next-auth.d.ts"
+    "types/next-auth.d.ts",
+    "**/*.mts"
   ]
 }
