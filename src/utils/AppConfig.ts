@@ -1,3 +1,4 @@
+// @ts-ignore
 import type { LocalePrefixMode } from 'next-intl/routing';
 
 import { Env } from '@/libs/Env.mjs';
