@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 
+import { pushError, pushSuccess } from '../CustomToastifyContainer';
+import AnimatedCover from '../stories/AnimatedCover';
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
 import { useAppSelector } from '@/libs/hooks';
@@ -13,16 +15,14 @@ import {
 } from '@/libs/services/modules/fav-stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 
-import { pushError, pushSuccess } from '../CustomToastifyContainer';
-import AnimatedCover from '../stories/AnimatedCover';
-
-export type BookCommonProps = {
+type BookCommonProps = {
   data: StoryType;
   renderActions?: () => React.ReactNode;
   refetch: () => void;
 };
+
 export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
   const userId = userInfo?.id;
   const { title } = data || {};
   const t = useTranslations('ExploreStory');

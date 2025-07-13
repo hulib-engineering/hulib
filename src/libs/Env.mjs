@@ -30,7 +30,7 @@ export const Env = createEnv({
     NEXT_PUBLIC_UPLOAD_PRESET: z.string().trim().min(9),
   },
   shared: {
-    NODE_ENV: z.enum(['development', 'production']),
+    NODE_ENV: z.enum(['test', 'development', 'production']).optional(),
   },
   // You need to destructure all the keys manually
   runtimeEnv: {

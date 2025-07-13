@@ -14,7 +14,7 @@ import { useAppDispatch } from '@/libs/hooks';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import { setUserInfo } from '@/libs/store/authentication';
 
-export const poppins = localFont({
+const poppins = localFont({
   src: [
     {
       path: '../styles/fonts/SVN-Poppins-ExtraLight.otf',
@@ -91,7 +91,9 @@ const MainTemplate = (props: WithChildren) => {
     }
   }, [data]);
 
-  if (error) return redirect('/auth/login');
+  if (error) {
+    return redirect('/auth/login');
+  }
 
   return (
     <div

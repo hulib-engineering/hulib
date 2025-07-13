@@ -10,7 +10,7 @@ const getStoryDetails = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
     serializeQueryArgs: ({ endpointName, queryArgs }) => {
       return `${endpointName}-${queryArgs.id || 0}`;
     },
-    providesTags: (result, error, { id }) => [
+    providesTags: (_result, _error, { id }) => [
       { type: 'Story' as const, id: id || 0 },
     ],
   });

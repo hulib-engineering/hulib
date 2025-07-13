@@ -8,12 +8,12 @@ export type SessionStatus =
   | 'rejected'
   | 'approved';
 
-export interface GetReadingSessionParams {
+type GetReadingSessionParams = {
   id: string;
   sessionStatus?: SessionStatus;
   page?: number;
   limit?: number;
-}
+};
 
 const getReadingSessionOfUser = (
   build: EndpointBuilder<BaseQueryFn, string, string>,

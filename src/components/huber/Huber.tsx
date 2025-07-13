@@ -6,12 +6,11 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useMemo, useState } from 'react';
 
+import Button from '../button/Button';
 import type { Huber as HuberType } from '@/libs/services/modules/huber/huberType';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 
-import Button from '../button/Button';
-
-export type HuberCommonProps = {
+type HuberCommonProps = {
   data: HuberType;
   topics: Topic[];
 };
@@ -30,7 +29,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
 
   // Lấy danh sách tên topic từ humanBookTopic
   const topicNames = huber.humanBookTopic
-    .map((item) => topicMap.get(item.topicId) || 'Unknown Topic')
+    .map(item => topicMap.get(item.topicId) || 'Unknown Topic')
     .join(', ');
 
   return (

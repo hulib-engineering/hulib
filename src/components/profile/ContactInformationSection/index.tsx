@@ -99,10 +99,10 @@ export const ContactInformationSection = ({ data }: { data: any }) => {
                   </div>
                 );
               })}
+              {' '}
+
             </div>
           )}
     </div>
   );
 };
-
-export default ContactInformationSection;

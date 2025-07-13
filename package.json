@@ -12,7 +12,7 @@
     "clean": "rimraf .next .swc out coverage",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "check-types": "tsc --noEmit --pretty",
+    "check:types": "tsc --noEmit --pretty",
     "check:deps": "knip",
     "check:i18n": "i18n-check -l src/locales -s en -u src -f next-intl",
     "test": "jest",
@@ -26,7 +26,6 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@date-io/date-fns": "^3.2.0",
     "@emailjs/browser": "^3.12.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
@@ -51,7 +50,6 @@
     "@t3-oss/env-nextjs": "^0.7.1",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@types/react-redux": "^7.1.34",
-    "@vercel/analytics": "^1.4.1",
     "@wavesurfer/react": "^1.0.7",
     "agora-rtc-sdk-ng": "^4.23.3",
     "async-mutex": "^0.5.0",
@@ -118,7 +116,6 @@
     "@types/nodemailer": "^6.4.14",
     "@types/page-flip": "^2.0.3",
     "@types/react": "^18.2.48",
-    "@types/react-slick": "^0.23.13",
     "@types/wavesurfer.js": "^6.0.12",
     "autoprefixer": "^10.4.17",
     "commitizen": "^4.3.0",

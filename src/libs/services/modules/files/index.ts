@@ -5,7 +5,7 @@ const fileApiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['Files'],
 });
 
-export const fileApi = fileApiWithTag.injectEndpoints({
+const fileApi = fileApiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
     upload: upload(build),
   }),

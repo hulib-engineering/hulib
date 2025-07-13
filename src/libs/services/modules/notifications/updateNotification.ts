@@ -12,7 +12,7 @@ const updateNotification = (
       url: `notifications/${id}`,
       method: 'PATCH',
     }),
-    invalidatesTags: (result, error, { id }) => [
+    invalidatesTags: (_result, _error, { id }) => [
       { type: 'Notification', id },
       { type: 'Notification', id: 'LIST' },
     ],

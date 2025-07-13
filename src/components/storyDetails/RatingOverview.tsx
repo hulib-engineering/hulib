@@ -3,12 +3,11 @@
 import { Heart } from '@phosphor-icons/react';
 import * as React from 'react';
 
+import ReviewItem from './ReviewItem';
 import { useGetReviewsOverviewQuery } from '@/libs/services/modules/stories';
 
-import ReviewItem from './ReviewItem';
-
 const RateScore = ({ score, reviews }: { score: string; reviews: number }) => {
-  const scoreNumber = parseFloat(score);
+  const scoreNumber = Number.parseFloat(score);
   return (
     <div className="flex items-center gap-x-2 py-4">
       {scoreNumber > 0 && <h6>{scoreNumber.toFixed(1)}</h6>}
@@ -19,7 +18,11 @@ const RateScore = ({ score, reviews }: { score: string; reviews: number }) => {
         <Heart size={24} color="#F3C00C" weight="fill" />
         <Heart size={24} color="#E3E4E5" weight="fill" />
       </div>
-      <p className="text-xs text-[#00000080]">{reviews} reviews</p>
+      <p className="text-xs text-[#00000080]">
+        {reviews}
+        {' '}
+        reviews
+      </p>
     </div>
   );
 };
@@ -43,7 +46,10 @@ const RateChartItem = ({
           style={{ width: `${percentage}%` }}
         />
       </div>
-      <p className="text-sm">{percentage}%</p>
+      <p className="text-sm">
+        {percentage}
+        %
+      </p>
     </div>
   );
 };
@@ -62,9 +68,9 @@ const RateChart = ({ histogram }: any) => {
   );
 };
 
-export interface Props {
+type Props = {
   id: number;
-}
+};
 
 const RatingOverview = ({ id }: Props) => {
   const { data, isLoading } = useGetReviewsOverviewQuery(id);

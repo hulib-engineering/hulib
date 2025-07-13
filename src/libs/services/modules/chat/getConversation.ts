@@ -17,7 +17,7 @@ export default (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query<TransformedMessage[], number>({
     query: (id: number) => `chat/user/${id}`,
     transformResponse: (response: MessageResponse[], _meta, id) => {
-      return response.map((transformedMessage) => ({
+      return response.map(transformedMessage => ({
         ...pick(transformedMessage, ['id']),
         from: transformedMessage.senderId,
         to: transformedMessage.recipientId,
@@ -29,7 +29,7 @@ export default (build: EndpointBuilder<BaseQueryFn, string, string>) =>
           `${transformedMessage.senderId}` === `${id}` ? 'received' : 'sent',
       }));
     },
-    providesTags: (result, _error, id) => {
+    providesTags: (_result, _error, id) => {
       return [{ type: 'Messages', id: `LIST-${id}` }];
     },
   });
