@@ -17,7 +17,6 @@ export const notificationApi = apiWithTag.injectEndpoints({
 });
 
 export const {
-  useCreateNotificationMutation,
   useGetNotificationsQuery,
   useUpdateNotificationMutation,
 }: any = notificationApi;

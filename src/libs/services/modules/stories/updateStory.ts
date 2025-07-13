@@ -2,7 +2,7 @@ import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
 import type { Story } from './storiesType';
 
-export interface UpdateStoryRequest {
+type UpdateStoryRequest = {
   id: number;
   title: string;
   abstract: string;
@@ -14,9 +14,9 @@ export interface UpdateStoryRequest {
     id: number;
   };
   publishStatus: string;
-}
+};
 
-export interface UpdateStoryResponse extends Story {}
+type UpdateStoryResponse = {} & Story;
 
 const updateStory = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.mutation<UpdateStoryResponse, UpdateStoryRequest>({

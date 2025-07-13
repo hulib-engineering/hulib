@@ -10,7 +10,7 @@ import {
   initMinigame,
 } from '@/libs/store/minigame';
 
-export const GameCards = [
+const GameCards = [
   {
     name: 'Shenron',
     imgUrl: 'shenron.jpeg',
@@ -63,14 +63,6 @@ export const GameCards = [
     name: 'Naturon shenron',
     imgUrl: 'naturon-shenron.jpeg',
   },
-  // {
-  //   name: 'Chappiru',
-  //   imgUrl: 'chappiru.jpeg',
-  // },
-  // {
-  //   name: 'Dark shenron',
-  //   imgUrl: 'dark-shenron.jpeg',
-  // },
 ];
 
 type IGameCardProps = {
@@ -134,7 +126,7 @@ const MinigameSection = () => {
 
   return (
     <section className="grid grid-cols-4 gap-4 md:grid-cols-6">
-      {cardList.map((each) => (
+      {cardList.map(each => (
         <MinigameCard
           key={each.id}
           id={each.id}

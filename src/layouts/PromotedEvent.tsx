@@ -6,8 +6,8 @@ import React, { useState } from 'react';
 
 import FeatureCard from '@/components/FeatureCard';
 import { mergeClassnames } from '@/components/private/utils';
-import EventFormModal from '@/layouts/EventFormModal';
-import SuccessModal from '@/layouts/SuccessModal';
+import EventFormModal from '@/layouts/event/EventFormModal';
+import SuccessModal from '@/layouts/event/SuccessModal';
 
 const EventFeatureList = [
   {
@@ -33,8 +33,8 @@ const EventFeatureList = [
 const PromotedEvent = () => {
   const t = useTranslations('Index');
 
-  const [isRegisteringEventFormModalOpen, setIsRegisteringEventFormModalOpen] =
-    useState(false);
+  const [isRegisteringEventFormModalOpen, setIsRegisteringEventFormModalOpen]
+    = useState(false);
   const [isSuccessfulModalOpen, setIsSuccessfulModalOpen] = useState(false);
   const [registerName, setRegisterName] = useState('');
 
@@ -74,8 +74,7 @@ const PromotedEvent = () => {
             onClick={() =>
               setIsRegisteringEventFormModalOpen(
                 !isRegisteringEventFormModalOpen,
-              )
-            }
+              )}
           />
           <Image
             alt="Event banner"
@@ -87,15 +86,14 @@ const PromotedEvent = () => {
             onClick={() =>
               setIsRegisteringEventFormModalOpen(
                 !isRegisteringEventFormModalOpen,
-              )
-            }
+              )}
           />
         </div>
       </div>
 
       <section className="w-full flex-col items-center justify-center px-8 py-6 sm:mt-0 lg:py-12 xl:px-48 2xl:px-[20.625rem]">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:gap-6">
-          {EventFeatureList.map((feature) => (
+          {EventFeatureList.map(feature => (
             <FeatureCard
               key={feature.key}
               title={t(`${feature.key}.title`)}

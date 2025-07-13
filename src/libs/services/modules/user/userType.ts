@@ -1,20 +1,20 @@
-export interface Topic {
+export type Topic = {
   id: number;
   name: string;
-}
+};
 
-export interface GetUsersParams {
+export type GetUsersParams = {
   page?: number;
   limit?: number;
   filter?: string;
   sort?: string;
   role?: string;
-}
+};
 
 // Allowed user status values for update
-export type UserStatus = 'active' | 'inactive' | 'under_warning';
+type UserStatus = 'active' | 'inactive' | 'under_warning';
 
 // Request body for updating user status
-export interface UpdateUserStatusRequest {
+export type UpdateUserStatusRequest = {
   status: UserStatus;
-}
+};

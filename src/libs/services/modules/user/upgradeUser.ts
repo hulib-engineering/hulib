@@ -5,7 +5,7 @@ import type { User } from '@/features/users/types';
 /**
  * Interface for the upgrade user request body
  */
-export interface UpgradeUserRequest {
+type UpgradeUserRequest = {
   /**
    * The action to take on the upgrade request
    * - 'accept': Approve the user upgrade
@@ -17,7 +17,7 @@ export interface UpgradeUserRequest {
    * The reason for rejection (required when action is 'reject')
    */
   reason?: string;
-}
+};
 
 /**
  * Service for handling user upgrade requests.
@@ -35,8 +35,8 @@ const upgradeUser = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       method: 'POST',
       body,
     }),
-    // Invalidate both the specific user and the users list to trigger refetch
-    invalidatesTags: (result, error, { id }) => [
+    // Invalidate both the specific user and the user's list to trigger refetch
+    invalidatesTags: (_result, _error, { id }) => [
       { type: 'Users', id },
       { type: 'Users', id: 'LIST' },
     ],

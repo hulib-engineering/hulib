@@ -23,12 +23,12 @@ type IEventRegistration = Omit<
   transferBill?: File;
 };
 
-interface RadioGroupProps {
+type RadioGroupProps = {
   id?: string;
   label?: ReactNode;
   isError?: boolean;
   dir?: 'ltr' | 'rtl' | 'auto';
-}
+};
 
 const RadioGroup = ({
   id,
@@ -47,9 +47,9 @@ const RadioGroup = ({
   optionsClassname?: string;
   isVertical?: boolean;
 } & RadioGroupProps &
-  UseControllerProps<
-    Omit<z.infer<typeof EmailRegistrationValidation>, 'transferBill'>
-  >) => {
+UseControllerProps<
+  Omit<z.infer<typeof EmailRegistrationValidation>, 'transferBill'>
+>) => {
   const {
     field: { onChange, value },
   } = useController({
@@ -74,7 +74,7 @@ const RadioGroup = ({
           isVertical && 'flex-col gap-0',
         )}
       >
-        {options.map((option) => (
+        {options.map(option => (
           <Radio.Option
             key={option.value}
             value={option.value}

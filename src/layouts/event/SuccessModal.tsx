@@ -37,7 +37,10 @@ const SuccessFormModal = (props: ISuccessFormModalProps) => (
             />
             <div className="flex flex-col gap-2 text-center">
               <p>
-                Chào <span className="font-bold">{props.name}</span>,
+                Chào
+                {' '}
+                <span className="font-bold">{props.name}</span>
+                ,
               </p>
               <p>Chúng tôi xác nhận bạn đã đăng ký thành công.</p>
               <p>

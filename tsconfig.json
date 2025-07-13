@@ -32,6 +32,7 @@
     "noFallthroughCasesInSwitch": true,
     "allowUnreachableCode": false,
     "useUnknownInCatchVariables": true,
+    "noImplicitOverride": true,
 
     // ======================================================================
     // Interoperability
@@ -49,7 +50,6 @@
     "skipLibCheck": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "verbatimModuleSyntax": true,
     "forceConsistentCasingInFileNames": true,
 
     // ======================================================================

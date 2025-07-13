@@ -4,6 +4,8 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect } from 'react';
 
+import OneWeek from '../schedule/components/OneWeek';
+import ScheduleBasicInfo from './ScheduleBasicInfo';
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
 import {
@@ -14,9 +16,6 @@ import {
 import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
 import { useGetTimeSlotsHuberQuery } from '@/libs/services/modules/time-slots';
 import type { TimeSlot } from '@/libs/services/modules/time-slots/getAllTimeSlots';
-
-import OneWeek from '../schedule/components/OneWeek';
-import ScheduleBasicInfo from './ScheduleBasicInfo';
 
 type ITimeItemProps = {
   time: string;
@@ -40,11 +39,11 @@ const TimeItem = ({ time, isSelected, isBooked, onClick }: ITimeItemProps) => (
   </button>
 );
 
-export interface IAttendee {
+type IAttendee = {
   icon: string;
   role: string;
   fullName: string;
-}
+};
 
 export const MainScreen = ({
   attendees,
@@ -80,29 +79,29 @@ export const MainScreen = ({
   const morningTimeSlot = React.useMemo(() => {
     return filterTimeSlots
       .filter(
-        (time) =>
-          Number(time.startTime.slice(0, 2)) >= MORNING_TIME_START &&
-          Number(time.startTime.slice(0, 2)) < AFTERNOON_TIME_START,
+        time =>
+          Number(time.startTime.slice(0, 2)) >= MORNING_TIME_START
+          && Number(time.startTime.slice(0, 2)) < AFTERNOON_TIME_START,
       )
-      .map((item) => item.startTime);
+      .map(item => item.startTime);
   }, [filterTimeSlots]);
 
   const afterNoonTimeSlot = React.useMemo(() => {
     return filterTimeSlots
       .filter(
-        (time) =>
-          Number(time.startTime.slice(0, 2)) >= AFTERNOON_TIME_START &&
-          Number(time.startTime.slice(0, 2)) < EVENING_TIME_START,
+        time =>
+          Number(time.startTime.slice(0, 2)) >= AFTERNOON_TIME_START
+          && Number(time.startTime.slice(0, 2)) < EVENING_TIME_START,
       )
-      .map((item) => item.startTime);
+      .map(item => item.startTime);
   }, [filterTimeSlots]);
 
   const eveningTimeSlot = React.useMemo(() => {
     return filterTimeSlots
       .filter(
-        (time) => Number(time.startTime.slice(0, 2)) >= EVENING_TIME_START,
+        time => Number(time.startTime.slice(0, 2)) >= EVENING_TIME_START,
       )
-      .map((item) => item.startTime);
+      .map(item => item.startTime);
   }, [filterTimeSlots]);
 
   const onClickDate = (day: Date) => {
@@ -127,13 +126,13 @@ export const MainScreen = ({
     return (
       <div className="flex w-full flex-wrap items-center gap-x-1 gap-y-2 xl:p-3">
         {list.map((item, index) => {
-          const hour = parseInt(item.split(':')[0] ?? '0', 10) ?? 0;
-          const minute = parseInt(item.split(':')[1] ?? '0', 10) ?? 0;
+          const hour = Number.parseInt(item.split(':')[0] ?? '0', 10) ?? 0;
+          const minute = Number.parseInt(item.split(':')[1] ?? '0', 10) ?? 0;
           const timeObj = selectDate.setHours(hour, minute, 0, 0);
-          const isBooked =
-            bookedTime &&
-            bookedTime.length &&
-            bookedTime.includes(new Date(timeObj).toISOString());
+          const isBooked
+            = bookedTime
+              && bookedTime.length
+              && bookedTime.includes(new Date(timeObj).toISOString());
 
           return (
             <TimeItem
@@ -153,11 +152,11 @@ export const MainScreen = ({
     window.scrollTo(0, 0);
   }, []);
 
-  const timeLineClass =
-    'flex grid-cols-[100px_auto] min-h-[60px] flex-col items-center gap-x-4 gap-y-2 md:grid';
+  const timeLineClass
+    = 'flex grid-cols-[100px_auto] min-h-[60px] flex-col items-center gap-x-4 gap-y-2 md:grid';
 
   return (
-    <div className="flex h-full w-full flex-col gap-6 bg-neutral-98 xl:flex-row">
+    <div className="flex size-full flex-col gap-6 bg-neutral-98 xl:flex-row">
       <ScheduleBasicInfo attendees={attendees} />
       <div className="flex w-full flex-col gap-y-4 rounded-3xl bg-white p-4 xl:w-2/3 xl:p-8">
         <h4 className="text-[28px] font-medium">{t('title')}</h4>

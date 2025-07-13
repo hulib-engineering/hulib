@@ -1,11 +1,11 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
-export interface GetHuberStoriesParams {
+type GetHuberStoriesParams = {
   page?: number;
   limit?: number;
-}
+};
 
-export interface Story {
+type Story = {
   id: number;
   title: string;
   description: string;
@@ -13,9 +13,9 @@ export interface Story {
   createdAt: string;
   updatedAt: string;
   // Add other story fields as needed
-}
+};
 
-export interface GetHuberStoriesResponse {
+type GetHuberStoriesResponse = {
   data: Story[];
   meta: {
     currentPage: number;
@@ -23,7 +23,7 @@ export interface GetHuberStoriesResponse {
     totalItems: number;
     totalPages: number;
   };
-}
+};
 
 const getHuberStories = (
   build: EndpointBuilder<BaseQueryFn, string, string>,
