@@ -547,15 +547,23 @@
   "Schedule": {
     "appointment_schedule": "Lịch trò chuyện tháng",
     "type_meeting": "Loại cuộc hẹn",
-    "waiting": "Chờ phản hổi",
+    "waiting": "Đang chờ",
     "upcoming": {
       "meeting_with": "Cuộc hẹn với"
     },
+    "tabs_all":"Tất cả",
+    "meeting_status":{
+      "meetings_today": "Cuộc hẹn hôm nay",
+      "next_meetings": "Cuộc hẹn tiếp theo",
+      "done_meetings": "Cuộc hẹn đã hoàn thành"
+    },
+    "this_week": "Tuần này",
     "no_meetings": {
       "huber_description": "Chưa có cuộc hẹn nào? Bạn có thể bắt đầu bằng cách chia sẻ câu chuyện của mình để người khác tìm thấy và đặt lịch gặp, hoặc khám phá các câu chuyện khác và đặt lịch hẹn.",
       "user_description": "Bạn chưa tham gia cuộc hẹn nào. Hãy dành thời gian khám phá, đọc một số câu chuyện và kết nối với Huber.",
       "share_story_btn": "Chia sẻ câu chuyện",
-      "explore_story_btn": "Khám phá câu chuyện"
+      "explore_story_btn": "Khám phá câu chuyện",
+      "noMeetingsFound": "Không tìm thấy cuộc họp nào"
     },
     "MainScreen": {
       "title": "Đặt lịch trò chuyện",
