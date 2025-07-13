@@ -37,7 +37,7 @@
     "@fullcalendar/timegrid": "^6.1.15",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
-    "@hookform/resolvers": "^3.3.2",
+    "@hookform/resolvers": "^5.0.1",
     "@logtail/pino": "^0.4.19",
     "@lottiefiles/react-lottie-player": "^3.5.4",
     "@mui/icons-material": "^6.4.11",

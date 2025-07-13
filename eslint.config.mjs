@@ -3,6 +3,7 @@ import nextPlugin from '@next/eslint-plugin-next';
 import jestDom from 'eslint-plugin-jest-dom';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import playwright from 'eslint-plugin-playwright';
+import tailwindcss from 'eslint-plugin-tailwindcss';
 
 export default antfu(
   {
@@ -42,6 +43,16 @@ export default antfu(
       ...nextPlugin.configs['core-web-vitals'].rules,
     },
   },
+
+  // --- Tailwind CSS Rules ---
+  {
+    plugins: {
+      tailwindcss,
+    },
+    rules: {
+      ...tailwindcss.configs.recommended.rules,
+    },
+  },
   // --- Accessibility Rules ---
   jsxA11y.flatConfigs.recommended,
   // --- Testing Rules ---
@@ -69,6 +80,14 @@ export default antfu(
       'node/prefer-global/process': 'off', // Allow using `process.env`
       'test/padding-around-all': 'error', // Add padding in test files
       'test/prefer-lowercase-title': 'off', // Allow using uppercase titles in test titles
+      'ts/ban-ts-comment': [
+        'error',
+        {
+          'ts-ignore': false, // 👈 allow `@ts-ignore` again
+          'ts-expect-error': 'allow-with-description',
+          'minimumDescriptionLength': 3,
+        },
+      ],
     },
   },
 );

@@ -10,7 +10,6 @@ import {
 } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
 import { Chip } from '@/components/common/chip/Chip';
@@ -37,7 +36,7 @@ const VerifiedPhoneNumberInput = ({
     setValue,
     setError,
     formState: { errors, dirtyFields },
-  } = useForm<z.infer<typeof PhoneNumberValidation>>({
+  } = useForm({
     mode: 'onChange',
     resolver: zodResolver(PhoneNumberValidation),
     defaultValues: {
@@ -48,8 +47,8 @@ const VerifiedPhoneNumberInput = ({
     },
   });
 
-  const [confirmationResponse, setConfirmationResponse] =
-    useState<ConfirmationResult | null>(null);
+  const [confirmationResponse, setConfirmationResponse]
+    = useState<ConfirmationResult | null>(null);
   const [verifiedNumber, setVerifiedNumber] = useState(value);
 
   useEffect(() => {
@@ -112,7 +111,9 @@ const VerifiedPhoneNumberInput = ({
     try {
       setupRecaptcha(); // Setup Recaptcha
       const phoneNumber = watch('parentPhoneNumber').trim();
-      if (!phoneNumber) throw new Error('Phone number is required');
+      if (!phoneNumber) {
+        throw new Error('Phone number is required');
+      }
 
       const confirmationResult = await signInWithPhoneNumber(
         auth,
@@ -149,38 +150,42 @@ const VerifiedPhoneNumberInput = ({
         />
       </fieldset>
       <fieldset className="w-1/3">
-        {!confirmationResponse ||
-        (watch('parentPhoneNumber') !== verifiedNumber &&
-          verifiedNumber !== '') ? (
-          <Button
-            id="verify-button"
-            type="button"
-            className="w-full"
-            disabled={
-              !dirtyFields.parentPhoneNumber || !!errors.parentPhoneNumber
-            }
-            onClick={handleSendCode}
-          >
-            Verify
-          </Button>
-        ) : !watch('isVerified') ? (
-          <TextInput
-            type="number"
-            label="Verification code"
-            {...register('verificationCode')}
-            isError={!!errors.verificationCode}
-            hintText={errors.verificationCode?.message}
-          />
-        ) : (
-          <Chip
-            className={mergeClassnames(
-              'rounded-full border border-[#C2C6CF] bg-green-98 text-green-50',
-              'hover:bg-green-98 hover:text-green-50',
-            )}
-          >
-            Verified
-          </Chip>
-        )}
+        {!confirmationResponse
+        || (watch('parentPhoneNumber') !== verifiedNumber
+          && verifiedNumber !== '')
+          ? (
+              <Button
+                id="verify-button"
+                type="button"
+                className="w-full"
+                disabled={
+                  !dirtyFields.parentPhoneNumber || !!errors.parentPhoneNumber
+                }
+                onClick={handleSendCode}
+              >
+                Verify
+              </Button>
+            )
+          : !watch('isVerified')
+              ? (
+                  <TextInput
+                    type="number"
+                    label="Verification code"
+                    {...register('verificationCode')}
+                    isError={!!errors.verificationCode}
+                    hintText={errors.verificationCode?.message}
+                  />
+                )
+              : (
+                  <Chip
+                    className={mergeClassnames(
+                      'rounded-full border border-[#C2C6CF] bg-green-98 text-green-50',
+                      'hover:bg-green-98 hover:text-green-50',
+                    )}
+                  >
+                    Verified
+                  </Chip>
+                )}
       </fieldset>
     </div>
   );

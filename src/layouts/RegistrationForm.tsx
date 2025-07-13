@@ -160,7 +160,7 @@ const Step2Form = ({
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<z.infer<typeof RegisterStep2Validation>>({
+  } = useForm({
     resolver: zodResolver(RegisterStep2Validation),
     defaultValues: {
       isUnderGuard: false,
@@ -234,7 +234,7 @@ const Step2Form = ({
           <Form.Item>
             <VerifiedPhoneNumberInput
               value=""
-              onChange={(value) => setValue('parentPhoneNumber', value)}
+              onChange={value => setValue('parentPhoneNumber', value)}
             />
           </Form.Item>
         )}
@@ -373,7 +373,8 @@ const Step3Form = (props: IStep3FormProps) => {
           <p className="tracking-[0.5%]">Step 3 of 3</p>
           <p className="tracking-[0.5%]">
             It’s almost done. please enter the 6-digit verification code we just
-            sent to{' '}
+            sent to
+            {' '}
             <span>
               <Link
                 href="https://mail.google.com/mail/u/1/#inbox"
@@ -483,8 +484,8 @@ const RegistrationForm = () => {
   const t = useTranslations('SignUp');
 
   const [step, setStep] = useState(0);
-  const [step1Data, setStep1Data] =
-    useState<z.infer<typeof RegisterStep1Validation>>();
+  const [step1Data, setStep1Data]
+    = useState<z.infer<typeof RegisterStep1Validation>>();
   const [verificationData, setVerificationData] = useState<{
     id: number;
     email: string;
@@ -495,7 +496,7 @@ const RegistrationForm = () => {
     data: z.infer<typeof RegisterStep1Validation>,
   ) => {
     setStep1Data(data);
-    setStep((currentStep) => currentStep + 1);
+    setStep(currentStep => currentStep + 1);
   };
 
   const handleStep2FormSubmit = async (
@@ -510,7 +511,7 @@ const RegistrationForm = () => {
       }).unwrap();
       if (result) {
         setVerificationData(result);
-        setStep((prevState) => prevState + 1);
+        setStep(prevState => prevState + 1);
       }
     } catch (error: any) {
       if (error && error?.data && error?.data?.errors) {
@@ -529,14 +530,14 @@ const RegistrationForm = () => {
     return (
       <Step3Form
         {...verificationData}
-        onSuccess={() => setStep((prevState) => prevState + 1)}
+        onSuccess={() => setStep(prevState => prevState + 1)}
       />
     );
   }
 
   if (step === 3) {
     return (
-      <div className="fixed inset-0 h-full w-full bg-neutral-variant-98">
+      <div className="fixed inset-0 size-full bg-neutral-variant-98">
         <Step4Form />
       </div>
     );
@@ -550,17 +551,19 @@ const RegistrationForm = () => {
         </h2>
         <p className="tracking-[0.5%]">{t('step', { step: step + 1 })}</p>
       </div>
-      {step === 0 ? (
-        <Step1Form onSubmit={handleStep1FormSubmit} />
-      ) : (
-        <Step2Form onSubmit={handleStep2FormSubmit} />
-      )}
+      {step === 0
+        ? (
+            <Step1Form onSubmit={handleStep1FormSubmit} />
+          )
+        : (
+            <Step2Form onSubmit={handleStep2FormSubmit} />
+          )}
       <div className="inline-flex h-6 items-center justify-start gap-2 self-stretch">
-        <div className="h-[1px] w-full shrink grow basis-0 bg-neutral-90" />
+        <div className="h-px w-full shrink grow basis-0 bg-neutral-90" />
         <div className="text-center tracking-tight text-neutral-30">
           {t('or_social_login')}
         </div>
-        <div className="h-[1px] w-full shrink grow basis-0 bg-neutral-90" />
+        <div className="h-px w-full shrink grow basis-0 bg-neutral-90" />
       </div>
       <div className="flex items-center justify-center gap-2">
         {/* <SocialButton

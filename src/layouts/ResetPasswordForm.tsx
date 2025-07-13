@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
@@ -35,7 +34,7 @@ const ResetPasswordSuccess = () => {
           </h2>
         </div>
 
-        <p className="mt-4 text-[1rem] font-normal leading-6 tracking-[0.5%] text-neutral-40">
+        <p className="mt-4 text-base font-normal leading-6 tracking-[0.5%] text-neutral-40">
           Your password has been reset
         </p>
       </div>
@@ -73,7 +72,7 @@ const ResetPasswordForm = () => {
     handleSubmit,
     register,
     formState: { errors, isValid },
-  } = useForm<z.infer<typeof ResetPasswordValidation>>({
+  } = useForm({
     resolver: zodResolver(ResetPasswordValidation),
   });
 
@@ -93,7 +92,9 @@ const ResetPasswordForm = () => {
     }
   });
 
-  if (submitSuccess) return <ResetPasswordSuccess />;
+  if (submitSuccess) {
+    return <ResetPasswordSuccess />;
+  }
 
   return (
     <>
@@ -112,8 +113,8 @@ const ResetPasswordForm = () => {
             showPasswordText={<Eye />}
             isError={!!errors.password}
             hintText={
-              errors.password?.message ??
-              'Password must have at least 8 characters'
+              errors.password?.message
+              ?? 'Password must have at least 8 characters'
             }
           />
         </Form.Item>
@@ -152,7 +153,7 @@ const ResetPasswordForm = () => {
           alt="arrow-icon"
           loading="lazy"
         />
-        <span className="text-[1rem] font-medium leading-5 text-primary-50 underline">
+        <span className="text-base font-medium leading-5 text-primary-50 underline">
           Back to login
         </span>
       </button>
