@@ -9,7 +9,6 @@ import { mergeClassnames } from '@/components/private/utils';
 import StatusBadge from '@/components/StatusBadge';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
-import { logger } from '@/libs/Logger';
 import { chatApi, useGetConversationQuery } from '@/libs/services/modules/chat';
 import type { TransformedMessage } from '@/libs/services/modules/chat/getConversation';
 
@@ -42,7 +41,7 @@ export const MessageItem = ({
 
 export default function ChatDetail() {
   const currentOpeningChat = useAppSelector(
-    (state) => state.messenger.currentChatDetail,
+    state => state.messenger.currentChatDetail,
   );
 
   const dispatch = useAppDispatch();
@@ -66,7 +65,7 @@ export default function ChatDetail() {
   const playSentMessageSound = () => {
     const audio = new Audio('/assets/media/message-sent.mp3');
     audio.play().catch((e) => {
-      logger.warn('Audio play blocked:', e);
+      console.warn('Audio play blocked:', e);
     });
   };
   const handleSendMessage = async (
@@ -74,10 +73,12 @@ export default function ChatDetail() {
     text: string,
     type?: 'txt' | 'img',
   ) => {
-    if (!text.trim()) return;
+    if (!text.trim()) {
+      return;
+    }
 
     if (!isConnected) {
-      logger.warn('[Chat] Cannot send — not connected');
+      console.warn('[Chat] Cannot send — not connected');
       return;
     }
     emit('send', { recipientId: id, message: text, chatType: type ?? 'txt' });
@@ -100,8 +101,8 @@ export default function ChatDetail() {
           <Image
             className="size-12 rounded-full"
             src={
-              currentOpeningChat?.avatarUrl ??
-              '/assets/images/ava-placeholder.png'
+              currentOpeningChat?.avatarUrl
+              ?? '/assets/images/ava-placeholder.png'
             }
             alt="Sender Avatar"
             width={48}
@@ -122,38 +123,37 @@ export default function ChatDetail() {
         ref={messageContainerRef}
         className="flex max-h-[604px] flex-1 flex-col-reverse overflow-y-auto"
       >
-        {data &&
-          data.map((each: TransformedMessage) => {
-            if (each.chatType === 'img') {
-              return (
-                <div
-                  key={each.id}
-                  className={mergeClassnames(
-                    'flex',
-                    each.direction === 'sent' ? 'justify-end' : 'justify-start',
-                  )}
-                >
-                  <Image
-                    alt={`Sticker ${each.msg}`}
-                    width={120}
-                    height={120}
-                    className="size-[120px] object-contain"
-                    src={each.stickerUrl ?? ''}
-                  />
-                </div>
-              );
-            }
+        {data
+        && data.map((each: TransformedMessage) => {
+          if (each.chatType === 'img') {
             return (
-              <MessageItem key={each.id} type={each.direction}>
-                {each.msg}
-              </MessageItem>
+              <div
+                key={each.id}
+                className={mergeClassnames(
+                  'flex',
+                  each.direction === 'sent' ? 'justify-end' : 'justify-start',
+                )}
+              >
+                <Image
+                  alt={`Sticker ${each.msg}`}
+                  width={120}
+                  height={120}
+                  className="size-[120px] object-contain"
+                  src={each.stickerUrl ?? ''}
+                />
+              </div>
             );
-          })}
+          }
+          return (
+            <MessageItem key={each.id} type={each.direction}>
+              {each.msg}
+            </MessageItem>
+          );
+        })}
       </div>
       <MessengerInput
         onSend={(value, type) =>
-          handleSendMessage(currentOpeningChat?.id, value, type)
-        }
+          handleSendMessage(currentOpeningChat?.id, value, type)}
         outerStickerPicker
       />
     </div>

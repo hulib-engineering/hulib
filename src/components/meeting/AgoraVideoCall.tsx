@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from 'react';
 
 import VideoComponent from './Video';
 import { useAppSelector } from '@/libs/hooks';
-import { logger } from '@/libs/Logger';
 import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
 
 type Props = {
@@ -225,7 +224,7 @@ export default function AgoraVideoCall({ appId }: Props) {
           await client.publish(newTracks);
         });
       } catch (error) {
-        logger.error('Share screen failed!', error);
+        console.error('Share screen failed!', error);
       }
     } else {
       // Nếu đang share mà tắt

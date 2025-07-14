@@ -10,7 +10,6 @@ import type { z } from 'zod';
 import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
 import TextInput from '@/components/textInput/TextInput';
-import { logger } from '@/libs/Logger';
 import { useForgotPasswordMutation } from '@/libs/services/modules/auth';
 import { ForgotPasswordValidation } from '@/validations/ForgotPasswordValidation';
 
@@ -37,13 +36,14 @@ const SendLinkEmailSuccess = ({ inputEmail }: SendLinkEmailSuccessProps) => {
           </h2>
         </div>
 
-        <p className="mt-4 text-[1rem] font-normal leading-6 tracking-[0.5%] text-neutral-40">
-          A password reset link has been send to your email{' '}
+        <p className="mt-4 text-base font-normal leading-6 tracking-[0.5%] text-neutral-40">
+          A password reset link has been send to your email
+          {' '}
           <a
             target="_blank"
             href="https://mail.google.com/mail/u/1/#inbox"
             rel="noopener noreferrer"
-            className="text-[1rem] font-medium leading-5 text-primary-50 underline"
+            className="text-base font-medium leading-5 text-primary-50 underline"
           >
             {inputEmail}
           </a>
@@ -61,7 +61,7 @@ const SendLinkEmailSuccess = ({ inputEmail }: SendLinkEmailSuccessProps) => {
           alt="arrow-icon"
           loading="lazy"
         />
-        <span className="text-[1rem] font-medium leading-5 text-primary-50 underline">
+        <span className="text-base font-medium leading-5 text-primary-50 underline">
           Back to login
         </span>
       </button>
@@ -94,12 +94,14 @@ const ForgotPasswordForm = () => {
         setInputEmail(data.email);
         setSubmitSuccess(true);
       } catch (error: any) {
-        logger.error(error);
+        console.error(error);
       }
     }
   });
 
-  if (submitSuccess) return <SendLinkEmailSuccess inputEmail={inputEmail} />;
+  if (submitSuccess) {
+    return <SendLinkEmailSuccess inputEmail={inputEmail} />;
+  }
 
   return (
     <>
@@ -107,7 +109,7 @@ const ForgotPasswordForm = () => {
         <h2 className="text-[2rem] font-medium leading-[40px] tracking-[-2%]">
           Forgot your password?
         </h2>
-        <p className="text-[1rem] font-normal leading-6 tracking-[0.5%] text-neutral-40">
+        <p className="text-base font-normal leading-6 tracking-[0.5%] text-neutral-40">
           No worries, enter your account email and we’ll send you a link to
           reset your password.
         </p>
@@ -152,7 +154,7 @@ const ForgotPasswordForm = () => {
           alt="arrow-icon"
           loading="lazy"
         />
-        <span className="text-[1rem] font-medium leading-5 text-primary-50 underline">
+        <span className="text-base font-medium leading-5 text-primary-50 underline">
           Back to login
         </span>
       </button>
