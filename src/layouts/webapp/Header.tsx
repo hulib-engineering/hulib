@@ -17,23 +17,22 @@ import { useTranslations } from 'next-intl';
 import type { FC, ReactNode } from 'react';
 import React, { useCallback, useMemo } from 'react';
 
+import { MessageItem } from './Messages/ChatList';
 import Button from '@/components/button/Button';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import MenuItem from '@/components/menuItem/MenuItem';
 import Popover from '@/components/popover/Popover';
-import type { WithChildren } from '@/components/private/types';
 import { mergeClassnames } from '@/components/private/utils';
 import SearchInput from '@/components/SearchInput';
 import NotificationButton from '@/layouts/webapp/NotificationIcon';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
-import { logger } from '@/libs/Logger';
 import {
-  chatApi,
   type Contact,
   type MessageResponse,
+  chatApi,
   useGetConversationContactsQuery,
 } from '@/libs/services/modules/chat';
 import {
@@ -45,25 +44,23 @@ import type { Message } from '@/libs/store/messenger';
 import { addMessage, openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
 
-import { MessageItem } from './Messages/ChatList';
-
-interface AvatarPopoverMenuItem {
+type AvatarPopoverMenuItem = {
   label: string;
   icon: React.ReactNode;
   href?: string;
   onClick?: () => void;
-}
+};
 
-interface RenderProps {
+type RenderProps = {
   open: boolean;
   close: () => void;
-}
+};
 
 const AvatarPopoverContent: FC<RenderProps> = ({
   open,
   close,
 }: RenderProps) => {
-  const { role } = useAppSelector((state) => state.auth.userInfo);
+  const { role } = useAppSelector(state => state.auth.userInfo);
   const t = useTranslations('HeaderWebApp');
 
   const handleClick = (item: AvatarPopoverMenuItem) => {
@@ -122,25 +119,27 @@ const AvatarPopoverContent: FC<RenderProps> = ({
   return (
     <div data-testid="popover-content">
       {menuItemsByRole.map((item, index) =>
-        item.href ? (
-          <Link href={item.href} key={index} onClick={close}>
-            <MenuItem>
-              {item.icon}
-              <MenuItem.Title>{item.label}</MenuItem.Title>
-            </MenuItem>
-          </Link>
-        ) : (
-          <MenuItem key={index} onClick={() => handleClick(item)}>
-            {item.icon}
-            <MenuItem.Title>{item.label}</MenuItem.Title>
-          </MenuItem>
-        ),
+        item.href
+          ? (
+              <Link href={item.href} key={index} onClick={close}>
+                <MenuItem>
+                  {item.icon}
+                  <MenuItem.Title>{item.label}</MenuItem.Title>
+                </MenuItem>
+              </Link>
+            )
+          : (
+              <MenuItem key={index} onClick={() => handleClick(item)}>
+                {item.icon}
+                <MenuItem.Title>{item.label}</MenuItem.Title>
+              </MenuItem>
+            ),
       )}
     </div>
   );
 };
 
-const AvatarPopover = ({ children }: WithChildren<{}>) => (
+const AvatarPopover = ({ children }: { children?: ReactNode }) => (
   <Popover position="bottom-end" className="h-full w-11">
     <Popover.Trigger
       data-testid="popover-trigger-arrow"
@@ -206,8 +205,7 @@ const MessengerPopover = ({
                 participant: rest.participant,
                 unreadCount,
                 lastMessage,
-              })
-            }
+              })}
           />
         ))}
       </div>
@@ -252,7 +250,7 @@ const Header = () => {
 
   const router = useRouter();
 
-  const user = useAppSelector((state) => state.auth.userInfo);
+  const user = useAppSelector(state => state.auth.userInfo);
 
   const { data, isLoading } = useGetNotificationsQuery({ page: 1, limit: 5 });
   const { data: conversations = [] } = useGetConversationContactsQuery();
@@ -282,7 +280,7 @@ const Header = () => {
   const playReceivedMessageSound = () => {
     const audio = new Audio('/assets/media/message-received.mp3');
     audio.play().catch((e) => {
-      logger.warn('Audio play blocked:', e);
+      console.warn('Audio play blocked:', e);
     });
   };
   const handleIncomingMessage = useCallback(
@@ -370,55 +368,57 @@ const Header = () => {
           <Link href={user?.id ? '/home' : '/'}>
             <Logo size="small" />
           </Link>
-          {!user || !user?.id ? (
-            <div className="flex gap-3 px-10 ">
-              <SkeletonHeader />
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              <Popover position="bottom-start">
-                {({ open, close }) => (
-                  <>
-                    <Popover.Trigger data-testid="messenger-popover-trigger">
-                      <HeaderIconButtonWithBadge
-                        badge={totalUnread}
-                        open={open}
-                      >
-                        <MessengerLogo className="text-[28px]" />
-                      </HeaderIconButtonWithBadge>
-                    </Popover.Trigger>
-                    <Popover.Panel className="flex flex-col gap-1 p-2">
-                      <MessengerPopover
-                        conversations={conversations}
-                        onSeeAllMessagesClick={() => router.push('/messages')}
-                        onItemClick={close}
-                      />
-                    </Popover.Panel>
-                  </>
-                )}
-              </Popover>
-              <NotificationButton
-                notificationCount={!isLoading && data ? data.unseenCount : 0}
-                notificationPath="/notification"
-              />
-              <div className="relative ml-2">
-                <AvatarPopover>
-                  <Image
-                    alt="Avatar Icon"
-                    width={44}
-                    height={44}
-                    loading="lazy"
-                    src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
-                    className="size-11 rounded-full object-contain"
-                  />
-                </AvatarPopover>
-                <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
-                  <CaretDown size={12} />
+          {!user || !user?.id
+            ? (
+                <div className="flex gap-3 px-10 ">
+                  <SkeletonHeader />
                 </div>
-              </div>
-              <LocaleSwitcher className="shrink" />
-            </div>
-          )}
+              )
+            : (
+                <div className="flex items-center gap-2">
+                  <Popover position="bottom-start">
+                    {({ open, close }) => (
+                      <>
+                        <Popover.Trigger data-testid="messenger-popover-trigger">
+                          <HeaderIconButtonWithBadge
+                            badge={totalUnread}
+                            open={open}
+                          >
+                            <MessengerLogo className="text-[28px]" />
+                          </HeaderIconButtonWithBadge>
+                        </Popover.Trigger>
+                        <Popover.Panel className="flex flex-col gap-1 p-2">
+                          <MessengerPopover
+                            conversations={conversations}
+                            onSeeAllMessagesClick={() => router.push('/messages')}
+                            onItemClick={close}
+                          />
+                        </Popover.Panel>
+                      </>
+                    )}
+                  </Popover>
+                  <NotificationButton
+                    notificationCount={!isLoading && data ? data.unseenCount : 0}
+                    notificationPath="/notification"
+                  />
+                  <div className="relative ml-2">
+                    <AvatarPopover>
+                      <Image
+                        alt="Avatar Icon"
+                        width={44}
+                        height={44}
+                        loading="lazy"
+                        src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
+                        className="size-11 rounded-full object-contain"
+                      />
+                    </AvatarPopover>
+                    <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
+                      <CaretDown size={12} />
+                    </div>
+                  </div>
+                  <LocaleSwitcher className="shrink" />
+                </div>
+              )}
         </div>
         <div className="flex flex-col gap-2">{renderNavbar()}</div>
       </header>
@@ -432,51 +432,53 @@ const Header = () => {
         <div className="w-[300px]">
           <SearchInput />
         </div>
-        {!user || !user?.id ? (
-          <div className="flex gap-3 px-10 ">
-            <SkeletonHeader />
-          </div>
-        ) : (
-          <div className="flex items-center gap-2">
-            <Popover position="bottom-start">
-              {({ open, close }) => (
-                <>
-                  <Popover.Trigger data-testid="messenger-popover-trigger">
-                    <HeaderIconButtonWithBadge badge={totalUnread} open={open}>
-                      <MessengerLogo className="text-[28px]" />
-                    </HeaderIconButtonWithBadge>
-                  </Popover.Trigger>
-                  <Popover.Panel className="mt-4 w-96 rounded-[20px] border-t border-neutral-90 px-0 py-4 shadow-popover">
-                    <MessengerPopover
-                      conversations={conversations}
-                      onSeeAllMessagesClick={() => router.push('/messages')}
-                      onItemClick={close}
-                    />
-                  </Popover.Panel>
-                </>
-              )}
-            </Popover>
-            <NotificationButton
-              notificationCount={!isLoading && data ? data.unseenCount : 0}
-              notificationPath="/notification"
-            />
-            <div className="relative ml-2 size-11">
-              <AvatarPopover>
-                <Image
-                  alt="Avatar Icon"
-                  layout="fill"
-                  className="size-11 rounded-full object-contain"
-                  loading="lazy"
-                  src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
-                />
-              </AvatarPopover>
-              <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
-                <CaretDown size={12} />
+        {!user || !user?.id
+          ? (
+              <div className="flex gap-3 px-10 ">
+                <SkeletonHeader />
               </div>
-            </div>
-            <LocaleSwitcher className="shrink" />
-          </div>
-        )}
+            )
+          : (
+              <div className="flex items-center gap-2">
+                <Popover position="bottom-start">
+                  {({ open, close }) => (
+                    <>
+                      <Popover.Trigger data-testid="messenger-popover-trigger">
+                        <HeaderIconButtonWithBadge badge={totalUnread} open={open}>
+                          <MessengerLogo className="text-[28px]" />
+                        </HeaderIconButtonWithBadge>
+                      </Popover.Trigger>
+                      <Popover.Panel className="mt-4 w-96 rounded-[20px] border-t border-neutral-90 px-0 py-4 shadow-popover">
+                        <MessengerPopover
+                          conversations={conversations}
+                          onSeeAllMessagesClick={() => router.push('/messages')}
+                          onItemClick={close}
+                        />
+                      </Popover.Panel>
+                    </>
+                  )}
+                </Popover>
+                <NotificationButton
+                  notificationCount={!isLoading && data ? data.unseenCount : 0}
+                  notificationPath="/notification"
+                />
+                <div className="relative ml-2 size-11">
+                  <AvatarPopover>
+                    <Image
+                      alt="Avatar Icon"
+                      layout="fill"
+                      className="size-11 rounded-full object-contain"
+                      loading="lazy"
+                      src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
+                    />
+                  </AvatarPopover>
+                  <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
+                    <CaretDown size={12} />
+                  </div>
+                </div>
+                <LocaleSwitcher className="shrink" />
+              </div>
+            )}
       </header>
     </>
   );

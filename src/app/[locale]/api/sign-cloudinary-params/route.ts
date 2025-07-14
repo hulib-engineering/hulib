@@ -2,7 +2,6 @@ import { v2 as cloudinary } from 'cloudinary';
 import { NextResponse } from 'next/server';
 
 import { Env } from '@/libs/Env.mjs';
-import { logger } from '@/libs/Logger';
 import { BillUploadValidation } from '@/validations/EventRegistrationValidation';
 
 cloudinary.config({
@@ -34,7 +33,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ imageURL: uploadResponse.secure_url });
   } catch (error) {
     // Handle any errors that may occur during the upload process
-    logger.error('Error uploading image:', error);
+    console.error('Error uploading image:', error);
     return NextResponse.json({
       error: 'Something went wrong during image upload',
     });

@@ -4,14 +4,12 @@ import type { Socket } from 'socket.io-client';
 
 import { socket as createSocket } from '@/libs/services/socket';
 
-import { logger } from '../Logger';
-
-interface UseSocketOptions<TEvents> {
+type UseSocketOptions<TEvents> = {
   namespace: 'notification' | 'chat';
   listeners?: Partial<{ [K in keyof TEvents]: (payload: TEvents[K]) => void }>;
   maxRetries?: number;
   cleanupOnUnmount?: boolean;
-}
+};
 
 export const useSocket = <TEvents = Record<string, any>>({
   namespace,
@@ -41,7 +39,9 @@ export const useSocket = <TEvents = Record<string, any>>({
     const initSocket = async () => {
       const session = await getSession();
       const token = session?.accessToken;
-      if (!token || !active) return;
+      if (!token || !active) {
+        return;
+      }
 
       const socketInstance = createSocket(namespace, token);
       socketRef.current = socketInstance;
@@ -52,26 +52,26 @@ export const useSocket = <TEvents = Record<string, any>>({
       });
 
       socketInstance.on('disconnect', () => {
-        logger.warn(`[${namespace}] disconnected`);
+        console.warn(`[${namespace}] disconnected`);
         setIsConnected(false);
       });
 
       socketInstance.on('error', (err: Error) => {
-        logger.error(`[${namespace}] Socket error:`, err);
+        console.error(`[${namespace}] Socket error:`, err);
       });
 
       socketInstance.on('message', (msg) => {
-        logger.info(`[${namespace}] Default message:`, msg);
+        console.log(`[${namespace}] Default message:`, msg);
       });
 
       socketInstance.onAny((event, ...args) => {
-        logger.debug(`[${namespace}] [onAny] ${event}`, ...args);
+        console.debug(`[${namespace}] [onAny] ${event}`, ...args);
       });
 
       socketInstance.io.on('reconnect_attempt', () => {
         retryCountRef.current += 1;
         if (retryCountRef.current > maxRetries) {
-          logger.warn(`[${namespace}] Max retries exceeded. Disconnecting.`);
+          console.warn(`[${namespace}] Max retries exceeded. Disconnecting.`);
           socketInstance.disconnect();
         }
       });
@@ -104,10 +104,9 @@ export const useSocket = <TEvents = Record<string, any>>({
     (event: string, ...args: any[]) => {
       const socket = socketRef.current;
       if (!socket || !socket.connected) {
-        logger.warn(`[${namespace}] Emit failed. Socket not connected.`);
+        console.warn(`[${namespace}] Emit failed. Socket not connected.`);
         return;
       }
-      logger.info(`[${namespace}] Emit: "${event}"`, args);
       socket.emit(event, ...args);
     },
     [namespace],

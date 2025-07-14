@@ -4,6 +4,7 @@ import { Minus, X } from '@phosphor-icons/react';
 import Image from 'next/image';
 import React, { useCallback, useState } from 'react';
 
+import { MessageItem } from './Messages/ChatDetail';
 import IconButton from '@/components/iconButton/IconButton';
 import { MessengerInput } from '@/components/messages/MessengerInput';
 import { mergeClassnames } from '@/components/private/utils';
@@ -11,13 +12,10 @@ import StatusBadge from '@/components/StatusBadge';
 import Tooltip from '@/components/tooltip/Tooltip';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
-import { logger } from '@/libs/Logger';
 import type { MessageResponse } from '@/libs/services/modules/chat';
 import { chatApi, useGetConversationQuery } from '@/libs/services/modules/chat';
 import type { TransformedMessage } from '@/libs/services/modules/chat/getConversation';
 import { closeChat, minimizeChat, restoreChat } from '@/libs/store/messenger';
-
-import { MessageItem } from './Messages/ChatDetail';
 
 type IChatBubbleProps = {
   id: string;
@@ -29,8 +27,8 @@ type IChatBubbleProps = {
 };
 
 const ChatBubble = (props: IChatBubbleProps) => {
-  const direction =
-    `${props.lastMessage?.recipientId}` === props.id ? 'received' : 'sent';
+  const direction
+    = `${props.lastMessage?.recipientId}` === props.id ? 'received' : 'sent';
   const [isHovering, setIsHovering] = useState(false);
 
   const onMouseEnter = useCallback(() => setIsHovering(true), [setIsHovering]);
@@ -48,8 +46,8 @@ const ChatBubble = (props: IChatBubbleProps) => {
         >
           <Image
             src={
-              props.participant.avatarUrl ||
-              '/assets/images/ava-placeholder.png'
+              props.participant.avatarUrl
+              || '/assets/images/ava-placeholder.png'
             }
             alt={props.participant.name}
             width={56}
@@ -85,15 +83,19 @@ const ChatBubble = (props: IChatBubbleProps) => {
         className="max-w-[221px] rounded-bl-2xl rounded-tr-2xl bg-primary-98 px-3 py-2 shadow-tooltip"
       >
         <div className="flex flex-col gap-1">
-          {props.lastMessage?.chatType.name === 'txt' ? (
-            <p className="line-clamp-1 truncate text-sm leading-5 text-neutral-20">{`${
-              direction === 'sent' ? 'You:' : ''
-            } ${props.lastMessage?.message || ''}`}</p>
-          ) : (
-            <p>
-              {direction === 'sent' ? 'You sent a sticker' : 'Sent a sticker'}
-            </p>
-          )}
+          {props.lastMessage?.chatType.name === 'txt'
+            ? (
+                <p className="line-clamp-1 truncate text-sm leading-5 text-neutral-20">
+                  {`${
+                    direction === 'sent' ? 'You:' : ''
+                  } ${props.lastMessage?.message || ''}`}
+                </p>
+              )
+            : (
+                <p>
+                  {direction === 'sent' ? 'You sent a sticker' : 'Sent a sticker'}
+                </p>
+              )}
         </div>
       </Tooltip.Content>
     </Tooltip>
@@ -120,8 +122,8 @@ const ChatWindow = (props: IChatWindowProps) => {
             <Image
               className="size-[36px] rounded-full"
               src={
-                props.participant.avatarUrl ??
-                '/assets/images/ava-placeholder.png'
+                props.participant.avatarUrl
+                ?? '/assets/images/ava-placeholder.png'
               }
               alt="Sender Avatar"
               width={36}
@@ -149,33 +151,33 @@ const ChatWindow = (props: IChatWindowProps) => {
 
       {/* Messages */}
       <div className="flex flex-1 flex-col-reverse overflow-y-auto bg-green-98 p-3 text-xs leading-5 text-neutral-30">
-        {data &&
-          data.map((each: TransformedMessage) => {
-            if (each.chatType === 'img') {
-              return (
-                <div
-                  key={each.id}
-                  className={mergeClassnames(
-                    'flex',
-                    each.direction === 'sent' ? 'justify-end' : 'justify-start',
-                  )}
-                >
-                  <Image
-                    alt={`Sticker ${each.msg}`}
-                    width={120}
-                    height={120}
-                    className="size-[120px] object-contain"
-                    src={each.stickerUrl ?? ''}
-                  />
-                </div>
-              );
-            }
+        {data
+        && data.map((each: TransformedMessage) => {
+          if (each.chatType === 'img') {
             return (
-              <MessageItem key={each.id} type={each.direction}>
-                {each.msg}
-              </MessageItem>
+              <div
+                key={each.id}
+                className={mergeClassnames(
+                  'flex',
+                  each.direction === 'sent' ? 'justify-end' : 'justify-start',
+                )}
+              >
+                <Image
+                  alt={`Sticker ${each.msg}`}
+                  width={120}
+                  height={120}
+                  className="size-[120px] object-contain"
+                  src={each.stickerUrl ?? ''}
+                />
+              </div>
             );
-          })}
+          }
+          return (
+            <MessageItem key={each.id} type={each.direction}>
+              {each.msg}
+            </MessageItem>
+          );
+        })}
       </div>
 
       {/* Input */}
@@ -187,7 +189,7 @@ const ChatWindow = (props: IChatWindowProps) => {
 };
 
 export default function MessengerWidget() {
-  const chats = useAppSelector((state) => state.messenger.chats);
+  const chats = useAppSelector(state => state.messenger.chats);
 
   const dispatch = useAppDispatch();
 
@@ -199,7 +201,7 @@ export default function MessengerWidget() {
   const playSentMessageSound = () => {
     const audio = new Audio('/assets/media/message-sent.mp3');
     audio.play().catch((e) => {
-      logger.warn('Audio play blocked:', e);
+      console.warn('Audio play blocked:', e);
     });
   };
   const handleSendMessage = async (
@@ -207,10 +209,12 @@ export default function MessengerWidget() {
     text: string,
     type?: 'txt' | 'img',
   ) => {
-    if (!text.trim()) return;
+    if (!text.trim()) {
+      return;
+    }
 
     if (!isConnected) {
-      logger.warn('[Chat] Cannot send — not connected');
+      console.warn('[Chat] Cannot send — not connected');
       return;
     }
     emit('send', { recipientId: id, message: text, chatType: type ?? 'txt' });
@@ -221,8 +225,8 @@ export default function MessengerWidget() {
 
     playSentMessageSound();
   };
-  const openChats = chats.filter((chat) => chat.isOpen && !chat.isMinimized);
-  const closedChats = chats.filter((chat) => !chat.isOpen || chat.isMinimized);
+  const openChats = chats.filter(chat => chat.isOpen && !chat.isMinimized);
+  const closedChats = chats.filter(chat => !chat.isOpen || chat.isMinimized);
   const handleMinimizeChat = (id: string) => {
     dispatch(minimizeChat(id));
   };
@@ -234,7 +238,7 @@ export default function MessengerWidget() {
     <>
       {/* Chat Windows - aligned horizontally leftward like Messenger */}
       <div className="fixed bottom-1.5 right-28 z-50 flex flex-row-reverse gap-4">
-        {openChats.map((chat) => (
+        {openChats.map(chat => (
           <ChatWindow
             key={chat.id}
             id={chat.id}
@@ -252,7 +256,7 @@ export default function MessengerWidget() {
 
       {/* Chat Bubbles - fixed to bottom-right */}
       <div className="fixed bottom-14 right-6 z-50 flex flex-col items-end gap-4">
-        {closedChats.map((chat) => (
+        {closedChats.map(chat => (
           <ChatBubble
             key={chat.id}
             id={chat.id}

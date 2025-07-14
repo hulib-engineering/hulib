@@ -11,7 +11,6 @@ import { useForm } from 'react-hook-form';
 import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
 import TextInput from '@/components/textInput/TextInput';
-import { logger } from '@/libs/Logger';
 import { useResetPasswordMutation } from '@/libs/services/modules/auth';
 import { ResetPasswordValidation } from '@/validations/ResetPasswordValidation';
 
@@ -87,7 +86,7 @@ const ResetPasswordForm = () => {
         });
         setSubmitSuccess(true);
       } catch (error: any) {
-        logger.error(error);
+        console.error(error);
       }
     }
   });
