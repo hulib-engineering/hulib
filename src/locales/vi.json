@@ -544,7 +544,10 @@
     "success_time_slots_description": "Bạn đã tạo khung giờ thành công"
   },
   "Meeting": {
-    "cancel_meeting": "Tôi không muốn gặp nữa"
+    "cancel_meeting": "Tôi không muốn gặp nữa",
+    "survey_submitted_successfully": "Khảo sát đã được gửi thành công. Chúc bạn có thời gian vui vẻ với Huber",
+    "you_have_meeting_now": "Bạn có cuộc họp ngay bây giờ",
+    "detail": "Chi tiết"
   },
   "Schedule": {
     "appointment_schedule": "Lịch trò chuyện tháng",
