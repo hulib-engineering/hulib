@@ -538,7 +538,10 @@
     "success_time_slots_description": "You have successfully created your time slots"
   },
   "Meeting": {
-    "cancel_meeting": "I don't want to meeting anymore"
+    "cancel_meeting": "I don't want to meeting anymore",
+    "survey_submitted_successfully": "Survey is submitted successfully. Hope you to have a good time with Huber",
+    "you_have_meeting_now": "You have meeting now",
+    "detail": "Detail"
   },
   "Schedule": {
     "appointment_schedule": "Appointment schedule",
