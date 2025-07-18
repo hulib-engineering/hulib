@@ -1,9 +1,10 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-const colors = require('tailwindcss/colors');
-// eslint-disable-next-line import/no-extraneous-dependencies
-const plugin = require('tailwindcss');
+import type { Config } from 'tailwindcss';
+import colors from 'tailwindcss/colors';
+import plugin from 'tailwindcss/plugin';
+import tailwind3d from 'tailwindcss-3d';
+import animationDelay from 'tailwindcss-animation-delay';
 
-const backfaceVisibility = plugin(function ({ addUtilities }) {
+const backfaceVisibility = plugin(({ addUtilities }) => {
   addUtilities({
     '.backface-visible': {
       'backface-visibility': 'visible',
@@ -36,19 +37,18 @@ const backfaceVisibility = plugin(function ({ addUtilities }) {
   });
 });
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     data: {
       checked: 'ui~="checked"',
     },
     fontSize: {
-      xs: '0.75rem',
-      sm: '0.875rem',
-      base: '1rem',
-      lg: '1.125rem',
-      xl: '1.25rem',
+      'xs': '0.75rem',
+      'sm': '0.875rem',
+      'base': '1rem',
+      'lg': '1.125rem',
+      'xl': '1.25rem',
       '2xl': '1.5rem',
       '3xl': '1.875rem',
       '4xl': '2.25rem',
@@ -58,23 +58,23 @@ module.exports = {
     colors: {
       // primary: '#0061EF',
       'primary-hover': '#0057D7',
-      secondary: '#FFC745',
-      light: '#B0CEFA',
+      'secondary': '#FFC745',
+      'light': '#B0CEFA',
       'blue-light': 'var(--foundation-blue-light)',
       'blue-light-active': 'var(--foundation-blue-light-active)',
       'blue-darker': 'var(--foundation-blue-darker)',
       'light-hover': '#D9E7FD',
-      white: colors.white,
-      black: colors.black,
-      slate: colors.slate,
-      lime: colors.lime,
-      violet: colors.violet,
-      amber: colors.amber,
-      indigo: colors.indigo,
-      red: colors.red,
-      neutral: colors.neutral,
-      transparent: 'transparent',
-      green: colors.green,
+      'white': colors.white,
+      'black': colors.black,
+      'slate': colors.slate,
+      'lime': colors.lime,
+      'violet': colors.violet,
+      'amber': colors.amber,
+      'indigo': colors.indigo,
+      'red': colors.red,
+      'neutral': colors.neutral,
+      'transparent': 'transparent',
+      'green': colors.green,
     },
     extend: {
       maxWidth: {
@@ -181,11 +181,11 @@ module.exports = {
         },
       },
       boxShadow: {
-        sm: '0 4px 5px 0 rgba(28, 30, 33, 0.1), 0 0px 4px 0 rgba(15, 15, 16, 0.06)',
-        popover: '0 6px 10px -1px #1C1E2124, 0 0 4px 0 #0F0F1014',
-        popup: '0 8px 18px -1px #1C1E2124, 0 0 4px 0 #0F0F1014',
+        'sm': '0 4px 5px 0 rgba(28, 30, 33, 0.1), 0 0px 4px 0 rgba(15, 15, 16, 0.06)',
+        'popover': '0 6px 10px -1px #1C1E2124, 0 0 4px 0 #0F0F1014',
+        'popup': '0 8px 18px -1px #1C1E2124, 0 0 4px 0 #0F0F1014',
         'focus-input': '0 0 0 4px rgba(205, 221, 254)',
-        tooltip:
+        'tooltip':
           '0 4px 5px 0 rgba(28, 30, 33, 0.10), 0 0 4px 0 rgba(15, 15, 16, 0.06)',
       },
       rotate: {
@@ -201,9 +201,9 @@ module.exports = {
         330: '330deg',
       },
       backgroundImage: {
-        'main-pattern': "url('/assets/images/bg-pattern.png')",
+        'main-pattern': 'url(\'/assets/images/bg-pattern.png\')',
         'special-section-pattern':
-          "url('/assets/images/bg-special-pattern.webp')",
+          'url(\'/assets/images/bg-special-pattern.webp\')',
         'radial-gradient':
           'radial-gradient(at 52% 57%, hsla(11,83%,72%,1) 0px, transparent 50%), radial-gradient(at 37% 57%, hsla(175,78%,66%,1) 0px, transparent 50%)',
       },
@@ -220,6 +220,7 @@ module.exports = {
       perspective: {
         '1000px': '1000px',
       },
+      // @ts-ignore
       transform: ['group-hover'],
       keyframes: {
         moveUp: {
@@ -434,7 +435,7 @@ module.exports = {
       animation: {
         'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
         'move-down': 'moveDown 2s ease-in infinite alternate-reverse',
-        slide: 'slide 10s infinite linear',
+        'slide': 'slide 10s infinite linear',
         'display-message': 'displayMessage 2s ease-in-out 7s forwards',
         'change-to-primary': 'changeToPrimary 2s ease-in-out 5.75s forwards',
         'change-to-secondary':
@@ -443,17 +444,17 @@ module.exports = {
         'change-to-yellow': 'changeToYellow 2s ease-in-out 5.75s forwards',
         'move-up-old-number': 'moveUpOld 5s ease-in-out 5s forwards',
         'drop-new-number': 'dropNew 6s ease-in-out forwards',
-        float: 'float 10s ease-in-out forwards',
+        'float': 'float 10s ease-in-out forwards',
         'show-firework': 'showFirework 1.5s ease-in-out 8s forwards',
-        fire: 'fire 0.5s ease-in-out 9s forwards',
+        'fire': 'fire 0.5s ease-in-out 9s forwards',
         'transform-from-old-to-new': 'transformFromOldToNew 1s ease-in-out 4s',
         'loader-circle-jump': 'loaderCircleJumping 2s infinite',
-        loader: 'rotation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite',
+        'loader': 'rotation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite',
         'gradient-animation': 'gradientAnimation 1.2s linear infinite',
-        crawling: 'borderCrawling 3s linear infinite',
+        'crawling': 'borderCrawling 3s linear infinite',
         'blob-bounce': 'blobBounce 5s infinite ease',
-        glider: 'glider 1s infinite linear',
-        flashing: 'flash 3s infinite',
+        'glider': 'glider 1s infinite linear',
+        'flashing': 'flash 3s infinite',
       },
     },
     animation: {
@@ -465,11 +466,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    backfaceVisibility,
-    // eslint-disable-next-line global-require,import/no-extraneous-dependencies
-    require('tailwindcss-3d')({ legacy: true }),
-    // eslint-disable-next-line global-require,import/no-extraneous-dependencies
-    require('tailwindcss-animation-delay'),
-  ],
-};
+  plugins: [backfaceVisibility, tailwind3d({ legacy: true }), animationDelay],
+} satisfies Config;

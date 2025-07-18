@@ -3,12 +3,11 @@
 import React, { useCallback, useState } from 'react';
 import type WaveSurfer from 'wavesurfer.js';
 
-import { useDeviceType } from '@/libs/hooks';
-
 import HeroDesktop from './HeroDesktop';
 import HeroMobile from './HeroMobile';
+import { useDeviceType } from '@/libs/hooks';
 
-export type IconType = {
+type IconType = {
   size?: number;
   yPosition?: string;
   xPosition?: string;
@@ -63,25 +62,27 @@ const Hero = () => {
     }
   }, [wavesurfer]);
 
-  return deviceType !== 'mobile' ? (
-    <HeroDesktop
-      StarIcons={StarIcons}
-      VectorIcons={VectorIcons}
-      isPlaying={isPlaying}
-      setIsPlaying={setIsPlaying}
-      onPlayPause={onPlayPause}
-      onReady={onReady}
-    />
-  ) : (
-    <HeroMobile
-      StarIcons={StarIcons}
-      VectorIcons={VectorIcons}
-      isPlaying={isPlaying}
-      setIsPlaying={setIsPlaying}
-      onPlayPause={onPlayPause}
-      onReady={onReady}
-    />
-  );
+  return deviceType !== 'mobile'
+    ? (
+        <HeroDesktop
+          StarIcons={StarIcons}
+          VectorIcons={VectorIcons}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+          onPlayPause={onPlayPause}
+          onReady={onReady}
+        />
+      )
+    : (
+        <HeroMobile
+          StarIcons={StarIcons}
+          VectorIcons={VectorIcons}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+          onPlayPause={onPlayPause}
+          onReady={onReady}
+        />
+      );
 };
 
 export default Hero;

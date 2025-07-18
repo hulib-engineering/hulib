@@ -13,13 +13,13 @@ import resendOTP from './resendOTP';
 import resetPassword from './resetPassword';
 import updateProfile from './updateProfile';
 
-interface Enum {
+type Enum = {
   id: string;
   name: string;
   __entity: string;
-}
+};
 
-export interface User {
+export type User = {
   id: string;
   email: string;
   provider: string;
@@ -33,7 +33,7 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
-}
+};
 
 export type EmailLoginResponse = {
   refreshToken: string;
@@ -77,5 +77,4 @@ export const {
   useChangePasswordMutation,
   useUpdateProfileMutation,
   useRegisterHuberMutation,
-  useCheckRegisterHumanBookMutation,
 }: any = authApi;

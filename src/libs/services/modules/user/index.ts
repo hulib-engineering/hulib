@@ -1,11 +1,10 @@
-import { api } from '@/libs/services/api';
-import getAuthorDetail from '@/libs/services/modules/user/getAuthorDetail';
-
 import getReadingSessionOfUser from './getReadingSessionOfUser';
 import getUsersById from './getUserById';
 import getUsers from './getUsers';
 import updateUserStatus from './updateUserStatus';
 import upgradeUser from './upgradeUser';
+import getAuthorDetail from '@/libs/services/modules/user/getAuthorDetail';
+import { api } from '@/libs/services/api';
 
 const authenticationApiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['Users'],
@@ -24,7 +23,6 @@ export const userApi = authenticationApiWithTag.injectEndpoints({
 });
 
 export const {
-  useGetAuthorDetailQuery,
   useGetUsersQuery,
   useGetUsersByIdQuery,
   useLazyGetUsersByIdQuery,

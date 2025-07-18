@@ -20,7 +20,6 @@ const hubersApi = apiWithTag.injectEndpoints({
 
 export const {
   useGetHubersQuery,
-  useCheckAvailabilityMutation,
   useGetHuberBookedSessionsQuery,
   useGetHuberStoriesQuery,
 }: any = hubersApi;

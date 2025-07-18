@@ -86,7 +86,6 @@ const baseQueryWithInterceptor = async (
             api.dispatch(logout());
           }
         } catch (err) {
-          // console.log(err);
           api.dispatch(logout());
         } finally {
           // release must be called once the mutex should be released again.
