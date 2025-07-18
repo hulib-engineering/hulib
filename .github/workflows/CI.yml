@@ -10,40 +10,82 @@ jobs:
   build:
     strategy:
       matrix:
-        node-version: [20.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [20.x, 22.x]
+        # See the supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     name: Build with ${{ matrix.node-version }}
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: npm ci
-      - run: npx next build
+          cache: npm
+
+      - name: Restore or cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Restore or cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/.next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: Build Next.js
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SENTRY_DISABLED: 'true' # Disable uploading Sentry source maps during build
 
   test:
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [22.x]
 
     name: Run all tests
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Retrieve Git history, needed to verify commits
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: npm ci
+          cache: npm
+
+      - name: Restore or cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Build Next.js for E2E tests
+        run: npm run build
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - if: github.event_name == 'pull_request'
         name: Validate all commits from PR
@@ -53,10 +95,13 @@ jobs:
         run: npm run lint
 
       - name: Type checking
-        run: npm run check-types
+        run: npm run check:types
+
+      - name: Check dependencies
+        run: npm run check:deps
 
       - name: Run unit tests
-        run: npm run test
+        run: npm run test -- --coverage
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
@@ -69,11 +114,11 @@ jobs:
       - name: Run storybook tests
         run: npm run test-storybook:ci
 
-# No e2e tests yet
-#      - name: Run E2E tests
-#        run: npx percy exec -- npm run test:e2e
-#        env:
-#          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+      # No e2e tests yet
+      #      - name: Run E2E tests
+      #        run: npx percy exec -- npm run test:e2e
+      #        env:
+      #          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -81,3 +126,29 @@ jobs:
           name: test-results
           path: test-results/
           retention-days: 7
+
+  synchronize-with-crowdin:
+    name: GitHub PR synchronize with Crowdin
+    runs-on: ubuntu-latest
+
+    needs: [build, test]
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }} # Crowdin Actions needs to push commits to the PR branch, checkout HEAD commit instead of merge commit
+
+      - name: crowdin action
+        uses: crowdin/github-action@v2
+        with:
+          upload_sources: true
+          upload_translations: true
+          download_translations: true
+          create_pull_request: false
+          localization_branch_name: ${{ github.head_ref || github.ref_name }} # the explanation here: https://stackoverflow.com/a/71158878
+          commit_message: 'chore: new Crowdin translations by GitHub Action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}

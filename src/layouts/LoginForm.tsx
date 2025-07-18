@@ -127,9 +127,9 @@ const LoginForm = () => {
         </Form.Item>
       </Form>
       <div className="inline-flex h-6 items-center justify-start gap-2 self-stretch">
-        <div className="h-[1px] w-full shrink grow basis-0 bg-neutral-90" />
+        <div className="h-px w-full shrink grow basis-0 bg-neutral-90" />
         <div className="text-center tracking-tight text-neutral-30">Or</div>
-        <div className="h-[1px] w-full shrink grow basis-0 bg-neutral-90" />
+        <div className="h-px w-full shrink grow basis-0 bg-neutral-90" />
       </div>
       <div className="w-full">
         <SocialButton
@@ -162,5 +162,3 @@ export const LoginWithSession = () => (
     <LoginForm />
   </SessionProvider>
 );
-
-export { LoginForm };

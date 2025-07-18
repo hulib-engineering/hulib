@@ -2,7 +2,7 @@ import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
 import type { PaginatedResponse } from '../../type';
 
-export type TimeSlot = {
+type TimeSlot = {
   id: number;
   dayOfWeek: number;
   startTime: string;
@@ -14,7 +14,7 @@ const getTimeSlotsHuber = (
   build: EndpointBuilder<BaseQueryFn, string, string>,
 ) =>
   build.query<PaginatedResponse<TimeSlot[]>, { id: number }>({
-    query: (params) => `time-slots/huber/${params.id}`,
+    query: params => `time-slots/huber/${params.id}`,
     providesTags: [{ type: 'TimeSlotHuber' }],
   });
 

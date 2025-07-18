@@ -1,8 +1,7 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
-import type { User } from '@/features/users/types';
-
 import type { UpdateUserStatusRequest } from './userType';
+import type { User } from '@/features/users/types';
 
 /**
  * Service for updating a user's status.
@@ -24,7 +23,7 @@ const updateUserStatus = (
       body,
     }),
     // Optionally, you can invalidate tags here if you want to refetch user data after update
-    invalidatesTags: (result, error, { id }) => [
+    invalidatesTags: (_result, _error, { id }) => [
       { type: 'Users', id },
       { type: 'Users', id: 'LIST' },
     ],

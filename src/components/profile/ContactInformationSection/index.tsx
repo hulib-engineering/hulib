@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,18 +6,16 @@ import { GlobeHemisphereWest } from '@phosphor-icons/react';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import type { z } from 'zod';
 
+import IconButtonEdit from '../IconButtonEdit';
 import { ProfileForm } from '@/components/profile/ContactInformationSection/ProfileForm';
 import type { Gender } from '@/types/common';
 import { GenderName } from '@/types/common';
 import { ProfileValidation } from '@/validations/ProfileValidation';
 
-import IconButtonEdit from '../IconButtonEdit';
-
 export const ContactInformationSection = ({ data }: { data: any }) => {
   const [contactInfoData, setContactInfoData] = React.useState<any>(data);
-  const methods = useForm<z.infer<typeof ProfileValidation>>({
+  const methods = useForm({
     resolver: zodResolver(ProfileValidation),
     defaultValues: {
       isUnderGuard: false,
@@ -76,35 +72,37 @@ export const ContactInformationSection = ({ data }: { data: any }) => {
           }}
         />
       </div>
-      {editMode ? (
-        <ProfileForm methods={methods} setEditMode={setEditMode} />
-      ) : (
-        <div className="flex flex-col gap-y-3">
-          {contactInfo.map((item) => {
-            return (
-              <div
-                key={item.title}
-                className="flex flex-row items-center justify-between"
-              >
-                <div>
-                  <p className="font-medium">{item.title}</p>
-                  <p className="font-light text-neutral-20">{item.value}</p>
-                </div>
-                <div className="rounded-full bg-neutral-90">
-                  <IconButton disabled>
-                    <GlobeHemisphereWest
-                      size={16}
-                      className="text-neutral-40"
-                    />
-                  </IconButton>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+      {editMode
+        ? (
+            <ProfileForm methods={methods} setEditMode={setEditMode} />
+          )
+        : (
+            <div className="flex flex-col gap-y-3">
+              {contactInfo.map((item) => {
+                return (
+                  <div
+                    key={item.title}
+                    className="flex flex-row items-center justify-between"
+                  >
+                    <div>
+                      <p className="font-medium">{item.title}</p>
+                      <p className="font-light text-neutral-20">{item.value}</p>
+                    </div>
+                    <div className="rounded-full bg-neutral-90">
+                      <IconButton disabled>
+                        <GlobeHemisphereWest
+                          size={16}
+                          className="text-neutral-40"
+                        />
+                      </IconButton>
+                    </div>
+                  </div>
+                );
+              })}
+              {' '}
+
+            </div>
+          )}
     </div>
   );
 };
-
-export default ContactInformationSection;

@@ -4,12 +4,12 @@ import type { Socket } from 'socket.io-client';
 
 import { socket as createSocket } from '@/libs/services/socket';
 
-interface UseSocketOptions<TEvents> {
+type UseSocketOptions<TEvents> = {
   namespace: 'notification' | 'chat';
   listeners?: Partial<{ [K in keyof TEvents]: (payload: TEvents[K]) => void }>;
   maxRetries?: number;
   cleanupOnUnmount?: boolean;
-}
+};
 
 export const useSocket = <TEvents = Record<string, any>>({
   namespace,
@@ -39,7 +39,9 @@ export const useSocket = <TEvents = Record<string, any>>({
     const initSocket = async () => {
       const session = await getSession();
       const token = session?.accessToken;
-      if (!token || !active) return;
+      if (!token || !active) {
+        return;
+      }
 
       const socketInstance = createSocket(namespace, token);
       socketRef.current = socketInstance;
@@ -105,7 +107,6 @@ export const useSocket = <TEvents = Record<string, any>>({
         console.warn(`[${namespace}] Emit failed. Socket not connected.`);
         return;
       }
-      console.log(`[${namespace}] Emit: "${event}"`, args);
       socket.emit(event, ...args);
     },
     [namespace],
