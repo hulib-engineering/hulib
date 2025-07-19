@@ -194,7 +194,7 @@ const MessengerPopover = ({
       <div className="px-5 pb-2 text-2xl font-bold leading-8">
         Your messages
       </div>
-      <div className="flex h-[280px] flex-col overflow-y-auto">
+      <div className="flex h-fit max-h-[300px] flex-col overflow-y-auto">
         {conversations.map(({ unreadCount, lastMessage, ...rest }) => (
           <MessageItem
             key={rest.participant.id}
@@ -210,14 +210,24 @@ const MessengerPopover = ({
         ))}
       </div>
       <div className="px-2.5">
-        <Button
-          variant="outline"
-          size="lg"
-          fullWidth
-          onClick={onSeeAllMessagesClick}
-        >
-          See all
-        </Button>
+        {
+          conversations.length > 0
+            ? (
+                <Button
+                  variant="outline"
+                  size="lg"
+                  fullWidth
+                  onClick={onSeeAllMessagesClick}
+                >
+                  See all
+                </Button>
+              )
+            : (
+                <div className="flex items-center justify-center">
+                  <p className="text-neutral-10">No messages</p>
+                </div>
+              )
+        }
       </div>
     </div>
   );
