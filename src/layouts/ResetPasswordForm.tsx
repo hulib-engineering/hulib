@@ -1,12 +1,13 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Eye } from '@phosphor-icons/react';
+import { CheckFat, Eye, X } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import PasswordChecklist from 'react-password-checklist';
 
 import Button from '@/components/button/Button';
 import Form from '@/components/form/Form';
@@ -25,7 +26,7 @@ const ResetPasswordSuccess = () => {
             src="/assets/icons/GreenCheck-circle.svg"
             width={45.5}
             height={35}
-            alt="arrow-icon"
+            alt="success-icon"
             loading="lazy"
           />
           <h2 className="text-[2rem] font-medium leading-[40px] tracking-[-2%]">
@@ -70,24 +71,31 @@ const ResetPasswordForm = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors, isValid },
+    watch,
+    formState: { errors, isValid, touchedFields, isSubmitting },
   } = useForm({
     resolver: zodResolver(ResetPasswordValidation),
+    defaultValues: {
+      password: '',
+      confirmPassword: '',
+    },
   });
 
   const [submitSuccess, setSubmitSuccess] = React.useState<boolean>(false);
 
   const onHandleSubmit = handleSubmit(async (data) => {
-    if (isValid) {
-      try {
-        await resetPassword({
-          password: data.password,
-          hash,
-        });
-        setSubmitSuccess(true);
-      } catch (error: any) {
-        console.error(error);
-      }
+    if (!isValid) return;
+
+
+    
+    try {
+      await resetPassword({
+        password: data.password,
+        hash,
+      }).unwrap();
+      setSubmitSuccess(true);
+    } catch (error: any) {
+      console.error('Reset password error:', error);
     }
   });
 
@@ -102,6 +110,7 @@ const ResetPasswordForm = () => {
           Reset the password
         </h2>
       </div>
+
       <Form className="flex w-full flex-col gap-4" onSubmit={onHandleSubmit}>
         <Form.Item>
           <TextInput
@@ -111,12 +120,10 @@ const ResetPasswordForm = () => {
             label="Password"
             showPasswordText={<Eye />}
             isError={!!errors.password}
-            hintText={
-              errors.password?.message
-              ?? 'Password must have at least 8 characters'
-            }
+            hintText={errors.password?.message}
           />
         </Form.Item>
+
         <Form.Item>
           <TextInput
             {...register('confirmPassword')}
@@ -128,14 +135,58 @@ const ResetPasswordForm = () => {
             hintText={errors.confirmPassword?.message}
           />
         </Form.Item>
+
+        {/* Password Requirements Checklist */}
+        {touchedFields.password && (
+          <div className="rounded-md bg-gray-50 p-3">
+            <PasswordChecklist
+              rules={['minLength', 'specialChar', 'number', 'capital', 'match']}
+              minLength={8}
+              value={watch('password')}
+              valueAgain={watch('confirmPassword')}
+              messages={{
+                minLength: 'At least 8 characters long',
+                specialChar: 'Contains a special character',
+                number: 'Contains a number',
+                capital: 'Contains an uppercase letter',
+                match: 'Passwords match',
+              }}
+              iconComponents={{
+                ValidIcon: (
+                  <CheckFat
+                    size={16}
+                    color="#16a34a"
+                    weight="fill"
+                    className="mr-2 flex-shrink-0"
+                  />
+                ),
+                InvalidIcon: (
+                  <X 
+                    size={16} 
+                    color="#dc2626" 
+                    weight="fill" 
+                    className="mr-2 flex-shrink-0" 
+                  />
+                ),
+              }}
+              className="text-sm"
+              style={{
+                fontSize: '14px',
+                lineHeight: '1.5',
+              }}
+            />
+          </div>
+        )}
+
         <Form.Item className="py-4">
           <Button
             type="submit"
             value="Submit"
             className="w-full"
-            onClick={onHandleSubmit}
+            disabled={isSubmitting}
+            animation={isSubmitting ? 'progress' : undefined}
           >
-            Reset password
+            {isSubmitting ? 'Resetting...' : 'Reset password'}
           </Button>
         </Form.Item>
       </Form>
@@ -144,12 +195,13 @@ const ResetPasswordForm = () => {
         type="button"
         className="flex items-center gap-x-2"
         onClick={() => router.push('/auth/login')}
+        disabled={isSubmitting}
       >
         <Image
           src="/assets/icons/ArrowLeft-icon.svg"
           width={24}
           height={24}
-          alt="arrow-icon"
+          alt="back-arrow-icon"
           loading="lazy"
         />
         <span className="text-base font-medium leading-5 text-primary-50 underline">
