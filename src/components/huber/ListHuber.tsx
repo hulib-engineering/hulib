@@ -4,16 +4,15 @@ import { CaretCircleDown, CaretCircleUp } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react';
 
+import Huber from './Huber';
 import Button from '@/components/button/Button';
 import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
 import { useGetHubersQuery } from '@/libs/services/modules/huber';
 import type { Huber as HuberType } from '@/libs/services/modules/huber/huberType';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 
-import Huber from './Huber';
-
 type ListHuberProps = {
-  topicIds: String[] | null;
+  topicIds: string[] | null;
   topics: Topic[];
 };
 
@@ -38,7 +37,7 @@ const ListHuber = ({ topicIds, topics }: ListHuberProps) => {
 
   const onClickSeeAll = () => {
     if (!isExpanded) {
-      setLimit((prevLimit) => prevLimit + 12);
+      setLimit(prevLimit => prevLimit + 12);
       setIsExpanded(true);
     } else {
       setLimit(12);
@@ -46,7 +45,9 @@ const ListHuber = ({ topicIds, topics }: ListHuberProps) => {
     }
   };
 
-  if (isLoading || isFetching) return <StoriesSkeleton />;
+  if (isLoading || isFetching) {
+    return <StoriesSkeleton />;
+  }
   const totalItems = hubersData?.meta?.totalItems || 0;
   const hasMoreData = limit < totalItems;
 
@@ -61,23 +62,27 @@ const ListHuber = ({ topicIds, topics }: ListHuberProps) => {
           </div>
         ))}
       </div>
-      {hasMoreData || isExpanded ? (
-        <div className="mt-6 flex w-full items-center justify-center">
-          <Button
-            variant="outline"
-            iconLeft={
-              isFullyExpanded ? (
-                <CaretCircleUp size={16} color="#0442BF" />
-              ) : (
-                <CaretCircleDown size={16} color="#0442BF" />
-              )
-            }
-            onClick={onClickSeeAll}
-          >
-            {isFullyExpanded ? t('hide_all') : t('view_more')}
-          </Button>
-        </div>
-      ) : null}
+      {hasMoreData || isExpanded
+        ? (
+            <div className="mt-6 flex w-full items-center justify-center">
+              <Button
+                variant="outline"
+                iconLeft={
+                  isFullyExpanded
+                    ? (
+                        <CaretCircleUp size={16} color="#0442BF" />
+                      )
+                    : (
+                        <CaretCircleDown size={16} color="#0442BF" />
+                      )
+                }
+                onClick={onClickSeeAll}
+              >
+                {isFullyExpanded ? t('hide_all') : t('view_more')}
+              </Button>
+            </div>
+          )
+        : null}
     </div>
   );
 };

@@ -8,6 +8,10 @@ import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import * as React from 'react';
 
+import AboutPanel from '../AboutPanel';
+import FavoriteTab from '../FavoriteTab';
+import IconButtonEdit from '../IconButtonEdit';
+import StoriesTab from '../StoriesTab';
 import Button from '@/components/button/Button';
 import type { ProfileMenuItem } from '@/components/core/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/core/NavBar/NavBar';
@@ -20,11 +24,6 @@ import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import { setAvatarUrl } from '@/libs/store/authentication';
 import { Role } from '@/types/common';
 import FormDataBuilder from '@/utils/FormDataBuilder';
-
-import AboutPanel from '../AboutPanel';
-import FavoriteTab from '../FavoriteTab';
-import IconButtonEdit from '../IconButtonEdit';
-import StoriesTab from '../StoriesTab';
 
 type Props = {
   label: string;
@@ -43,7 +42,7 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 const Profile = () => {
   const t = useTranslations('MyProfile');
   const searchParams = useSearchParams();
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
   const isAdmin = userInfo?.role?.id === Role.ADMIN;
   // isLiber: if user is a Liber, means user is a Liber
   const isLiber = userInfo?.role?.id === 3;
@@ -205,7 +204,7 @@ const Profile = () => {
     const tabParam = searchParams.get('tab'); // lấy từ ?tab=...
 
     if (tabParam && tabsRender.length > 0) {
-      const foundItem = tabsRender.find((item) => item.type === tabParam);
+      const foundItem = tabsRender.find(item => item.type === tabParam);
       if (foundItem) {
         setSelectedMenuItem(foundItem);
         return;
@@ -220,8 +219,10 @@ const Profile = () => {
 
   const getActiveMenuItemIndex = React.useCallback(
     (type: MyProfilePanelIndex | undefined) => {
-      if (!type) return 0;
-      return tabsRender.findIndex((o) => o.type === type) ?? 0;
+      if (!type) {
+        return 0;
+      }
+      return tabsRender.findIndex(o => o.type === type) ?? 0;
     },
     [tabsRender],
   );
@@ -232,7 +233,7 @@ const Profile = () => {
 
   if (isLoading) {
     return (
-      <div className="flex h-full w-full justify-center px-[10%]">
+      <div className="flex size-full justify-center px-[10%]">
         <LoadingSkeleton />
       </div>
     );
@@ -245,7 +246,7 @@ const Profile = () => {
   const rating = '5/5';
 
   return (
-    <div className="mb-5 flex h-full w-full flex-col gap-y-4">
+    <div className="mb-5 flex size-full flex-col gap-y-4">
       <div>
         <div className="relative flex h-[99.99px] justify-end justify-items-end bg-[#A6D4FF] lg:h-[200px]">
           <div className="relative h-[99.99px] w-full lg:h-[200px]">
@@ -266,11 +267,12 @@ const Profile = () => {
                 alt="Avatar Icon"
                 width={160}
                 height={160}
-                className="h-[100px] w-[100px] rounded-full lg:h-[160px] lg:w-[160px]"
+                className="size-[100px] rounded-full lg:size-[160px]"
                 loading="lazy"
-                src={
-                  userDetail?.photo?.path ?? '/assets/images/icons/avatar.svg'
-                }
+                // src={
+                //   userDetail?.photo?.path ?? '/assets/images/ava-placeholder.png'
+                // }
+                src="/assets/images/ava-placeholder.png"
               />
 
               <div className="absolute bottom-0 left-20 opacity-0 transition-opacity duration-200 group-hover:opacity-100 lg:left-28 ">
@@ -286,10 +288,9 @@ const Profile = () => {
                 <IconButtonEdit
                   disabled={!!huberId}
                   onClick={() =>
-                    billUploader &&
-                    billUploader?.current &&
-                    billUploader?.current?.click()
-                  }
+                    billUploader
+                    && billUploader?.current
+                    && billUploader?.current?.click()}
                 />
               </div>
             </div>
@@ -298,7 +299,8 @@ const Profile = () => {
               <div className="flex-col gap-y-1 lg:gap-y-1">
                 <div className="flex items-center gap-2">
                   <p className="text-3xl font-medium text-[#000000]">
-                    {userDetail?.fullName ?? ''}{' '}
+                    {userDetail?.fullName ?? ''}
+                    {' '}
                   </p>
                   {userDetail?.role?.name && (
                     <span className="inline-flex items-center gap-2 rounded-full bg-primary-90 px-4 py-1 text-sm text-primary-40">

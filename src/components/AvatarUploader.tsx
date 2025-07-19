@@ -18,7 +18,7 @@ const AvatarUploader = () => {
   const [upload] = useUploadMutation();
   const [updateProfile] = useUpdateProfileMutation();
 
-  const avatarUrl = useAppSelector((state) => state.auth.avatarUrl);
+  const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
 
   const dispatch = useAppDispatch();
 
@@ -65,12 +65,12 @@ const AvatarUploader = () => {
   return (
     <div className="flex w-full flex-col items-center gap-5">
       <Image
-        src={avatarUrl === '' ? '/assets/images/user-avatar.jpeg' : avatarUrl}
+        src={avatarUrl === '' ? '/assets/images/ava-placeholder.png' : avatarUrl}
         alt="Avatar"
         width={120}
         height={120}
         priority
-        className="h-[120px] w-[120px] rounded-full border-4 border-neutral-98 object-contain object-center"
+        className="size-[120px] rounded-full border-4 border-neutral-98 object-contain object-center"
       />
       <div className="flex w-full flex-col gap-3">
         <input
@@ -87,10 +87,9 @@ const AvatarUploader = () => {
           iconLeft={<UploadSimple />}
           className="border border-solid border-[#C2C6CF] bg-white capitalize text-primary-40 ring-0"
           onClick={() =>
-            billUploader &&
-            billUploader?.current &&
-            billUploader?.current?.click()
-          }
+            billUploader
+            && billUploader?.current
+            && billUploader?.current?.click()}
         >
           {t('upload')}
         </Button>

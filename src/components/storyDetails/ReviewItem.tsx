@@ -9,7 +9,7 @@ const ReviewItem = (params: StoryReview) => {
       <div className="flex w-full justify-between">
         <div className="flex items-center gap-x-2">
           <Image
-            src={params?.user?.photo?.path || '/assets/images/user-avatar.jpeg'}
+            src={params?.user?.photo?.path || '/assets/images/ava-placeholder.png'}
             alt="Avatar"
             width={44}
             height={44}

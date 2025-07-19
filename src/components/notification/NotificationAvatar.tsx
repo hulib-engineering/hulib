@@ -8,25 +8,25 @@ import type { Notification } from '@/libs/services/modules/notifications/notific
 import { NOTIFICATION_TYPES } from '@/libs/services/modules/notifications/notificationType';
 import { Role } from '@/types/common';
 
-interface NotificationAvatarProps {
+type NotificationAvatarProps = {
   notification: Notification;
   size?: number;
-}
+};
 
 const NotificationAvatar: FC<NotificationAvatarProps> = ({
   notification,
   size = 56,
 }) => {
-  const { role } = useAppSelector((state) => state.auth.userInfo);
+  const { role } = useAppSelector(state => state.auth.userInfo);
   if (
-    notification.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name ||
-    notification.type.name === NOTIFICATION_TYPES.REVIEW_STORY.name ||
-    role.id === Role.ADMIN
+    notification.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name
+    || notification.type.name === NOTIFICATION_TYPES.REVIEW_STORY.name
+    || role.id === Role.ADMIN
   ) {
     return (
       <div className="relative shrink-0">
         <Image
-          src={notification.sender.file ?? '/assets/images/user-avatar.jpeg'}
+          src={notification.sender.file ?? '/assets/images/ava-placeholder.png'}
           alt={notification.sender.fullName ?? 'Unknown User'}
           className="rounded-full"
           width={size}
@@ -72,7 +72,7 @@ const NotificationAvatar: FC<NotificationAvatarProps> = ({
       <Image
         src="/assets/images/minified-HULIB-logo.png"
         alt="HULIB logo"
-        className="h-8 w-8 rounded-full"
+        className="size-8 rounded-full"
         width={26}
         height={32}
       />
