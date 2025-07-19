@@ -39,11 +39,9 @@ const NewsletterForm = () => {
         },
         Env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
       );
-      pushSuccess(
-        '"Welcome aboard! 🌟 Your journey to wellness starts now. Keep an eye on your inbox for updates and exclusive content. Let\'s thrive together!" 📩🌿',
-      );
+      pushSuccess(t('newsletter_success_message'));
     } catch (error: any) {
-      pushError(`Error: ${error.message}`);
+      pushError(t('newsletter_error_message'));
     } finally {
       setIsLoading(false);
     }
@@ -77,14 +75,14 @@ const NewsletterForm = () => {
       <div className="flex lg:hidden">
         <IconButton
           type="submit"
-          icon={
+          icon={(
             <Image
               width={40}
               height={40}
               alt="Subscribe"
               src="/assets/images/icons/arrow-right-2.svg"
             />
-          }
+          )}
           className="bg-lp-primary-blue p-0"
         />
       </div>
