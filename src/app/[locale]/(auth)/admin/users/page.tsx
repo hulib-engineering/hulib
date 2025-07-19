@@ -7,7 +7,7 @@ import Button from '@/components/button/Button';
 import UserCard from '@/features/users/components/UserCard';
 import AdminLayout from '@/layouts/AdminLayout';
 import { useGetUsersQuery } from '@/libs/services/modules/user';
-import { Role, ROLE_NAME } from '@/types/common';
+import { ROLE_NAME, Role } from '@/types/common';
 
 const RoleBadge = ({
   role,
@@ -67,7 +67,7 @@ const UsersPage = () => {
 
   return (
     <AdminLayout pendingUsersCount={0}>
-      <div className="mx-auto flex h-full w-full flex-col md:p-8">
+      <div className="mx-auto flex size-full flex-col md:p-8">
         {/* Header section */}
         <h1 className="mb-1 text-2xl font-bold">User management</h1>
         <p className="mb-6 text-base text-neutral-40">List of Users</p>

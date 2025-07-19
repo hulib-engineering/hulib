@@ -1,36 +1,22 @@
 'use client';
 
 import { CalendarDot, MapPinArea, VideoCamera } from '@phosphor-icons/react';
-import { format } from 'date-fns';
-import { isNaN } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 
+import dayjs from 'dayjs';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
+import { ROLE_NAME, Role } from '@/types/common';
 
-// import avatar from './assets/images/icons/avatar.svg'
-
-const formatTime = (isoString: string): string => {
-  try {
-    const date = new Date(isoString);
-    if (isNaN(date.getTime())) {
-      return '00:00';
-    }
-    return format(date, 'h:mm');
-  } catch (error) {
-    return 'Invalid date';
-  }
-};
-
-interface UpComingEventProps {
+type UpComingEventProps = {
   isHuber: boolean;
-}
+};
 const UpComingEvent: React.FC<UpComingEventProps> = ({ isHuber }) => {
   const t = useTranslations('Schedule');
-  const { data: readingSessions, isLoading: isLoadingReadingSessions } =
-    useGetReadingSessionsQuery({ upcoming: true });
+  const { data: readingSessions, isLoading: isLoadingReadingSessions }
+    = useGetReadingSessionsQuery({ upcoming: true });
   const [data, setData] = useState<any>({});
 
   useEffect(() => {
@@ -42,7 +28,7 @@ const UpComingEvent: React.FC<UpComingEventProps> = ({ isHuber }) => {
   return (
     <div>
       {data && (
-        <div className="flex flex-col justify-start rounded-[12px] bg-[#fff] px-[16px] pb-[6px] pt-[16px] drop-shadow-md">
+        <div className="flex flex-col justify-start rounded-[12px] bg-white px-[16px] pb-[6px] pt-[16px] drop-shadow-md">
           {/* <div className="font-500 text-[20px]">Upcoming event</div>  */}
           <div className="my-[10px] flex flex-row">
             <div className="inline-flex h-[24px] items-center justify-center rounded-[4px] bg-[#0858FA] p-[2px]">
@@ -53,9 +39,10 @@ const UpComingEvent: React.FC<UpComingEventProps> = ({ isHuber }) => {
                 isHuber ? '' : 'text-primary-50'
               }`}
             >
-              {t('upcoming.meeting_with')}{' '}
+              {t('upcoming.meeting_with')}
+              {' '}
               <span className={isHuber ? 'text-[#DBAE0A]' : 'text-primary-50'}>
-                {isHuber ? 'Reader' : 'Huber'}
+                {isHuber ? ROLE_NAME[Role.LIBER] : ROLE_NAME[Role.HUBER]}
               </span>
             </div>
             <div>
@@ -73,10 +60,13 @@ const UpComingEvent: React.FC<UpComingEventProps> = ({ isHuber }) => {
               <CalendarDot size={13} color="#292D37" />
             </div>
             <div className="text-[14px] font-[400] leading-[16px]">
-              Today{' '}
-              <span>{`${formatTime(data.startedAt)} -> ${formatTime(
-                data.endedAt,
-              )}`}</span>
+              {dayjs(data.startedAt).format('ddd, DD/MM/YYYY')}
+              {' | '}
+              <span>
+                {dayjs(data.startedAt).format('hh:mm A')}
+                {' - '}
+                {dayjs(data.endedAt).format('hh:mm A')}
+              </span>
             </div>
           </div>
           <div className="flex items-center">
@@ -88,12 +78,12 @@ const UpComingEvent: React.FC<UpComingEventProps> = ({ isHuber }) => {
                 href={`${
                   data.sessionUrl
                     ? data.sessionUrl
-                    : 'https://shorturl.at/miRK7'
+                    : '-'
                 }`}
                 className="block truncate text-[14px] font-[500] leading-[16px] hover:underline"
                 title={data.sessionUrl}
               >
-                {data.sessionUrl || 'https://shorturl.at/miRK7'}
+                {data.sessionUrl || '-'}
               </Link>
             </div>
           </div>
