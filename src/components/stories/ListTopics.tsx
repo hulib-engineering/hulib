@@ -1,18 +1,17 @@
 'use client';
 
-import { uniqueId } from 'lodash';
 import { useParams, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react';
 
-import { useGetTopicsQuery } from '@/libs/services/modules/topics';
-
 import Topic from './Topic';
 import TopicsSkeleton from './TopicsSkeleton';
+import { useTopicsWithAll } from '@/libs/hooks';
+import type { Topic as TopicType } from '@/libs/services/modules/topics/topicType';
 
-interface Props {
+type Props = {
   currentPathName?: 'explore-story' | 'home' | 'explore-huber' | 'profile';
-}
+};
 
 const ListTopics = (props: Props) => {
   const { currentPathName = 'explore-story' } = props;
@@ -22,17 +21,8 @@ const ListTopics = (props: Props) => {
     [],
   );
 
-  const { data: topicsPages, isLoading } = useGetTopicsQuery();
   const t = useTranslations('ExploreStory');
-
-  const topics = React.useMemo(() => {
-    const all = { id: uniqueId(), name: t('all'), iconName: 'squares-four' };
-    if (!topicsPages?.data) {
-      return [all];
-    }
-
-    return [all, ...topicsPages.data];
-  }, [t, topicsPages]);
+  const { topics, isLoading } = useTopicsWithAll(t('all'));
 
   useEffect(() => {
     if (topicIds) {
@@ -52,35 +42,39 @@ const ListTopics = (props: Props) => {
         `/${currentPathName}?topicIds=${selectedCategories.join(',')}`,
       );
     }
-  }, [selectedCategories]);
+  }, [selectedCategories, currentPathName, router]);
 
   return (
     <div className="mt-6 flex flex-row flex-wrap gap-2">
-      {isLoading ? (
-        <TopicsSkeleton />
-      ) : (
-        (topics || []).map((topic) => (
-          <Topic
-            key={topic?.name}
-            name={topic?.name}
-            isActive={
-              topic?.name === 'All'
-                ? null
-                : selectedCategories.includes(topic.id)
-            }
-            onClick={() => {
-              setSelectedCategories((prev) => {
-                if (topic?.name === 'All') return prev;
-
-                if (prev.includes(topic?.id)) {
-                  return prev.filter((item: any) => item !== topic?.id);
+      {isLoading
+        ? (
+            <TopicsSkeleton />
+          )
+        : (
+            (topics || []).map((topic: TopicType) => (
+              <Topic
+                key={topic?.name}
+                name={topic?.name}
+                isActive={
+                  topic?.name === t('all')
+                    ? null
+                    : selectedCategories.includes(topic.id)
                 }
-                return [...prev, topic?.id];
-              });
-            }}
-          />
-        ))
-      )}
+                onClick={() => {
+                  setSelectedCategories((prev) => {
+                    if (topic?.name === t('all')) {
+                      return [];
+                    }
+
+                    if (prev.includes(topic?.id)) {
+                      return prev.filter((item: number) => item !== topic?.id);
+                    }
+                    return [...prev, topic?.id];
+                  });
+                }}
+              />
+            ))
+          )}
     </div>
   );
 };

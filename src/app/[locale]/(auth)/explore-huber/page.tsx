@@ -6,13 +6,14 @@ import { useTranslations } from 'next-intl';
 import ListHuber from '@/components/huber/ListHuber';
 import { mergeClassnames } from '@/components/private/utils';
 import ListTopics from '@/components/stories/ListTopics';
-import { useGetTopicsQuery } from '@/libs/services/modules/topics';
+import { useTopics } from '@/libs/hooks';
 
 const ExploreHuber = () => {
   const searchParams = useSearchParams();
-  const { data: topicsPages, isLoading } = useGetTopicsQuery();
+  const { topics, isLoading } = useTopics();
   const topicIds = searchParams.get('topicIds')?.split(',') || []; // Convert topicIds to an array
   const t = useTranslations('Huber');
+
   return (
     <div
       className={mergeClassnames(
@@ -26,7 +27,7 @@ const ExploreHuber = () => {
       <div className="text-lg font-normal">{t('description')}</div>
       <ListTopics currentPathName="explore-huber" />
       {!isLoading && (
-        <ListHuber topicIds={topicIds} topics={topicsPages?.data || []} />
+        <ListHuber topicIds={topicIds} topics={topics} />
       )}
     </div>
   );
