@@ -1,11 +1,12 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Eye } from '@phosphor-icons/react';
+import { CheckFat, Eye, X } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import PasswordChecklist from 'react-password-checklist';
 import type { z } from 'zod';
 
 import Button from '@/components/button/Button';
@@ -23,9 +24,15 @@ const ChangePassword = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors, isValid },
+    watch,
+    formState: { errors, isValid, touchedFields },
   } = useForm<z.infer<typeof ChangePasswordValidation>>({
     resolver: zodResolver(ChangePasswordValidation),
+    defaultValues: {
+      oldPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+    },
   });
 
   const [isOpen, setIsOpen] = useState(false);
@@ -68,10 +75,7 @@ const ChangePassword = () => {
               label="Old Password"
               showPasswordText={<Eye />}
               isError={!!errors.oldPassword}
-              hintText={
-                errors.oldPassword?.message ??
-                'Password must have at least 8 characters'
-              }
+              hintText={errors.oldPassword?.message}
             />
           </Form.Item>
           <Form.Item>
@@ -82,10 +86,7 @@ const ChangePassword = () => {
               label="New Password"
               showPasswordText={<Eye />}
               isError={!!errors.newPassword}
-              hintText={
-                errors.newPassword?.message ??
-                'Password must have at least 8 characters'
-              }
+              hintText={errors.newPassword?.message}
             />
           </Form.Item>
           <Form.Item>
@@ -99,6 +100,32 @@ const ChangePassword = () => {
               hintText={errors.confirmPassword?.message}
             />
           </Form.Item>
+          
+          {/* Password Requirements Checklist */}
+          {touchedFields.newPassword && (
+            <div className="w-full">
+              <PasswordChecklist
+                rules={['minLength', 'specialChar', 'number', 'capital', 'match']}
+                minLength={8}
+                value={watch('newPassword')}
+                valueAgain={watch('confirmPassword')}
+                iconComponents={{
+                  ValidIcon: (
+                    <CheckFat
+                      size={20}
+                      color="#46d51b"
+                      weight="fill"
+                      className="mr-2"
+                    />
+                  ),
+                  InvalidIcon: (
+                    <X size={20} color="#ee0538" weight="fill" className="mr-2" />
+                  ),
+                }}
+              />
+            </div>
+          )}
+
           <Form.Item className="py-4">
             <Button type="submit" value="Submit" className="w-full">
               Change
