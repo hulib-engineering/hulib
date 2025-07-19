@@ -1,5 +1,4 @@
-import type { BaseQueryFn } from '@reduxjs/toolkit/query';
-import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinitions';
+import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
 const getReadingSessions = (
   build: EndpointBuilder<BaseQueryFn, string, string>,

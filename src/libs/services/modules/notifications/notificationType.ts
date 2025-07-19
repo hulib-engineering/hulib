@@ -6,22 +6,20 @@ export const NOTIFICATION_TYPES = {
   OTHER: { id: 5, name: 'other' } as const,
 } as const;
 
-export type NotificationTypeName =
+type NotificationTypeName =
   (typeof NOTIFICATION_TYPES)[keyof typeof NOTIFICATION_TYPES]['name'];
-export type NotificationTypeKey = keyof typeof NOTIFICATION_TYPES;
-
-export interface NotificationType {
+type NotificationType = {
   id: number;
   name: NotificationTypeName;
-}
+};
 
-export interface NotificationUser {
+type NotificationUser = {
   id: number;
   fullName: string;
   file: string | null;
-}
+};
 
-export interface Notification {
+export type Notification = {
   id: number;
   seen: boolean;
   relatedEntityId: number;
@@ -32,20 +30,11 @@ export interface Notification {
   recipient: NotificationUser;
   sender: NotificationUser;
   relatedEntity: any;
-}
+};
 
-export interface CreateNotificationRequest {
+export type CreateNotificationRequest = {
   recipientId: number;
   senderId: number;
   type: string;
   relatedEntityId: number;
-}
-
-// Helper function to get notification type key
-export const getNotificationTypeKey = (
-  typeId: number,
-): NotificationTypeKey | undefined => {
-  return (Object.keys(NOTIFICATION_TYPES) as NotificationTypeKey[]).find(
-    (key) => NOTIFICATION_TYPES[key].id === typeId,
-  );
 };

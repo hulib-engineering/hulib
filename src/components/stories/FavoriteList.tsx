@@ -6,24 +6,23 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { FlipBook } from '@/components/flipBook/FlipBook';
-import { mergeClassnames } from '@/components/private/utils';
-import { useAppSelector } from '@/libs/hooks';
-import {
-  useDeleteAllFavoriteStoriesMutation,
-  useDeleteFavoriteStoryMutation,
-  useGetFavoritesStoryQuery,
-} from '@/libs/services/modules/fav-stories';
-import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
-
 import Button from '../button/Button';
 import { pushSuccess } from '../CustomToastifyContainer';
 import RemoveAllFavoriteModal from '../profile/FavoriteTab/modal/RemoveAllFavoriteModal';
 import RemoveFavoriteModal from '../profile/FavoriteTab/modal/RemoveFavoriteModal';
 import ListTopics from './ListTopics';
 import StoriesSkeleton from './StoriesSkeleton';
+import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
+import {
+  useDeleteAllFavoriteStoriesMutation,
+  useDeleteFavoriteStoryMutation,
+  useGetFavoritesStoryQuery,
+} from '@/libs/services/modules/fav-stories';
+import { useAppSelector } from '@/libs/hooks';
+import { mergeClassnames } from '@/components/private/utils';
+import { FlipBook } from '@/components/flipBook/FlipBook';
 
-interface FavoriteListProps {
+type FavoriteListProps = {
   title: string;
   description?: string;
   stories?: StoryType[];
@@ -31,7 +30,7 @@ interface FavoriteListProps {
   showTopics?: boolean;
   // refetchStories?: () => void;
   onSeeAllClick?: () => void;
-}
+};
 
 const FavoriteList = ({
   title: _title,
@@ -45,11 +44,11 @@ const FavoriteList = ({
   const tExplore = useTranslations('ExploreStory');
   const tMyFavorites = useTranslations('MyFavorites');
 
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
   const [isShowModal, setIsShowModal] = React.useState(false);
   const [isShowModalRemoveAll, setIsShowModalRemoveAll] = React.useState(false);
-  const [currentStoryData, setCurrentStoryData] =
-    React.useState<StoryType | null>();
+  const [currentStoryData, setCurrentStoryData]
+    = React.useState<StoryType | null>();
 
   const [isSelectAll, setIsSelectAll] = React.useState(false);
 
@@ -65,7 +64,9 @@ const FavoriteList = ({
   const [deleteFavoriteStory] = useDeleteFavoriteStoryMutation();
   const [deleteAllFavoriteStories] = useDeleteAllFavoriteStoriesMutation();
 
-  if (isLoading) return <StoriesSkeleton />;
+  if (isLoading) {
+    return <StoriesSkeleton />;
+  }
 
   const handleRemoveFavorite = async () => {
     try {
@@ -86,7 +87,9 @@ const FavoriteList = ({
   };
 
   const handleRemoveAllFavorites = async () => {
-    if (!isSelectAll) return;
+    if (!isSelectAll) {
+      return;
+    }
 
     try {
       await deleteAllFavoriteStories({
@@ -148,7 +151,7 @@ const FavoriteList = ({
               onChange={() => {
                 setIsSelectAll(!isSelectAll);
               }}
-              className="mt-0.5 h-4 w-4 cursor-pointer border border-solid border-neutral-40"
+              className="mt-0.5 size-4 cursor-pointer border border-solid border-neutral-40"
             />
             {tMyFavorites('choose_all')}
           </div>
@@ -164,45 +167,47 @@ const FavoriteList = ({
         </div>
       )}
 
-      {favoriteStories?.length > 0 ? (
-        <div
-          className={mergeClassnames(
-            'mt-6 grid grid-cols-1 gap-8 rounded-lg',
-            'md:grid-cols-2',
-            'xl:grid-cols-3',
-          )}
-        >
-          {favoriteStories?.map((item: StoryType) => (
-            <FlipBook
-              key={item.id}
-              data={item}
-              refetch={() => {}}
-              renderActions={() => renderActionsRead(item)}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="relative flex flex-col items-center justify-center gap-5">
-          <Image
-            src="/assets/images/no-results-found.png"
-            className="object-contain"
-            width={482}
-            height={378}
-            quality={100}
-            alt="banner"
-            loading="lazy"
-          />
+      {favoriteStories?.length > 0
+        ? (
+            <div
+              className={mergeClassnames(
+                'mt-6 grid grid-cols-1 gap-8 rounded-lg',
+                'md:grid-cols-2',
+                'xl:grid-cols-3',
+              )}
+            >
+              {favoriteStories?.map((item: StoryType) => (
+                <FlipBook
+                  key={item.id}
+                  data={item}
+                  refetch={() => {}}
+                  renderActions={() => renderActionsRead(item)}
+                />
+              ))}
+            </div>
+          )
+        : (
+            <div className="relative flex flex-col items-center justify-center gap-5">
+              <Image
+                src="/assets/images/no-results-found.png"
+                className="object-contain"
+                width={482}
+                height={378}
+                quality={100}
+                alt="banner"
+                loading="lazy"
+              />
 
-          <div className=" text-center">
-            <h3 className="text-[24px] font-bold text-[#010D26]">
-              {tMyFavorites('no_favorite_story')}
-            </h3>
-            <p className="text-base leading-6 text-[#010D26]">
-              {tMyFavorites('explore_stories')}
-            </p>
-          </div>
-        </div>
-      )}
+              <div className=" text-center">
+                <h3 className="text-[24px] font-bold text-[#010D26]">
+                  {tMyFavorites('no_favorite_story')}
+                </h3>
+                <p className="text-base leading-6 text-[#010D26]">
+                  {tMyFavorites('explore_stories')}
+                </p>
+              </div>
+            </div>
+          )}
 
       <RemoveFavoriteModal
         data={currentStoryData}

@@ -21,8 +21,8 @@ const HumanBookBanner = () => {
 
   // @ts-ignore
   const isUserLoggedIn = session?.accessToken;
-  const isUserLoggedInButTokenHasExpired =
-    isUserLoggedIn && decodedToken && isExpired;
+  const isUserLoggedInButTokenHasExpired
+    = isUserLoggedIn && decodedToken && isExpired;
 
   const fetchSession = async () => {
     const data = await getSession();

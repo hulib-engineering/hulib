@@ -5,10 +5,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
+import VideoComponent from './Video';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
-
-import VideoComponent from './Video';
 
 type Props = {
   appId: string;
@@ -17,7 +16,7 @@ type Props = {
 export default function AgoraVideoCall({ appId }: Props) {
   const router = useRouter();
 
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
 
   const [ready, setReady] = useState(true);
   const [isCameraOn, setIsCameraOn] = useState(true);
@@ -43,13 +42,13 @@ export default function AgoraVideoCall({ appId }: Props) {
     },
     {
       skip: !sessionId,
-    }
+    },
   );
 
   // Xác định vai trò của user hiện tại
   const isVibing = Number(userInfo?.id) === Number(readingSession?.reader?.id); // User là Liber (reader)
-  const isHuber =
-    Number(userInfo?.id) === Number(readingSession?.humanBook?.id); // User là Huber (humanBook)
+  const isHuber
+    = Number(userInfo?.id) === Number(readingSession?.humanBook?.id); // User là Huber (humanBook)
 
   const localRef = useRef<HTMLDivElement>(null);
   const remoteRef = useRef<HTMLDivElement>(null);
@@ -97,7 +96,7 @@ export default function AgoraVideoCall({ appId }: Props) {
         });
 
         // Xử lý khi remote user unpublish (bật/tắt mic)
-        agoraClient.on('user-unpublished', async (user, mediaType) => {
+        agoraClient.on('user-unpublished', async (_user, mediaType) => {
           if (mediaType === 'audio') {
             setRemoteMicOn(false); // Remote user muted microphone
           }
@@ -165,7 +164,9 @@ export default function AgoraVideoCall({ appId }: Props) {
   }, [ready, appId, channel, token]);
 
   const toggleScreenShare = async () => {
-    if (!client) return;
+    if (!client) {
+      return;
+    }
 
     if (!isSharingScreen) {
       try {
@@ -177,7 +178,7 @@ export default function AgoraVideoCall({ appId }: Props) {
                 await client.unpublish([track]);
                 track.stop();
                 track.close();
-              })
+              }),
             );
           } else {
             await client.unpublish([localTracks[1]]);
@@ -309,7 +310,7 @@ export default function AgoraVideoCall({ appId }: Props) {
 
       if (isVibing) {
         router.push(
-          `/after-meeting/${sessionId}?storyName=${readingSession.story.title}`
+          `/after-meeting/${sessionId}?storyName=${readingSession.story.title}`,
         );
       }
     } catch (error) {
@@ -333,7 +334,9 @@ export default function AgoraVideoCall({ appId }: Props) {
             />
             <span>00:00:00</span>
           </div>
-          Meeting story: {readingSession.story.title}
+          Meeting story:
+          {' '}
+          {readingSession.story.title}
         </div>
 
         <Image
@@ -443,26 +446,60 @@ export default function AgoraVideoCall({ appId }: Props) {
       {/* Debug info (chỉ hiện trong development) */}
       {process.env.NODE_ENV === 'development' && (
         <div className="mt-2 rounded bg-gray-100 p-2 text-xs">
-          <div>Tracks Ready: {tracksReady ? '✅' : '❌'}</div>
-          <div>Local Tracks: {localTracks.length}</div>
-          <div>Local Camera: {isCameraOn ? 'ON' : 'OFF'}</div>
-          <div>Local Microphone: {isMicOn ? 'ON' : 'OFF'}</div>
-          <div>Remote Microphone: {remoteMicOn ? 'ON' : 'OFF'}</div>
-          <div>Remote Users Count: {client?.remoteUsers?.length || 0}</div>
           <div>
-            Remote Users:{' '}
+            Tracks Ready:
+            {tracksReady ? '✅' : '❌'}
+          </div>
+          <div>
+            Local Tracks:
+            {localTracks.length}
+          </div>
+          <div>
+            Local Camera:
+            {isCameraOn ? 'ON' : 'OFF'}
+          </div>
+          <div>
+            Local Microphone:
+            {isMicOn ? 'ON' : 'OFF'}
+          </div>
+          <div>
+            Remote Microphone:
+            {remoteMicOn ? 'ON' : 'OFF'}
+          </div>
+          <div>
+            Remote Users Count:
+            {client?.remoteUsers?.length || 0}
+          </div>
+          <div>
+            Remote Users:
+            {' '}
             {client?.remoteUsers
               ?.map(
                 (u: any) =>
-                  `${u.uid}(${u.hasVideo ? 'V' : ''}${u.hasAudio ? 'A' : ''})`
+                  `${u.uid}(${u.hasVideo ? 'V' : ''}${u.hasAudio ? 'A' : ''})`,
               )
               .join(', ') || 'None'}
           </div>
-          <div>User ID: {userInfo?.id}</div>
-          <div>Reader ID: {readingSession?.reader?.id}</div>
-          <div>HumanBook ID: {readingSession?.humanBook?.id}</div>
-          <div>Is Vibing (Liber): {isVibing ? '✅' : '❌'}</div>
-          <div>Is Huber: {isHuber ? '✅' : '❌'}</div>
+          <div>
+            User ID:
+            {userInfo?.id}
+          </div>
+          <div>
+            Reader ID:
+            {readingSession?.reader?.id}
+          </div>
+          <div>
+            HumanBook ID:
+            {readingSession?.humanBook?.id}
+          </div>
+          <div>
+            Is Vibing (Liber):
+            {isVibing ? '✅' : '❌'}
+          </div>
+          <div>
+            Is Huber:
+            {isHuber ? '✅' : '❌'}
+          </div>
         </div>
       )}
     </div>

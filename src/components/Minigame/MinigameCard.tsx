@@ -25,8 +25,6 @@ type IMinigameCardProps = IGameCardProps & {
 };
 
 const MinigameCard = (props: IMinigameCardProps) => {
-  // const pickedId = useAppSelector((state) => state.minigame.pickedId);
-  // console.log(pickedId);
   const guessedIds = useAppSelector((state) => state.minigame.guessedIds);
 
   // const dispatch = useAppDispatch();
@@ -60,7 +58,6 @@ const MinigameCard = (props: IMinigameCardProps) => {
   //       }, 1500);
   //     }
   //     dispatch(handleMovement);
-  //     // console.log('counter', counter);
   //     // counter -= 1;
   //     // available.innerHTML = counter;
   //     // if (counter === 0) {

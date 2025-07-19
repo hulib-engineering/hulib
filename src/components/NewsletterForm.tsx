@@ -75,14 +75,14 @@ const NewsletterForm = () => {
       <div className="flex lg:hidden">
         <IconButton
           type="submit"
-          icon={
+          icon={(
             <Image
               width={40}
               height={40}
               alt="Subscribe"
               src="/assets/images/icons/arrow-right-2.svg"
             />
-          }
+          )}
           className="bg-lp-primary-blue p-0"
         />
       </div>

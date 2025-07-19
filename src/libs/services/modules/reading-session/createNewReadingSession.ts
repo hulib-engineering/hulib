@@ -1,11 +1,10 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
-import type { User } from '@/features/users/types';
-
 import type { PaginatedResponse } from '../../type';
 import type { Story } from '../stories/storiesType';
+import type { User } from '@/features/users/types';
 
-export type FeedBack = {
+type FeedBack = {
   id: string;
   readingSessionId: string;
   readingSession: string;
@@ -20,14 +19,6 @@ export type StatusType =
   | 'rejected'
   | 'approved'
   | 'unInitialized';
-
-export type Message = {
-  id: string;
-  readingSessionId: string;
-  readingSession: string;
-  humanBookId: string;
-  humanBook: User;
-};
 
 export type ReadingSession = {
   id: string;

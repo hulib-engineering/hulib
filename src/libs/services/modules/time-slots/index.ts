@@ -1,8 +1,7 @@
+import getTimeSlotsHuber from './getTimeSlotsHuber';
 import { api } from '@/libs/services/api';
 import createTimeSlots from '@/libs/services/modules/time-slots/createTimeSlots';
 import getAllTimeSlots from '@/libs/services/modules/time-slots/getAllTimeSlots';
-
-import getTimeSlotsHuber from './getTimeSlotsHuber';
 
 const apiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['TimeSlot'],
@@ -18,7 +17,6 @@ const timeSlotsApi = apiWithTag.injectEndpoints({
 });
 
 export const {
-  useGetAllTimeSlotsQuery,
   useCreateTimeSlotsMutation,
   useGetTimeSlotsHuberQuery,
 }: any = timeSlotsApi;
