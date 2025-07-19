@@ -48,10 +48,11 @@ const UpComingEvent: React.FC<UpComingEventProps> = ({ isHuber }) => {
             <div>
               <Image
                 alt="avatar"
-                src="/assets/images/icons/avatar.svg"
+                src="/assets/images/ava-placeholder.png"
                 width={32}
                 height={32}
                 loading="lazy"
+                className="rounded-full"
               />
             </div>
           </div>

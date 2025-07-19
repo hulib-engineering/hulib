@@ -418,7 +418,8 @@ const Header = () => {
                         width={44}
                         height={44}
                         loading="lazy"
-                        src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
+                        // src={user.photo?.path ?? '/assets/images/ava-placeholder.png'}
+                        src="/assets/images/ava-placeholder.png"
                         className="size-11 rounded-full object-contain"
                       />
                     </AvatarPopover>
@@ -479,7 +480,8 @@ const Header = () => {
                       layout="fill"
                       className="size-11 rounded-full object-contain"
                       loading="lazy"
-                      src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
+                      // src={user.photo?.path ?? '/assets/images/ava-placeholder.png'}
+                      src="/assets/images/ava-placeholder.png"
                     />
                   </AvatarPopover>
                   <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
