@@ -1,3 +1,10 @@
+## [1.29.1](https://github.com/hulib-engineering/hulib/compare/v1.29.0...v1.29.1) (2025-07-19)
+
+
+### Bug Fixes
+
+* **334970:** update navigation path in Step1 component ([110c4c7](https://github.com/hulib-engineering/hulib/commit/110c4c7f27117c29a3c22e978dc513349d9ed6b1))
+
 # [1.29.0](https://github.com/hulib-engineering/hulib/compare/v1.28.0...v1.29.0) (2025-07-19)
 
 
