@@ -5,7 +5,7 @@ import type { GetTopicsParams, Topic } from './topicType';
 
 const getTopics = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query<PaginatedResponse<Topic>, GetTopicsParams>({
-    query: (params) => ({
+    query: params => ({
       url: 'topics',
       params: {
         page: params?.page || 1,
@@ -14,8 +14,10 @@ const getTopics = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       },
     }),
     serializeQueryArgs: ({ endpointName, queryArgs }) => {
-      return `${endpointName}(${queryArgs?.name})`;
+      const { page, limit, name } = queryArgs ?? {};
+      return `${endpointName}(${page},${limit},${name})`;
     },
+
     merge: (currentCache, newItems, { arg }) => {
       if (arg?.page === 1) {
         return newItems;
@@ -27,11 +29,11 @@ const getTopics = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
     },
     forceRefetch: ({ currentArg, previousArg }) => {
       return (
-        currentArg?.page !== previousArg?.page ||
-        currentArg?.name !== previousArg?.name
+        currentArg?.page !== previousArg?.page
+        || currentArg?.name !== previousArg?.name
       );
     },
-    providesTags: (result) =>
+    providesTags: result =>
       result
         ? [
             ...result.data.map(({ id }) => ({ type: 'Topics' as const, id })),
