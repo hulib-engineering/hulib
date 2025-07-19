@@ -1,17 +1,16 @@
 import { Users } from '@phosphor-icons/react';
 import React from 'react';
 
-import type { User } from '@/features/users/types';
-import { Role, ROLE_NAME } from '@/types/common';
-
 import { UserAvatar } from './UserAvatar';
+import type { User } from '@/features/users/types';
+import { ROLE_NAME, Role } from '@/types/common';
 
-interface SessionAttendeesProps {
+type SessionAttendeesProps = {
   humanBook: User;
   reader: User;
   isVibing: boolean;
   isAdmin?: boolean;
-}
+};
 
 export const SessionAttendees: React.FC<SessionAttendeesProps> = ({
   humanBook,

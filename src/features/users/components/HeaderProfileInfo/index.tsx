@@ -2,9 +2,8 @@ import { MapPin, Star, Users } from '@phosphor-icons/react';
 import Image from 'next/image';
 import React from 'react';
 
-import { ROLE_NAME } from '@/types/common';
-
 import ProfileActionDropdown from '../ProfileActionDropdown';
+import { ROLE_NAME } from '@/types/common';
 
 /**
  * ProfileInfo component
@@ -25,13 +24,13 @@ const HeaderProfileInfo = ({ data }: { data: any }) => {
       {/* Profile Info Row */}
       <div className="relative flex flex-row items-end px-8 pb-6">
         {/* Avatar (read-only, rounded, with border and shadow) */}
-        <div className="-mt-16 mr-6 h-32 w-32 shrink-0 overflow-hidden rounded-full border-4 border-white shadow-lg">
+        <div className="-mt-16 mr-6 size-32 shrink-0 overflow-hidden rounded-full border-4 border-white shadow-lg">
           <Image
             src={data?.photo?.path || '/assets/images/avatar-placeholder.png'}
             alt="Avatar"
             width={128}
             height={128}
-            className="h-32 w-32 object-cover"
+            className="size-32 object-cover"
           />
         </div>
         {/* Basic user info: role, name, location, mentee count, rating */}
@@ -60,11 +59,17 @@ const HeaderProfileInfo = ({ data }: { data: any }) => {
             </span>
             <span className="flex items-center gap-1 text-sm">
               <Users size={18} className="text-primary-60" />
-              {data.menteeCount || 0} mentees
+              {data.menteeCount || 0}
+              {' '}
+              mentees
             </span>
             <span className="flex items-center gap-1 text-sm">
               <Star size={18} className="text-pink-50" />
-              {data.rating || 0}/5 ({data.ratingCount || 0} hearts)
+              {data.rating || 0}
+              /5 (
+              {data.ratingCount || 0}
+              {' '}
+              hearts)
             </span>
           </div>
         </div>

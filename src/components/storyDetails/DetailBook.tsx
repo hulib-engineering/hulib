@@ -30,7 +30,7 @@ const Page = forwardRef<HTMLDivElement, PageProps>(
       ref={ref}
       data-density={density}
     >
-      <div className="flex h-full w-full flex-col justify-between gap-4">
+      <div className="flex size-full flex-col justify-between gap-4">
         <div className="flex w-full flex-col gap-4">
           {number === 2 && (
             <h6 className="text-xl font-bold leading-7 text-neutral-20">
@@ -62,14 +62,14 @@ type FlipBookHandle = {
 
 type PageContentData =
   | {
-      first?: false;
-      content: string;
-    }
+    first?: false;
+    content: string;
+  }
   | {
-      first: true;
-      title: string;
-      cover: string;
-    };
+    first: true;
+    title: string;
+    cover: string;
+  };
 const paginateText = (
   longText: string,
   containerWidth: number,
@@ -88,8 +88,8 @@ const paginateText = (
 
     // Ensure not to split words
     const lastSpaceIndex = pageText.lastIndexOf(' ');
-    const finalText =
-      i + maxCharsPerPage < longText.length && lastSpaceIndex !== -1
+    const finalText
+      = i + maxCharsPerPage < longText.length && lastSpaceIndex !== -1
         ? pageText.slice(0, lastSpaceIndex)
         : pageText;
 
@@ -206,7 +206,7 @@ export function DetailBook({
     <div className="flex flex-col items-center">
       <div className="w-full overflow-hidden" id="demoBlock">
         <div
-          className="relative z-50 m-auto flex h-full w-full justify-center overflow-visible"
+          className="relative z-50 m-auto flex size-full justify-center overflow-visible"
           ref={contentRef}
         >
           {/* @ts-ignore */}
@@ -232,36 +232,38 @@ export function DetailBook({
           >
             {pagesRender.map((page, i) => (
               <Page key={i} title={title} number={i + 1}>
-                {page.first ? (
-                  <div className="flex flex-col gap-2">
-                    <h2
-                      className={clsx(
-                        'font-bold',
-                        'text-xl',
-                        'sm:text-2xl',
-                        'md:text-[36px]',
-                      )}
-                    >
-                      {page?.title ?? ''}
-                    </h2>
-                    <Image
-                      src={page?.cover ?? '/assets/images/user-avatar.jpeg'}
-                      height={500}
-                      width={355}
-                      alt="Book cover"
-                      className="w-full object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div
-                    className={clsx(
-                      'whitespace-pre-line text-sm leading-5 tracking-wider text-[#45484A]',
-                      'md:text-base md:leading-6',
+                {page.first
+                  ? (
+                      <div className="flex flex-col gap-2">
+                        <h2
+                          className={clsx(
+                            'font-bold',
+                            'text-xl',
+                            'sm:text-2xl',
+                            'md:text-[36px]',
+                          )}
+                        >
+                          {page?.title ?? ''}
+                        </h2>
+                        <Image
+                          src={page?.cover ?? '/assets/images/ava-placeholder.png'}
+                          height={500}
+                          width={355}
+                          alt="Book cover"
+                          className="w-full object-cover"
+                        />
+                      </div>
+                    )
+                  : (
+                      <div
+                        className={clsx(
+                          'whitespace-pre-line text-sm leading-5 tracking-wider text-[#45484A]',
+                          'md:text-base md:leading-6',
+                        )}
+                      >
+                        {page?.content ?? ''}
+                      </div>
                     )}
-                  >
-                    {page?.content ?? ''}
-                  </div>
-                )}
               </Page>
             ))}
           </HTMLFlipBook>
@@ -271,7 +273,7 @@ export function DetailBook({
         <IconButton
           onClick={goToPrevPage}
           disabled={index === 0}
-          className={`flex h-8 w-8 items-center justify-center rounded-full border border-blue-500 ${
+          className={`flex size-8 items-center justify-center rounded-full border border-blue-500 ${
             index === 0 ? 'cursor-not-allowed opacity-50' : 'hover:bg-blue-100'
           }`}
         >
@@ -280,7 +282,7 @@ export function DetailBook({
         <IconButton
           onClick={goToNextPage}
           disabled={index + 2 === pagesRender.length}
-          className={`flex h-8 w-8 items-center justify-center rounded-full border border-blue-500 ${
+          className={`flex size-8 items-center justify-center rounded-full border border-blue-500 ${
             index + 2 >= pagesRender.length
               ? 'cursor-not-allowed opacity-50'
               : 'hover:bg-blue-100'

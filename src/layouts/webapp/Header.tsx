@@ -194,7 +194,7 @@ const MessengerPopover = ({
       <div className="px-5 pb-2 text-2xl font-bold leading-8">
         Your messages
       </div>
-      <div className="flex h-[280px] flex-col overflow-y-auto">
+      <div className="flex h-fit max-h-[300px] flex-col overflow-y-auto">
         {conversations.map(({ unreadCount, lastMessage, ...rest }) => (
           <MessageItem
             key={rest.participant.id}
@@ -210,14 +210,24 @@ const MessengerPopover = ({
         ))}
       </div>
       <div className="px-2.5">
-        <Button
-          variant="outline"
-          size="lg"
-          fullWidth
-          onClick={onSeeAllMessagesClick}
-        >
-          See all
-        </Button>
+        {
+          conversations.length > 0
+            ? (
+                <Button
+                  variant="outline"
+                  size="lg"
+                  fullWidth
+                  onClick={onSeeAllMessagesClick}
+                >
+                  See all
+                </Button>
+              )
+            : (
+                <div className="flex items-center justify-center">
+                  <p className="text-neutral-10">No messages</p>
+                </div>
+              )
+        }
       </div>
     </div>
   );
@@ -408,7 +418,8 @@ const Header = () => {
                         width={44}
                         height={44}
                         loading="lazy"
-                        src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
+                        // src={user.photo?.path ?? '/assets/images/ava-placeholder.png'}
+                        src="/assets/images/ava-placeholder.png"
                         className="size-11 rounded-full object-contain"
                       />
                     </AvatarPopover>
@@ -469,7 +480,8 @@ const Header = () => {
                       layout="fill"
                       className="size-11 rounded-full object-contain"
                       loading="lazy"
-                      src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
+                      // src={user.photo?.path ?? '/assets/images/ava-placeholder.png'}
+                      src="/assets/images/ava-placeholder.png"
                     />
                   </AvatarPopover>
                   <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">

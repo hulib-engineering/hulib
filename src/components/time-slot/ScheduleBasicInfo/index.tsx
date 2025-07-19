@@ -6,14 +6,14 @@ import { SessionAttendees } from '@/components/schedule/components/sessionCard/S
 import { useAppSelector } from '@/libs/hooks';
 
 const ScheduleBasicInfo = ({ attendees: { liber, huber } }: any) => {
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
   const t = useTranslations('ScheduleBasicInfo');
 
   return (
     <div className="flex w-full flex-col gap-y-4 rounded-3xl bg-white p-4 xl:w-1/3 xl:p-8">
       <div className="flex items-center gap-x-2 rounded-3xl bg-neutral-98 p-4">
         <Image
-          src="/assets/images/Avatar.png"
+          src="/assets/images/ava-placeholder.png"
           alt="avatar author"
           width={76}
           height={76}
@@ -51,7 +51,8 @@ const ScheduleBasicInfo = ({ attendees: { liber, huber } }: any) => {
         <div className="flex flex-col gap-y-1">
           <div className="flex items-center gap-x-2 text-sm font-medium text-neutral-10">
             <Timer size={16} />
-            {t('duration')}{' '}
+            {t('duration')}
+            {' '}
             <span className="text-sm font-medium text-neutral-40">
               {t('duration_time')}
             </span>
@@ -66,7 +67,8 @@ const ScheduleBasicInfo = ({ attendees: { liber, huber } }: any) => {
             {t('notice_text')}
           </p>
           <p className="text-sm font-normal text-neutral-40">
-            {t('support_text')}&nbsp;
+            {t('support_text')}
+&nbsp;
             <span className="cursor-pointer text-[#009BEE] underline">
               {t('click_here')}
             </span>

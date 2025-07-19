@@ -138,7 +138,7 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
               <div className="flex flex-row items-center gap-1">
                 <Image
                   alt="author-avatar"
-                  src="/assets/images/Avatar.png"
+                  src="/assets/images/ava-placeholder.png"
                   width={24}
                   height={24}
                   className="size-6 rounded-full"

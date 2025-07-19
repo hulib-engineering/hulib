@@ -396,7 +396,7 @@ const Step1 = (props: Props) => {
         <Button
           className="w-full"
           variant="outline"
-          onClick={() => router.push('/')}
+          onClick={() => router.push('/home')}
           disabled={isFormDisabled}
         >
           {t('cancel')}

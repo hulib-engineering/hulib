@@ -20,7 +20,7 @@ const ExploreHuber = () => {
         'md:px-28 ',
       )}
     >
-      <div className="h-full w-full max-w-[1216px] rounded-lg text-[40px] font-bold">
+      <div className="size-full max-w-[1216px] rounded-lg text-[40px] font-bold">
         {t('title')}
       </div>
       <div className="text-lg font-normal">{t('description')}</div>

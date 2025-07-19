@@ -69,8 +69,8 @@ export default function Index() {
       <div className="mb-5 flex h-[210px] w-full gap-3 rounded-2xl bg-white p-2">
         <Image
           src={
-            data?.cover?.path ??
-            '/assets/images/cover-book/story_background_yellow.png'
+            data?.cover?.path
+            ?? '/assets/images/cover-book/story_background_yellow.png'
           }
           alt={`${data?.title} - ${data?.humanBook?.fullName}`}
           width={120}
@@ -80,7 +80,7 @@ export default function Index() {
           <h5 className="font-medium text-primary-10">{data?.title}</h5>
           <div className="mt-2 flex gap-1">
             <Image
-              src="/assets/images/Avatar.png"
+              src="/assets/images/ava-placeholder.png"
               alt="Avatar"
               width={36}
               height={36}
@@ -108,7 +108,7 @@ export default function Index() {
       </div>
       <DetailBook
         title={data?.title || ''}
-        cover="/assets/images/user-avatar.jpeg"
+        cover="/assets/images/ava-placeholder.png"
         abstract={data?.abstract || ''}
       />
       {/* Approve/Declined buttons at the bottom */}
