@@ -26,6 +26,9 @@ storybook-static
 # cache
 .swc/
 
+# TypeScript incremental compilation cache
+*.tsbuildinfo
+
 # production
 /build
 

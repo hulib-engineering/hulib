@@ -19,7 +19,7 @@ import { ScheduleFilterPopover } from '@/components/schedule/components/Schedule
 import { PortalSessionCard } from '@/components/schedule/components/sessionCard/PortalSessionCard';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
-import { Role, ROLE_NAME, StatusEnum } from '@/types/common';
+import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
 
 export default function BigCalendar() {
   const t = useTranslations('Schedule');
@@ -55,7 +55,7 @@ export default function BigCalendar() {
   const [events, setEvents] = useState<
     { title: string; start: any; end: any; extendedProps: any }[]
   >([]);
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
 
   const formatMonthYear = (date: Date, currentLocale: string) => {
     const month = date.toLocaleString(currentLocale, { month: 'long' });
@@ -97,7 +97,7 @@ export default function BigCalendar() {
 
   const getWeekDisplayText = () => {
     if (isSameWeek(displayedWeek, currentWeek, { weekStartsOn: 0 })) {
-      return t('this_week') || 'This week';
+      return t('this_week');
     }
     return `${format(displayedWeek, 'MMM d')} - ${format(
       addDays(displayedWeek, 6),
@@ -160,14 +160,14 @@ export default function BigCalendar() {
     const { event } = eventInfo;
     const { extendedProps } = event;
     const isHumanBook = userInfo?.id === extendedProps.humanBookId;
-    const isPending =
-      extendedProps.sessionStatus !==
-      (StatusEnum.Approved || StatusEnum.Finished);
+    const isPending
+      = extendedProps.sessionStatus
+        !== (StatusEnum.Approved || StatusEnum.Finished);
 
     return (
       <div
         className="group relative z-50 h-[68px] cursor-pointer overflow-visible"
-        onMouseEnter={(e) => handleMouseEnter(e, extendedProps)}
+        onMouseEnter={e => handleMouseEnter(e, extendedProps)}
         onMouseLeave={handleMouseLeave}
       >
         <div className="relative h-full min-w-[60px] overflow-visible">
@@ -180,13 +180,14 @@ export default function BigCalendar() {
           >
             {isPending && (
               <span className=" inline-block h-[24px] w-[80px] self-end rounded-[100px] border-l-white bg-[#FFEDD5] p-[7px] text-right text-[12px] font-[500] leading-[16px] text-[#F97316]">
-                {t('waiting')}...
+                {t('waiting')}
+                ...
               </span>
             )}
             <div className="flex items-center">
               <Image
                 alt="avatar"
-                src="/assets/images/icons/avatar.svg"
+                src="/assets/images/ava-placeholder.png"
                 width={14}
                 height={14}
                 loading="lazy"
@@ -211,14 +212,6 @@ export default function BigCalendar() {
     );
   };
 
-  const slotLabelContent = (arg: { date: Date }) => {
-    return (
-      <span className="align-top font-semibold text-black">
-        {arg.date.getHours()}h00
-      </span>
-    );
-  };
-
   const dayHeaderContent = (arg: { date: Date }) => {
     const date = new Date(arg.date);
     const dayName = date
@@ -228,7 +221,9 @@ export default function BigCalendar() {
     return (
       <div className="flex flex-col items-center">
         <span className="font-bold">
-          {dayName} {dayNumber}
+          {dayName}
+          {' '}
+          {dayNumber}
         </span>
       </div>
     );
@@ -238,7 +233,9 @@ export default function BigCalendar() {
     <div className="bg-white p-4">
       <div className="flex w-full items-center justify-between">
         <h2 className="flex-1 rounded-md bg-white p-2 text-[28px] font-[500] leading-[36px] text-[#010D26]">
-          {t('appointment_schedule')} {currentMonthYear}
+          {t('appointment_schedule')}
+          {' '}
+          {currentMonthYear}
         </h2>
         <div className="flex items-center gap-x-2">
           <span>View:</span>
@@ -277,7 +274,6 @@ export default function BigCalendar() {
         </button>
       </div>
 
-      {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
       <div className="calendar-scroll-wrapper">
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin]}
@@ -288,7 +284,11 @@ export default function BigCalendar() {
               titleFormat: { year: 'numeric', month: 'long' },
             },
           }}
-          slotLabelContent={slotLabelContent}
+          slotLabelFormat={{
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: false,
+          }}
           height="auto"
           contentHeight="auto"
           slotMinTime="6:00:00"
@@ -297,7 +297,6 @@ export default function BigCalendar() {
           dayHeaderContent={dayHeaderContent}
           events={events}
           eventContent={renderEventContent}
-          // Force FullCalendar to re-render when currentDate changes
           key={currentDate.toISOString()}
           initialDate={currentDate}
         />
