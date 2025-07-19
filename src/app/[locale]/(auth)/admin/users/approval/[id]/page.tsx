@@ -26,7 +26,7 @@ import {
   useGetUsersByIdQuery,
   useUpgradeUserMutation,
 } from '@/libs/services/modules/user';
-import { Role, ROLE_NAME } from '@/types/common';
+import { ROLE_NAME, Role } from '@/types/common';
 
 // --- Sidebar section definitions ---
 const SIDEBAR_SECTIONS = [
@@ -61,8 +61,8 @@ const UserApprovalPage = () => {
     Number(id),
   );
   // Fetch the current logged-in user's info
-  const { data: currentUser, isLoading: isCurrentUserLoading } =
-    useGetPersonalInfoQuery();
+  const { data: currentUser, isLoading: isCurrentUserLoading }
+    = useGetPersonalInfoQuery();
 
   // Sidebar state: which section is selected
   const [selectedSection, setSelectedSection] = useState('overview');
@@ -81,7 +81,7 @@ const UserApprovalPage = () => {
         id: String(id),
         body: { action: 'accept' },
       }).unwrap();
-      setIsConfirmModalOpen((prev) => ({
+      setIsConfirmModalOpen(prev => ({
         ...prev,
         type: 'approve-success',
       }));
@@ -96,7 +96,7 @@ const UserApprovalPage = () => {
         id: String(id),
         body: { action: 'reject', reason },
       }).unwrap();
-      setIsConfirmModalOpen((prev) => ({
+      setIsConfirmModalOpen(prev => ({
         ...prev,
         type: 'decline-success',
       }));
@@ -108,7 +108,7 @@ const UserApprovalPage = () => {
   // Show loading skeleton if either user or current user info is loading
   if (isUserLoading || isCurrentUserLoading) {
     return (
-      <div className="flex h-full w-full justify-center px-[10%]">
+      <div className="flex size-full justify-center px-[10%]">
         <LoadingSkeleton />
       </div>
     );
@@ -117,19 +117,19 @@ const UserApprovalPage = () => {
   // If the user to approve is the current user, do not allow self-approval
   if (!user || !currentUser || String(user.id) === String(currentUser.id)) {
     return (
-      <div className="flex h-full w-full items-center justify-center text-lg text-neutral-60">
+      <div className="flex size-full items-center justify-center text-lg text-neutral-60">
         You cannot approve your own account.
       </div>
     );
   }
 
   if (
-    user.role.id === Role.HUBER &&
-    user.approval &&
-    user.approval !== 'Pending'
+    user.role.id === Role.HUBER
+    && user.approval
+    && user.approval !== 'Pending'
   ) {
     return (
-      <div className="my-20 flex h-full w-full items-center justify-center text-lg text-neutral-60">
+      <div className="my-20 flex size-full items-center justify-center text-lg text-neutral-60">
         This user is already a Huber and has been approved or rejected.
       </div>
     );
@@ -162,7 +162,7 @@ const UserApprovalPage = () => {
         <div className="mx-auto flex w-full max-w-7xl flex-1 rounded-lg shadow-sm">
           {/* Sidebar: Apple HIG, modern, vertical, minimal */}
           <div className="flex w-[260px] min-w-[200px] flex-col gap-2 border-r border-neutral-90 p-4">
-            {SIDEBAR_SECTIONS.map((section) => (
+            {SIDEBAR_SECTIONS.map(section => (
               <button
                 key={section.key}
                 type="button"
@@ -174,7 +174,8 @@ const UserApprovalPage = () => {
                 )}
                 onClick={() => setSelectedSection(section.key)}
               >
-                <section.icon size={20} />{' '}
+                <section.icon size={20} />
+                {' '}
                 <span className="pl-2">{section.label}</span>
               </button>
             ))}
@@ -209,12 +210,11 @@ const UserApprovalPage = () => {
             variant="primary"
             className="h-[44px] w-[240px] px-8 py-2"
             onClick={() =>
-              setIsConfirmModalOpen((prev) => ({
+              setIsConfirmModalOpen(prev => ({
                 ...prev,
                 isOpen: true,
                 type: 'approve',
-              }))
-            }
+              }))}
             disabled={isUpgrading}
           >
             {isUpgrading ? 'Approving...' : 'Approve'}
@@ -223,12 +223,11 @@ const UserApprovalPage = () => {
             iconLeft={<X size={16} />}
             className="h-[44px] w-[240px] bg-red-90 px-8 py-2 text-red-50 hover:bg-white hover:text-red-90"
             onClick={() =>
-              setIsConfirmModalOpen((prev) => ({
+              setIsConfirmModalOpen(prev => ({
                 ...prev,
                 isOpen: true,
                 type: 'decline',
-              }))
-            }
+              }))}
           >
             Declined
           </Button>
@@ -249,17 +248,16 @@ const UserApprovalPage = () => {
           }}
           type={
             isConfirmModalOpen.type as
-              | 'approve'
-              | 'decline'
-              | 'approve-success'
-              | 'decline-success'
+            | 'approve'
+            | 'decline'
+            | 'approve-success'
+            | 'decline-success'
           }
           onCancel={() =>
-            setIsConfirmModalOpen((prev) => ({
+            setIsConfirmModalOpen(prev => ({
               ...prev,
               isOpen: false,
-            }))
-          }
+            }))}
         />
       )}
     </div>

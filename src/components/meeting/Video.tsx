@@ -43,7 +43,7 @@ const VideoComponent = (props: VideoProps) => {
         <div className="absolute bottom-1/2 left-1/2 flex flex-col items-center gap-4 -translate-x-1/2">
           <Image
             alt="author-avatar"
-            src="/assets/images/Avatar.png"
+            src="/assets/images/ava-placeholder.png"
             width={168}
             height={168}
             className="size-6 rounded-full"
