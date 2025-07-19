@@ -3,6 +3,14 @@ import './bigSchedule.css';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import {
+  addDays,
+  differenceInWeeks,
+  format,
+  isSameWeek,
+  startOfWeek,
+} from 'date-fns';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import React, { useEffect, useRef, useState } from 'react';
@@ -17,31 +25,38 @@ export default function BigCalendar() {
   const t = useTranslations('Schedule');
   const locale = useLocale();
 
-  const getCurrentWeekRange = () => {
-    const now = new Date();
-    const currentDay = now.getDay();
-    const startOfWeek = new Date(now);
-    startOfWeek.setDate(now.getDate() - currentDay);
-    startOfWeek.setHours(0, 0, 0, 0);
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6);
-    endOfWeek.setHours(23, 59, 59, 999);
+  // State để quản lý tuần hiện tại
+  const today = new Date();
+  const [currentDate, setCurrentDate] = useState(today);
+  const currentWeek = startOfWeek(today, { weekStartsOn: 0 });
+  const displayedWeek = startOfWeek(currentDate, { weekStartsOn: 0 });
+
+  const getCurrentWeekRange = (date: Date) => {
+    const weekStart = startOfWeek(date, { weekStartsOn: 0 });
+    const startOfWeekDate = new Date(weekStart);
+    startOfWeekDate.setHours(0, 0, 0, 0);
+
+    const endOfWeekDate = new Date(weekStart);
+    endOfWeekDate.setDate(weekStart.getDate() + 6);
+    endOfWeekDate.setHours(23, 59, 59, 999);
+
     return {
-      startedAt: startOfWeek.toISOString(),
-      endedAt: endOfWeek.toISOString(),
+      startedAt: startOfWeekDate.toISOString(),
+      endedAt: endOfWeekDate.toISOString(),
     };
   };
 
-  const { startedAt, endedAt } = getCurrentWeekRange();
+  const { startedAt, endedAt } = getCurrentWeekRange(currentDate);
   const { data: readingSessions, isLoading } = useGetReadingSessionsQuery({
     startedAt,
     endedAt,
   });
+
   const [events, setEvents] = useState<
     { title: string; start: any; end: any; extendedProps: any }[]
   >([]);
   const userInfo = useAppSelector((state) => state.auth.userInfo);
-  const currentDate = new Date();
+
   const formatMonthYear = (date: Date, currentLocale: string) => {
     const month = date.toLocaleString(currentLocale, { month: 'long' });
     const year = date.getFullYear();
@@ -57,6 +72,38 @@ export default function BigCalendar() {
   }>({ top: 0, left: 0 });
 
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Navigation functions
+  const canGoPrevious = () => {
+    return !isSameWeek(displayedWeek, currentWeek, { weekStartsOn: 0 });
+  };
+
+  const canGoNext = () => {
+    const weeksFromCurrent = differenceInWeeks(displayedWeek, currentWeek);
+    return weeksFromCurrent < 3;
+  };
+
+  const handlePrevWeek = () => {
+    if (canGoPrevious()) {
+      setCurrentDate(addDays(currentDate, -7));
+    }
+  };
+
+  const handleNextWeek = () => {
+    if (canGoNext()) {
+      setCurrentDate(addDays(currentDate, 7));
+    }
+  };
+
+  const getWeekDisplayText = () => {
+    if (isSameWeek(displayedWeek, currentWeek, { weekStartsOn: 0 })) {
+      return t('this_week') || 'This week';
+    }
+    return `${format(displayedWeek, 'MMM d')} - ${format(
+      addDays(displayedWeek, 6),
+      'MMM d, yyyy',
+    )}`;
+  };
 
   const formatEvents = (data: any) => {
     if (!data || !Array.isArray(data)) {
@@ -119,7 +166,7 @@ export default function BigCalendar() {
 
     return (
       <div
-        className="group relative z-[50] h-[68px] cursor-pointer overflow-visible"
+        className="group relative z-50 h-[68px] cursor-pointer overflow-visible"
         onMouseEnter={(e) => handleMouseEnter(e, extendedProps)}
         onMouseLeave={handleMouseLeave}
       >
@@ -132,7 +179,7 @@ export default function BigCalendar() {
             } p-[2px]`}
           >
             {isPending && (
-              <span className=" inline-block h-[24px] w-[80px] self-end rounded-[100px] border-l-[#fff] bg-[#FFEDD5] p-[7px] text-right text-[12px] font-[500] leading-[16px] text-[#F97316]">
+              <span className=" inline-block h-[24px] w-[80px] self-end rounded-[100px] border-l-white bg-[#FFEDD5] p-[7px] text-right text-[12px] font-[500] leading-[16px] text-[#F97316]">
                 {t('waiting')}...
               </span>
             )}
@@ -143,7 +190,7 @@ export default function BigCalendar() {
                 width={14}
                 height={14}
                 loading="lazy"
-                className="mr-[2px] rounded-full border border-[#fff]"
+                className="mr-[2px] rounded-full border border-white"
               />
               <p className="h-[20px] w-[80px] truncate text-xs text-[#171819]">
                 {isHumanBook
@@ -198,6 +245,38 @@ export default function BigCalendar() {
           <ScheduleFilterPopover />
         </div>
       </div>
+
+      {/* Week Navigation */}
+      <div className="mb-4 flex items-center justify-between rounded-lg p-3">
+        <button
+          type="button"
+          onClick={handlePrevWeek}
+          disabled={!canGoPrevious()}
+          className={`${
+            !canGoPrevious()
+              ? 'cursor-not-allowed opacity-50'
+              : 'hover:bg-gray-200'
+          } rounded p-2 transition-colors`}
+        >
+          <CaretLeft className="size-5 text-gray-600" />
+        </button>
+
+        <span className="font-semibold text-gray-800">
+          {getWeekDisplayText()}
+        </span>
+
+        <button
+          type="button"
+          onClick={handleNextWeek}
+          disabled={!canGoNext()}
+          className={`${
+            !canGoNext() ? 'cursor-not-allowed opacity-50' : 'hover:bg-gray-200'
+          } rounded p-2 transition-colors`}
+        >
+          <CaretRight className="size-5 text-gray-600" />
+        </button>
+      </div>
+
       {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
       <div className="calendar-scroll-wrapper">
         <FullCalendar
@@ -218,6 +297,9 @@ export default function BigCalendar() {
           dayHeaderContent={dayHeaderContent}
           events={events}
           eventContent={renderEventContent}
+          // Force FullCalendar to re-render when currentDate changes
+          key={currentDate.toISOString()}
+          initialDate={currentDate}
         />
 
         {hoveredSession && (

@@ -1,7 +1,7 @@
 'use client';
 
 import localFont from 'next/font/local';
-import { redirect } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
@@ -9,11 +9,12 @@ import type { WithChildren } from '@/components/private/types';
 import { mergeClassnames } from '@/components/private/utils';
 import FooterWebApp from '@/layouts/FooterWebApp';
 import Header from '@/layouts/webapp/Header';
+import MessengerWidget from '@/layouts/webapp/MultipleChatWidget';
 import { useAppDispatch } from '@/libs/hooks';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import { setUserInfo } from '@/libs/store/authentication';
 
-export const poppins = localFont({
+const poppins = localFont({
   src: [
     {
       path: '../styles/fonts/SVN-Poppins-ExtraLight.otf',
@@ -78,15 +79,21 @@ export const poppins = localFont({
   ],
 });
 const MainTemplate = (props: WithChildren) => {
+  const pathname = usePathname();
+
   const { data, error } = useGetPersonalInfoQuery();
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(setUserInfo(data));
+    if (data) {
+      dispatch(setUserInfo(data));
+    }
   }, [data]);
 
-  if (error) return redirect('/auth/login');
+  if (error) {
+    return redirect('/auth/login');
+  }
 
   return (
     <div
@@ -95,7 +102,7 @@ const MainTemplate = (props: WithChildren) => {
         'relative antialiased h-screen flex flex-col',
       )}
     >
-      <div className="flex h-full w-full flex-col">
+      <div className="flex size-full flex-col">
         <Header />
         <main className="flex-1 overflow-y-auto bg-neutral-98">
           <div className="min-h-[calc(100vh-410px)] bg-neutral-98">
@@ -104,6 +111,7 @@ const MainTemplate = (props: WithChildren) => {
 
           <FooterWebApp />
         </main>
+        {!pathname.includes('messages') && <MessengerWidget />}
       </div>
       <CustomToastifyContainer />
     </div>

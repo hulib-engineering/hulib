@@ -1,7 +1,7 @@
 import { withSentryConfig } from '@sentry/nextjs';
-// eslint-disable-next-line import/extensions
+
 import './src/libs/Env.mjs';
-// eslint-disable-next-line import/no-extraneous-dependencies
+
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import withNextIntl from 'next-intl/plugin';
 
@@ -25,12 +25,18 @@ export default withSentryConfig(
       poweredByHeader: false,
       reactStrictMode: true,
       transpilePackages: ['@wavesurfer/react'],
+      experimental: {
+        // Related to Pino error with RSC: https://github.com/orgs/vercel/discussions/3150
+        serverComponentsExternalPackages: ['pino'],
+        // Use Turbo if available
+        turbo: true,
+      },
       webpack: (config) => {
         // config.externals is needed to resolve the following errors:
         // Module not found: Can't resolve 'bufferutil'
         // Module not found: Can't resolve 'utf-8-validate'
         config.externals.push({
-          bufferutil: 'bufferutil',
+          'bufferutil': 'bufferutil',
           'utf-8-validate': 'utf-8-validate',
           '@headlessui/react': '@headlessui/react',
         });
@@ -43,7 +49,7 @@ export default withSentryConfig(
           {
             protocol: 'http',
             hostname: 'localhost',
-            port: '3000',
+            port: '3001',
             pathname: '/api/v1/files/**',
             search: '',
           },
@@ -91,5 +97,8 @@ export default withSentryConfig(
     // https://docs.sentry.io/product/crons/
     // https://vercel.com/docs/cron-jobs
     automaticVercelMonitors: true,
+
+    // Disable Sentry telemetry
+    telemetry: false,
   },
 );

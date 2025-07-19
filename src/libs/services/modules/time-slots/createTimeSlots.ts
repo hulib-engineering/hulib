@@ -1,9 +1,8 @@
-import type { BaseQueryFn } from '@reduxjs/toolkit/query';
-import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinitions';
+import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
 import type { TimeSlot } from './getAllTimeSlots';
 
-export type CreateTimeSlotRequest = {
+type CreateTimeSlotRequest = {
   timeSlots: {
     dayOfWeek: number;
     startTime: string;
@@ -12,7 +11,7 @@ export type CreateTimeSlotRequest = {
 
 const createTimeSlots = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.mutation<TimeSlot, CreateTimeSlotRequest>({
-    query: (body) => ({
+    query: body => ({
       url: 'time-slots',
       method: 'POST',
       body,

@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export interface StoriesState {
+type StoriesState = {
   stories: any[];
-}
+};
 
 const initialState: StoriesState = {
   stories: [],

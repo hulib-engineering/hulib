@@ -1,5 +1,4 @@
-import type { BaseQueryFn } from '@reduxjs/toolkit/query';
-import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinitions';
+import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
 export type SessionStatus =
   | 'finished'
@@ -9,12 +8,12 @@ export type SessionStatus =
   | 'rejected'
   | 'approved';
 
-export interface GetReadingSessionParams {
+type GetReadingSessionParams = {
   id: string;
   sessionStatus?: SessionStatus;
   page?: number;
   limit?: number;
-}
+};
 
 const getReadingSessionOfUser = (
   build: EndpointBuilder<BaseQueryFn, string, string>,

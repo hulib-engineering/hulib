@@ -19,14 +19,14 @@ import {
 } from '@/libs/services/modules/topics';
 import { HuberStep1Validation } from '@/validations/HuberValidation';
 
-interface Props {
+type Props = {
   next: any;
-}
+};
 
-interface Topic {
+type Topic = {
   id: number;
   name: string;
-}
+};
 
 type FormData = z.infer<ReturnType<typeof HuberStep1Validation>>;
 
@@ -37,7 +37,7 @@ const Step1 = (props: Props) => {
   const router = useRouter();
   const [registerHuber, { isLoading }] = useRegisterHuberMutation();
   const [createTopic, { isLoading: isCreatingTopic }] = usePostTopicsMutation();
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
 
   const [isTopicDropdownOpen, setIsTopicDropdownOpen] = useState(false);
   const [topicSearchQuery, setTopicSearchQuery] = useState('');
@@ -53,7 +53,7 @@ const Step1 = (props: Props) => {
     watch,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>({
+  } = useForm({
     resolver: zodResolver(HuberStep1Validation(t)),
     mode: 'onChange',
     defaultValues: {
@@ -80,8 +80,8 @@ const Step1 = (props: Props) => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        topicDropdownRef.current &&
-        !topicDropdownRef.current.contains(event.target as Node)
+        topicDropdownRef.current
+        && !topicDropdownRef.current.contains(event.target as Node)
       ) {
         setIsTopicDropdownOpen(false);
       }
@@ -123,7 +123,9 @@ const Step1 = (props: Props) => {
 
   const handleCreateNewTopic = async () => {
     const trimmedQuery = topicSearchQuery.trim();
-    if (!trimmedQuery || trimmedQuery.length > 30) return;
+    if (!trimmedQuery || trimmedQuery.length > 30) {
+      return;
+    }
 
     try {
       const newTopic = await createTopic({ name: trimmedQuery }).unwrap();
@@ -152,10 +154,10 @@ const Step1 = (props: Props) => {
       topic.name.toLowerCase() === topicSearchQuery.toLowerCase(),
   );
 
-  const showAddNewOption =
-    topicSearchQuery.trim() &&
-    !hasExactMatch &&
-    topicSearchQuery.trim().length <= 30;
+  const showAddNewOption
+    = topicSearchQuery.trim()
+      && !hasExactMatch
+      && topicSearchQuery.trim().length <= 30;
 
   const handleTopicInputFocus = () => {
     setIsTopicDropdownOpen(true);
@@ -179,8 +181,8 @@ const Step1 = (props: Props) => {
   };
 
   const getInputClassName = (fieldName: keyof FormData) => {
-    const baseClass =
-      'rounded-lg border border-solid p-3 text-sm leading-4 text-neutral-40 outline-none';
+    const baseClass
+      = 'rounded-lg border border-solid p-3 text-sm leading-4 text-neutral-40 outline-none';
     const errorClass = errors[fieldName]
       ? 'border-red-500'
       : 'border-neutral-90';
@@ -196,13 +198,15 @@ const Step1 = (props: Props) => {
       className="flex flex-col items-center justify-center rounded-3xl bg-white p-5"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <p className="self-start text-xl font-medium leading-[2.75rem] text-neutral-10 md:text-[2.25rem]">
+      <p className="self-start text-xl font-medium leading-[2.75rem] text-neutral-10 md:text-4xl">
         {t('step_1_title')}
       </p>
 
       <label className="mt-6 flex w-full flex-col gap-2" htmlFor="bio">
         <span className="text-sm leading-4 text-neutral-10">
-          {t('bio.text')} <span className="text-red-50">*</span>
+          {t('bio.text')}
+          {' '}
+          <span className="text-red-50">*</span>
         </span>
         <Controller
           name="bio"
@@ -266,7 +270,9 @@ const Step1 = (props: Props) => {
               const topic = (topicsPages?.data || []).find(
                 (i: Topic) => i.id === selectedTopic.id,
               );
-              if (!topic) return null;
+              if (!topic) {
+                return null;
+              }
               return (
                 <div
                   key={topic.id}
@@ -370,8 +376,8 @@ const Step1 = (props: Props) => {
                   id="isConfirmed"
                   type="checkbox"
                   checked={field.value}
-                  onChange={(e) => field.onChange(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 cursor-pointer border border-solid border-neutral-40"
+                  onChange={e => field.onChange(e.target.checked)}
+                  className="mt-0.5 size-4 cursor-pointer border border-solid border-neutral-40"
                   disabled={isFormDisabled}
                 />
                 <span className="text-sm leading-5 text-neutral-10">

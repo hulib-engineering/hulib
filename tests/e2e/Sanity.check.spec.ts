@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 // Checkly is a tool used to monitor deployed environments, such as production or preview environments.
 // It runs end-to-end tests with the `.check.spec.ts` extension after each deployment to ensure that the environment is up and running.
@@ -7,37 +7,39 @@ import { test } from '@playwright/test';
 // On the other hand, E2E tests ending with `*.spec.ts` are only run before deployment.
 // You can run them locally or on CI to ensure that the application is ready for deployment.
 
-const targetUrl = process.env.ENVIRONMENT_URL || process.env.PRODUCTION_URL;
-
-if (!targetUrl) {
-  // throw new Error(
-  //   'Please set the ENVIRONMENT_URL or PRODUCTION_URL environment variable',
-  // );
-}
+// BaseURL needs to be explicitly defined in the test file.
+// Otherwise, Checkly runtime will throw an exception: `CHECKLY_INVALID_URL: Only URL's that start with http(s)`
+// You can't use `goto` function directly with a relative path like with other *.spec.ts tests.
+// Check the example at https://feedback.checklyhq.com/changelog/new-changelog-436
 
 test.describe('Sanity', () => {
-  // test.describe('Static pages', () => {
-  //   test('should display the homepage', async ({ page }) => {
-  //     await page.goto(targetUrl);
-  //     await expect(
-  //       page.getByRole('heading', {
-  //         name: 'Boilerplate code for your Nextjs project with Tailwind CSS',
-  //       }),
-  //     ).toBeVisible();
-  //   });
-  //   test('should navigate to the about page', async ({ page }) => {
-  //     await page.goto(targetUrl);
-  //     await page.getByRole('link', { name: 'About' }).click();
-  //     await expect(page).toHaveURL(/about$/);
-  //     await expect(
-  //       page.getByText('Welcome to our About page', { exact: false }),
-  //     ).toBeVisible();
-  //   });
-  //   test('should navigate to the portfolio page', async ({ page }) => {
-  //     await page.goto(targetUrl);
-  //     await page.getByRole('link', { name: 'Portfolio' }).click();
-  //     await expect(page).toHaveURL(/portfolio$/);
-  //     await expect(page.locator('main').getByRole('link')).toHaveCount(6);
-  //   });
-  // });
+  test.describe('Static pages', () => {
+    test('should display the homepage', async ({ page, baseURL }) => {
+      await page.goto(`${baseURL}/`);
+
+      await expect(
+        page.getByRole('heading', {
+          name: 'Boilerplate code for your Nextjs project with Tailwind CSS',
+        }),
+      ).toBeVisible();
+    });
+
+    test('should navigate to the about page', async ({ page, baseURL }) => {
+      await page.goto(`${baseURL}/`);
+      await page.getByRole('link', { name: 'About' }).click();
+
+      await expect(page).toHaveURL(/about$/);
+      await expect(
+        page.getByText('Welcome to our About page', { exact: false }),
+      ).toBeVisible();
+    });
+
+    test('should navigate to the portfolio page', async ({ page, baseURL }) => {
+      await page.goto(`${baseURL}/`);
+      await page.getByRole('link', { name: 'Portfolio' }).click();
+
+      await expect(page).toHaveURL(/portfolio$/);
+      await expect(page.locator('main').getByRole('link')).toHaveCount(6);
+    });
+  });
 });

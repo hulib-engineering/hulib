@@ -3,9 +3,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Mutex } from 'async-mutex';
 import { getSession } from 'next-auth/react';
 
-import { AppConfig } from '@/utils/AppConfig';
-
 import { logout, refreshAccessToken } from '../store/authentication';
+import { AppConfig } from '@/utils/AppConfig';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${AppConfig.api.endpoint}/${AppConfig.api.version}/`,
@@ -30,7 +29,7 @@ const mutex = new Mutex(); // create a new mutex
 const baseQueryWithInterceptor = async (
   args: string | FetchArgs,
   api: BaseQueryApi,
-  extraOptions: {},
+  extraOptions: object,
 ) => {
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock();
@@ -56,10 +55,10 @@ const baseQueryWithInterceptor = async (
   let result = await baseQuery(args, api, extraOptions);
 
   if (
-    api.endpoint !== 'loginAsAdmin' &&
-    api.endpoint !== 'loginAsUser' &&
-    result.error &&
-    result.error.status === 401
+    api.endpoint !== 'loginAsAdmin'
+    && api.endpoint !== 'loginAsUser'
+    && result.error
+    && result.error.status === 401
   ) {
     // here we can deal with 401 error
     // checking whether the mutex is locked
@@ -69,8 +68,8 @@ const baseQueryWithInterceptor = async (
 
       try {
         if (hasLoggedIn) {
-          const refreshRoute =
-            localStorage.getItem('role') === 'admin'
+          const refreshRoute
+            = localStorage.getItem('role') === 'admin'
               ? 'admin/profile/refresh'
               : 'profile/refresh';
 
@@ -90,10 +89,6 @@ const baseQueryWithInterceptor = async (
             api.dispatch(logout());
             return result;
           }
-        } else {
-          // If not logged in, logout
-          api.dispatch(logout());
-          return result;
         }
       } catch (err) {
         // If any error occurs during refresh, logout
@@ -123,6 +118,6 @@ const baseQueryWithInterceptor = async (
 
 export const api = createApi({
   baseQuery: baseQueryWithInterceptor,
-  tagTypes: ['User', 'OTP'],
+  tagTypes: ['User', 'OTP', 'AgoraChat', 'Chat', 'Messages'],
   endpoints: () => ({}),
 });

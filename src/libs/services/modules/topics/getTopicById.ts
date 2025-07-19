@@ -1,14 +1,13 @@
-import type { BaseQueryFn } from '@reduxjs/toolkit/query';
-import type { EndpointBuilder } from '@reduxjs/toolkit/src/query/endpointDefinitions';
+import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
 import type { Topic } from './topicType';
 
 const getTopicById = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query<Topic, string>({
-    query: (topicId) => ({
+    query: topicId => ({
       url: `topics/${topicId}`,
     }),
-    providesTags: (result, error, topicId) =>
+    providesTags: (result, _error, topicId) =>
       result
         ? [{ type: 'Topics' as const, id: topicId }]
         : [{ type: 'Topics' as const, id: 'LIST' }],
