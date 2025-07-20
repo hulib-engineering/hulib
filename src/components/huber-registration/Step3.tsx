@@ -8,29 +8,27 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
-import Form from '@/components/form/Form';
-import TextArea from '@/components/textArea/TextArea';
-import TextInput from '@/components/textInput/TextInput';
-import { useAppSelector } from '@/libs/hooks';
-import { useCreateStoryMutation } from '@/libs/services/modules/stories';
-import { useGetTopicsQuery } from '@/libs/services/modules/topics';
-import { StoriesValidation } from '@/validations/StoriesValidation';
-
 import Button from '../button/Button';
 import CustomCoverBook from '../common/CustomCoverBook';
 import { pushError, pushSuccess } from '../CustomToastifyContainer';
+import Form from '@/components/form/Form';
+import TextArea from '@/components/textArea/TextArea';
+import TextInput from '@/components/textInput/TextInput';
+import { useAppSelector, useTopics } from '@/libs/hooks';
+import { useCreateStoryMutation } from '@/libs/services/modules/stories';
+import { StoriesValidation } from '@/validations/StoriesValidation';
 
-interface Topic {
+type Topic = {
   id: number;
   name: string;
-}
+};
 
 const Step3 = ({ next }: { next: () => void }) => {
   const t = useTranslations('Common');
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
-  const { data: topicsPages, isLoading } = useGetTopicsQuery();
+  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const { topics, isLoading } = useTopics();
   const [createStory] = useCreateStoryMutation();
   const [coverImages] = useState<any[]>([
     {
@@ -71,7 +69,7 @@ const Step3 = ({ next }: { next: () => void }) => {
 
   const handleSelectedCoverImage = (coverId: any) => {
     setIsSelected(coverId);
-    setValue('cover', coverImages.find((cover) => cover.id === coverId) || '');
+    setValue('cover', coverImages.find(cover => cover.id === coverId) || '');
   };
 
   const handleTopicToggle = (topicId: number) => {
@@ -79,7 +77,7 @@ const Step3 = ({ next }: { next: () => void }) => {
     if (currentTopics.includes(topicId)) {
       setValue(
         'topicIds',
-        currentTopics.filter((id) => id !== topicId),
+        currentTopics.filter(id => id !== topicId),
       );
     } else {
       setValue('topicIds', [...currentTopics, topicId]);
@@ -89,7 +87,7 @@ const Step3 = ({ next }: { next: () => void }) => {
   const handleTopicRemove = (topicId: number) => {
     setValue(
       'topicIds',
-      selectedTopics.filter((id) => id !== topicId),
+      selectedTopics.filter(id => id !== topicId),
     );
   };
 
@@ -118,8 +116,8 @@ const Step3 = ({ next }: { next: () => void }) => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
+        dropdownRef.current
+        && !dropdownRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
       }
@@ -146,7 +144,9 @@ const Step3 = ({ next }: { next: () => void }) => {
                     <div className="flex flex-col gap-2">
                       <div className="relative">
                         <div className="mb-2 block text-sm font-medium text-black">
-                          {t('topics')} <span className="text-red-500">*</span>
+                          {t('topics')}
+                          {' '}
+                          <span className="text-red-500">*</span>
                         </div>
                         <div className="relative" ref={dropdownRef}>
                           <button
@@ -155,33 +155,36 @@ const Step3 = ({ next }: { next: () => void }) => {
                             className="flex w-full items-center justify-between rounded-lg border bg-white px-4 py-2 text-left focus:outline-none focus:ring-2 focus:ring-blue-500"
                           >
                             <div className="flex flex-wrap gap-2">
-                              {selectedTopics?.length > 0 ? (
-                                selectedTopics?.map((topicId) => {
-                                  const topic = (topicsPages?.data || []).find(
-                                    (i: Topic) => i.id === topicId,
-                                  );
-                                  if (!topic) return null;
-                                  return (
-                                    <div
-                                      key={topic.id}
-                                      className="inline-flex items-center gap-2 rounded-full bg-primary-90 px-4 py-2 text-sm text-primary-40"
-                                    >
-                                      {topic.name}
-                                      <X
-                                        size={16}
-                                        className="cursor-pointer text-primary-40"
-                                        onClick={() =>
-                                          handleTopicRemove(topic.id)
-                                        }
-                                      />
-                                    </div>
-                                  );
-                                })
-                              ) : (
-                                <span className="text-sm text-gray-700">
-                                  {t('select_topics')}
-                                </span>
-                              )}
+                              {selectedTopics?.length > 0
+                                ? (
+                                    selectedTopics?.map((topicId) => {
+                                      const topic = (topics || []).find(
+                                        (i: Topic) => i.id === topicId,
+                                      );
+                                      if (!topic) {
+                                        return null;
+                                      }
+                                      return (
+                                        <div
+                                          key={topic.id}
+                                          className="inline-flex items-center gap-2 rounded-full bg-primary-90 px-4 py-2 text-sm text-primary-40"
+                                        >
+                                          {topic.name}
+                                          <X
+                                            size={16}
+                                            className="cursor-pointer text-primary-40"
+                                            onClick={() =>
+                                              handleTopicRemove(topic.id)}
+                                          />
+                                        </div>
+                                      );
+                                    })
+                                  )
+                                : (
+                                    <span className="text-sm text-gray-700">
+                                      {t('select_topics')}
+                                    </span>
+                                  )}
                             </div>
                             <CaretDown
                               className={`transition-transform ${
@@ -193,7 +196,7 @@ const Step3 = ({ next }: { next: () => void }) => {
                           {isOpen && !isLoading && (
                             <div className="absolute z-10 mt-1 w-full rounded-lg border bg-white shadow-lg">
                               <div className="max-h-60 overflow-y-auto p-2">
-                                {(topicsPages?.data || []).map(
+                                {(topics || []).map(
                                   (topic: Topic) => (
                                     <button
                                       key={topic.id}
@@ -204,8 +207,7 @@ const Step3 = ({ next }: { next: () => void }) => {
                                           : 'text-gray-700 hover:bg-primary-90'
                                       }`}
                                       onClick={() =>
-                                        handleTopicToggle(topic.id)
-                                      }
+                                        handleTopicToggle(topic.id)}
                                     >
                                       {topic.name}
                                     </button>
@@ -235,17 +237,18 @@ const Step3 = ({ next }: { next: () => void }) => {
                           type="text"
                           className="text-sm"
                           placeholder={t('placeholder_title')}
-                          label={
+                          label={(
                             <p className="text-sm text-neutral-10">
-                              {t('title')}{' '}
+                              {t('title')}
+                              {' '}
                               <span className="text-red-500">*</span>
                             </p>
-                          }
+                          )}
                           isError={!!errors.title}
                           maxLength={32}
                           hintText={
-                            errors.title?.message ||
-                            (errors.title && 'Required')
+                            errors.title?.message
+                            || (errors.title && 'Required')
                           }
                         />
                       )}
@@ -255,7 +258,9 @@ const Step3 = ({ next }: { next: () => void }) => {
                 <Form.Item className="flex flex-col gap-2 lg:flex-row">
                   <fieldset className="w-full">
                     <div className="text-sm font-medium text-black">
-                      {t('abstract')} <span className="text-red-500">*</span>
+                      {t('abstract')}
+                      {' '}
+                      <span className="text-red-500">*</span>
                     </div>
                     <Controller
                       name="abstract"
@@ -284,7 +289,9 @@ const Step3 = ({ next }: { next: () => void }) => {
             <div className="flex-1">
               <div className="flex flex-col gap-2">
                 <div className="text-sm font-medium text-black">
-                  {t('cover_picture')} <span className="text-red-500">*</span>
+                  {t('cover_picture')}
+                  {' '}
+                  <span className="text-red-500">*</span>
                   <div className="mt-2 flex justify-between gap-2 rounded-2xl bg-neutral-90 p-5">
                     <div className="flex cursor-pointer flex-col gap-4">
                       <div className="flex gap-2">

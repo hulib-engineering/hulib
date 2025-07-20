@@ -547,6 +547,7 @@
     "type_meeting": "Type of meeting",
     "waiting": "Waiting",
     "upcoming": {
+      "upcoming_event": "Upcoming event",
       "meeting_with": "Meeting with"
     },
     "tabs_all": "All",

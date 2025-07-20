@@ -11,10 +11,9 @@ import type { z } from 'zod';
 import Button from '@/components/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import TermAndCondition from '@/components/huber-registration/TermAndCondition';
-import { useAppSelector } from '@/libs/hooks';
+import { useAppSelector, useTopics } from '@/libs/hooks';
 import { useRegisterHuberMutation } from '@/libs/services/modules/auth';
 import {
-  useGetTopicsQuery,
   usePostTopicsMutation,
 } from '@/libs/services/modules/topics';
 import { HuberStep1Validation } from '@/validations/HuberValidation';
@@ -43,9 +42,7 @@ const Step1 = (props: Props) => {
   const [topicSearchQuery, setTopicSearchQuery] = useState('');
   const topicDropdownRef = useRef<HTMLDivElement>(null);
   const topicInputRef = useRef<HTMLInputElement>(null);
-  const { data: topicsPages, isLoading: isTopicsLoading } = useGetTopicsQuery({
-    limit: 100,
-  });
+  const { topics, isLoading: isTopicsLoading } = useTopics();
 
   const {
     control,
@@ -139,7 +136,7 @@ const Step1 = (props: Props) => {
     }
   };
 
-  const filteredTopics = (topicsPages?.data || []).filter((topic: Topic) => {
+  const filteredTopics = (topics || []).filter((topic: Topic) => {
     const isAlreadySelected = selectedTopics.some(
       (selectedTopic: any) => selectedTopic.id === topic.id,
     );
@@ -267,7 +264,7 @@ const Step1 = (props: Props) => {
         <div className="relative" ref={topicDropdownRef}>
           <div className="flex min-h-[40px] w-full flex-wrap items-center gap-2 rounded-lg border bg-neutral-98 px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
             {selectedTopics?.map((selectedTopic: any) => {
-              const topic = (topicsPages?.data || []).find(
+              const topic = (topics || []).find(
                 (i: Topic) => i.id === selectedTopic.id,
               );
               if (!topic) {
