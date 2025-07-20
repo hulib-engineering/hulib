@@ -1,5 +1,13 @@
 'use client';
 
+import {
+  differenceInMinutes,
+  format,
+  isThisWeek,
+  isToday,
+  isYesterday,
+  parseISO,
+} from 'date-fns';
 import Image from 'next/image';
 import React, { useEffect, useRef } from 'react';
 
@@ -9,16 +17,73 @@ import { mergeClassnames } from '@/components/private/utils';
 import StatusBadge from '@/components/StatusBadge';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
-import { chatApi, useGetConversationQuery } from '@/libs/services/modules/chat';
-import type { TransformedMessage } from '@/libs/services/modules/chat/getConversation';
+import {
+  chatApi,
+  useGetConversationQuery,
+  useGetUserOnlineStatusQuery,
+} from '@/libs/services/modules/chat';
+import type { TransformedMessage } from '@/libs/services/modules/chat/getConversationByUserId';
+
+export type ChatItem =
+  | { type: 'separator'; label: string }
+  | { type: 'message'; message: TransformedMessage };
+
+export function groupMessagesByTime(
+  messages: TransformedMessage[],
+  gapMinutes = 5,
+): ChatItem[] {
+  const result: ChatItem[] = [];
+  let lastTimestamp: Date | null = null;
+
+  for (const msg of messages) {
+    const timestamp = parseISO(msg.time);
+
+    const shouldInsertSeparator =
+      !lastTimestamp ||
+      differenceInMinutes(timestamp, lastTimestamp) > gapMinutes;
+
+    if (shouldInsertSeparator) {
+      const datePart = isToday(timestamp)
+        ? 'Today'
+        : isYesterday(timestamp)
+          ? 'Yesterday'
+          : isThisWeek(timestamp)
+            ? format(timestamp, 'EEEE')
+            : format(timestamp, 'MMM dd, yyyy');
+
+      const timePart = format(timestamp, 'hh:mm a');
+
+      result.push({
+        type: 'separator',
+        label: `${datePart} ${timePart}`,
+      });
+
+      lastTimestamp = timestamp;
+    }
+
+    result.push({ type: 'message', message: msg });
+    lastTimestamp = timestamp;
+  }
+
+  return result;
+}
 
 export const MessageItem = ({
   type,
+  participantAvatarUrl,
+  markedAsRead = false,
   children,
 }: WithChildren<{
   type: 'sent' | 'received';
+  participantAvatarUrl?: string;
+  markedAsRead?: boolean;
 }>) => (
-  <div className="flex flex-col gap-4 px-5 py-2">
+  <div
+    className={mergeClassnames(
+      'flex flex-col gap-1 px-5 py-2',
+      markedAsRead && 'items-end',
+    )}
+  >
     <div
       className={mergeClassnames(
         'flex',
@@ -36,16 +101,37 @@ export const MessageItem = ({
         {children}
       </div>
     </div>
+    {markedAsRead && (
+      <Image
+        className="size-5 rounded-full"
+        src={participantAvatarUrl ?? '/assets/images/ava-placeholder.png'}
+        alt="Sender Avatar"
+        width={20}
+        height={20}
+        objectFit="cover"
+        objectPosition="center"
+        quality={100}
+        placeholder="blur"
+        blurDataURL="/assets/images/ava-placeholder.png"
+      />
+    )}
   </div>
 );
 
 export default function ChatDetail() {
   const currentOpeningChat = useAppSelector(
-    state => state.messenger.currentChatDetail,
+    (state) => state.messenger.currentChatDetail,
   );
 
   const dispatch = useAppDispatch();
 
+  const { data: isOnline } = useGetUserOnlineStatusQuery(
+    currentOpeningChat?.id,
+    {
+      skip: !currentOpeningChat,
+      pollingInterval: 10 * 60 * 1000,
+    },
+  );
   const { data } = useGetConversationQuery(currentOpeningChat?.id, {
     skip: !currentOpeningChat,
   });
@@ -57,8 +143,6 @@ export default function ChatDetail() {
   useEffect(() => {
     if (messageContainerRef.current) {
       messageContainerRef.current.scrollTop = 0;
-      // messageContainerRef.current.scrollTop =
-      //   messageContainerRef.current.scrollHeight;
     }
   }, [data]);
 
@@ -101,8 +185,8 @@ export default function ChatDetail() {
           <Image
             className="size-12 rounded-full"
             src={
-              currentOpeningChat?.avatarUrl
-              ?? '/assets/images/ava-placeholder.png'
+              currentOpeningChat?.avatarUrl ??
+              '/assets/images/ava-placeholder.png'
             }
             alt="Sender Avatar"
             width={48}
@@ -113,7 +197,10 @@ export default function ChatDetail() {
             placeholder="blur"
             blurDataURL="/assets/images/ava-placeholder.png"
           />
-          <StatusBadge onLine className="absolute bottom-[-6px] right-[-6px]" />
+          <StatusBadge
+            onLine={isOnline}
+            className="absolute bottom-[-6px] right-[-6px]"
+          />
         </div>
         <span className="text-2xl font-bold text-black">
           {currentOpeningChat?.name}
@@ -123,8 +210,7 @@ export default function ChatDetail() {
         ref={messageContainerRef}
         className="flex max-h-[604px] flex-1 flex-col-reverse overflow-y-auto"
       >
-        {data
-        && data.map((each: TransformedMessage) => {
+        {data && data.map((each: TransformedMessage) => {
           if (each.chatType === 'img') {
             return (
               <div
@@ -145,7 +231,12 @@ export default function ChatDetail() {
             );
           }
           return (
-            <MessageItem key={each.id} type={each.direction}>
+            <MessageItem
+                key={each.id}
+                type={each.direction}
+                participantAvatarUrl={currentOpeningChat?.avatarUrl}
+                markedAsRead={each.direction === 'sent' && each.isRead}
+              >
               {each.msg}
             </MessageItem>
           );
