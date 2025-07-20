@@ -1,6 +1,12 @@
 'use client';
 
-import { CaretCircleRight, MapPin, Star, Users } from '@phosphor-icons/react';
+import {
+  CaretCircleRight,
+  MapPin,
+  Star,
+  TelegramLogoIcon,
+  Users,
+} from '@phosphor-icons/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -8,10 +14,6 @@ import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import * as React from 'react';
 
-import AboutPanel from '../AboutPanel';
-import FavoriteTab from '../FavoriteTab';
-import IconButtonEdit from '../IconButtonEdit';
-import StoriesTab from '../StoriesTab';
 import Button from '@/components/button/Button';
 import type { ProfileMenuItem } from '@/components/core/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/core/NavBar/NavBar';
@@ -22,8 +24,14 @@ import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { useUploadMutation } from '@/libs/services/modules/files';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import { setAvatarUrl } from '@/libs/store/authentication';
+import { openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
 import FormDataBuilder from '@/utils/FormDataBuilder';
+
+import AboutPanel from '../AboutPanel';
+import FavoriteTab from '../FavoriteTab';
+import IconButtonEdit from '../IconButtonEdit';
+import StoriesTab from '../StoriesTab';
 
 type Props = {
   label: string;
@@ -42,9 +50,10 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 const Profile = () => {
   const t = useTranslations('MyProfile');
   const searchParams = useSearchParams();
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
+
   const isAdmin = userInfo?.role?.id === Role.ADMIN;
-  // isLiber: if user is a Liber, means user is a Liber
+  // isLiber: if a user is a Liber, means user is a Liber
   const isLiber = userInfo?.role?.id === 3;
   // huberId: if Huber is not defined, means someone is viewing huber's profile
   const huberId = searchParams.get('huberId');
@@ -112,6 +121,17 @@ const Profile = () => {
       }
     }
   };
+  const handleOpenChatWindow = () => {
+    dispatch(
+      openChat({
+        id: userDetail?.id ?? '',
+        name: userDetail?.fullName ?? '',
+        avatarUrl: userDetail?.photo?.path,
+        isOpen: true,
+        isMinimized: false,
+      }),
+    );
+  };
 
   const tabsRender: ProfileMenuItem[] = React.useMemo(() => {
     return [
@@ -174,7 +194,7 @@ const Profile = () => {
                 </p>
               </div>
             ),
-            component: <div>abc abacb</div>,
+            component: <div>WIP</div>,
           }
         : null,
 
@@ -204,14 +224,13 @@ const Profile = () => {
     const tabParam = searchParams.get('tab'); // lấy từ ?tab=...
 
     if (tabParam && tabsRender.length > 0) {
-      const foundItem = tabsRender.find(item => item.type === tabParam);
+      const foundItem = tabsRender.find((item) => item.type === tabParam);
       if (foundItem) {
         setSelectedMenuItem(foundItem);
         return;
       }
     }
 
-    // fallback mặc định
     if (tabsRender.length > 0 && !selectedMenuItem) {
       setSelectedMenuItem(tabsRender[0]);
     }
@@ -219,10 +238,8 @@ const Profile = () => {
 
   const getActiveMenuItemIndex = React.useCallback(
     (type: MyProfilePanelIndex | undefined) => {
-      if (!type) {
-        return 0;
-      }
-      return tabsRender.findIndex(o => o.type === type) ?? 0;
+      if (!type) return 0;
+      return tabsRender.findIndex((o) => o.type === type) ?? 0;
     },
     [tabsRender],
   );
@@ -269,10 +286,10 @@ const Profile = () => {
                 height={160}
                 className="size-[100px] rounded-full lg:size-[160px]"
                 loading="lazy"
-                // src={
-                //   userDetail?.photo?.path ?? '/assets/images/ava-placeholder.png'
-                // }
-                src="/assets/images/ava-placeholder.png"
+                src={
+                  userDetail?.photo?.path ??
+                  '/assets/images/ava-placeholder.png'
+                }
               />
 
               <div className="absolute bottom-0 left-20 opacity-0 transition-opacity duration-200 group-hover:opacity-100 lg:left-28 ">
@@ -288,19 +305,19 @@ const Profile = () => {
                 <IconButtonEdit
                   disabled={!!huberId}
                   onClick={() =>
-                    billUploader
-                    && billUploader?.current
-                    && billUploader?.current?.click()}
+                    billUploader &&
+                    billUploader?.current &&
+                    billUploader?.current?.click()
+                  }
                 />
               </div>
             </div>
 
-            <div className="relative left-4 mb-10 flex w-full flex-row items-center justify-between gap-2 lg:left-0 lg:ml-[210px] lg:mr-5">
+            <div className="relative left-4 mb-10 flex w-full items-center justify-between gap-2 lg:left-0 lg:ml-[210px] lg:mr-5">
               <div className="flex-col gap-y-1 lg:gap-y-1">
                 <div className="flex items-center gap-2">
                   <p className="text-3xl font-medium text-[#000000]">
-                    {userDetail?.fullName ?? ''}
-                    {' '}
+                    {userDetail?.fullName ?? ''}{' '}
                   </p>
                   {userDetail?.role?.name && (
                     <span className="inline-flex items-center gap-2 rounded-full bg-primary-90 px-4 py-1 text-sm text-primary-40">
@@ -327,7 +344,7 @@ const Profile = () => {
                   )}
                 </div>
               </div>
-              {isAdmin && (
+              {isAdmin ? (
                 <div className="px-8 lg:px-0">
                   <Link href={`/admin/users/manage/${huberId}`}>
                     <Button
@@ -339,6 +356,19 @@ const Profile = () => {
                       View Activity
                     </Button>
                   </Link>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <Button variant="outline" size="lg">
+                    Report
+                  </Button>
+                  <Button
+                    size="lg"
+                    iconRight={<TelegramLogoIcon />}
+                    onClick={handleOpenChatWindow}
+                  >
+                    Chat
+                  </Button>
                 </div>
               )}
             </div>

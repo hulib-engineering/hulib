@@ -50,7 +50,7 @@ const Step1 = (props: Props) => {
     watch,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm({
+  } = useForm<FormData>({
     resolver: zodResolver(HuberStep1Validation(t)),
     mode: 'onChange',
     defaultValues: {
@@ -91,13 +91,13 @@ const Step1 = (props: Props) => {
   }, []);
 
   const handleTopicToggle = (topicId: number) => {
-    const currentTopics = selectedTopics || [];
+    const currentTopics: { id: number }[] = selectedTopics || [];
     const topicIds = currentTopics.map((topic: any) => topic.id);
 
     if (topicIds.includes(topicId)) {
       setValue(
         'topics',
-        currentTopics.filter((topic: any) => topic.id !== topicId),
+        currentTopics.filter((topic) => topic.id !== topicId),
       );
     } else {
       setValue('topics', [...currentTopics, { id: topicId }]);
@@ -373,7 +373,7 @@ const Step1 = (props: Props) => {
                   id="isConfirmed"
                   type="checkbox"
                   checked={field.value}
-                  onChange={e => field.onChange(e.target.checked)}
+                  onChange={(e) => field.onChange(e.target.checked)}
                   className="mt-0.5 size-4 cursor-pointer border border-solid border-neutral-40"
                   disabled={isFormDisabled}
                 />
