@@ -551,6 +551,7 @@
     "type_meeting": "Loại cuộc hẹn",
     "waiting": "Đang chờ",
     "upcoming": {
+      "upcoming_event": "Sự kiện sắp tới",
       "meeting_with": "Cuộc hẹn với"
     },
     "tabs_all": "Tất cả",

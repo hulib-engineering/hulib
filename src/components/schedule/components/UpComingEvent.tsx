@@ -28,11 +28,13 @@ const UpComingEvent: React.FC<UpComingEventProps> = ({ isHuber }) => {
   return (
     <div>
       {data && (
-        <div className="flex flex-col justify-start rounded-[12px] bg-white px-[16px] pb-[6px] pt-[16px] drop-shadow-md">
-          {/* <div className="font-500 text-[20px]">Upcoming event</div>  */}
-          <div className="my-[10px] flex flex-row">
+        <div className="flex flex-col justify-start gap-1 rounded-[12px] bg-white p-[12px] drop-shadow-md">
+          <p className="text-lg font-medium leading-[28px]">
+            {t('upcoming.upcoming_event')}
+          </p>
+          <div className="flex flex-row items-center">
             <div className="inline-flex h-[24px] items-center justify-center rounded-[4px] bg-[#0858FA] p-[2px]">
-              <VideoCamera size={20} color="#ffffff" weight="fill" />
+              <VideoCamera size={16} color="#ffffff" weight="fill" />
             </div>
             <div
               className={`mx-[8px] text-[16px] font-normal leading-[24px] ${
@@ -41,7 +43,7 @@ const UpComingEvent: React.FC<UpComingEventProps> = ({ isHuber }) => {
             >
               {t('upcoming.meeting_with')}
               {' '}
-              <span className={isHuber ? 'text-[#DBAE0A]' : 'text-primary-50'}>
+              <span className={isHuber ? 'text-yellow-40' : 'text-primary-50'}>
                 {isHuber ? ROLE_NAME[Role.LIBER] : ROLE_NAME[Role.HUBER]}
               </span>
             </div>
@@ -49,8 +51,8 @@ const UpComingEvent: React.FC<UpComingEventProps> = ({ isHuber }) => {
               <Image
                 alt="avatar"
                 src="/assets/images/ava-placeholder.png"
-                width={32}
-                height={32}
+                width={24}
+                height={24}
                 loading="lazy"
                 className="rounded-full"
               />
@@ -62,7 +64,7 @@ const UpComingEvent: React.FC<UpComingEventProps> = ({ isHuber }) => {
             </div>
             <div className="text-[14px] font-[400] leading-[16px]">
               {dayjs(data.startedAt).format('ddd, DD/MM/YYYY')}
-              {' | '}
+              {', '}
               <span>
                 {dayjs(data.startedAt).format('hh:mm A')}
                 {' - '}
