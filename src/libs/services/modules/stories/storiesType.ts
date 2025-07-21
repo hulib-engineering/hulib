@@ -46,6 +46,8 @@ export type Story = {
   isFavorite?: boolean;
   publishStatus: StoryPublishStatus;
   storyId?: number;
+  highlightTitle?: string;
+  highlightAbstract?: string;
 };
 
 type Histogram = {
