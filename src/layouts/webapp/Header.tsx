@@ -431,6 +431,7 @@ const Header = () => {
                 </div>
               )}
         </div>
+        <SearchInput />
         <div className="flex flex-col gap-2">{renderNavbar()}</div>
       </header>
       <header className="hidden w-screen items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
