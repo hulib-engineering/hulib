@@ -37,7 +37,7 @@ export const RegisterStep2Validation = z
           message: 'Invalid date format.',
         },
       ),
-    parentPhoneNumber: z.any(),
+    parentPhoneNumber: z.string().optional(),
   })
   .superRefine((values, context) => {
     if (
@@ -49,7 +49,7 @@ export const RegisterStep2Validation = z
       context.addIssue({
         code: z.ZodIssueCode.custom,
         message: 'Please specify a parent phone number if you are under 18!',
-        path: ['phoneNumber'],
+        path: ['parentPhoneNumber'],
       });
     }
   });
