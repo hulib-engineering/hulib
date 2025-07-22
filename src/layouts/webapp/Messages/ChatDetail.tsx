@@ -6,7 +6,6 @@ import {
   isThisWeek,
   isToday,
   isYesterday,
-  parseISO,
 } from 'date-fns';
 import Image from 'next/image';
 import React, { useEffect, useRef } from 'react';
@@ -36,11 +35,11 @@ export function groupMessagesByTime(
   let lastTimestamp: Date | null = null;
 
   for (const msg of messages) {
-    const timestamp = parseISO(msg.time);
+    const timestamp = new Date(msg.time);
 
-    const shouldInsertSeparator =
-      !lastTimestamp ||
-      differenceInMinutes(timestamp, lastTimestamp) > gapMinutes;
+    const shouldInsertSeparator
+      = !lastTimestamp
+        || differenceInMinutes(timestamp, lastTimestamp) > gapMinutes;
 
     if (shouldInsertSeparator) {
       const datePart = isToday(timestamp)
@@ -120,7 +119,7 @@ export const MessageItem = ({
 
 export default function ChatDetail() {
   const currentOpeningChat = useAppSelector(
-    (state) => state.messenger.currentChatDetail,
+    state => state.messenger.currentChatDetail,
   );
 
   const dispatch = useAppDispatch();
@@ -185,8 +184,8 @@ export default function ChatDetail() {
           <Image
             className="size-12 rounded-full"
             src={
-              currentOpeningChat?.avatarUrl ??
-              '/assets/images/ava-placeholder.png'
+              currentOpeningChat?.avatarUrl
+              ?? '/assets/images/ava-placeholder.png'
             }
             alt="Sender Avatar"
             width={48}
@@ -232,11 +231,11 @@ export default function ChatDetail() {
           }
           return (
             <MessageItem
-                key={each.id}
-                type={each.direction}
-                participantAvatarUrl={currentOpeningChat?.avatarUrl}
-                markedAsRead={each.direction === 'sent' && each.isRead}
-              >
+              key={each.id}
+              type={each.direction}
+              participantAvatarUrl={currentOpeningChat?.avatarUrl}
+              markedAsRead={each.direction === 'sent' && each.isRead}
+            >
               {each.msg}
             </MessageItem>
           );

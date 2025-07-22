@@ -4,7 +4,7 @@ import {
   CaretCircleRight,
   MapPin,
   Star,
-  TelegramLogoIcon,
+  TelegramLogo,
   Users,
 } from '@phosphor-icons/react';
 import Image from 'next/image';
@@ -14,6 +14,10 @@ import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import * as React from 'react';
 
+import AboutPanel from '../AboutPanel';
+import FavoriteTab from '../FavoriteTab';
+import IconButtonEdit from '../IconButtonEdit';
+import StoriesTab from '../StoriesTab';
 import Button from '@/components/button/Button';
 import type { ProfileMenuItem } from '@/components/core/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/core/NavBar/NavBar';
@@ -27,11 +31,6 @@ import { setAvatarUrl } from '@/libs/store/authentication';
 import { openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
 import FormDataBuilder from '@/utils/FormDataBuilder';
-
-import AboutPanel from '../AboutPanel';
-import FavoriteTab from '../FavoriteTab';
-import IconButtonEdit from '../IconButtonEdit';
-import StoriesTab from '../StoriesTab';
 
 type Props = {
   label: string;
@@ -50,7 +49,7 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 const Profile = () => {
   const t = useTranslations('MyProfile');
   const searchParams = useSearchParams();
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
 
   const isAdmin = userInfo?.role?.id === Role.ADMIN;
   // isLiber: if a user is a Liber, means user is a Liber
@@ -224,7 +223,7 @@ const Profile = () => {
     const tabParam = searchParams.get('tab'); // lấy từ ?tab=...
 
     if (tabParam && tabsRender.length > 0) {
-      const foundItem = tabsRender.find((item) => item.type === tabParam);
+      const foundItem = tabsRender.find(item => item.type === tabParam);
       if (foundItem) {
         setSelectedMenuItem(foundItem);
         return;
@@ -238,8 +237,10 @@ const Profile = () => {
 
   const getActiveMenuItemIndex = React.useCallback(
     (type: MyProfilePanelIndex | undefined) => {
-      if (!type) return 0;
-      return tabsRender.findIndex((o) => o.type === type) ?? 0;
+      if (!type) {
+        return 0;
+      }
+      return tabsRender.findIndex(o => o.type === type) ?? 0;
     },
     [tabsRender],
   );
@@ -287,8 +288,8 @@ const Profile = () => {
                 className="size-[100px] rounded-full lg:size-[160px]"
                 loading="lazy"
                 src={
-                  userDetail?.photo?.path ??
-                  '/assets/images/ava-placeholder.png'
+                  userDetail?.photo?.path
+                  ?? '/assets/images/ava-placeholder.png'
                 }
               />
 
@@ -305,10 +306,9 @@ const Profile = () => {
                 <IconButtonEdit
                   disabled={!!huberId}
                   onClick={() =>
-                    billUploader &&
-                    billUploader?.current &&
-                    billUploader?.current?.click()
-                  }
+                    billUploader
+                    && billUploader?.current
+                    && billUploader?.current?.click()}
                 />
               </div>
             </div>
@@ -317,7 +317,8 @@ const Profile = () => {
               <div className="flex-col gap-y-1 lg:gap-y-1">
                 <div className="flex items-center gap-2">
                   <p className="text-3xl font-medium text-[#000000]">
-                    {userDetail?.fullName ?? ''}{' '}
+                    {userDetail?.fullName ?? ''}
+                    {' '}
                   </p>
                   {userDetail?.role?.name && (
                     <span className="inline-flex items-center gap-2 rounded-full bg-primary-90 px-4 py-1 text-sm text-primary-40">
@@ -344,33 +345,35 @@ const Profile = () => {
                   )}
                 </div>
               </div>
-              {isAdmin ? (
-                <div className="px-8 lg:px-0">
-                  <Link href={`/admin/users/manage/${huberId}`}>
-                    <Button
-                      iconLeft={<CaretCircleRight size={20} />}
-                      variant="primary"
-                      className="mt-auto rounded-full"
-                      onClick={() => {}}
-                    >
-                      View Activity
-                    </Button>
-                  </Link>
-                </div>
-              ) : (
-                <div className="flex gap-2">
-                  <Button variant="outline" size="lg">
-                    Report
-                  </Button>
-                  <Button
-                    size="lg"
-                    iconRight={<TelegramLogoIcon />}
-                    onClick={handleOpenChatWindow}
-                  >
-                    Chat
-                  </Button>
-                </div>
-              )}
+              {isAdmin
+                ? (
+                    <div className="px-8 lg:px-0">
+                      <Link href={`/admin/users/manage/${huberId}`}>
+                        <Button
+                          iconLeft={<CaretCircleRight size={20} />}
+                          variant="primary"
+                          className="mt-auto rounded-full"
+                          onClick={() => {}}
+                        >
+                          View Activity
+                        </Button>
+                      </Link>
+                    </div>
+                  )
+                : (
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="lg">
+                        Report
+                      </Button>
+                      <Button
+                        size="lg"
+                        iconRight={<TelegramLogo />}
+                        onClick={handleOpenChatWindow}
+                      >
+                        Chat
+                      </Button>
+                    </div>
+                  )}
             </div>
           </div>
         </div>
