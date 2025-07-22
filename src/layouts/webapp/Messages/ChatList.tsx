@@ -1,20 +1,22 @@
 'use client';
 
 import { MagnifyingGlass } from '@phosphor-icons/react';
+import Fuse from 'fuse.js';
 import Image from 'next/image';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import type z from 'zod';
 
+import { mergeClassnames } from '@/components/private/utils';
 import StatusBadge from '@/components/StatusBadge';
 import TextInput from '@/components/textInput/TextInput';
-import { useAppDispatch } from '@/libs/hooks';
+import { useAppDispatch, useDebounce } from '@/libs/hooks';
 import type { Contact } from '@/libs/services/modules/chat';
 import { useGetConversationContactsQuery } from '@/libs/services/modules/chat';
 import { openChatDetail } from '@/libs/store/messenger';
 import { formatRelativeTime } from '@/utils/dateUtils';
 import type { ProfileValidation } from '@/validations/ProfileValidation';
 
-type IMessageItemProps = {
+type IContactItemProps = {
   participant: z.infer<typeof ProfileValidation> & {
     id: number;
     photo: { id: string; path: string };
@@ -23,19 +25,22 @@ type IMessageItemProps = {
     recipientId: number;
     message: string;
     createdAt: string;
+    isRead: boolean;
   };
+  isOnline?: boolean;
   onClick: () => void;
 };
 
-export const MessageItem = ({
+export const ContactItem = ({
   participant,
   lastMessage,
+  isOnline = false,
   onClick,
-}: IMessageItemProps) => (
+}: IContactItemProps) => (
   <button
     type="button"
     className="flex gap-[11px] bg-white p-2.5"
-    onClick={() => onClick()}
+    onClick={onClick}
   >
     <div className="relative">
       <Image
@@ -50,19 +55,31 @@ export const MessageItem = ({
         placeholder="blur"
         blurDataURL="/assets/images/ava-placeholder.png"
       />
-      <StatusBadge onLine={false} className="absolute bottom-0 right-0" />
+      <StatusBadge onLine={isOnline} className="absolute bottom-0 right-0" />
     </div>
     <div className="flex flex-1 flex-col justify-center gap-1">
       <div className="flex items-center justify-between">
         <p className="text-sm font-bold leading-6 tracking-tight text-black">
           {participant.fullName ?? 'Unknown'}
         </p>
-        <p className="text-xs font-medium leading-[14px] text-neutral-70">
+        <p
+          className={mergeClassnames(
+            'text-xs font-medium leading-[14px]',
+            lastMessage.isRead ? 'text-neutral-70' : 'text-primary-60',
+          )}
+        >
           {formatRelativeTime(new Date(lastMessage.createdAt).getTime())}
         </p>
       </div>
-      <p className="text-left text-sm font-medium leading-none text-black">
-        {`${lastMessage.recipientId === participant.id ? 'You: ' : ''}${lastMessage.message}`}
+      <p
+        className={mergeClassnames(
+          'text-left text-sm leading-none line-clamp-2',
+          lastMessage.isRead ? 'text-neutral-50' : 'font-medium text-black',
+        )}
+      >
+        {`${lastMessage.recipientId === participant.id ? 'You: ' : ''}${
+          lastMessage.message
+        }`}
       </p>
     </div>
   </button>
@@ -73,7 +90,30 @@ export default function ChatList() {
 
   const dispatch = useAppDispatch();
 
-  // const [qString, setQString] = useState('');
+  const [qString, setQString] = useState('');
+
+  const debouncedSearch = useDebounce(qString, 300);
+
+  const filteredConversations = useMemo(() => {
+    const normalizeText = (text: string) =>
+      text
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+
+    if (!debouncedSearch) return conversations;
+
+    const fuse = new Fuse(conversations, {
+      keys: ['participant.fullName'],
+      threshold: 0.3,
+      ignoreLocation: true,
+      includeScore: true,
+      useExtendedSearch: true,
+      getFn: (obj: Contact) => normalizeText(obj.participant.fullName),
+    });
+
+    return fuse.search(normalizeText(debouncedSearch)).map((res) => res.item);
+  }, [qString, conversations]);
 
   useEffect(() => {
     if (conversations.length === 0) return;
@@ -96,14 +136,18 @@ export default function ChatList() {
           type="text"
           placeholder="Search for name"
           icon={<MagnifyingGlass size={24} />}
-          onChange={() => {}}
+          onChange={(event) => setQString(event.target.value)}
         />
       </div>
       <div className="flex flex-col overflow-y-auto">
-        {conversations.map((contact: Contact) => (
-          <MessageItem
+        {filteredConversations.map((contact: Contact) => (
+          <ContactItem
             key={contact.participant.id}
             {...contact}
+            lastMessage={{
+              ...contact.lastMessage,
+              isRead: !!contact.lastMessage.readAt,
+            }}
             onClick={() =>
               dispatch(
                 openChatDetail({

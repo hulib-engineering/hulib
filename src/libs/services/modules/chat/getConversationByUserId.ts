@@ -7,10 +7,11 @@ export type TransformedMessage = Pick<MessageResponse, 'id'> & {
   to: number;
   from: number;
   msg: string;
-  time: Date;
+  time: string;
   chatType: string;
   stickerUrl?: string;
   direction: 'received' | 'sent';
+  isRead: boolean;
 };
 
 export default (build: EndpointBuilder<BaseQueryFn, string, string>) =>
@@ -22,11 +23,12 @@ export default (build: EndpointBuilder<BaseQueryFn, string, string>) =>
         from: transformedMessage.senderId,
         to: transformedMessage.recipientId,
         msg: transformedMessage.message,
-        time: new Date(transformedMessage.createdAt),
+        time: transformedMessage.createdAt,
         chatType: transformedMessage.chatType.name,
         stickerUrl: transformedMessage.sticker?.image?.path,
         direction:
           `${transformedMessage.senderId}` === `${id}` ? 'received' : 'sent',
+        isRead: !!transformedMessage.readAt,
       }));
     },
     providesTags: (_result, _error, id) => {

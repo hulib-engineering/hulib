@@ -91,13 +91,13 @@ const Step1 = (props: Props) => {
   }, []);
 
   const handleTopicToggle = (topicId: number) => {
-    const currentTopics = selectedTopics || [];
+    const currentTopics: { id: number }[] = selectedTopics || [];
     const topicIds = currentTopics.map((topic: any) => topic.id);
 
     if (topicIds.includes(topicId)) {
       setValue(
         'topics',
-        currentTopics.filter((topic: any) => topic.id !== topicId),
+        currentTopics.filter(topic => topic.id !== topicId),
       );
     } else {
       setValue('topics', [...currentTopics, { id: topicId }]);

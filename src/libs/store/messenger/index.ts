@@ -17,11 +17,11 @@ type ChatWindow = {
   avatarUrl?: string;
   isOpen: boolean;
   isMinimized: boolean;
-  unread: number;
-  messages: Message[];
+  unread?: number;
+  messages?: Message[];
   lastMessage?: MessageResponse;
 };
-type ChatState = {
+export interface ChatState {
   chats: ChatWindow[];
   currentChatDetail: Pick<ChatWindow, 'id' | 'name' | 'avatarUrl'> | null;
 };
@@ -43,7 +43,7 @@ const chatSlice = createSlice({
       } else {
         // Limit open chats to 3
         const openingChats = state.chats.filter(
-          c => c.isOpen && !c.isMinimized,
+          (c) => c.isOpen && !c.isMinimized,
         );
         if (openingChats.length >= 3) {
           // Minimize the oldest open chat
@@ -61,35 +61,33 @@ const chatSlice = createSlice({
       }
     },
     closeChat: (state, action: PayloadAction<string>) => {
-      state.chats = state.chats.filter(chat => chat.id !== action.payload);
+      state.chats = state.chats.filter((chat) => chat.id !== action.payload);
     },
     minimizeChat: (state, action: PayloadAction<string>) => {
-      const chat = state.chats.find(c => c.id === action.payload);
-      if (chat) {
-        chat.isMinimized = true;
-      }
+      const chat = state.chats.find((c) => c.id === action.payload);
+      if (chat) chat.isMinimized = true;
     },
     restoreChat: (state, action: PayloadAction<string>) => {
-      const chat = state.chats.find(c => c.id === action.payload);
+      const chat = state.chats.find((c) => c.id === action.payload);
       if (chat) {
         chat.isOpen = true;
         chat.isMinimized = false;
       }
     },
-    addMessage: (
-      state,
-      action: PayloadAction<{ id: string; message: Message }>,
-    ) => {
-      const chat = state.chats.find(c => c.id === action.payload.id);
-      if (chat) {
-        chat.messages.push(action.payload.message);
-        if (!chat.isOpen || chat.isMinimized) {
-          chat.unread += 1;
-        }
-      }
-    },
+    // addMessage: (
+    //   state,
+    //   action: PayloadAction<{ id: string; message: Message }>,
+    // ) => {
+    //   const chat = state.chats.find((c) => c.id === action.payload.id);
+    //   if (chat) {
+    //     chat.messages.push(action.payload.message);
+    //     if (!chat.isOpen || chat.isMinimized) {
+    //       chat.unread += 1;
+    //     }
+    //   }
+    // },
     markAsRead: (state, action: PayloadAction<string>) => {
-      const chat = state.chats.find(c => c.id === action.payload);
+      const chat = state.chats.find((c) => c.id === action.payload);
       if (chat) {
         chat.unread = 0;
       }
@@ -108,7 +106,7 @@ export const {
   closeChat,
   minimizeChat,
   restoreChat,
-  addMessage,
+  // addMessage,
   markAsRead,
   openChatDetail,
 } = chatSlice.actions;
