@@ -4,7 +4,7 @@ import { Minus, X } from '@phosphor-icons/react';
 import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { MessageItem } from './Messages/ChatDetail';
+import { MessageItem, groupMessagesByTime } from './Messages/ChatDetail';
 import IconButton from '@/components/iconButton/IconButton';
 import { MessengerInput } from '@/components/messages/MessengerInput';
 import { mergeClassnames } from '@/components/private/utils';
@@ -25,8 +25,6 @@ import {
   minimizeChat,
   restoreChat,
 } from '@/libs/store/messenger';
-
-import { groupMessagesByTime, MessageItem } from './Messages/ChatDetail';
 
 type IChatBubbleProps = {
   id: string;
@@ -128,12 +126,12 @@ const ChatWindow = (props: IChatWindowProps) => {
   const { data } = useGetConversationQuery(props.id);
   const reversedData = data ? data.toReversed() : [];
   const groupedMessages = groupMessagesByTime(reversedData);
-  const lastReadMessageId =
-    (data &&
-      data?.filter(
+  const lastReadMessageId
+    = (data
+      && data?.filter(
         (msg: TransformedMessage) => msg.direction === 'sent' && msg.isRead,
-      )[0]?.id) ??
-    null;
+      )[0]?.id)
+      ?? null;
 
   const dispatch = useAppDispatch();
 
@@ -260,9 +258,9 @@ const ChatWindow = (props: IChatWindowProps) => {
               type={message.direction}
               participantAvatarUrl={props.participant.avatarUrl}
               markedAsRead={
-                message.id === lastReadMessageId &&
-                message.direction === 'sent' &&
-                message.isRead
+                message.id === lastReadMessageId
+                && message.direction === 'sent'
+                && message.isRead
               }
             >
               {message.msg}
