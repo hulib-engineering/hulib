@@ -14,24 +14,23 @@ import Form from '@/components/form/Form';
 import Modal from '@/components/Modal';
 import TextArea from '@/components/textArea/TextArea';
 import TextInput from '@/components/textInput/TextInput';
-import { useAppSelector } from '@/libs/hooks';
+import { useAppSelector, useTopics } from '@/libs/hooks';
 import {
   useCreateStoryMutation,
   useUpdateStoryMutation,
 } from '@/libs/services/modules/stories';
-import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import { StoriesValidation } from '@/validations/StoriesValidation';
 
-interface Topic {
+type Topic = {
   id: number;
   name: string;
-}
+};
 
-interface CreateStoryModalProps {
+type CreateStoryModalProps = {
   open: boolean;
   onClose: () => void;
   editingStory?: any;
-}
+};
 
 const CreateStoryModal = ({
   open,
@@ -41,8 +40,8 @@ const CreateStoryModal = ({
   const t = useTranslations('Common');
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
-  const { data: topicsPages, isLoading } = useGetTopicsQuery();
+  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const { topics, isLoading } = useTopics();
   const [createStory] = useCreateStoryMutation();
   const [updateStory] = useUpdateStoryMutation();
   const [coverImages] = useState<any[]>([
@@ -97,7 +96,7 @@ const CreateStoryModal = ({
     if (currentTopics.includes(topicId)) {
       setValue(
         'topicIds',
-        currentTopics.filter((id) => id !== topicId),
+        currentTopics.filter(id => id !== topicId),
       );
     } else {
       setValue('topicIds', [...currentTopics, topicId]);
@@ -107,7 +106,7 @@ const CreateStoryModal = ({
   const handleTopicRemove = (topicId: number) => {
     setValue(
       'topicIds',
-      selectedTopics.filter((id) => id !== topicId),
+      selectedTopics.filter(id => id !== topicId),
     );
   };
 
@@ -144,8 +143,8 @@ const CreateStoryModal = ({
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
+        dropdownRef.current
+        && !dropdownRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
       }
@@ -184,7 +183,9 @@ const CreateStoryModal = ({
                         <div className="flex flex-col gap-2">
                           <div className="relative">
                             <div className="mb-2 block text-sm font-medium text-black">
-                              Topics <span className="text-red-500">*</span>
+                              Topics
+                              {' '}
+                              <span className="text-red-500">*</span>
                             </div>
                             <div className="relative" ref={dropdownRef}>
                               <button
@@ -193,33 +194,36 @@ const CreateStoryModal = ({
                                 className="flex w-full items-center justify-between rounded-lg border bg-white px-4 py-2 text-left focus:outline-none focus:ring-2 focus:ring-blue-500"
                               >
                                 <div className="flex flex-wrap gap-2">
-                                  {selectedTopics?.length > 0 ? (
-                                    selectedTopics?.map((topicId) => {
-                                      const topic = (
-                                        topicsPages?.data || []
-                                      ).find((i: Topic) => i.id === topicId);
-                                      if (!topic) return null;
-                                      return (
-                                        <div
-                                          key={topic.id}
-                                          className="inline-flex items-center gap-2 rounded-full bg-primary-90 px-4 py-2 text-sm text-primary-40"
-                                        >
-                                          {topic.name}
-                                          <X
-                                            size={16}
-                                            className="cursor-pointer text-primary-40"
-                                            onClick={() =>
-                                              handleTopicRemove(topic.id)
-                                            }
-                                          />
-                                        </div>
-                                      );
-                                    })
-                                  ) : (
-                                    <span className="text-sm text-gray-700">
-                                      Select Topics
-                                    </span>
-                                  )}
+                                  {selectedTopics?.length > 0
+                                    ? (
+                                        selectedTopics?.map((topicId) => {
+                                          const topic = (
+                                            topics || []
+                                          ).find((i: Topic) => i.id === topicId);
+                                          if (!topic) {
+                                            return null;
+                                          }
+                                          return (
+                                            <div
+                                              key={topic.id}
+                                              className="inline-flex items-center gap-2 rounded-full bg-primary-90 px-4 py-2 text-sm text-primary-40"
+                                            >
+                                              {topic.name}
+                                              <X
+                                                size={16}
+                                                className="cursor-pointer text-primary-40"
+                                                onClick={() =>
+                                                  handleTopicRemove(topic.id)}
+                                              />
+                                            </div>
+                                          );
+                                        })
+                                      )
+                                    : (
+                                        <span className="text-sm text-gray-700">
+                                          Select Topics
+                                        </span>
+                                      )}
                                 </div>
                                 <CaretDown
                                   className={`transition-transform ${
@@ -231,7 +235,7 @@ const CreateStoryModal = ({
                               {isOpen && !isLoading && (
                                 <div className="absolute z-10 mt-1 w-full rounded-lg border bg-white shadow-lg">
                                   <div className="p-2">
-                                    {(topicsPages?.data || []).map(
+                                    {(topics || []).map(
                                       (topic: Topic) => (
                                         <button
                                           key={topic.id}
@@ -242,8 +246,7 @@ const CreateStoryModal = ({
                                               : 'text-gray-700 hover:bg-primary-90'
                                           }`}
                                           onClick={() =>
-                                            handleTopicToggle(topic.id)
-                                          }
+                                            handleTopicToggle(topic.id)}
                                         >
                                           {topic.name}
                                         </button>
@@ -273,16 +276,18 @@ const CreateStoryModal = ({
                               type="text"
                               className="text-sm"
                               placeholder="Please enter your story's name"
-                              label={
+                              label={(
                                 <p className="text-sm text-neutral-10">
-                                  Title <span className="text-red-500">*</span>
+                                  Title
+                                  {' '}
+                                  <span className="text-red-500">*</span>
                                 </p>
-                              }
+                              )}
                               isError={!!errors.title}
                               maxLength={32}
                               hintText={
-                                errors.title?.message ||
-                                (errors.title && 'Required')
+                                errors.title?.message
+                                || (errors.title && 'Required')
                               }
                             />
                           )}
@@ -292,7 +297,9 @@ const CreateStoryModal = ({
                     <Form.Item className="flex flex-col gap-2 lg:flex-row">
                       <fieldset className="w-full">
                         <div className="text-sm font-medium text-black">
-                          Abstract <span className="text-red-500">*</span>
+                          Abstract
+                          {' '}
+                          <span className="text-red-500">*</span>
                         </div>
                         <Controller
                           name="abstract"
@@ -321,7 +328,9 @@ const CreateStoryModal = ({
                 <div className="flex-1">
                   <div className="flex flex-col gap-2">
                     <div className="text-sm font-medium text-black">
-                      Cover picture <span className="text-red-500">*</span>
+                      Cover picture
+                      {' '}
+                      <span className="text-red-500">*</span>
                       <div className="mt-2 flex justify-between gap-2 rounded-2xl bg-neutral-90 p-5">
                         <div className="flex cursor-pointer flex-col gap-4">
                           <CustomCoverBook

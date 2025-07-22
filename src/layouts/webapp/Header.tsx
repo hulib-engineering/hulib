@@ -17,7 +17,6 @@ import { useTranslations } from 'next-intl';
 import type { FC, ReactNode } from 'react';
 import React, { useCallback, useMemo } from 'react';
 
-import { MessageItem } from './Messages/ChatList';
 import Button from '@/components/button/Button';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
@@ -25,14 +24,15 @@ import MenuItem from '@/components/menuItem/MenuItem';
 import Popover from '@/components/popover/Popover';
 import { mergeClassnames } from '@/components/private/utils';
 import SearchInput from '@/components/SearchInput';
+import { ContactItem } from '@/layouts/webapp/Messages/ChatList';
 import NotificationButton from '@/layouts/webapp/NotificationIcon';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
 import {
+  chatApi,
   type Contact,
   type MessageResponse,
-  chatApi,
   useGetConversationContactsQuery,
 } from '@/libs/services/modules/chat';
 import {
@@ -41,7 +41,7 @@ import {
 } from '@/libs/services/modules/notifications';
 import { useLazyGetUsersByIdQuery } from '@/libs/services/modules/user';
 import type { Message } from '@/libs/store/messenger';
-import { addMessage, openChat } from '@/libs/store/messenger';
+import { openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
 
 type AvatarPopoverMenuItem = {
@@ -60,7 +60,7 @@ const AvatarPopoverContent: FC<RenderProps> = ({
   open,
   close,
 }: RenderProps) => {
-  const { role } = useAppSelector(state => state.auth.userInfo);
+  const { role } = useAppSelector((state) => state.auth.userInfo);
   const t = useTranslations('HeaderWebApp');
 
   const handleClick = (item: AvatarPopoverMenuItem) => {
@@ -172,7 +172,7 @@ const MessengerPopover = ({
     participant,
     unreadCount,
     lastMessage,
-  }: Omit<Contact, 'id'>) => {
+  }: Omit<Contact, 'id' | 'isOnline'>) => {
     if (onItemClick) {
       onItemClick();
     }
@@ -194,41 +194,40 @@ const MessengerPopover = ({
       <div className="px-5 pb-2 text-2xl font-bold leading-8">
         Your messages
       </div>
-      <div className="flex h-fit max-h-[300px] flex-col overflow-y-auto">
-        {conversations.map(({ unreadCount, lastMessage, ...rest }) => (
-          <MessageItem
-            key={rest.participant.id}
-            {...rest}
-            lastMessage={lastMessage}
-            onClick={() =>
-              handleMessageItemClick({
-                participant: rest.participant,
-                unreadCount,
-                lastMessage,
-              })}
-          />
-        ))}
-      </div>
-      <div className="px-2.5">
-        {
-          conversations.length > 0
-            ? (
-                <Button
-                  variant="outline"
-                  size="lg"
-                  fullWidth
-                  onClick={onSeeAllMessagesClick}
-                >
-                  See all
-                </Button>
-              )
-            : (
-                <div className="flex items-center justify-center">
-                  <p className="text-neutral-10">No messages</p>
-                </div>
-              )
-        }
-      </div>
+      {conversations.length === 0 ? (
+        <div className="flex flex-1 items-center justify-center">
+          You have no conversations yet!
+        </div>
+      ) : (
+        <>
+          <div className="flex h-[280px] flex-col overflow-y-auto">
+            {conversations.map(({ unreadCount, lastMessage, ...rest }) => (
+              <ContactItem
+                key={rest.participant.id}
+                {...rest}
+                lastMessage={{ ...lastMessage, isRead: !!lastMessage.readAt }}
+                onClick={() =>
+                  handleMessageItemClick({
+                    participant: rest.participant,
+                    unreadCount,
+                    lastMessage,
+                  })
+                }
+              />
+            ))}
+          </div>
+          <div className="px-2.5">
+            <Button
+              variant="outline"
+              size="lg"
+              fullWidth
+              onClick={onSeeAllMessagesClick}
+            >
+              See all
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -249,9 +248,11 @@ const HeaderIconButtonWithBadge = ({
     )}
   >
     {children}
-    <div className="absolute right-0 top-1 flex h-4 w-[18px] items-center justify-center rounded-lg border border-white bg-red-50 px-1 py-[0.5px] text-[10px] font-medium leading-3 text-white">
-      {badge > 0 && badge}
-    </div>
+    {badge > 0 && (
+      <div className="absolute right-0 top-1 flex h-4 w-[18px] items-center justify-center rounded-lg border border-white bg-red-50 px-1 py-[0.5px] text-[10px] font-medium leading-3 text-white">
+        {badge}
+      </div>
+    )}
   </div>
 );
 
@@ -260,10 +261,15 @@ const Header = () => {
 
   const router = useRouter();
 
-  const user = useAppSelector(state => state.auth.userInfo);
+  const user = useAppSelector((state) => state.auth.userInfo);
 
   const { data, isLoading } = useGetNotificationsQuery({ page: 1, limit: 5 });
-  const { data: conversations = [] } = useGetConversationContactsQuery();
+  const { data: conversations = [] } = useGetConversationContactsQuery(
+    undefined,
+    {
+      pollingInterval: 10 * 60 * 1000,
+    },
+  );
   const totalUnread = conversations.reduce(
     (sum: number, conv: MessageResponse) => sum + (conv.unreadCount || 0),
     0,
@@ -298,12 +304,12 @@ const Header = () => {
       const participantId = `${user.id}` === `${msg.from}` ? msg.to : msg.from;
       const participant = await fetchParticipantInfo(participantId);
 
-      dispatch(
-        addMessage({
-          id: `${participantId}`,
-          message: msg,
-        }),
-      );
+      // dispatch(
+      //   addMessage({
+      //     id: `${participantId}`,
+      //     message: msg,
+      //   }),
+      // );
 
       dispatch(
         openChat({
@@ -378,58 +384,55 @@ const Header = () => {
           <Link href={user?.id ? '/home' : '/'}>
             <Logo size="small" />
           </Link>
-          {!user || !user?.id
-            ? (
-                <div className="flex gap-3 px-10 ">
-                  <SkeletonHeader />
-                </div>
-              )
-            : (
-                <div className="flex items-center gap-2">
-                  <Popover position="bottom-start">
-                    {({ open, close }) => (
-                      <>
-                        <Popover.Trigger data-testid="messenger-popover-trigger">
-                          <HeaderIconButtonWithBadge
-                            badge={totalUnread}
-                            open={open}
-                          >
-                            <MessengerLogo className="text-[28px]" />
-                          </HeaderIconButtonWithBadge>
-                        </Popover.Trigger>
-                        <Popover.Panel className="flex flex-col gap-1 p-2">
-                          <MessengerPopover
-                            conversations={conversations}
-                            onSeeAllMessagesClick={() => router.push('/messages')}
-                            onItemClick={close}
-                          />
-                        </Popover.Panel>
-                      </>
-                    )}
-                  </Popover>
-                  <NotificationButton
-                    notificationCount={!isLoading && data ? data.unseenCount : 0}
-                    notificationPath="/notification"
-                  />
-                  <div className="relative ml-2">
-                    <AvatarPopover>
-                      <Image
-                        alt="Avatar Icon"
-                        width={44}
-                        height={44}
-                        loading="lazy"
-                        // src={user.photo?.path ?? '/assets/images/ava-placeholder.png'}
-                        src="/assets/images/ava-placeholder.png"
-                        className="size-11 rounded-full object-contain"
+          {!user || !user?.id ? (
+            <div className="flex gap-3 px-10 ">
+              <SkeletonHeader />
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Popover position="bottom-start">
+                {({ open, close }) => (
+                  <>
+                    <Popover.Trigger data-testid="messenger-popover-trigger">
+                      <HeaderIconButtonWithBadge
+                        badge={totalUnread}
+                        open={open}
+                      >
+                        <MessengerLogo className="text-[28px]" />
+                      </HeaderIconButtonWithBadge>
+                    </Popover.Trigger>
+                    <Popover.Panel className="flex flex-col gap-1 p-2">
+                      <MessengerPopover
+                        conversations={conversations}
+                        onSeeAllMessagesClick={() => router.push('/messages')}
+                        onItemClick={close}
                       />
-                    </AvatarPopover>
-                    <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
-                      <CaretDown size={12} />
-                    </div>
-                  </div>
-                  <LocaleSwitcher className="shrink" />
+                    </Popover.Panel>
+                  </>
+                )}
+              </Popover>
+              <NotificationButton
+                notificationCount={!isLoading && data ? data.unseenCount : 0}
+                notificationPath="/notification"
+              />
+              <div className="relative ml-2">
+                <AvatarPopover>
+                  <Image
+                    alt="Avatar Icon"
+                    width={44}
+                    height={44}
+                    loading="lazy"
+                    src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
+                    className="size-11 rounded-full object-contain"
+                  />
+                </AvatarPopover>
+                <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
+                  <CaretDown size={12} />
                 </div>
-              )}
+              </div>
+              <LocaleSwitcher className="shrink" />
+            </div>
+          )}
         </div>
         <div className="flex flex-col gap-2">{renderNavbar()}</div>
       </header>

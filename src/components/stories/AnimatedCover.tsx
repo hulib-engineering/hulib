@@ -11,6 +11,8 @@ type IAnimatedCoverProps = {
   authorName: string;
   coverUrl: string;
   abstract: string;
+  highlightTitle?: string;
+  highlightAbstract?: string;
   onClick: () => void;
 };
 
@@ -33,21 +35,28 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
     };
 
     const pages = paginateText(
-      props.abstract,
+      props.highlightAbstract || props.abstract,
       164,
       160,
       2,
       calculateMaxCharWidth(),
     );
     setAbstractPages(pages);
-  }, [props.abstract]);
+  }, [props.abstract, props.highlightAbstract]);
 
   return (
-    <div className="h-full w-full bg-cover bg-no-repeat perspective-[1000px]">
-      <div className="group relative h-full w-full">
-        <div className="absolute m-0 flex h-full w-full flex-col items-center justify-between gap-[10px] rounded-[5px] bg-gradient-to-r from-[#9C9C9C] via-[#D5D5D5] via-5% to-[#f8f8f8] to-20% p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)] group-hover:z-10">
+    <div className="size-full bg-cover bg-no-repeat perspective-[1000px]">
+      <div className="group relative size-full">
+        <div className="absolute m-0 flex size-full flex-col items-center justify-between gap-[10px] rounded-[5px] bg-gradient-to-r from-[#9C9C9C] via-[#D5D5D5] to-[#f8f8f8] p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)] group-hover:z-10">
           <p className="font-['DVN-Poppins] text-xs leading-5 tracking-wider text-neutral-30 sm:text-sm">
-            {`${abstractPages[1]}...`}
+            {props.highlightAbstract
+              ? (
+                // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
+                  <div dangerouslySetInnerHTML={{ __html: `${abstractPages[1]}...` }} />
+                )
+              : (
+                  `${abstractPages[1]}...`
+                )}
           </p>
           <Button
             onClick={props.onClick}
@@ -56,14 +65,14 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
             Read all
           </Button>
         </div>
-        <div className="absolute h-full w-full origin-left rounded bg-gray-200 transition-all duration-500 ease-[cubic-bezier(0.50,0.00,0.25,1.00)] transform-style-3d rotate-y-0 group-hover:rotate-y-180">
+        <div className="absolute size-full origin-left rounded bg-gray-200 transition-all duration-500 ease-[cubic-bezier(0.50,0.00,0.25,1.00)] transform-style-3d rotate-y-0 group-hover:rotate-y-180">
           {/* Front Face */}
           <figure
-            className="absolute m-0 h-full w-full bg-cover bg-no-repeat backface-hidden"
+            className="absolute m-0 size-full bg-cover bg-no-repeat backface-hidden"
             style={{
               backgroundImage: `url(${
-                props.coverUrl ||
-                '/assets/images/cover-book/story_background_yellow.png'
+                props.coverUrl
+                || '/assets/images/cover-book/story_background_yellow.png'
               })`,
             }}
           >
@@ -77,12 +86,26 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
             </div>
           </figure>
           {/* Back Face */}
-          <figure className="absolute m-0 flex h-full w-full flex-col justify-between gap-[10px] rounded bg-gradient-to-l from-[#b1b1b1] via-[#e3e3e3] via-5% to-[#f8f8f8] to-20% p-2 rotate-y-180 backface-hidden">
+          <figure className="absolute m-0 flex size-full flex-col justify-between gap-[10px] rounded bg-gradient-to-l from-[#b1b1b1] via-[#e3e3e3] to-[#f8f8f8] p-2 backface-hidden rotate-y-180">
             <h6 className="line-clamp-2 text-lg font-medium leading-6 text-primary-10 sm:text-xl sm:leading-7">
-              {props.title}
+              {props.highlightTitle
+                ? (
+                  // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
+                    <div dangerouslySetInnerHTML={{ __html: props.highlightTitle || '' }} />
+                  )
+                : (
+                    `${props.title}`
+                  )}
             </h6>
             <p className="font-['DVN-Poppins] text-xs leading-5 tracking-wider text-neutral-30 sm:text-sm">
-              {abstractPages[0]}
+              {props.highlightAbstract
+                ? (
+                  // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
+                    <div dangerouslySetInnerHTML={{ __html: `${abstractPages[1]}...` }} />
+                  )
+                : (
+                    `${abstractPages[1]}...`
+                  )}
             </p>
           </figure>
         </div>

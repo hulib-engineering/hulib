@@ -218,6 +218,8 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
             title={title}
             authorName={data?.humanBook?.fullName || ''}
             coverUrl={data?.cover?.path || ''}
+            highlightTitle={data?.highlightTitle}
+            highlightAbstract={data?.highlightAbstract}
             onClick={() => router.push(`/explore-story/${data?.id}`)}
           />
         </div>

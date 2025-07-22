@@ -2,9 +2,9 @@
 
 import { Minus, X } from '@phosphor-icons/react';
 import Image from 'next/image';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { MessageItem } from './Messages/ChatDetail';
+import { MessageItem, groupMessagesByTime } from './Messages/ChatDetail';
 import IconButton from '@/components/iconButton/IconButton';
 import { MessengerInput } from '@/components/messages/MessengerInput';
 import { mergeClassnames } from '@/components/private/utils';
@@ -13,9 +13,18 @@ import Tooltip from '@/components/tooltip/Tooltip';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
 import type { MessageResponse } from '@/libs/services/modules/chat';
-import { chatApi, useGetConversationQuery } from '@/libs/services/modules/chat';
-import type { TransformedMessage } from '@/libs/services/modules/chat/getConversation';
-import { closeChat, minimizeChat, restoreChat } from '@/libs/store/messenger';
+import {
+  chatApi,
+  useGetConversationQuery,
+  useGetUserOnlineStatusQuery,
+} from '@/libs/services/modules/chat';
+import type { TransformedMessage } from '@/libs/services/modules/chat/getConversationByUserId';
+import {
+  closeChat,
+  markAsRead,
+  minimizeChat,
+  restoreChat,
+} from '@/libs/store/messenger';
 
 type IChatBubbleProps = {
   id: string;
@@ -59,7 +68,6 @@ const ChatBubble = (props: IChatBubbleProps) => {
               className={mergeClassnames(
                 'absolute left-0 top-0 flex size-5 items-center justify-center rounded-full border',
                 'border-white bg-red-50 px-1 py-[0.5px] text-[10px] font-medium leading-3 text-white',
-                isHovering && 'hidden',
               )}
             >
               {props.unreadCount}
@@ -107,11 +115,66 @@ type IChatWindowProps = {
   onSend: (id: string, message: string, type?: 'txt' | 'img') => void;
   onClose: () => void;
   onMinimize: () => void;
+  onMarkAsRead: () => void;
   id: string;
 };
 
 const ChatWindow = (props: IChatWindowProps) => {
+  const { data: isOnline } = useGetUserOnlineStatusQuery(props.id, {
+    pollingInterval: 10 * 60 * 1000,
+  });
   const { data } = useGetConversationQuery(props.id);
+  const reversedData = data ? data.toReversed() : [];
+  const groupedMessages = groupMessagesByTime(reversedData);
+  const lastReadMessageId
+    = (data
+      && data?.filter(
+        (msg: TransformedMessage) => msg.direction === 'sent' && msg.isRead,
+      )[0]?.id)
+      ?? null;
+
+  const dispatch = useAppDispatch();
+
+  const messageContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = messageContainerRef.current;
+    if (!container || !data || !data[0] || data[0]?.direction !== 'received') {
+      return undefined;
+    }
+
+    const shouldMarkAsRead = () => {
+      const atBottom = container.scrollTop <= 10;
+      if (atBottom) {
+        props.onMarkAsRead();
+        dispatch(markAsRead(props.id));
+      }
+    };
+
+    container.addEventListener('scroll', shouldMarkAsRead);
+
+    shouldMarkAsRead();
+
+    // Cleanup
+    return () => {
+      container.removeEventListener('scroll', shouldMarkAsRead);
+    };
+  }, [props.id, props.onMarkAsRead, dispatch, data]);
+
+  const handleMarkParticipantMessageAsRead = () => {
+    dispatch(
+      chatApi.util.invalidateTags([
+        { type: 'Messages', id: `LIST-${Number(props.id)}` },
+      ]),
+    );
+  };
+
+  useSocket({
+    namespace: 'chat',
+    listeners: {
+      read: handleMarkParticipantMessageAsRead,
+    },
+  });
 
   return (
     <div className="flex h-[576px] w-[391px] flex-col overflow-hidden rounded-2xl bg-white shadow-popup">
@@ -135,7 +198,7 @@ const ChatWindow = (props: IChatWindowProps) => {
               blurDataURL="/assets/images/ava-placeholder.png"
             />
             <StatusBadge
-              onLine
+              onLine={isOnline}
               className="absolute bottom-[-6px] right-[-6px]"
             />
           </div>
@@ -150,31 +213,57 @@ const ChatWindow = (props: IChatWindowProps) => {
       </div>
 
       {/* Messages */}
-      <div className="flex flex-1 flex-col-reverse overflow-y-auto bg-green-98 p-3 text-xs leading-5 text-neutral-30">
-        {data
-        && data.map((each: TransformedMessage) => {
-          if (each.chatType === 'img') {
+      <div
+        ref={messageContainerRef}
+        className="flex flex-1 flex-col-reverse overflow-y-auto bg-green-98 p-3 text-xs leading-5 text-neutral-30"
+      >
+        {groupedMessages.reverse().map((item, index) => {
+          if (item.type === 'separator') {
             return (
               <div
-                key={each.id}
+                key={`separator-${index}`}
+                className="text-center text-xs leading-5 text-neutral-30"
+              >
+                {item.label}
+              </div>
+            );
+          }
+
+          const { message } = item;
+          if (message.chatType === 'img') {
+            return (
+              <div
+                key={message.id}
                 className={mergeClassnames(
                   'flex',
-                  each.direction === 'sent' ? 'justify-end' : 'justify-start',
+                  message.direction === 'sent'
+                    ? 'justify-end'
+                    : 'justify-start',
                 )}
               >
                 <Image
-                  alt={`Sticker ${each.msg}`}
+                  alt={`Sticker ${message.msg}`}
                   width={120}
                   height={120}
                   className="size-[120px] object-contain"
-                  src={each.stickerUrl ?? ''}
+                  src={message.stickerUrl ?? ''}
                 />
               </div>
             );
           }
+
           return (
-            <MessageItem key={each.id} type={each.direction}>
-              {each.msg}
+            <MessageItem
+              key={message.id}
+              type={message.direction}
+              participantAvatarUrl={props.participant.avatarUrl}
+              markedAsRead={
+                message.id === lastReadMessageId
+                && message.direction === 'sent'
+                && message.isRead
+              }
+            >
+              {message.msg}
             </MessageItem>
           );
         })}
@@ -233,6 +322,10 @@ export default function MessengerWidget() {
   const handleRestoreChat = (id: string) => {
     dispatch(restoreChat(id));
   };
+  const handleMarkAsRead = (senderId: string) => {
+    emit('read', { senderId: Number(senderId) });
+    dispatch(chatApi.util.invalidateTags([{ type: 'Messages', id: 'LIST' }]));
+  };
 
   return (
     <>
@@ -250,6 +343,7 @@ export default function MessengerWidget() {
             onSend={(_id, text, type) => handleSendMessage(chat.id, text, type)}
             onClose={() => handleCloseChat(chat.id)}
             onMinimize={() => handleMinimizeChat(chat.id)}
+            onMarkAsRead={() => handleMarkAsRead(chat.id)}
           />
         ))}
       </div>
@@ -261,7 +355,7 @@ export default function MessengerWidget() {
             key={chat.id}
             id={chat.id}
             participant={{ name: chat.name, avatarUrl: chat.avatarUrl }}
-            unreadCount={chat.unread}
+            unreadCount={chat.unread ?? 0}
             lastMessage={chat.lastMessage}
             toggleChat={handleRestoreChat}
             onCloseChat={handleCloseChat}
