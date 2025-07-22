@@ -1,3 +1,17 @@
+# [1.30.0](https://github.com/hulib-engineering/hulib/compare/v1.29.1...v1.30.0) (2025-07-22)
+
+
+### Bug Fixes
+
+* **569744:** removed duplicated import ([9148789](https://github.com/hulib-engineering/hulib/commit/9148789c9217e1ed029f2776ec4cb12069b3a858))
+
+
+### Features
+
+* **569744:** added marking as read and getting online status ([2f318de](https://github.com/hulib-engineering/hulib/commit/2f318de0e6bf072b54454178383053777d05e919))
+* add hightlight to FE ([907f582](https://github.com/hulib-engineering/hulib/commit/907f5822d96d85961d953382f6c281949bab3b4a))
+* **upcoming-events:** enhance UpcomingEvent component and localization ([6b62d2e](https://github.com/hulib-engineering/hulib/commit/6b62d2ed961e001538a7d56d25ac337d84ed2acb))
+
 ## [1.29.1](https://github.com/hulib-engineering/hulib/compare/v1.29.0...v1.29.1) (2025-07-19)
 
 
