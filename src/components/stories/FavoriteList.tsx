@@ -75,7 +75,7 @@ const FavoriteList = ({
         userId: userInfo?.id,
       }).unwrap();
 
-      // refetch();
+      refetch();
       setCurrentStoryData(null);
 
       pushSuccess(
@@ -180,7 +180,7 @@ const FavoriteList = ({
                 <FlipBook
                   key={item.id}
                   data={item}
-                  // refetch={() => {}}
+                  refetch={() => {}}
                   renderActions={() => renderActionsRead(item)}
                 />
               ))}

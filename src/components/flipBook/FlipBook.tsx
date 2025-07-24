@@ -18,10 +18,10 @@ import type { Story as StoryType } from '@/libs/services/modules/stories/stories
 type BookCommonProps = {
   data: StoryType;
   renderActions?: () => React.ReactNode;
-  // refetch: () => void;
+  refetch: () => void;
 };
 
-export const FlipBook = ({ data, renderActions }: BookCommonProps) => {
+export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
   const userInfo = useAppSelector(state => state.auth.userInfo);
   const userId = userInfo?.id;
   const { title } = data || {};
@@ -53,6 +53,7 @@ export const FlipBook = ({ data, renderActions }: BookCommonProps) => {
           userId,
         }).unwrap();
         pushSuccess(response?.message || t('story_added_to_favorites'));
+        refetch();
       }
     } catch (err: any) {
       setIsFavorite(isFavorite);
