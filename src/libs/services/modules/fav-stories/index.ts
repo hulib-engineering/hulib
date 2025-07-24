@@ -5,7 +5,7 @@ import deleteFavoriteStory from './deleteStoryFavorites';
 import getFavoritesStory from './getFavoritesStory';
 
 const apiWithTag = api.enhanceEndpoints?.({
-  addTagTypes: ['FavoritesStory'],
+  addTagTypes: ['FavoritesStory', 'Stories'],
 });
 
 const favStoriesApi = apiWithTag.injectEndpoints({

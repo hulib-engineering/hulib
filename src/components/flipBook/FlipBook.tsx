@@ -54,7 +54,6 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
         }).unwrap();
         pushSuccess(response?.message || t('story_added_to_favorites'));
       }
-      refetch();
     } catch (err: any) {
       setIsFavorite(isFavorite);
       pushError(err?.data?.message || t('error_contact_admin'));
