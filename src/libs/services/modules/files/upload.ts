@@ -2,7 +2,7 @@ import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
 export default (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.mutation({
-    query: (body: FormData) => ({
+    query: (body: { fileName: string; fileSize: string }) => ({
       url: 'files/upload',
       method: 'POST',
       body,

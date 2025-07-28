@@ -12,7 +12,6 @@ import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { useUploadMutation } from '@/libs/services/modules/files';
 import { setAvatarUrl } from '@/libs/store/authentication';
-import FormDataBuilder from '@/utils/FormDataBuilder';
 
 const AvatarUploader = () => {
   const [upload] = useUploadMutation();
@@ -36,9 +35,10 @@ const AvatarUploader = () => {
         }),
       );
       try {
-        const result = await upload(
-          FormDataBuilder({ file: event.target.files[0] }),
-        ).unwrap();
+        const result = await upload({
+          fileName: event.target.files[0]?.name,
+          fileSize: event.target.files[0]?.size,
+        }).unwrap();
         if (result?.file) {
           dispatch(
             setAvatarUrl({ id: result?.file?.id, path: result?.file?.path }),

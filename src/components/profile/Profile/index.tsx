@@ -30,7 +30,6 @@ import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import { setAvatarUrl } from '@/libs/store/authentication';
 import { openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
-import FormDataBuilder from '@/utils/FormDataBuilder';
 
 type Props = {
   label: string;
@@ -48,8 +47,11 @@ const LabelWithLeftIcon = ({ label, icon }: Props) => {
 
 const Profile = () => {
   const t = useTranslations('MyProfile');
+
   const searchParams = useSearchParams();
+
   const userInfo = useAppSelector(state => state.auth.userInfo);
+  const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
 
   const isAdmin = userInfo?.role?.id === Role.ADMIN;
   // isLiber: if a user is a Liber, means user is a Liber
@@ -82,7 +84,7 @@ const Profile = () => {
 
       // Update the URL query param
       const params = new URLSearchParams(searchParams.toString());
-      params.set('tab', item.type.toString()); // Ensure item.type is string
+      params.set('tab', item.type.toString()); // Ensure the item.type is string
       router.push(`${pathname}?${params.toString()}`, { scroll: false });
     }
   };
@@ -97,23 +99,32 @@ const Profile = () => {
         }),
       );
       try {
-        const result = await upload(
-          FormDataBuilder({ file: event.target.files[0] }),
-        ).unwrap();
-        if (result?.file) {
-          dispatch(
-            setAvatarUrl({ id: result?.file?.id, path: result?.file?.path }),
-          );
-
-          await updateProfile({
-            photo: {
-              id: result?.file?.id,
-              path: result?.file?.path,
-            },
+        const file = event.target.files[0];
+        if (file) {
+          const result = await upload({
+            fileName: file.name,
+            fileSize: file.size,
           }).unwrap();
+          if (result?.file && result?.uploadSignedUrl) {
+            await fetch(result?.uploadSignedUrl, {
+              method: 'PUT',
+              body: file,
+            });
 
-          // Refetch user data to update the UI with the new avatar
-          await refetch();
+            dispatch(
+              setAvatarUrl({ id: result?.file?.id, path: result?.file?.path }),
+            );
+
+            await updateProfile({
+              photo: {
+                id: result?.file?.id,
+                path: result?.file?.path,
+              },
+            }).unwrap();
+
+            // Refetch user data to update the UI with the new avatar
+            await refetch();
+          }
         }
       } catch (error: any) {
         pushError(`Error: ${error.message}`);
@@ -288,8 +299,8 @@ const Profile = () => {
                 className="size-[100px] rounded-full lg:size-[160px]"
                 loading="lazy"
                 src={
-                  userDetail?.photo?.path
-                  ?? '/assets/images/ava-placeholder.png'
+                  avatarUrl
+                  || '/assets/images/ava-placeholder.png'
                 }
               />
 
