@@ -12,7 +12,7 @@ import Header from '@/layouts/webapp/Header';
 import MessengerWidget from '@/layouts/webapp/MultipleChatWidget';
 import { useAppDispatch } from '@/libs/hooks';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
-import { setUserInfo } from '@/libs/store/authentication';
+import { setAvatarUrl, setUserInfo } from '@/libs/store/authentication';
 
 const poppins = localFont({
   src: [
@@ -88,6 +88,7 @@ const MainTemplate = (props: WithChildren) => {
   useEffect(() => {
     if (data) {
       dispatch(setUserInfo(data));
+      dispatch(setAvatarUrl(data.photo));
     }
   }, [data]);
 

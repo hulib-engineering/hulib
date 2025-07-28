@@ -30,9 +30,9 @@ import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
 import {
-  chatApi,
   type Contact,
   type MessageResponse,
+  chatApi,
   useGetConversationContactsQuery,
 } from '@/libs/services/modules/chat';
 import {
@@ -60,7 +60,7 @@ const AvatarPopoverContent: FC<RenderProps> = ({
   open,
   close,
 }: RenderProps) => {
-  const { role } = useAppSelector((state) => state.auth.userInfo);
+  const { role } = useAppSelector(state => state.auth.userInfo);
   const t = useTranslations('HeaderWebApp');
 
   const handleClick = (item: AvatarPopoverMenuItem) => {
@@ -194,40 +194,41 @@ const MessengerPopover = ({
       <div className="px-5 pb-2 text-2xl font-bold leading-8">
         Your messages
       </div>
-      {conversations.length === 0 ? (
-        <div className="flex flex-1 items-center justify-center">
-          You have no conversations yet!
-        </div>
-      ) : (
-        <>
-          <div className="flex h-[280px] flex-col overflow-y-auto">
-            {conversations.map(({ unreadCount, lastMessage, ...rest }) => (
-              <ContactItem
-                key={rest.participant.id}
-                {...rest}
-                lastMessage={{ ...lastMessage, isRead: !!lastMessage.readAt }}
-                onClick={() =>
-                  handleMessageItemClick({
-                    participant: rest.participant,
-                    unreadCount,
-                    lastMessage,
-                  })
-                }
-              />
-            ))}
-          </div>
-          <div className="px-2.5">
-            <Button
-              variant="outline"
-              size="lg"
-              fullWidth
-              onClick={onSeeAllMessagesClick}
-            >
-              See all
-            </Button>
-          </div>
-        </>
-      )}
+      {conversations.length === 0
+        ? (
+            <div className="flex flex-1 items-center justify-center">
+              You have no conversations yet!
+            </div>
+          )
+        : (
+            <>
+              <div className="flex h-[280px] flex-col overflow-y-auto">
+                {conversations.map(({ unreadCount, lastMessage, ...rest }) => (
+                  <ContactItem
+                    key={rest.participant.id}
+                    {...rest}
+                    lastMessage={{ ...lastMessage, isRead: !!lastMessage.readAt }}
+                    onClick={() =>
+                      handleMessageItemClick({
+                        participant: rest.participant,
+                        unreadCount,
+                        lastMessage,
+                      })}
+                  />
+                ))}
+              </div>
+              <div className="px-2.5">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  fullWidth
+                  onClick={onSeeAllMessagesClick}
+                >
+                  See all
+                </Button>
+              </div>
+            </>
+          )}
     </div>
   );
 };
@@ -261,7 +262,8 @@ const Header = () => {
 
   const router = useRouter();
 
-  const user = useAppSelector((state) => state.auth.userInfo);
+  const user = useAppSelector(state => state.auth.userInfo);
+  const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
 
   const { data, isLoading } = useGetNotificationsQuery({ page: 1, limit: 5 });
   const { data: conversations = [] } = useGetConversationContactsQuery(
@@ -329,7 +331,7 @@ const Header = () => {
         ]),
       );
 
-      playReceivedMessageSound(); // 🔊 Play sound on receive
+      playReceivedMessageSound(); // 🔊 Play sound on receiving
     },
     [user.id, fetchParticipantInfo, dispatch],
   );
@@ -384,55 +386,60 @@ const Header = () => {
           <Link href={user?.id ? '/home' : '/'}>
             <Logo size="small" />
           </Link>
-          {!user || !user?.id ? (
-            <div className="flex gap-3 px-10 ">
-              <SkeletonHeader />
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              <Popover position="bottom-start">
-                {({ open, close }) => (
-                  <>
-                    <Popover.Trigger data-testid="messenger-popover-trigger">
-                      <HeaderIconButtonWithBadge
-                        badge={totalUnread}
-                        open={open}
-                      >
-                        <MessengerLogo className="text-[28px]" />
-                      </HeaderIconButtonWithBadge>
-                    </Popover.Trigger>
-                    <Popover.Panel className="flex flex-col gap-1 p-2">
-                      <MessengerPopover
-                        conversations={conversations}
-                        onSeeAllMessagesClick={() => router.push('/messages')}
-                        onItemClick={close}
-                      />
-                    </Popover.Panel>
-                  </>
-                )}
-              </Popover>
-              <NotificationButton
-                notificationCount={!isLoading && data ? data.unseenCount : 0}
-                notificationPath="/notification"
-              />
-              <div className="relative ml-2">
-                <AvatarPopover>
-                  <Image
-                    alt="Avatar Icon"
-                    width={44}
-                    height={44}
-                    loading="lazy"
-                    src={user.photo?.path ?? '/assets/images/icons/avatar.svg'}
-                    className="size-11 rounded-full object-contain"
-                  />
-                </AvatarPopover>
-                <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
-                  <CaretDown size={12} />
+          {!user || !user?.id
+            ? (
+                <div className="flex gap-3 px-10 ">
+                  <SkeletonHeader />
                 </div>
-              </div>
-              <LocaleSwitcher className="shrink" />
-            </div>
-          )}
+              )
+            : (
+                <div className="flex items-center gap-2">
+                  <Popover position="bottom-start">
+                    {({ open, close }) => (
+                      <>
+                        <Popover.Trigger data-testid="messenger-popover-trigger">
+                          <HeaderIconButtonWithBadge
+                            badge={totalUnread}
+                            open={open}
+                          >
+                            <MessengerLogo className="text-[28px]" />
+                          </HeaderIconButtonWithBadge>
+                        </Popover.Trigger>
+                        <Popover.Panel className="flex flex-col gap-1 p-2">
+                          <MessengerPopover
+                            conversations={conversations}
+                            onSeeAllMessagesClick={() => router.push('/messages')}
+                            onItemClick={close}
+                          />
+                        </Popover.Panel>
+                      </>
+                    )}
+                  </Popover>
+                  <NotificationButton
+                    notificationCount={!isLoading && data ? data.unseenCount : 0}
+                    notificationPath="/notification"
+                  />
+                  <div className="relative ml-2">
+                    <AvatarPopover>
+                      <Image
+                        alt="Avatar Icon"
+                        width={44}
+                        height={44}
+                        loading="lazy"
+                        src={
+                          avatarUrl
+                          || '/assets/images/ava-placeholder.png'
+                        }
+                        className="size-11 rounded-full object-contain"
+                      />
+                    </AvatarPopover>
+                    <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
+                      <CaretDown size={12} />
+                    </div>
+                  </div>
+                  <LocaleSwitcher className="shrink" />
+                </div>
+              )}
         </div>
         <div className="flex flex-col gap-2">{renderNavbar()}</div>
       </header>
@@ -483,8 +490,10 @@ const Header = () => {
                       layout="fill"
                       className="size-11 rounded-full object-contain"
                       loading="lazy"
-                      // src={user.photo?.path ?? '/assets/images/ava-placeholder.png'}
-                      src="/assets/images/ava-placeholder.png"
+                      src={
+                        avatarUrl
+                        || '/assets/images/ava-placeholder.png'
+                      }
                     />
                   </AvatarPopover>
                   <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
