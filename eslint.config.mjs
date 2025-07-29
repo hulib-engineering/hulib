@@ -4,6 +4,7 @@ import jestDom from 'eslint-plugin-jest-dom';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import playwright from 'eslint-plugin-playwright';
 import tailwindcss from 'eslint-plugin-tailwindcss';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 export default antfu(
   {
@@ -43,7 +44,15 @@ export default antfu(
       ...nextPlugin.configs['core-web-vitals'].rules,
     },
   },
-
+  // --- React Hooks Rules ---
+  {
+    plugins: {
+      'react-hooks': reactHooks,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+    },
+  },
   // --- Tailwind CSS Rules ---
   {
     plugins: {

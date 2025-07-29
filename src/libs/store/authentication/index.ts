@@ -30,13 +30,15 @@ const slice = createSlice({
       Cookies.set('NEXT_LOCALE', 'vi');
       Cookies.remove('defaultLocale');
       Cookies.remove('locales');
-      // Sign out and redirect to login page
+      // Sign out and redirect to the login page
       signOut({ callbackUrl: '/auth/login' });
     },
     setAvatarUrl: (state, action) => {
-      const { path, id } = action.payload;
-      state.avatarUrl = path ?? '';
-      state.avatarId = id ?? '';
+      if (action.payload) {
+        const { path, id } = action.payload;
+        state.avatarUrl = path ?? '';
+        state.avatarId = id ?? '';
+      }
     },
     setUserInfo: (state, action) => {
       state.userInfo = action.payload;
@@ -44,7 +46,7 @@ const slice = createSlice({
   },
 });
 
-export const { logout, refreshAccessToken, setAvatarUrl, setUserInfo } =
-  slice.actions;
+export const { logout, refreshAccessToken, setAvatarUrl, setUserInfo }
+  = slice.actions;
 
 export default slice.reducer;
