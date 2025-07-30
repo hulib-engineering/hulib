@@ -1,3 +1,10 @@
+## [1.31.2](https://github.com/hulib-engineering/hulib/compare/v1.31.1...v1.31.2) (2025-07-30)
+
+
+### Bug Fixes
+
+* **Next Image:** fixed Next image optimisation option ([c69c5c3](https://github.com/hulib-engineering/hulib/commit/c69c5c33e53308b6b4f86b7633aa15111a43d4f6))
+
 ## [1.31.1](https://github.com/hulib-engineering/hulib/compare/v1.31.0...v1.31.1) (2025-07-30)
 
 
