@@ -59,6 +59,13 @@ export default withSentryConfig(
             pathname: '/api/v1/files/**',
             search: '',
           },
+          {
+            protocol: 'https',
+            hostname: 'dev-hulib-production.s3.ap-southeast-1.amazonaws.com',
+            port: '',
+            pathname: '/**',
+            search: '',
+          },
         ],
       },
     }),
