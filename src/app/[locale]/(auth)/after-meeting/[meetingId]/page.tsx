@@ -33,7 +33,7 @@ export default function FeedbackForm() {
   const { meetingId } = useParams();
   const searchParams = useSearchParams();
   const storyName = searchParams.get('storyName');
-  const userId = useAppSelector((state) => state.auth.userInfo?.id);
+  const userId = useAppSelector(state => state.auth.userInfo?.id);
   const { deviceType } = useDeviceType();
 
   const isMobile = deviceType === 'mobile';
@@ -57,8 +57,8 @@ export default function FeedbackForm() {
     },
   );
 
-  const [updateReadingSession, { isLoading }] =
-    useUpdateReadingSessionMutation();
+  const [updateReadingSession, { isLoading }]
+    = useUpdateReadingSessionMutation();
 
   const handleNext = async () => {
     try {
@@ -205,7 +205,8 @@ export default function FeedbackForm() {
                   px: { xs: 1, sm: 0 },
                 }}
               >
-                {t('rate_for_story')}{' '}
+                {t('rate_for_story')}
+                {' '}
                 <Typography
                   component="span"
                   color="primary"
@@ -227,7 +228,7 @@ export default function FeedbackForm() {
                   px: { xs: 1, sm: 0 },
                 }}
               >
-                {[0, 1, 2, 3, 4].map((indexRating) => (
+                {[0, 1, 2, 3, 4].map(indexRating => (
                   <IconButton
                     key={indexRating}
                     onClick={(e) => {
@@ -235,10 +236,10 @@ export default function FeedbackForm() {
                       e.stopPropagation();
                     }}
                     sx={{
-                      p: { xs: 0.5, sm: 1 },
-                      minWidth: { xs: 44, sm: 48 }, // Apple's minimum touch target
-                      minHeight: { xs: 44, sm: 48 },
-                      transition: 'all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1)',
+                      'p': { xs: 0.5, sm: 1 },
+                      'minWidth': { xs: 44, sm: 48 }, // Apple's minimum touch target
+                      'minHeight': { xs: 44, sm: 48 },
+                      'transition': 'all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1)',
                       '&:hover': {
                         transform: 'scale(1.1)',
                       },
@@ -271,11 +272,11 @@ export default function FeedbackForm() {
                 fullWidth
                 variant="outlined"
                 value={storyReview}
-                onChange={(e) => setStoryReview(e.target.value)}
+                onChange={e => setStoryReview(e.target.value)}
                 sx={{
                   '& .MuiOutlinedInput-root': {
-                    borderRadius: { xs: 2, sm: 3 }, // Apple-style corner radius
-                    fontSize: { xs: '0.875rem', sm: '1rem' },
+                    'borderRadius': { xs: 2, sm: 3 }, // Apple-style corner radius
+                    'fontSize': { xs: '0.875rem', sm: '1rem' },
                     '& fieldset': {
                       borderColor: 'rgba(0, 0, 0, 0.12)',
                     },
@@ -323,7 +324,7 @@ export default function FeedbackForm() {
           </>
         ) : (
           <>
-            {/* Second step - Huber feedback */}
+            {/* Second step - Huber's feedback */}
             <Typography
               variant={isMobile ? 'h5' : 'h4'}
               component="h1"
@@ -410,7 +411,7 @@ export default function FeedbackForm() {
                   px: { xs: 1, sm: 0 },
                 }}
               >
-                {[0, 1, 2, 3, 4].map((indexRating) => (
+                {[0, 1, 2, 3, 4].map(indexRating => (
                   <IconButton
                     key={indexRating}
                     onClick={(e) => {
@@ -418,10 +419,10 @@ export default function FeedbackForm() {
                       e.stopPropagation();
                     }}
                     sx={{
-                      p: { xs: 0.5, sm: 1 },
-                      minWidth: { xs: 44, sm: 48 },
-                      minHeight: { xs: 44, sm: 48 },
-                      transition: 'all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1)',
+                      'p': { xs: 0.5, sm: 1 },
+                      'minWidth': { xs: 44, sm: 48 },
+                      'minHeight': { xs: 44, sm: 48 },
+                      'transition': 'all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1)',
                       '&:hover': {
                         transform: 'scale(1.1)',
                       },
@@ -463,11 +464,11 @@ export default function FeedbackForm() {
                 fullWidth
                 variant="outlined"
                 value={huberFeedback}
-                onChange={(e) => setHuberFeedback(e.target.value)}
+                onChange={e => setHuberFeedback(e.target.value)}
                 sx={{
                   '& .MuiOutlinedInput-root': {
-                    borderRadius: { xs: 2, sm: 3 },
-                    fontSize: { xs: '0.875rem', sm: '1rem' },
+                    'borderRadius': { xs: 2, sm: 3 },
+                    'fontSize': { xs: '0.875rem', sm: '1rem' },
                     '& fieldset': {
                       borderColor: 'rgba(0, 0, 0, 0.12)',
                     },

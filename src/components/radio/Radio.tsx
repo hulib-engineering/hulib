@@ -1,9 +1,8 @@
 import { RadioGroup } from '@headlessui/react';
 import React, { forwardRef } from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
-
 import type { OptionProps, RadioProps } from './private/types';
+import { mergeClassnames } from '@/components/private/utils';
 
 const RadioRoot = forwardRef<HTMLInputElement, RadioProps>(
   (
@@ -71,8 +70,8 @@ const Indicator = ({
       'after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:transition-all',
       'data-checked:after:w-3 data-checked:after:h-3 border-[#c8c8c8] data-checked:border-primary-50',
       'after:bg-primary-50',
-      isError &&
-        'input-err input-err hover:input-err focus:input-err focus-visible:input-err',
+      isError
+      && 'input-err input-err hover:input-err focus:input-err focus-visible:input-err',
       className,
     )}
   />

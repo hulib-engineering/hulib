@@ -24,8 +24,8 @@ const IconButton = <C extends ElementType = 'button'>({
   'aria-label': ariaLabel,
   ...rest
 }: Props<C>) => {
-  const hasAnimationContent =
-    animation === 'progress' || animation === 'success';
+  const hasAnimationContent
+    = animation === 'progress' || animation === 'success';
 
   return (
     <IconButtonComponent
@@ -39,21 +39,23 @@ const IconButton = <C extends ElementType = 'button'>({
       aria-label={getAriaLabel({ ariaLabel, animation })}
       {...rest}
     >
-      {hasAnimationContent ? (
-        <AnimationContent
-          icon={icon}
-          animation={animation}
-          size={size}
-          variant={variant}
-        >
-          {children}
-        </AnimationContent>
-      ) : (
-        <>
-          {icon}
-          {children}
-        </>
-      )}
+      {hasAnimationContent
+        ? (
+            <AnimationContent
+              icon={icon}
+              animation={animation}
+              size={size}
+              variant={variant}
+            >
+              {children}
+            </AnimationContent>
+          )
+        : (
+            <>
+              {icon}
+              {children}
+            </>
+          )}
     </IconButtonComponent>
   );
 };

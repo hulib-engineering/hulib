@@ -73,7 +73,7 @@ const SpecialSection = () => {
       <div className="absolute top-1/3 w-full animate-display-message text-center text-[6.25rem] font-extrabold text-[#f48fb1] opacity-0 sm:top-1/2">
         Happy New Year
       </div>
-      <div className="absolute left-0 top-0 flex h-full w-full flex-row items-center justify-center overflow-hidden p-[12.5rem_6.25rem_0_0] text-[175px] font-bold text-white">
+      <div className="absolute left-0 top-0 flex size-full flex-row items-center justify-center overflow-hidden p-[12.5rem_6.25rem_0_0] text-[175px] font-bold text-white">
         <span>
           <span className="animate-change-to-secondary">2</span>
           <span className="animate-change-to-yellow">0</span>
@@ -99,7 +99,7 @@ const SpecialSection = () => {
           )}
         />
       </div>
-      <div className="absolute left-0 top-0 block h-full w-full overflow-hidden">
+      <div className="absolute left-0 top-0 block size-full overflow-hidden">
         <Firework className="left-[20%] top-[40%]" />
         <Firework className="left-[15%] top-[70%]" />
         <Firework className="right-[20%] top-[40%]" />

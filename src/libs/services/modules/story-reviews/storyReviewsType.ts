@@ -1,6 +1,6 @@
 import type { User } from '@/features/users/types';
 
-export interface StoryReview {
+export type StoryReview = {
   id: number;
   rating: number;
   numberOfReviews: number;
@@ -9,10 +9,10 @@ export interface StoryReview {
   user: User;
   createdAt?: string;
   updatedAt?: string;
-}
+};
 
-export interface StoryReviewParams {
+export type StoryReviewParams = {
   storyId: number;
   page: number;
   limit: number;
-}
+};

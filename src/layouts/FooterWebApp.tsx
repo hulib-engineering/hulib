@@ -103,7 +103,7 @@ const FooterWebApp = () => {
                 {t('footer_description')}
               </p>
               <div className="flex flex-row justify-center gap-5 sm:justify-start">
-                {socialLinks.map((link) => (
+                {socialLinks.map(link => (
                   <Link
                     key={link.name}
                     href={link.link}
@@ -123,7 +123,7 @@ const FooterWebApp = () => {
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3">
-              {footerSections.map((section) => (
+              {footerSections.map(section => (
                 <div
                   className="mt-16 flex w-fit flex-col gap-5 lg:mt-0"
                   key={section.title}
@@ -148,7 +148,7 @@ const FooterWebApp = () => {
                                 height={14}
                                 width={18}
                                 loading="lazy"
-                                className="mb-[1px]"
+                                className="mb-px"
                               />
                             )}
                             <p className="text-base font-medium text-neutral-30">
@@ -177,7 +177,7 @@ const FooterWebApp = () => {
                               height={14}
                               width={18}
                               loading="lazy"
-                              className="mb-[1px]"
+                              className="mb-px"
                             />
                           )}
 
@@ -193,7 +193,7 @@ const FooterWebApp = () => {
             </div>
           </div>
 
-          <p className="border-t-[1px] border-solid border-neutral-90 bg-white py-5 text-center text-sm leading-4 text-neutral-30">
+          <p className="border-t border-solid border-neutral-90 bg-white py-5 text-center text-sm leading-4 text-neutral-30">
             Copyright © 2025 HuLib Website. All rights reserved.
           </p>
         </footer>
@@ -240,7 +240,7 @@ const FooterWebApp = () => {
                       {t('join_our_social_community')}
                     </h4>
                     <div className="flex flex-row gap-5">
-                      {socialLinks.map((link) => (
+                      {socialLinks.map(link => (
                         <Link
                           key={link.name}
                           href={link.link}
@@ -284,7 +284,7 @@ const FooterWebApp = () => {
                                 height={14}
                                 width={18}
                                 loading="lazy"
-                                className="mb-[1px]"
+                                className="mb-px"
                               />
                             )}
                             <p className="text-base font-medium text-neutral-30">
@@ -313,7 +313,7 @@ const FooterWebApp = () => {
                               height={14}
                               width={18}
                               loading="lazy"
-                              className="mb-[1px]"
+                              className="mb-px"
                             />
                           )}
 
@@ -329,7 +329,7 @@ const FooterWebApp = () => {
             ))}
           </div>
         </div>
-        <div className="flex items-center justify-center border-t-[1px] border-solid border-neutral-90 bg-white py-5">
+        <div className="flex items-center justify-center border-t border-solid border-neutral-90 bg-white py-5">
           <p className="w-3/4 text-center text-sm leading-4 text-neutral-30">
             {t('copy_right')}
           </p>

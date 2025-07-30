@@ -39,7 +39,7 @@ const CustomSelect = ({
         '.MuiOutlinedInput-root': {
           borderRadius: '8px !important',
         },
-        boxShadow: 'none',
+        'boxShadow': 'none',
         '.MuiOutlinedInput-notchedOutline': { border: 0 },
         '&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
           border: 0,
@@ -50,7 +50,7 @@ const CustomSelect = ({
           },
       }}
     >
-      {options.map((option) => (
+      {options.map(option => (
         <MenuItem key={option} value={option}>
           {option}
         </MenuItem>

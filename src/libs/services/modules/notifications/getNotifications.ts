@@ -10,7 +10,7 @@ const getNotifications = (
     PaginatedResponse<Notification> & { unseenCount: number },
     { page?: number; limit?: number }
   >({
-    query: (params) => ({
+    query: params => ({
       url: 'notifications',
       params: {
         page: params?.page || 1,

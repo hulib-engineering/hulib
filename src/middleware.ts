@@ -16,8 +16,8 @@ export default async function middleware(request: NextRequest) {
   const [, locale, ...segments] = request.nextUrl.pathname.split('/');
 
   if (locale != null && segments.join('/') === 'profile') {
-    const usesNewProfile =
-      (request.cookies.get('NEW_PROFILE')?.value || 'false') === 'true';
+    const usesNewProfile
+      = (request.cookies.get('NEW_PROFILE')?.value || 'false') === 'true';
 
     if (usesNewProfile) {
       request.nextUrl.pathname = `/${locale}/profile/new`;

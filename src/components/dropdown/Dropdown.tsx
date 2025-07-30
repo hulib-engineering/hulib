@@ -4,13 +4,6 @@ import { Listbox } from '@headlessui/react';
 import React, { Children, Fragment, useMemo, useState } from 'react';
 import { usePopper } from 'react-popper';
 
-import {
-  useFormContext,
-  useFormItemContext,
-} from '@/components/form/private/utils';
-import type { WithChildren } from '@/components/private/types';
-import { mergeClassnames } from '@/components/private/utils';
-
 import GenericHint from '../Hint';
 import SelectButton from '../selectButton/selectButton';
 import type {
@@ -20,6 +13,12 @@ import type {
   SelectProps,
 } from './private/types';
 import { DropdownContext, useDropdownContext } from './private/utils';
+import { mergeClassnames } from '@/components/private/utils';
+import type { WithChildren } from '@/components/private/types';
+import {
+  useFormContext,
+  useFormItemContext,
+} from '@/components/form/private/utils';
 
 const DropdownRoot = ({
   children,
@@ -68,8 +67,8 @@ const DropdownRoot = ({
     [attributes, disabled, isError, onClear, size, styles, value],
   );
 
-  const childrens =
-    typeof children !== 'function' ? Children.toArray(children) : [];
+  const childrens
+    = typeof children !== 'function' ? Children.toArray(children) : [];
   const callableChildren = typeof children === 'function' && children;
 
   return (
@@ -87,7 +86,7 @@ const DropdownRoot = ({
             <div className="relative">
               {typeof children === 'function'
                 ? callableChildren && callableChildren({ open })
-                : childrens?.map((ch) => ch)}
+                : childrens?.map(ch => ch)}
             </div>
           )}
         </Listbox>
@@ -128,8 +127,7 @@ const Option = ({ children, value }: OptionProps) => {
       {({ selected, active }) =>
         typeof children === 'function'
           ? children({ selected, active })
-          : children
-      }
+          : children}
     </Listbox.Option>
   );
 };
@@ -142,8 +140,8 @@ const Select = ({
   className,
   ...rest
 }: WithChildren<SelectProps>) => {
-  const { size, popper, isError, disabled } =
-    useDropdownContext('Dropdown.Select');
+  const { size, popper, isError, disabled }
+    = useDropdownContext('Dropdown.Select');
 
   return (
     <>
@@ -160,11 +158,13 @@ const Select = ({
           {...rest}
         >
           <SelectButton.Input className={className}>
-            {children ? (
-              <SelectButton.Value>{children}</SelectButton.Value>
-            ) : (
-              <SelectButton.Placeholder>{placeholder}</SelectButton.Placeholder>
-            )}
+            {children
+              ? (
+                  <SelectButton.Value>{children}</SelectButton.Value>
+                )
+              : (
+                  <SelectButton.Placeholder>{placeholder}</SelectButton.Placeholder>
+                )}
           </SelectButton.Input>
         </SelectButton>
       </Listbox.Button>

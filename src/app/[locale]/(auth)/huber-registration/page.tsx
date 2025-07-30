@@ -12,11 +12,11 @@ import Step3 from '@/components/huber-registration/Step3';
 import CommonLayout from '@/layouts/CommonLayout';
 import { useAppSelector } from '@/libs/hooks';
 
-interface Step {
+type Step = {
   no: string;
   value: string;
   num: number;
-}
+};
 
 const STEPS: Step[] = [
   { no: '01', value: 'Info', num: 1 },
@@ -34,7 +34,7 @@ const ProgressBar = ({ currentStep }: { currentStep: number }) => (
     <div
       className={clsx(
         'absolute inset-x-0 top-4 z-0  flex w-full items-center justify-center p-0',
-        'md:pl-[4.125rem] md:pr-[5rem] ',
+        'md:pl-[4.125rem] md:pr-20 ',
       )}
     >
       <div
@@ -46,7 +46,7 @@ const ProgressBar = ({ currentStep }: { currentStep: number }) => (
           ${currentStep > 2 ? 'bg-primary-50' : 'bg-neutral-80'}`}
       />
     </div>
-    {STEPS.map((item) => (
+    {STEPS.map(item => (
       <div
         key={item.no}
         className="flex flex-col items-center justify-center gap-2.5 text-[13px]"
@@ -56,7 +56,7 @@ const ProgressBar = ({ currentStep }: { currentStep: number }) => (
             'relative z-10 flex size-8 items-center justify-center rounded-full font-medium',
             currentStep > item.num
               ? 'bg-primary-50'
-              : 'border-[2px] border-solid bg-white',
+              : 'border-2 border-solid bg-white',
             currentStep === item.num
               ? 'border-primary-50'
               : 'border-neutral-80',
@@ -64,11 +64,13 @@ const ProgressBar = ({ currentStep }: { currentStep: number }) => (
           )}
         >
           <span className="mt-1">
-            {item.num < currentStep ? (
-              <Check color="white" size={16} />
-            ) : (
-              item.no
-            )}
+            {item.num < currentStep
+              ? (
+                  <Check color="white" size={16} />
+                )
+              : (
+                  item.no
+                )}
           </span>
         </div>
         <div
@@ -117,7 +119,7 @@ const StepContent = ({
 
 const Page = () => {
   const t = useTranslations('Common');
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
   const [currentStep, setCurrentStep] = React.useState(1);
 
   useEffect(() => {
@@ -132,7 +134,7 @@ const Page = () => {
   }, [userInfo]);
 
   const handleNextStep = () => {
-    setCurrentStep((prev) => prev + 1);
+    setCurrentStep(prev => prev + 1);
     localStorage.setItem(
       `${userInfo.id}_huber_registration_step`,
       (currentStep + 1).toString(),

@@ -24,7 +24,9 @@ const makeBorder = (
   isRtl?: boolean,
   error?: boolean,
 ) => {
-  if (error) return '';
+  if (error) {
+    return '';
+  }
   if (isSideBorderHidden) {
     if (isRtl) {
       return isFirst ? 'input-lsb-hidden' : 'input-rsb-hidden';

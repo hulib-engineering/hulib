@@ -1,8 +1,8 @@
 import type { FC } from 'react';
 
-interface NotificationSkeletonProps {
+type NotificationSkeletonProps = {
   count?: number;
-}
+};
 
 const NotificationSkeleton: FC<NotificationSkeletonProps> = ({ count = 5 }) => {
   return (
@@ -11,9 +11,9 @@ const NotificationSkeleton: FC<NotificationSkeletonProps> = ({ count = 5 }) => {
         <div key={index} className="border-b p-3 last:border-b-0 ">
           <div className="flex items-start gap-2">
             <div className="relative shrink-0">
-              <div className="h-14 w-14 rounded-full bg-gray-200" />
+              <div className="size-14 rounded-full bg-gray-200" />
               {index % 2 === 0 && (
-                <div className="absolute bottom-0 right-0 h-6 w-6 rounded-sm bg-gray-300" />
+                <div className="absolute bottom-0 right-0 size-6 rounded-sm bg-gray-300" />
               )}
             </div>
 

@@ -13,8 +13,7 @@ type TextInputTypes =
   | 'time'
   | 'url';
 
-export default interface TextInputProps
-  extends InputHTMLAttributes<HTMLInputElement> {
+type TextInputProps = {
   id?: string;
   inputSize?: 'sm' | 'md' | 'lg' | 'xl' | string;
   type?: TextInputTypes | string;
@@ -31,4 +30,5 @@ export default interface TextInputProps
   isTopBottomBorderHidden?: boolean;
   isSideBorderHidden?: boolean;
   isFirst?: boolean;
-}
+} & InputHTMLAttributes<HTMLInputElement>;
+export default TextInputProps;

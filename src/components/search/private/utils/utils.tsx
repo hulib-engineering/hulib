@@ -9,9 +9,9 @@ export function getItemIndex(
 ) {
   return (
     items
-      .map((list) => list.items)
+      .map(list => list.items)
       .reduce((a, b) => a.concat(b))
-      .findIndex((i) => i.id === id) + startIndex
+      .findIndex(i => i.id === id) + startIndex
   );
 }
 
@@ -39,7 +39,7 @@ function doesKeywordsMatchSearch(search: string, keywords: string[]) {
   return keywords.includes('*')
     ? true
     : keywords.some(
-        (keyword) => keyword?.toLowerCase().includes(search?.toLowerCase()),
+        keyword => keyword?.toLowerCase().includes(search?.toLowerCase()),
       );
 }
 
@@ -57,21 +57,21 @@ export function filterItems(
   return items
     .filter((list) => {
       const listHasMatchingItem = list.items.some(
-        (item) =>
-          doesChildMatchSearch(search, item.children) ||
-          doesKeywordsMatchSearch(search, item.keywords ?? []),
+        item =>
+          doesChildMatchSearch(search, item.children)
+          || doesKeywordsMatchSearch(search, item.keywords ?? []),
       );
 
       return filterOnListHeading
-        ? list.heading?.toLowerCase().includes(search.toLowerCase()) ||
-            listHasMatchingItem
+        ? list.heading?.toLowerCase().includes(search.toLowerCase())
+        || listHasMatchingItem
         : listHasMatchingItem;
     })
     .map((list) => {
       const matchingItems = list.items.filter(
-        (item) =>
-          doesChildMatchSearch(search, item.children) ||
-          doesKeywordsMatchSearch(search, item.keywords ?? []),
+        item =>
+          doesChildMatchSearch(search, item.children)
+          || doesKeywordsMatchSearch(search, item.keywords ?? []),
       );
 
       return {

@@ -16,12 +16,12 @@ const AccordionItem = ({
       <button
         onClick={() => setIsExpanding(!isExpanding)}
         type="button"
-        className="flex w-full items-center justify-center gap-[0.75rem] rounded-xl bg-white px-6 py-4"
+        className="flex w-full items-center justify-center gap-3 rounded-xl bg-white px-6 py-4"
       >
         <span className="w-full text-wrap text-start text-base font-medium lg:text-xl">
           {trigger}
         </span>
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-light-hover">
+        <div className="flex size-8 items-center justify-center rounded-lg bg-light-hover">
           <svg
             className="fill-indigo-500"
             width="20"

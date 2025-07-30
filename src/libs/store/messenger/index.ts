@@ -21,7 +21,7 @@ type ChatWindow = {
   messages?: Message[];
   lastMessage?: MessageResponse;
 };
-export interface ChatState {
+export type ChatState = {
   chats: ChatWindow[];
   currentChatDetail: Pick<ChatWindow, 'id' | 'name' | 'avatarUrl'> | null;
 };
@@ -43,7 +43,7 @@ const chatSlice = createSlice({
       } else {
         // Limit open chats to 3
         const openingChats = state.chats.filter(
-          (c) => c.isOpen && !c.isMinimized,
+          c => c.isOpen && !c.isMinimized,
         );
         if (openingChats.length >= 3) {
           // Minimize the oldest open chat
@@ -61,14 +61,16 @@ const chatSlice = createSlice({
       }
     },
     closeChat: (state, action: PayloadAction<string>) => {
-      state.chats = state.chats.filter((chat) => chat.id !== action.payload);
+      state.chats = state.chats.filter(chat => chat.id !== action.payload);
     },
     minimizeChat: (state, action: PayloadAction<string>) => {
-      const chat = state.chats.find((c) => c.id === action.payload);
-      if (chat) chat.isMinimized = true;
+      const chat = state.chats.find(c => c.id === action.payload);
+      if (chat) {
+        chat.isMinimized = true;
+      }
     },
     restoreChat: (state, action: PayloadAction<string>) => {
-      const chat = state.chats.find((c) => c.id === action.payload);
+      const chat = state.chats.find(c => c.id === action.payload);
       if (chat) {
         chat.isOpen = true;
         chat.isMinimized = false;
@@ -87,7 +89,7 @@ const chatSlice = createSlice({
     //   }
     // },
     markAsRead: (state, action: PayloadAction<string>) => {
-      const chat = state.chats.find((c) => c.id === action.payload);
+      const chat = state.chats.find(c => c.id === action.payload);
       if (chat) {
         chat.unread = 0;
       }

@@ -4,11 +4,11 @@ import React from 'react';
 
 import IconButton from '../iconButton/IconButton';
 
-interface PaginationProps {
+type PaginationProps = {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
-}
+};
 
 const StoryPagination: React.FC<PaginationProps> = ({
   currentPage,
@@ -20,7 +20,7 @@ const StoryPagination: React.FC<PaginationProps> = ({
       <IconButton
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 0}
-        className={`flex h-8 w-8 items-center justify-center rounded-full border border-blue-500 ${
+        className={`flex size-8 items-center justify-center rounded-full border border-blue-500 ${
           currentPage === 0
             ? 'cursor-not-allowed opacity-50'
             : 'hover:bg-blue-100'
@@ -29,12 +29,15 @@ const StoryPagination: React.FC<PaginationProps> = ({
         &lt;
       </IconButton>
       <span className="text-sm text-gray-700">
-        {currentPage + 1} / {totalPages}
+        {currentPage + 1}
+        {' '}
+        /
+        {totalPages}
       </span>
       <IconButton
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage + 1 === totalPages}
-        className={`flex h-8 w-8 items-center justify-center rounded-full border border-blue-500 ${
+        className={`flex size-8 items-center justify-center rounded-full border border-blue-500 ${
           currentPage + 1 >= totalPages
             ? 'cursor-not-allowed opacity-50'
             : 'hover:bg-blue-100'

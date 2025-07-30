@@ -7,13 +7,13 @@ export const RegisterStep1Validation = z
       .string()
       .trim()
       .min(8)
-      .refine((password) => /[A-Z]/.test(password))
-      .refine((password) => /[a-z]/.test(password))
-      .refine((password) => /[0-9]/.test(password))
-      .refine((password) => /[!@#$%^&*]/.test(password)),
+      .refine(password => /[A-Z]/.test(password))
+      .refine(password => /[a-z]/.test(password))
+      .refine(password => /\d/.test(password))
+      .refine(password => /[!@#$%^&*]/.test(password)),
     confirmPassword: z.string(),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine(data => data.password === data.confirmPassword, {
     message: 'Passwords do not match!',
     path: ['confirmPassword'],
   });
@@ -29,8 +29,8 @@ export const RegisterStep2Validation = z
       .refine(
         (value) => {
           return (
-            /^\d{4}-\d{2}-\d{2}$/.test(value) &&
-            !Number.isNaN(Date.parse(value))
+            /^\d{4}-\d{2}-\d{2}$/.test(value)
+            && !Number.isNaN(Date.parse(value))
           );
         },
         {
@@ -41,10 +41,10 @@ export const RegisterStep2Validation = z
   })
   .superRefine((values, context) => {
     if (
-      values.isUnderGuard &&
-      (!values.parentPhoneNumber ||
-        values.parentPhoneNumber.length <= 0 ||
-        !/^\+[1-9]\d{1,14}$/.test(values.parentPhoneNumber))
+      values.isUnderGuard
+      && (!values.parentPhoneNumber
+        || values.parentPhoneNumber.length <= 0
+        || !/^\+[1-9]\d{1,14}$/.test(values.parentPhoneNumber))
     ) {
       context.addIssue({
         code: z.ZodIssueCode.custom,

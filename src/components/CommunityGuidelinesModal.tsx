@@ -39,29 +39,29 @@ const CommunityGuidelinesModal = ({
               })}
             </div>
           )}
-          {index === 'index_2' &&
-            ['index_0' as const, 'index_1' as const, 'index_2' as const].map(
-              (each) => (
-                <div key={each} className="mb-3 last:mb-0">
-                  <h3 className="mb-1 text-lg font-semibold text-gray-800">
-                    {t(
-                      `community_guidelines_sections.index_2.content_sections.${each}.heading`,
-                    )}
-                  </h3>
-                  <div>
-                    {t.rich(
-                      `community_guidelines_sections.index_2.content_sections.${each}.content`,
-                      {
-                        br: newLineMessage(),
-                        ul: unorderedMessageList('list-disc pl-6'),
-                        li: listMessageItem(),
-                        strong: strongMessage(),
-                      },
-                    )}
-                  </div>
+          {index === 'index_2'
+          && ['index_0' as const, 'index_1' as const, 'index_2' as const].map(
+            each => (
+              <div key={each} className="mb-3 last:mb-0">
+                <h3 className="mb-1 text-lg font-semibold text-gray-800">
+                  {t(
+                    `community_guidelines_sections.index_2.content_sections.${each}.heading`,
+                  )}
+                </h3>
+                <div>
+                  {t.rich(
+                    `community_guidelines_sections.index_2.content_sections.${each}.content`,
+                    {
+                      br: newLineMessage(),
+                      ul: unorderedMessageList('list-disc pl-6'),
+                      li: listMessageItem(),
+                      strong: strongMessage(),
+                    },
+                  )}
                 </div>
-              ),
-            )}
+              </div>
+            ),
+          )}
         </section>
       ))}
     </PolicyModal>

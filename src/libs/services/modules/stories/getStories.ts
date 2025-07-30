@@ -5,7 +5,7 @@ import type { StoriesParams, Story } from './storiesType';
 
 const getStories = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query<PaginatedResponse<Story>, StoriesParams>({
-    query: (params) => ({
+    query: params => ({
       url: 'stories',
       params: {
         humanBookId: params?.humanBookId || undefined,
@@ -21,7 +21,7 @@ const getStories = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
     forceRefetch: ({ currentArg, previousArg }) => {
       return currentArg?.limit !== previousArg?.limit;
     },
-    providesTags: (result) =>
+    providesTags: result =>
       result
         ? [
             ...result.data.map(({ id }) => ({ type: 'Stories' as const, id })),

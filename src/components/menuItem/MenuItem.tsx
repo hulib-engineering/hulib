@@ -1,11 +1,10 @@
 import type { ElementType, ReactNode } from 'react';
-import React, { forwardRef, useEffect } from 'react';
-
-import type { PolymorphicRef } from '@/components/private/types';
-import { mergeClassnames, useRegisterChild } from '@/components/private/utils';
+import React, { forwardRef, useEffect, useMemo } from 'react';
 
 import type { MenuItemPolymorphicProps } from './private/types';
 import { MenuItemContext, useMenuItemContext } from './private/utils';
+import type { PolymorphicRef } from '@/components/private/types';
+import { mergeClassnames, useRegisterChild } from '@/components/private/utils';
 
 const MenuItemRoot = forwardRef(
   // @ts-ignore
@@ -29,13 +28,18 @@ const MenuItemRoot = forwardRef(
       disabled: isDisabled,
     };
     const { items, register } = useRegisterChild();
+
+    const contextValue = useMemo(
+      () => ({ ...states, registerChild: register }),
+      [states, register],
+    );
+
     const isNoBg = items?.find(
       (name: string) => name === 'Radio' || name === 'Checkbox',
     );
     const innerSelected = isNoBg ? false : isSelected;
     return (
-      // eslint-disable-next-line react/jsx-no-constructed-context-values
-      <MenuItemContext.Provider value={{ ...states, registerChild: register }}>
+      <MenuItemContext.Provider value={contextValue}>
         <Component
           ref={ref}
           className={mergeClassnames(

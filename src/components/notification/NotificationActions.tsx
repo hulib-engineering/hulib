@@ -7,13 +7,13 @@ import { PortalSessionCard } from '@/components/schedule/components/sessionCard/
 import { NOTIFICATION_TYPES } from '@/libs/services/modules/notifications/notificationType';
 import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
 
-interface NotificationActionsProps {
+type NotificationActionsProps = {
   onAccept: () => void;
   onReject: () => void;
   isLoading?: boolean;
   notificationType?: string;
   sessionId?: number;
-}
+};
 
 const NotificationActions: FC<NotificationActionsProps> = ({
   onAccept,
@@ -26,8 +26,8 @@ const NotificationActions: FC<NotificationActionsProps> = ({
   const [portalPosition, setPortalPosition] = useState({ top: 0, left: 0 });
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
-  const shouldFetchReadingSession =
-    notificationType === NOTIFICATION_TYPES.OTHER.name && sessionId;
+  const shouldFetchReadingSession
+    = notificationType === NOTIFICATION_TYPES.OTHER.name && sessionId;
 
   const { data: readingSession } = useGetReadingSessionByIdQuery(
     {

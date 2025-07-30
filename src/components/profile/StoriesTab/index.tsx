@@ -4,6 +4,8 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 import { Trash } from '@phosphor-icons/react';
 import React from 'react';
 
+import CreateStoryModal from './CreateStoryModal';
+import DeleteStoryModal from './DeleteStoryModal';
 import Button from '@/components/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { FlipBook } from '@/components/flipBook/FlipBook';
@@ -13,11 +15,8 @@ import { useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
 import { useDeleteStoryMutation } from '@/libs/services/modules/stories';
 import { Role } from '@/types/common';
 
-import CreateStoryModal from './CreateStoryModal';
-import DeleteStoryModal from './DeleteStoryModal';
-
 const StoriesTab = () => {
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
   const isHuber = userInfo?.role?.id === Role.HUBER;
   const [deleteStory] = useDeleteStoryMutation();
   const {
@@ -96,7 +95,9 @@ const StoriesTab = () => {
     );
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -109,8 +110,8 @@ const StoriesTab = () => {
         )}
       >
         <div className="flex h-[287px] w-[392px] flex-col items-center justify-center rounded-2xl bg-white p-8 shadow-sm">
-          <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary-98">
-            <PlusIcon className="h-8 w-8 text-primary-60" />
+          <div className="mb-6 flex size-16 items-center justify-center rounded-full bg-primary-98">
+            <PlusIcon className="size-8 text-primary-60" />
           </div>
           <Button onClick={() => setIsCreateModalOpen(true)}>
             Create New Story
@@ -118,13 +119,13 @@ const StoriesTab = () => {
         </div>
         {stories?.data?.length > 0
           ? stories?.data?.map((story: any) => (
-              <FlipBook
-                key={story?.id}
-                data={story}
-                renderActions={() => renderActions(story)}
-                refetch={refetch}
-              />
-            ))
+            <FlipBook
+              key={story?.id}
+              data={story}
+              renderActions={() => renderActions(story)}
+              refetch={refetch}
+            />
+          ))
           : null}
       </div>
 

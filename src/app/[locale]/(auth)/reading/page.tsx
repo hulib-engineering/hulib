@@ -23,12 +23,12 @@ const AgoraVideoCall = dynamic(
 );
 
 export default function ReadingPage() {
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
   const searchParams = useSearchParams();
   const channel = searchParams.get('channel');
   const sessionId = channel?.split('-')?.[1];
-  const [updateReadingSession, { isLoading }] =
-    useUpdateReadingSessionMutation();
+  const [updateReadingSession, { isLoading }]
+    = useUpdateReadingSessionMutation();
   const [isDoneSurveyForReading, setIsDoneSurveyForReading] = useState(false);
   const [surveyData, setSurveyData] = useState({
     feeling: 0,
@@ -47,7 +47,9 @@ export default function ReadingPage() {
   );
 
   useEffect(() => {
-    if (!userInfo?.id || !readingSession) return;
+    if (!userInfo?.id || !readingSession) {
+      return;
+    }
     const savedIsDoneSurveyForReading = localStorage.getItem(
       `is_done_survey_for_reading_${userInfo.id}_${readingSession.id}`,
     );
@@ -82,7 +84,7 @@ export default function ReadingPage() {
         ];
 
         await updateReadingSession({
-          id: parseInt(sessionId, 10),
+          id: Number.parseInt(sessionId, 10),
           presurvey: presurveyData,
         }).unwrap();
 
@@ -107,21 +109,22 @@ export default function ReadingPage() {
 
   // Handle rating selection
   const handleRatingChange = (question: string, rating: number) => {
-    setSurveyData((prev) => ({
+    setSurveyData(prev => ({
       ...prev,
       [question]: rating,
     }));
   };
 
   // Check if all questions are answered
-  const isFormComplete = Object.values(surveyData).every((value) => value > 0);
+  const isFormComplete = Object.values(surveyData).every(value => value > 0);
 
-  if (!readingSession || isLoading)
+  if (!readingSession || isLoading) {
     return (
       <div className="flex h-[300px] w-full items-center justify-center">
         <Loader />
       </div>
     );
+  }
 
   return (
     <div className="flex size-full items-center justify-center">
@@ -157,7 +160,7 @@ export default function ReadingPage() {
                 leftLabel="Not good"
                 rightLabel="Very good"
                 value={surveyData.feeling}
-                onChange={(rating) => handleRatingChange('feeling', rating)}
+                onChange={rating => handleRatingChange('feeling', rating)}
               />
 
               <RatingScale
@@ -165,7 +168,7 @@ export default function ReadingPage() {
                 leftLabel="Not relevant"
                 rightLabel="Very relevant"
                 value={surveyData.story}
-                onChange={(rating) => handleRatingChange('story', rating)}
+                onChange={rating => handleRatingChange('story', rating)}
               />
 
               <RatingScale
@@ -173,7 +176,7 @@ export default function ReadingPage() {
                 leftLabel="Not relevant"
                 rightLabel="Very relevant"
                 value={surveyData.huber}
-                onChange={(rating) => handleRatingChange('huber', rating)}
+                onChange={rating => handleRatingChange('huber', rating)}
               />
 
               <RatingScale
@@ -181,7 +184,7 @@ export default function ReadingPage() {
                 leftLabel="Not helpful"
                 rightLabel="Very helpful"
                 value={surveyData.session}
-                onChange={(rating) => handleRatingChange('session', rating)}
+                onChange={rating => handleRatingChange('session', rating)}
               />
 
               {/* Submit Button */}

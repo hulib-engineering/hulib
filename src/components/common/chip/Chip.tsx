@@ -1,11 +1,10 @@
 import type { ElementType } from 'react';
 import React, { forwardRef } from 'react';
 
-import type { PolymorphicRef } from '@/components/private/types';
-import { mergeClassnames } from '@/components/private/utils';
-
 import type { ChipPolymorphicProps } from './private/type';
 import { getActive, getDisabled, getPadding } from './private/utils';
+import type { PolymorphicRef } from '@/components/private/types';
+import { mergeClassnames } from '@/components/private/utils';
 
 const Chip = forwardRef(
   // @ts-ignore

@@ -1,15 +1,14 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
-import { AppConfig } from '@/utils/AppConfig';
-
 import type { PaginatedResponse } from '../../type';
 import type { SearchParams } from './storiesType';
+import { AppConfig } from '@/utils/AppConfig';
 
 const getSearchByKeyword = (
   build: EndpointBuilder<BaseQueryFn, string, string>,
 ) =>
   build.query<PaginatedResponse<any>, SearchParams>({
-    query: (params) => ({
+    query: params => ({
       url: `${AppConfig.api.endpoint}/search`, // Override baseUrl tại đây
       params: {
         keyword: params?.keyword,

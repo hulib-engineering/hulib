@@ -2,11 +2,11 @@ import React from 'react';
 
 import { mergeClassnames } from '../private/utils';
 
-interface Props {
+type Props = {
   name: string;
   isActive: boolean | null;
   onClick?: () => void;
-}
+};
 
 const Topic = (props: Props) => {
   const { name, isActive, onClick } = props;

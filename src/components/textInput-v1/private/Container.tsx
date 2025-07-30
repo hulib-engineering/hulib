@@ -1,9 +1,8 @@
 import React from 'react';
 
+import { getBorderRadius } from './utils';
 import type { WithChildren } from '@/components/private/types';
 import { mergeClassnames } from '@/components/private/utils';
-
-import { getBorderRadius } from './utils';
 
 type IContainerProps = WithChildren<{
   inputSize?: string;

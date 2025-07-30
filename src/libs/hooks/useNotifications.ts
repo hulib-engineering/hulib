@@ -7,11 +7,11 @@ import type { Notification } from '@/libs/services/modules/notifications/notific
 import { NOTIFICATION_TYPES } from '@/libs/services/modules/notifications/notificationType';
 import { StatusEnum } from '@/types/common';
 
-interface UseNotificationsProps {
+type UseNotificationsProps = {
   initialPage?: number;
   limit?: number;
   enablePagination?: boolean;
-}
+};
 
 const useNotifications = ({
   initialPage = 1,
@@ -45,14 +45,14 @@ const useNotifications = ({
   const sortNotifications = useCallback((notifications: Notification[]) => {
     return [...notifications].sort((a, b) => {
       if (
-        a.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name &&
-        b.type.name !== NOTIFICATION_TYPES.SESSION_REQUEST.name
+        a.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name
+        && b.type.name !== NOTIFICATION_TYPES.SESSION_REQUEST.name
       ) {
         return -1;
       }
       if (
-        a.type.name !== NOTIFICATION_TYPES.SESSION_REQUEST.name &&
-        b.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name
+        a.type.name !== NOTIFICATION_TYPES.SESSION_REQUEST.name
+        && b.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name
       ) {
         return 1;
       }
@@ -61,7 +61,9 @@ const useNotifications = ({
   }, []);
 
   useMemo(() => {
-    if (!notificationsResponse?.data) return;
+    if (!notificationsResponse?.data) {
+      return;
+    }
 
     const filteredNotifications = filterNotifications(
       notificationsResponse.data,
@@ -70,7 +72,7 @@ const useNotifications = ({
     if (enablePagination) {
       setAllNotifications((prev) => {
         const newNotifications = filteredNotifications.filter(
-          (newNotif) => !prev.some((notif) => notif.id === newNotif.id),
+          newNotif => !prev.some(notif => notif.id === newNotif.id),
         );
         return [...prev, ...newNotifications];
       });
@@ -85,7 +87,7 @@ const useNotifications = ({
 
   const loadNextPage = useCallback(() => {
     if (notificationsResponse?.hasNextPage && !isLoading) {
-      setPage((prev) => prev + 1);
+      setPage(prev => prev + 1);
     }
   }, [notificationsResponse?.hasNextPage, isLoading]);
 

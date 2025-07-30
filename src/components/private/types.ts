@@ -1,6 +1,6 @@
 import type {
-  ComponentPropsWithoutRef,
   ComponentPropsWithRef,
+  ComponentPropsWithoutRef,
   ElementType,
   PropsWithChildren,
   ReactNode,

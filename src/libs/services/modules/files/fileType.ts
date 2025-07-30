@@ -1,4 +1,4 @@
-export interface FileType {
+export type FileType = {
   id: string;
   path: string;
-}
+};

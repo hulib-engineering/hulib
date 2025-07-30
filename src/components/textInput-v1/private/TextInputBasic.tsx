@@ -1,12 +1,11 @@
 import React, { forwardRef } from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
-
 import Container from './Container';
 import HintText from './HintText';
 import Input from './Input';
 import type TextInputProps from './types';
 import { getLabelSize } from './utils';
+import { mergeClassnames } from '@/components/private/utils';
 
 const TextInputBasic = forwardRef<HTMLInputElement, TextInputProps>(
   (props, ref) => {

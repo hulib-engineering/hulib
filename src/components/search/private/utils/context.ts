@@ -12,17 +12,17 @@ export const SearchContext = createContext<{
   inputRef: RefObject<MutableRefObject<HTMLInputElement>> | null;
   isOpen: boolean;
 }>({
-  search: '',
-  onChangeOpen: () => {},
-  onChangeSearch: () => {},
-  inputRef: null,
-  isOpen: false,
-});
+      search: '',
+      onChangeOpen: () => {},
+      onChangeSearch: () => {},
+      inputRef: null,
+      isOpen: false,
+    });
 
 export const OpenContext = createContext<{
   onChangeOpen: (value: boolean) => void;
   isOpen: boolean;
 }>({
-  onChangeOpen: () => undefined,
-  isOpen: false,
-});
+      onChangeOpen: () => undefined,
+      isOpen: false,
+    });

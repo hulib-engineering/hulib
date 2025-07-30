@@ -25,7 +25,7 @@ const TestimonialItems = [
   },
   {
     content:
-      "Theo mình HuLib là một dự án với mission mới toanh ở miền Trung nói riêng và Việt Nam nói chung. Kết nối những người có kinh nghiệm 'thực chiến' dày dặn trong lĩnh vực của họ với các bạn mentees chắc chắn sẽ là tạo ra ảnh hưởng lớn đến với các bạn trong tương lai. Mình mong dự án sẽ bay cao bay xa trong trong thời gian tới. Chúc toàn bộ team luôn giữ được nhiệt huyết ạ~",
+      'Theo mình HuLib là một dự án với mission mới toanh ở miền Trung nói riêng và Việt Nam nói chung. Kết nối những người có kinh nghiệm \'thực chiến\' dày dặn trong lĩnh vực của họ với các bạn mentees chắc chắn sẽ là tạo ra ảnh hưởng lớn đến với các bạn trong tương lai. Mình mong dự án sẽ bay cao bay xa trong trong thời gian tới. Chúc toàn bộ team luôn giữ được nhiệt huyết ạ~',
     name: 'Quỳnh Lê',
     avatarUrl: '/assets/images/avatars/pf_member_2.jpeg',
     position: 'Team PF',
@@ -53,7 +53,7 @@ const TestimonialItems = [
   },
   {
     content:
-      "Just quick note to say being part of HuLib has been more than I expected. Before joining, I genuinely loved the vision and mission of this project. As an HR member, it opened my eyes to a world of learning and growth. Working with my team has been a joy – they're not just friendly; they're talented and supportive. And you know what's cool? HuLib is more than a project; it's my journey to well-being. I've tackled insecurities, made many lovely friends, and learned tons. I hope our HuLib will be truly successful.",
+      'Just quick note to say being part of HuLib has been more than I expected. Before joining, I genuinely loved the vision and mission of this project. As an HR member, it opened my eyes to a world of learning and growth. Working with my team has been a joy – they\'re not just friendly; they\'re talented and supportive. And you know what\'s cool? HuLib is more than a project; it\'s my journey to well-being. I\'ve tackled insecurities, made many lovely friends, and learned tons. I hope our HuLib will be truly successful.',
     name: 'Doan Duy My Phuong',
     avatarUrl: '/assets/images/avatars/ha_member_3.jpeg',
     position: 'Team HA',

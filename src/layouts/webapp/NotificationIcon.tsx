@@ -23,10 +23,10 @@ const ButtonWithChip = ({
   </div>
 );
 
-interface NotificationButtonProps {
+type NotificationButtonProps = {
   notificationCount?: number;
   notificationPath?: string;
-}
+};
 
 const NotificationButton: React.FC<NotificationButtonProps> = ({
   notificationCount = 10,

@@ -1,14 +1,13 @@
 import type { DetailedHTMLProps, FormHTMLAttributes, ReactNode } from 'react';
 
-interface FormProps
-  extends Omit<
-    DetailedHTMLProps<FormHTMLAttributes<HTMLFormElement>, HTMLFormElement>,
-    'size'
-  > {
+type FormProps = {
   size?: Size;
   className?: string;
   onSubmit?: (event: React.FormEvent) => void;
-}
+} & Omit<
+  DetailedHTMLProps<FormHTMLAttributes<HTMLFormElement>, HTMLFormElement>,
+  'size'
+>;
 
 type FormState = {
   size?: Size;

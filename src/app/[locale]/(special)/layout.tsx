@@ -23,9 +23,9 @@ export default function Layout({
   const router = useRouter();
 
   const numberOfAvailableMovements = useAppSelector(
-    (state) => state.minigame.numOfAvailableMovements,
+    state => state.minigame.numOfAvailableMovements,
   );
-  const guessedIds = useAppSelector((state) => state.minigame.guessedIds);
+  const guessedIds = useAppSelector(state => state.minigame.guessedIds);
 
   return (
     <div

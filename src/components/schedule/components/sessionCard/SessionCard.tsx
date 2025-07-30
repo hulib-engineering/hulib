@@ -1,13 +1,6 @@
 import { CaretDown, CaretUp } from '@phosphor-icons/react';
 import React, { useMemo, useState } from 'react';
 
-import { useAppSelector } from '@/libs/hooks';
-import type {
-  ReadingSession,
-  StatusType,
-} from '@/libs/services/modules/reading-session/createNewReadingSession';
-import { Role, ROLE_NAME, StatusEnum } from '@/types/common';
-
 import { SessionActions } from './SessionActions';
 import { SessionAttendees } from './SessionAttendees';
 import { SessionDateTime } from './SessionDateTime';
@@ -15,14 +8,20 @@ import { SessionStoryDescription } from './SessionStoryDescription';
 import { SessionUrl } from './SessionUrl';
 import { StatusBadge } from './StatusBadge';
 import { UserAvatar } from './UserAvatar';
+import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
+import type {
+  ReadingSession,
+  StatusType,
+} from '@/libs/services/modules/reading-session/createNewReadingSession';
+import { useAppSelector } from '@/libs/hooks';
 
-interface SessionCardProps {
+type SessionCardProps = {
   session: ReadingSession;
   expanded?: boolean;
   showCancelDialogProp?: boolean;
   isMobile?: boolean;
   isMeetingToday?: boolean;
-}
+};
 
 export const SessionCard: React.FC<SessionCardProps> = ({
   session,
@@ -32,7 +31,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({
   isMeetingToday = false,
 }) => {
   const [isExpanded, setIsExpanded] = useState(expanded);
-  const userId = useAppSelector((state) => state.auth.userInfo?.id);
+  const userId = useAppSelector(state => state.auth.userInfo?.id);
 
   const isVibing = Number(userId) === Number(session?.reader?.id);
   const cardTitle = isVibing ? 'Vibing with Huber' : 'Session with Liber';
@@ -43,7 +42,9 @@ export const SessionCard: React.FC<SessionCardProps> = ({
 
   // Get border class based on isMeetingToday and isVibing
   const getBorderClass = () => {
-    if (!isMeetingToday) return '';
+    if (!isMeetingToday) {
+      return '';
+    }
     return isVibing ? 'border border-primary-60' : 'border border-yellow-98';
   };
 
@@ -143,15 +144,17 @@ export const SessionCard: React.FC<SessionCardProps> = ({
       {session.sessionUrl && session.sessionStatus !== StatusEnum.Pending && (
         <SessionUrl url={session.sessionUrl} />
       )}
-      {isExpanded ? (
-        <SessionAttendees
-          humanBook={session.humanBook}
-          reader={session.reader}
-          isVibing={isVibing}
-        />
-      ) : (
-        renderCollapsedUserInfo
-      )}
+      {isExpanded
+        ? (
+            <SessionAttendees
+              humanBook={session.humanBook}
+              reader={session.reader}
+              isVibing={isVibing}
+            />
+          )
+        : (
+            renderCollapsedUserInfo
+          )}
       {isExpanded && (
         <div className="w-full pb-3">
           <SessionStoryDescription note={session.note} />

@@ -25,7 +25,7 @@ const getHubers = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
     forceRefetch: ({ currentArg, previousArg }) => {
       return currentArg?.limit !== previousArg?.limit;
     },
-    providesTags: (result) =>
+    providesTags: result =>
       result
         ? [
             ...result.data.map(({ id }) => ({ type: 'Hubers' as const, id })),

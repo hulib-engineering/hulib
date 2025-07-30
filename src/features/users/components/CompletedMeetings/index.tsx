@@ -9,15 +9,15 @@ import type { SessionStatus } from '@/libs/services/modules/user/getReadingSessi
 
 const CompletedMeetings = () => {
   const { id } = useParams();
-  const { data: completedSessions, isLoading } =
-    useGetReadingSessionOfUserQuery({
+  const { data: completedSessions, isLoading }
+    = useGetReadingSessionOfUserQuery({
       id: id as string,
       sessionStatus: 'finished' as SessionStatus,
     });
 
   if (isLoading) {
     return (
-      <div className="flex h-full w-full justify-center px-[10%]">
+      <div className="flex size-full justify-center px-[10%]">
         <LoadingSkeleton />
       </div>
     );
@@ -25,28 +25,30 @@ const CompletedMeetings = () => {
 
   return (
     <div className="mt-4 grid grid-cols-2 gap-4 text-neutral-60">
-      {completedSessions?.data?.length > 0 ? (
-        completedSessions?.data.map((session: any) => (
-          <div
-            key={session.id}
-            className="rounded-lg bg-primary-98 px-3 pt-4 shadow-md"
-          >
-            <SessionDateTime
-              date={session.startedAt}
-              startDate={session.startTime}
-              endDate={session.endTime}
-            />
-            <SessionAttendees
-              humanBook={session.humanBook}
-              reader={session.reader}
-              isVibing={session.isVibing}
-              isAdmin
-            />
-          </div>
-        ))
-      ) : (
-        <span className="text-neutral-40">No completed meetings found.</span>
-      )}
+      {completedSessions?.data?.length > 0
+        ? (
+            completedSessions?.data.map((session: any) => (
+              <div
+                key={session.id}
+                className="rounded-lg bg-primary-98 px-3 pt-4 shadow-md"
+              >
+                <SessionDateTime
+                  date={session.startedAt}
+                  startDate={session.startTime}
+                  endDate={session.endTime}
+                />
+                <SessionAttendees
+                  humanBook={session.humanBook}
+                  reader={session.reader}
+                  isVibing={session.isVibing}
+                  isAdmin
+                />
+              </div>
+            ))
+          )
+        : (
+            <span className="text-neutral-40">No completed meetings found.</span>
+          )}
     </div>
   );
 };

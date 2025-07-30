@@ -13,10 +13,10 @@ export const ProfileValidation = z
   })
   .superRefine((values, context) => {
     if (
-      values.isUnderGuard &&
-      (!values.parentPhoneNumber ||
-        values.parentPhoneNumber.length <= 0 ||
-        !/^\+[1-9]\d{1,14}$/.test(values.parentPhoneNumber))
+      values.isUnderGuard
+      && (!values.parentPhoneNumber
+        || values.parentPhoneNumber.length <= 0
+        || !/^\+[1-9]\d{1,14}$/.test(values.parentPhoneNumber))
     ) {
       context.addIssue({
         code: z.ZodIssueCode.custom,

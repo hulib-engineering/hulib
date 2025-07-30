@@ -7,7 +7,9 @@ import { mergeClassnames } from '@/components/private/utils';
 
 // Badge component for showing counts
 const CountBadge = ({ count }: { count: number }) => {
-  if (!count) return null;
+  if (!count) {
+    return null;
+  }
   return (
     <div className="flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-xs font-medium text-white">
       {count}

@@ -5,12 +5,11 @@ import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 
+import type { HeroProps } from '.';
 import Button from '@/components/button/Button';
 import { HighlightContentBox } from '@/components/HighlightContentBox';
 import { mergeClassnames } from '@/components/private/utils';
 import { customMessage } from '@/utils/i18NRichTextUtils';
-
-import type { HeroProps } from '.';
 
 const HeroDesktop = (props: HeroProps) => {
   const {
@@ -63,7 +62,7 @@ const HeroDesktop = (props: HeroProps) => {
             </Button>
           </div>
         </div>
-        <div className="absolute right-28 top-24 mt-8 w-[40%]">
+        <div className="absolute right-28 top-24 mt-8 w-2/5">
           <div className=" flex flex-col items-center justify-center">
             <p className="absolute left-2 top-20 h-12 max-w-64 px-2 text-center text-sm font-normal text-slate-1000 lg:px-0 lg:text-left xl:top-12">
               {t.rich('hero_message_1', {
@@ -177,7 +176,7 @@ const HeroDesktop = (props: HeroProps) => {
                   src={`/assets/images/icons/${
                     isPlaying ? 'pause' : 'play'
                   }-circle.png`}
-                  className="h-8 w-8 cursor-pointer object-cover object-center"
+                  className="size-8 cursor-pointer object-cover object-center"
                 />
                 <WavesurferPlayer
                   height={32}

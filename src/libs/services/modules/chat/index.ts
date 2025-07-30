@@ -1,14 +1,13 @@
 import type z from 'zod';
 
-import type { ProfileValidation } from '@/validations/ProfileValidation';
-
 import { api } from '../../api';
 import type { User } from '../auth';
 import getConversation from './getConversationByUserId';
 import getConversations from './getConversations';
 import getUserOnlineStatus from './getUserOnlineStatus';
+import type { ProfileValidation } from '@/validations/ProfileValidation';
 
-export interface MessageResponse {
+export type MessageResponse = {
   id: string;
   recipientId: number;
   senderId: number;
@@ -22,9 +21,9 @@ export interface MessageResponse {
   sticker: { image: { id: string; path: string } };
   unreadCount: number;
   readAt: string;
-}
+};
 
-export interface Contact {
+export type Contact = {
   id: string;
   participant: z.infer<typeof ProfileValidation> & {
     id: number;
@@ -33,7 +32,7 @@ export interface Contact {
   lastMessage: MessageResponse;
   unreadCount: number;
   isOnline: boolean;
-}
+};
 
 const chatApiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['Messages'],

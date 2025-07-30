@@ -1,4 +1,3 @@
-/* eslint-disable tailwindcss/no-custom-classname */
 export default function SkeletonHeader() {
   return (
     <div className="relative h-[40px] w-[200px] overflow-hidden rounded-full bg-gray-300">

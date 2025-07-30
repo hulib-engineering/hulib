@@ -12,12 +12,11 @@ import { useParams } from 'next/navigation';
 import * as React from 'react';
 import { useMemo } from 'react';
 
+import { pushError, pushSuccess } from '../CustomToastifyContainer';
+import { SessionAttendees } from '../schedule/components/sessionCard/SessionAttendees';
 import Button from '@/components/button/Button';
 import { useAppSelector } from '@/libs/hooks';
 import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
-
-import { pushError, pushSuccess } from '../CustomToastifyContainer';
-import { SessionAttendees } from '../schedule/components/sessionCard/SessionAttendees';
 
 type Props = {
   attendees: {
@@ -40,7 +39,7 @@ export const PlaceRequestScreen = ({
   backStep,
 }: Props) => {
   const { huberId } = useParams();
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
   const [placeRequest] = useCreateNewReadingSessionMutation();
   const [note, setNote] = React.useState('');
   const [startedAt] = React.useState<any>(() => {
@@ -108,7 +107,7 @@ export const PlaceRequestScreen = ({
             <CalendarDots size={16} />
             Time
           </div>
-          <div className="grid grid-cols-3 items-center justify-items-center gap-x-2 text-base font-normal text-primary-50">
+          <div className="grid grid-cols-3 place-items-center gap-x-2 text-base font-normal text-primary-50">
             <span className="w-full text-left">{startTime}</span>
             <div className="flex w-full justify-end">
               <ArrowRight size={16} />
@@ -132,7 +131,8 @@ export const PlaceRequestScreen = ({
         <div className="flex flex-col gap-y-1">
           <div className="flex items-center gap-x-2 text-sm font-medium text-neutral-10">
             <Timer size={16} />
-            Duration{' '}
+            Duration
+            {' '}
             <span className="text-sm font-medium text-neutral-40">30 mins</span>
           </div>
         </div>
@@ -150,10 +150,10 @@ export const PlaceRequestScreen = ({
             className="h-[120px] w-full resize-none rounded-3xl border border-neutral-90 bg-neutral-98 p-3"
             placeholder="Enter meeting notes..."
             value={note}
-            onChange={(e) => setNote(e.target.value)}
+            onChange={e => setNote(e.target.value)}
           />
         </div>
-        <div className="grid grid-cols-2 items-center  justify-items-center gap-x-4">
+        <div className="grid grid-cols-2 place-items-center  gap-x-4">
           <Button variant="outline" className="w-full" onClick={backStep}>
             Back
           </Button>

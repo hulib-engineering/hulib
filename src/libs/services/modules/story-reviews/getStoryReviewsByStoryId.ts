@@ -7,7 +7,7 @@ const getStoryReviewsByStoryId = (
   build: EndpointBuilder<BaseQueryFn, string, string>,
 ) =>
   build.query<PaginatedResponse<StoryReview>, StoryReviewParams>({
-    query: (params) => ({
+    query: params => ({
       url: 'story-reviews',
       params: {
         page: params?.page || 1,
@@ -20,12 +20,12 @@ const getStoryReviewsByStoryId = (
     },
     forceRefetch: ({ currentArg, previousArg }) => {
       return (
-        currentArg?.page !== previousArg?.page ||
-        JSON.stringify(currentArg?.storyId) !==
-          JSON.stringify(previousArg?.storyId)
+        currentArg?.page !== previousArg?.page
+        || JSON.stringify(currentArg?.storyId)
+        !== JSON.stringify(previousArg?.storyId)
       );
     },
-    providesTags: (result) =>
+    providesTags: result =>
       result
         ? [
             ...result.data.map(({ id }) => ({

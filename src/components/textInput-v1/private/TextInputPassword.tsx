@@ -1,14 +1,13 @@
 import { Eye, EyeSlash } from '@phosphor-icons/react';
 import React, { forwardRef, useState } from 'react';
 
-import IconButton from '@/components/iconButton/IconButton';
-import { mergeClassnames } from '@/components/private/utils';
-
 import Container from './Container';
 import HintText from './HintText';
 import Input from './Input';
 import type TextInputProps from './types';
 import { getBorderRadius, getLabelSize } from './utils';
+import { mergeClassnames } from '@/components/private/utils';
+import IconButton from '@/components/iconButton/IconButton';
 
 const TextInputPassword = forwardRef<HTMLInputElement, TextInputProps>(
   (props, ref) => {
@@ -34,7 +33,7 @@ const TextInputPassword = forwardRef<HTMLInputElement, TextInputProps>(
     const [passwordShown, setPasswordShown] = useState(false);
 
     const togglePasswordVisibility = () => {
-      setPasswordShown((prevState) => !prevState);
+      setPasswordShown(prevState => !prevState);
     };
 
     const inputProps = {

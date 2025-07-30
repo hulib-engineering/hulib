@@ -1,5 +1,5 @@
 import localFont from 'next/font/local';
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/private/utils';

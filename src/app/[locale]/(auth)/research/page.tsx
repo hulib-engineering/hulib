@@ -28,8 +28,15 @@ const Page = () => {
 
     const getMessage = (key: any, count: number) => (
       <>
-        <span className="text-primary-50">{count}</span> {t(key)}{' '}
-        <span className="font-bold">&quot;{keyword}&quot;</span>
+        <span className="text-primary-50">{count}</span>
+        {' '}
+        {t(key)}
+        {' '}
+        <span className="font-bold">
+          &quot;
+          {keyword}
+          &quot;
+        </span>
       </>
     );
 

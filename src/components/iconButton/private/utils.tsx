@@ -23,7 +23,7 @@ const AnimationContent = ({
   variant,
 }: IconButtonSettingsProps) => (
   <span className="pointer-events-none relative block h-full">
-    <span className="absolute left-1/2 top-1/2 flex content-center justify-center -translate-x-1/2 -translate-y-1/2">
+    <span className="absolute left-1/2 top-1/2 flex place-content-center -translate-x-1/2 -translate-y-1/2">
       {animation === 'progress' && (
         <Loader color={getLoaderColor(variant)} size={getLoaderSize(size)} />
       )}
@@ -92,8 +92,8 @@ type Props = {
 };
 
 const getAriaLabel = ({ ariaLabel, animation }: Props): string | undefined =>
-  ariaLabel ||
-  (animation === 'error'
+  ariaLabel
+  || (animation === 'error'
     ? 'Error'
     : animation === 'progress' || animation === 'success'
       ? undefined

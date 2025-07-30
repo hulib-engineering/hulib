@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { NextIntlClientProvider } from 'next-intl';
 
+import { BaseTemplate } from './BaseTemplate';
 import StoreProvider from '@/app/StoreProvider';
 import messages from '@/locales/en.json';
-
-import { BaseTemplate } from './BaseTemplate';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
 const meta = {
@@ -17,7 +16,7 @@ const meta = {
     nextjs: { appDirectory: true },
   },
   decorators: [
-    (Story) => (
+    Story => (
       <NextIntlClientProvider locale="en" messages={messages}>
         <StoreProvider>
           <Story />

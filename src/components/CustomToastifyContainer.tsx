@@ -1,5 +1,5 @@
 import type { ToastProps } from 'node_modules/react-toastify/dist/types';
-import { Bounce, toast, ToastContainer } from 'react-toastify';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 import { mergeClassnames } from '@/components/private/utils';
 

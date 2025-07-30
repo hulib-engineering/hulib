@@ -6,8 +6,12 @@ export function paginateText(
   lineHeight: number,
   charMaxWidth?: number,
 ) {
-  if (!longText || longText.length === 0) return [];
-  if (containerWidth <= 0 || containerHeight <= 0) return [];
+  if (!longText || longText.length === 0) {
+    return [];
+  }
+  if (containerWidth <= 0 || containerHeight <= 0) {
+    return [];
+  }
 
   const pages = [];
   const charWidth = Math.floor(charMaxWidth ?? containerWidth);
@@ -28,7 +32,9 @@ export function paginateText(
     iterationCount += 1;
 
     const remainingText = longText.slice(currentIndex);
-    if (remainingText.length === 0) break;
+    if (remainingText.length === 0) {
+      break;
+    }
 
     const maxChars = Math.min(maxCharsPerPage, remainingText.length);
     const pageText = remainingText.slice(0, maxChars);

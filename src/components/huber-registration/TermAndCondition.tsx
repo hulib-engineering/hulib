@@ -8,10 +8,10 @@ import {
   unorderedMessageList,
 } from '@/utils/i18NRichTextUtils';
 
-interface SectionProps {
+type SectionProps = {
   title?: string;
   children: React.ReactNode;
-}
+};
 
 const Section: React.FC<SectionProps> = ({ title, children }) => (
   <div>
@@ -20,10 +20,10 @@ const Section: React.FC<SectionProps> = ({ title, children }) => (
   </div>
 );
 
-interface SubSectionProps {
+type SubSectionProps = {
   title: string;
   children: React.ReactNode;
-}
+};
 
 const SubSection: React.FC<SubSectionProps> = ({ title, children }) => (
   <div>
@@ -36,7 +36,7 @@ const TermAndCondition = () => {
   const t = useTranslations('Index');
 
   return (
-    <div className="flex h-[10rem] flex-col overflow-auto text-sm leading-5 text-neutral-40">
+    <div className="flex h-40 flex-col overflow-auto text-sm leading-5 text-neutral-40">
       <Section>
         {t.rich('community_guidelines_sections.index_0.content', {
           br: newLineMessage(),

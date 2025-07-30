@@ -7,23 +7,23 @@ import { mergeClassnames } from '@/components/private/utils';
 
 type ITestimonialItemCardProps =
   | {
-      avatarUrl: string;
-      content: string;
-      name: string;
-      role: string;
-      className?: string;
-      isPopup: true;
-      onClose: () => void;
-    }
+    avatarUrl: string;
+    content: string;
+    name: string;
+    role: string;
+    className?: string;
+    isPopup: true;
+    onClose: () => void;
+  }
   | {
-      avatarUrl: string;
-      content: string;
-      name: string;
-      role: string;
-      className?: string;
-      isPopup?: false;
-      onClick: () => void;
-    };
+    avatarUrl: string;
+    content: string;
+    name: string;
+    role: string;
+    className?: string;
+    isPopup?: false;
+    onClick: () => void;
+  };
 
 const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
   const currentSlide = useSwiperSlide();
@@ -44,7 +44,7 @@ const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
               src={props.avatarUrl}
               width={56} // cus 3.5rem * 16 = 56 px
               height={56}
-              className="h-14 w-14 rounded-full object-none object-center"
+              className="size-14 rounded-full object-none object-center"
               loading="lazy"
             />
             <div className="flex flex-col items-start text-xl">
@@ -89,7 +89,7 @@ const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
             src={props.avatarUrl}
             width={56} // cus 3.5rem * 16 = 56 px
             height={56}
-            className="h-14 w-14 rounded-full object-cover object-center"
+            className="size-14 rounded-full object-cover object-center"
             loading="lazy"
           />
           <div className="flex flex-col items-start text-xl">

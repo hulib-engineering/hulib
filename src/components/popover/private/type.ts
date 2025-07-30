@@ -22,18 +22,17 @@ type Placement =
   | 'right'
   | 'left';
 
-interface PopoverRootProps
-  extends Omit<
-    DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-    'children'
-  > {
+type PopoverRootProps = {
   position?: Placement;
   autoPositionDisable?: boolean;
   className?: string;
   children?:
     | ReactNode
     | ((data: { open?: boolean; close?: () => void }) => ReactNode);
-}
+} & Omit<
+  DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+  'children'
+>;
 
 type CallableChildren = (data: {
   open: boolean;
@@ -57,17 +56,16 @@ type PopoverState = {
   items?: string[];
 };
 
-interface PanelProps
-  extends Omit<
-    DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-    'children'
-  > {
+type PanelProps = {
   className?: string;
   isStatic?: boolean;
   children?:
     | ReactNode
     | ((data: { open?: boolean; close: () => void }) => ReactNode);
-}
+} & Omit<
+  DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+  'children'
+>;
 
 type GroupProps = {
   className?: string;

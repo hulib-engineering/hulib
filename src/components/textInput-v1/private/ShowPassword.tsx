@@ -11,7 +11,7 @@ const ShowPassword = ({ children, onClick }: Props) => (
   <div
     role="alert"
     onClick={onClick}
-    className="absolute end-4 top-1/2 z-[3] mt-[-0.75rem] cursor-pointer text-sm leading-6 text-neutral-40 underline"
+    className="absolute end-4 top-1/2 z-[3] -mt-3 cursor-pointer text-sm leading-6 text-neutral-40 underline"
   >
     {children}
   </div>

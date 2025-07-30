@@ -5,15 +5,14 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import IconButtonEdit from '../IconButtonEdit';
+import CustomSelect from './CustomSelect';
 import Button from '@/components/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import Form from '@/components/form/Form';
 import TextInput from '@/components/textInput-v1/TextInput';
 import type { User } from '@/features/users/types';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
-
-import IconButtonEdit from '../IconButtonEdit';
-import CustomSelect from './CustomSelect';
 
 type Props = {
   data: User | undefined;
@@ -43,8 +42,10 @@ const WorkAndEducationSection = ({ data }: Props) => {
 
   // Helper function to convert numeric month to month name
   const numberToMonth = (monthNumber: string | undefined) => {
-    if (!monthNumber) return months[0];
-    const monthIndex = parseInt(monthNumber, 10) - 1;
+    if (!monthNumber) {
+      return months[0];
+    }
+    const monthIndex = Number.parseInt(monthNumber, 10) - 1;
     return months[monthIndex] || months[0];
   };
 
@@ -125,147 +126,151 @@ const WorkAndEducationSection = ({ data }: Props) => {
           <IconButtonEdit onClick={() => setEditMode(true)} />
         </div>
 
-        {!editMode ? (
-          <div className="mb-4">
-            <div className="flex items-baseline">
-              <h3 className="text-neutral-20">{data?.education}</h3>
-            </div>
-            <p className="text-sm text-gray-600">
-              {`${formValues?.educationStart?.fromMonth} ${
-                formValues?.educationStart?.fromYear || ''
-              }`}{' '}
-              -{' '}
-              {`${formValues?.educationEnd?.toMonth} ${
-                formValues?.educationEnd?.toYear || ''
-              }`}
-            </p>
-          </div>
-        ) : (
-          <Form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
-            <Form.Item>
-              <TextInput
-                id="education"
-                type="text"
-                inputSize="sm"
-                label=""
-                placeholder="Enter your education"
-                {...methods.register('education')}
-              />
-            </Form.Item>
+        {!editMode
+          ? (
+              <div className="mb-4">
+                <div className="flex items-baseline">
+                  <h3 className="text-neutral-20">{data?.education}</h3>
+                </div>
+                <p className="text-sm text-gray-600">
+                  {`${formValues?.educationStart?.fromMonth} ${
+                    formValues?.educationStart?.fromYear || ''
+                  }`}
+                  {' '}
+                  -
+                  {' '}
+                  {`${formValues?.educationEnd?.toMonth} ${
+                    formValues?.educationEnd?.toYear || ''
+                  }`}
+                </p>
+              </div>
+            )
+          : (
+              <Form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
+                <Form.Item>
+                  <TextInput
+                    id="education"
+                    type="text"
+                    inputSize="sm"
+                    label=""
+                    placeholder="Enter your education"
+                    {...methods.register('education')}
+                  />
+                </Form.Item>
 
-            <Stack
-              direction={{ xs: 'column', sm: 'row' }}
-              spacing={1}
-              alignItems={{ xs: 'flex-start', sm: 'center' }}
-              sx={{
-                '& > span': {
-                  fontSize: '16px',
-                  minWidth: { xs: '100%', sm: 'auto' },
-                  mb: { xs: 1, sm: 0 },
-                },
-              }}
-            >
-              <span>From</span>
-              <Stack
-                direction="row"
-                spacing={1}
-                alignItems="center"
-                sx={{ width: { xs: '100%', sm: 'auto' } }}
-              >
-                <Controller
-                  name="educationStart.fromMonth"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <CustomSelect
-                      name="fromMonth"
-                      value={value}
-                      onChange={(e) => onChange(e.target.value)}
-                      options={months}
-                    />
-                  )}
-                />
-
-                <Controller
-                  name="educationStart.fromYear"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <CustomSelect
-                      name="fromYear"
-                      value={value}
-                      onChange={(e) => onChange(e.target.value)}
-                      options={years}
-                    />
-                  )}
-                />
-              </Stack>
-
-              <span>to</span>
-              <Stack
-                direction="row"
-                spacing={1}
-                alignItems="center"
-                sx={{ width: { xs: '100%', sm: 'auto' } }}
-              >
-                <Controller
-                  name="educationEnd.toMonth"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <CustomSelect
-                      name="toMonth"
-                      value={value}
-                      onChange={(e) => onChange(e.target.value)}
-                      options={months}
-                    />
-                  )}
-                />
-
-                <Controller
-                  name="educationEnd.toYear"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <CustomSelect
-                      name="toYear"
-                      value={value}
-                      onChange={(e) => onChange(e.target.value)}
-                      options={years}
-                    />
-                  )}
-                />
-              </Stack>
-            </Stack>
-
-            <Divider />
-
-            <div className="flex flex-row justify-end gap-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={isSubmitting}
-                onClick={() => {
-                  methods.reset({
-                    education: data?.education || '',
-                    educationStart: {
-                      fromMonth:
-                        data?.educationStart?.split('-')[1] || months[0],
-                      fromYear: data?.educationStart?.split('-')[0] || years[0],
+                <Stack
+                  direction={{ xs: 'column', sm: 'row' }}
+                  spacing={1}
+                  alignItems={{ xs: 'flex-start', sm: 'center' }}
+                  sx={{
+                    '& > span': {
+                      fontSize: '16px',
+                      minWidth: { xs: '100%', sm: 'auto' },
+                      mb: { xs: 1, sm: 0 },
                     },
-                  });
-                  setEditMode(false);
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="primary"
-                type="submit"
-                size="sm"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Saving...' : 'Save'}
-              </Button>
-            </div>
-          </Form>
-        )}
+                  }}
+                >
+                  <span>From</span>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems="center"
+                    sx={{ width: { xs: '100%', sm: 'auto' } }}
+                  >
+                    <Controller
+                      name="educationStart.fromMonth"
+                      control={control}
+                      render={({ field: { onChange, value } }) => (
+                        <CustomSelect
+                          name="fromMonth"
+                          value={value}
+                          onChange={e => onChange(e.target.value)}
+                          options={months}
+                        />
+                      )}
+                    />
+
+                    <Controller
+                      name="educationStart.fromYear"
+                      control={control}
+                      render={({ field: { onChange, value } }) => (
+                        <CustomSelect
+                          name="fromYear"
+                          value={value}
+                          onChange={e => onChange(e.target.value)}
+                          options={years}
+                        />
+                      )}
+                    />
+                  </Stack>
+
+                  <span>to</span>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems="center"
+                    sx={{ width: { xs: '100%', sm: 'auto' } }}
+                  >
+                    <Controller
+                      name="educationEnd.toMonth"
+                      control={control}
+                      render={({ field: { onChange, value } }) => (
+                        <CustomSelect
+                          name="toMonth"
+                          value={value}
+                          onChange={e => onChange(e.target.value)}
+                          options={months}
+                        />
+                      )}
+                    />
+
+                    <Controller
+                      name="educationEnd.toYear"
+                      control={control}
+                      render={({ field: { onChange, value } }) => (
+                        <CustomSelect
+                          name="toYear"
+                          value={value}
+                          onChange={e => onChange(e.target.value)}
+                          options={years}
+                        />
+                      )}
+                    />
+                  </Stack>
+                </Stack>
+
+                <Divider />
+
+                <div className="flex flex-row justify-end gap-x-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={isSubmitting}
+                    onClick={() => {
+                      methods.reset({
+                        education: data?.education || '',
+                        educationStart: {
+                          fromMonth:
+                        data?.educationStart?.split('-')[1] || months[0],
+                          fromYear: data?.educationStart?.split('-')[0] || years[0],
+                        },
+                      });
+                      setEditMode(false);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    size="sm"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Saving...' : 'Save'}
+                  </Button>
+                </div>
+              </Form>
+            )}
       </div>
     </div>
   );

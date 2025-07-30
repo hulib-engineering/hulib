@@ -235,7 +235,7 @@ const Step2Form = ({
             <VerifiedPhoneNumberInput
               value=""
               // @ts-ignore
-              onChange={(value) => setValue('parentPhoneNumber', value)}
+              onChange={value => setValue('parentPhoneNumber', value)}
             />
           </Form.Item>
         )}

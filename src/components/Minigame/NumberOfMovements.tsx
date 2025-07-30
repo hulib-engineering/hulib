@@ -6,7 +6,7 @@ import { useAppSelector } from '@/libs/hooks';
 
 const NumberOfMovements = () => {
   const numberOfAvailableMovements = useAppSelector(
-    (state) => state.minigame.numOfAvailableMovements,
+    state => state.minigame.numOfAvailableMovements,
   );
 
   return (

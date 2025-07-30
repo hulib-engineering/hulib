@@ -1,20 +1,17 @@
 'use client';
 
-/* eslint-disable prettier/prettier */
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as z from 'zod';
 
+import AvailableSchedule from '../common/AvailableSchedule';
+import { pushError, pushSuccess } from '../CustomToastifyContainer';
 import Button from '@/components/button/Button';
 import HeadSlots from '@/components/common/HeadSlots';
 import { useAppSelector } from '@/libs/hooks';
 import { useCreateTimeSlotsMutation } from '@/libs/services/modules/time-slots';
-
-import AvailableSchedule from '../common/AvailableSchedule';
-import { pushError, pushSuccess } from '../CustomToastifyContainer';
 
 const Step2 = ({ next }: { next: () => void }) => {
   const t = useTranslations('HumanBookRegister.Step2');
@@ -44,21 +41,21 @@ const Step2 = ({ next }: { next: () => void }) => {
       timeSlots: [],
     },
   });
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
   const [currentDay, setCurrentDay] = useState(0);
   const [createTimeSlots, { isLoading }] = useCreateTimeSlotsMutation();
 
   const handleTimeSelect = (time: string, selectedDay: number) => {
     const currentTimeSlots = watch('timeSlots');
     const existingSlot = currentTimeSlots.find(
-      (slot) => slot.dayOfWeek === selectedDay && slot.startTime === time,
+      slot => slot.dayOfWeek === selectedDay && slot.startTime === time,
     );
 
     if (existingSlot) {
       setValue(
         'timeSlots',
         currentTimeSlots.filter(
-          (slot) =>
+          slot =>
             !(slot.dayOfWeek === selectedDay && slot.startTime === time),
         ),
       );
@@ -130,7 +127,7 @@ const Step2 = ({ next }: { next: () => void }) => {
               variant="outline"
               className="w-[180px] rounded-full border-neutral-80 px-12 py-2 text-primary-50"
               disabled={currentDay > 5}
-              onClick={() => setCurrentDay((prev) => prev + 1)}
+              onClick={() => setCurrentDay(prev => prev + 1)}
             >
               Confirm
             </Button>
@@ -141,15 +138,15 @@ const Step2 = ({ next }: { next: () => void }) => {
       <div className="mt-8 flex justify-between gap-2">
         <Button
           variant="outline"
-          onClick={() => setCurrentDay((prev) => prev - 1)}
+          onClick={() => setCurrentDay(prev => prev - 1)}
           disabled={currentDay === 0}
-          className={`w-1/2 rounded-full px-12 py-2 text-primary-50 ${currentDay===0 && 'border bg-[#E3E4E5] text-neutral-70'}`}
+          className={`w-1/2 rounded-full px-12 py-2 text-primary-50 ${currentDay === 0 && 'border bg-[#E3E4E5] text-neutral-70'}`}
         >
           Back
         </Button>
         <Button
           type="submit"
-          className={`w-1/2 rounded-full bg-primary-50 px-12 py-2 text-white ${currentDay!== 6 && 'border bg-[#E3E4E5] text-neutral-70'}`}
+          className={`w-1/2 rounded-full bg-primary-50 px-12 py-2 text-white ${currentDay !== 6 && 'border bg-[#E3E4E5] text-neutral-70'}`}
           disabled={currentDay !== 6 || isLoading}
           animation={isLoading ? 'progress' : undefined}
         >

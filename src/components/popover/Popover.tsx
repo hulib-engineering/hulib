@@ -22,7 +22,7 @@ const PopoverRoot = ({
   const [popperEl, setPopperEl] = useState<HTMLElement | null>();
   const [arrowEl, setArrowEl] = useState<HTMLElement | null>(null);
   const { items, register } = useRegisterChild();
-  const isArrow = items?.find((name) => name === 'Arrow');
+  const isArrow = items?.find(name => name === 'Arrow');
   const offset = isArrow ? 16 : 8;
 
   const defaultModifiers = [
@@ -69,22 +69,20 @@ const PopoverRoot = ({
     [states, items, register],
   );
 
-  const childArray =
-    typeof children !== 'function' ? Children.toArray(children) : [];
-  const callableChildren =
-    typeof children === 'function' && (children as CallableChildren);
+  const childArray
+    = typeof children !== 'function' ? Children.toArray(children) : [];
+  const callableChildren
+    = typeof children === 'function' && (children as CallableChildren);
 
   return (
     <PopoverContext.Provider value={values}>
       <HeadlessPopover className={mergeClassnames('relative', className)}>
         {({ open, close }) =>
           typeof children === 'function' ? (
-            // eslint-disable-next-line react/jsx-no-useless-fragment
             <>{callableChildren ? callableChildren({ open, close }) : null}</>
           ) : (
-            <>{childArray.map((ch) => ch)}</>
-          )
-        }
+            <>{childArray.map(ch => ch)}</>
+          )}
       </HeadlessPopover>
     </PopoverContext.Provider>
   );
@@ -112,14 +110,14 @@ const Trigger = ({
 };
 
 const Panel = ({ children, className, isStatic }: PanelProps) => {
-  const { popper, items: registerChildArray } =
-    usePopoverContext('Popover.Trigger');
+  const { popper, items: registerChildArray }
+    = usePopoverContext('Popover.Trigger');
 
-  const isArrow = registerChildArray?.find((name) => name === 'Arrow');
-  const childArray =
-    typeof children !== 'function' ? Children.toArray(children) : [];
-  const callableChildren =
-    typeof children === 'function' && (children as CallableChildren);
+  const isArrow = registerChildArray?.find(name => name === 'Arrow');
+  const childArray
+    = typeof children !== 'function' ? Children.toArray(children) : [];
+  const callableChildren
+    = typeof children === 'function' && (children as CallableChildren);
 
   return (
     <HeadlessPopover.Panel
@@ -136,12 +134,10 @@ const Panel = ({ children, className, isStatic }: PanelProps) => {
     >
       {({ open, close }) =>
         typeof children === 'function' ? (
-          // eslint-disable-next-line react/jsx-no-useless-fragment
           <>{callableChildren ? callableChildren({ open, close }) : null}</>
         ) : (
-          <>{childArray.map((ch) => ch)}</>
-        )
-      }
+          <>{childArray.map(ch => ch)}</>
+        )}
     </HeadlessPopover.Panel>
   );
 };
@@ -161,10 +157,10 @@ const Arrow = ({ className }: { className?: string }) => {
   return (
     <div
       className={mergeClassnames(
-        "[&[data-placement='top']]:-bottom-[5px] [&[data-placement='top-start']]:-bottom-[5px] [&[data-placement='top-end']]:-bottom-[5px]",
-        "[&[data-placement='bottom']]:-top-[5px] [&[data-placement='bottom-start']]:-top-[5px] [&[data-placement='bottom-end']]:-top-[5px]",
-        "[&[data-placement='right']]:-left-[5px] [&[data-placement='right-start']]:-left-[5px] [&[data-placement='right-end']]:-left-[5px]",
-        "[&[data-placement='left']]:-right-[5px] [&[data-placement='left-start']]:-right-[5px] [&[data-placement='left-end']]:-right-[5px]",
+        '[&[data-placement=\'top\']]:-bottom-[5px] [&[data-placement=\'top-start\']]:-bottom-[5px] [&[data-placement=\'top-end\']]:-bottom-[5px]',
+        '[&[data-placement=\'bottom\']]:-top-[5px] [&[data-placement=\'bottom-start\']]:-top-[5px] [&[data-placement=\'bottom-end\']]:-top-[5px]',
+        '[&[data-placement=\'right\']]:-left-[5px] [&[data-placement=\'right-start\']]:-left-[5px] [&[data-placement=\'right-end\']]:-left-[5px]',
+        '[&[data-placement=\'left\']]:-right-[5px] [&[data-placement=\'left-start\']]:-right-[5px] [&[data-placement=\'left-end\']]:-right-[5px]',
         className,
       )}
       ref={popper?.setArrow}

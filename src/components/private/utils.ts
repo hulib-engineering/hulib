@@ -9,7 +9,7 @@ const mergeClassnames = extendTailwindMerge({
 });
 
 const useRegisterChild = () => {
-  const items = useAppSelector((state) => state.menuItem.items);
+  const items = useAppSelector(state => state.menuItem.items);
 
   const dispatch = useAppDispatch();
 

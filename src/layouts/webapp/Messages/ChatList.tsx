@@ -98,10 +98,12 @@ export default function ChatList() {
     const normalizeText = (text: string) =>
       text
         .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[\u0300-\u036F]/g, '')
         .toLowerCase();
 
-    if (!debouncedSearch) return conversations;
+    if (!debouncedSearch) {
+      return conversations;
+    }
 
     const fuse = new Fuse(conversations, {
       keys: ['participant.fullName'],
@@ -112,11 +114,13 @@ export default function ChatList() {
       getFn: (obj: Contact) => normalizeText(obj.participant.fullName),
     });
 
-    return fuse.search(normalizeText(debouncedSearch)).map((res) => res.item);
+    return fuse.search(normalizeText(debouncedSearch)).map(res => res.item);
   }, [qString, conversations]);
 
   useEffect(() => {
-    if (conversations.length === 0) return;
+    if (conversations.length === 0) {
+      return;
+    }
     const latestConversation = conversations[0];
 
     dispatch(
@@ -136,7 +140,7 @@ export default function ChatList() {
           type="text"
           placeholder="Search for name"
           icon={<MagnifyingGlass size={24} />}
-          onChange={(event) => setQString(event.target.value)}
+          onChange={event => setQString(event.target.value)}
         />
       </div>
       <div className="flex flex-col overflow-y-auto">
@@ -155,8 +159,7 @@ export default function ChatList() {
                   name: contact.participant.fullName,
                   avatarUrl: contact.participant.photo?.path,
                 }),
-              )
-            }
+              )}
           />
         ))}
       </div>

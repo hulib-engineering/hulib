@@ -12,14 +12,14 @@ const ShortDescription = () => {
   const router = useRouter();
   return (
     <>
-      <div className="relative mt-8 h-full w-full">
+      <div className="relative mt-8 size-full">
         <Image
           src="/assets/images/short-description.png"
           alt="Short Description Banner"
           width={0}
           height={0}
           sizes="100vw"
-          className="hidden h-[12rem] w-full md:block md:h-full"
+          className="hidden h-48 w-full md:block md:h-full"
         />
 
         <Image
@@ -33,7 +33,7 @@ const ShortDescription = () => {
 
         <div className="absolute bottom-4 z-20 w-full px-[16px] md:bottom-12 md:pl-[32px]">
           <div className="flex flex-col items-start gap-2">
-            <h3 className="text-[28px] font-medium leading-[1.6rem] text-primary-10 md:text-[2.25rem] md:leading-[2.75rem]">
+            <h3 className="text-[28px] font-medium leading-[1.6rem] text-primary-10 md:text-4xl md:leading-[2.75rem]">
               {t('short_descriptions.title')}
             </h3>
             <Button

@@ -53,11 +53,11 @@ type JsonStructure = Array<{
   id: string;
 }>;
 
-interface FreeSearchActionProps extends Omit<ButtonProps & LinkProps, 'index'> {
+type FreeSearchActionProps = {
   index?: number;
   label?: string | ReactNode;
   className?: string;
-}
+} & Omit<ButtonProps & LinkProps, 'index'>;
 
 export type {
   ButtonProps,

@@ -78,14 +78,14 @@ const Rate = ({
             {/* Rating button with enhanced touch interaction */}
             <IconButton
               sx={{
-                mb: { xs: 0.5, sm: 0.75, md: 1 },
-                height: buttonSize,
-                width: buttonSize,
-                bgcolor: selectedRating === index ? '#0442BF' : 'transparent',
-                color: selectedRating === index ? 'white' : 'inherit',
-                border:
+                'mb': { xs: 0.5, sm: 0.75, md: 1 },
+                'height': buttonSize,
+                'width': buttonSize,
+                'bgcolor': selectedRating === index ? '#0442BF' : 'transparent',
+                'color': selectedRating === index ? 'white' : 'inherit',
+                'border':
                   selectedRating === index ? 'none' : '1px solid transparent',
-                transition: 'all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1)', // Apple's preferred easing
+                'transition': 'all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1)', // Apple's preferred easing
                 '&:hover': {
                   bgcolor:
                     selectedRating === index

@@ -1,16 +1,16 @@
 import { Box } from '@mui/material';
 import clsx from 'clsx';
 
-interface TimeSlot {
+type TimeSlot = {
   time: string;
   day: number;
-}
+};
 
-interface AvailableScheduleProps {
+type AvailableScheduleProps = {
   onSelectTime: (time: string, day: number) => void;
   selectedTimes: { startTime: string; dayOfWeek: number }[];
   currentDay: number;
-}
+};
 
 const timeSlots = {
   morning: [
