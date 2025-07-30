@@ -302,6 +302,7 @@ const Profile = () => {
                   avatarUrl
                   || '/assets/images/ava-placeholder.png'
                 }
+                unoptimized={!!avatarUrl}
               />
 
               <div className="absolute bottom-0 left-20 opacity-0 transition-opacity duration-200 group-hover:opacity-100 lg:left-28 ">
