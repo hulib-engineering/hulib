@@ -1,4 +1,4 @@
-export interface PaginatedResponse<T> {
+export type PaginatedResponse<T> = {
   data: T[];
   hasNextPage: boolean;
-}
+};

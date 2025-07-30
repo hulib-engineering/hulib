@@ -2,9 +2,8 @@ import { MagnifyingGlass } from '@phosphor-icons/react';
 import type { ComponentProps, HTMLAttributes, LegacyRef, Ref } from 'react';
 import React, { forwardRef, useContext } from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
-
 import { SearchContext } from '../utils/context';
+import { mergeClassnames } from '@/components/private/utils';
 
 const Wrapper = ({
   children,
@@ -45,8 +44,8 @@ const InnerInput = forwardRef(
     }: HTMLAttributes<HTMLInputElement> & { placeholder?: string },
     ref: Ref<HTMLInputElement>,
   ) => {
-    const { search, onChangeOpen, onChangeSearch, inputRef } =
-      useContext(SearchContext);
+    const { search, onChangeOpen, onChangeSearch, inputRef }
+      = useContext(SearchContext);
     const ariaLabelValue = props['aria-label'] ? props['aria-label'] : 'Search';
 
     return (

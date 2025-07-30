@@ -9,14 +9,14 @@ import { useForm } from 'react-hook-form';
 import PasswordChecklist from 'react-password-checklist';
 import type { z } from 'zod';
 
+import Link from 'next/link';
+import { pushError, pushSuccess } from '../CustomToastifyContainer';
 import Button from '@/components/button/Button';
 import ConfirmUpdatePopup from '@/components/confirmUpdatePopup/ConfirmUpdatePopup';
 import Form from '@/components/form/Form';
 import TextInput from '@/components/textInput/TextInput';
 import { useChangePasswordMutation } from '@/libs/services/modules/auth';
 import { ChangePasswordValidation } from '@/validations/ChangePasswordValidation';
-
-import { pushError, pushSuccess } from '../CustomToastifyContainer';
 
 const ChangePassword = () => {
   const t = useTranslations('Common');
@@ -100,7 +100,7 @@ const ChangePassword = () => {
               hintText={errors.confirmPassword?.message}
             />
           </Form.Item>
-          
+
           {/* Password Requirements Checklist */}
           {touchedFields.newPassword && (
             <div className="w-full">
@@ -131,12 +131,12 @@ const ChangePassword = () => {
               Change
             </Button>
           </Form.Item>
-          <a
-            className="cursor-pointer text-[1rem] font-medium leading-5 text-[#0442BF] underline"
+          <Link
+            className="cursor-pointer text-base font-medium leading-5 text-[#0442BF] underline"
             href="/auth/forgot-password"
           >
             Forgot Passwords?
-          </a>
+          </Link>
         </Form>
         <ConfirmUpdatePopup
           open={isOpen}

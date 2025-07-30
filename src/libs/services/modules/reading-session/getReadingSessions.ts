@@ -13,7 +13,7 @@ const getReadingSessions = (
       endedAt?: string;
     }
   >({
-    query: (params) => ({
+    query: params => ({
       url: 'reading-sessions',
       params: {
         upcoming: params?.upcoming || undefined,

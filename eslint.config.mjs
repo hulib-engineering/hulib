@@ -4,6 +4,7 @@ import jestDom from 'eslint-plugin-jest-dom';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import playwright from 'eslint-plugin-playwright';
 import tailwindcss from 'eslint-plugin-tailwindcss';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 export default antfu(
   {
@@ -43,7 +44,15 @@ export default antfu(
       ...nextPlugin.configs['core-web-vitals'].rules,
     },
   },
-
+  // --- React Hooks Rules ---
+  {
+    plugins: {
+      'react-hooks': reactHooks,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+    },
+  },
   // --- Tailwind CSS Rules ---
   {
     plugins: {
@@ -75,6 +84,7 @@ export default antfu(
     rules: {
       'antfu/no-top-level-await': 'off', // Allow top-level await
       'style/brace-style': ['error', '1tbs'], // Use the default brace style
+      'style/multiline-ternary': 'off',
       'ts/consistent-type-definitions': ['error', 'type'], // Use `type` instead of `interface`
       'react/prefer-destructuring-assignment': 'off', // Vscode doesn't support automatically destructuring, it's a pain to add a new variable
       'react/no-unstable-default-props': 'off',
@@ -90,6 +100,9 @@ export default antfu(
         },
       ],
       'no-console': 'off',
+      'no-restricted-globals': 'warn',
+      'no-alert': 'warn',
+      'ts/no-empty-object-type': 'off',
     },
   },
 );

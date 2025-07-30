@@ -10,12 +10,11 @@ import {
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 
-import type { User } from '@/features/users/types';
-import { Role, ROLE_NAME } from '@/types/common';
-
 import { ContactInformationSection } from '../ContactInformationSection';
 import OverviewSection from '../OverviewSection';
 import WorkAndEducationSection from '../WorkAndEducationSection';
+import { ROLE_NAME, Role } from '@/types/common';
+import type { User } from '@/features/users/types';
 
 type Props = {
   isLiber: boolean;
@@ -65,15 +64,15 @@ const AboutPanel = ({ isLiber, data, onInvalidate }: Props) => {
   ];
 
   return (
-    <div className="h-full w-full rounded-xl bg-white shadow-sm">
+    <div className="size-full rounded-xl bg-white shadow-sm">
       {/* Mobile View - Accordion Style */}
       <div className="flex w-full flex-col rounded-xl border-neutral-90  lg:hidden">
         <div className="p-5 text-base font-medium text-neutral-10">
           Giới thiệu
         </div>
         {sectionMenu
-          .filter((section) => section.isShow)
-          .map((section) => (
+          .filter(section => section.isShow)
+          .map(section => (
             <div key={section.type} className="border-t border-neutral-90">
               {/* Section Toggle Button */}
               <button
@@ -86,20 +85,21 @@ const AboutPanel = ({ isLiber, data, onInvalidate }: Props) => {
                 onClick={() =>
                   setActiveSection(
                     section.type === activeSection ? '' : section.type,
-                  )
-                }
+                  )}
               >
                 <div className="flex items-center gap-x-2">
-                  <span className="flex h-5 w-5 items-center justify-center">
+                  <span className="flex size-5 items-center justify-center">
                     {section.icon}
                   </span>
                   <span>{section.label}</span>
                 </div>
-                {activeSection === section.type ? (
-                  <CaretUp size={20} />
-                ) : (
-                  <CaretDown size={20} />
-                )}
+                {activeSection === section.type
+                  ? (
+                      <CaretUp size={20} />
+                    )
+                  : (
+                      <CaretDown size={20} />
+                    )}
               </button>
 
               {/* Section Content (shows when active) */}
@@ -118,7 +118,7 @@ const AboutPanel = ({ isLiber, data, onInvalidate }: Props) => {
           <div className="mb-4 text-base font-medium text-neutral-10">
             Giới thiệu
           </div>
-          {sectionMenu.map((section) => (
+          {sectionMenu.map(section => (
             <button
               type="button"
               key={section.type}
@@ -129,7 +129,7 @@ const AboutPanel = ({ isLiber, data, onInvalidate }: Props) => {
               }`}
               onClick={() => setActiveSection(section.type)}
             >
-              <span className="flex h-5 w-5 items-center justify-center">
+              <span className="flex size-5 items-center justify-center">
                 {section.icon}
               </span>
               <span>{section.label}</span>
@@ -138,7 +138,7 @@ const AboutPanel = ({ isLiber, data, onInvalidate }: Props) => {
         </div>
         <div className="w-4/6 flex-1 rounded-xl bg-white">
           {sectionMenu.map(
-            (section) =>
+            section =>
               section.type === activeSection && (
                 <div className="w-full p-5" key={section.type}>
                   {section.component}

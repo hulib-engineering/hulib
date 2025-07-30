@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-import type { ColorProps } from '@/components/private/types';
-
 import makeBorderRadius from '../private/makeBorderRadius';
+import type { ColorProps } from '@/components/private/types';
 
 type ContainerProps = {
   disabled?: boolean;

@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
-interface NoResultFoundProps {
+type NoResultFoundProps = {
   className?: string;
-}
+};
 
 export default function NoResultFound({ className = '' }: NoResultFoundProps) {
   const t = useTranslations('Research');
@@ -24,7 +24,10 @@ export default function NoResultFound({ className = '' }: NoResultFoundProps) {
       <h3 className="mb-3 text-xl font-semibold text-primary-10">
         {t('no_result.title')}
       </h3>
-      <p className="text-primaty-10 max-w-md"> {t('no_result.description')}</p>
+      <p className="text-primaty-10 max-w-md">
+        {' '}
+        {t('no_result.description')}
+      </p>
     </div>
   );
 }

@@ -15,11 +15,13 @@ const IconButtonEdit = ({
   disabled = false,
   isHidden = false,
 }: Props) => {
-  const user = useAppSelector((state) => state.auth.userInfo);
+  const user = useAppSelector(state => state.auth.userInfo);
   const isAdmin = user?.role?.id === 1;
   const searchParams = useSearchParams();
   const huberId = searchParams.get('huberId');
-  if (huberId || isHidden || isAdmin) return null;
+  if (huberId || isHidden || isAdmin) {
+    return null;
+  }
 
   return (
     <div className="rounded-full bg-primary-90 ">

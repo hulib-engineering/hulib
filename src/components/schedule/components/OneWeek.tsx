@@ -83,16 +83,16 @@ export default function OneWeek({
               : 'hover:bg-gray-100'
           } rounded p-1`}
         >
-          <CaretLeft className="h-5 w-5 text-gray-500" />
+          <CaretLeft className="size-5 text-gray-500" />
         </button>
 
         <span className="font-semibold">
           {isSameWeek(displayedWeek, currentWeek, { weekStartsOn: 0 })
             ? 'This week'
             : `${format(displayedWeek, 'MMM d')} - ${format(
-                addDays(displayedWeek, 6),
-                'MMM d, yyyy',
-              )}`}
+              addDays(displayedWeek, 6),
+              'MMM d, yyyy',
+            )}`}
         </span>
 
         <button
@@ -103,15 +103,15 @@ export default function OneWeek({
             !canGoNext() ? 'cursor-not-allowed opacity-50' : 'hover:bg-gray-100'
           } rounded p-1`}
         >
-          <CaretRight className="h-5 w-5 text-gray-500" />
+          <CaretRight className="size-5 text-gray-500" />
         </button>
       </div>
 
       <div className="grid grid-cols-7 gap-2 text-center">
         {getWeekDays().map((day, index) => {
           const isPastDate = isBefore(startOfDay(day), startOfDay(new Date()));
-          const isSelected =
-            selectedDate?.toDateString() === day.toDateString();
+          const isSelected
+            = selectedDate?.toDateString() === day.toDateString();
           const isTodayDate = isToday(day);
 
           return (
@@ -125,12 +125,12 @@ export default function OneWeek({
                 className={`flex h-10 w-full items-center justify-center rounded-md transition-all
                   ${isTodayDate ? todayClass : 'border-gray-300'}
                   ${
-                    !isPastDate && isSelected
-                      ? selectedClass
-                      : !isPastDate
-                        ? 'hover:bg-gray-200'
-                        : ''
-                  }`}
+            !isPastDate && isSelected
+              ? selectedClass
+              : !isPastDate
+                  ? 'hover:bg-gray-200'
+                  : ''
+            }`}
               >
                 {format(day, 'd')}
               </Button>

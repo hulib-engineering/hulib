@@ -15,7 +15,7 @@ Sentry.init({
   ignoreErrors: [
     // Workaround for React RSC and Suspense boundaries: https://github.com/amannn/next-intl/issues/614#issuecomment-1862508393
     // Can be removed once the change is integrated into Sentry SDK.
-    "This is not a real error! It's an implementation detail of `use`",
+    'This is not a real error! It\'s an implementation detail of `use`',
   ],
 
   // Adjust this value in production, or use tracesSampler for greater control

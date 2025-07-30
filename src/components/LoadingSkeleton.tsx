@@ -11,8 +11,8 @@ const LoadingSkeleton = () => (
       'after:animate-gradient-animation',
     )}
   >
-    <div className="relative h-full w-full">
-      <div className="h-12 w-12 rounded-full bg-neutral-80" />
+    <div className="relative size-full">
+      <div className="size-12 rounded-full bg-neutral-80" />
       <div className="absolute left-[58px] top-[11px] h-[10px] w-[100px] bg-neutral-80" />
       <div className="absolute left-[58px] top-[34px] h-[10px] w-[150px] bg-neutral-80" />
       <div className="absolute left-0 top-[57px] h-[10px] w-full bg-neutral-80" />

@@ -5,14 +5,14 @@ import Button from '@/components/button/Button';
 import { useUpdateUserStatusMutation } from '@/libs/services/modules/user';
 
 // Props for the modal component
-interface ModalBanningActionProps {
+type ModalBanningActionProps = {
   userId: string; // User ID to ban
   userImage?: string; // URL for the user's profile image
   userName?: string;
   userRole?: string;
   onConfirm?: (reason: string) => void;
   onCancel?: () => void;
-}
+};
 
 /**
  * ModalbanningAction
@@ -31,8 +31,8 @@ const ModalBanningAction: React.FC<ModalBanningActionProps> = ({
   const [reason, setReason] = useState('');
 
   // --- Mutation hook for updating user status (ban) ---
-  const [updateUserStatus, { isLoading, error }] =
-    useUpdateUserStatusMutation();
+  const [updateUserStatus, { isLoading, error }]
+    = useUpdateUserStatusMutation();
 
   // Handle confirm button click
   const handleConfirm = async () => {
@@ -43,7 +43,9 @@ const ModalBanningAction: React.FC<ModalBanningActionProps> = ({
         body: { status: 'inactive' },
       }).unwrap();
       // Optionally, call onConfirm with reason for extensibility
-      if (onConfirm) onConfirm(reason);
+      if (onConfirm) {
+        onConfirm(reason);
+      }
     } catch (e) {
       // Error is handled below in UI
     }
@@ -51,7 +53,9 @@ const ModalBanningAction: React.FC<ModalBanningActionProps> = ({
 
   // Handle cancel button click
   const handleCancel = () => {
-    if (onCancel) onCancel();
+    if (onCancel) {
+      onCancel();
+    }
   };
 
   return (
@@ -71,7 +75,7 @@ const ModalBanningAction: React.FC<ModalBanningActionProps> = ({
             alt={userName}
             width={112}
             height={112}
-            className="mb-3 h-28 w-28 rounded-2xl border-2 border-white object-cover shadow-md"
+            className="mb-3 size-28 rounded-2xl border-2 border-white object-cover shadow-md"
           />
           <div>
             <div
@@ -88,7 +92,7 @@ const ModalBanningAction: React.FC<ModalBanningActionProps> = ({
           className="mb-4 w-full resize-none rounded-xl border border-gray-200 bg-white p-4 text-gray-800 transition placeholder:text-gray-400 focus:border-red-50 focus:ring-2 focus:ring-red-200"
           placeholder="Reason for banning"
           value={reason}
-          onChange={(e) => setReason(e.target.value)}
+          onChange={e => setReason(e.target.value)}
           rows={4}
         />
         {/* Subtle banning text: muted red, centered, margin for separation */}

@@ -1,8 +1,6 @@
 import * as RadixTooltip from '@radix-ui/react-tooltip';
 import React, { useEffect, useMemo } from 'react';
 
-import { mergeClassnames, useRegisterChild } from '@/components/private/utils';
-
 import type {
   ArrowProps,
   ContentComponentProps,
@@ -10,11 +8,12 @@ import type {
   TriggerComponentProps,
 } from './private/types';
 import {
+  TooltipContext,
   getAlign,
   getSide,
-  TooltipContext,
   useTooltipContext,
 } from './private/utils';
+import { mergeClassnames, useRegisterChild } from '@/components/private/utils';
 
 const TooltipRoot = ({ children, ...rest }: RootContentProps) => (
   <RadixTooltip.Provider delayDuration={100}>
@@ -62,7 +61,7 @@ const Content = ({
 
   const { items, register } = useRegisterChild();
 
-  const isArrow = items?.find((name) => name === 'Arrow');
+  const isArrow = items?.find(name => name === 'Arrow');
 
   const value = useMemo(
     () => ({ ...states, ...items, register }),

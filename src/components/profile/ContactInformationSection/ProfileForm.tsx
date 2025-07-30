@@ -24,7 +24,7 @@ export const ProfileForm = ({
   const t = useTranslations('Common');
   const [updateProfile] = useUpdateProfileMutation();
 
-  const avatarId = useAppSelector((state) => state.auth.avatarId);
+  const avatarId = useAppSelector(state => state.auth.avatarId);
 
   const dispatch = useAppDispatch();
 

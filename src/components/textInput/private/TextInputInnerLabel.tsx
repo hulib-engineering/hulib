@@ -1,17 +1,16 @@
 import type { InputHTMLAttributes, ReactNode } from 'react';
 import React, { forwardRef } from 'react';
 
+import Container from '../styles/Container';
+import Inner from '../styles/Inner';
+import LabelInner from '../styles/LabelInner';
+import type { TextInputSizeType, TextInputTypes } from './types';
 import Hint from '@/components/Hint';
 import Input from '@/components/input/Input';
 import type { ColorProps } from '@/components/private/types';
 import { Size } from '@/components/private/types';
 
-import Container from '../styles/Container';
-import Inner from '../styles/Inner';
-import LabelInner from '../styles/LabelInner';
-import type { TextInputSizeType, TextInputTypes } from './types';
-
-interface TextInputMediumProps extends InputHTMLAttributes<HTMLInputElement> {
+type TextInputMediumProps = {
   id?: string;
   inputSize?: TextInputSizeType | undefined;
   label?: ReactNode;
@@ -28,7 +27,7 @@ interface TextInputMediumProps extends InputHTMLAttributes<HTMLInputElement> {
   isSharpBottomSide?: boolean;
   isTopBottomBorderHidden?: boolean;
   isSideBorderHidden?: boolean;
-}
+} & InputHTMLAttributes<HTMLInputElement>;
 const TextInputInnerLabel = forwardRef<HTMLInputElement, TextInputMediumProps>(
   (props, ref) => {
     const {

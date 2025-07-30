@@ -1,20 +1,23 @@
 import { DotsThreeVertical, Hammer, Warning } from '@phosphor-icons/react';
 import { useState } from 'react';
 
+import ModalBanningAction from '../ModalBanningAction';
+import ModalWarningAction from '../ModalWarningAction';
 import { pushSuccess } from '@/components/CustomToastifyContainer';
 import Dropdown from '@/components/dropdown/Dropdown';
 import MenuItem from '@/components/menuItem/MenuItem';
 import type { User } from '@/features/users/types';
 
-import ModalBanningAction from '../ModalBanningAction';
-import ModalWarningAction from '../ModalWarningAction';
-
 const ProfileActionDropdown = ({ data }: { data: User }) => {
   const [modal, setModal] = useState<null | 'warn' | 'ban'>(null);
   // Handler for dropdown selection
-  const handleDropdownChange = (value: string) => {
-    if (value === 'warn') setModal('warn');
-    if (value === 'ban') setModal('ban');
+  const handleDropdownChange = (value: unknown) => {
+    if (value === 'warn') {
+      setModal('warn');
+    }
+    if (value === 'ban') {
+      setModal('ban');
+    }
   };
 
   // Handler for closing modals

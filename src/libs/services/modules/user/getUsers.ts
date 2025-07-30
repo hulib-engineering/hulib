@@ -1,13 +1,12 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
-import type { User } from '@/features/users/types';
-
 import type { PaginatedResponse } from '../../type';
 import type { GetUsersParams } from './userType';
+import type { User } from '@/features/users/types';
 
 const getUsers = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query<PaginatedResponse<User>, GetUsersParams>({
-    query: (params) => ({
+    query: params => ({
       url: 'users',
       params: {
         page: params?.page || 1,
@@ -31,11 +30,11 @@ const getUsers = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
     },
     forceRefetch: ({ currentArg, previousArg }) => {
       return (
-        currentArg?.page !== previousArg?.page ||
-        currentArg?.filter !== previousArg?.filter
+        currentArg?.page !== previousArg?.page
+        || currentArg?.filter !== previousArg?.filter
       );
     },
-    providesTags: (result) =>
+    providesTags: result =>
       result
         ? [
             ...result.data.map(({ id }) => ({ type: 'Users' as const, id })),

@@ -1,7 +1,5 @@
 'use client';
 
-/* eslint-disable no-unsafe-optional-chaining */
-
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -29,7 +27,7 @@ const ExploreStory = ({ topicIds }: ExploreStoryProps) => {
   });
 
   const onClickSeeAll = () => {
-    setIsExpandList((prev) => !prev);
+    setIsExpandList(prev => !prev);
   };
 
   React.useEffect(() => {
@@ -41,7 +39,7 @@ const ExploreStory = ({ topicIds }: ExploreStoryProps) => {
   }, [isExpandList]);
 
   return (
-    <div className="mx-auto h-full w-full rounded-lg">
+    <div className="mx-auto size-full rounded-lg">
       <StoriesList
         title={t('title')}
         description={t('description')}

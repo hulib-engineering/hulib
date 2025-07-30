@@ -15,7 +15,7 @@ const slice = createSlice({
       }
     },
     unregisterChild: (state, action) => {
-      state.items?.filter((item) => item !== action.payload.child);
+      state.items?.filter(item => item !== action.payload.child);
     },
   },
 });

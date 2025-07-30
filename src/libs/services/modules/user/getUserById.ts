@@ -4,7 +4,7 @@ import type { User } from '@/features/users/types';
 
 const getUsersById = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query<User, string>({
-    query: (id) => ({
+    query: id => ({
       url: `users/${id}`,
     }),
   });

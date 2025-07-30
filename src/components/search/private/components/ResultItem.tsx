@@ -2,10 +2,9 @@ import Link from 'next/link';
 import type { MouseEvent } from 'react';
 import React, { useContext } from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
-
 import type { ButtonProps, LinkProps } from '../types';
 import { OpenContext, SelectContext } from '../utils/context';
+import { mergeClassnames } from '@/components/private/utils';
 
 const commonClasses = 'search-list-item w-full';
 

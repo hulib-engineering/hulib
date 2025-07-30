@@ -5,18 +5,17 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useCallback } from 'react';
 
+import Button from '../button/Button';
+import { mergeClassnames } from '../private/utils';
+import StoriesSkeleton from '../stories/StoriesSkeleton';
 import { FlipBook } from '@/components/flipBook/FlipBook';
 import NoResultFound from '@/components/research/NoResultFound';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
 
-import Button from '../button/Button';
-import { mergeClassnames } from '../private/utils';
-import StoriesSkeleton from '../stories/StoriesSkeleton';
-
-interface NewestBooksProps {
+type NewestBooksProps = {
   stories: Story[];
   loadingStories: boolean;
-}
+};
 
 const NewestBooks: React.FC<NewestBooksProps> = ({
   stories,
@@ -72,15 +71,17 @@ const NewestBooks: React.FC<NewestBooksProps> = ({
       v < 0.5 ? 2 * v * v : 1 - (-2 * v + 2) ** 2 / 2;
 
     if (element) {
-      const targetPosition =
-        element.getBoundingClientRect().top + window.scrollY;
+      const targetPosition
+        = element.getBoundingClientRect().top + window.scrollY;
       const startPosition = window.scrollY;
       const distance = targetPosition - startPosition;
       const duration = 800;
       let startTime: number | null = null;
 
       const animateScroll = (currentTime: number) => {
-        if (startTime === null) startTime = currentTime;
+        if (startTime === null) {
+          startTime = currentTime;
+        }
         const timeElapsed = currentTime - startTime;
         const progress = Math.min(timeElapsed / duration, 1);
 
@@ -103,22 +104,26 @@ const NewestBooks: React.FC<NewestBooksProps> = ({
       >
         {t('stories.title')}
       </h3>
-      {loadingStories ? (
-        <StoriesSkeleton />
-      ) : stories?.length > 0 ? (
-        <div className="relative mt-4 flex flex-wrap items-center justify-center gap-8 xl:justify-start 2xl:gap-12">
-          {stories.map((item) => (
-            <FlipBook
-              key={item.id}
-              data={item}
-              renderActions={() => renderActions(item.id)}
-              refetch={() => {}}
-            />
-          ))}
-        </div>
-      ) : (
-        <NoResultFound className="mt-4" />
-      )}
+      {loadingStories
+        ? (
+            <StoriesSkeleton />
+          )
+        : stories?.length > 0
+          ? (
+              <div className="relative mt-4 flex flex-wrap items-center justify-center gap-8 xl:justify-start 2xl:gap-12">
+                {stories.map(item => (
+                  <FlipBook
+                    key={item.id}
+                    data={item}
+                    renderActions={() => renderActions(item.id)}
+                    refetch={() => {}}
+                  />
+                ))}
+              </div>
+            )
+          : (
+              <NoResultFound className="mt-4" />
+            )}
     </div>
   );
 };

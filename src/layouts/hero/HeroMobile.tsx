@@ -5,12 +5,11 @@ import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 
+import type { HeroProps } from '.';
 import Button from '@/components/button/Button';
 import { HighlightContentBox } from '@/components/HighlightContentBox';
 import { mergeClassnames } from '@/components/private/utils';
 import { customMessage } from '@/utils/i18NRichTextUtils';
-
-import type { HeroProps } from '.';
 
 const HeroMobile = (props: HeroProps) => {
   const {
@@ -183,7 +182,7 @@ const HeroMobile = (props: HeroProps) => {
                 src={`/assets/images/icons/${
                   isPlaying ? 'pause' : 'play'
                 }-circle.png`}
-                className="h-8 w-8 cursor-pointer object-cover object-center"
+                className="size-8 cursor-pointer object-cover object-center"
               />
               <WavesurferPlayer
                 height={32}

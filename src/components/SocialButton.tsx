@@ -11,7 +11,7 @@ const SocialIcon = ({ iconUrl }: { iconUrl: string }) => (
     alt="Social icon"
     width={24}
     height={24}
-    className="h-6 w-6 object-contain"
+    className="size-6 object-contain"
   />
 );
 

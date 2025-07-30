@@ -24,13 +24,9 @@ type Placement =
   | 'right'
   | 'left';
 
-interface DropdownRootProps
-  extends Omit<
-    DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>,
-    'children' | 'ref'
-  > {
+type DropdownRootProps = {
   value: unknown;
-  onChange(value: unknown): void;
+  onChange: (value: unknown) => void;
   onClear?: () => void;
   isError?: boolean;
   disabled?: boolean;
@@ -40,7 +36,10 @@ interface DropdownRootProps
   position?: Placement;
   children?: ReactNode | ((data: { open?: boolean }) => ReactNode);
   ref?: Ref<HTMLElement>;
-}
+} & Omit<
+  DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>,
+    'children' | 'ref'
+>;
 
 type DropdownState = {
   value?: any;

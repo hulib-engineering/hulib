@@ -1,15 +1,14 @@
 import type { InputHTMLAttributes, ReactNode } from 'react';
 import React, { forwardRef } from 'react';
 
-import type { ColorProps } from '@/components/private/types';
-import { Size } from '@/components/private/types';
-
 import TextInputBasic from './private/TextInputBasic';
 import TextInputInnerLabel from './private/TextInputInnerLabel';
 import TextInputPassword from './private/TextInputPassword';
 import type { TextInputSizeType, TextInputTypes } from './private/types';
+import { Size } from '@/components/private/types';
+import type { ColorProps } from '@/components/private/types';
 
-export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export type TextInputProps = {
   id?: string;
   inputSize?: TextInputSizeType | undefined;
   type: TextInputTypes | string;
@@ -27,7 +26,7 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   isSharpBottomSide?: boolean;
   isTopBottomBorderHidden?: boolean;
   isSideBorderHidden?: boolean;
-}
+} & InputHTMLAttributes<HTMLInputElement>;
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   const { inputSize = Size.MEDIUM, type } = props;

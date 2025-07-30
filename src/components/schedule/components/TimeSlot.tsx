@@ -37,7 +37,7 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
   const t = useTranslations('Time_slots');
 
   const [modalListDay, setModalListDay] = useState<Record<string, TimeSlots>>(
-    {}
+    {},
   );
   const handleUpdateTimeSlot = () => {
     setModalListDay(JSON.parse(JSON.stringify(listDay)));
@@ -58,14 +58,14 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
     try {
       const sanitizedListDay = Object.entries(modalListDay).flatMap(
         ([_, slots]) =>
-          (['morning', 'afternoon', 'evening'] as const).flatMap((timeSlot) =>
+          (['morning', 'afternoon', 'evening'] as const).flatMap(timeSlot =>
             (slots[timeSlot] || []).map(
               ({ startTime, dayOfWeek }: TimeSlotItem) => ({
                 dayOfWeek,
                 startTime,
-              })
-            )
-          )
+              }),
+            ),
+          ),
       );
 
       await createTimeSlots({ timeSlots: sanitizedListDay }).unwrap();
@@ -109,9 +109,9 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
       });
 
       const parts = formatter.formatToParts(date);
-      const day = parts.find((p) => p.type === DAY_STRING)?.value;
-      const month = parts.find((p) => p.type === MONTH_STRING)?.value;
-      const year = parts.find((p) => p.type === YEAR_STRING)?.value;
+      const day = parts.find(p => p.type === DAY_STRING)?.value;
+      const month = parts.find(p => p.type === MONTH_STRING)?.value;
+      const year = parts.find(p => p.type === YEAR_STRING)?.value;
       setCurrentDate(`${day} ${month}, ${year}`);
     }
   }, []);
@@ -130,13 +130,13 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
     setModalListDay((prev) => {
       const updatedDay = WEEK_STRING[day] as string;
       const existingTimeSlot = prev[updatedDay]?.[timeSlotType]?.find(
-        (slot) => slot.startTime === time
+        slot => slot.startTime === time,
       );
 
       const updatedTimeSlot = existingTimeSlot
         ? prev[updatedDay]?.[timeSlotType]?.filter(
-            (slot) => slot.startTime !== time
-          )
+          slot => slot.startTime !== time,
+        )
         : [
             ...(prev[updatedDay]?.[timeSlotType] || []),
             { startTime: time, dayOfWeek: day },
@@ -218,7 +218,7 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
   const hasEveningSlots = (listDay[currentDate]?.evening?.length || 0) > 0;
 
   return (
-    <div className="mb-[20px] flex flex-col justify-center rounded-[12px] bg-[#fff] p-[16px] drop-shadow-md">
+    <div className="mb-[20px] flex flex-col justify-center rounded-[12px] bg-white p-[16px] drop-shadow-md">
       <div className="my-[10px]">
         <p className="text-[18px] font-[500] leading-[28px] text-[#03191C]">
           {t('available_time_slots')}
@@ -234,7 +234,7 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
         selectedTimes={
           listDay[currentDate]?.morning.concat(
             listDay[currentDate]?.afternoon,
-            listDay[currentDate]?.evening
+            listDay[currentDate]?.evening,
           ) || []
         }
         availableSlot
@@ -243,7 +243,7 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
         {hasMorningSlots && (
           <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
             {sortTimeSlots(
-              (listDay[currentDate] as { morning: any[] }).morning
+              (listDay[currentDate] as { morning: any[] }).morning,
             ).map((time: any, index: any) => (
               <div
                 key={index}
@@ -258,7 +258,7 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
         {hasAfternoonSlots && (
           <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
             {sortTimeSlots(
-              (listDay[currentDate] as { afternoon: any[] }).afternoon
+              (listDay[currentDate] as { afternoon: any[] }).afternoon,
             ).map((time: any, index: any) => (
               <div
                 key={index}
@@ -273,7 +273,7 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
         {hasEveningSlots && (
           <div className="mb-[10px] flex flex-wrap items-center justify-start gap-[4px] rounded-[8px] bg-[#F9F9F9] p-[8px]">
             {sortTimeSlots(
-              (listDay[currentDate] as { evening: any[] }).evening
+              (listDay[currentDate] as { evening: any[] }).evening,
             ).map((time: any, index: any) => (
               <div
                 key={index}
@@ -289,7 +289,7 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
         <button
           type="button"
           onClick={handleUpdateTimeSlot}
-          className="hove:opacity-[0.9] mb-[10px] flex min-h-[30px] w-full items-center justify-center rounded-[20px] bg-[#0442BF] p-[8px]"
+          className="hove:opacity-90 mb-[10px] flex min-h-[30px] w-full items-center justify-center rounded-[20px] bg-[#0442BF] p-[8px]"
         >
           {/* <CalendarPlus size={16} color="#ffffff" className="inline-block mt-[-4px]"/> */}
           <span className="ml-[6px] inline-block text-[14px] font-[500] leading-[20px] text-white">
@@ -306,7 +306,10 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
           <Modal.Backdrop />
           <Modal.Panel className="inset-0 flex w-[550px] items-center justify-center">
             <div className="rounded-lg bg-white p-6 shadow-lg">
-              <Modal.Title>{t('available_time_slots')} </Modal.Title>
+              <Modal.Title>
+                {t('available_time_slots')}
+                {' '}
+              </Modal.Title>
               <span>{t('select_time_slots')}</span>
               <HeadSlots
                 dayOfWeek={WEEK_DAY_MAP[currentDate]}
@@ -314,18 +317,17 @@ function TimeSlot({ timeSlots }: { timeSlots: any }) {
                 selectedTimes={
                   listDay[currentDate]?.morning.concat(
                     listDay[currentDate]?.afternoon,
-                    listDay[currentDate]?.evening
+                    listDay[currentDate]?.evening,
                   ) || []
                 }
               />
               <AvailableSchedule
                 onSelectTime={(time: string, day: number) =>
-                  updateSelectedTimeInModal(time, day)
-                }
+                  updateSelectedTimeInModal(time, day)}
                 selectedTimes={
                   modalListDay[currentDate]?.morning.concat(
                     modalListDay[currentDate]?.afternoon,
-                    modalListDay[currentDate]?.evening
+                    modalListDay[currentDate]?.evening,
                   ) || []
                 }
                 currentDay={WEEK_DAY_MAP[currentDate] || 0}

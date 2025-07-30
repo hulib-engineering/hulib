@@ -1,9 +1,8 @@
 import React from 'react';
 
+import type { LoaderProps } from './private/types';
 import { getDivBorder, getSize } from '@/components/loader/private/utils';
 import { mergeClassnames } from '@/components/private/utils';
-
-import type { LoaderProps } from './private/types';
 
 const Loader = ({
   color = 'border-primary-50',

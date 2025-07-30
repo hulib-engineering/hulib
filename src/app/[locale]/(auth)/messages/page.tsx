@@ -33,7 +33,9 @@ export async function generateMetadata({
 export default async function Index() {
   const session = await getServerSession(authOptions);
 
-  if (!session) return notFound();
+  if (!session) {
+    return notFound();
+  }
 
   return (
     <div className="flex w-full flex-1">

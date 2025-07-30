@@ -19,10 +19,10 @@ import {
 const useNotificationActions = () => {
   const router = useRouter();
 
-  const role = useAppSelector((state) => state.auth.userInfo.role);
+  const role = useAppSelector(state => state.auth.userInfo.role);
 
-  const [updateStatus, { isLoading: isUpdatingStatus }] =
-    useUpdateReadingSessionMutation();
+  const [updateStatus, { isLoading: isUpdatingStatus }]
+    = useUpdateReadingSessionMutation();
   const [updateNotification] = useUpdateNotificationMutation();
 
   const markAsSeen = async (notificationId: string) => {
@@ -41,8 +41,8 @@ const useNotificationActions = () => {
       }).unwrap();
 
       if (
-        notification.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name &&
-        !notification.seen
+        notification.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name
+        && !notification.seen
       ) {
         await markAsSeen(notification.id.toString());
       }
@@ -56,14 +56,16 @@ const useNotificationActions = () => {
   const handleNotificationClick = async (notification: Notification) => {
     const config = getNotificationConfig(notification.type.name);
 
-    if (!config.isClickable) return;
+    if (!config.isClickable) {
+      return;
+    }
 
     if (!notification.seen) {
       await markAsSeen(notification.id.toString());
     }
 
-    const route =
-      role.id === Role.ADMIN
+    const route
+      = role.id === Role.ADMIN
         ? getAdminNotificationRoute(notification)
         : getNotificationRoute(notification);
     router.push(route);

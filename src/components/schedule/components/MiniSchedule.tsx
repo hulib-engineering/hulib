@@ -89,7 +89,7 @@ export default function MiniSchedule({ selectedDate, setSelectedDate }: Props) {
   }, []);
 
   return (
-    <div className="my-[20px] rounded-[12px] bg-[#fff] drop-shadow-md">
+    <div className="my-[20px] rounded-[12px] bg-white drop-shadow-md">
       <LocalizationProvider dateAdapter={dateAdapter}>
         <DateCalendar
           disablePast

@@ -84,10 +84,10 @@ const ResetPasswordForm = () => {
   const [submitSuccess, setSubmitSuccess] = React.useState<boolean>(false);
 
   const onHandleSubmit = handleSubmit(async (data) => {
-    if (!isValid) return;
+    if (!isValid) {
+      return;
+    }
 
-
-    
     try {
       await resetPassword({
         password: data.password,
@@ -138,7 +138,7 @@ const ResetPasswordForm = () => {
 
         {/* Password Requirements Checklist */}
         {touchedFields.password && (
-          <div className="rounded-md bg-gray-50 p-3">
+          <div className="bg-gray-50 rounded-md p-3">
             <PasswordChecklist
               rules={['minLength', 'specialChar', 'number', 'capital', 'match']}
               minLength={8}
@@ -157,15 +157,15 @@ const ResetPasswordForm = () => {
                     size={16}
                     color="#16a34a"
                     weight="fill"
-                    className="mr-2 flex-shrink-0"
+                    className="mr-2 shrink-0"
                   />
                 ),
                 InvalidIcon: (
-                  <X 
-                    size={16} 
-                    color="#dc2626" 
-                    weight="fill" 
-                    className="mr-2 flex-shrink-0" 
+                  <X
+                    size={16}
+                    color="#dc2626"
+                    weight="fill"
+                    className="mr-2 shrink-0"
                   />
                 ),
               }}

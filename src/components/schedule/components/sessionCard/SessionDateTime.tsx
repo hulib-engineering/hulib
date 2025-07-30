@@ -1,11 +1,11 @@
 import { Calendar } from '@phosphor-icons/react';
 import React from 'react';
 
-interface SessionDateTimeProps {
+type SessionDateTimeProps = {
   date: string;
   startDate: string;
   endDate: string;
-}
+};
 
 export const SessionDateTime: React.FC<SessionDateTimeProps> = ({
   date,
@@ -34,10 +34,18 @@ export const SessionDateTime: React.FC<SessionDateTimeProps> = ({
       <Calendar size={16} className="mr-2" />
       <div>
         <span>
-          {getDayOfWeek(date)}, {formatDate(date)} |{' '}
+          {getDayOfWeek(date)}
+          ,
+          {formatDate(date)}
+          {' '}
+          |
+          {' '}
         </span>
         <span>
-          {startDate} - {endDate}
+          {startDate}
+          {' '}
+          -
+          {endDate}
         </span>
       </div>
     </div>

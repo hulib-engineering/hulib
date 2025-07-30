@@ -47,84 +47,84 @@ const TermOfUseModal = ({ open, onClose }: Omit<IPolicyModalProps, 'type'>) => {
           <h2 className="mb-1 text-xl font-semibold uppercase text-gray-800">
             {t(`term_of_use_sections.${index}.heading`)}
           </h2>
-          {index !== 'index_4' &&
-            index !== 'index_6' &&
-            index !== 'index_7' && (
+          {index !== 'index_4'
+          && index !== 'index_6'
+          && index !== 'index_7' && (
+            <p>
+              {t.rich(`term_of_use_sections.${index}.content`, {
+                br: newLineMessage(),
+                ul: unorderedMessageList('list-disc pl-6'),
+                li: listMessageItem(),
+                linkToPrivacy: customInternalLink('#privacy-policy-0'),
+                strong: strongMessage(),
+              })}
+            </p>
+          )}
+          {index === 'index_4'
+          && [
+            'index_0' as const,
+            'index_1' as const,
+            'index_2' as const,
+            'index_3' as const,
+          ].map(each => (
+            <div key={each} className="mb-3 last:mb-0">
+              <h3 className="mb-1 text-lg font-semibold text-gray-800">
+                {t(
+                  `term_of_use_sections.index_4.content_sections.${each}.heading`,
+                )}
+              </h3>
               <p>
-                {t.rich(`term_of_use_sections.${index}.content`, {
-                  br: newLineMessage(),
-                  ul: unorderedMessageList('list-disc pl-6'),
-                  li: listMessageItem(),
-                  linkToPrivacy: customInternalLink('#privacy-policy-0'),
-                  strong: strongMessage(),
-                })}
+                {t.rich(
+                  `term_of_use_sections.index_4.content_sections.${each}.content`,
+                  {
+                    br: newLineMessage(),
+                    ul: unorderedMessageList('list-none'),
+                    li: listMessageItem(),
+                  },
+                )}
               </p>
-            )}
-          {index === 'index_4' &&
-            [
-              'index_0' as const,
-              'index_1' as const,
-              'index_2' as const,
-              'index_3' as const,
-            ].map((each) => (
-              <div key={each} className="mb-3 last:mb-0">
-                <h3 className="mb-1 text-lg font-semibold text-gray-800">
-                  {t(
-                    `term_of_use_sections.index_4.content_sections.${each}.heading`,
-                  )}
-                </h3>
-                <p>
-                  {t.rich(
-                    `term_of_use_sections.index_4.content_sections.${each}.content`,
-                    {
-                      br: newLineMessage(),
-                      ul: unorderedMessageList('list-none'),
-                      li: listMessageItem(),
-                    },
-                  )}
-                </p>
-              </div>
-            ))}
-          {index === 'index_6' &&
-            ['index_0' as const, 'index_1' as const].map((each) => (
-              <div key={each} className="mb-3 last:mb-0">
-                <h3 className="mb-1 text-lg font-semibold text-gray-800">
-                  {t(
-                    `term_of_use_sections.index_6.content_sections.${each}.heading`,
-                  )}
-                </h3>
-                <p>
-                  {t.rich(
-                    `term_of_use_sections.index_6.content_sections.${each}.content`,
-                    {
-                      br: newLineMessage(),
-                      ul: unorderedMessageList('list-none'),
-                      li: listMessageItem(),
-                    },
-                  )}
-                </p>
-              </div>
-            ))}
-          {index === 'index_7' &&
-            ['index_0' as const, 'index_1' as const].map((each) => (
-              <div key={each} className="mb-3 last:mb-0">
-                <h3 className="mb-1 text-lg font-semibold text-gray-800">
-                  {t(
-                    `term_of_use_sections.index_7.content_sections.${each}.heading`,
-                  )}
-                </h3>
-                <p>
-                  {t.rich(
-                    `term_of_use_sections.index_7.content_sections.${each}.content`,
-                    {
-                      br: newLineMessage(),
-                      ul: unorderedMessageList('list-none'),
-                      li: listMessageItem(),
-                    },
-                  )}
-                </p>
-              </div>
-            ))}
+            </div>
+          ))}
+          {index === 'index_6'
+          && ['index_0' as const, 'index_1' as const].map(each => (
+            <div key={each} className="mb-3 last:mb-0">
+              <h3 className="mb-1 text-lg font-semibold text-gray-800">
+                {t(
+                  `term_of_use_sections.index_6.content_sections.${each}.heading`,
+                )}
+              </h3>
+              <p>
+                {t.rich(
+                  `term_of_use_sections.index_6.content_sections.${each}.content`,
+                  {
+                    br: newLineMessage(),
+                    ul: unorderedMessageList('list-none'),
+                    li: listMessageItem(),
+                  },
+                )}
+              </p>
+            </div>
+          ))}
+          {index === 'index_7'
+          && ['index_0' as const, 'index_1' as const].map(each => (
+            <div key={each} className="mb-3 last:mb-0">
+              <h3 className="mb-1 text-lg font-semibold text-gray-800">
+                {t(
+                  `term_of_use_sections.index_7.content_sections.${each}.heading`,
+                )}
+              </h3>
+              <p>
+                {t.rich(
+                  `term_of_use_sections.index_7.content_sections.${each}.content`,
+                  {
+                    br: newLineMessage(),
+                    ul: unorderedMessageList('list-none'),
+                    li: listMessageItem(),
+                  },
+                )}
+              </p>
+            </div>
+          ))}
         </section>
       ))}
     </PolicyModal>

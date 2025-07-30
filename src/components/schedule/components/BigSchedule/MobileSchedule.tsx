@@ -36,7 +36,7 @@ export default function MobileSchedule() {
   const [activeTab, setActiveTab] = useState<TabType>('all');
 
   // User info
-  const userId = useAppSelector((state) => state.auth.userInfo?.id);
+  const userId = useAppSelector(state => state.auth.userInfo?.id);
 
   // Get week range for API
   const getCurrentWeekRange = (date: Date) => {
@@ -94,7 +94,9 @@ export default function MobileSchedule() {
 
   // Filter sessions by tab
   const getFilteredSessions = (sessions: ReadingSession[]) => {
-    if (!sessions || !Array.isArray(sessions)) return [];
+    if (!sessions || !Array.isArray(sessions)) {
+      return [];
+    }
 
     return sessions.filter((session) => {
       const isVibing = Number(userId) === Number(session?.reader?.id);
@@ -122,18 +124,18 @@ export default function MobileSchedule() {
     const meetingsToday = sessions.filter((session) => {
       const sessionDate = new Date(session.startedAt);
       return (
-        isSameDay(sessionDate, now) &&
-        (session.sessionStatus === StatusEnum.Approved ||
-          session.sessionStatus === StatusEnum.Pending)
+        isSameDay(sessionDate, now)
+        && (session.sessionStatus === StatusEnum.Approved
+          || session.sessionStatus === StatusEnum.Pending)
       );
     });
 
     const nextMeetings = sessions.filter((session) => {
       const sessionDate = new Date(session.startedAt);
       return (
-        isAfter(sessionDate, todayEnd) &&
-        (session.sessionStatus === StatusEnum.Approved ||
-          session.sessionStatus === StatusEnum.Pending)
+        isAfter(sessionDate, todayEnd)
+        && (session.sessionStatus === StatusEnum.Approved
+          || session.sessionStatus === StatusEnum.Pending)
       );
     });
 
@@ -149,30 +151,30 @@ export default function MobileSchedule() {
   };
 
   const filteredSessions = getFilteredSessions(readingSessions || []);
-  const { meetingsToday, nextMeetings, doneMeetings } =
-    categorizeSessions(filteredSessions);
+  const { meetingsToday, nextMeetings, doneMeetings }
+    = categorizeSessions(filteredSessions);
 
   // Count for tabs
   const getTabCount = (tabType: TabType) => {
     const sessions = getFilteredSessions(readingSessions || []);
     const activeSessions = sessions.filter(
-      (session) =>
-        session.sessionStatus === StatusEnum.Approved ||
-        session.sessionStatus === StatusEnum.Pending,
+      session =>
+        session.sessionStatus === StatusEnum.Approved
+        || session.sessionStatus === StatusEnum.Pending,
     );
 
     switch (tabType) {
       case 'liber':
         return activeSessions.filter(
-          (session) => Number(userId) === Number(session?.reader?.id),
+          session => Number(userId) === Number(session?.reader?.id),
         ).length;
       case 'huber':
         return activeSessions.filter(
-          (session) => Number(userId) !== Number(session?.reader?.id),
+          session => Number(userId) !== Number(session?.reader?.id),
         ).length;
       case 'waiting':
         return sessions.filter(
-          (session) => session.sessionStatus === StatusEnum.Pending,
+          session => session.sessionStatus === StatusEnum.Pending,
         ).length;
       case 'all':
       default:
@@ -193,7 +195,9 @@ export default function MobileSchedule() {
     isDone = false,
     isMeetingToday = false,
   ) => {
-    if (sessions.length === 0) return null;
+    if (sessions.length === 0) {
+      return null;
+    }
 
     return (
       <div className="mb-6">
@@ -206,7 +210,7 @@ export default function MobileSchedule() {
           )}
         </div>
         <div className="space-y-3">
-          {sessions.map((session) => (
+          {sessions.map(session => (
             <SessionCard
               key={session.id}
               session={session}
@@ -265,7 +269,7 @@ export default function MobileSchedule() {
 
         {/* Tabs */}
         <div className="flex border-b border-gray-200">
-          {tabs.map((tab) => (
+          {tabs.map(tab => (
             <button
               type="button"
               key={tab.key}
@@ -276,7 +280,11 @@ export default function MobileSchedule() {
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              {tab.label} ({tab.count})
+              {tab.label}
+              {' '}
+              (
+              {tab.count}
+              )
             </button>
           ))}
         </div>
@@ -303,17 +311,17 @@ export default function MobileSchedule() {
         )}
 
         {/* Empty state */}
-        {meetingsToday.length === 0 &&
-          nextMeetings.length === 0 &&
-          doneMeetings.length === 0 && (
-            <div className="flex h-40 items-center justify-center">
-              <div className="text-center">
-                <p className="text-gray-500">
-                  {t('no_meetings.noMeetingsFound')}
-                </p>
-              </div>
+        {meetingsToday.length === 0
+        && nextMeetings.length === 0
+        && doneMeetings.length === 0 && (
+          <div className="flex h-40 items-center justify-center">
+            <div className="text-center">
+              <p className="text-gray-500">
+                {t('no_meetings.noMeetingsFound')}
+              </p>
             </div>
-          )}
+          </div>
+        )}
       </div>
 
       <div className="h-20" />

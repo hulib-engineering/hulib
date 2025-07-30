@@ -3,11 +3,10 @@
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 
+import Button from '../button/Button';
 import NotificationItem from '@/components/notification/NotificationItem';
 import NotificationSkeleton from '@/components/notification/NotificationSkeleton';
 import useNotifications from '@/libs/hooks/useNotifications';
-
-import Button from '../button/Button';
 
 const NotificationPage = () => {
   const t = useTranslations('notifications');
@@ -43,14 +42,14 @@ const NotificationPage = () => {
           </div>
         )}
 
-        {!isLoading &&
-          !error &&
-          notifications.map((notification) => (
-            <NotificationItem
-              key={notification.id}
-              notification={notification}
-            />
-          ))}
+        {!isLoading
+        && !error
+        && notifications.map(notification => (
+          <NotificationItem
+            key={notification.id}
+            notification={notification}
+          />
+        ))}
 
         {isLoading && currentPage > 1 && <NotificationSkeleton count={3} />}
       </div>

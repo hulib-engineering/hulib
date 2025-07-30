@@ -4,6 +4,9 @@ import { format } from 'date-fns';
 import Image from 'next/image';
 import type { FC } from 'react';
 
+import NotificationActions from './NotificationActions';
+import NotificationAvatar from './NotificationAvatar';
+import NotificationContent from './NotificationContent';
 import { mergeClassnames } from '@/components/private/utils';
 import useNotificationActions from '@/libs/hooks/useNotificationActions';
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
@@ -11,16 +14,12 @@ import { NOTIFICATION_TYPES } from '@/libs/services/modules/notifications/notifi
 import { StatusEnum } from '@/types/common';
 import { getNotificationConfig } from '@/utils/notificationUtils';
 
-import NotificationActions from './NotificationActions';
-import NotificationAvatar from './NotificationAvatar';
-import NotificationContent from './NotificationContent';
-
-interface NotificationItemProps {
+type NotificationItemProps = {
   notification: Notification;
   hideDetails?: boolean;
   hideRateNumber?: boolean;
   onClick?: () => void;
-}
+};
 
 const NotificationItem: FC<NotificationItemProps> = ({
   notification,
@@ -65,8 +64,8 @@ const NotificationItem: FC<NotificationItemProps> = ({
       notification,
     );
 
-  const isReviewStory =
-    notification.type.name === NOTIFICATION_TYPES.REVIEW_STORY.name;
+  const isReviewStory
+    = notification.type.name === NOTIFICATION_TYPES.REVIEW_STORY.name;
   return (
     <div
       className={mergeClassnames(
@@ -118,8 +117,16 @@ const NotificationItem: FC<NotificationItemProps> = ({
             <p className="text-sm text-gray-500">{formattedTime}</p>
             {isReviewStory && !hideRateNumber && notification.relatedEntity && (
               <div className="absolute right-[80px] top-0 flex items-center gap-4 text-sm text-primary-50">
-                <span>{notification.relatedEntity.numOfRatings} rating</span>
-                <span>{notification.relatedEntity.numOfComments} comment</span>
+                <span>
+                  {notification.relatedEntity.numOfRatings}
+                  {' '}
+                  rating
+                </span>
+                <span>
+                  {notification.relatedEntity.numOfComments}
+                  {' '}
+                  comment
+                </span>
               </div>
             )}
           </div>

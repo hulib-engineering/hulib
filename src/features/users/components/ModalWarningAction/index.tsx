@@ -5,14 +5,14 @@ import Button from '@/components/button/Button';
 import { useUpdateUserStatusMutation } from '@/libs/services/modules/user';
 
 // Props for the modal component
-interface ModalWarningActionProps {
+type ModalWarningActionProps = {
   userId: string; // User ID to warn
   userImage?: string; // URL for the user's profile image
   userName?: string;
   userRole?: string;
   onConfirm?: (reason: string) => void;
   onCancel?: () => void;
-}
+};
 
 /**
  * ModalWarningAction
@@ -31,8 +31,8 @@ const ModalWarningAction: React.FC<ModalWarningActionProps> = ({
   const [reason, setReason] = useState('');
 
   // --- Mutation hook for updating user status (warn) ---
-  const [updateUserStatus, { isLoading, error }] =
-    useUpdateUserStatusMutation();
+  const [updateUserStatus, { isLoading, error }]
+    = useUpdateUserStatusMutation();
 
   // Handle confirm button click
   const handleConfirm = async () => {
@@ -43,7 +43,9 @@ const ModalWarningAction: React.FC<ModalWarningActionProps> = ({
         body: { status: 'under_warning' },
       }).unwrap();
       // Optionally, call onConfirm with reason for extensibility
-      if (onConfirm) onConfirm(reason);
+      if (onConfirm) {
+        onConfirm(reason);
+      }
     } catch (e) {
       // Error is handled below in UI
     }
@@ -51,7 +53,9 @@ const ModalWarningAction: React.FC<ModalWarningActionProps> = ({
 
   // Handle cancel button click
   const handleCancel = () => {
-    if (onCancel) onCancel();
+    if (onCancel) {
+      onCancel();
+    }
   };
 
   return (
@@ -72,7 +76,7 @@ const ModalWarningAction: React.FC<ModalWarningActionProps> = ({
             alt={userName}
             width={112}
             height={112}
-            className="mb-3 h-28 w-28 rounded-2xl border-2 border-white object-cover shadow-md"
+            className="mb-3 size-28 rounded-2xl border-2 border-white object-cover shadow-md"
           />
           <div>
             <div
@@ -89,7 +93,7 @@ const ModalWarningAction: React.FC<ModalWarningActionProps> = ({
           className="mb-4 w-full resize-none rounded-xl border border-gray-200 bg-white p-4 text-gray-800 transition placeholder:text-gray-400 focus:border-orange-50 focus:ring-2 focus:ring-orange-50"
           placeholder="Reason for warning"
           value={reason}
-          onChange={(e) => setReason(e.target.value)}
+          onChange={e => setReason(e.target.value)}
           rows={4}
         />
         {/* Subtle warning text: muted orange, centered, margin for separation */}

@@ -1,7 +1,6 @@
 import type { HTMLInputTypeAttribute, InputHTMLAttributes } from 'react';
 
-interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+type InputProps = {
   className?: string;
   type?: HTMLInputTypeAttribute;
   size?: 'sm' | 'md' | 'lg';
@@ -9,6 +8,6 @@ interface InputProps
   isRtl?: boolean;
   disabled?: boolean;
   id?: string;
-}
+} & Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>;
 
 export default InputProps;

@@ -30,7 +30,7 @@ const Features = () => {
   return (
     <section className="mx-auto mt-8 w-full max-w-xs flex-col items-center justify-center p-4 py-6 sm:mt-0 md:max-w-screen-xxl lg:px-[90px] lg:py-12">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:gap-6">
-        {FeatureList.map((feature) => (
+        {FeatureList.map(feature => (
           <FeatureCard
             key={feature.key}
             title={t(`${feature.key}.title`)}

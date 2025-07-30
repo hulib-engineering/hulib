@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import Button from '@/components/button/Button';
 
 // Props for the modal component
-interface ModalApprovalHuberProps {
+type ModalApprovalHuberProps = {
   userImage?: string; // URL for the user's profile image
   userName?: string;
   userRole?: string;
@@ -14,7 +14,7 @@ interface ModalApprovalHuberProps {
   onCancel?: () => void;
   isLoading?: boolean;
   type: 'approve' | 'decline' | 'approve-success' | 'decline-success';
-}
+};
 
 /**
  * ModalApprovalHuber
@@ -33,7 +33,9 @@ const ModalApprovalHuber: React.FC<ModalApprovalHuberProps> = ({
   const [reason, setReason] = useState('');
   // Handle cancel button click
   const handleCancel = () => {
-    if (onCancel) onCancel();
+    if (onCancel) {
+      onCancel();
+    }
   };
 
   const message = (
@@ -113,7 +115,7 @@ const ModalApprovalHuber: React.FC<ModalApprovalHuberProps> = ({
               className="w-full resize-none rounded-xl border border-gray-200 bg-white p-4 text-gray-800 transition placeholder:text-gray-400 focus:border-red-50 focus:ring-2 focus:ring-red-200"
               placeholder="Reason for rejection"
               value={reason}
-              onChange={(e) => setReason(e.target.value)}
+              onChange={e => setReason(e.target.value)}
               rows={4}
             />
           </div>

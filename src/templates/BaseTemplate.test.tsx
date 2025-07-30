@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
 
+import { BaseTemplate } from './BaseTemplate';
 import StoreProvider from '@/app/StoreProvider';
 import messages from '@/locales/en.json';
-
-import { BaseTemplate } from './BaseTemplate';
 
 // Mock useRouter and usePathname of next-intl:
 jest.mock('next-intl/navigation', () => ({

@@ -23,7 +23,7 @@ const FAQs = () => {
 
   return (
     <section className="flex flex-col items-center justify-center py-8 text-slate-1000 md:px-[5.625rem] lg:py-[5.625rem]">
-      <div className="flex w-full flex-col items-center justify-center py-[0.75rem] lg:max-w-3xl">
+      <div className="flex w-full flex-col items-center justify-center py-3 lg:max-w-3xl">
         <div className="mb-6 w-full text-center lg:mb-8">
           <h1 className="w-full text-[1.75rem] font-semibold md:text-4xl lg:text-5xl lg:font-bold">
             FAQs
@@ -36,7 +36,7 @@ const FAQs = () => {
               trigger={t(`${item.key}.question`)}
               content={{
                 heading: t(`${item.key}.answer.heading`),
-                bodyParams: item.bodyParas.map((paraIndex) =>
+                bodyParams: item.bodyParas.map(paraIndex =>
                   // @ts-ignore
                   t(`${item.key}.answer.body_paras.${paraIndex}`),
                 ),

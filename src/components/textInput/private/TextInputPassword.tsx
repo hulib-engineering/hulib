@@ -2,6 +2,7 @@ import { Eye, EyeSlash } from '@phosphor-icons/react';
 import type { InputHTMLAttributes, ReactNode } from 'react';
 import React, { forwardRef, useState } from 'react';
 
+import type { TextInputSizeType, TextInputTypes } from './types';
 import Hint from '@/components/Hint';
 import IconButton from '@/components/iconButton/IconButton';
 import Input from '@/components/input/Input';
@@ -13,9 +14,7 @@ import Inner from '@/components/textInput/styles/Inner';
 import LabelInner from '@/components/textInput/styles/LabelInner';
 import ShowPassword from '@/components/textInput/styles/ShowPassword';
 
-import type { TextInputSizeType, TextInputTypes } from './types';
-
-interface TextInputPasswordProps extends InputHTMLAttributes<HTMLInputElement> {
+type TextInputPasswordProps = {
   id?: string;
   inputSize?: TextInputSizeType | string;
   label?: ReactNode;
@@ -32,7 +31,7 @@ interface TextInputPasswordProps extends InputHTMLAttributes<HTMLInputElement> {
   isSharpBottomSide?: boolean;
   isTopBottomBorderHidden?: boolean;
   isSideBorderHidden?: boolean;
-}
+} & InputHTMLAttributes<HTMLInputElement>;
 
 const TextInputPassword = forwardRef<HTMLInputElement, TextInputPasswordProps>(
   (props, ref) => {

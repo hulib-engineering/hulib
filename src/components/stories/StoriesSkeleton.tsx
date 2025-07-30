@@ -2,14 +2,14 @@ import { mergeClassnames } from '../private/utils';
 
 function StoriesSkeleton() {
   return (
-    <div className="mx-auto h-full w-full max-w-[1216px] rounded-lg">
+    <div className="mx-auto size-full max-w-[1216px] rounded-lg">
       <div
         className={mergeClassnames(
           'mt-6 grid grid-cols-1 gap-8',
           'md:grid-cols-3',
         )}
       >
-        {[1, 2, 3, 4, 5, 6].map((index) => (
+        {[1, 2, 3, 4, 5, 6].map(index => (
           <div
             key={index}
             className={mergeClassnames(
@@ -29,7 +29,7 @@ function StoriesSkeleton() {
 
               <div className="absolute bottom-6 right-0 flex w-full flex-row items-center gap-2 px-3">
                 <div className=" mt-2 h-11 flex-[1px] rounded-full bg-neutral-80" />
-                <div className=" mt-2 h-11 w-11 rounded-full bg-neutral-80" />
+                <div className=" mt-2 size-11 rounded-full bg-neutral-80" />
               </div>
             </div>
           </div>

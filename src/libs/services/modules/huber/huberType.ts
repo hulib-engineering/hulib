@@ -1,4 +1,4 @@
-export interface Huber {
+export type Huber = {
   id: number;
   email: string;
   password: string;
@@ -32,10 +32,10 @@ export interface Huber {
     userId: number;
     topicId: number;
   }>;
-}
+};
 
-export interface HuberlistParams {
+export type HuberlistParams = {
   page: number;
   limit: number;
   topicIds: string[];
-}
+};
