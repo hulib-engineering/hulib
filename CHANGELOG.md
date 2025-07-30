@@ -1,3 +1,10 @@
+## [1.31.1](https://github.com/hulib-engineering/hulib/compare/v1.31.0...v1.31.1) (2025-07-30)
+
+
+### Bug Fixes
+
+* **Remote Image:** fixed remote image pattern ([718a0fa](https://github.com/hulib-engineering/hulib/commit/718a0fa3a1a81ba06870231c305f9e6972696574))
+
 # [1.31.0](https://github.com/hulib-engineering/hulib/compare/v1.30.0...v1.31.0) (2025-07-30)
 
 
