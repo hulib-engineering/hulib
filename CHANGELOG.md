@@ -1,3 +1,23 @@
+# [1.31.0](https://github.com/hulib-engineering/hulib/compare/v1.30.0...v1.31.0) (2025-07-30)
+
+
+### Bug Fixes
+
+* **388035:** fixed reported issues ([54ae51b](https://github.com/hulib-engineering/hulib/commit/54ae51b62225d273a4d3f68cb32b92b78343a5f2))
+* **441405:** changed uploading file flow ([8987fe0](https://github.com/hulib-engineering/hulib/commit/8987fe07cd039be6b9f32f18355416cffc3e20e3))
+* **Eslint:** fixed eslint ([cd6d677](https://github.com/hulib-engineering/hulib/commit/cd6d677e821517df668f37de193d5ca16fee4772))
+* **Eslint:** fixed eslint error on CI ([c97d801](https://github.com/hulib-engineering/hulib/commit/c97d8019c7c2c42c4c222bfdffae509783eba058))
+* resolve cache invalidation issue for favorite stories ([88f10a3](https://github.com/hulib-engineering/hulib/commit/88f10a3b7408d52835782230e60cc770c78e7952))
+* resolve cache invalidation issue for favorite stories ([b7391cc](https://github.com/hulib-engineering/hulib/commit/b7391cc7b443f4fa90f19af79eb95b883eb64a81))
+* resolve cache invalidation issue for favorite stories ([5626d94](https://github.com/hulib-engineering/hulib/commit/5626d94326335ac880ad9d47608cb3e61f56e8e1))
+
+
+### Features
+
+* add search on mobile screen ([8846a23](https://github.com/hulib-engineering/hulib/commit/8846a2388cb6b5b1a56c7a1528f31e7bee8c9c17))
+* show notification button ([2906990](https://github.com/hulib-engineering/hulib/commit/29069907a5ab7db087ef9e0b0e8db16b0ee0bffa))
+* update User interface to match API response structure ([c3b634f](https://github.com/hulib-engineering/hulib/commit/c3b634fe9058acc49d56cd75997ded911fd1099b))
+
 # [1.30.0](https://github.com/hulib-engineering/hulib/compare/v1.29.1...v1.30.0) (2025-07-22)
 
 
