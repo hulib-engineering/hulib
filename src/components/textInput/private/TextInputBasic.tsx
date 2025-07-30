@@ -1,6 +1,7 @@
 import type { InputHTMLAttributes, ReactNode } from 'react';
 import React, { forwardRef } from 'react';
 
+import Container from '../styles/Container';
 import Hint from '@/components/Hint';
 import Input from '@/components/input/Input';
 import Label from '@/components/Label';
@@ -13,9 +14,7 @@ import type {
 } from '@/components/textInput/private/types';
 import Inner from '@/components/textInput/styles/Inner';
 
-import Container from '../styles/Container';
-
-interface TextInputXSandSmProps extends InputHTMLAttributes<HTMLInputElement> {
+type TextInputXSandSmProps = {
   id?: string;
   inputSize?: TextInputSizeType;
   label?: ReactNode;
@@ -33,7 +32,7 @@ interface TextInputXSandSmProps extends InputHTMLAttributes<HTMLInputElement> {
   isSharpBottomSide?: boolean;
   isTopBottomBorderHidden?: boolean;
   isSideBorderHidden?: boolean;
-}
+} & InputHTMLAttributes<HTMLInputElement>;
 
 const TextInputBasic = forwardRef<HTMLInputElement, TextInputXSandSmProps>(
   (props, ref) => {

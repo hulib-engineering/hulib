@@ -32,8 +32,8 @@ const Button = <C extends ElementType = 'button'>({
   className,
   ...rest
 }: Props<C> & { shouldHover?: boolean }) => {
-  const hasAnimationContent =
-    animation === 'progress' || animation === 'success';
+  const hasAnimationContent
+    = animation === 'progress' || animation === 'success';
 
   const [isHover, setIsHover] = useState(false);
 
@@ -60,34 +60,36 @@ const Button = <C extends ElementType = 'button'>({
       customClassName={className}
       {...rest}
     >
-      {hasAnimationContent ? (
-        <AnimationContent
-          iconLeft={iconLeft}
-          iconRight={iconRight}
-          iconOnly={iconOnly}
-          animation={animation}
-          size={size}
-          fullWidth={fullWidth}
-          variant={variant}
-        >
-          {children}
-        </AnimationContent>
-      ) : (
-        <>
-          {iconLeft && (
-            <IconLeft fullWidth={fullWidth} iconLeft={iconLeft} size={size} />
-          )}
-          {children}
-          {iconRight && (
-            <IconRight
-              fullWidth={fullWidth}
+      {hasAnimationContent
+        ? (
+            <AnimationContent
+              iconLeft={iconLeft}
               iconRight={iconRight}
+              iconOnly={iconOnly}
+              animation={animation}
               size={size}
-            />
+              fullWidth={fullWidth}
+              variant={variant}
+            >
+              {children}
+            </AnimationContent>
+          )
+        : (
+            <>
+              {iconLeft && (
+                <IconLeft fullWidth={fullWidth} iconLeft={iconLeft} size={size} />
+              )}
+              {children}
+              {iconRight && (
+                <IconRight
+                  fullWidth={fullWidth}
+                  iconRight={iconRight}
+                  size={size}
+                />
+              )}
+              {iconOnly}
+            </>
           )}
-          {iconOnly}
-        </>
-      )}
       {!hasCustomHoverClasses && <Hover isHover={isHover} variant={variant} />}
     </ButtonComponent>
   );

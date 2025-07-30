@@ -6,10 +6,10 @@ import Input from '@/components/input/Input';
 import Label from '@/components/Label';
 import Popover from '@/components/popover/Popover';
 
-interface RenderProps {
+type RenderProps = {
   open: boolean;
   close: () => void;
-}
+};
 
 const ScheduleFilterPopoverMenuItems = [
   {
@@ -35,7 +35,7 @@ const ScheduleFilterPopoverContent: React.FC<RenderProps> = () => {
             type="checkbox"
             id={item.label}
             readOnly={false}
-            className="flex h-3 w-3 flex-1"
+            className="flex size-3 flex-1"
           />
           <Label
             htmlFor={item.label}

@@ -15,7 +15,9 @@ const ApprovalMeetings = () => {
   });
 
   const sessions = useMemo(() => {
-    if (!pendingSessions?.data) return [];
+    if (!pendingSessions?.data) {
+      return [];
+    }
     const now = new Date();
     return pendingSessions.data.filter((session: any) => {
       const startDate = new Date(session.startedAt);
@@ -25,7 +27,7 @@ const ApprovalMeetings = () => {
 
   if (isLoading) {
     return (
-      <div className="flex h-full w-full justify-center px-[10%]">
+      <div className="flex size-full justify-center px-[10%]">
         <LoadingSkeleton />
       </div>
     );
@@ -33,28 +35,30 @@ const ApprovalMeetings = () => {
 
   return (
     <div className="mt-4 grid grid-cols-2 gap-4 text-neutral-60">
-      {sessions.length > 0 ? (
-        sessions.map((session: any) => (
-          <div
-            key={session.id}
-            className="rounded-lg bg-neutral-98 px-3 pt-4 shadow-md"
-          >
-            <SessionDateTime
-              date={session.startedAt}
-              startDate={session.startTime}
-              endDate={session.endTime}
-            />
-            <SessionAttendees
-              humanBook={session.humanBook}
-              reader={session.reader}
-              isVibing={session.isVibing}
-              isAdmin
-            />
-          </div>
-        ))
-      ) : (
-        <span className="text-neutral-40">No completed meetings found.</span>
-      )}
+      {sessions.length > 0
+        ? (
+            sessions.map((session: any) => (
+              <div
+                key={session.id}
+                className="rounded-lg bg-neutral-98 px-3 pt-4 shadow-md"
+              >
+                <SessionDateTime
+                  date={session.startedAt}
+                  startDate={session.startTime}
+                  endDate={session.endTime}
+                />
+                <SessionAttendees
+                  humanBook={session.humanBook}
+                  reader={session.reader}
+                  isVibing={session.isVibing}
+                  isAdmin
+                />
+              </div>
+            ))
+          )
+        : (
+            <span className="text-neutral-40">No completed meetings found.</span>
+          )}
     </div>
   );
 };

@@ -1,11 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import clsx from 'clsx';
 import React from 'react';
 
-interface Props {
+type Props = {
   children: React.ReactNode;
   className?: string;
-}
+};
 
 const CommonLayout = (props: Props) => {
   const { children, className } = props;

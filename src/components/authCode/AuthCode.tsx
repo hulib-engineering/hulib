@@ -5,10 +5,9 @@ import React, {
   useRef,
 } from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
-
 import type { AuthCodeProps, AuthCodeRef } from './private/types';
 import { allowedCharactersValues, propsMap } from './private/utils';
+import { mergeClassnames } from '@/components/private/utils';
 
 const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
   (
@@ -30,7 +29,7 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
       throw new Error('Length should be a number and greater than 0');
     }
 
-    if (!allowedCharactersValues.some((value) => value === allowedCharacters)) {
+    if (!allowedCharactersValues.includes(allowedCharacters)) {
       throw new Error(
         'Invalid value for allowedCharacters. Use alpha, numeric, or alphanumeric',
       );
@@ -40,7 +39,7 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
     const inputProps = propsMap[allowedCharacters];
 
     const sendResult = () => {
-      const res = inputsRef.current.map((input) => input.value).join('');
+      const res = inputsRef.current.map(input => input.value).join('');
       if (onChange) {
         onChange(res);
       }
@@ -125,8 +124,8 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
             // @ts-ignore
             inputsRef.current[currentInput].value = pastedCharacter;
             if (
-              inputsRef.current[currentInput] &&
-              inputsRef.current[currentInput]?.nextElementSibling !== null
+              inputsRef.current[currentInput]
+              && inputsRef.current[currentInput]?.nextElementSibling !== null
             ) {
               (
                 inputsRef.current[currentInput]

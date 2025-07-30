@@ -51,7 +51,9 @@ export default function RootLayout({
   params: { locale: string };
 }) {
   // Validate that the incoming `locale` parameter is valid
-  if (!AppConfig.locales.includes(locale)) notFound();
+  if (!AppConfig.locales.includes(locale)) {
+    notFound();
+  }
 
   // Using internationalization in Client Components
   const messages = useMessages();

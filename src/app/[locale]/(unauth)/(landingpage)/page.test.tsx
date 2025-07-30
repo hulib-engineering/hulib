@@ -1,9 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
 
-import messages from '@/locales/en.json';
-
 import Index from './page';
+import messages from '@/locales/en.json';
 
 describe('Index page', () => {
   describe('Render method', () => {
@@ -15,6 +14,7 @@ describe('Index page', () => {
       );
 
       const about = screen.getByTestId('about-section');
+
       expect(about).toBeInTheDocument();
     });
   });

@@ -7,13 +7,13 @@ const getReviewsOverview = (
   build: EndpointBuilder<BaseQueryFn, string, string>,
 ) =>
   build.query<PaginatedResponse<StoryReviewsOverview>, void>({
-    query: (id) => ({
+    query: id => ({
       url: `stories/${id}/reviews-overview`,
     }),
     serializeQueryArgs: ({ endpointName }) => {
       return `${endpointName}`;
     },
-    providesTags: (result) =>
+    providesTags: result =>
       result
         ? [
             { type: 'StoryReviewOverview' as const, id: 'LIST' },

@@ -1,8 +1,7 @@
 import type React from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
-
 import type { ButtonSettingsProps, ButtonVariants } from '../types';
+import { mergeClassnames } from '@/components/private/utils';
 
 export const getButtonCommonStyles = ({
   disabled,
@@ -28,8 +27,8 @@ export const getButtonVariants = ({
       : mergeClassnames(
           'text-primary-50 bg-transparent border border-[#C2C6CF]',
           disabled && 'border-neutral-90',
-          !disabled &&
-            'hover:bg-primary-98 focus:border focus:border-[#C2C6CF] focus:shadow-primary-60',
+          !disabled
+          && 'hover:bg-primary-98 focus:border focus:border-[#C2C6CF] focus:shadow-primary-60',
         );
   }
   if (variant === 'tertiary') {
@@ -46,8 +45,8 @@ export const getButtonVariants = ({
       : mergeClassnames(
           'text-primary-50 bg-transparent',
           disabled && 'text-neutral-70',
-          !disabled &&
-            'hover:bg-primary-98 focus:border-2 focus:border-[#858DA0] focus:shadow-primary-60',
+          !disabled
+          && 'hover:bg-primary-98 focus:border-2 focus:border-[#858DA0] focus:shadow-primary-60',
         );
   }
   if (variant === 'secondary') {
@@ -59,8 +58,8 @@ export const getButtonVariants = ({
       : mergeClassnames(
           'text-primary-50 bg-primary-90',
           disabled && 'bg-neutral-90 text-neutral-70',
-          !disabled &&
-            'hover:bg-primary-80 focus:border focus:border-primary-80 focus:shadow-primary-60',
+          !disabled
+          && 'hover:bg-primary-80 focus:border focus:border-primary-80 focus:shadow-primary-60',
         );
   }
   return animation === 'error'
@@ -68,8 +67,8 @@ export const getButtonVariants = ({
     : mergeClassnames(
         'text-white bg-primary-50',
         disabled && 'bg-neutral-90 text-neutral-70',
-        !disabled &&
-          'hover:bg-primary-80 focus:border focus:border-primary-80 focus:shadow-primary-60',
+        !disabled
+        && 'hover:bg-primary-80 focus:border focus:border-primary-80 focus:shadow-primary-60',
       );
 };
 

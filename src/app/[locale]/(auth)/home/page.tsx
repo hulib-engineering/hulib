@@ -12,7 +12,7 @@ import { useAppSelector } from '@/libs/hooks';
 import { Role } from '@/types/common';
 
 const Page = () => {
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
   const [roleUser, setRoleUser] = useState<Role | null>(null);
 
   useEffect(() => {
@@ -29,26 +29,28 @@ const Page = () => {
     );
   }
 
-  return roleUser === Role.ADMIN ? (
-    <AdminLayout className="h-full bg-neutral-98">
-      <div className="flex flex-1 items-center justify-center">
-        <div className="text-center">
-          <div className="mb-2 flex justify-center gap-1">
-            <span className="text-2xl">💕</span>
+  return roleUser === Role.ADMIN
+    ? (
+        <AdminLayout className="h-full bg-neutral-98">
+          <div className="flex flex-1 items-center justify-center">
+            <div className="text-center">
+              <div className="mb-2 flex justify-center gap-1">
+                <span className="text-2xl">💕</span>
+              </div>
+              <p className="text-lg font-medium text-neutral-20">
+                You have a warm heart
+              </p>
+            </div>
           </div>
-          <p className="text-lg font-medium text-neutral-20">
-            You have a warm heart
-          </p>
-        </div>
-      </div>
-    </AdminLayout>
-  ) : (
-    <CommonLayout className="bg-neutral-98">
-      <Banner />
-      <ExploreStory topicIds={null} />
-      <ShortDescription />
-    </CommonLayout>
-  );
+        </AdminLayout>
+      )
+    : (
+        <CommonLayout className="bg-neutral-98">
+          <Banner />
+          <ExploreStory topicIds={null} />
+          <ShortDescription />
+        </CommonLayout>
+      );
 };
 
 export default Page;

@@ -6,13 +6,13 @@ import { useUpdateReadingSessionMutation } from '@/libs/services/modules/reading
 import type { StatusType } from '@/libs/services/modules/reading-session/createNewReadingSession';
 import { StatusEnum } from '@/types/common';
 
-interface SessionActionsProps {
+type SessionActionsProps = {
   sessionId: string;
   status: string;
   isVibing: boolean;
   showCancelDialogProp?: boolean;
   onStatusChange?: (newStatus: StatusType) => void;
-}
+};
 
 export const SessionActions: React.FC<SessionActionsProps> = ({
   sessionId,
@@ -89,7 +89,7 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
               className="mt-1 w-full rounded-md border border-gray-300 p-2 text-sm"
               placeholder={defaultCancelReason}
               value={cancelReason}
-              onChange={(e) => setCancelReason(e.target.value)}
+              onChange={e => setCancelReason(e.target.value)}
               rows={3}
             />
           </label>

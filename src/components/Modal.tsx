@@ -3,10 +3,9 @@ import localFont from 'next/font/local';
 import type { MutableRefObject, ReactElement, ReactNode } from 'react';
 import React from 'react';
 
+import Backdrop from './Backdrop';
 import type { WithChildren } from '@/components/private/types';
 import { mergeClassnames } from '@/components/private/utils';
-
-import Backdrop from './Backdrop';
 
 const poppins = localFont({
   src: [

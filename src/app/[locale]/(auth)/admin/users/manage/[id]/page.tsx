@@ -14,7 +14,7 @@ const UserApprovalPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex h-full w-full justify-center px-[10%]">
+      <div className="flex size-full justify-center px-[10%]">
         <LoadingSkeleton />
       </div>
     );
@@ -29,7 +29,8 @@ const UserApprovalPage = () => {
         'w-full justify-between rounded-md bg-neutral-98 p-0 px-4 py-[-2rem] lg:flex-row lg:px-28',
       )}
     >
-      <UserProfile data={data} />;
+      <UserProfile data={data} />
+      ;
     </div>
   );
 };

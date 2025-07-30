@@ -10,7 +10,7 @@ type OptionProps = {
 type RadioProps = {
   defaultValue?: string | number;
   value?: string | number;
-  onChange?(value: unknown): void;
+  onChange?: (value: unknown) => void;
   children?: ReactNode;
   className?: string;
   disabled?: boolean;

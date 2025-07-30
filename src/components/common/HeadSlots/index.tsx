@@ -3,18 +3,18 @@
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-interface Props {
+type Props = {
   dayOfWeek: any;
-  onChangeDayOfWeek: Function;
+  onChangeDayOfWeek: (value: number) => void;
   selectedTimes: any;
   availableSlot?: boolean;
-}
+};
 
 const days = {
   0: {
     title: 'SUN',
     name: 'Sunday',
-    text: "Wait, you're working on Sunday too? 😆",
+    text: 'Wait, you\'re working on Sunday too? 😆',
   },
   1: {
     title: 'MON',

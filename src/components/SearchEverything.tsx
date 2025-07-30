@@ -6,17 +6,17 @@ import React, { useMemo, useState } from 'react';
 import MenuItem from './menuItem/MenuItem';
 import Search, { searchFilterItems, searchGetItemIndex } from './search/Search';
 
-interface Item {
+type Item = {
   children?: ReactNode;
   href?: string;
   id: string;
-}
+};
 
-interface Items {
+type Items = {
   items: Item[];
   heading?: string;
   id: string;
-}
+};
 
 const SearchEverything = () => {
   const [open, setOpen] = useState(false);
@@ -93,37 +93,41 @@ const SearchEverything = () => {
 
       <Search.Transition>
         <Search.Result>
-          {filteredItems.length ? (
-            filteredItems.map((list: Items) => (
-              <ul className="space-y-1" key={list.id}>
-                <li>
-                  <Search.ResultHeading>{list.heading}</Search.ResultHeading>
-                  {list.items.map(({ id, children, href, ...rest }: Item) => (
-                    <Search.ResultItem
-                      key={id}
-                      index={searchGetItemIndex(filteredItems, id)}
-                      closeOnSelect
-                      {...rest}
-                    >
-                      {href ? (
-                        <a href={href}>
-                          <MenuItem>
-                            <MenuItem.Title>{children}</MenuItem.Title>
-                          </MenuItem>
-                        </a>
-                      ) : (
-                        <MenuItem>
-                          <MenuItem.Title>{children}</MenuItem.Title>
-                        </MenuItem>
-                      )}
-                    </Search.ResultItem>
-                  ))}
-                </li>
-              </ul>
-            ))
-          ) : (
-            <Search.NoResults />
-          )}
+          {filteredItems.length
+            ? (
+                filteredItems.map((list: Items) => (
+                  <ul className="space-y-1" key={list.id}>
+                    <li>
+                      <Search.ResultHeading>{list.heading}</Search.ResultHeading>
+                      {list.items.map(({ id, children, href, ...rest }: Item) => (
+                        <Search.ResultItem
+                          key={id}
+                          index={searchGetItemIndex(filteredItems, id)}
+                          closeOnSelect
+                          {...rest}
+                        >
+                          {href
+                            ? (
+                                <a href={href}>
+                                  <MenuItem>
+                                    <MenuItem.Title>{children}</MenuItem.Title>
+                                  </MenuItem>
+                                </a>
+                              )
+                            : (
+                                <MenuItem>
+                                  <MenuItem.Title>{children}</MenuItem.Title>
+                                </MenuItem>
+                              )}
+                        </Search.ResultItem>
+                      ))}
+                    </li>
+                  </ul>
+                ))
+              )
+            : (
+                <Search.NoResults />
+              )}
         </Search.Result>
       </Search.Transition>
     </Search>

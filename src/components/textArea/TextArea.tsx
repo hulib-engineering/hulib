@@ -1,10 +1,9 @@
 import React, { forwardRef } from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
-
 import { useFormContext, useFormItemContext } from '../form/private/utils';
 import type { TextAreaProps } from './private/types';
 import { getSizeStyles } from './private/utils';
+import { mergeClassnames } from '@/components/private/utils';
 
 const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (
@@ -46,8 +45,8 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           'read-only:focus-visible:shadow-input invalid:focus-visible:shadow-input-err',
           'invalid:shadow-input-err invalid:hover:shadow-input-err invalid:focus:shadow-input-err',
           getSizeStyles(size),
-          error &&
-            'input-err hover:input-err focus:input-err focus-visible:input-err',
+          error
+          && 'input-err hover:input-err focus:input-err focus-visible:input-err',
           disabled && 'opacity-60 cursor-not-allowed',
           className,
         )}

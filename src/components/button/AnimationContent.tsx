@@ -1,13 +1,12 @@
 import { CheckIcon } from '@heroicons/react/24/solid';
 import React from 'react';
 
+import type { ButtonSettingsProps } from './private/types';
+import { getIconSize, getLoaderSize } from './private/utils/getButtonSizes';
 import { IconLeft, IconRight } from '@/components/button/ButtonComponent';
 import { getLoaderColor } from '@/components/button/private/utils/getButtonStyles';
 import Loader from '@/components/loader/Loader';
 import { mergeClassnames } from '@/components/private/utils';
-
-import type { ButtonSettingsProps } from './private/types';
-import { getIconSize, getLoaderSize } from './private/utils/getButtonSizes';
 
 const AnimationContent = ({
   children,

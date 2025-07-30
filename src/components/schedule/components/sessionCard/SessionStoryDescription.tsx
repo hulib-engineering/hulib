@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import React from 'react';
 
-interface SessionStoryDescriptionProps {
+type SessionStoryDescriptionProps = {
   note: string;
-}
+};
 
 export const SessionStoryDescription: React.FC<
   SessionStoryDescriptionProps

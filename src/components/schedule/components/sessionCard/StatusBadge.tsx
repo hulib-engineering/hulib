@@ -3,10 +3,10 @@ import React from 'react';
 import type { StatusType } from '@/libs/services/modules/reading-session/createNewReadingSession';
 import { StatusEnum } from '@/types/common';
 
-interface StatusBadgeProps {
+type StatusBadgeProps = {
   status: StatusType;
   isVibing?: boolean;
-}
+};
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({
   status,

@@ -7,7 +7,7 @@ export const HuberStep1Validation = (t: any) => {
       .string()
       .trim()
       .optional()
-      .refine((val) => !val || z.string().url().safeParse(val).success, {
+      .refine(val => !val || z.string().url().safeParse(val).success, {
         message: t('validation.invalid_url'),
       }),
     topics: z
@@ -17,7 +17,7 @@ export const HuberStep1Validation = (t: any) => {
         }),
       )
       .default([]),
-    isConfirmed: z.boolean().refine((val) => val, {
+    isConfirmed: z.boolean().refine(val => val, {
       message: t('validation.terms_required'),
     }),
   });

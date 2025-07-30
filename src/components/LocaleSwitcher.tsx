@@ -79,7 +79,7 @@ const LocaleSwitcher = ({ className }: { className?: string }) => {
   return (
     <Dropdown
       value={option}
-      onChange={handleChange}
+      onChange={v => handleChange(v as { locale: string; flag: JSX.Element })}
       className={mergeClassnames(className && className)}
     >
       {({ open }) => (
@@ -87,7 +87,7 @@ const LocaleSwitcher = ({ className }: { className?: string }) => {
           <Dropdown.Trigger className="rounded-full bg-white px-4 py-3">
             <Chip
               iconLeft={option.flag}
-              iconRight={
+              iconRight={(
                 <ChevronDownIcon
                   className={`text-base text-slate-1000 ${
                     open && 'rotate-180'
@@ -95,7 +95,7 @@ const LocaleSwitcher = ({ className }: { className?: string }) => {
                   width={24}
                   height={24}
                 />
-              }
+              )}
               className="!h-auto !p-0 uppercase leading-tight"
             >
               {option.locale}

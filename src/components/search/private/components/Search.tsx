@@ -14,14 +14,13 @@ import React, {
   useState,
 } from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
-import useClickOutside from '@/libs/hooks/useClickOutside';
-
 import type { SearchProps } from '../types';
 import { SearchContext, SelectContext } from '../utils/context';
 import { Input } from './Input';
 import NoResults from './NoResults';
 import ResultItem from './ResultItem';
+import useClickOutside from '@/libs/hooks/useClickOutside';
+import { mergeClassnames } from '@/components/private/utils';
 
 const SearchRoot = ({
   selected: selectedParent,
@@ -33,8 +32,8 @@ const SearchRoot = ({
   isOpen,
   className,
 }: SearchProps) => {
-  const isParentSelected =
-    typeof selectedParent === 'number' && onChangeSelected;
+  const isParentSelected
+    = typeof selectedParent === 'number' && onChangeSelected;
 
   const inputRef = useRef<MutableRefObject<HTMLInputElement>>(null);
 
@@ -119,17 +118,17 @@ const SearchRoot = ({
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (
-        e.key === 'ArrowDown' ||
-        (e.ctrlKey && e.key === 'n') ||
-        (e.ctrlKey && e.key === 'j')
+        e.key === 'ArrowDown'
+        || (e.ctrlKey && e.key === 'n')
+        || (e.ctrlKey && e.key === 'j')
       ) {
         e.preventDefault();
         e.stopPropagation();
         handleChangeSelected();
       } else if (
-        e.key === 'ArrowUp' ||
-        (e.ctrlKey && e.key === 'p') ||
-        (e.ctrlKey && e.key === 'k')
+        e.key === 'ArrowUp'
+        || (e.ctrlKey && e.key === 'p')
+        || (e.ctrlKey && e.key === 'k')
       ) {
         e.preventDefault();
         e.stopPropagation();

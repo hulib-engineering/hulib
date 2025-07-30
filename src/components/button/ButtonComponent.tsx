@@ -1,13 +1,6 @@
 import type { ElementType } from 'react';
 import React from 'react';
 
-import getAnimation from '@/components/button/private/utils/getButtonAnimation';
-import {
-  getButtonSizes,
-  getIconSize,
-} from '@/components/button/private/utils/getButtonSizes';
-import { mergeClassnames } from '@/components/private/utils';
-
 import type {
   ButtonProps,
   ButtonSettingsProps,
@@ -18,6 +11,12 @@ import {
   getButtonVariants,
   getIconHorizontalPosition,
 } from './private/utils/getButtonStyles';
+import getAnimation from '@/components/button/private/utils/getButtonAnimation';
+import {
+  getButtonSizes,
+  getIconSize,
+} from '@/components/button/private/utils/getButtonSizes';
+import { mergeClassnames } from '@/components/private/utils';
 
 const ButtonComponent = <C extends ElementType>({
   variant,
@@ -48,9 +47,9 @@ const ButtonComponent = <C extends ElementType>({
         }),
         getButtonCommonStyles({ disabled }),
         getButtonVariants({ variant, disabled, animation }),
-        animation === 'pulse' &&
-          (variant === 'fill' || variant === 'primary') &&
-          getAnimation('pulse'),
+        animation === 'pulse'
+        && (variant === 'fill' || variant === 'primary')
+        && getAnimation('pulse'),
         animation === 'error' && getAnimation('error'),
         fullWidth && !iconOnly && 'w-full',
         customClassName,
@@ -69,8 +68,8 @@ const Hover = ({
   isHover: boolean;
   variant: ButtonVariants;
 }) => {
-  const hoverBackground =
-    variant === 'ghost'
+  const hoverBackground
+    = variant === 'ghost'
       ? 'bg-light-active'
       : variant === 'outline'
         ? 'bg-light-hover'
@@ -93,11 +92,11 @@ const IconLeft = ({ fullWidth, iconLeft, size }: ButtonSettingsProps) => (
     aria-hidden="true"
     className={mergeClassnames(
       getIconSize(size),
-      fullWidth &&
-        `absolute block top-1/2 translate-y-[-50%] ${getIconHorizontalPosition({
-          iconLeft,
-          size,
-        })}`,
+      fullWidth
+      && `absolute block top-1/2 translate-y-[-50%] ${getIconHorizontalPosition({
+        iconLeft,
+        size,
+      })}`,
     )}
   >
     {iconLeft}
@@ -109,11 +108,11 @@ const IconRight = ({ fullWidth, iconRight, size }: ButtonSettingsProps) => (
     aria-hidden="true"
     className={mergeClassnames(
       getIconSize(size),
-      fullWidth &&
-        `absolute block top-1/2 translate-y-[-50%] ${getIconHorizontalPosition({
-          iconRight,
-          size,
-        })}`,
+      fullWidth
+      && `absolute block top-1/2 translate-y-[-50%] ${getIconHorizontalPosition({
+        iconRight,
+        size,
+      })}`,
     )}
   >
     {iconRight}

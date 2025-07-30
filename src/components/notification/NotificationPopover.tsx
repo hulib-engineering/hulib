@@ -6,15 +6,14 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import type { FC, ReactNode } from 'react';
 
+import Button from '../button/Button';
 import NotificationItem from '@/components/notification/NotificationItem';
 import NotificationSkeleton from '@/components/notification/NotificationSkeleton';
 import useNotifications from '@/libs/hooks/useNotifications';
 
-import Button from '../button/Button';
-
-interface NotificationPopoverProps {
+type NotificationPopoverProps = {
   children: ReactNode;
-}
+};
 
 const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
   const router = useRouter();
@@ -38,7 +37,7 @@ const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
           <Popover.Panel
             className={clsx(
               'absolute z-[9999] mt-2 origin-top-right rounded-md bg-white shadow-lg focus:outline-none',
-              'right-[-150px] h-[100vh] w-[100vw] md:right-0 md:h-auto md:w-80',
+              'right-[-150px] h-screen w-screen md:right-0 md:h-auto md:w-80',
             )}
           >
             {({ close }) => (
@@ -62,17 +61,17 @@ const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
                     </div>
                   )}
 
-                  {!isLoading &&
-                    !error &&
-                    notifications.map((notification) => (
-                      <NotificationItem
-                        key={notification.id}
-                        notification={notification}
-                        hideDetails
-                        hideRateNumber
-                        onClick={close}
-                      />
-                    ))}
+                  {!isLoading
+                  && !error
+                  && notifications.map(notification => (
+                    <NotificationItem
+                      key={notification.id}
+                      notification={notification}
+                      hideDetails
+                      hideRateNumber
+                      onClick={close}
+                    />
+                  ))}
                 </div>
 
                 {!isLoading && !error && notifications.length > 0 && (

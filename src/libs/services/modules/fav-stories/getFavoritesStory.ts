@@ -5,7 +5,7 @@ const getFavoritesStory = (
 ) =>
   build.query<any, number>({
     query: userId => `fav-stories?userId=${userId}`,
-    providesTags: (result, error, userId) => [
+    providesTags: (_result, _error, userId) => [
       { type: 'FavoritesStory', id: 'LIST' },
       { type: 'FavoritesStory', id: userId },
     ],

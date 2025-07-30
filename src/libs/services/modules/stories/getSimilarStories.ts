@@ -7,13 +7,13 @@ const getSimilarStories = (
   build: EndpointBuilder<BaseQueryFn, string, string>,
 ) =>
   build.query<PaginatedResponse<Story>, SimilarStoriesParams>({
-    query: (params) => ({
+    query: params => ({
       url: 'stories',
       params: {
-        page: params?.page || 1,
-        limit: params?.limit,
-        humanBookId: params?.humanBookId,
-        topicIds: params?.topicIds,
+        'page': params?.page || 1,
+        'limit': params?.limit,
+        'humanBookId': params?.humanBookId,
+        'topicIds': params?.topicIds,
         'sort[orderBy]': 'title',
         'sort[order]': 'ASC',
       },
@@ -26,7 +26,7 @@ const getSimilarStories = (
     forceRefetch: ({ currentArg, previousArg }) => {
       return currentArg?.limit !== previousArg?.limit;
     },
-    providesTags: (result) =>
+    providesTags: result =>
       result
         ? [
             ...result.data.map(({ id }) => ({ type: 'Stories' as const, id })),

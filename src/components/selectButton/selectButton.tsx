@@ -3,18 +3,17 @@ import { CaretDown } from '@phosphor-icons/react';
 import type { ReactNode, Ref } from 'react';
 import React, { forwardRef, useMemo } from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
-
 import type {
   InputProps,
   LabelProps,
   SelectButtonProps,
 } from './private/types';
 import {
-  getSelectSize,
   SelectButtonContext,
+  getSelectSize,
   useSelectButtonContext,
 } from './private/utils';
+import { mergeClassnames } from '@/components/private/utils';
 
 const SelectButtonRoot = forwardRef(
   (
@@ -63,8 +62,8 @@ const Control = () => {
 };
 
 const Input = ({ children, className }: InputProps) => {
-  const { size, isError, isDisabled, ...rest } =
-    useSelectButtonContext('SelectButton.Input');
+  const { size, isError, isDisabled, ...rest }
+    = useSelectButtonContext('SelectButton.Input');
 
   return (
     <button
@@ -75,10 +74,10 @@ const Input = ({ children, className }: InputProps) => {
         'shadow-input hover:shadow-input-hov transition-shadow duration-200',
         'focus:shadow-input-focus focus:outline-none',
         getSelectSize(size),
-        isError &&
-          'shadow-input-err hover:shadow-input-err focus:shadow-input-err',
-        isDisabled &&
-          'bg-neutral-90 text-neutral-40 cursor-not-allowed hover:shadow-input',
+        isError
+        && 'shadow-input-err hover:shadow-input-err focus:shadow-input-err',
+        isDisabled
+        && 'bg-neutral-90 text-neutral-40 cursor-not-allowed hover:shadow-input',
         className && className,
       )}
       type="button"

@@ -18,14 +18,13 @@ const getSizeStyles = (size?: string) => {
   }
 };
 
-export interface NativeSelectProps
-  extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
+export type NativeSelectProps = {
   className?: string;
   size?: 'sm' | 'md' | 'lg';
   error?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
-}
+} & Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'size'>;
 const NativeSelect = forwardRef<
   HTMLSelectElement,
   WithChildren<NativeSelectProps>
@@ -68,8 +67,8 @@ const NativeSelect = forwardRef<
             'block w-full max-w-full py-0 px-4 m-0 appearance-none text-moon-16 text-bulma transition-shadow box-border relative z-[2] cursor-pointer',
             'bg-goku shadow-input hover:shadow-input-hov',
             'focus:shadow-input-focus focus:outline-none',
-            error &&
-              'shadow-input-err hover:shadow-input-err focus:shadow-input-err',
+            error
+            && 'shadow-input-err hover:shadow-input-err focus:shadow-input-err',
             'invalid:shadow-input-err invalid:hover:shadow-input-err invalid:focus:shadow-input-err',
             getSizeStyles(size as string),
             'before:box-border after:box-border',

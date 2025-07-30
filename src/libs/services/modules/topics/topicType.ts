@@ -1,16 +1,16 @@
-export interface Topic {
+export type Topic = {
   id: number;
   name: string;
   createdAt?: string | undefined;
   updatedAt?: string | undefined;
-}
+};
 
-export interface GetTopicsParams {
+export type GetTopicsParams = {
   page?: number;
   limit?: number;
   name?: string;
-}
+};
 
-export interface CreateTopicParams {
+export type CreateTopicParams = {
   name: string;
-}
+};

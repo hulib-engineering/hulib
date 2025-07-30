@@ -5,11 +5,11 @@ import React, { useMemo } from 'react';
 
 type TabType = 'all' | 'story' | 'huber';
 
-interface SearchTabsProps {
+type SearchTabsProps = {
   activeTab: TabType;
   onTabChange: (tab: TabType) => void;
   className?: string;
-}
+};
 
 const SearchTabs: React.FC<SearchTabsProps> = ({
   activeTab,
@@ -29,7 +29,7 @@ const SearchTabs: React.FC<SearchTabsProps> = ({
 
   return (
     <div className={`flex gap-3 ${className}`}>
-      {tabs.map((tab) => (
+      {tabs.map(tab => (
         <button
           type="button"
           key={tab.key}
@@ -37,10 +37,10 @@ const SearchTabs: React.FC<SearchTabsProps> = ({
           className={`
             rounded-full px-4 py-2 text-sm font-medium transition-all duration-200
             ${
-              activeTab === tab.key
-                ? 'bg-primary-80 text-primary-60 shadow-md'
-                : 'bg-neutral-90 text-neutral-20 hover:bg-gray-300'
-            }
+        activeTab === tab.key
+          ? 'bg-primary-80 text-primary-60 shadow-md'
+          : 'bg-neutral-90 text-neutral-20 hover:bg-gray-300'
+        }
           `}
         >
           {tab.label}

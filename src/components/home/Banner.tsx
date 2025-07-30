@@ -7,14 +7,14 @@ import React from 'react';
 const Banner = () => {
   const t = useTranslations('Home');
   return (
-    <div className="relative h-full w-full rounded-lg">
+    <div className="relative size-full rounded-lg">
       <div className="absolute inset-0 rounded-lg bg-gradient-to-b" />
       <Image
         src="/assets/images/banner-mb.svg"
         width={0}
         height={0}
         sizes="100vw"
-        className="h-full w-full rounded-lg object-cover md:hidden"
+        className="size-full rounded-lg object-cover md:hidden"
         alt="Home Banner"
       />
 
@@ -24,7 +24,7 @@ const Banner = () => {
         width={0}
         height={0}
         sizes="100vw"
-        className="hidden h-[8rem] w-full rounded-lg object-cover md:block md:h-full "
+        className="hidden h-32 w-full rounded-lg object-cover md:block md:h-full "
         alt="Home Banner"
       />
 
@@ -33,7 +33,7 @@ const Banner = () => {
           <h3 className="text-base font-medium leading-[1.6rem] text-primary-30 md:text-[2.5rem] md:leading-[3rem]">
             {t('banner.title')}
           </h3>
-          <p className="w-[16rem] text-sm font-medium leading-6 text-primary-30 md:w-[27.5rem] md:text-2xl md:leading-8">
+          <p className="w-64 text-sm font-medium leading-6 text-primary-30 md:w-[27.5rem] md:text-2xl md:leading-8">
             {t('banner.sub_title')}
           </p>
         </div>

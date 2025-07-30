@@ -25,7 +25,7 @@ type IMinigameCardProps = IGameCardProps & {
 };
 
 const MinigameCard = (props: IMinigameCardProps) => {
-  const guessedIds = useAppSelector((state) => state.minigame.guessedIds);
+  const guessedIds = useAppSelector(state => state.minigame.guessedIds);
 
   // const dispatch = useAppDispatch();
 
@@ -83,14 +83,13 @@ const MinigameCard = (props: IMinigameCardProps) => {
         'h-48 w-full cursor-pointer rounded border-[0.2rem] border-solid border-gray-700 bg-[#fffbf6]',
         'transition-transform duration-500 transform-style-3d',
         props.isPicked && 'rotate-y-180',
-        guessedIds.includes(props.imgUrl) &&
-          'bg-[#f5f5f5] rotate-y-180 scale-90',
+        guessedIds.includes(props.imgUrl)
+        && 'bg-[#f5f5f5] rotate-y-180 scale-90',
       )}
       data-id={props.id}
       onClick={() =>
-        props.flippable &&
-        props.onPick({ id: props.id, name: props.name, imgUrl: props.imgUrl })
-      }
+        props.flippable
+        && props.onPick({ id: props.id, name: props.name, imgUrl: props.imgUrl })}
       type="button"
     >
       <div
@@ -100,7 +99,7 @@ const MinigameCard = (props: IMinigameCardProps) => {
         )}
       >
         <Image
-          className="w-[7rem]"
+          className="w-28"
           src={`/assets/images/minigame/${props.imgUrl}`}
           alt={props.name}
           loading="lazy"

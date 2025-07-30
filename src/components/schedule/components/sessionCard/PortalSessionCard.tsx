@@ -3,13 +3,13 @@ import { createPortal } from 'react-dom';
 
 import { SessionCard } from './SessionCard';
 
-interface PortalSessionCardProps {
+type PortalSessionCardProps = {
   session: any;
   expanded?: boolean;
   position: { top: number; left: number };
   onClose?: () => void;
   showCancelDialogProp?: boolean;
-}
+};
 
 export const PortalSessionCard: React.FC<PortalSessionCardProps> = ({
   session,
@@ -59,7 +59,9 @@ export const PortalSessionCard: React.FC<PortalSessionCardProps> = ({
     };
   }, [onClose]);
 
-  if (!session) return null;
+  if (!session) {
+    return null;
+  }
 
   const getCardStyle = () => {
     if (isMobile) {

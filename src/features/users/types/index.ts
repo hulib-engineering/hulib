@@ -29,6 +29,7 @@ export type User = {
     name: string;
   };
   file: any | null;
+  photo?: { id: string; path: string };
   humanBookTopic: {
     userId: number;
     topicId: number;

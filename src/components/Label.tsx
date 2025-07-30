@@ -8,16 +8,15 @@ import React, { forwardRef } from 'react';
 import type { WithChildren } from './private/types';
 import { mergeClassnames } from './private/utils';
 
-interface LabelProps
-  extends Omit<
-    DetailedHTMLProps<LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>,
-    'size'
-  > {
+type LabelProps = {
   className?: string;
   type?: HTMLInputTypeAttribute;
   size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
-}
+} & Omit<
+  DetailedHTMLProps<LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>,
+  'size'
+>;
 
 const Label = forwardRef<HTMLLabelElement, WithChildren<LabelProps>>(
   (

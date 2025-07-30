@@ -36,7 +36,7 @@ function ControlledSelect<T extends FieldValues>({
       {({ open }) => (
         <>
           <Dropdown.Select open={open} label={label}>
-            {options.find((option) => option.value === value)?.label}
+            {options.find(option => option.value === value)?.label}
           </Dropdown.Select>
           <Dropdown.Options>
             {options.map((option, index) => (

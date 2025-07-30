@@ -10,23 +10,23 @@ import { NOTIFICATION_TYPES } from '@/libs/services/modules/notifications/notifi
 import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
 import { Role } from '@/types/common';
 
-interface NotificationContentProps {
+type NotificationContentProps = {
   notification: Notification;
   hideDetails?: boolean;
   onSeeDetail?: () => void;
-}
+};
 
 const NotificationContent: FC<NotificationContentProps> = ({
   notification,
   hideDetails = false,
   onSeeDetail,
 }) => {
-  const { role } = useAppSelector((state) => state.auth.userInfo);
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const { role } = useAppSelector(state => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
   const t = useTranslations('notifications');
-  const shouldFetchReadingSession =
-    notification.type.name === NOTIFICATION_TYPES.OTHER.name &&
-    notification.relatedEntityId;
+  const shouldFetchReadingSession
+    = notification.type.name === NOTIFICATION_TYPES.OTHER.name
+      && notification.relatedEntityId;
 
   const { data: readingSession } = useGetReadingSessionByIdQuery(
     {
@@ -57,11 +57,18 @@ const NotificationContent: FC<NotificationContentProps> = ({
           <span className="font-bold">{t('upComming.title')}</span>
         </p>
         <p>
-          {t('upComming.meetingWith')}{' '}
+          {t('upComming.meetingWith')}
+          {' '}
           <span className="text-yellow-50">
-            {meetingType} {partnerName}
-          </span>{' '}
-          {t('upComming.startingNow')} {t('upComming.encouragement')}{' '}
+            {meetingType}
+            {' '}
+            {partnerName}
+          </span>
+          {' '}
+          {t('upComming.startingNow')}
+          {' '}
+          {t('upComming.encouragement')}
+          {' '}
           {t('upComming.callToAction')}
         </p>
       </>
@@ -76,7 +83,8 @@ const NotificationContent: FC<NotificationContentProps> = ({
             <p>
               <span className="font-bold">
                 {notification.sender?.fullName ?? t('unknownUser')}
-              </span>{' '}
+              </span>
+              {' '}
               {t('sessionRequest.message')}
             </p>
             {!hideDetails && (
@@ -95,8 +103,10 @@ const NotificationContent: FC<NotificationContentProps> = ({
         return (
           <div className="w-full">
             <p>
-              <span className="font-bold">{notification.sender?.fullName}</span>{' '}
-              {t('reviewStory.message')}{' '}
+              <span className="font-bold">{notification.sender?.fullName}</span>
+              {' '}
+              {t('reviewStory.message')}
+              {' '}
               {notification.relatedEntity?.title && (
                 <span className="font-bold text-primary-60">
                   &ldquo;
@@ -111,12 +121,16 @@ const NotificationContent: FC<NotificationContentProps> = ({
       case NOTIFICATION_TYPES.PUBLISH_STORY.name:
         return (
           <p>
-            {t('publishStory.user.prefix')}{' '}
+            {t('publishStory.user.prefix')}
+            {' '}
             {notification.relatedEntity?.title && (
               <span className="font-bold text-primary-60">
-                &ldquo;{notification.relatedEntity.title}&rdquo;
+                &ldquo;
+                {notification.relatedEntity.title}
+                &rdquo;
               </span>
-            )}{' '}
+            )}
+            {' '}
             {t('publishStory.user.suffix')}
           </p>
         );
@@ -124,7 +138,10 @@ const NotificationContent: FC<NotificationContentProps> = ({
       case NOTIFICATION_TYPES.ACCOUNT.name:
         return (
           <p>
-            <span className="font-bold">{t('account.user.prefix')} </span>
+            <span className="font-bold">
+              {t('account.user.prefix')}
+              {' '}
+            </span>
             {t('account.user.suffix')}
           </p>
         );
@@ -145,10 +162,13 @@ const NotificationContent: FC<NotificationContentProps> = ({
             <span className="font-bold">
               {`${notification.sender?.fullName} `}
             </span>
-            {t('publishStory.admin.message')}{' '}
+            {t('publishStory.admin.message')}
+            {' '}
             {notification.relatedEntity?.title && (
               <span className="font-bold text-primary-60">
-                &ldquo;{notification.relatedEntity.title}&rdquo;
+                &ldquo;
+                {notification.relatedEntity.title}
+                &rdquo;
               </span>
             )}
           </p>

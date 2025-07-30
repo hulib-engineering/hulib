@@ -3,9 +3,8 @@
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 
-import { useGetSimilarStoriesQuery } from '@/libs/services/modules/stories';
-
 import StoriesList from '../stories/StoriesList';
+import { useGetSimilarStoriesQuery } from '@/libs/services/modules/stories';
 
 type SimilarStoryProps = {
   humanBookId: string;
