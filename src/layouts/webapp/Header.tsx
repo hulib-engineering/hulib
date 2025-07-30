@@ -430,6 +430,7 @@ const Header = () => {
                           avatarUrl
                           || '/assets/images/ava-placeholder.png'
                         }
+                        unoptimized={!!avatarUrl}
                         className="size-11 rounded-full object-contain"
                       />
                     </AvatarPopover>
@@ -495,6 +496,7 @@ const Header = () => {
                         avatarUrl
                         || '/assets/images/ava-placeholder.png'
                       }
+                      unoptimized={!!avatarUrl}
                     />
                   </AvatarPopover>
                   <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
