@@ -166,8 +166,10 @@ export default {
         },
         green: {
           30: '#2A8010',
+          40: '#38AA16',
           50: '#46D51B',
           60: '#66E73F',
+          80: '#B2F39F',
           90: '#D9F9CF',
           98: '#FBFEFA',
         },
@@ -176,7 +178,9 @@ export default {
           'primary-blue': '#0061EF',
         },
         orange: {
+          40: '#FF7301',
           50: '#FF8207',
+          60: '#FF8F34',
           70: '#FFAB67',
           90: '#FFE4D1',
           98: '#FFF9F5',
