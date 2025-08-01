@@ -104,18 +104,6 @@ const paginateText = (
   const linesPerPage = Math.floor(availableHeight / actualLineHeight);
   const maxCharsPerPage = Math.max(charsPerLine * linesPerPage, 150); // Minimum 150 chars
 
-  console.log('Pagination params:', {
-    containerWidth,
-    containerHeight,
-    availableWidth,
-    availableHeight,
-    charsPerLine,
-    linesPerPage,
-    maxCharsPerPage,
-    actualFontSize,
-    actualLineHeight,
-  });
-
   let currentIndex = 0;
 
   while (currentIndex < longText.length) {
@@ -148,8 +136,6 @@ const paginateText = (
       break;
     }
   }
-
-  console.log('Generated pages:', pages.length);
   return pages;
 };
 
@@ -225,7 +211,6 @@ export function DetailBook({
         flipBookHeight,
       );
 
-      console.log('Paginated result:', paginatedResult.length, 'pages');
       if (paginatedResult.length > 0) {
         setPages(paginatedResult);
       } else {
