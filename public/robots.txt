@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://hulib.com
-
-# Sitemaps
-Sitemap: https://hulib.com/sitemap.xml
