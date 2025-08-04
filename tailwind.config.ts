@@ -194,6 +194,7 @@ export default {
         'focus-input': '0 0 0 4px rgba(205, 221, 254)',
         'tooltip':
           '0 4px 5px 0 rgba(28, 30, 33, 0.10), 0 0 4px 0 rgba(15, 15, 16, 0.06)',
+        'spinner': '0 0 0 7px #42a5f5, inset 0 0 0 1px #42a5f5',
       },
       rotate: {
         30: '30deg',
@@ -438,6 +439,28 @@ export default {
             backgroundPosition: '-100% 0',
           },
         },
+        rotate: {
+          '0%, 42%': {
+            transform: 'rotate(0deg)',
+          },
+          '48%, 92%': {
+            transform: 'rotate(180deg)',
+          },
+          '100%': {
+            transform: 'rotate(360deg)',
+          },
+        },
+        load: {
+          '0%': {
+            width: '0',
+          },
+          '40%, 50%': {
+            width: '100%',
+          },
+          '90%, 100%': {
+            width: '0',
+          },
+        },
       },
       animation: {
         'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
@@ -462,6 +485,8 @@ export default {
         'blob-bounce': 'blobBounce 5s infinite ease',
         'glider': 'glider 1s infinite linear',
         'flashing': 'flash 3s infinite',
+        'rotate': 'rotate 6s linear infinite',
+        'load': 'load 6s linear infinite',
       },
     },
     animation: {
