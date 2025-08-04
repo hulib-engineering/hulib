@@ -2,8 +2,8 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
-import { SessionAttendees } from '@/components/schedule/components/sessionCard/SessionAttendees';
-import { SessionDateTime } from '@/components/schedule/components/sessionCard/SessionDateTime';
+import { SessionAttendees } from '@/components/schedule/sessionCard/SessionAttendees';
+import { SessionDateTime } from '@/components/schedule/sessionCard/SessionDateTime';
 import { useGetReadingSessionOfUserQuery } from '@/libs/services/modules/user';
 import type { SessionStatus } from '@/libs/services/modules/user/getReadingSessionOfUser';
 
@@ -38,8 +38,8 @@ const CompletedMeetings = () => {
                   endDate={session.endTime}
                 />
                 <SessionAttendees
-                  humanBook={session.humanBook}
-                  reader={session.reader}
+                  huber={session.humanBook}
+                  liber={session.reader}
                   isVibing={session.isVibing}
                   isAdmin
                 />

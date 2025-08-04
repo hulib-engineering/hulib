@@ -38,7 +38,7 @@ const AnimationContent = ({
   </span>
 );
 
-const getButtonSize = (size?: ButtonSizes): string => {
+export const getButtonSize = (size?: ButtonSizes): string => {
   if (size === 'sm') {
     return 'h-8 p-1 gap-1 text-moon-14 rounded-moon-i-sm';
   }
@@ -91,7 +91,7 @@ type Props = {
   animation?: ButtonAnimations;
 };
 
-const getAriaLabel = ({ ariaLabel, animation }: Props): string | undefined =>
+export const getAriaLabel = ({ ariaLabel, animation }: Props): string | undefined =>
   ariaLabel
   || (animation === 'error'
     ? 'Error'
@@ -99,4 +99,4 @@ const getAriaLabel = ({ ariaLabel, animation }: Props): string | undefined =>
       ? undefined
       : 'IconButton');
 
-export { AnimationContent, getAriaLabel, getButtonSize };
+export { AnimationContent };

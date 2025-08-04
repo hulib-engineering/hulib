@@ -575,7 +575,28 @@
       "morning": "Morning",
       "afternoon": "Afternoon",
       "night": "Night",
-      "next": "Next"
+      "next": "Next",
+      "confirm_time": "You are going to have a meeting at",
+      "this_week": "This week",
+      "back": "Back",
+      "confirmation_title": "30 Minutes meeting",
+      "time": "Time",
+      "warning": "Warning",
+      "warning_detail": "Make sure you have selected the correct day, time and time zone.",
+      "duration": "Duration",
+      "mins": "mins",
+      "message": "Message",
+      "message_helper_txt": "Please share anything that will help prepare for the meeting.",
+      "message_placeholder": "Enter meeting notes...",
+      "submit": "Place request",
+      "success_title": "Congratulation!",
+      "success_detail": "You have successfully sent a meeting request to Huber",
+      "back_to_home": "Back to Homepage",
+      "back_to_schedule": "Your schedule",
+      "notice": "Notice",
+      "notice_text": "Please make sure you select the correct time slot for your schedule. The time shown is in your local timezone.",
+      "support_text": "In case you do not find an open time slot. Feel free to check with the Huber over chat",
+      "click_here": "click here"
     }
   },
   "notifications": {
@@ -707,14 +728,17 @@
     "back_to_home": "Back to Home"
   },
   "ScheduleBasicInfo": {
-    "topics": "topics",
+    "topics": "Topics",
     "rating": "rating",
     "duration": "Duration",
-    "duration_time": "(30 mins)",
+    "duration_time": "30 mins",
     "notice": "Notice",
     "notice_text": "Please make sure you select the correct time slot for your schedule. The time shown is in your local timezone.",
     "support_text": "If you need any support, please",
-    "click_here": "click here"
+    "click_here": "click here",
+    "back": "Back",
+    "attendees": "Attendees",
+    "you": "You"
   },
   "Messages": {
     "meta_title": "Messenger | HuLib",

@@ -170,7 +170,7 @@ const HumanBookInfo = ({
         </div>
         <div className="flex w-full flex-col items-center gap-2">
           <Link
-            href={`/schedule-meeting/${humanBook?.id}?storyId=${storyId}`}
+            href={`/explore-story/${storyId}/booking`}
             className="w-full"
           >
             <IconButton

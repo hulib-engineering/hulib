@@ -8,12 +8,12 @@ import { SessionStoryDescription } from './SessionStoryDescription';
 import { SessionUrl } from './SessionUrl';
 import { StatusBadge } from './StatusBadge';
 import { UserAvatar } from './UserAvatar';
-import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
 import type {
   ReadingSession,
   StatusType,
 } from '@/libs/services/modules/reading-session/createNewReadingSession';
 import { useAppSelector } from '@/libs/hooks';
+import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
 
 type SessionCardProps = {
   session: ReadingSession;
@@ -147,8 +147,10 @@ export const SessionCard: React.FC<SessionCardProps> = ({
       {isExpanded
         ? (
             <SessionAttendees
-              humanBook={session.humanBook}
-              reader={session.reader}
+              // @ts-ignore
+              huber={session.humanBook}
+              // @ts-ignore
+              liber={session.reader}
               isVibing={isVibing}
             />
           )
