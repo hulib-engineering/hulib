@@ -155,6 +155,7 @@ export default {
           98: '#F0F5FF',
         },
         red: {
+          40: '#BE002D',
           50: '#EE0038',
           70: '#FF5C82',
           90: '#FFC9D5',
