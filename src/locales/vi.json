@@ -579,7 +579,28 @@
       "morning": "Buổi sáng",
       "afternoon": "Buổi chiều",
       "night": "Buổi tối",
-      "next": "Tiếp tục"
+      "next": "Tiếp tục",
+      "confirm_time": "Bạn sẽ có một cuộc gặp gỡ vào lúc",
+      "this_week": "Tuần này",
+      "back": "Quay lại",
+      "confirmation_title": "Buổi trò chuyện 30 phút",
+      "time": "Khung giờ",
+      "warning": "Lưu ý",
+      "warning_detail": "Hãy kiểm tra chắc chắn bạn đã chọn đúng khung giờ/ngày/múi giờ.",
+      "duration": "Thời gian diễn ra",
+      "mins": "phút",
+      "message": "Ghi chú",
+      "message_helper_txt": "Hãy chia sẻ những nội dung cần chuẩn bị trước buổi hẹn nhé!",
+      "message_placeholder": "Ghi chú...",
+      "submit": "Đặt cuộc hẹn",
+      "success_title": "Chúc mừng!",
+      "success_detail": "Bạn đã gửi thành công lịch hẹn trò chuyện với Huber.",
+      "back_to_home": "Trở về Trang chủ",
+      "back_to_schedule": "Lịch trình",
+      "notice": "Lưu ý",
+      "notice_text": "Vui lòng đảm bảo bạn chọn đúng khung giờ cho lịch hẹn của mình. Thời gian hiển thị là theo múi giờ địa phương của bạn.",
+      "support_text": "Nếu chưa thấy khung giờ phù hợp, cứ thoải mái nhắn cho Huber để trao đổi",
+      "click_here": "tại đây"
     }
   },
   "notifications": {
@@ -718,10 +739,13 @@
     "topics": "Chủ đề",
     "rating": "Đánh giá",
     "duration": "Thời lượng",
-    "duration_time": "(30 phút)",
+    "duration_time": "30 phút",
     "notice": "Lưu ý",
     "notice_text": "Vui lòng đảm bảo bạn chọn đúng khung giờ cho lịch hẹn của mình. Thời gian hiển thị là theo múi giờ địa phương của bạn.",
     "support_text": "Nếu bạn cần hỗ trợ, vui lòng",
-    "click_here": "nhấn vào đây"
+    "click_here": "nhấn vào đây",
+    "back": "Quay lại",
+    "attendees": "Người tham gia",
+    "you": "Bạn"
   }
 }

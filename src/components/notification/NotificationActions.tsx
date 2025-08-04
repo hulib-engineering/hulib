@@ -3,7 +3,7 @@
 import type { FC } from 'react';
 import { useRef, useState } from 'react';
 
-import { PortalSessionCard } from '@/components/schedule/components/sessionCard/PortalSessionCard';
+import { PortalSessionCard } from '@/components/schedule/sessionCard/PortalSessionCard';
 import { NOTIFICATION_TYPES } from '@/libs/services/modules/notifications/notificationType';
 import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
 
