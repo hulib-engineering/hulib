@@ -21,6 +21,7 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
 import { mergeClassnames } from '@/components/private/utils';
 import { openChat } from '@/libs/store/messenger';
+import { Spinner } from '@/components/common/Spinner';
 
 export default function Index() {
   const router = useRouter();
@@ -30,7 +31,7 @@ export default function Index() {
   const locale = useLocale();
   const t = useTranslations('Schedule.MainScreen');
 
-  const { data: story } = useGetStoryDetailQuery(storyId);
+  const { data: story } = useGetStoryDetailQuery(Number(storyId));
   const [placeRequest] = useCreateNewReadingSessionMutation();
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
@@ -101,7 +102,11 @@ export default function Index() {
   };
 
   if (!story) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex h-screen w-full flex-1 items-center justify-center">
+        <Spinner />
+      </div>
+    );
   }
 
   return (

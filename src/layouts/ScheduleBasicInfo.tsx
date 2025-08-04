@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import type z from 'zod';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { SessionAttendees } from '@/components/schedule/sessionCard/SessionAttendees';
 import { useAppSelector } from '@/libs/hooks';
 import type { HuberStep1Validation } from '@/validations/HuberValidation';
@@ -12,13 +13,22 @@ import { ScheduleInfoItemLayout } from '@/components/schedule/ScheduleInfoItemLa
 import Button from '@/components/button/Button';
 
 const ScheduleBasicInfo = ({ huber, onOpenHuberConv }: { huber: z.infer<typeof ProfileValidation> & Pick<z.infer<ReturnType<typeof HuberStep1Validation>>, 'topics'> & { rating: number; photo: { id: string; path: string } }; onOpenHuberConv: () => void }) => {
+  const router = useRouter();
+
   const t = useTranslations('ScheduleBasicInfo');
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
   return (
     <div className="hidden w-full flex-col gap-4 rounded-3xl bg-white p-4 xl:flex xl:w-1/3 xl:p-8">
-      <Button variant="ghost" iconLeft={<ArrowLeft />} className="w-fit text-black">{t('back')}</Button>
+      <Button
+        variant="ghost"
+        iconLeft={<ArrowLeft />}
+        className="w-fit text-black"
+        onClick={() => router.back()}
+      >
+        {t('back')}
+      </Button>
       <div className="flex items-center gap-x-2 rounded-3xl bg-neutral-98 p-4">
         <Image
           src={huber.photo?.path ?? '/assets/images/ava-placeholder.png'}
