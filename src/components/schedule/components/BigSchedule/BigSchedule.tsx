@@ -16,7 +16,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { ScheduleFilterPopover } from '@/components/schedule/components/ScheduleFilter/ScheduleFilter';
-import { PortalSessionCard } from '@/components/schedule/components/sessionCard/PortalSessionCard';
+import { PortalSessionCard } from '@/components/schedule/sessionCard/PortalSessionCard';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 import { ROLE_NAME, Role, StatusEnum } from '@/types/common';

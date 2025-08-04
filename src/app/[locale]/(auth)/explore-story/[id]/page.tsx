@@ -16,9 +16,7 @@ export default function Index() {
   const { id } = useParams();
   const router = useRouter();
 
-  const { data, isLoading } = useGetStoryDetailQuery({
-    id: Number(id), // id is a string, so we need to convert it to a number
-  });
+  const { data, isLoading } = useGetStoryDetailQuery(Number(id));
 
   if (isLoading) {
     return <StoryDetailsSkeleton />;

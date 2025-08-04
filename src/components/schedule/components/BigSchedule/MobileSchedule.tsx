@@ -14,7 +14,7 @@ import {
 import { useTranslations } from 'next-intl';
 import React, { useMemo, useState } from 'react';
 
-import { SessionCard } from '@/components/schedule/components/sessionCard/SessionCard';
+import { SessionCard } from '@/components/schedule/sessionCard/SessionCard';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 import type { ReadingSession } from '@/libs/services/modules/reading-session/createNewReadingSession';

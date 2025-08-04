@@ -35,7 +35,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
         rows={rows}
         disabled={disabled}
         className={mergeClassnames(
-          'block w-full max-w-full p-3 m-0 appearance-none text-bulma',
+          'block w-full max-w-full p-3 m-0 appearance-none text-neutral-40',
           'transition-shadow box-border rounded-2xl border border-solid border-neutral-90 relative z-[2] bg-neutral-98 shadow-input hover:shadow-input-hov',
           'focus:shadow-input-focus focus:outline-none focus-visible:shadow-input-focus',
           'focus-visible:outline-none before:box-border after:box-border placeholder:delay-75',

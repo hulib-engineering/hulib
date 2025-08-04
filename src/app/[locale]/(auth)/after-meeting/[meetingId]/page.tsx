@@ -18,8 +18,8 @@ import React, { useState } from 'react';
 import Button from '@/components/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import Rate from '@/components/meeting/Rate';
-import { SessionAttendees } from '@/components/schedule/components/sessionCard/SessionAttendees';
-import { SessionDateTime } from '@/components/schedule/components/sessionCard/SessionDateTime';
+import { SessionAttendees } from '@/components/schedule/sessionCard/SessionAttendees';
+import { SessionDateTime } from '@/components/schedule/sessionCard/SessionDateTime';
 import { useAppSelector } from '@/libs/hooks';
 import useDeviceType from '@/libs/hooks/useDeviceType';
 import {
@@ -116,7 +116,7 @@ export default function FeedbackForm() {
             sm: '480px', // Tablet-friendly width
             md: '600px', // Desktop optimal width
           },
-          // Responsive padding following Apple's 16pt base unit system
+          // Responsive padding following Apple's 16 pt base unit system
           p: {
             xs: 2, // 16px on mobile
             sm: 3, // 24px on tablet
@@ -170,8 +170,8 @@ export default function FeedbackForm() {
 
             <Box sx={{ mb: { xs: 3, sm: 4, md: 3 } }}>
               <SessionAttendees
-                humanBook={readingSession?.humanBook}
-                reader={readingSession?.reader}
+                huber={readingSession?.humanBook}
+                liber={readingSession?.reader}
                 isVibing={Number(userId) === Number(readingSession?.reader?.id)}
               />
             </Box>
