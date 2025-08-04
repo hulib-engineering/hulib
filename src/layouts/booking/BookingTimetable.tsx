@@ -3,6 +3,7 @@
 import { CaretLeft, CaretRight, Info } from '@phosphor-icons/react';
 import {
   addDays,
+  differenceInHours,
   differenceInWeeks,
   format,
   isBefore,
@@ -181,17 +182,19 @@ export default function BookingTimetable({ huberId, onSelectTime, onOpenHuberCon
                       const hour = Number.parseInt(item.split(':')[0] ?? '0', 10) ?? 0;
                       const minute = Number.parseInt(item.split(':')[1] ?? '0', 10) ?? 0;
                       const timeObj = selectedDate.setHours(hour, minute, 0, 0);
-                      const isoSelectedTimeString = new Date(timeObj).toISOString();
+                      const selectedTimestamp = new Date(timeObj);
                       const isBooked
                       = bookedSlots
                         && bookedSlots.length
-                        && bookedSlots.includes(isoSelectedTimeString);
+                        && bookedSlots.includes(selectedTimestamp.toISOString());
+                      const isDisabled = differenceInHours(selectedTimestamp, new Date()) < 24;
 
                       return (
                         <Button
                           key={item}
                           variant={selectedTime === item ? 'primary' : 'outline'}
                           size="sm"
+                          disabled={isDisabled}
                           className={mergeClassnames(
                             'flex-shrink-0 min-w-fit rounded-lg px-3 py-2 text-sm font-normal leading-4',
                             'focus:border-none focus:shadow-none',

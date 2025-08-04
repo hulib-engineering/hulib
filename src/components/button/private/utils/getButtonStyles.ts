@@ -26,7 +26,7 @@ export const getButtonVariants = ({
         )
       : mergeClassnames(
           'text-primary-50 bg-transparent border border-[#C2C6CF]',
-          disabled && 'border-neutral-90',
+          'disabled:border-neutral-90 disabled:text-neutral-70',
           !disabled
           && 'hover:bg-primary-98 focus:border focus:border-[#C2C6CF] focus:shadow-primary-60',
         );
