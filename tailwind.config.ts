@@ -122,6 +122,7 @@ export default {
           40: '#DBAE0A',
           50: '#F3C00C',
           60: '#F6CE3C',
+          80: '#FBE79D',
           90: '#FDF3CE',
           98: '#FFFDF5',
         },
@@ -157,6 +158,7 @@ export default {
         red: {
           40: '#BE002D',
           50: '#EE0038',
+          60: '#FF2559',
           70: '#FF5C82',
           90: '#FFC9D5',
           98: '#FFF5F7',

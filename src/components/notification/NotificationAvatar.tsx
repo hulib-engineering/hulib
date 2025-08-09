@@ -17,17 +17,39 @@ const NotificationAvatar: FC<NotificationAvatarProps> = ({
   notification,
   size = 56,
 }) => {
-  const { role } = useAppSelector(state => state.auth.userInfo);
+  // Safe access to userInfo with fallback
+  const userInfo = useAppSelector(state => state.auth?.userInfo);
+  const role = userInfo?.role;
+
+  // Early return if notification or required data is missing
+  if (!notification?.type?.name) {
+    return (
+      <div
+        className="flex shrink-0 items-center justify-center rounded-full border-2 border-gray-300 bg-gray-100"
+        style={{ width: size, height: size }}
+      >
+        <span className="text-gray-500">?</span>
+      </div>
+    );
+  }
+
+  // Safe access to notification type
+  const notificationType = notification.type.name;
+
   if (
-    notification.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name
-    || notification.type.name === NOTIFICATION_TYPES.REVIEW_STORY.name
-    || role.id === Role.ADMIN
+    notificationType === NOTIFICATION_TYPES.SESSION_REQUEST.name
+    || notificationType === NOTIFICATION_TYPES.REVIEW_STORY.name
+    || (role?.id === Role.ADMIN)
   ) {
+    // Safe access to sender data with fallbacks
+    const senderFile = notification.sender?.file ?? '/assets/images/ava-placeholder.png';
+    const senderName = notification.sender?.fullName ?? 'Unknown User';
+
     return (
       <div className="relative shrink-0">
         <Image
-          src={notification.sender.file ?? '/assets/images/ava-placeholder.png'}
-          alt={notification.sender.fullName ?? 'Unknown User'}
+          src={senderFile}
+          alt={senderName}
           className="rounded-full"
           width={size}
           height={size}
@@ -43,7 +65,7 @@ const NotificationAvatar: FC<NotificationAvatarProps> = ({
     );
   }
 
-  if (notification.type.name === NOTIFICATION_TYPES.OTHER.name) {
+  if (notificationType === NOTIFICATION_TYPES.OTHER.name) {
     return (
       <div className="relative shrink-0">
         <Image
@@ -64,6 +86,48 @@ const NotificationAvatar: FC<NotificationAvatarProps> = ({
     );
   }
 
+  if (notificationType === NOTIFICATION_TYPES.ACCEPTED_MEETING.name || notificationType === NOTIFICATION_TYPES.REJECTED_MEETING.name) {
+    return (
+      <div className="flex shrink-0 items-center justify-center rounded-full ">
+        <Image
+          src="/assets/icons/notification/Avatar.svg"
+          alt="avatar"
+          className="rounded-full"
+          width={size}
+          height={size}
+        />
+      </div>
+    );
+  }
+
+  if (notificationType === NOTIFICATION_TYPES.CANCELED_MEETING.name) {
+    return (
+      <div className="relative shrink-0">
+        <Image
+          src="/assets/icons/notification/camera.svg"
+          alt="Meeting icon"
+          className="rounded-lg"
+          width={size}
+          height={size}
+        />
+      </div>
+    );
+  }
+
+  if (notificationType === NOTIFICATION_TYPES.NOT_ATTENDED.name) {
+    return (
+      <div className="relative shrink-0">
+        <Image
+          src="/assets/icons/notification/camera_1.png"
+          alt="Meeting icon"
+          className="rounded-lg"
+          width={size}
+          height={size}
+        />
+      </div>
+    );
+  }
+  // Default case
   return (
     <div
       className="flex shrink-0 items-center justify-center rounded-full border-2 border-blue-500 bg-blue-100 p-1 text-white"
