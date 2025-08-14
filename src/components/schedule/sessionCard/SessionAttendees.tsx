@@ -1,4 +1,5 @@
 import { Users } from '@phosphor-icons/react';
+import type { ReactNode } from 'react';
 import React from 'react';
 
 import Image from 'next/image';
@@ -7,6 +8,7 @@ import { useTranslations } from 'next-intl';
 import { ROLE_NAME, Role } from '@/types/common';
 import { ScheduleInfoItemLayout } from '@/components/schedule/ScheduleInfoItemLayout';
 import type { ProfileValidation } from '@/validations/ProfileValidation';
+import { mergeClassnames } from '@/components/private/utils';
 
 type User = Omit<z.infer<typeof ProfileValidation>, 'isUnderGuard'> & { photo?: { path: string } };
 type ISessionAttendeesProps = {
@@ -14,6 +16,9 @@ type ISessionAttendeesProps = {
   liber: User;
   isVibing: boolean;
   isAdmin?: boolean;
+  classname?: string;
+  childClassname?: string;
+  icon?: ReactNode;
 };
 
 export const SessionAttendees = ({
@@ -21,15 +26,17 @@ export const SessionAttendees = ({
   liber,
   isVibing,
   isAdmin = false,
+  childClassname,
+  icon,
 }: ISessionAttendeesProps) => {
   const t = useTranslations('ScheduleBasicInfo');
 
   return (
-    <ScheduleInfoItemLayout icon={<Users size={16} />} title={t('attendees')}>
-      <div className="flex flex-col space-y-2">
+    <ScheduleInfoItemLayout icon={icon ?? <Users size={16} />} title={t('attendees')}>
+      <div className={mergeClassnames('flex flex-col space-y-2', childClassname)}>
         <div className="flex items-center">
           <Image
-            src={huber.photo?.path ?? '/assets/images/ava-placeholder.png'}
+            src={huber?.photo?.path ?? '/assets/images/ava-placeholder.png'}
             alt="Huber avatar"
             className="size-8 rounded-full object-cover"
             width={32}
@@ -46,7 +53,7 @@ export const SessionAttendees = ({
               {ROLE_NAME[Role.HUBER]}
             </span>
             <span className="text-sm font-medium text-black">
-              {huber.fullName || 'Unnamed'}
+              {huber?.fullName || 'Unnamed'}
               {!isVibing && !isAdmin && ` (${t('you')})`}
             </span>
           </div>
@@ -54,7 +61,7 @@ export const SessionAttendees = ({
 
         <div className="flex items-center">
           <Image
-            src={liber.photo?.path ?? '/assets/images/ava-placeholder.png'}
+            src={liber?.photo?.path ?? '/assets/images/ava-placeholder.png'}
             alt="Huber avatar"
             className="size-8 rounded-full object-cover"
             width={32}

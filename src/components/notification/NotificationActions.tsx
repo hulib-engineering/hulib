@@ -29,14 +29,9 @@ const NotificationActions: FC<NotificationActionsProps> = ({
   const shouldFetchReadingSession
     = notificationType === NOTIFICATION_TYPES.OTHER.name && sessionId;
 
-  const { data: readingSession } = useGetReadingSessionByIdQuery(
-    {
-      id: sessionId || 0,
-    },
-    {
-      skip: !shouldFetchReadingSession,
-    },
-  );
+  const { data: readingSession } = useGetReadingSessionByIdQuery(sessionId || 0, {
+    skip: !shouldFetchReadingSession,
+  });
 
   const handleCancelRequest = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

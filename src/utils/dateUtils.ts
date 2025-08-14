@@ -23,3 +23,10 @@ export const formatRelativeTime = (timestamp: number) => {
   const daysAgo = Math.floor(hoursAgo / 24);
   return rtf.format(daysAgo, 'day');
 };
+
+export const toLocaleDateString = (dateString: string, locales: string): string => new Date(dateString).toLocaleDateString(locales, {
+  weekday: 'short',
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+});

@@ -28,6 +28,7 @@ export const Env = createEnv({
     NEXT_PUBLIC_CONTACT_PHONE_NUMBER: z.string().trim().min(9),
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().trim().min(9),
     NEXT_PUBLIC_UPLOAD_PRESET: z.string().trim().min(9),
+    NEXT_PUBLIC_AGORA_APP_ID: z.string().trim().min(1),
   },
   shared: {
     NODE_ENV: z.enum(['test', 'development', 'production']).optional(),
@@ -45,6 +46,7 @@ export const Env = createEnv({
     GOOGLE_ID: process.env.GOOGLE_ID,
     GOOGLE_SECRET: process.env.GOOGLE_SECRET,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_REACT_APP_BACKEND_VERSION:
       process.env.NEXT_PUBLIC_REACT_APP_BACKEND_VERSION,
     NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT:
@@ -62,6 +64,6 @@ export const Env = createEnv({
       process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
     NEXT_PUBLIC_UPLOAD_PRESET: process.env.NEXT_PUBLIC_UPLOAD_PRESET,
     LOGTAIL_SOURCE_TOKEN: process.env.LOGTAIL_SOURCE_TOKEN,
-    NODE_ENV: process.env.NODE_ENV,
+    NEXT_PUBLIC_AGORA_APP_ID: process.env.NEXT_PUBLIC_AGORA_APP_ID,
   },
 });

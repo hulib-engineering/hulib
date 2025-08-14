@@ -159,7 +159,7 @@ const ChatWindow = (props: IChatWindowProps) => {
     return () => {
       container.removeEventListener('scroll', shouldMarkAsRead);
     };
-  }, [props.id, props.onMarkAsRead, dispatch, data]);
+  }, [props.id, props.onMarkAsRead, dispatch, data, props]);
 
   const handleMarkParticipantMessageAsRead = () => {
     dispatch(
