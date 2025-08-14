@@ -233,7 +233,7 @@ const MessengerPopover = ({
   );
 };
 
-const HeaderIconButtonWithBadge = ({
+export const HeaderIconButtonWithBadge = ({
   children,
   badge,
   open = false,

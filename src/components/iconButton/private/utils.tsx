@@ -60,8 +60,8 @@ export const getButtonVariants = ({
           !disabled && 'hover:bg-chichi-10',
         )
       : mergeClassnames(
-          'text-bulma bg-transparent ring-inset ring-1 ring-trunks',
-          !disabled && 'hover:ring-bulma',
+          'text-neutral-20 bg-transparent border border-[#C2C6CF]',
+          !disabled && 'hover:bg-neutral-90',
         );
   }
   if (variant === 'tertiary') {

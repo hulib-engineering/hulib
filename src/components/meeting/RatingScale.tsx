@@ -1,51 +1,53 @@
-const RatingScale = ({
-  question,
-  leftLabel,
-  rightLabel,
-  value,
-  onChange,
-}: {
+import { useController } from 'react-hook-form';
+import type { Control, FieldValues, Path } from 'react-hook-form';
+import Radio from '../radio/Radio';
+
+type IRatingScaleProps<T extends FieldValues> = {
   question: string;
   leftLabel: string;
   rightLabel: string;
-  value: number;
-  onChange: (rating: number) => void;
-}) => (
-  <div className="space-y-3 sm:space-y-4">
-    <h3 className="text-base font-medium text-gray-900 sm:text-lg">
-      {question}
-    </h3>
-    <div className="mx-auto flex w-full items-end justify-between sm:w-4/5">
-      <span className="text-xs font-medium text-primary-60 sm:text-sm">
-        {leftLabel}
-      </span>
-      <div className="flex space-x-4 sm:space-x-10">
-        {[1, 2, 3, 4, 5].map(rating => (
-          <div
-            key={rating}
-            className="flex flex-col items-center space-y-1 sm:space-y-2"
-          >
-            <span className="text-sm sm:text-base">{rating}</span>
-            <button
-              type="button"
-              onClick={() => onChange(rating)}
-              className={`size-5 rounded-full border-2 transition-all duration-200 hover:scale-110 sm:size-6 ${
-                value === rating
-                  ? 'border-primary-60 bg-primary-60'
-                  : 'border-gray-300 bg-white hover:border-primary-60'
-              }`}
-              aria-label={`Rating ${rating}`}
-            >
-              <span className="sr-only">{rating}</span>
-            </button>
-          </div>
-        ))}
+  name: Path<T>;
+  control: Control<T>;
+};
+
+function RatingScale<T extends FieldValues>({
+  question,
+  leftLabel,
+  rightLabel,
+  name,
+  control,
+}: IRatingScaleProps<T>) {
+  const {
+    field: { name: fieldName, onChange, value },
+  } = useController({
+    name,
+    control,
+    rules: { required: true },
+  });
+
+  return (
+    <div className="flex flex-col gap-4">
+      <p className="text-black sm:text-lg">
+        {question}
+      </p>
+      <div className="flex w-full items-end gap-4">
+        <span className="grow text-right text-sm font-medium leading-4 text-primary-60">
+          {leftLabel}
+        </span>
+        <Radio name={fieldName} value={value} onChange={onChange} className="flex grow-0 justify-center gap-[27px]">
+          {[1, 2, 3, 4, 5].map(rating => (
+            <Radio.Option key={rating} value={rating} className="flex-col-reverse">
+              <Radio.Indicator checked={value === rating} />
+              {rating}
+            </Radio.Option>
+          ))}
+        </Radio>
+        <span className="grow text-xs font-medium text-primary-60 sm:text-sm">
+          {rightLabel}
+        </span>
       </div>
-      <span className="text-xs font-medium text-primary-60 sm:text-sm">
-        {rightLabel}
-      </span>
     </div>
-  </div>
-);
+  );
+}
 
 export default RatingScale;

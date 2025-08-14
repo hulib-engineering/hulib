@@ -2,11 +2,11 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-interface AlertProps {
+type AlertProps = {
   type?: 'success' | 'info';
   sessionUrl?: string;
   className?: string;
-}
+};
 
 const Alert: React.FC<AlertProps> = ({
   type = 'success',
