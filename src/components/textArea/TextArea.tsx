@@ -35,19 +35,20 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
         rows={rows}
         disabled={disabled}
         className={mergeClassnames(
-          'block w-full max-w-full p-3 m-0 appearance-none text-neutral-40',
-          'transition-shadow box-border rounded-2xl border border-solid border-neutral-90 relative z-[2] bg-neutral-98 shadow-input hover:shadow-input-hov',
-          'focus:shadow-input-focus focus:outline-none focus-visible:shadow-input-focus',
-          'focus-visible:outline-none before:box-border after:box-border placeholder:delay-75',
+          'block w-full max-w-full p-3 m-0 appearance-none text-neutral-10',
+          'transition-all ease-out box-border rounded-2xl border border-neutral-90 relative z-[2] bg-neutral-98 shadow-input active:input-active',
+          'hover:shadow-input-hov hover:input-hov',
+          'focus:input-focus focus:outline-none focus-visible:input-focus focus-visible:outline-none',
+          'before:box-border after:box-border placeholder:delay-75',
           'placeholder:text-neutral-40 placeholder:opacity-100 placeholder:transition-opacity',
-          'read-only:outline-0 read-only:border-none read-only:cursor-not-allowed',
+          'read-only:bg-neutral-90 read-only:outline-0 read-only:input-def read-only:cursor-not-allowed',
           'read-only:hover:shadow-input read-only:focus:shadow-input',
           'read-only:focus-visible:shadow-input invalid:focus-visible:shadow-input-err',
-          'invalid:shadow-input-err invalid:hover:shadow-input-err invalid:focus:shadow-input-err',
+          'invalid:shadow-input-err invalid:hover:shadow-input-err invalid:focus:shadow-input-err invalid:input-err',
           getSizeStyles(size),
           error
-          && 'input-err hover:input-err focus:input-err focus-visible:input-err',
-          disabled && 'opacity-60 cursor-not-allowed',
+          && 'input-err text-red-50 hover:input-err focus:input-err focus-visible:input-err',
+          disabled && 'bg-neutral-90 text-neutral-40 opacity-60 cursor-not-allowed',
           className,
         )}
         {...rest}

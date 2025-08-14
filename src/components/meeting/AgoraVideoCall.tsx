@@ -1,57 +1,62 @@
 'use client';
 
 import AgoraRTC from 'agora-rtc-sdk-ng';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import {
+  Chat,
+  Heart,
+  Microphone,
+  MicrophoneSlash,
+  PhoneSlash,
+  Screencast,
+  VideoCamera,
+  VideoCameraSlash,
+  X,
+} from '@phosphor-icons/react';
 
+import IconButton from '../iconButton/IconButton';
 import VideoComponent from './Video';
 import { useAppSelector } from '@/libs/hooks';
+
 import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
+import { Env } from '@/libs/Env.mjs';
+import { mergeClassnames } from '@/components/private/utils';
+import { HeaderIconButtonWithBadge } from '@/layouts/webapp/Header';
+import { MessengerInput } from '@/components/messages/MessengerInput';
 
-type Props = {
-  appId: string;
-};
+export default function AgoraVideoCall({ onEndCall }: { onEndCall: () => void }) {
+  const urlParams = useSearchParams();
+  const channel = urlParams.get('channel') || '';
+  const sessionId = channel.split('-')[1];
+  const token = urlParams.get('token')?.replace(/ /g, '+') || '';
 
-export default function AgoraVideoCall({ appId }: Props) {
-  const router = useRouter();
+  const t = useTranslations('Reading.AgoraMeeting');
+
+  const { data: readingSession } = useGetReadingSessionByIdQuery(sessionId || 0, {
+    skip: !sessionId,
+  });
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
-  const [ready, setReady] = useState(true);
-  const [isCameraOn, setIsCameraOn] = useState(true);
-  const [isMicOn, setIsMicOn] = useState(true);
-  const [client, setClient] = useState<any>(null);
+  const localRef = useRef<HTMLDivElement>(null);
+  const remoteRef = useRef<HTMLDivElement>(null);
 
+  const [ready, setReady] = useState(true);
+  const [isCameraOn, setIsCameraOn] = useState(false);
+  const [isMicOn, setIsMicOn] = useState(false);
+  const [client, setClient] = useState<any>(null);
   const [localTracks, setLocalTracks] = useState<any[]>([]);
   // Thêm state để theo dõi việc setup tracks
   const [tracksReady, setTracksReady] = useState(false);
   // Thêm state để track trạng thái microphone của remote user
-  const [remoteMicOn, setRemoteMicOn] = useState(true);
-
+  const [remoteMicOn, setRemoteMicOn] = useState(false);
   const [isSharingScreen, setIsSharingScreen] = useState(false);
   const [screenTrack, setScreenTrack] = useState<any>(null);
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const channel = urlParams.get('channel') || '';
-  const sessionId = channel.split('-')[1];
-  const token = urlParams.get('token')?.replace(/ /g, '+') || '';
-  const { data: readingSession } = useGetReadingSessionByIdQuery(
-    {
-      id: sessionId || 0,
-    },
-    {
-      skip: !sessionId,
-    },
-  );
-
-  // Xác định vai trò của user hiện tại
-  const isVibing = Number(userInfo?.id) === Number(readingSession?.reader?.id); // User là Liber (reader)
-  const isHuber
-    = Number(userInfo?.id) === Number(readingSession?.humanBook?.id); // User là Huber (humanBook)
-
-  const localRef = useRef<HTMLDivElement>(null);
-  const remoteRef = useRef<HTMLDivElement>(null);
+  // const [isRecording, setIsRecording] = useState(false);
+  const [hasParticipantJoined, setHasParticipantJoined] = useState(false);
+  const [isChatOpening, setIsChatOpening] = useState(false);
 
   useEffect(() => {
     // Always return a cleanup function, even if we don't set up anything
@@ -66,22 +71,15 @@ export default function AgoraVideoCall({ appId }: Props) {
 
     const start = async () => {
       try {
-        await agoraClient.join(appId, channel, token, 0);
+        // Listen for when a remote user joins
+        agoraClient.on('user-joined', (_user) => {
+          setHasParticipantJoined(true);
+        });
 
-        // Tạo tracks cho microphone và camera
-        tracks = await AgoraRTC.createMicrophoneAndCameraTracks();
-
-        // Cập nhật localTracks state
-        setLocalTracks(tracks);
-        setTracksReady(true);
-
-        // Play video track vào local container
-        if (tracks[1] && localRef.current) {
-          tracks[1].play(localRef.current);
-        }
-
-        // Publish tracks
-        await agoraClient.publish(tracks);
+        // Listen for when a remote user leaves
+        agoraClient.on('user-left', (_user) => {
+          setHasParticipantJoined(false);
+        });
 
         // Set up remote user handling
         agoraClient.on('user-published', async (user, mediaType) => {
@@ -101,6 +99,25 @@ export default function AgoraVideoCall({ appId }: Props) {
             setRemoteMicOn(false); // Remote user muted microphone
           }
         });
+
+        await agoraClient.join(Env.NEXT_PUBLIC_AGORA_APP_ID, channel, token, 0);
+
+        // Create microphone and camera tracking
+        tracks = await AgoraRTC.createMicrophoneAndCameraTracks();
+        await tracks[0]?.setEnabled(false);
+        await tracks[1]?.setEnabled(false);
+
+        // Update localTracks state
+        setLocalTracks(tracks);
+        setTracksReady(true);
+
+        // Play video track in a local container
+        if (tracks[1] && localRef.current) {
+          tracks[1].play(localRef.current);
+        }
+
+        // Publish tracks to remote participant
+        await agoraClient.publish(tracks);
 
         // **FIX: Xử lý existing users đã có sẵn trong channel**
         // Khi join vào channel, cần kiểm tra và subscribe tới remote users đã có sẵn
@@ -141,27 +158,31 @@ export default function AgoraVideoCall({ appId }: Props) {
         // Chờ tất cả subscription hoàn thành
         await Promise.all(subscribePromises);
       } catch (error) {
-        // Silent error handling - could be replaced with proper error reporting
+        // Silent error handling could be replaced with proper error reporting
       }
     };
 
     start();
 
     // Cleanup function với proper function declaration
-    const cleanup = () => {
+    // Always return a cleanup function for consistent return behavior
+    return () => {
       if (tracks.length > 0) {
         tracks.forEach((track) => {
-          track.stop();
-          track.close();
+          if (track) {
+            track.stop();
+            track.close();
+          }
         });
       }
       agoraClient.leave();
       setTracksReady(false);
     };
+  }, [ready, channel, token]);
 
-    // Always return a cleanup function for consistent return behavior
-    return cleanup;
-  }, [ready, appId, channel, token]);
+  const isVibing = Number(userInfo.id) === Number(readingSession?.reader?.id);
+  const isHuber
+    = Number(userInfo.id) === Number(readingSession?.humanBook?.id);
 
   const toggleScreenShare = async () => {
     if (!client) {
@@ -247,7 +268,6 @@ export default function AgoraVideoCall({ appId }: Props) {
       await client.publish(newTracks);
     }
   };
-
   /**
    * Toggle camera on/off với improved error handling
    * tracks[1] là camera track, tracks[0] là microphone track
@@ -268,7 +288,6 @@ export default function AgoraVideoCall({ appId }: Props) {
       // Silent error handling - could be replaced with proper error reporting
     }
   };
-
   /**
    * Toggle microphone on/off với improved error handling
    * tracks[0] là microphone track
@@ -288,9 +307,8 @@ export default function AgoraVideoCall({ appId }: Props) {
       // Silent error handling - could be replaced with proper error reporting
     }
   };
-
   /**
-   * End call và cleanup tất cả resources
+   * End call and cleanup all resources
    */
   const endCall = async () => {
     try {
@@ -303,203 +321,206 @@ export default function AgoraVideoCall({ appId }: Props) {
 
       await client?.leave();
       setLocalTracks([]);
-      setIsCameraOn(true);
-      setIsMicOn(true);
+      setIsCameraOn(false);
+      setIsMicOn(false);
       setTracksReady(false);
-      setReady(false); // reset để tránh rejoin
+      setReady(false); // avoid rejoining
 
-      if (isVibing) {
-        router.push(
-          `/after-meeting/${sessionId}?storyName=${readingSession.story.title}`,
-        );
-      }
+      onEndCall();
     } catch (error) {
       // Silent error handling - could be replaced with proper error reporting
     }
   };
 
   return (
-    <div className="m-4 size-full rounded-lg bg-[#FFFFFF] p-6 shadow-lg">
-      {/* Header với meeting info và controls */}
-      <div className="flex items-center justify-between">
-        <div />
-        <div className="flex gap-8 text-center text-2xl text-lp-primary-blue">
-          <div className="flex items-center justify-center gap-2 rounded-full bg-[#0858FA] px-4 py-2 text-sm text-white">
-            <Image
-              src="/assets/icons/meeting/record.svg"
-              width={20}
-              height={20}
-              alt="record-icon"
-              loading="lazy"
-            />
-            <span>00:00:00</span>
+    <div className="mx-0 my-2 flex size-full items-stretch justify-center gap-6 xl:m-6">
+      <div className="flex size-full flex-col gap-4 rounded-[40px] rounded-tl-none bg-[#FFFFFF] p-4 shadow-popover xl:rounded-tl-[40px]">
+        {/* Header with meeting info and controls */}
+        <div className="flex items-center justify-between">
+          <div />
+          <div className="flex items-center gap-4 text-center text-2xl leading-8 text-primary-60">
+            {/* {isRecording && ( */}
+            {/*  <Chip */}
+            {/*    disabled */}
+            {/*    className={mergeClassnames('rounded-full border border-primary-80 bg-primary-60 text-sm leading-4 text-neutral-98', 'opacity-100')} */}
+            {/*  > */}
+            {/*    <Record color="#aa2727" weight="fill" /> */}
+            {/*    <span>00:00:00</span> */}
+            {/*  </Chip> */}
+            {/* )} */}
+            <h5 className="font-medium">
+              {t('meeting_topic')}
+              {': '}
+              {readingSession.story.title}
+            </h5>
           </div>
-          Meeting story:
-          {' '}
-          {readingSession.story.title}
+
+          <button type="button" onClick={() => setIsChatOpening(!isChatOpening)}>
+            <HeaderIconButtonWithBadge badge={10} open={isChatOpening}>
+              <Chat className="text-[28px] text-primary-60" />
+            </HeaderIconButtonWithBadge>
+          </button>
         </div>
 
-        <Image
-          src="/assets/icons/meeting/chat.svg"
-          width={44}
-          height={44}
-          alt="chat-icon"
-          loading="lazy"
-          className="cursor-pointer"
-          onClick={() => {}}
-        />
-      </div>
-
-      {/* Video display area */}
-      <div className="relative mt-4">
-        {/* Main video (local) - luôn là video của chính user hiện tại */}
-        <VideoComponent
-          localRef={localRef}
-          isShowWaitingText
-          isMicOn={isMicOn} // Trạng thái mic của user hiện tại
-          showMicIndicator // Luôn hiển thị indicator cho local video
-          roleLabel="You"
-        />
-
-        {/* Picture-in-picture video (remote) - là video của người kia */}
-        <div className="absolute right-2 top-2 h-[181px] w-[135px] rounded-lg border border-gray-300 bg-white shadow-lg md:h-[181px] md:w-[297px]">
+        {/* Video display area */}
+        <div className="relative">
           <VideoComponent
-            localRef={remoteRef}
-            isShowWaitingText={false}
-            height={181}
-            isMicOn={remoteMicOn} // Trạng thái mic của remote user
-            showMicIndicator // Hiển thị indicator cho remote video
-            roleLabel={isVibing ? 'Huber' : 'Liber'}
+            agoraVideoPlayerRef={localRef}
+            className="h-[700px]"
+            isShowWaitingText={!hasParticipantJoined}
+            isMicOn={isMicOn}
+            isCamOn={isCameraOn}
+            roleLabel={isVibing ? 'Liber' : 'Huber'}
+            participantAvatarUrl={userInfo.photo?.path}
           />
+
+          {/* Picture-in-picture video (remote) */}
+          {hasParticipantJoined && (
+            <div
+              className="absolute right-2 top-2 h-[181px] w-[135px] rounded-3xl border-2 border-white bg-black xl:h-[181px] xl:w-[297px]"
+            >
+              <VideoComponent
+                agoraVideoPlayerRef={remoteRef}
+                isShowWaitingText={false}
+                isMicOn={remoteMicOn}
+                roleLabel={isVibing ? 'Huber' : 'Liber'}
+                isLocal={false}
+                participantName={readingSession?.humanBook?.fullName}
+                participantAvatarUrl={readingSession?.humanBook?.photo?.path}
+              />
+            </div>
+          )}
         </div>
-      </div>
 
-      {/* Control panel */}
-      <div className="mt-4 h-[76px] rounded-sm bg-[#F9F9F9] px-2 py-4">
-        <div className="flex items-center justify-center gap-4">
-          {/* Toggle Camera Button */}
-          <Image
-            src={
-              isCameraOn
-                ? '/assets/icons/meeting/camera-on.svg'
-                : '/assets/icons/meeting/camera-off.svg'
-            }
-            width={44}
-            height={44}
-            alt="camera-icon"
-            loading="lazy"
-            className={`cursor-pointer transition-opacity ${
-              tracksReady ? 'opacity-100' : 'opacity-50'
-            }`}
-            onClick={toggleCamera}
-            title={tracksReady ? 'Toggle Camera' : 'Camera not ready'}
-          />
+        {/* Control panel */}
+        <div className="flex items-center justify-between rounded-[40px] bg-neutral-98 shadow-sm">
+          <IconButton size="lg" className="invisible !size-11" />
+          <div className="flex items-center gap-4">
+            {/* Toggle Camera Button */}
+            <IconButton
+              size="lg"
+              className={mergeClassnames(
+                '!size-11 bg-primary-60 transition-opacity',
+                tracksReady ? 'opacity-100' : 'opacity-50',
+              )}
+              onClick={toggleCamera}
+            >
+              {isCameraOn ? <VideoCameraSlash /> : <VideoCamera />}
+            </IconButton>
 
-          {/* Toggle Microphone Button */}
-          <Image
-            src={
-              isMicOn
-                ? '/assets/icons/meeting/voice.svg'
-                : '/assets/icons/meeting/voice-off.svg'
-            }
-            width={44}
-            height={44}
-            alt="mic-icon"
-            loading="lazy"
-            className={`cursor-pointer transition-opacity ${
-              tracksReady ? 'opacity-100' : 'opacity-50'
-            }`}
-            onClick={toggleMic}
-            title={tracksReady ? 'Toggle Microphone' : 'Microphone not ready'}
-          />
+            {/* Toggle Microphone Button */}
+            <IconButton
+              size="lg"
+              className={mergeClassnames(
+                '!size-11 bg-primary-60 transition-opacity backdrop-blur-[15px]',
+                tracksReady ? 'opacity-100' : 'opacity-50',
+              )}
+              onClick={toggleMic}
+            >
+              {isMicOn ? <MicrophoneSlash /> : <Microphone />}
+            </IconButton>
 
-          {/* End Call Button */}
-          <Image
-            src="/assets/icons/meeting/end-call.svg"
-            width={44}
-            height={44}
-            alt="end-call-icon"
-            loading="lazy"
-            className="cursor-pointer"
-            onClick={endCall}
-            title="End Call"
-          />
+            {/* End Call Button */}
+            <IconButton
+              size="lg"
+              className={mergeClassnames(
+                '!size-11 border border-red-50 bg-red-50 transition-opacity backdrop-blur-[15px]',
+                tracksReady ? 'opacity-100' : 'opacity-50',
+              )}
+              onClick={endCall}
+            >
+              <PhoneSlash />
+            </IconButton>
 
-          {/* Share Screen Button (placeholder) */}
-          <Image
-            src={
-              !isSharingScreen
-                ? '/assets/icons/meeting/share-screen.svg'
-                : '/assets/icons/meeting/stop-share-screen.svg'
-            }
-            width={44}
-            height={44}
-            alt="share-screen-icon"
-            loading="lazy"
-            className="cursor-pointer"
-            onClick={toggleScreenShare}
-            title="Share Screen (Coming Soon)"
-          />
+            {/* Share Screen Button */}
+            <IconButton
+              variant="outline"
+              className={mergeClassnames(
+                '!size-11 p-2.5 transition-opacity border-primary-60 text-primary-60',
+                tracksReady ? 'opacity-100' : 'opacity-50',
+              )}
+              onClick={toggleScreenShare}
+            >
+              <Screencast size={24} />
+            </IconButton>
+          </div>
+          <IconButton variant="outline" size="lg" className="!size-11 border-none bg-white p-2.5 shadow-sm">
+            <Heart size={24} color="#FF2C94" />
+          </IconButton>
         </div>
-      </div>
 
-      {/* Debug info (chỉ hiện trong development) */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="mt-2 rounded bg-gray-100 p-2 text-xs">
-          <div>
-            Tracks Ready:
-            {tracksReady ? '✅' : '❌'}
+        {/* Debug info (only development environment) */}
+        {Env.NODE_ENV === 'development' && (
+          <div className="rounded bg-gray-100 p-2 text-xs">
+            <div>
+              Tracks Ready:
+              {tracksReady ? '✅' : '❌'}
+            </div>
+            <div>
+              Local Tracks:
+              {localTracks.length}
+            </div>
+            <div>
+              Local Camera:
+              {isCameraOn ? 'ON' : 'OFF'}
+            </div>
+            <div>
+              Local Microphone:
+              {isMicOn ? 'ON' : 'OFF'}
+            </div>
+            <div>
+              Remote Microphone:
+              {remoteMicOn ? 'ON' : 'OFF'}
+            </div>
+            <div>
+              Remote Users Count:
+              {client?.remoteUsers?.length || 0}
+            </div>
+            <div>
+              Remote Users:
+              {' '}
+              {client?.remoteUsers
+                ?.map(
+                  (u: any) =>
+                    `${u.uid}(${u.hasVideo ? 'V' : ''}${u.hasAudio ? 'A' : ''})`,
+                )
+                .join(', ') || 'None'}
+            </div>
+            <div>
+              User ID:
+              {userInfo?.id}
+            </div>
+            <div>
+              Reader ID:
+              {readingSession?.reader?.id}
+            </div>
+            <div>
+              HumanBook ID:
+              {readingSession?.humanBook?.id}
+            </div>
+            <div>
+              Is Vibing (Liber):
+              {isVibing ? '✅' : '❌'}
+            </div>
+            <div>
+              Is Huber:
+              {isHuber ? '✅' : '❌'}
+            </div>
           </div>
-          <div>
-            Local Tracks:
-            {localTracks.length}
+        )}
+      </div>
+      {isChatOpening && (
+        <div className="flex w-1/3 flex-col overflow-hidden rounded-[20px] rounded-tr-none bg-neutral-90 shadow-popover">
+          <div className="flex items-center justify-between bg-white px-3 py-2 text-neutral-10">
+            <X className="invisible size-7" />
+            <h6 className="text-xl font-medium">{t('chat')}</h6>
+            <X className="size-7 cursor-pointer text-[#343330]" onClick={() => setIsChatOpening(false)} />
           </div>
-          <div>
-            Local Camera:
-            {isCameraOn ? 'ON' : 'OFF'}
-          </div>
-          <div>
-            Local Microphone:
-            {isMicOn ? 'ON' : 'OFF'}
-          </div>
-          <div>
-            Remote Microphone:
-            {remoteMicOn ? 'ON' : 'OFF'}
-          </div>
-          <div>
-            Remote Users Count:
-            {client?.remoteUsers?.length || 0}
-          </div>
-          <div>
-            Remote Users:
-            {' '}
-            {client?.remoteUsers
-              ?.map(
-                (u: any) =>
-                  `${u.uid}(${u.hasVideo ? 'V' : ''}${u.hasAudio ? 'A' : ''})`,
-              )
-              .join(', ') || 'None'}
-          </div>
-          <div>
-            User ID:
-            {userInfo?.id}
-          </div>
-          <div>
-            Reader ID:
-            {readingSession?.reader?.id}
-          </div>
-          <div>
-            HumanBook ID:
-            {readingSession?.humanBook?.id}
-          </div>
-          <div>
-            Is Vibing (Liber):
-            {isVibing ? '✅' : '❌'}
-          </div>
-          <div>
-            Is Huber:
-            {isHuber ? '✅' : '❌'}
-          </div>
+          <div className="flex flex-1 flex-col bg-neutral-98" />
+          <MessengerInput
+            onSend={(value, type) =>
+              console.log(value, type, 'send message')}
+          />
         </div>
       )}
     </div>
