@@ -712,6 +712,7 @@
     "cancel": "Hủy",
     "next": "Tiếp theo",
     "back": "Quay lại",
+    "skip": "Bỏ qua",
     "confirm": "Xác nhận",
     "how_many_love": "Bạn muốn gửi bao nhiêu tình yêu đến Huber",
     "say_something": "Nói gì đó với Huber của bạn",
@@ -723,13 +724,17 @@
       "optimistic": "Lạc quan",
       "energy": "Năng lượng",
       "select_option": "Chọn tùy chọn"
-    }
+    },
+    "thank_you": "Cảm ơn bạn đã phản hồi",
+    "feedback_value": "Phản hồi của bạn rất có giá trị đối với sự hoàn thiện và phát triển của Hulib",
+    "go_to_schedule": "Lịch trò chuyện",
+    "back_to_home": "Về Trang chủ"
   },
   "thanks_page": {
-    "thank_you": "Cảm ơn phản hồi của bạn",
-    "feedback_value": "Phản hồi của bạn rất có giá trị đối với chúng tôi. Nội dung này cần được chỉnh sửa",
-    "go_to_schedule": "Đi đến lịch trình",
-    "back_to_home": "Trở về Trang chủ"
+    "thank_you": "Cảm ơn bạn đã phản hồi",
+    "feedback_value": "Phản hồi của bạn rất có giá trị đối với sự hoàn thiện và phát triển của Hulib",
+    "go_to_schedule": "Lịch trò chuyện",
+    "back_to_home": "Về Trang chủ"
   },
   "Messages": {
     "meta_title": "Messenger | HuLib",
@@ -747,5 +752,32 @@
     "back": "Quay lại",
     "attendees": "Người tham gia",
     "you": "Bạn"
+  },
+  "Reading": {
+    "PreSurvey": {
+      "title": "Chúng tôi quan tâm đến hạnh phúc của bạn",
+      "subtitle": "Trước khi cuộc gặp gỡ diễn ra, chúng mình muốn gửi đến bạn cuộc khảo sát về mood chung của bạn dưới đây.<br></br> Bài khảo sát chỉ mất khoảng 15s nhưng những thông tin bạn cung cấp là rất có ý nghĩa với tụi mình.",
+      "back": "Quay lại",
+      "skip": "Bỏ qua",
+      "submit": "Xác nhận",
+      "questions": {
+        "quest_1": "1. Hôm nay tâm trạng của bạn thế nào nhỉ?",
+        "quest_2": "2. Bạn thấy câu chuyện đồng cảm với câu chuyện ở mức độ nảo nhỉ?",
+        "quest_3": "3. Bạn thấy hứng thú với Huber ở mức độ nào nhỉ?",
+        "quest_4": "4. Bạn nghĩ buổi đọc này sẽ giúp ích cho bạn chứ?"
+      },
+      "not_good": "Không tốt",
+      "very_good": "Rất tốt",
+      "not_relevant": "Không hợp",
+      "very_relevant": "Rất hợp",
+      "not_helpful": "Không có ích",
+      "very_helpful": "Rất có ích"
+    },
+    "AgoraMeeting": {
+      "meeting_topic": "Đề tài",
+      "waiting": "Hãy đợi bạn đồng hành của mình một lúc nhé..",
+      "you": "Bạn",
+      "chat": "Trò chyện"
+    }
   }
 }

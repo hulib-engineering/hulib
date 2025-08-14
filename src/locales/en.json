@@ -708,6 +708,7 @@
     "cancel": "Cancel",
     "next": "Next",
     "back": "Back",
+    "skip": "Skip",
     "confirm": "Confirm",
     "how_many_love": "How many love do you want to send to Huber",
     "say_something": "Say something to your Huber",
@@ -719,7 +720,11 @@
       "optimistic": "Optimistic",
       "energy": "Energy",
       "select_option": "Select option"
-    }
+    },
+    "thank_you": "Thank you for your feedback",
+    "feedback_value": "Your feedback is valuable to us. This content need to be modify",
+    "go_to_schedule": "Go to schedule",
+    "back_to_home": "Back to Home"
   },
   "thanks_page": {
     "thank_you": "Thank you for your feedback",
@@ -743,5 +748,32 @@
   "Messages": {
     "meta_title": "Messenger | HuLib",
     "meta_description": ""
+  },
+  "Reading": {
+    "PreSurvey": {
+      "title": "We care about your mental well-being",
+      "subtitle": "Before the meeting, we would like to send you a below survey-form to know your overall well-being.<br></br> The survey take only 15 seconds but what you input is very valuable to us.",
+      "back": "Back",
+      "skip": "Skip",
+      "submit": "Submit",
+      "questions": {
+        "quest_1": "1. How are you feeling today?",
+        "quest_2": "2. How relevant does the story to your problem?",
+        "quest_3": "3. How relevant does the Huber's profile to your interest?",
+        "quest_4": "4. How helpful do you think this session will be for you?"
+      },
+      "not_good": "Not good",
+      "very_good": "Very good",
+      "not_relevant": "Not relevant",
+      "very_relevant": "Very relevant",
+      "not_helpful": "Not helpful",
+      "very_helpful": "Very helpful"
+    },
+    "AgoraMeeting": {
+      "meeting_topic": "Meeting topic",
+      "waiting": "Waiting for partner to join..",
+      "you": "You",
+      "chat": "Chat"
+    }
   }
 }

@@ -28,14 +28,9 @@ const NotificationContent: FC<NotificationContentProps> = ({
     = notification.type.name === NOTIFICATION_TYPES.OTHER.name
       && notification.relatedEntityId;
 
-  const { data: readingSession } = useGetReadingSessionByIdQuery(
-    {
-      id: notification.relatedEntityId || 0,
-    },
-    {
-      skip: !shouldFetchReadingSession,
-    },
-  );
+  const { data: readingSession } = useGetReadingSessionByIdQuery(notification.relatedEntityId || 0, {
+    skip: !shouldFetchReadingSession,
+  });
 
   const renderOtherNotification = () => {
     if (!readingSession) {

@@ -4,16 +4,19 @@
 
 @layer components {
   .input-def {
-    @apply border border-solid border-neutral-90;
+    @apply border border-neutral-90;
   }
   .input-err {
-    @apply border-2 border-solid border-red-50;
+    @apply border-2 border-red-50;
   }
   .input-hov {
-    @apply border-2 border-solid border-primary-50;
+    @apply border-2 border-primary-50;
   }
   .input-focus {
-    @apply border-2 border-solid border-primary-50 shadow-[0_0_0_4px_rgba(205,221,254,1)];
+    @apply border-2 border-primary-50 shadow-[0_0_0_4px_#CDDDFE];
+  }
+  .input-active {
+    @apply border border-primary-60;
   }
 }
 
