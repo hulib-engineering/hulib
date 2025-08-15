@@ -777,7 +777,11 @@
       "meeting_topic": "Đề tài",
       "waiting": "Hãy đợi bạn đồng hành của mình một lúc nhé..",
       "you": "Bạn",
-      "chat": "Trò chyện"
+      "chat": "Trò chyện",
+      "recording_title": "Ghi lại buổi trò chuyện ?",
+      "recording_detail": "Bạn có muốn ghi lại cuộc họp này không? Bản ghi sẽ hiển thị cho tất cả người tham dự.",
+      "not_record": "Không",
+      "start_recording": "Bắt đầu"
     }
   }
 }

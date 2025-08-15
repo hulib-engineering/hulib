@@ -16,17 +16,22 @@ import {
   X,
 } from '@phosphor-icons/react';
 
-import IconButton from '../iconButton/IconButton';
-import VideoComponent from './Video';
-import { useAppSelector } from '@/libs/hooks';
+import IconButton from '../../components/iconButton/IconButton';
+import VideoComponent from '../../components/meeting/Video';
 
+import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
 import { Env } from '@/libs/Env.mjs';
 import { mergeClassnames } from '@/components/private/utils';
 import { HeaderIconButtonWithBadge } from '@/layouts/webapp/Header';
 import { MessengerInput } from '@/components/messages/MessengerInput';
+import Modal from '@/components/Modal';
+import Button from '@/components/button/Button';
+import { useStartCloudRecordingMutation } from '@/libs/services/modules/agora';
+import { pushError } from '@/components/CustomToastifyContainer';
+import RecordingTimer from '@/layouts/reading/RecordingTimer';
 
-export default function AgoraVideoCall({ onEndCall }: { onEndCall: () => void }) {
+export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?: { resourceId: string; sid: string; uid: string }) => void }) {
   const urlParams = useSearchParams();
   const channel = urlParams.get('channel') || '';
   const sessionId = channel.split('-')[1];
@@ -37,6 +42,7 @@ export default function AgoraVideoCall({ onEndCall }: { onEndCall: () => void })
   const { data: readingSession } = useGetReadingSessionByIdQuery(sessionId || 0, {
     skip: !sessionId,
   });
+  const [startRecording] = useStartCloudRecordingMutation();
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
@@ -48,15 +54,18 @@ export default function AgoraVideoCall({ onEndCall }: { onEndCall: () => void })
   const [isMicOn, setIsMicOn] = useState(false);
   const [client, setClient] = useState<any>(null);
   const [localTracks, setLocalTracks] = useState<any[]>([]);
-  // Thêm state để theo dõi việc setup tracks
   const [tracksReady, setTracksReady] = useState(false);
-  // Thêm state để track trạng thái microphone của remote user
   const [remoteMicOn, setRemoteMicOn] = useState(false);
+  const [remoteCameraOn, setRemoteCameraOn] = useState(false);
   const [isSharingScreen, setIsSharingScreen] = useState(false);
   const [screenTrack, setScreenTrack] = useState<any>(null);
-  // const [isRecording, setIsRecording] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const [hasParticipantJoined, setHasParticipantJoined] = useState(false);
   const [isChatOpening, setIsChatOpening] = useState(false);
+  const [isRecordingAlertModalOpen, setIsRecordingAlertModalOpen] = useState(false);
+  const [cloudRecordingData, setCloudRecordingData] = useState<{ resourceId: string; sid: string; uid: string } | undefined>(undefined);
+
+  const isVibing = Number(userInfo.id) === Number(readingSession?.reader?.id);
 
   useEffect(() => {
     // Always return a cleanup function, even if we don't set up anything
@@ -74,27 +83,32 @@ export default function AgoraVideoCall({ onEndCall }: { onEndCall: () => void })
         // Listen for when a remote user joins
         agoraClient.on('user-joined', (_user) => {
           setHasParticipantJoined(true);
-        });
 
+          if (isVibing && agoraClient.remoteUsers.length >= 1 && agoraClient.uid) {
+            setIsRecordingAlertModalOpen(true);
+          }
+        });
         // Listen for when a remote user leaves
         agoraClient.on('user-left', (_user) => {
           setHasParticipantJoined(false);
         });
-
         // Set up remote user handling
         agoraClient.on('user-published', async (user, mediaType) => {
           await agoraClient.subscribe(user, mediaType);
           if (mediaType === 'video' && remoteRef.current) {
             user.videoTrack?.play(remoteRef.current);
+            setRemoteCameraOn(true); // Remote user has camera track
           }
           if (mediaType === 'audio') {
             user.audioTrack?.play();
             setRemoteMicOn(true); // Remote user has audio track
           }
         });
-
         // Xử lý khi remote user unpublish (bật/tắt mic)
         agoraClient.on('user-unpublished', async (_user, mediaType) => {
+          if (mediaType === 'video') {
+            setRemoteCameraOn(false); // Remote user muted camera
+          }
           if (mediaType === 'audio') {
             setRemoteMicOn(false); // Remote user muted microphone
           }
@@ -104,8 +118,6 @@ export default function AgoraVideoCall({ onEndCall }: { onEndCall: () => void })
 
         // Create microphone and camera tracking
         tracks = await AgoraRTC.createMicrophoneAndCameraTracks();
-        await tracks[0]?.setEnabled(false);
-        await tracks[1]?.setEnabled(false);
 
         // Update localTracks state
         setLocalTracks(tracks);
@@ -118,6 +130,9 @@ export default function AgoraVideoCall({ onEndCall }: { onEndCall: () => void })
 
         // Publish tracks to remote participant
         await agoraClient.publish(tracks);
+
+        // await tracks[0]?.setEnabled(false);
+        // await tracks[1]?.setEnabled(false);
 
         // **FIX: Xử lý existing users đã có sẵn trong channel**
         // Khi join vào channel, cần kiểm tra và subscribe tới remote users đã có sẵn
@@ -134,6 +149,7 @@ export default function AgoraVideoCall({ onEndCall }: { onEndCall: () => void })
               .then(() => {
                 if (remoteUser.videoTrack && remoteRef.current) {
                   remoteUser.videoTrack.play(remoteRef.current);
+                  setRemoteCameraOn(true);
                 }
               });
             promises.push(videoPromise);
@@ -178,12 +194,26 @@ export default function AgoraVideoCall({ onEndCall }: { onEndCall: () => void })
       agoraClient.leave();
       setTracksReady(false);
     };
-  }, [ready, channel, token]);
+  }, [ready, channel, token, isVibing]);
 
-  const isVibing = Number(userInfo.id) === Number(readingSession?.reader?.id);
   const isHuber
     = Number(userInfo.id) === Number(readingSession?.humanBook?.id);
 
+  const startRecordingSession = async () => {
+    try {
+      const recordingData = await startRecording({
+        channel,
+      }).unwrap();
+      setIsRecording(true);
+      setCloudRecordingData(recordingData);
+    } catch (e) {
+      pushError('Cannot start recording this session!');
+    }
+  };
+  const handleEnableRecording = async () => {
+    setIsRecordingAlertModalOpen(false);
+    await startRecordingSession();
+  };
   const toggleScreenShare = async () => {
     if (!client) {
       return;
@@ -308,7 +338,7 @@ export default function AgoraVideoCall({ onEndCall }: { onEndCall: () => void })
     }
   };
   /**
-   * End call and cleanup all resources
+   * End call and clean up all resources
    */
   const endCall = async () => {
     try {
@@ -326,28 +356,45 @@ export default function AgoraVideoCall({ onEndCall }: { onEndCall: () => void })
       setTracksReady(false);
       setReady(false); // avoid rejoining
 
-      onEndCall();
+      onEndCall(cloudRecordingData);
     } catch (error) {
-      // Silent error handling - could be replaced with proper error reporting
+      // Silent error handling could be replaced with proper error reporting
     }
   };
 
   return (
     <div className="mx-0 my-2 flex size-full items-stretch justify-center gap-6 xl:m-6">
+      <Modal
+        open={isRecordingAlertModalOpen}
+        disableClosingTrigger
+        onClose={() => setIsRecordingAlertModalOpen(false)}
+      >
+        <Modal.Backdrop className="bg-[#2E3032]/50" />
+        <Modal.Panel className="flex w-full max-w-sm flex-col items-center gap-4 rounded-2xl px-5 py-6">
+          <h6 className="text-xl font-medium text-neutral-10">{t('recording_title')}</h6>
+          <p className="text-center text-sm font-medium text-neutral-20">
+            {t('recording_detail')}
+          </p>
+          <div className="flex w-full items-center gap-2.5">
+            <Button
+              variant="outline"
+              fullWidth
+              onClick={() => setIsRecordingAlertModalOpen(false)}
+            >
+              {t('not_record')}
+            </Button>
+            <Button fullWidth onClick={handleEnableRecording}>
+              {t('start_recording')}
+            </Button>
+          </div>
+        </Modal.Panel>
+      </Modal>
       <div className="flex size-full flex-col gap-4 rounded-[40px] rounded-tl-none bg-[#FFFFFF] p-4 shadow-popover xl:rounded-tl-[40px]">
         {/* Header with meeting info and controls */}
         <div className="flex items-center justify-between">
           <div />
           <div className="flex items-center gap-4 text-center text-2xl leading-8 text-primary-60">
-            {/* {isRecording && ( */}
-            {/*  <Chip */}
-            {/*    disabled */}
-            {/*    className={mergeClassnames('rounded-full border border-primary-80 bg-primary-60 text-sm leading-4 text-neutral-98', 'opacity-100')} */}
-            {/*  > */}
-            {/*    <Record color="#aa2727" weight="fill" /> */}
-            {/*    <span>00:00:00</span> */}
-            {/*  </Chip> */}
-            {/* )} */}
+            {isRecording && <RecordingTimer />}
             <h5 className="font-medium">
               {t('meeting_topic')}
               {': '}
@@ -383,6 +430,7 @@ export default function AgoraVideoCall({ onEndCall }: { onEndCall: () => void })
                 agoraVideoPlayerRef={remoteRef}
                 isShowWaitingText={false}
                 isMicOn={remoteMicOn}
+                isCamOn={remoteCameraOn}
                 roleLabel={isVibing ? 'Huber' : 'Liber'}
                 isLocal={false}
                 participantName={readingSession?.humanBook?.fullName}
