@@ -14,9 +14,10 @@ import PreSurvey from '@/layouts/reading/PreSurvey';
 import { Spinner } from '@/components/common/Spinner';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { StatusEnum } from '@/types/common';
+import { useStopCloudRecordingMutation } from '@/libs/services/modules/agora';
 
-const AgoraVideoCall = dynamic(
-  () => import('@/components/meeting/AgoraVideoCall'),
+const AgoraMeeting = dynamic(
+  () => import('@/layouts/reading/AgoraMeeting'),
   {
     ssr: false,
   },
@@ -31,6 +32,7 @@ export default function ReadingPage() {
   const { data: readingSession } = useGetReadingSessionByIdQuery(sessionId || 0, {
     skip: !sessionId,
   });
+  const [stopRecording] = useStopCloudRecordingMutation();
   const [updateReadingSession] = useUpdateReadingSessionMutation();
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
@@ -60,7 +62,7 @@ export default function ReadingPage() {
     }
   }, [userInfo.id, readingSession]);
 
-  const handleEndCall = async () => {
+  const handleEndCall = async (recordedInfo?: { resourceId: string; sid: string; uid: string }) => {
     const meetingEnd = new Date(readingSession.endedAt);
     const now = new Date();
 
@@ -69,6 +71,19 @@ export default function ReadingPage() {
     if (diff < 0) {
       router.push('/schedule-meeting/weekly-schedule');
     }
+
+    if (recordedInfo?.resourceId && recordedInfo.sid && recordedInfo.uid) {
+      try {
+        await stopRecording({
+          channel,
+          ...recordedInfo,
+        }).unwrap();
+        pushSuccess('Session has finished successfully');
+      } catch (error) {
+        pushError('Failed to stop recording!');
+      }
+    }
+
     try {
       await updateReadingSession({
         id: sessionId,
@@ -98,7 +113,7 @@ export default function ReadingPage() {
           onFinish={() => setIsDoneSurveyForReading(true)}
         />
       ) : (
-        <AgoraVideoCall onEndCall={handleEndCall} />
+        <AgoraMeeting onEndCall={handleEndCall} />
       )}
     </div>
   );
