@@ -481,7 +481,7 @@
     },
     "bio": { "text": "Bio", "placeholder": "Placeholder" },
     "intro_video": { "text": "Introduction Video", "placeholder": "https://" },
-    "read_community": "Read community guildeline",
+    "read_community": "Read community guideline",
     "confirm": "I confirm that I have read and understood the terms and conditions of Hulib, and I agree to be bound by them.",
     "cancel": "Cancel",
     "next": "Next",
@@ -773,7 +773,11 @@
       "meeting_topic": "Meeting topic",
       "waiting": "Waiting for partner to join..",
       "you": "You",
-      "chat": "Chat"
+      "chat": "Chat",
+      "recording_title": "Record this meeting ?",
+      "recording_detail": "Do you want to record this meeting? Recording will be visible to all attendees.",
+      "not_record": "No, do not record",
+      "start_recording": "Start recording"
     }
   }
 }
