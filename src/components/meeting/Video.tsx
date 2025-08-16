@@ -4,6 +4,7 @@ import { Microphone, MicrophoneSlash } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import { mergeClassnames } from '@/components/private/utils';
 import IconButton from '@/components/iconButton/IconButton';
+import { ReactionAnimation } from '@/components/meeting/ReactionAnimation';
 
 type IVideoProps = {
   agoraVideoPlayerRef: RefObject<HTMLDivElement>;
@@ -12,6 +13,7 @@ type IVideoProps = {
   className?: string;
   isMicOn?: boolean;
   isCamOn?: boolean;
+  isReactionShown?: boolean;
   roleLabel?: 'Liber' | 'Huber';
   isLocal?: boolean;
   participantName?: string;
@@ -28,6 +30,7 @@ const VideoComponent = (props: IVideoProps) => {
     className = '',
     isMicOn = false,
     isCamOn = false,
+    isReactionShown = false,
     roleLabel,
     isLocal = true,
     participantName,
@@ -42,6 +45,13 @@ const VideoComponent = (props: IVideoProps) => {
         className,
       )}
     >
+      {isReactionShown
+      && (
+        <ReactionAnimation
+          size={!isLocal ? 'sm' : 'md'}
+          className={mergeClassnames('z-[999999]', !isLocal && 'bottom-4 right-4 ')}
+        />
+      )}
       <div
         ref={agoraVideoPlayerRef}
         className={mergeClassnames(
