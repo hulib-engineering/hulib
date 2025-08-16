@@ -157,7 +157,9 @@ export default {
         red: {
           40: '#BE002D',
           50: '#EE0038',
+          60: '#FF2559',
           70: '#FF5C82',
+          80: '#FF92AC',
           90: '#FFC9D5',
           98: '#FFF5F7',
         },
@@ -207,6 +209,17 @@ export default {
         270: '270deg',
         300: '300deg',
         330: '330deg',
+      },
+      gridTemplateColumns: {
+        heart: 'repeat(13, 20px)',
+      },
+      gridTemplateRows: {
+        heart: 'repeat(11, 20px)',
+      },
+      spacing: {
+        'pixel-gap': '1px',
+        'pixel-size': '20px',
+        'pixel-size-sm': '20px',
       },
       backgroundImage: {
         'main-pattern': 'url(\'/assets/images/bg-pattern.png\')',
@@ -461,6 +474,46 @@ export default {
             width: '0',
           },
         },
+        heartbeat: {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.02)' },
+        },
+        pinkPulse: {
+          '0%, 100%': {
+            background: '#ff6b81',
+            transform: 'scale(1)',
+            boxShadow: '0 0 0 rgba(230, 57, 70, 0)',
+          },
+          '50%': {
+            background: '#e63946',
+            transform: 'scale(1.05)',
+            boxShadow: '0 0 10px rgba(230, 57, 70, 0.6)',
+          },
+        },
+        softPinkPulse: {
+          '0%, 100%': {
+            background: '#e63946',
+            transform: 'scale(1)',
+            boxShadow: '0 0 0 rgba(241, 161, 180, 0)',
+          },
+          '50%': {
+            background: '#f1a1b4',
+            transform: 'scale(1.05)',
+            boxShadow: '0 0 8px rgba(241, 161, 180, 0.6)',
+          },
+        },
+        whitePulse: {
+          '0%, 100%': {
+            background: '#ffe3e3',
+            transform: 'scale(1)',
+            boxShadow: '0 0 0 rgba(255, 234, 234, 0)',
+          },
+          '50%': {
+            background: '#ffeaea',
+            transform: 'scale(1.05)',
+            boxShadow: '0 0 15px rgba(255, 234, 234, 0.8)',
+          },
+        },
       },
       animation: {
         'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
@@ -487,6 +540,10 @@ export default {
         'flashing': 'flash 3s infinite',
         'rotate': 'rotate 6s linear infinite',
         'load': 'load 6s linear infinite',
+        'heartbeat': 'heartbeat 2s infinite ease-in-out',
+        'pink-pulse': 'pinkPulse 2.5s infinite ease-in-out',
+        'soft-pink-pulse': 'softPinkPulse 2.2s infinite ease-in-out',
+        'white-pulse': 'whitePulse 2.8s infinite ease-in-out',
       },
     },
     animation: {

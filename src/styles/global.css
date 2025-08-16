@@ -18,6 +18,33 @@
   .input-active {
     @apply border border-primary-60;
   }
+  /* Heart container */
+  .heart {
+    @apply inline-grid gap-[1px] p-5;
+    grid-template-columns: repeat(13, 20px);
+    grid-template-rows: repeat(11, 20px);
+    animation: heartbeat 2s infinite ease-in-out;
+  }
+
+  /* Pixel base */
+  .pixel {
+    @apply w-5 h-5 transition-all duration-300;
+    transform: scale(1);
+  }
+
+  /* Pixel colors with animation */
+  .pink {
+    background-color: #e63946;
+    animation: pinkPulse 2.5s infinite ease-in-out;
+  }
+  .soft-pink {
+    background-color: #f1a1b4;
+    animation: softPinkPulse 2.2s infinite ease-in-out;
+  }
+  .white {
+    background-color: #ffeaea;
+    animation: whitePulse 2.8s infinite ease-in-out;
+  }
 }
 
 :root {

@@ -30,6 +30,7 @@ import Button from '@/components/button/Button';
 import { useStartCloudRecordingMutation } from '@/libs/services/modules/agora';
 import { pushError } from '@/components/CustomToastifyContainer';
 import RecordingTimer from '@/layouts/reading/RecordingTimer';
+import { useSocket } from '@/libs/hooks/useSocket';
 
 export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?: { resourceId: string; sid: string; uid: string }) => void }) {
   const urlParams = useSearchParams();
@@ -50,8 +51,8 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
   const remoteRef = useRef<HTMLDivElement>(null);
 
   const [ready, setReady] = useState(true);
-  const [isCameraOn, setIsCameraOn] = useState(false);
-  const [isMicOn, setIsMicOn] = useState(false);
+  const [isCameraOn, setIsCameraOn] = useState(true);
+  const [isMicOn, setIsMicOn] = useState(true);
   const [client, setClient] = useState<any>(null);
   const [localTracks, setLocalTracks] = useState<any[]>([]);
   const [tracksReady, setTracksReady] = useState(false);
@@ -64,8 +65,23 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
   const [isChatOpening, setIsChatOpening] = useState(false);
   const [isRecordingAlertModalOpen, setIsRecordingAlertModalOpen] = useState(false);
   const [cloudRecordingData, setCloudRecordingData] = useState<{ resourceId: string; sid: string; uid: string } | undefined>(undefined);
+  const [heartShown, setHeartShown] = useState(false);
+  const [miniHeartShown, setMiniHeartShown] = useState(false);
+
+  const { emit } = useSocket({
+    namespace: 'chat',
+    listeners: {
+      reaction: () => {
+        setMiniHeartShown(true);
+        setTimeout(() => {
+          setMiniHeartShown(false);
+        }, 5000);
+      },
+    },
+  });
 
   const isVibing = Number(userInfo.id) === Number(readingSession?.reader?.id);
+  const remoteParticipant = isVibing ? readingSession?.humanBook : readingSession?.reader;
 
   useEffect(() => {
     // Always return a cleanup function, even if we don't set up anything
@@ -221,7 +237,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
 
     if (!isSharingScreen) {
       try {
-        // Tắt camera trước khi share
+        // Turn off camera and before sharing
         if (localTracks[1]) {
           if (Array.isArray(localTracks[1])) {
             await Promise.all(
@@ -238,25 +254,23 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
           }
         }
 
-        // Tạo track từ màn hình
-        const sTrack = await AgoraRTC.createScreenVideoTrack({
+        // Create a screen track
+        const screenTrack = await AgoraRTC.createScreenVideoTrack({
           encoderConfig: '1080p_1',
         });
 
-        // Nếu trả về mảng, chỉ lấy video track
-        const videoTrack = Array.isArray(sTrack) ? sTrack[0] : sTrack;
+        const videoTrack = Array.isArray(screenTrack) ? screenTrack[0] : screenTrack;
 
         // Hiển thị tại video local
         if (localRef.current && videoTrack) {
           videoTrack.play(localRef.current);
         }
 
-        // Publish track màn hình
+        // Publish this screen track
         await client.publish([videoTrack]);
         setScreenTrack(videoTrack);
         setIsSharingScreen(true);
 
-        // Nếu người dùng dừng share từ phía OS
         videoTrack.on('track-ended', async () => {
           await client.unpublish([videoTrack]);
           videoTrack.stop();
@@ -265,7 +279,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
           setScreenTrack(null);
           setIsSharingScreen(false);
 
-          // Tái khởi động camera
+          // Resetting camera and microphone
           const newTracks = await AgoraRTC.createMicrophoneAndCameraTracks();
 
           setLocalTracks(newTracks);
@@ -278,7 +292,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
         console.error('Share screen failed!', error);
       }
     } else {
-      // Nếu đang share mà tắt
+      // If the share screen is on, toggle it off
       if (screenTrack) {
         await client.unpublish([screenTrack]);
         screenTrack.stop();
@@ -288,7 +302,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
         setIsSharingScreen(false);
       }
 
-      // Tái khởi động camera
+      // Still resetting camera and microphone
       const newTracks = await AgoraRTC.createMicrophoneAndCameraTracks();
 
       setLocalTracks(newTracks);
@@ -299,12 +313,11 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
     }
   };
   /**
-   * Toggle camera on/off với improved error handling
-   * tracks[1] là camera track, tracks[0] là microphone track
+   * Toggle camera on/off and improved error handling
+   * tracks[1] is camera track, tracks[0] is microphone track
    */
   const toggleCamera = async () => {
     try {
-      // Kiểm tra xem tracks đã sẵn sàng chưa
       if (!tracksReady || !localTracks[1]) {
         return;
       }
@@ -319,8 +332,8 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
     }
   };
   /**
-   * Toggle microphone on/off với improved error handling
-   * tracks[0] là microphone track
+   * Toggle microphone on/off and improved error handling
+   * tracks[0] is microphone track
    */
   const toggleMic = async () => {
     try {
@@ -361,6 +374,13 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
       // Silent error handling could be replaced with proper error reporting
     }
   };
+  const handleReact = async () => {
+    emit('reaction', { recipientId: remoteParticipant?.id });
+    setHeartShown(true);
+    setTimeout(() => {
+      setHeartShown(false);
+    }, 5000);
+  };
 
   return (
     <div className="mx-0 my-2 flex size-full items-stretch justify-center gap-6 xl:m-6">
@@ -393,7 +413,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
         {/* Header with meeting info and controls */}
         <div className="flex items-center justify-between">
           <div />
-          <div className="flex items-center gap-4 text-center text-2xl leading-8 text-primary-60">
+          <div className="flex items-center gap-4 text-center leading-8 text-primary-60 xl:text-2xl">
             {isRecording && <RecordingTimer />}
             <h5 className="font-medium">
               {t('meeting_topic')}
@@ -417,6 +437,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
             isShowWaitingText={!hasParticipantJoined}
             isMicOn={isMicOn}
             isCamOn={isCameraOn}
+            isReactionShown={heartShown || miniHeartShown}
             roleLabel={isVibing ? 'Liber' : 'Huber'}
             participantAvatarUrl={userInfo.photo?.path}
           />
@@ -433,8 +454,8 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
                 isCamOn={remoteCameraOn}
                 roleLabel={isVibing ? 'Huber' : 'Liber'}
                 isLocal={false}
-                participantName={readingSession?.humanBook?.fullName}
-                participantAvatarUrl={readingSession?.humanBook?.photo?.path}
+                participantName={remoteParticipant?.fullName}
+                participantAvatarUrl={remoteParticipant?.photo?.path}
               />
             </div>
           )}
@@ -492,7 +513,13 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
               <Screencast size={24} />
             </IconButton>
           </div>
-          <IconButton variant="outline" size="lg" className="!size-11 border-none bg-white p-2.5 shadow-sm">
+          <IconButton
+            variant="outline"
+            size="lg"
+            disabled={heartShown}
+            className="!size-11 border-none bg-white p-2.5 shadow-sm"
+            onClick={handleReact}
+          >
             <Heart size={24} color="#FF2C94" />
           </IconButton>
         </div>
