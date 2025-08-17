@@ -21,7 +21,8 @@ type IReactionAnimationProps = {
 
 const ReactionAnimation = ({ className, size = 'md' }: IReactionAnimationProps) => (
   <div className={mergeClassnames(
-    'inline-grid animate-heartbeat grid-cols-heart grid-rows-heart gap-[1px] p-5',
+    'inline-grid animate-heartbeat gap-[1px] p-5',
+    size === 'sm' ? 'grid-cols-heart-sm grid-rows-heart-sm' : 'grid-cols-heart grid-rows-heart',
     className,
   )}
   >
@@ -31,7 +32,7 @@ const ReactionAnimation = ({ className, size = 'md' }: IReactionAnimationProps) 
           key={`${i}-${j}`}
           className={mergeClassnames(
             'transition-transform duration-300',
-            size === 'sm' ? 'size-[5px]' : 'size-5',
+            size === 'sm' ? 'size-0.5' : 'size-5',
             color === 'pink'
               ? 'bg-red-60 animate-pink-pulse'
               : color === 'soft-pink'

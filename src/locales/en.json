@@ -690,7 +690,8 @@
     "title_notification": "Summited",
     "notification": "Thanks for your story! HuLib will keep you informed when our process completes. We look forward to your participation as a Huber!",
     "btn_name_notification": "Explore",
-    "back_to_home": "Back to Homepage"
+    "back_to_home": "Back to Homepage",
+    "placeholder": "Placeholder"
   },
   "feedback_form": {
     "session_feedback": "Feedback for the session",

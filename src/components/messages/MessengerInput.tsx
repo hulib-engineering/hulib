@@ -4,6 +4,7 @@ import { SmileySticker, TelegramLogo } from '@phosphor-icons/react';
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 
+import { useTranslations } from 'next-intl';
 import IconButton from '../iconButton/IconButton';
 import Popover from '../popover/Popover';
 import TextInput from '../textInput/TextInput';
@@ -52,6 +53,8 @@ export const MessengerInput = ({
   outerStickerPicker?: boolean;
   onSend: (msg: string, type?: 'txt' | 'img') => void;
 }) => {
+  const t = useTranslations('Common');
+
   const { data: stickers } = useGetStickersQuery();
 
   const textInputRef = useRef<HTMLInputElement | null>(null);
@@ -79,7 +82,7 @@ export const MessengerInput = ({
           id="message"
           ref={textInputRef}
           type="text"
-          placeholder="Placeholder"
+          placeholder={t('placeholder')}
           icon={
             !outerStickerPicker
               ? (
