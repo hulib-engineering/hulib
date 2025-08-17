@@ -7,6 +7,16 @@ import getConversations from './getConversations';
 import getUserOnlineStatus from './getUserOnlineStatus';
 import type { ProfileValidation } from '@/validations/ProfileValidation';
 
+enum ChatType {
+  TXT = 'txt',
+  IMG = 'img',
+}
+
+export const ChatTypeMap: Record<ChatType, number> = {
+  [ChatType.TXT]: 1,
+  [ChatType.IMG]: 2,
+};
+
 export type MessageResponse = {
   id: string;
   recipientId: number;

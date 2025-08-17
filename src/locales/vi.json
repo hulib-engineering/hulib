@@ -694,7 +694,8 @@
     "title_notification": "Hoàn tất đăng kí",
     "notification": "Cảm ơn bạn đã gửi câu chuyện! Hẹn gặp bạn trong suốt hành trình làm Huber nhé!",
     "btn_name_notification": "Khám phá thêm",
-    "back_to_home": "Trở lại trang chủ"
+    "back_to_home": "Trở lại trang chủ",
+    "placeholder": "Bạn đang nghĩ gì..."
   },
   "feedback_form": {
     "session_feedback": "Phản hồi cho buổi học",

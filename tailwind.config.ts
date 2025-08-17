@@ -211,10 +211,12 @@ export default {
         330: '330deg',
       },
       gridTemplateColumns: {
-        heart: 'repeat(13, 20px)',
+        'heart-sm': 'repeat(13, 2px)',
+        'heart': 'repeat(13, 20px)',
       },
       gridTemplateRows: {
-        heart: 'repeat(11, 20px)',
+        'heart-sm': 'repeat(11, 2px)',
+        'heart': 'repeat(11, 20px)',
       },
       spacing: {
         'pixel-gap': '1px',
