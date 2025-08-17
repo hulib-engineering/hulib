@@ -5,7 +5,7 @@ import type { Socket } from 'socket.io-client';
 import { socket as createSocket } from '@/libs/services/socket';
 
 type UseSocketOptions<TEvents> = {
-  namespace: 'notification' | 'chat';
+  namespace: 'notification' | 'chat' | string;
   listeners?: Partial<{ [K in keyof TEvents]: (payload: TEvents[K]) => void }>;
   maxRetries?: number;
   cleanupOnUnmount?: boolean;

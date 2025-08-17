@@ -49,7 +49,7 @@ const VideoComponent = (props: IVideoProps) => {
       && (
         <ReactionAnimation
           size={!isLocal ? 'sm' : 'md'}
-          className={mergeClassnames('z-[999999]', !isLocal && 'bottom-4 right-4 ')}
+          className={mergeClassnames('z-[999999]', !isLocal && 'absolute bottom-1 right-1')}
         />
       )}
       <div

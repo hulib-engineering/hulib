@@ -2,7 +2,7 @@
 
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import {
   Chat,
@@ -13,7 +13,6 @@ import {
   Screencast,
   VideoCamera,
   VideoCameraSlash,
-  X,
 } from '@phosphor-icons/react';
 
 import IconButton from '../../components/iconButton/IconButton';
@@ -24,13 +23,14 @@ import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-s
 import { Env } from '@/libs/Env.mjs';
 import { mergeClassnames } from '@/components/private/utils';
 import { HeaderIconButtonWithBadge } from '@/layouts/webapp/Header';
-import { MessengerInput } from '@/components/messages/MessengerInput';
 import Modal from '@/components/Modal';
 import Button from '@/components/button/Button';
 import { useStartCloudRecordingMutation } from '@/libs/services/modules/agora';
 import { pushError } from '@/components/CustomToastifyContainer';
 import RecordingTimer from '@/layouts/reading/RecordingTimer';
 import { useSocket } from '@/libs/hooks/useSocket';
+import ChatInCall from '@/layouts/reading/ChatInCall';
+import Popover from '@/components/popover/Popover';
 
 export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?: { resourceId: string; sid: string; uid: string }) => void }) {
   const urlParams = useSearchParams();
@@ -67,9 +67,10 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
   const [cloudRecordingData, setCloudRecordingData] = useState<{ resourceId: string; sid: string; uid: string } | undefined>(undefined);
   const [heartShown, setHeartShown] = useState(false);
   const [miniHeartShown, setMiniHeartShown] = useState(false);
+  const [unreadChatInCallMessageCount, setUnreadChatInCallMessageCount] = useState(0);
 
   const { emit } = useSocket({
-    namespace: 'chat',
+    namespace: '',
     listeners: {
       reaction: () => {
         setMiniHeartShown(true);
@@ -151,10 +152,9 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
         // await tracks[1]?.setEnabled(false);
 
         // **FIX: Xử lý existing users đã có sẵn trong channel**
-        // Khi join vào channel, cần kiểm tra và subscribe tới remote users đã có sẵn
+        // When joining the channel, need to check and subscribe to available remote user
         const { remoteUsers } = agoraClient;
 
-        // Sử dụng Promise.all để xử lý concurrent thay vì await trong loop
         const subscribePromises = remoteUsers.map(async (remoteUser) => {
           const promises = [];
 
@@ -187,7 +187,6 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
           return Promise.all(promises);
         });
 
-        // Chờ tất cả subscription hoàn thành
         await Promise.all(subscribePromises);
       } catch (error) {
         // Silent error handling could be replaced with proper error reporting
@@ -314,7 +313,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
   };
   /**
    * Toggle camera on/off and improved error handling
-   * tracks[1] is camera track, tracks[0] is microphone track
+   * Second track is camera track, first one is a microphone track
    */
   const toggleCamera = async () => {
     try {
@@ -328,7 +327,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
       await localTracks[1].setEnabled(newState);
       setIsCameraOn(newState);
     } catch (error) {
-      // Silent error handling - could be replaced with proper error reporting
+      // Silent error handling could be replaced with proper error reporting
     }
   };
   /**
@@ -347,7 +346,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
       await localTracks[0].setEnabled(newState);
       setIsMicOn(newState);
     } catch (error) {
-      // Silent error handling - could be replaced with proper error reporting
+      // Silent error handling could be replaced with proper error reporting
     }
   };
   /**
@@ -409,7 +408,12 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
           </div>
         </Modal.Panel>
       </Modal>
-      <div className="flex size-full flex-col gap-4 rounded-[40px] rounded-tl-none bg-[#FFFFFF] p-4 shadow-popover xl:rounded-tl-[40px]">
+      <div
+        className={mergeClassnames(
+          'flex size-full flex-col gap-4 rounded-[40px] rounded-tl-none bg-[#FFFFFF] p-4 shadow-popover',
+          'xl:rounded-tl-[40px]',
+        )}
+      >
         {/* Header with meeting info and controls */}
         <div className="flex items-center justify-between">
           <div />
@@ -422,8 +426,26 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
             </h5>
           </div>
 
-          <button type="button" onClick={() => setIsChatOpening(!isChatOpening)}>
-            <HeaderIconButtonWithBadge badge={10} open={isChatOpening}>
+          <Popover position="bottom-end" className="xl:hidden">
+            <Popover.Trigger data-testid="chat-in-call-trigger">
+              <HeaderIconButtonWithBadge badge={unreadChatInCallMessageCount}>
+                <Chat className="text-[28px] text-primary-60" />
+              </HeaderIconButtonWithBadge>
+            </Popover.Trigger>
+            <Popover.Panel className="mt-2 h-[612px] w-[301px] rounded-none bg-transparent p-0">
+              {({ close }) => (
+                <ChatInCall
+                  participantId={remoteParticipant?.id}
+                  participantAvatarUrl={remoteParticipant?.photo?.path}
+                  isShow
+                  onClose={close}
+                  onUnreadCountChange={count => setUnreadChatInCallMessageCount(count)}
+                />
+              )}
+            </Popover.Panel>
+          </Popover>
+          <button type="button" className="hidden xl:block" onClick={() => setIsChatOpening(!isChatOpening)}>
+            <HeaderIconButtonWithBadge badge={unreadChatInCallMessageCount} open={isChatOpening}>
               <Chat className="text-[28px] text-primary-60" />
             </HeaderIconButtonWithBadge>
           </button>
@@ -433,11 +455,11 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
         <div className="relative">
           <VideoComponent
             agoraVideoPlayerRef={localRef}
-            className="h-[700px]"
+            className="h-[612px] xl:h-[732px]"
             isShowWaitingText={!hasParticipantJoined}
             isMicOn={isMicOn}
             isCamOn={isCameraOn}
-            isReactionShown={heartShown || miniHeartShown}
+            isReactionShown={heartShown}
             roleLabel={isVibing ? 'Liber' : 'Huber'}
             participantAvatarUrl={userInfo.photo?.path}
           />
@@ -452,6 +474,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
                 isShowWaitingText={false}
                 isMicOn={remoteMicOn}
                 isCamOn={remoteCameraOn}
+                isReactionShown={miniHeartShown}
                 roleLabel={isVibing ? 'Huber' : 'Liber'}
                 isLocal={false}
                 participantName={remoteParticipant?.fullName}
@@ -584,20 +607,13 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
           </div>
         )}
       </div>
-      {isChatOpening && (
-        <div className="flex w-1/3 flex-col overflow-hidden rounded-[20px] rounded-tr-none bg-neutral-90 shadow-popover">
-          <div className="flex items-center justify-between bg-white px-3 py-2 text-neutral-10">
-            <X className="invisible size-7" />
-            <h6 className="text-xl font-medium">{t('chat')}</h6>
-            <X className="size-7 cursor-pointer text-[#343330]" onClick={() => setIsChatOpening(false)} />
-          </div>
-          <div className="flex flex-1 flex-col bg-neutral-98" />
-          <MessengerInput
-            onSend={(value, type) =>
-              console.log(value, type, 'send message')}
-          />
-        </div>
-      )}
+      <ChatInCall
+        participantId={remoteParticipant?.id}
+        participantAvatarUrl={remoteParticipant?.photo?.path}
+        isShow={isChatOpening}
+        onClose={() => setIsChatOpening(false)}
+        onUnreadCountChange={count => setUnreadChatInCallMessageCount(count)}
+      />
     </div>
   );
 }
