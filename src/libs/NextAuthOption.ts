@@ -4,6 +4,7 @@ import GoogleProvider from 'next-auth/providers/google';
 
 import { Env } from '@/libs/Env.mjs';
 import { AppConfig } from '@/utils/AppConfig';
+import { ROLE_NAME, Role } from '@/types/common';
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -40,6 +41,7 @@ export const authOptions = {
           return {
             id: credentials.id,
             accessToken: credentials.accessToken,
+            role: credentials.role,
           };
         }
         return null;
@@ -68,7 +70,11 @@ export const authOptions = {
             },
           );
           const resParsed = await res.json();
-          tokenParsed = { ...tokenParsed, accessToken: resParsed.token };
+          tokenParsed = {
+            ...tokenParsed,
+            accessToken: resParsed.token,
+            role: resParsed.user?.role?.name ?? ROLE_NAME[Role.LIBER], // 🔹 attach role from API
+          };
         }
         if (account?.provider === 'facebook') {
           const res = await fetch(
@@ -80,10 +86,19 @@ export const authOptions = {
             },
           );
           const resParsed = await res.json();
-          tokenParsed = { ...tokenParsed, accessToken: resParsed.token };
+          tokenParsed = {
+            ...tokenParsed,
+            accessToken: resParsed.token,
+            role: resParsed.user?.role?.name ?? ROLE_NAME[Role.LIBER], // 🔹 attach role from API
+          };
         }
         if (account?.provider === 'credentials') {
-          tokenParsed = { ...tokenParsed, accessToken: user.accessToken };
+          console.log('User', user);
+          tokenParsed = {
+            ...tokenParsed,
+            accessToken: user.accessToken,
+            role: user.role ?? ROLE_NAME[Role.LIBER], // 🔹 attach role from API
+          };
         }
       }
 
@@ -91,6 +106,7 @@ export const authOptions = {
     },
     async session({ session, token }: { session: any; token: any }) {
       session.accessToken = token.accessToken;
+      session.role = token.role; // 🔹 expose role to client session
 
       return session;
     },

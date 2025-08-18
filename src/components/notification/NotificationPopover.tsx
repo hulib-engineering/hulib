@@ -17,6 +17,7 @@ type NotificationPopoverProps = {
 
 const NotificationPopover: FC<NotificationPopoverProps> = ({ children }) => {
   const router = useRouter();
+
   const t = useTranslations('notifications');
 
   const { notifications, isLoading, error } = useNotifications({

@@ -54,6 +54,7 @@ const LoginForm = () => {
         await signIn('credentials', {
           id: result.user.id,
           accessToken: result.token,
+          role: result.user.role.name,
           callbackUrl: `${window.location.origin}/home`,
         });
       }

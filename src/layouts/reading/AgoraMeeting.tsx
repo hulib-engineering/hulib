@@ -16,8 +16,8 @@ import {
 } from '@phosphor-icons/react';
 
 import IconButton from '../../components/iconButton/IconButton';
-import VideoComponent from '../../components/meeting/Video';
 
+import { PlayableAgoraMeetView } from '@/components/meeting/PlayableAgoraMeetView';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
 import { Env } from '@/libs/Env.mjs';
@@ -384,7 +384,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
   return (
     <div className="mx-0 my-2 flex size-full items-stretch justify-center gap-6 xl:m-6">
       <Modal
-        open={isRecordingAlertModalOpen}
+        open={isRecordingAlertModalOpen && !isRecording}
         disableClosingTrigger
         onClose={() => setIsRecordingAlertModalOpen(false)}
       >
@@ -453,7 +453,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
 
         {/* Video display area */}
         <div className="relative">
-          <VideoComponent
+          <PlayableAgoraMeetView
             agoraVideoPlayerRef={localRef}
             className="h-[612px] xl:h-[732px]"
             isShowWaitingText={!hasParticipantJoined}
@@ -469,7 +469,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
             <div
               className="absolute right-2 top-2 h-[181px] w-[135px] rounded-3xl border-2 border-white bg-black xl:h-[181px] xl:w-[297px]"
             >
-              <VideoComponent
+              <PlayableAgoraMeetView
                 agoraVideoPlayerRef={remoteRef}
                 isShowWaitingText={false}
                 isMicOn={remoteMicOn}
