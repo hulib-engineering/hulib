@@ -100,6 +100,8 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
     );
   };
 
+  console.log(data);
+
   return (
     <div
       className={mergeClassnames(
