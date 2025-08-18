@@ -1,3 +1,11 @@
+## [1.31.3](https://github.com/hulib-engineering/hulib/compare/v1.31.2...v1.31.3) (2025-08-18)
+
+
+### Bug Fixes
+
+* highlight matched result ([036f6c1](https://github.com/hulib-engineering/hulib/commit/036f6c15d40839cfab84909b7c3dc0bfdafe38ec))
+* highlight matched result ([20db5b1](https://github.com/hulib-engineering/hulib/commit/20db5b199fbc30efe78fae4141ce07c764af2cbc))
+
 ## [1.31.2](https://github.com/hulib-engineering/hulib/compare/v1.31.1...v1.31.2) (2025-07-30)
 
 
