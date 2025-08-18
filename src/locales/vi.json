@@ -408,6 +408,20 @@
       "huber_overview": "Tổng quan Huber",
       "work_and_education": "Công việc và Học vấn",
       "contact_information": "Thông tin liên hệ"
+    },
+    "report_modal": {
+      "header_title": "Bạn sắp báo cáo về người dùng này.",
+      "reason_checkbox_label": "Vui lòng dành chút thời gian suy nghĩ kỹ và chọn lý do phù hợp nhất bên dưới.",
+      "reason_0": "Sử dụng từ ngữ thô tục, hung hăng, phân biệt chủng tộc...",
+      "reason_1": "Yêu cầu thông tin cá nhân hoặc nhạy cảm.",
+      "reason_2": "Chia sẻ hình ảnh hoặc nội dung khiêu dâm, không phù hợp.",
+      "reason_3": "Bán hoặc quảng bá các mặt hàng bị hạn chế.",
+      "reason_4": "Chế nhạo hoặc coi nhẹ việc chia sẻ cá nhân nghiêm túc.",
+      "reason_5": "Lừa đảo, gian lận hoặc thông tin sai lệch.",
+      "other_reason_placeholder": "Nếu bạn có lý do nào khác, hãy thoải mái chia sẻ với chúng tôi ở đây.",
+      "submit": "Báo cáo",
+      "success_report_title": "Báo cáo đã được gửi thành công",
+      "success_report_detail": "Cảm ơn bạn đã báo cáo. Chúng tôi trân trọng sự đóng góp của bạn trong việc giữ gìn một cộng đồng an toàn. Đội ngũ Hulib sẽ xem xét cẩn thận thông tin bạn cung cấp."
     }
   },
   "MyFavorites": {

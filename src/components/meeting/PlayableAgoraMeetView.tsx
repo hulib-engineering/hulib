@@ -6,7 +6,7 @@ import { mergeClassnames } from '@/components/private/utils';
 import IconButton from '@/components/iconButton/IconButton';
 import { ReactionAnimation } from '@/components/meeting/ReactionAnimation';
 
-type IVideoProps = {
+type IPlayableAgoraMeetViewProps = {
   agoraVideoPlayerRef: RefObject<HTMLDivElement>;
   waitingText?: string;
   isShowWaitingText?: boolean;
@@ -20,7 +20,7 @@ type IVideoProps = {
   participantAvatarUrl?: string;
 };
 
-const VideoComponent = (props: IVideoProps) => {
+const PlayableAgoraMeetView = (props: IPlayableAgoraMeetViewProps) => {
   const t = useTranslations('Reading.AgoraMeeting');
 
   const {
@@ -66,7 +66,7 @@ const VideoComponent = (props: IVideoProps) => {
           <div
             className={mergeClassnames(
               'rounded-[100px] bg-neutral-98 backdrop-blur-[15px]',
-              isLocal ? 'px-4 py-2 text-[#F3C00C]' : 'px-2 py-1 text-sm text-primary-60',
+              isLocal ? 'px-2 py-1 text-xs leading-5 text-[#F3C00C] xl:px-4 xl:py-2 xl:text-base' : 'px-2 py-1 text-xs leading-5 text-primary-60 xs:text-sm',
             )}
           >
             {roleLabel}
@@ -76,7 +76,7 @@ const VideoComponent = (props: IVideoProps) => {
           <div
             className={mergeClassnames(
               'rounded-[100px] bg-neutral-98 text-[#F3C00C] backdrop-blur-[15px]',
-              isLocal ? 'px-4 py-2' : 'px-2 py-1 text-sm',
+              isLocal ? 'px-2 py-1 text-xs xl:px-4 xl:py-2 xl:text-base' : 'px-2 py-1 text-xs leading-5 xl:text-sm',
 
             )}
           >
@@ -86,7 +86,7 @@ const VideoComponent = (props: IVideoProps) => {
           <div
             className={mergeClassnames(
               'rounded-[100px] bg-neutral-98 text-primary-60 backdrop-blur-[15px]',
-              isLocal ? 'px-4 py-2' : 'px-2 py-1 text-sm',
+              isLocal ? 'px-2 py-1 text-xs xl:px-4 xl:py-2 xl:text-base' : 'px-2 py-1 text-xs leading-5 xl:text-sm',
             )}
           >
             {participantName}
@@ -129,4 +129,4 @@ const VideoComponent = (props: IVideoProps) => {
   );
 };
 
-export default VideoComponent;
+export { PlayableAgoraMeetView };
