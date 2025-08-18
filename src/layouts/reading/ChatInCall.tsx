@@ -91,7 +91,7 @@ export default function ChatInCall({ isShow, participantId, participantAvatarUrl
       leaveFrom="opacity-100 translate-y-0 scale-100"
       leaveTo="opacity-0 translate-y-4 scale-95"
     >
-      <div className="flex size-full flex-col overflow-hidden rounded-[20px] rounded-tr-none bg-neutral-90 shadow-popover xl:w-1/3">
+      <div className="flex size-full flex-col overflow-hidden rounded-[20px] rounded-tr-none bg-neutral-90 shadow-popover xl:h-auto xl:w-1/3">
         <div className="flex items-center justify-between bg-white px-3 py-2 text-neutral-10">
           <X className="invisible size-7" />
           <h6 className="text-xl font-medium">{t('chat')}</h6>
