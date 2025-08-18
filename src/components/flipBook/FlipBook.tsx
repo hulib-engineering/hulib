@@ -129,9 +129,10 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
                 'text-base font-medium leading-6 text-primary-10 line-clamp-3 capitalize',
                 'md:text-[18px] md:leading-7',
               )}
-            >
-              {data?.title.toLowerCase()}
-            </h2>
+              dangerouslySetInnerHTML={{
+                __html: data?.highlightTitle?.toLocaleLowerCase() || data?.title.toLowerCase(),
+              }}
+            />
             <div
               className={mergeClassnames('flex flex-row items-center gap-2')}
             >
@@ -214,7 +215,7 @@ export const FlipBook = ({ data, renderActions, refetch }: BookCommonProps) => {
           )}
         >
           <AnimatedCover
-            abstract={data?.abstract ?? ''}
+            abstract={(data?.highlightAbstract || data?.abstract) ?? ''}
             title={title}
             authorName={data?.humanBook?.fullName || ''}
             coverUrl={data?.cover?.path || ''}
