@@ -12,12 +12,13 @@ import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
-import * as React from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import AboutPanel from '../AboutPanel';
 import FavoriteTab from '../FavoriteTab';
 import IconButtonEdit from '../IconButtonEdit';
 import StoriesTab from '../StoriesTab';
+
 import Button from '@/components/button/Button';
 import type { ProfileMenuItem } from '@/components/core/NavBar/NavBar';
 import { MyProfilePanelIndex, NavBar } from '@/components/core/NavBar/NavBar';
@@ -30,6 +31,7 @@ import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import { setAvatarUrl } from '@/libs/store/authentication';
 import { openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
+import ReportModal from '@/layouts/profile/ReportModal';
 
 type Props = {
   label: string;
@@ -67,13 +69,14 @@ const Profile = () => {
   });
 
   const dispatch = useAppDispatch();
-  const billUploader = React.useRef<HTMLInputElement>(null);
+  const billUploader = useRef<HTMLInputElement>(null);
   const [upload] = useUploadMutation();
   const [updateProfile] = useUpdateProfileMutation();
 
-  const [selectedMenuItem, setSelectedMenuItem] = React.useState<
+  const [selectedMenuItem, setSelectedMenuItem] = useState<
     ProfileMenuItem | undefined
   >();
+  const [isReportModalOpen, setReportModalOpen] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -143,7 +146,7 @@ const Profile = () => {
     );
   };
 
-  const tabsRender: ProfileMenuItem[] = React.useMemo(() => {
+  const tabsRender: ProfileMenuItem[] = useMemo(() => {
     return [
       {
         type: MyProfilePanelIndex.ABOUT,
@@ -230,7 +233,7 @@ const Profile = () => {
     ].filter(Boolean) as ProfileMenuItem[];
   }, [userDetail, selectedMenuItem?.type, huberId, isAdmin]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const tabParam = searchParams.get('tab'); // lấy từ ?tab=...
 
     if (tabParam && tabsRender.length > 0) {
@@ -246,7 +249,7 @@ const Profile = () => {
     }
   }, [searchParams, tabsRender]);
 
-  const getActiveMenuItemIndex = React.useCallback(
+  const getActiveMenuItemIndex = useCallback(
     (type: MyProfilePanelIndex | undefined) => {
       if (!type) {
         return 0;
@@ -256,7 +259,7 @@ const Profile = () => {
     [tabsRender],
   );
 
-  const selectedItemIndex = React.useMemo(() => {
+  const selectedItemIndex = useMemo(() => {
     return getActiveMenuItemIndex(selectedMenuItem?.type);
   }, [getActiveMenuItemIndex, selectedMenuItem?.type]);
 
@@ -276,6 +279,7 @@ const Profile = () => {
 
   return (
     <div className="mb-5 flex size-full flex-col gap-y-4">
+      <ReportModal open={isReportModalOpen} onClose={() => setReportModalOpen(false)} />
       <div>
         <div className="relative flex h-[99.99px] justify-end justify-items-end bg-[#A6D4FF] lg:h-[200px]">
           <div className="relative h-[99.99px] w-full lg:h-[200px]">
@@ -374,7 +378,7 @@ const Profile = () => {
                   )
                 : (
                     <div className="flex gap-2">
-                      <Button variant="outline" size="lg">
+                      <Button variant="outline" size="lg" onClick={() => setReportModalOpen(true)}>
                         Report
                       </Button>
                       <Button
@@ -403,4 +407,5 @@ const Profile = () => {
     </div>
   );
 };
+
 export default Profile;

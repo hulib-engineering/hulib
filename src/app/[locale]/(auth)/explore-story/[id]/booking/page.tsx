@@ -221,7 +221,6 @@ export default function Index() {
                       <TextArea
                         aria-multiline
                         className="h-[240px] text-sm leading-4 placeholder:text-sm placeholder:leading-4 xl:h-[120px]"
-                        required
                         placeholder={t('message_placeholder')}
                         value={note}
                         onChange={e => setNote(e.target.value)}
