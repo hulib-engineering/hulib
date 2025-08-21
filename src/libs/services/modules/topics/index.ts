@@ -18,6 +18,6 @@ const topicsApi = apiWithTag.injectEndpoints({
 
 export const {
   useGetTopicsQuery,
-  useGetTopicByIdQuery,
+  // useGetTopicByIdQuery,
   usePostTopicsMutation,
 }: any = topicsApi;

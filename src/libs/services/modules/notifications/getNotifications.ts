@@ -13,10 +13,26 @@ const getNotifications = (
     query: params => ({
       url: 'notifications',
       params: {
-        page: params?.page || 1,
-        limit: params?.limit || 10,
+        page: params?.page,
+        limit: params?.limit,
       },
     }),
+
+    // 👇 Group all pages into one cache key ("getNotifications")
+    serializeQueryArgs: ({ endpointName }) => endpointName,
+
+    // 👇 Merge new results into the cache
+    merge: (currentCache, newItems) => {
+      currentCache.data.push(...newItems.data);
+      currentCache.hasNextPage = newItems.hasNextPage;
+      currentCache.unseenCount = newItems.unseenCount; // keep the latest unseen count
+    },
+
+    // 👇 Prevent duplicate fetches
+    forceRefetch({ currentArg, previousArg }) {
+      return currentArg?.page !== previousArg?.page;
+    },
+
     providesTags: [{ type: 'Notification', id: 'LIST' }],
   });
 
