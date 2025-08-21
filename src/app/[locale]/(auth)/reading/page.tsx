@@ -93,7 +93,7 @@ export default function ReadingPage() {
     } catch (error) {
       pushError('Failed to finish session');
     } finally {
-      router.push('/notification');
+      router.push('/notifications');
     }
   };
 

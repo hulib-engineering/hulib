@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  Bell,
   CaretDown,
   Gear,
   House,
@@ -25,7 +26,6 @@ import Popover from '@/components/popover/Popover';
 import { mergeClassnames } from '@/components/private/utils';
 import SearchInput from '@/components/SearchInput';
 import { ContactItem } from '@/layouts/webapp/Messages/ChatList';
-import NotificationButton from '@/layouts/webapp/NotificationIcon';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
@@ -43,6 +43,7 @@ import { useLazyGetUsersByIdQuery } from '@/libs/services/modules/user';
 import type { Message } from '@/libs/store/messenger';
 import { openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
+import NotificationPopover from '@/layouts/webapp/NotificationPopover';
 
 type AvatarPopoverMenuItem = {
   label: string;
@@ -265,7 +266,7 @@ const Header = () => {
   const user = useAppSelector(state => state.auth.userInfo);
   const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
 
-  const { data, isLoading } = useGetNotificationsQuery({ page: 1, limit: 5 });
+  const { data, isLoading, error } = useGetNotificationsQuery({ page: 1, limit: 5 });
   const { data: conversations = [] } = useGetConversationContactsQuery(
     undefined,
     {
@@ -306,13 +307,6 @@ const Header = () => {
       const participantId = `${user.id}` === `${msg.from}` ? msg.to : msg.from;
       const participant = await fetchParticipantInfo(participantId);
 
-      // dispatch(
-      //   addMessage({
-      //     id: `${participantId}`,
-      //     message: msg,
-      //   }),
-      // );
-
       dispatch(
         openChat({
           id: `${participantId}`,
@@ -349,7 +343,6 @@ const Header = () => {
       list: handleNotificationList,
     },
   });
-
   useSocket({
     namespace: 'chat',
     listeners: chatListeners,
@@ -415,10 +408,13 @@ const Header = () => {
                       </>
                     )}
                   </Popover>
-                  <NotificationButton
-                    notificationCount={!isLoading && data ? data.unseenCount : 0}
-                    notificationPath="/notification"
-                  />
+                  {(!isLoading && !error) && (
+                    <button type="button" className="xl:hidden" onClick={() => router.push('/notifications')}>
+                      <HeaderIconButtonWithBadge badge={data ? data.unseenCount : 0} open={false}>
+                        <Bell className="text-[28px]" />
+                      </HeaderIconButtonWithBadge>
+                    </button>
+                  )}
                   <div className="relative ml-2">
                     <AvatarPopover>
                       <Image
@@ -481,10 +477,7 @@ const Header = () => {
                     </>
                   )}
                 </Popover>
-                <NotificationButton
-                  notificationCount={!isLoading && data ? data.unseenCount : 0}
-                  notificationPath="/notification"
-                />
+                {!isLoading && !error && <NotificationPopover unreadNotifCount={data ? data.unseenCount : 0} />}
                 <div className="relative ml-2 size-11">
                   <AvatarPopover>
                     <Image
