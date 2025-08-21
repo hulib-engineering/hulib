@@ -122,6 +122,7 @@ export default {
           40: '#DBAE0A',
           50: '#F3C00C',
           60: '#F6CE3C',
+          80: '#FBE79D',
           90: '#FDF3CE',
           98: '#FFFDF5',
         },

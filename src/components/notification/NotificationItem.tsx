@@ -19,6 +19,8 @@ type NotificationItemProps = {
   hideDetails?: boolean;
   hideRateNumber?: boolean;
   onClick?: () => void;
+  onMarkAsSeen?: (id: number) => void;
+  className?: string;
 };
 
 const NotificationItem: FC<NotificationItemProps> = ({
@@ -26,11 +28,13 @@ const NotificationItem: FC<NotificationItemProps> = ({
   hideRateNumber = false,
   hideDetails = false,
   onClick,
+  onMarkAsSeen,
 }) => {
   const config = getNotificationConfig(
     notification.type.name,
     notification.relatedEntity?.sessionStatus,
   );
+
   const {
     handleNotificationClick,
     handleStatusChange,
@@ -44,28 +48,76 @@ const NotificationItem: FC<NotificationItemProps> = ({
   );
 
   const onItemClick = async () => {
-    await handleNotificationClick(notification);
-    if (onClick) {
-      onClick();
+    try {
+      if (!notification.seen && onMarkAsSeen) {
+        onMarkAsSeen(notification.id);
+      }
+
+      await handleNotificationClick(notification);
+
+      if (onClick) {
+        onClick();
+      }
+    } catch (error) {
+      console.error('Error handling notification click:', error);
     }
   };
 
-  const onSeeDetailClick = () => handleSeeDetail(notification);
-  const onAccept = () =>
-    handleStatusChange(
-      notification.relatedEntityId,
-      StatusEnum.Approved,
-      notification,
-    );
-  const onReject = () =>
-    handleStatusChange(
-      notification.relatedEntityId,
-      StatusEnum.Rejected,
-      notification,
-    );
+  const onSeeDetailClick = async (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
-  const isReviewStory
-    = notification.type.name === NOTIFICATION_TYPES.REVIEW_STORY.name;
+    try {
+      if (!notification.seen && onMarkAsSeen) {
+        onMarkAsSeen(notification.id);
+      }
+
+      await handleSeeDetail(notification);
+    } catch (error) {
+      console.error('Error handling see detail click:', error);
+    }
+  };
+
+  const onAccept = async () => {
+    if (!notification.relatedEntityId) {
+      console.error('No related entity ID for acceptance');
+      return;
+    }
+
+    try {
+      await handleStatusChange(
+        notification.relatedEntityId,
+        StatusEnum.Approved,
+        notification,
+      );
+    } catch (error) {
+      console.error('Error accepting notification:', error);
+    }
+  };
+
+  const onReject = async () => {
+    if (!notification.relatedEntityId) {
+      console.error('No related entity ID for rejection');
+      return;
+    }
+
+    try {
+      await handleStatusChange(
+        notification.relatedEntityId,
+        StatusEnum.Rejected,
+        notification,
+      );
+    } catch (error) {
+      console.error('Error rejecting notification:', error);
+    }
+  };
+
+  const isReviewStory = notification.type.name === NOTIFICATION_TYPES.REVIEW_STORY.name;
+  const isSessionRequest = notification.type.name === NOTIFICATION_TYPES.SESSION_REQUEST.name;
+  const isPendingSession = isSessionRequest && notification.relatedEntity?.sessionStatus === StatusEnum.Pending;
+
   return (
     <div
       className={mergeClassnames(
@@ -87,6 +139,7 @@ const NotificationItem: FC<NotificationItemProps> = ({
           }
         : {})}
     >
+      {/* Unseen indicator */}
       {!notification.seen && (
         <div className="absolute right-4 top-1/2 hidden -translate-y-1/2 md:block">
           <Image
@@ -99,7 +152,14 @@ const NotificationItem: FC<NotificationItemProps> = ({
         </div>
       )}
 
-      <div className="flex items-start gap-2">
+      {/* Priority indicator for urgent notifications */}
+      {isPendingSession && (
+        <div className="absolute left-0 top-1/2 -translate-y-1/2">
+          <div className="h-8 w-1 rounded-r bg-primary-50"></div>
+        </div>
+      )}
+
+      <div className="flex items-start gap-3">
         {config.showAvatar && (
           <NotificationAvatar notification={notification} />
         )}
@@ -112,7 +172,7 @@ const NotificationItem: FC<NotificationItemProps> = ({
               onSeeDetail={onSeeDetailClick}
             />
           </div>
-
+          {/* Time and metadata */}
           <div className="relative mt-1">
             <p className="text-sm text-gray-500">{formattedTime}</p>
             {isReviewStory && !hideRateNumber && notification.relatedEntity && (
@@ -132,17 +192,27 @@ const NotificationItem: FC<NotificationItemProps> = ({
           </div>
 
           {config.showActions && (
-            <NotificationActions
-              onAccept={onAccept}
-              onReject={onReject}
-              isLoading={isUpdatingStatus}
-              notificationType={notification.type.name}
-              sessionId={notification.relatedEntityId}
-            />
+            <div className="mt-3">
+              <NotificationActions
+                onAccept={onAccept}
+                onReject={onReject}
+                isLoading={isUpdatingStatus}
+                notificationType={notification.type.name}
+                sessionId={notification.relatedEntityId || undefined}
+              />
+            </div>
           )}
         </div>
       </div>
+
+      {/* Loading overlay */}
+      {isUpdatingStatus && (
+        <div className="absolute inset-0 flex items-center justify-center bg-white/50">
+          <div className="animate-spin size-6 rounded-full border-2 border-primary-50 border-t-transparent"></div>
+        </div>
+      )}
     </div>
   );
 };
+
 export default NotificationItem;
