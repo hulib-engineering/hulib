@@ -8,7 +8,7 @@ const NotificationSkeleton: FC<NotificationSkeletonProps> = ({ count = 5 }) => {
   return (
     <>
       {Array.from({ length: count }).map((_, index) => (
-        <div key={index} className="border-b p-3 last:border-b-0 ">
+        <div key={index} className="w-full border-b p-3 last:border-b-0 ">
           <div className="flex items-start gap-2">
             <div className="relative shrink-0">
               <div className="size-14 rounded-full bg-gray-200" />
