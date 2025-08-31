@@ -13,6 +13,7 @@ type ReadingSessionRequest = {
   id: number;
   sessionStatus: string;
   note?: string;
+  rejectReason?: string;
   sessionRating?: Rating;
   storyReview?: Rating;
   huberFeedback?: Rating;
@@ -27,6 +28,7 @@ const updateReadingSession = (
       id,
       sessionStatus,
       note,
+      rejectReason,
       sessionRating,
       storyReview,
       huberFeedback,
@@ -44,6 +46,7 @@ const updateReadingSession = (
         storyReview,
         huberFeedback,
         presurvey,
+        rejectReason,
       }),
     }),
     invalidatesTags: [{ type: 'ReadingSession' }],

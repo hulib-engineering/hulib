@@ -2,21 +2,21 @@ import type { SizeProps } from '@/components/avatar/private/types';
 
 const getWrapperSize = (size?: SizeProps) => {
   if (size === 'xs') {
-    return 'h-6 w-6';
+    return 'size-4';
   }
   if (size === 'sm') {
-    return 'h-8 w-8';
+    return 'size-8';
   }
   if (size === 'md') {
-    return 'h-10 w-10';
+    return 'size-10';
   }
   if (size === 'lg') {
-    return 'h-12 w-12';
+    return 'size-12';
   }
   if (size === 'xl') {
-    return 'h-14 w-14';
+    return 'size-14';
   }
-  return 'h-16 w-16';
+  return 'size-16';
 };
 
 const getStatusSize = (size?: SizeProps) => {
