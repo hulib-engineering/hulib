@@ -118,6 +118,6 @@ const baseQueryWithInterceptor = async (
 
 export const api = createApi({
   baseQuery: baseQueryWithInterceptor,
-  tagTypes: ['User', 'OTP', 'AgoraChat', 'Chat', 'Messages'],
+  tagTypes: ['User', 'OTP', 'AgoraChat', 'Chat', 'Messages', 'Notification'],
   endpoints: () => ({}),
 });

@@ -3,24 +3,28 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
+import { useLocale } from 'next-intl';
+import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
 import { notificationConfig } from '../private/config';
 import { NotificationType } from '../private/types';
-import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
 
 import Avatar from '@/components/avatar/Avatar';
 import { mergeClassnames } from '@/components/private/utils';
 import Button from '@/components/button/Button';
+import { toLocaleDateString } from '@/utils/dateUtils';
 
 export default function InformativeNotificationCard({ notification, showExtras, onClick }: INotificationItemRendererProps) {
   const cfg = notificationConfig[notification.type.name as NotificationType];
 
   const router = useRouter();
 
+  const locale = useLocale();
+
   const handleClick = () => {
     if (onClick) {
       onClick();
     }
-    if (cfg.route) {
+    if (cfg.route && cfg.route(notification.relatedEntityId) !== '') {
       router.push(cfg.route(notification.relatedEntityId));
     }
   };
@@ -68,7 +72,12 @@ export default function InformativeNotificationCard({ notification, showExtras, 
                 && 'px-2 border-primary-60 bg-white text-neutral-10',
               )}
             >
-              {notification.relatedEntity?.reason ?? 'No reason'}
+              {notification.type.name === NotificationType.HUBER_REJECTION
+                ? notification.extraNote
+                : notification.type.name === NotificationType.SESSION_REJECTION
+                  ? notification.relatedEntity?.rejectReason
+                  : notification.type.name === NotificationType.SESSION_CANCELLATION ? notification.relatedEntity?.note
+                    : (notification.relatedEntity?.rejectionReason ?? 'No reason')}
             </p>
           )}
           {notification.type.name === NotificationType.SESSION_APPROVAL && (
@@ -84,7 +93,15 @@ export default function InformativeNotificationCard({ notification, showExtras, 
               </div>
               <div className="flex items-center justify-between">
                 <p className="text-neutral-50">Time:</p>
-                <p>{notification.relatedEntity?.startedAt}</p>
+                <p>
+                  {toLocaleDateString(notification.relatedEntity?.startedAt, locale === 'en' ? 'en-GB' : 'vi-VI')}
+                  {' '}
+                  |
+                  {' '}
+                  {notification.relatedEntity?.startTime}
+                  {' '}
+                  {notification.relatedEntity?.endTime}
+                </p>
               </div>
               <div className="flex items-center justify-between">
                 <p className="text-neutral-50">Huber:</p>
@@ -93,10 +110,10 @@ export default function InformativeNotificationCard({ notification, showExtras, 
             </div>
           )}
           {notification.type.name === NotificationType.STORY_REJECTION && (
-            <Button size="sm">See the rejected stories</Button>
+            <Button size="sm" onClick={handleClick}>See the rejected stories</Button>
           )}
           {notification.type.name === NotificationType.SESSION_REJECTION && (
-            <Button size="sm">Explore other stories</Button>
+            <Button size="sm" onClick={() => router.push('/explore-story')}>Explore other stories</Button>
           )}
           {notification.type.name === NotificationType.SESSION_MISS && (
             <Button size="sm">Share the reason</Button>)}

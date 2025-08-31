@@ -1,3 +1,4 @@
+// deprecated, need to refactor using reusable components
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,8 +7,8 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-import AvailableSchedule from '../common/AvailableSchedule';
-import { pushError, pushSuccess } from '../CustomToastifyContainer';
+import AvailableSchedule from '../../components/common/AvailableSchedule';
+import { pushError, pushSuccess } from '../../components/CustomToastifyContainer';
 import Button from '@/components/button/Button';
 import HeadSlots from '@/components/common/HeadSlots';
 import { useAppSelector } from '@/libs/hooks';
@@ -16,7 +17,6 @@ import { useCreateTimeSlotsMutation } from '@/libs/services/modules/time-slots';
 const Step2 = ({ next }: { next: () => void }) => {
   const t = useTranslations('HumanBookRegister.Step2');
   const tCommon = useTranslations('Common');
-
   const formSchema = z.object({
     timeSlots: z
       .array(
@@ -27,8 +27,12 @@ const Step2 = ({ next }: { next: () => void }) => {
       )
       .min(1, t('validation.error_select_at_least_one_time_slot')),
   });
-
   type FormData = z.infer<typeof formSchema>;
+
+  const [createTimeSlots, { isLoading }] = useCreateTimeSlotsMutation();
+
+  const userInfo = useAppSelector(state => state.auth.userInfo);
+
   const {
     handleSubmit,
     control,
@@ -41,9 +45,8 @@ const Step2 = ({ next }: { next: () => void }) => {
       timeSlots: [],
     },
   });
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+
   const [currentDay, setCurrentDay] = useState(0);
-  const [createTimeSlots, { isLoading }] = useCreateTimeSlotsMutation();
 
   const handleTimeSelect = (time: string, selectedDay: number) => {
     const currentTimeSlots = watch('timeSlots');
@@ -66,7 +69,6 @@ const Step2 = ({ next }: { next: () => void }) => {
       ]);
     }
   };
-
   const onSubmit = async (data: FormData) => {
     try {
       await createTimeSlots({
@@ -84,60 +86,63 @@ const Step2 = ({ next }: { next: () => void }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto max-w-2xl rounded-lg bg-white p-5"
+      className="mx-auto flex max-w-2xl flex-col gap-6 rounded-[20px] bg-white p-5"
     >
-      <h1 className="mb-6 text-4xl font-bold">{t('title')}</h1>
-      <div className="rounded-lg bg-white p-8 shadow-lg">
-        <div className="mb-2">
-          <h2 className="text-xl">{t('available_slots')}</h2>
-          <p className="text-gray-700">{t('available_slots_description')}</p>
-        </div>
+      <h2 className="text-2xl font-medium text-black xl:text-4xl">{t('title')}</h2>
+      <div className="rounded-xl px-2 pb-0 pt-5 shadow-sm xl:px-5 xl:pb-5">
+        <div className="mx-auto flex max-w-lg flex-col gap-2">
+          <div className="font-medium text-[#03191C]">
+            <p className="text-lg">{t('available_slots')}</p>
+            <p className="text-sm">{t('available_slots_description')}</p>
+          </div>
+          <div className="flex flex-col gap-4 py-4">
+            <div>
+              <Controller
+                name="timeSlots"
+                control={control}
+                render={({ field }) => {
+                  return (
+                    <div className="flex flex-col gap-2.5">
+                      <HeadSlots
+                        dayOfWeek={currentDay}
+                        onChangeDayOfWeek={setCurrentDay}
+                        selectedTimes={field.value}
+                      />
 
-        <div className="flex flex-col gap-[10px]">
-          <Controller
-            name="timeSlots"
-            control={control}
-            render={({ field }) => {
-              return (
-                <>
-                  <HeadSlots
-                    dayOfWeek={currentDay}
-                    onChangeDayOfWeek={setCurrentDay}
-                    selectedTimes={field.value}
-                  />
+                      <AvailableSchedule
+                        onSelectTime={handleTimeSelect}
+                        selectedTimes={field.value}
+                        currentDay={currentDay}
+                      />
+                    </div>
+                  );
+                }}
+              />
+              {errors.timeSlots && (
+                <p className="mt-2 text-sm text-red-500">
+                  {errors.timeSlots.message}
+                </p>
+              )}
+            </div>
 
-                  <AvailableSchedule
-                    onSelectTime={handleTimeSelect}
-                    selectedTimes={field.value}
-                    currentDay={currentDay}
-                  />
-                </>
-              );
-            }}
-          />
-
-          {errors.timeSlots && (
-            <p className="mt-2 text-sm text-red-500">
-              {errors.timeSlots.message}
-            </p>
-          )}
-
-          <div className="mt-8 flex justify-center">
-            <Button
-              variant="outline"
-              className="w-[180px] rounded-full border-neutral-80 px-12 py-2 text-primary-50"
-              disabled={currentDay > 5}
-              onClick={() => setCurrentDay(prev => prev + 1)}
-            >
-              Confirm
-            </Button>
+            <div className="flex justify-center">
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-[180px] rounded-full border-neutral-80 px-12 py-2 text-primary-50"
+                disabled={currentDay > 5}
+                onClick={() => setCurrentDay(prev => prev + 1)}
+              >
+                Confirm
+              </Button>
+            </div>
           </div>
         </div>
       </div>
-
-      <div className="mt-8 flex justify-between gap-2">
+      <div className="flex justify-between gap-2">
         <Button
           variant="outline"
+          size="lg"
           onClick={() => setCurrentDay(prev => prev - 1)}
           disabled={currentDay === 0}
           className={`w-1/2 rounded-full px-12 py-2 text-primary-50 ${currentDay === 0 && 'border bg-[#E3E4E5] text-neutral-70'}`}
@@ -146,6 +151,7 @@ const Step2 = ({ next }: { next: () => void }) => {
         </Button>
         <Button
           type="submit"
+          size="lg"
           className={`w-1/2 rounded-full bg-primary-50 px-12 py-2 text-white ${currentDay !== 6 && 'border bg-[#E3E4E5] text-neutral-70'}`}
           disabled={currentDay !== 6 || isLoading}
           animation={isLoading ? 'progress' : undefined}

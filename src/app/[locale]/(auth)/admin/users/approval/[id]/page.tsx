@@ -74,7 +74,7 @@ const UserApprovalPage = () => {
   });
   const [upgradeUser, { isLoading: isUpgrading }] = useUpgradeUserMutation();
 
-  // Handle approve action
+  // Handle approves action
   const handleApprove = async () => {
     try {
       await upgradeUser({

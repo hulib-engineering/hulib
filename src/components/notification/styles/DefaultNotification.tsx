@@ -11,8 +11,9 @@ import type { INotificationItemRendererProps } from '../NotificationItemRenderer
 import Avatar from '@/components/avatar/Avatar';
 import Button from '@/components/button/Button';
 import { mergeClassnames } from '@/components/private/utils';
+import { useAppSelector } from '@/libs/hooks';
 import useNotificationActions from '@/libs/hooks/useNotificationActions';
-import { StatusEnum } from '@/types/common';
+import { Role, StatusEnum } from '@/types/common';
 import { toLocaleDateString } from '@/utils/dateUtils';
 
 export default function DefaultNotificationCard({ notification, showExtras, onClick }: INotificationItemRendererProps) {
@@ -24,8 +25,9 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
 
   const {
     handleApproveOrRejectSession,
-    markAsSeen,
   } = useNotificationActions();
+
+  const userInfo = useAppSelector(state => state.auth.userInfo);
 
   const handleApproveRequestClick = async () => {
     await handleApproveOrRejectSession(
@@ -33,7 +35,9 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
       StatusEnum.Approved,
     );
 
-    await markAsSeen(`${notification.id}`);
+    if (onClick) {
+      onClick();
+    }
   };
   const handleRejectRequestClick = async () => {
     await handleApproveOrRejectSession(
@@ -41,14 +45,17 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
       StatusEnum.Rejected,
     );
 
-    await markAsSeen(`${notification.id}`);
+    if (onClick) {
+      onClick();
+    }
   };
   const handleClick = () => {
     if (onClick) {
       onClick();
     }
-    if (cfg.route) {
-      router.push(cfg.route(notification.relatedEntityId));
+    const relatedEntityId = notification.type.name === NotificationType.ACCOUNT_UPGRADE ? notification.sender.id : notification.relatedEntityId;
+    if (cfg.route && cfg.route(relatedEntityId, userInfo?.role?.id ?? Role.LIBER) !== '') {
+      router.push(cfg.route(relatedEntityId, userInfo?.role?.id ?? Role.LIBER));
     }
   };
 
@@ -86,7 +93,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
       <div className="flex flex-1 items-center gap-3">
         <div className="flex flex-1 flex-col gap-1">
           <div className="flex items-center justify-between">
-            <p className="line-clamp-2 font-medium">{cfg.getMessage(notification)}</p>
+            <p className="line-clamp-2 font-medium">{cfg.getMessage(notification, userInfo?.role?.id ?? Role.LIBER)}</p>
             {showExtras && notification.type.name === NotificationType.SESSION_REQUEST && (
               <Link href="/schedule-meeting/weekly-schedule" className="text-sm font-medium text-primary-60 underline">
                 See detail
