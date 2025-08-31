@@ -23,6 +23,8 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
 }) => {
   const [updateStatus, { isLoading }] = useUpdateReadingSessionMutation();
   const [showCancelDialog, setShowCancelDialog] = useState(false);
+  const [isRejectionConfirming, setIsRejectionConfirming] = useState(false);
+
   const t = useTranslations('Meeting');
   const defaultCancelReason = t('cancel_meeting');
   const [cancelReason, setCancelReason] = useState(defaultCancelReason);
@@ -39,8 +41,11 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
       };
 
       if (newStatus === StatusEnum.Canceled) {
-        const finalReason = reason || defaultCancelReason;
-        payload.note = finalReason;
+        payload.note = reason || defaultCancelReason;
+      }
+
+      if (newStatus === StatusEnum.Rejected) {
+        payload.rejectReason = reason;
       }
 
       await updateStatus(payload).unwrap();
@@ -106,7 +111,7 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
           <button
             type="button"
             className="flex-1 rounded-[100px] bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700"
-            onClick={handleCancelConfirm}
+            onClick={() => !isRejectionConfirming ? handleCancelConfirm() : handleStatusChange(StatusEnum.Rejected, cancelReason)}
             disabled={isLoading}
           >
             Confirm
@@ -121,13 +126,17 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
       return renderCancelDialog();
     }
 
-    if (status === StatusEnum.Pending && isVibing === false) {
+    if (status === StatusEnum.Pending && !isVibing) {
       return (
         <div className="flex w-full gap-3">
           <button
             type="button"
             className="flex-1 rounded-[100px] border border-gray-100 px-5 py-2 text-sm font-medium text-blue-700 hover:bg-gray-200"
-            onClick={() => handleStatusChange(StatusEnum.Rejected)}
+            onClick={() => {
+              setIsRejectionConfirming(true);
+              renderCancelDialog();
+              setShowCancelDialog(true);
+            }}
             disabled={isLoading}
           >
             Reject
@@ -143,7 +152,7 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
         </div>
       );
     }
-    if (status === StatusEnum.Finished && isVibing === true) {
+    if (status === StatusEnum.Finished && isVibing) {
       return (
         <button
           type="button"
@@ -153,19 +162,21 @@ export const SessionActions: React.FC<SessionActionsProps> = ({
         </button>
       );
     }
-    if (status === StatusEnum.Finished && isVibing === false) {
-      return null;
+    if (status === StatusEnum.Pending && isVibing) {
+      return (
+        <button
+          type="button"
+          className="w-full rounded-[100px] bg-[#FFC9D5] px-5 py-2 text-sm font-medium text-[#EE0038]"
+          onClick={handleCancelRequest}
+          disabled={isLoading}
+        >
+          Cancel
+        </button>
+      );
     }
-    return (
-      <button
-        type="button"
-        className="w-full rounded-[100px] bg-[#FFC9D5] px-5 py-2 text-sm font-medium text-[#EE0038]"
-        onClick={handleCancelRequest}
-        disabled={isLoading}
-      >
-        Cancel
-      </button>
-    );
+    // if (status === StatusEnum.Finished && !isVibing) {
+    return null;
+    // }
   };
 
   return <div className="mt-4">{renderActionButtons()}</div>;

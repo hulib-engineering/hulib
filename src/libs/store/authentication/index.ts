@@ -4,6 +4,7 @@ import { signOut } from 'next-auth/react';
 import type { z } from 'zod';
 
 import type { ProfileValidation } from '@/validations/ProfileValidation';
+import type { StatusEnum } from '@/types/common';
 
 type SliceState = {
   avatarId: string;
@@ -12,6 +13,7 @@ type SliceState = {
     id: string;
     photo: { id: string; path: string };
     role: { id: number; name: string };
+    approvalStatus: StatusEnum;
   };
 };
 

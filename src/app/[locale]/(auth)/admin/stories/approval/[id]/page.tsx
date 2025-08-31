@@ -5,16 +5,15 @@ import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import * as React from 'react';
 
+import { useState } from 'react';
 import Button from '@/components/button/Button';
-import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { DetailBook } from '@/components/storyDetails/DetailBook';
 import StoryDetailsSkeleton from '@/components/storyDetails/StoryDetailsSkeleton';
 import {
   useGetStoryDetailQuery,
-  useUpdateStoryMutation,
 } from '@/libs/services/modules/stories';
-import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
 import type { Topic } from '@/libs/services/modules/user/userType';
+import StoryConfirmationModal from '@/layouts/admin/StoryConfirmationModal';
 
 export default function Index() {
   const { id } = useParams();
@@ -22,26 +21,8 @@ export default function Index() {
 
   const { data, isLoading } = useGetStoryDetailQuery(Number(id));
 
-  const [updateStory] = useUpdateStoryMutation();
-
-  const approveStory = async (
-    status: StoryPublishStatus.PUBLISHED | StoryPublishStatus.DELETED,
-  ) => {
-    try {
-      await updateStory({
-        id: Number(id),
-        publishStatus: status,
-      }).unwrap();
-      pushSuccess(
-        status === StoryPublishStatus.PUBLISHED
-          ? 'Story approved successfully'
-          : 'Story rejected successfully',
-      );
-      router.push('/admin/stories/approval');
-    } catch (error) {
-      pushError('Failed to approve story');
-    }
-  };
+  const [isApprovalConfirmationModalOpen, setIsApprovalConfirmationModalOpen] = useState(false);
+  const [isRejectionConfirmationModalOpen, setIsRejectionConfirmationModalOpen] = useState(false);
 
   if (isLoading) {
     return <StoryDetailsSkeleton />;
@@ -49,6 +30,18 @@ export default function Index() {
 
   return (
     <div className="mx-auto w-full max-w-screen-lg px-4 py-8">
+      <StoryConfirmationModal
+        story={data}
+        type="approve"
+        open={isApprovalConfirmationModalOpen}
+        onClose={() => setIsApprovalConfirmationModalOpen(false)}
+      />
+      <StoryConfirmationModal
+        story={data}
+        type="reject"
+        open={isRejectionConfirmationModalOpen}
+        onClose={() => setIsRejectionConfirmationModalOpen(false)}
+      />
       {/* Back navigation */}
       <div
         className="mb-4 flex cursor-pointer items-center gap-2"
@@ -115,14 +108,14 @@ export default function Index() {
           iconLeft={<Check size={16} />}
           variant="primary"
           className="h-[44px] w-[240px] px-8 py-2"
-          onClick={() => approveStory(StoryPublishStatus.PUBLISHED)}
+          onClick={() => setIsApprovalConfirmationModalOpen(true)}
         >
           Approve
         </Button>
         <Button
           iconLeft={<X size={16} />}
           className="h-[44px] w-[240px] bg-red-90 px-8 py-2 text-red-50 hover:bg-white hover:text-red-90"
-          onClick={() => approveStory(StoryPublishStatus.DELETED)}
+          onClick={() => setIsRejectionConfirmationModalOpen(true)}
         >
           Declined
         </Button>

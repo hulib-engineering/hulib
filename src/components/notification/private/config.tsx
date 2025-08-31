@@ -2,28 +2,37 @@ import Image from 'next/image';
 import type { ReactNode } from 'react';
 import React from 'react';
 
+import { format } from 'date-fns';
 import { NotificationType } from './types';
 
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
 import { toLocaleDateString } from '@/utils/dateUtils';
+import { Role } from '@/types/common';
 
 type NotificationConfig = {
   [_K in NotificationType]: {
-    getMessage: (m: Notification) => ReactNode;
-    route?: (id: number | string) => string;
+    getMessage: (m: Notification, roleId?: number) => ReactNode;
+    route?: (relatedEntityId: number, roleId?: number) => string;
     title?: ReactNode;
   };
 };
 
 export const notificationConfig: NotificationConfig = {
   [NotificationType.ACCOUNT_UPGRADE]: {
-    getMessage: () => (
+    getMessage: (m: Notification, roleId?: number) => roleId === Role.LIBER ? (
       <>
         <span className="font-bold">Your registration to become a Huber</span>
         {' '}
         has been accepted. Welcome onboard!
       </>
+    ) : (
+      <>
+        <span className="font-bold">{m?.sender.fullName}</span>
+        {' has submitted a request to become a Huber.'}
+      </>
     ),
+    route: (relatedEntityId: number, roleId?: number) => (roleId && roleId === Role.ADMIN)
+      ? `/admin/users/approval/${relatedEntityId}` : '',
   },
   [NotificationType.SESSION_REQUEST]: {
     getMessage: (m: Notification) => (
@@ -33,6 +42,7 @@ export const notificationConfig: NotificationConfig = {
         would love to have a meeting with you.
       </>
     ),
+    route: () => '/schedule-meeting/weekly-schedule',
   },
   [NotificationType.STORY_REVIEW]: {
     getMessage: (m: Notification) => (
@@ -45,14 +55,22 @@ export const notificationConfig: NotificationConfig = {
     ),
   },
   [NotificationType.STORY_PUBLISH]: {
-    getMessage: (m: Notification) => (
+    getMessage: (m: Notification, roleId?: number) => roleId === Role.LIBER ? (
       <>
         Your story,
         {' '}
         <span className="font-bold text-primary-60">{`“${m.relatedEntity?.title}”`}</span>
         ,  has been successfully published.
       </>
+    ) : (
+      <>
+        <span className="font-bold">{`${m?.sender.fullName} `}</span>
+        has sent a request to create a new Story
+        <span className="font-bold text-primary-60">{` ${m.relatedEntity?.title}.`}</span>
+      </>
     ),
+    route: (relatedEntityId: number, roleId?: number) => (roleId && roleId === Role.ADMIN)
+      ? `/admin/stories/approval/${relatedEntityId}` : '',
   },
   [NotificationType.STORY_REJECTION]: {
     getMessage: (m: Notification) => (
@@ -63,6 +81,7 @@ export const notificationConfig: NotificationConfig = {
         , has not published successfully. Reason:
       </>
     ),
+    route: () => '/profile?tab=my-stories',
   },
   [NotificationType.HUBER_REPORT]: {
     getMessage: (m: Notification) => (
@@ -87,7 +106,16 @@ export const notificationConfig: NotificationConfig = {
         Unfortunately,
         {' '}
         <span className="text-primary-60">{`Huber ${m.sender?.fullName} `}</span>
-        isn’t available for this meeting (11:00 to 11:30, 05 Feb, 2025). Reason:
+        isn’t available for this meeting (
+        {m.relatedEntity?.startTime}
+        {' '}
+        to
+        {' '}
+        {m.relatedEntity?.endTime}
+        ,
+        {' '}
+        {format(m.relatedEntity?.startedAt ? new Date(m.relatedEntity?.startedAt) : new Date(), 'dd MMM, yyyy')}
+        ). Reason:
       </>
     ),
     title: <span className="text-red-60">Your request for meeting is rejected</span>,
@@ -102,6 +130,7 @@ export const notificationConfig: NotificationConfig = {
       </>
     ),
     title: <span className="text-primary-60">Your request for meeting is accepted</span>,
+    route: () => '/schedule-meeting/weekly-schedule',
   },
   [NotificationType.OTHER]: {
     getMessage: (m: Notification) => (
@@ -156,11 +185,10 @@ export const notificationConfig: NotificationConfig = {
     title: <span className="text-red-60">The meeting is canceled</span>,
   },
   [NotificationType.SESSION_MISS]: {
-    getMessage: () => (
+    getMessage: (m: Notification) => (
       <>
-        You didn’t join the meeting today
-        {' '}
-        <span className="font-bold">{` (11:00 to 11:30, 05 Feb, 2025). `}</span>
+        You didn’t join the meeting today (
+        <span className="font-bold">{`${m.relatedEntity?.startTime} to ${m.relatedEntity?.endTime}, ${toLocaleDateString(m.relatedEntity?.startedAt, 'en-GB')}). `}</span>
         We’d love to know what happened, so we can improve the experience for everyone.
       </>
     ),

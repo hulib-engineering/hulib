@@ -30,6 +30,7 @@ export type Notification = {
   recipient: NotificationUser;
   sender: NotificationUser;
   relatedEntity: any;
+  extraNote?: string;
 };
 
 export type CreateNotificationRequest = {
