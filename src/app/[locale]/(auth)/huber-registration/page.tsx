@@ -6,9 +6,9 @@ import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react';
 
 import { SuccessScreen } from '@/components/common/SuccessScreen';
-import Step1 from '@/components/huber-registration/Step1';
-import Step2 from '@/components/huber-registration/Step2';
-import Step3 from '@/components/huber-registration/Step3';
+import Step1 from '@/layouts/profile/Step1';
+import Step2 from '@/layouts/profile/Step2';
+import Step3 from '@/layouts/profile/Step3';
 import CommonLayout from '@/layouts/CommonLayout';
 import { useAppSelector } from '@/libs/hooks';
 

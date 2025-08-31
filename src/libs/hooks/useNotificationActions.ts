@@ -58,10 +58,8 @@ const useNotificationActions = () => {
 
   return {
     handleApproveOrRejectSession,
-    // handleNotificationClick,
     handleSeeDetail,
     markAsSeen,
-    // isUpdatingStatus,
   };
 };
 

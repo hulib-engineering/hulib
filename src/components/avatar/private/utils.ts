@@ -2,7 +2,7 @@ import type { SizeProps } from '@/components/avatar/private/types';
 
 const getWrapperSize = (size?: SizeProps) => {
   if (size === 'xs') {
-    return 'size-6';
+    return 'size-4';
   }
   if (size === 'sm') {
     return 'size-8';
