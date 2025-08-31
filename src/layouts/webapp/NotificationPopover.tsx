@@ -68,6 +68,7 @@ export default function NotificationPopover({
                         key={notification.id}
                         notification={notification}
                         showExtras={false}
+                        onClick={close || (() => {})}
                       />
                     ))}
                   </div>

@@ -94,7 +94,7 @@ const AvatarPopoverContent: FC<RenderProps> = ({
       {
         label: t('register_huber'),
         icon: <Pencil size={20} color="primary-20" />,
-        href: '/huber-registration',
+        href: '/me/account-upgrade',
         roles: [Role.LIBER],
       },
       {

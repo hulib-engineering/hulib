@@ -95,6 +95,7 @@ export default {
         },
         blue: {
           50: '#C9ECFF',
+          90: '#C9ECFF',
           100: '#ebf8ff',
           200: '#bee3f8',
           250: '#a8d5fe',
@@ -192,13 +193,14 @@ export default {
         },
       },
       boxShadow: {
-        'sm': '0 4px 5px 0 rgba(28, 30, 33, 0.1), 0 0px 4px 0 rgba(15, 15, 16, 0.06)',
+        'sm': '0 4px 5px 0 rgba(28, 30, 33, 0.1), 0 0 4px 0 rgba(15, 15, 16, 0.06)',
         'popover': '0 6px 10px -1px #1C1E2124, 0 0 4px 0 #0F0F1014',
         'popup': '0 8px 18px -1px #1C1E2124, 0 0 4px 0 #0F0F1014',
         'focus-input': '0 0 0 4px rgba(205, 221, 254)',
         'tooltip':
           '0 4px 5px 0 rgba(28, 30, 33, 0.10), 0 0 4px 0 rgba(15, 15, 16, 0.06)',
         'spinner': '0 0 0 7px #42a5f5, inset 0 0 0 1px #42a5f5',
+        'cover': '4px 4px 0 0 #87878759',
       },
       rotate: {
         30: '30deg',
