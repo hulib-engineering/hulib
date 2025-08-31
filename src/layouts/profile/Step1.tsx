@@ -1,3 +1,4 @@
+// Deprecated, need to refactor using reusable components
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,19 +9,16 @@ import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
+import { isEmpty } from 'lodash';
 import Button from '@/components/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import TermAndCondition from '@/components/huber-registration/TermAndCondition';
+import TermAndCondition from '@/layouts/profile/TermAndCondition';
 import { useAppSelector, useTopics } from '@/libs/hooks';
 import { useRegisterHuberMutation } from '@/libs/services/modules/auth';
 import {
   usePostTopicsMutation,
 } from '@/libs/services/modules/topics';
 import { HuberStep1Validation } from '@/validations/HuberValidation';
-
-type Props = {
-  next: any;
-};
 
 type Topic = {
   id: number;
@@ -29,20 +27,17 @@ type Topic = {
 
 type FormData = z.infer<ReturnType<typeof HuberStep1Validation>>;
 
-const Step1 = (props: Props) => {
-  const { next } = props;
+const Step1 = ({ next }: { next: () => void }) => {
+  const router = useRouter();
+
   const t = useTranslations('HumanBookRegister');
   const tCommon = useTranslations('Common');
-  const router = useRouter();
+
   const [registerHuber, { isLoading }] = useRegisterHuberMutation();
   const [createTopic, { isLoading: isCreatingTopic }] = usePostTopicsMutation();
-  const userInfo = useAppSelector(state => state.auth.userInfo);
-
-  const [isTopicDropdownOpen, setIsTopicDropdownOpen] = useState(false);
-  const [topicSearchQuery, setTopicSearchQuery] = useState('');
-  const topicDropdownRef = useRef<HTMLDivElement>(null);
-  const topicInputRef = useRef<HTMLInputElement>(null);
   const { topics, isLoading: isTopicsLoading } = useTopics();
+
+  const userInfo = useAppSelector(state => state.auth.userInfo);
 
   const {
     control,
@@ -60,8 +55,13 @@ const Step1 = (props: Props) => {
       isConfirmed: false,
     },
   });
-
   const selectedTopics = watch('topics') || [];
+  const isFormDisabled = isLoading || isSubmitting;
+
+  const [isTopicDropdownOpen, setIsTopicDropdownOpen] = useState(false);
+  const [topicSearchQuery, setTopicSearchQuery] = useState('');
+  const topicDropdownRef = useRef<HTMLDivElement>(null);
+  const topicInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
@@ -110,14 +110,12 @@ const Step1 = (props: Props) => {
       }
     }, 0);
   };
-
   const handleTopicRemove = (topicId: number) => {
     setValue(
       'topics',
       selectedTopics.filter((topic: any) => topic.id !== topicId),
     );
   };
-
   const handleCreateNewTopic = async () => {
     const trimmedQuery = topicSearchQuery.trim();
     if (!trimmedQuery || trimmedQuery.length > 30) {
@@ -135,7 +133,6 @@ const Step1 = (props: Props) => {
       pushError(tCommon(error?.message || 'error_contact_admin'));
     }
   };
-
   const filteredTopics = (topics || []).filter((topic: Topic) => {
     const isAlreadySelected = selectedTopics.some(
       (selectedTopic: any) => selectedTopic.id === topic.id,
@@ -145,26 +142,21 @@ const Step1 = (props: Props) => {
       .includes(topicSearchQuery.toLowerCase());
     return !isAlreadySelected && matchesSearch;
   });
-
   const hasExactMatch = filteredTopics.some(
     (topic: Topic) =>
       topic.name.toLowerCase() === topicSearchQuery.toLowerCase(),
   );
-
   const showAddNewOption
     = topicSearchQuery.trim()
       && !hasExactMatch
       && topicSearchQuery.trim().length <= 30;
-
   const handleTopicInputFocus = () => {
     setIsTopicDropdownOpen(true);
   };
-
   const handleTopicInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTopicSearchQuery(e.target.value);
     setIsTopicDropdownOpen(true);
   };
-
   const onSubmit = async (formData: FormData) => {
     try {
       await registerHuber(formData).unwrap();
@@ -176,7 +168,6 @@ const Step1 = (props: Props) => {
       pushError(tCommon(error?.message || 'error_contact_admin'));
     }
   };
-
   const getInputClassName = (fieldName: keyof FormData) => {
     const baseClass
       = 'rounded-lg border border-solid p-3 text-sm leading-4 text-neutral-40 outline-none';
@@ -187,17 +178,15 @@ const Step1 = (props: Props) => {
     return `${baseClass} ${errorClass} ${disabledClass}`;
   };
 
-  const isFormDisabled = isLoading || isSubmitting;
-
   return (
     <form
       id="step-1"
       className="flex flex-col items-center justify-center rounded-3xl bg-white p-5"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <p className="self-start text-xl font-medium leading-[2.75rem] text-neutral-10 md:text-4xl">
+      <h2 className="self-start text-xl font-medium leading-[2.75rem] text-neutral-10 xl:text-4xl">
         {t('step_1_title')}
-      </p>
+      </h2>
 
       <label className="mt-6 flex w-full flex-col gap-2" htmlFor="bio">
         <span className="text-sm leading-4 text-neutral-10">
@@ -389,7 +378,7 @@ const Step1 = (props: Props) => {
         />
       </div>
 
-      <div className="flex w-full items-center gap-3">
+      <div className="mt-6 flex w-full items-center gap-3">
         <Button
           className="w-full"
           variant="outline"
@@ -401,8 +390,8 @@ const Step1 = (props: Props) => {
         <Button
           className="w-full"
           type="submit"
-          animation={isFormDisabled ? 'progress' : undefined}
-          disabled={isFormDisabled}
+          animation={isFormDisabled && 'progress'}
+          disabled={!isEmpty(errors) || isFormDisabled}
         >
           {t('next')}
         </Button>

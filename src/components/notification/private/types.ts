@@ -1,0 +1,15 @@
+export enum NotificationType {
+  SESSION_REQUEST = 'sessionRequest',
+  ACCOUNT_UPGRADE = 'account',
+  STORY_REVIEW = 'reviewStory',
+  STORY_PUBLISH = 'publishStory',
+  STORY_REJECTION = 'rejectStory',
+  HUBER_REPORT = 'huberReported',
+  HUBER_REJECTION = 'rejectHuber',
+  SESSION_REJECTION = 'rejectReadingSession',
+  SESSION_APPROVAL = 'approveReadingSession',
+  SESSION_CANCELLATION = 'cancelReadingSession',
+  SESSION_MISS = 'missReadingSession',
+  SESSION_COMPLETION = 'sessionFinish',
+  OTHER = 'other',
+}

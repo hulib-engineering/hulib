@@ -19,6 +19,7 @@ export const PortalSessionCard: React.FC<PortalSessionCardProps> = ({
   showCancelDialogProp,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+
   const [isMobile, setIsMobile] = useState(false);
   const [cardDimensions, setCardDimensions] = useState({ width: 0, height: 0 });
 
@@ -34,14 +35,12 @@ export const PortalSessionCard: React.FC<PortalSessionCardProps> = ({
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
-
   useEffect(() => {
     if (cardRef.current) {
       const { offsetWidth, offsetHeight } = cardRef.current;
       setCardDimensions({ width: offsetWidth, height: offsetHeight });
     }
   }, [session]);
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (cardRef.current && !cardRef.current.contains(event.target as Node)) {

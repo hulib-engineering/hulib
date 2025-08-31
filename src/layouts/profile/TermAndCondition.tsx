@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
-import React from 'react';
 
+import type { FC, ReactNode } from 'react';
 import {
   listMessageItem,
   newLineMessage,
@@ -13,7 +13,7 @@ type SectionProps = {
   children: React.ReactNode;
 };
 
-const Section: React.FC<SectionProps> = ({ title, children }) => (
+const Section: FC<SectionProps> = ({ title, children }) => (
   <div>
     {title && <h2 className="my-1 text-lg font-bold">{title}</h2>}
     <ul className="!my-0">{children}</ul>
@@ -22,10 +22,10 @@ const Section: React.FC<SectionProps> = ({ title, children }) => (
 
 type SubSectionProps = {
   title: string;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
-const SubSection: React.FC<SubSectionProps> = ({ title, children }) => (
+const SubSection: FC<SubSectionProps> = ({ title, children }) => (
   <div>
     <h3 className="mb-1 font-semibold">{title}</h3>
     <ul className="!my-0">{children}</ul>
