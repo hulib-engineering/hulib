@@ -11,6 +11,7 @@ import Button from '@/components/button/Button';
 import Combobox from '@/components/combobox/Combobox';
 import MenuItem from '@/components/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/private/utils';
+import type { TFilter } from '@/layouts/scheduling/BigCalendar';
 import BigCalendar from '@/layouts/scheduling/BigCalendar';
 import MiniCalendar from '@/layouts/scheduling/MiniCalendar';
 import MobileSessionList from '@/layouts/scheduling/MobileSessionList';
@@ -27,12 +28,6 @@ const filters: TFilter[] = [
   { id: 3, label: 'Huber', value: 'isHuber' },
   { id: 4, label: 'Liber', value: 'isLiber' },
 ];
-
-type TFilter = {
-  id: number;
-  label: string;
-  value: string;
-};
 
 const filter = (
   query: string,
@@ -211,7 +206,7 @@ export default function Index() {
               </div>
             </div>
             <div className="flex-1">
-              <BigCalendar dateInWeekView={dateInWeekView} />
+              <BigCalendar dateInWeekView={dateInWeekView} statusFilters={statusFilters} />
             </div>
           </div>
         </>
