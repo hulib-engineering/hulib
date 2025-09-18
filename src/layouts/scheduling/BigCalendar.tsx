@@ -10,7 +10,13 @@ import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-sess
 import type { ReadingSession } from '@/libs/services/modules/reading-session/createNewReadingSession';
 import { StatusEnum } from '@/types/common';
 import { getGMTOffset } from '@/utils/dateUtils';
+import { useAppSelector } from '@/libs/hooks';
 
+export type TFilter = {
+  id: number;
+  label: string;
+  value: string;
+};
 type IEvent = {
   id: string;
   title: string;
@@ -31,7 +37,9 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-export default function BigCalendar({ dateInWeekView = new Date() }: { dateInWeekView?: Date }) {
+export default function BigCalendar({ dateInWeekView = new Date(), statusFilters }: { dateInWeekView?: Date; statusFilters?: TFilter[] }) {
+  const userInfo = useAppSelector(state => state.auth.userInfo);
+
   const getCurrentWeekRange = (date: Date) => {
     const weekStart = startOfWeek(date, { weekStartsOn: 0 });
     const startOfWeekDate = new Date(weekStart);
@@ -52,15 +60,29 @@ export default function BigCalendar({ dateInWeekView = new Date() }: { dateInWee
     startedAt,
     endedAt,
   });
-  const events: IEvent[] = !isLoading && readingSessions && readingSessions.length > 0 ? readingSessions.map((readingSession: ReadingSession) => ({
-    id: readingSession.id,
-    title: `${readingSession.humanBookId} - ${
-      readingSession.readerId
-    }`,
-    start: new Date(readingSession.startedAt),
-    end: new Date (readingSession.endedAt),
-    resource: { ...readingSession },
-  })) : [];
+
+  const filterEvents = (events: IEvent[], selectedStatuses: string[]) => {
+    if (selectedStatuses.length === 0) {
+      return events;
+    } // show all if nothing selected
+
+    return events.filter(event =>
+      selectedStatuses.includes(event.resource.sessionStatus)
+      || (selectedStatuses.includes('isHuber') && event.resource.humanBookId === userInfo?.id)
+      || (selectedStatuses.includes('isLiber') && event.resource.readerId === userInfo?.id),
+    );
+  };
+  const events: IEvent[] = !isLoading && readingSessions && readingSessions.length > 0
+    ? readingSessions.map((readingSession: ReadingSession) => ({
+        id: readingSession.id,
+        title: `${readingSession.humanBookId} - ${
+          readingSession.readerId
+        }`,
+        start: new Date(readingSession.startedAt),
+        end: new Date (readingSession.endedAt),
+        resource: { ...readingSession },
+      })) : [];
+  const filteredEvents = filterEvents(events, statusFilters?.map(filter => filter.value ?? '') ?? []);
 
   const calRef = useRef<HTMLDivElement | null>(null);
 
@@ -71,7 +93,7 @@ export default function BigCalendar({ dateInWeekView = new Date() }: { dateInWee
     <div ref={calRef} className="relative size-full">
       <Calendar
         localizer={localizer}
-        events={events}
+        events={filteredEvents}
         date={dateInWeekView}
         defaultView={Views.WEEK}
         views={{ week: true }}
@@ -98,7 +120,7 @@ export default function BigCalendar({ dateInWeekView = new Date() }: { dateInWee
         }}
         slotPropGetter={(date) => {
           // Does this specific slot fall inside an event?
-          const hasEvent = events.some(
+          const hasEvent = filteredEvents.some(
             event =>
               date >= new Date(event.start) && date < new Date(event.end),
           );
