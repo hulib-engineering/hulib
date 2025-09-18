@@ -11,6 +11,8 @@ import CustomCoverBook from '../common/CustomCoverBook';
 import { pushError, pushSuccess } from '../CustomToastifyContainer';
 import IconButton from '../iconButton/IconButton';
 import { mergeClassnames } from '../private/utils';
+
+import Button from '@/components/button/Button';
 import { useAppSelector } from '@/libs/hooks';
 import {
   useAddStoryToFavoritesMutation,
@@ -46,7 +48,6 @@ const HumanBookInfo = ({
   storyReview,
   topics,
 }: Props) => {
-  // const [imgError, setImgError] = useState(false);
   const t = useTranslations('ExploreStory');
   const router = useRouter();
   const userInfo = useAppSelector(state => state.auth.userInfo);
@@ -173,13 +174,14 @@ const HumanBookInfo = ({
             href={`/explore-story/${storyId}/booking`}
             className="w-full"
           >
-            <IconButton
-              icon={<Book size={16} />}
-              className="w-full px-4 text-base text-white "
+            <Button
+              iconLeft={<Book />}
+              size="lg"
+              fullWidth
               disabled={Number(humanBook?.id) === Number(userInfo?.id)}
             >
               {t('schedule_meeting')}
-            </IconButton>
+            </Button>
           </Link>
           <IconButton
             icon={(

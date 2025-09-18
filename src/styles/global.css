@@ -74,6 +74,9 @@
   --toastify-color-success: #32d583;
   --toastify-color-warning: #ffd21f;
   --toastify-color-error: #f04438;
+  --neutral-variant-98: rgba(243, 244, 246, 1);
+  --primary-50: rgba(4, 66, 191, 1);
+  --primary-90: rgba(205, 221, 254, 1);
   --swiper-pagination-progressbar-length: 1.25rem;
 }
 
@@ -203,4 +206,96 @@ html {
   flex-shrink: 0;
   width: 2rem;
   display: flex;
+}
+
+.rbc-time-view {
+  border: none !important;
+  background-color: white !important;
+}
+
+/* Make slots taller */
+.rbc-timeslot-group {
+  min-height: 134px !important;
+}
+
+.rbc-time-header {
+  border: none !important;
+  background-color: var(--neutral-variant-98) !important;
+}
+.rbc-time-header-gutter {
+  background-color: black !important;
+  color: white !important;
+  padding: 6px 8px !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.rbc-time-header-content {
+  border: none !important;
+  padding: 4px !important;
+  display: flex !important;
+}
+.rbc-header {
+  border: none !important;
+  padding: 8px 10px !important;
+  color: black !important;
+  font-size: 14px !important;
+  line-height: 16px !important;
+  font-weight: normal !important;
+}
+.rbc-header.rbc-today {
+  border-radius: 100px !important;
+  background-color: var(--primary-90) !important;
+  color: var(--primary-50) !important;
+}
+.rbc-allday-cell {
+  display: none !important;
+}
+
+.rbc-time-content {
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 16px 0 !important;
+  height: 772px !important;
+}
+.rbc-time-gutter .rbc-timeslot-group {
+  border: none !important;
+  padding: 0 10px !important;
+}
+
+/* Custom time gutter labels */
+.rbc-time-gutter .rbc-time-slot {
+  font-size: 14px;
+  line-height: 16px;
+  color: #73787c;
+  text-align: left !important;
+}
+.rbc-day-slot .rbc-timeslot-group:first-of-type {
+  border-top: 1px solid #ddd; /* or your theme color */
+}
+.rbc-day-slot .rbc-timeslot-group {
+  background-color: #f9f9f9;
+}
+.rbc-day-slot.rbc-time-column:last-child {
+  border-right: 1px solid #ddd; /* or your theme color */
+}
+.rbc-day-slot .rbc-time-slot {
+  border: none !important;
+}
+.rbc-day-slot .rbc-events-container {
+  margin: 0 !important;
+}
+/* If any slot in the group has event → whole group white */
+.rbc-timeslot-group:has(.slot-has-event) {
+  background-color: #fff;
+}
+.rbc-event {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+/* Highlight current time */
+.rbc-current-time-indicator {
+  visibility: hidden !important;
 }

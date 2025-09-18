@@ -42,7 +42,7 @@ export const notificationConfig: NotificationConfig = {
         would love to have a meeting with you.
       </>
     ),
-    route: () => '/schedule-meeting/weekly-schedule',
+    route: () => '/my-schedule',
   },
   [NotificationType.STORY_REVIEW]: {
     getMessage: (m: Notification) => (
@@ -130,7 +130,7 @@ export const notificationConfig: NotificationConfig = {
       </>
     ),
     title: <span className="text-primary-60">Your request for meeting is accepted</span>,
-    route: () => '/schedule-meeting/weekly-schedule',
+    route: () => '/my-schedule',
   },
   [NotificationType.OTHER]: {
     getMessage: (m: Notification) => (

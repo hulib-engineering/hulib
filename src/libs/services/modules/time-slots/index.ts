@@ -1,22 +1,23 @@
-import getTimeSlotsHuber from './getTimeSlotsHuber';
+import createTimeslots from './createTimeslots';
+import getTimeslots from './getTimeslots';
+import getTimeslotsByHuber from './getTimeslotsByHuber';
+
 import { api } from '@/libs/services/api';
-import createTimeSlots from '@/libs/services/modules/time-slots/createTimeSlots';
-import getAllTimeSlots from '@/libs/services/modules/time-slots/getAllTimeSlots';
 
 const apiWithTag = api.enhanceEndpoints?.({
-  addTagTypes: ['TimeSlot'],
+  addTagTypes: ['Timeslot'],
 });
 
-const timeSlotsApi = apiWithTag.injectEndpoints({
+export const timeslotApi = apiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
-    getAllTimeSlots: getAllTimeSlots(build),
-    createTimeSlots: createTimeSlots(build),
-    getTimeSlotsHuber: getTimeSlotsHuber(build),
+    getTimeslots: getTimeslots(build),
+    createTimeslots: createTimeslots(build),
+    getTimeslotsByHuber: getTimeslotsByHuber(build),
   }),
   overrideExisting: false,
 });
 
 export const {
-  useCreateTimeSlotsMutation,
-  useGetTimeSlotsHuberQuery,
-}: any = timeSlotsApi;
+  useCreateTimeslotsMutation,
+  useGetTimeslotsByHuberQuery,
+}: any = timeslotApi;

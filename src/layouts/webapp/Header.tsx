@@ -356,7 +356,7 @@ const Header = () => {
       <div className="flex items-center justify-between gap-x-2">
         {user && user?.id && (
           <Link
-            href="/schedule-meeting/weekly-schedule"
+            href="/my-schedule"
             className="mx-2 text-neutral-10"
           >
             {t('my_schedule')}

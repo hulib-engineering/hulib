@@ -17,7 +17,13 @@ type MenuItemProps = {
   className?: string;
 };
 
+type CheckboxRadioProps = {
+  isSelected?: boolean;
+  className?: string;
+  ['aria-label']?: string;
+};
+
 type MenuItemPolymorphicProps<C extends ElementType> =
   PolymorphicComponentPropWithRef<C, MenuItemProps>;
 
-export type { MenuItemPolymorphicProps, MenuItemState };
+export type { CheckboxRadioProps, MenuItemPolymorphicProps, MenuItemState };

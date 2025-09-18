@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 import Button from '@/components/button/Button';
 import { Step, StepLabel, Stepper } from '@/components/stepper/Stepper';
@@ -12,7 +12,7 @@ import Step1 from '@/layouts/profile/Step1';
 import Step2 from '@/layouts/profile/Step2';
 import Step3 from '@/layouts/profile/Step3';
 import { useAppSelector } from '@/libs/hooks';
-import { StatusEnum } from '@/types/common';
+import { Role, StatusEnum } from '@/types/common';
 
 const STEPS = ['Info', 'Choose Available slot', 'First Story'];
 
@@ -26,8 +26,11 @@ export default function AccountUpgrade() {
   const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
-    if (userInfo && userInfo.approvalStatus === StatusEnum.Pending) {
+    if (userInfo && userInfo?.approvalStatus === StatusEnum.Pending) {
       setActiveStep(3);
+    }
+    if (userInfo && userInfo?.role?.id === Role.HUBER) {
+      redirect('/profile');
     }
   }, [userInfo]);
 
@@ -59,7 +62,7 @@ export default function AccountUpgrade() {
           <Step1 next={handleNextStep} />
         )}
         {activeStep === 1 && (
-          <Step2 next={handleNextStep} />
+          <Step2 next={handleNextStep} onBack={() => setActiveStep(prev => prev - 1)} />
         )}
         {activeStep === 2 && (
           <Step3 next={handleNextStep} />

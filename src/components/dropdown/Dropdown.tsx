@@ -111,7 +111,7 @@ const Options = ({
       className={mergeClassnames(
         menuWidth || 'w-full min-w-[7.25rem]',
         'z-[999] p-2 rounded-2xl box-border bg-white shadow-2xl',
-        'flex flex-col gap-1 !my-3',
+        'flex flex-col gap-1 !my-1',
         className && className,
       )}
       {...rest}
