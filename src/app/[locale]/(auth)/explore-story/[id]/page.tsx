@@ -43,7 +43,8 @@ export default function Index() {
           <div className="flex-1">
             <DetailBook
               title={data?.title || ''}
-              cover="/assets/images/ava-placeholder.png"
+              cover={data?.cover?.path ?? '/assets/images/half-title-illus.png'}
+              authorName={data?.humanBook?.fullName || ''}
               abstract={data?.abstract || ''}
             />
           </div>

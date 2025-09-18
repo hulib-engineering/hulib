@@ -1,27 +1,31 @@
 'use client';
 
-import { useParams, useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
-import * as React from 'react';
-import { ArrowLeft, ArrowRight, CalendarDots, Globe, Note, Timer, Warning } from '@phosphor-icons/react';
+import { ArrowLeft, ArrowRight, CalendarDots, Note, Timer, Warning } from '@phosphor-icons/react';
+import { fromZonedTime, toZonedTime } from 'date-fns-tz';
+import { format } from 'date-fns';
+import { isEmpty } from 'lodash';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { addMinutes, format } from 'date-fns';
-import { isEmpty } from 'lodash';
+import { useParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import * as React from 'react';
 
-import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
-import ScheduleBasicInfo from '@/layouts/ScheduleBasicInfo';
 import Button from '@/components/button/Button';
-import BookingTimetable from '@/layouts/booking/BookingTimetable';
-import { SessionAttendees } from '@/components/schedule/sessionCard/SessionAttendees';
-import { ScheduleInfoItemLayout } from '@/components/schedule/ScheduleInfoItemLayout';
-import TextArea from '@/components/textArea/TextArea';
-import { useAppDispatch, useAppSelector } from '@/libs/hooks';
-import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
-import { mergeClassnames } from '@/components/private/utils';
-import { openChat } from '@/libs/store/messenger';
 import { Spinner } from '@/components/common/Spinner';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import { mergeClassnames } from '@/components/private/utils';
+import TextArea from '@/components/textArea/TextArea';
+import { TimezoneSelect } from '@/components/TimezoneSelect';
+
+import ScheduleBasicInfo from '@/layouts/ScheduleBasicInfo';
+import BookingTimetable from '@/layouts/booking/BookingTimetable';
+import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
+import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
+import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
+import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
+import { openChat } from '@/libs/store/messenger';
+import { CURRENT_TZ, formatTimezone } from '@/utils/dateUtils';
 
 export default function Index() {
   const router = useRouter();
@@ -35,49 +39,33 @@ export default function Index() {
   const [placeRequest] = useCreateNewReadingSessionMutation();
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
+
   const dispatch = useAppDispatch();
 
   const [currentStep, setCurrentStep] = useState<
     'select-time' | 'confirm' | 'success'
   >('select-time');
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedTime, setSelectedTime] = useState('');
+  const [selectedTime, setSelectedTime] = useState(fromZonedTime(new Date(), CURRENT_TZ));
+  const [displayedTime, setDisplayedTime] = useState(new Date());
   const [note, setNote] = useState('');
+  const [currentTz, setCurrentTz] = useState(CURRENT_TZ);
 
-  const endTime = useMemo(() => {
-    if (selectedTime === '') {
-      return '';
-    }
-    return format(addMinutes(new Date().setHours(Number(selectedTime.split(':')[0]) ?? 0, Number(selectedTime.split(':')[1]) ?? 0), 30), 'HH:mm');
-  }, [selectedTime]);
-  const startedAt = useMemo(() => {
-    if (selectedTime === '') {
-      return new Date().toISOString();
-    }
-    const hour = Number.parseInt(selectedTime.split(':')[0] ?? '0', 10) ?? 0;
-    const minute = Number.parseInt(selectedTime.split(':')[1] ?? '0', 10) ?? 0;
-    const timeObj = selectedDate.setHours(hour, minute, 0, 0);
-    return new Date(timeObj).toISOString();
-  }, [selectedDate, selectedTime]);
-  const endedAt = useMemo(() => {
-    return addMinutes(startedAt, 30).toISOString();
-  }, [startedAt]);
-
-  const handleSelectTime = (date: Date, time: string) => {
-    setSelectedDate(date);
-    setSelectedTime(time);
+  const handleSelectTime = (date: Date) => {
+    setSelectedTime(date);
+    setDisplayedTime(toZonedTime(date, CURRENT_TZ));
     setCurrentStep('confirm');
   };
-
   const handlePlaceRequest = async () => {
     try {
+      const endedAt = fromZonedTime(new Date(selectedTime.getTime() + 30 * 60 * 1000), CURRENT_TZ);
+      const endTime = format(displayedTime.getTime() + 30 * 60 * 1000, 'HH:mm');
       await placeRequest({
         humanBookId: Number(story?.humanBookId),
         readerId: userInfo?.id,
         storyId: Number(storyId),
-        startTime: selectedTime,
+        startTime: format(displayedTime, 'HH:mm'),
         endTime,
-        startedAt,
+        startedAt: selectedTime,
         endedAt,
         note,
       }).unwrap();
@@ -130,21 +118,15 @@ export default function Index() {
                 {t('subtitle')}
               </p>
             </div>
-            <div className="flex flex-col">
+            <div className="flex w-full flex-col">
               <p className="text-base font-normal text-neutral-40">
                 {t('huber_timezone')}
               </p>
-              <Button
-                className="w-fit text-[#009BEE]"
-                variant="ghost"
-                size="sm"
-                iconLeft={<Globe size={16} color="#009BEE" weight="fill" />}
-              >
-                ICT | GMT-7
-              </Button>
+              <TimezoneSelect value={currentTz} onChange={setCurrentTz} />
             </div>
             <BookingTimetable
               huberId={story?.humanBookId}
+              tz={currentTz}
               onSelectTime={handleSelectTime}
               onOpenHuberConv={handleOpenHuberChat}
             />
@@ -187,22 +169,23 @@ export default function Index() {
                       liber={userInfo}
                       isVibing
                     />
-
                     <ScheduleInfoItemLayout icon={<CalendarDots size={16} />} title={t('time')}>
                       <div className="grid grid-cols-3 place-items-center gap-2 text-primary-50">
-                        <span className="w-full text-left">{selectedTime}</span>
+                        <span className="w-full text-left">{format(displayedTime, 'HH:mm')}</span>
                         <ArrowRight size={16} weight="bold" color="#2E3032" />
-                        <span className="w-full text-right">{endTime}</span>
+                        <span className="w-full text-right">
+                          {format(displayedTime.getTime() + 30 * 60 * 1000, 'HH:mm')}
+                        </span>
                       </div>
                       <div className="grid grid-cols-2 items-center justify-between gap-2 text-primary-50">
                         <span>
-                          {selectedDate?.toLocaleDateString(locale === 'en' ? 'en-GB' : 'vi-VI', {
+                          {displayedTime?.toLocaleDateString(locale === 'en' ? 'en-GB' : 'vi-VI', {
                             weekday: 'short',
                             month: 'long',
                             day: '2-digit',
                           })}
                         </span>
-                        <span className="text-right">ICT | GMT-7</span>
+                        <span className="text-right">{formatTimezone(CURRENT_TZ)}</span>
                       </div>
                     </ScheduleInfoItemLayout>
 
@@ -256,7 +239,7 @@ export default function Index() {
                       <Button
                         variant="outline"
                         className="w-full"
-                        onClick={() => router.push('/schedule-meeting/weekly-schedule')}
+                        onClick={() => router.push('/my-schedule')}
                       >
                         {t('back_to_schedule')}
                       </Button>

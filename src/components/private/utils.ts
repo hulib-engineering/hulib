@@ -1,3 +1,4 @@
+import type { ForwardedRef } from 'react';
 import { useCallback } from 'react';
 import { extendTailwindMerge } from 'tailwind-merge';
 
@@ -19,5 +20,16 @@ const useRegisterChild = () => {
   }, []);
   return { items, register };
 };
+
+export function assignRef<T>(ref: ForwardedRef<T>, value: T) {
+  if (typeof ref === 'function') {
+    ref(value);
+    return;
+  }
+
+  if (ref?.current) {
+    ref.current = value;
+  }
+}
 
 export { mergeClassnames, useRegisterChild };

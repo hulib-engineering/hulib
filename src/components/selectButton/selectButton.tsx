@@ -1,9 +1,13 @@
 import { Listbox } from '@headlessui/react';
-import { CaretDown } from '@phosphor-icons/react';
+import { CaretDown, X } from '@phosphor-icons/react';
 import type { ReactNode, Ref } from 'react';
-import React, { forwardRef, useMemo } from 'react';
+import React, { forwardRef, useCallback, useMemo } from 'react';
+
+import { mergeClassnames } from '../private/utils';
+import Tag from '../tag/Tag';
 
 import type {
+  ChipProps,
   InputProps,
   LabelProps,
   SelectButtonProps,
@@ -13,7 +17,6 @@ import {
   getSelectSize,
   useSelectButtonContext,
 } from './private/utils';
-import { mergeClassnames } from '@/components/private/utils';
 
 const SelectButtonRoot = forwardRef(
   (
@@ -96,7 +99,6 @@ const Value = ({ children }: { children?: ReactNode }) => {
   return (
     <span
       className={mergeClassnames(
-        // size === 'sm' ? 'text-moon-14' : 'text-moon-16',
         'w-full font-medium text-sm leading-4 text-neutral-10 read-only:text-neutral-40 truncate',
       )}
     >
@@ -105,16 +107,29 @@ const Value = ({ children }: { children?: ReactNode }) => {
   );
 };
 
-const Label = ({ children, isDisabled }: LabelProps) => (
-  <Listbox.Label
-    className={mergeClassnames(
-      'block text-neutral-10 text-sm leading-4 pb-2',
-      isDisabled && 'opacity-60 cursor-not-allowed',
-    )}
-  >
-    {children}
-  </Listbox.Label>
-);
+const Label = ({
+  children,
+  labelSize,
+  isDisabled,
+  htmlFor = '',
+}: LabelProps) => {
+  const { size } = useSelectButtonContext('SelectButton.Label');
+
+  const currentSize = labelSize || size;
+
+  return (
+    <Listbox.Label
+      className={mergeClassnames(
+        'block text-bulma pb-2',
+        currentSize === 'sm' ? 'text-moon-14' : 'text-moon-16',
+        isDisabled && 'opacity-60 cursor-not-allowed',
+      )}
+      htmlFor={htmlFor}
+    >
+      {children}
+    </Listbox.Label>
+  );
+};
 
 const Placeholder = ({ children }: { children?: ReactNode }) => {
   // const { size } = useSelectButtonContext('SelectButton.Placeholder');
@@ -131,11 +146,47 @@ const Placeholder = ({ children }: { children?: ReactNode }) => {
   );
 };
 
+const Chip = ({
+  children,
+  onClear,
+  isUppercase,
+  iconClassName,
+  onClick,
+  ...rest
+}: ChipProps) => {
+  const { size } = useSelectButtonContext('SelectButton.Control');
+
+  const onCloseHandler = useCallback(
+    (e: any) => {
+      e.preventDefault();
+      if (onClear) {
+        onClear();
+      }
+    },
+    [onClear],
+  );
+
+  return (
+    <Tag
+      size={size === 'sm' ? '2xs' : 'xs'}
+      onClick={onClick}
+      iconRight={(
+        <X onClick={onCloseHandler} className={mergeClassnames('text-neutral-98', iconClassName)} />
+      )}
+      isUppercase={isUppercase}
+      {...rest}
+    >
+      {children}
+    </Tag>
+  );
+};
+
 const SelectButton = Object.assign(SelectButtonRoot, {
   Input,
   Label,
   Value,
   Placeholder,
+  Chip,
 });
 
 export default SelectButton;

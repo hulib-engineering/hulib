@@ -11,8 +11,6 @@ import type { StatusType } from '@/libs/services/modules/reading-session/createN
 const useNotificationActions = () => {
   const router = useRouter();
 
-  // const role = useAppSelector(state => state.auth.userInfo.role);
-
   const [updateSessionStatus] = useUpdateReadingSessionMutation();
   const [updateNotification] = useUpdateNotificationMutation();
 
@@ -35,25 +33,11 @@ const useNotificationActions = () => {
     }
   };
 
-  // const handleNotificationClick = async (notification: Notification) => {
-  //   const cfg = notificationConfig[notification.type];
-  //
-  //   if (!cfg.route) {
-  //     return;
-  //   }
-  //
-  //   if (!notification.seen) {
-  //     await markAsSeen(notification.id.toString());
-  //   }
-  //
-  //   router.push(cfg.route(notification.relatedEntityId));
-  // };
-
   const handleSeeDetail = async (notification: Notification) => {
     if (!notification.seen) {
       await markAsSeen(notification.id.toString());
     }
-    router.push('/schedule-meeting/weekly-schedule');
+    router.push('/my-schedule');
   };
 
   return {
