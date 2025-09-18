@@ -1,6 +1,6 @@
 'use client';
 
-import { CaretLeft, CaretRight, Info } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight, Info, Warning } from '@phosphor-icons/react';
 import {
   addDays,
   differenceInHours,
@@ -12,32 +12,43 @@ import {
   startOfDay,
   startOfWeek,
 } from 'date-fns';
+import { fromZonedTime } from 'date-fns-tz';
+import { isEmpty } from 'lodash';
+import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useState } from 'react';
 import * as React from 'react';
-import { useLocale, useTranslations } from 'next-intl';
-import { isEmpty } from 'lodash';
-import Link from 'next/link';
+
+import Button from '@/components/button/Button';
 import IconButton from '@/components/iconButton/IconButton';
 import { mergeClassnames } from '@/components/private/utils';
-import Button from '@/components/button/Button';
-import { useGetTimeSlotsHuberQuery } from '@/libs/services/modules/time-slots';
-import type { TimeSlot } from '@/libs/services/modules/time-slots/getAllTimeSlots';
-import { AFTERNOON_TIME_START, EVENING_TIME_START, MORNING_TIME_START } from '@/libs/constants/date';
+import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
+import { useTimeslotGrouping } from '@/libs/hooks/useTimeslotGrouping';
 import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
-import { ScheduleInfoItemLayout } from '@/components/schedule/ScheduleInfoItemLayout';
+import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
+import { CURRENT_TZ } from '@/utils/dateUtils';
 
-export default function BookingTimetable({ huberId, onSelectTime, onOpenHuberConv }: { huberId: number; onSelectTime: (date: Date, time: string) => void; onOpenHuberConv: () => void }) {
+type IBookingTimetableProps = {
+  tz?: string;
+  huberId: number;
+  onSelectTime: (date: Date) => void;
+  onOpenHuberConv: () => void;
+};
+export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHuberConv }: IBookingTimetableProps) {
   const today = new Date();
 
   const locale = useLocale();
   const t = useTranslations('Schedule.MainScreen');
 
-  const { data: timeSlots } = useGetTimeSlotsHuberQuery({
+  const { data: timeSlots } = useGetTimeslotsByHuberQuery({
     id: huberId,
   });
   const { data: bookedSlots } = useGetHuberBookedSessionsQuery({
     id: huberId,
   });
+
+  const groupingTimeslots = useTimeslotGrouping(timeSlots, tz);
+  console.log('groupingTimeslots', groupingTimeslots);
 
   const [currentDate, setCurrentDate] = useState(today);
   const [selectedDate, setSelectedDate] = useState(today);
@@ -45,29 +56,7 @@ export default function BookingTimetable({ huberId, onSelectTime, onOpenHuberCon
 
   const currentWeek = startOfWeek(today, { weekStartsOn: 1 });
   const displayedWeek = startOfWeek(currentDate, { weekStartsOn: 1 });
-  const filteredTimeSlots: TimeSlot[] = timeSlots?.filter(
-    (timeSlot: TimeSlot) => timeSlot.dayOfWeek === selectedDate?.getDay(),
-  ) ?? [];
 
-  const groupTimeSlots = (slots: TimeSlot[]) => {
-    const morningTimeSlots: string[] = [];
-    const afternoonTimeSlots: string[] = [];
-    const eveningTimeSlots: string[] = [];
-
-    for (const time of slots) {
-      const hour = Number(time.startTime.slice(0, 2));
-      if (hour >= MORNING_TIME_START && hour < AFTERNOON_TIME_START) {
-        morningTimeSlots.push(time.startTime);
-      } else if (hour >= AFTERNOON_TIME_START && hour < EVENING_TIME_START) {
-        afternoonTimeSlots.push(time.startTime);
-      } else if (hour >= EVENING_TIME_START) {
-        eveningTimeSlots.push(time.startTime);
-      }
-    }
-
-    return { morningTimeSlots, afternoonTimeSlots, eveningTimeSlots };
-  };
-  const { morningTimeSlots, afternoonTimeSlots, eveningTimeSlots } = groupTimeSlots(filteredTimeSlots);
   const getWeekDays = () => {
     return Array.from({ length: 7 }, (_, i) => addDays(displayedWeek, i));
   };
@@ -94,6 +83,18 @@ export default function BookingTimetable({ huberId, onSelectTime, onOpenHuberCon
       return;
     }
     setSelectedDate(item);
+  };
+  const handleNextToTimeConfirmation = () => {
+    const [hours, minutes] = selectedTime.split(':').map(v => Number(v || 0));
+
+    const localDateTimeStr = `${[
+      selectedDate.getFullYear(),
+      String(selectedDate.getMonth() + 1).padStart(2, '0'),
+      String(selectedDate.getDate()).padStart(2, '0'),
+    ].join('-')} ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`;
+
+    const utcInstant = fromZonedTime(localDateTimeStr, tz ?? CURRENT_TZ);
+    onSelectTime(utcInstant);
   };
 
   return (
@@ -165,8 +166,8 @@ export default function BookingTimetable({ huberId, onSelectTime, onOpenHuberCon
               day: '2-digit',
             })}
           </p>
-          {(['morning', 'afternoon', 'night'] as const).map((each) => {
-            const timeSlotsByDayTime = each === 'morning' ? morningTimeSlots : each === 'afternoon' ? afternoonTimeSlots : eveningTimeSlots;
+          {(['morning', 'afternoon', 'evening'] as const).map((each) => {
+            const weekday = selectedDate.getDay();
 
             return (
               <div
@@ -176,9 +177,9 @@ export default function BookingTimetable({ huberId, onSelectTime, onOpenHuberCon
                 <p className="text-neutral-40">
                   {t(each)}
                 </p>
-                {timeSlotsByDayTime.length > 0 && (
+                {groupingTimeslots[weekday] && groupingTimeslots[weekday][each] && groupingTimeslots[weekday][each]?.length > 0 && (
                   <div className="flex w-full items-center gap-1 overflow-x-auto">
-                    {timeSlotsByDayTime.map((item) => {
+                    {groupingTimeslots[weekday][each].map((item) => {
                       const hour = Number.parseInt(item.split(':')[0] ?? '0', 10) ?? 0;
                       const minute = Number.parseInt(item.split(':')[1] ?? '0', 10) ?? 0;
                       const timeObj = selectedDate.setHours(hour, minute, 0, 0);
@@ -217,7 +218,7 @@ export default function BookingTimetable({ huberId, onSelectTime, onOpenHuberCon
         </div>
       </div>
       <div className="flex items-center justify-between gap-8">
-        {!isEmpty(selectedTime) && (
+        {!isEmpty(selectedTime) ? (
           <p className="leading-5 text-neutral-20">
             {t('confirm_time')}
             {' '}
@@ -234,13 +235,20 @@ export default function BookingTimetable({ huberId, onSelectTime, onOpenHuberCon
               })}
             </span>
           </p>
+        ) : (
+          <div className="flex gap-2 font-medium text-yellow-30">
+            <Warning className="text-yellow-50" />
+            <span className="text-sm leading-4">
+              To help the Huber arrange their schedule, please choose a time slot at least 24 hours after your meeting request.
+            </span>
+          </div>
         )}
 
         <Button
           size="lg"
           className="w-full xl:w-[300px]"
           disabled={isEmpty(selectedTime)}
-          onClick={() => onSelectTime(selectedDate, selectedTime)}
+          onClick={handleNextToTimeConfirmation}
         >
           {t('next')}
         </Button>

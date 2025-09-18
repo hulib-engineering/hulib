@@ -1,7 +1,8 @@
 import type { ElementType, ReactNode } from 'react';
 import React, { forwardRef, useEffect, useMemo } from 'react';
 
-import type { MenuItemPolymorphicProps } from './private/types';
+import { CheckSquare, Square } from '@phosphor-icons/react';
+import type { CheckboxRadioProps, MenuItemPolymorphicProps } from './private/types';
 import { MenuItemContext, useMenuItemContext } from './private/utils';
 import type { PolymorphicRef } from '@/components/private/types';
 import { mergeClassnames, useRegisterChild } from '@/components/private/utils';
@@ -91,8 +92,66 @@ const Title = ({
   );
 };
 
+const Checkbox = ({
+  isSelected,
+  className,
+  'aria-label': ariaLabel,
+}: CheckboxRadioProps) => {
+  const { selected = isSelected, registerChild }
+    = useMenuItemContext('MenuItem.Checkbox');
+
+  useEffect(() => {
+    if (registerChild) {
+      registerChild('Checkbox');
+    }
+  }, []);
+
+  const ariaLabelValue = ariaLabel || 'Checkbox';
+
+  return (
+    <span className="relative flex size-5 items-center justify-center">
+      <span
+        role="checkbox"
+        aria-checked={selected}
+        aria-label={ariaLabelValue}
+        className={mergeClassnames(
+          'absolute inset-0 flex size-5 items-center justify-center',
+          'transition-colors text-[16px]',
+          className,
+        )}
+      >
+        {selected
+          ? (
+              <CheckSquare
+                weight="fill"
+                className={mergeClassnames(
+                  'transition-colors text-primary-50',
+                  selected ? 'opacity-100' : 'opacity-0',
+                )}
+              />
+            ) : (
+              <Square
+                weight="bold"
+                className={mergeClassnames(
+                  'transition-opacity text-neutral-40',
+                  selected ? 'opacity-0' : 'opacity-100',
+                )}
+              />
+            )}
+        {/* <Check */}
+        {/*  className={mergeClassnames( */}
+        {/*    'transition-opacity', */}
+        {/*    selected ? 'opacity-100' : 'opacity-0', */}
+        {/*  )} */}
+        {/* /> */}
+      </span>
+    </span>
+  );
+};
+
 const MenuItem = Object.assign(MenuItemRoot, {
   Title,
+  Checkbox,
 });
 
 export default MenuItem;

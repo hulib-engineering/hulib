@@ -50,6 +50,7 @@ const StorySession = ({ data }: any) => {
         title={data?.title || ''}
         cover="/assets/images/ava-placeholder.png"
         abstract={data?.abstract || ''}
+        authorName={data?.humanBook?.fullName || ''}
       />
     </div>
   );

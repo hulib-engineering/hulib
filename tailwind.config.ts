@@ -94,7 +94,7 @@ export default {
           900: '#1a202c',
         },
         blue: {
-          50: '#C9ECFF',
+          50: '#009BEE',
           90: '#C9ECFF',
           100: '#ebf8ff',
           200: '#bee3f8',
@@ -141,6 +141,7 @@ export default {
           90: '#E3E4E5',
           98: '#F9F9F9',
           variant: {
+            10: '#15161B',
             80: '#C2C6CF',
             98: '#F3F4F6',
           },
@@ -167,6 +168,7 @@ export default {
           98: '#FFF5F7',
         },
         pink: {
+          30: '#E0006F',
           50: '#FF77BA',
           90: '#FFE4F1',
         },
@@ -561,5 +563,18 @@ export default {
       },
     },
   },
-  plugins: [backfaceVisibility, tailwind3d({ legacy: true }), animationDelay],
+  plugins: [
+    backfaceVisibility,
+    tailwind3d({ legacy: true }),
+    animationDelay,
+    plugin(({ addVariant }) => {
+      addVariant(`hulib-open`, [
+        `&[aria-open="true"]`,
+        `:where([aria-open="true"]) &`,
+        `&[data-state="open"]`,
+        `:where([data-state="open"]) &`,
+      ]);
+      addVariant('hover-supported', '@media (hover: hover)');
+    }),
+  ],
 } satisfies Config;

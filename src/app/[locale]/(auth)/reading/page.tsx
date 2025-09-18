@@ -69,7 +69,7 @@ export default function ReadingPage() {
     const diff = differenceInMinutes(now, meetingEnd);
 
     if (diff < 0) {
-      return router.push('/schedule-meeting/weekly-schedule');
+      return router.push('/my-schedule');
     }
 
     if (recordedInfo?.resourceId && recordedInfo.sid && recordedInfo.uid) {

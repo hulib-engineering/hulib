@@ -28,4 +28,5 @@ export enum StatusEnum {
   Canceled = 'canceled',
   Rejected = 'rejected',
   Approved = 'approved',
+  Missed = 'missed',
 }
