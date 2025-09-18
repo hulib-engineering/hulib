@@ -5,9 +5,15 @@ import Image from 'next/image';
 import type { ReactNode } from 'react';
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import HTMLFlipBook from 'react-pageflip';
+import { Playfair_Display } from 'next/font/google';
 
 import IconButton from '@/components/iconButton/IconButton';
 import { mergeClassnames } from '@/components/private/utils';
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['400', '700', '900'],
+});
 
 type PageProps = {
   number: number;
@@ -30,7 +36,7 @@ const Page = forwardRef<HTMLDivElement, PageProps>(
       ref={ref}
       data-density={density}
     >
-      <div className="flex size-full flex-col justify-between gap-4">
+      <div className={mergeClassnames('flex size-full flex-col justify-between gap-4', number === 1 && 'justify-center')}>
         <div className="flex w-full flex-col gap-4">
           {number === 2 && (
             <h6 className="text-xl font-bold leading-7 text-neutral-20">
@@ -39,13 +45,15 @@ const Page = forwardRef<HTMLDivElement, PageProps>(
           )}
           {children}
         </div>
-        <div className="flex w-full gap-6 py-5">
-          <p className="text-[10px] font-medium leading-3 text-[#73787C]">
-            {`Page ${number}`}
-          </p>
-          <div className="flex-1 border-b-[0.5px] border-[#73787C]" />
-          <div className="text-[10px] leading-3 text-neutral-20">{title}</div>
-        </div>
+        {number !== 1 && (
+          <div className="flex w-full gap-6 py-5">
+            <p className="text-[10px] font-medium leading-3 text-[#73787C]">
+              {`Page ${number}`}
+            </p>
+            <div className="flex-1 border-b-[0.5px] border-[#73787C]" />
+            <div className="text-[10px] leading-3 text-neutral-20">{title}</div>
+          </div>
+        )}
       </div>
     </div>
   ),
@@ -142,10 +150,12 @@ const paginateText = (
 export function DetailBook({
   title,
   cover,
+  authorName,
   abstract,
 }: {
   title: string;
   cover: string;
+  authorName: string;
   abstract: string;
 }) {
   const flipBookRef = useRef<{ pageFlip: () => FlipBookHandle } | null>(null);
@@ -272,24 +282,45 @@ export function DetailBook({
               <Page key={i} title={title} number={i + 1}>
                 {page.first
                   ? (
-                      <div className="flex flex-col gap-2">
-                        <h2
-                          className={clsx(
-                            'font-bold',
-                            'text-xl',
-                            'sm:text-2xl',
-                            'md:text-[36px]',
-                          )}
+                      <div className="relative w-full overflow-hidden rounded-lg">
+                        {/* Top area (keeps space for the circular portrait) */}
+                        <div className="h-40 bg-transparent sm:h-48 md:h-64"></div>
+
+                        <div className="relative mt-10 p-6 sm:p-8 md:p-10">
+                          {/* Large decorative double-quote (positioned) */}
+                          <div
+                            className={mergeClassnames(
+                              'absolute -top-8 left-6 select-none text-[72px] font-extrabold leading-none text-yellow-40 z-[9999]',
+                              'sm:text-[96px] md:text-[6rem]',
+                              playfair.className,
+                            )}
+                          >
+                            &ldquo;
+                          </div>
+
+                          {/* Quote text */}
+                          <h2 className="line-clamp-2 text-2xl font-extrabold leading-none text-primary-60 sm:text-3xl sm:leading-snug md:text-4xl md:leading-snug">
+                            {title}
+                          </h2>
+
+                          {/* Author */}
+                          <p className="mt-6 line-clamp-1 text-sm font-semibold text-yellow-50 sm:text-base md:text-lg">
+                            {`– ${authorName}`}
+                          </p>
+                        </div>
+
+                        {/* Circular author portrait (overlaps both top area and blue block) */}
+                        <div
+                          className="absolute -left-24 -top-20 size-36 overflow-hidden rounded-full border-4 border-white shadow-xl sm:size-44 md:size-96"
                         >
-                          {page?.title ?? ''}
-                        </h2>
-                        <Image
-                          src={page?.cover ?? '/assets/images/ava-placeholder.png'}
-                          height={500}
-                          width={355}
-                          alt="Book cover"
-                          className="w-full object-cover"
-                        />
+                          <Image
+                            src={cover}
+                            alt="Author avatar"
+                            width={500}
+                            height={500}
+                            className="size-full object-cover object-right-bottom"
+                          />
+                        </div>
                       </div>
                     )
                   : (

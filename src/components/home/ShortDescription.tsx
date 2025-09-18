@@ -39,7 +39,7 @@ const ShortDescription = () => {
             <Button
               className="flex h-11 w-full text-base font-medium md:w-[20.4375rem]"
               iconLeft={<Book />}
-              onClick={() => router.push('/huber-registration')}
+              onClick={() => router.push('/me/account-upgrade')}
             >
               {t('short_descriptions.btn')}
             </Button>

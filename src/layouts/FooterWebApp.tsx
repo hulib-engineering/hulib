@@ -61,7 +61,7 @@ const FooterWebApp = () => {
     {
       title: t('site'),
       items: [
-        { title: t('my_schedule'), href: '/schedule-meeting/weekly-schedule' },
+        { title: t('my_schedule'), href: '/my-schedule' },
         { title: t('books'), href: '/explore-story' },
         { title: t('profile'), href: '/profile' },
       ],

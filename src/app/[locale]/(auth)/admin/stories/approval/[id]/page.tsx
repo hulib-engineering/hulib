@@ -101,6 +101,7 @@ export default function Index() {
         title={data?.title || ''}
         cover="/assets/images/ava-placeholder.png"
         abstract={data?.abstract || ''}
+        authorName={data?.humanBook.fullName || ''}
       />
       {/* Approve/Declined buttons at the bottom */}
       <div className="mt-6 flex gap-4">

@@ -7,8 +7,19 @@ type InputProps = {
 };
 
 type LabelProps = {
+  labelSize?: 'sm' | 'md' | 'lg' | 'xl' | string;
   isDisabled?: boolean;
-  children?: React.ReactNode;
+  children?: ReactNode;
+  htmlFor?: string;
+};
+
+type ChipProps = {
+  children: ReactNode;
+  onClear?: () => void;
+  isUppercase?: boolean;
+  className?: string;
+  iconClassName?: string;
+  onClick?: () => void;
 };
 
 type SelectButtonProps = {
@@ -30,4 +41,4 @@ type SelectButtonState = {
   isUppercase?: boolean;
 };
 
-export type { InputProps, LabelProps, SelectButtonProps, SelectButtonState };
+export type { ChipProps, InputProps, LabelProps, SelectButtonProps, SelectButtonState };
