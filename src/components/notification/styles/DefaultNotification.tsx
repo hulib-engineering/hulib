@@ -95,7 +95,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
           <div className="flex items-center justify-between">
             <p className="line-clamp-2 font-medium">{cfg.getMessage(notification, userInfo?.role?.id ?? Role.LIBER)}</p>
             {showExtras && notification.type.name === NotificationType.SESSION_REQUEST && (
-              <Link href="/schedule-meeting/weekly-schedule" className="text-sm font-medium text-primary-60 underline">
+              <Link href="/my-schedule" className="text-sm font-medium text-primary-60 underline">
                 See detail
               </Link>
             )}
@@ -110,7 +110,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
             )}
           </div>
           {showExtras && notification.type.name === NotificationType.HUBER_REPORT && (
-            <Link href="/schedule-meeting/weekly-schedule" className="text-sm font-medium text-primary-60 underline">
+            <Link href="/my-schedule" className="text-sm font-medium text-primary-60 underline">
               See detail
             </Link>
           )}

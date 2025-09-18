@@ -2,8 +2,8 @@ import { useParams } from 'next/navigation';
 import React, { useMemo } from 'react';
 
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
-import { SessionAttendees } from '@/components/schedule/sessionCard/SessionAttendees';
-import { SessionDateTime } from '@/components/schedule/sessionCard/SessionDateTime';
+import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
+import { SessionDateTime } from '@/layouts/scheduling/SessionDateTime';
 import { useGetReadingSessionOfUserQuery } from '@/libs/services/modules/user';
 import type { SessionStatus } from '@/libs/services/modules/user/getReadingSessionOfUser';
 

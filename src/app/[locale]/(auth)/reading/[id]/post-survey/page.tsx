@@ -9,27 +9,27 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
+import Avatar from '@/components/avatar/Avatar';
 import Button from '@/components/button/Button';
+import { Chip } from '@/components/common/chip/Chip';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import { Spinner } from '@/components/common/Spinner';
 import { EmojiRateScale } from '@/components/EmojiRateScale';
-import { SessionAttendees } from '@/components/schedule/sessionCard/SessionAttendees';
+import IconButton from '@/components/iconButton/IconButton';
+import Label from '@/components/Label';
+import { mergeClassnames } from '@/components/private/utils';
+import { Rating } from '@/components/Rating';
+import TextArea from '@/components/textArea/TextArea';
+import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
+import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
+import { useDeviceType } from '@/libs/hooks';
 import {
   useGetReadingSessionByIdQuery,
   useUpdateReadingSessionMutation,
 } from '@/libs/services/modules/reading-session';
-import { toLocaleDateString } from '@/utils/dateUtils';
-import { ScheduleInfoItemLayout } from '@/components/schedule/ScheduleInfoItemLayout';
-import { Spinner } from '@/components/common/Spinner';
-import { Rating } from '@/components/Rating';
-import TextArea from '@/components/textArea/TextArea';
-import { PostSurveyValidation } from '@/validations/SurveyValidation';
 import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
-import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import Avatar from '@/components/avatar/Avatar';
-import { Chip } from '@/components/common/chip/Chip';
-import Label from '@/components/Label';
-import { mergeClassnames } from '@/components/private/utils';
-import IconButton from '@/components/iconButton/IconButton';
-import { useDeviceType } from '@/libs/hooks';
+import { toLocaleDateString } from '@/utils/dateUtils';
+import { PostSurveyValidation } from '@/validations/SurveyValidation';
 
 export default function PostSurvey() {
   const router = useRouter();
@@ -121,7 +121,7 @@ export default function PostSurvey() {
   }
 
   if (readingSession?.status !== StatusEnum.Finished) {
-    redirect('/schedule-meeting/weekly-schedule');
+    redirect('/my-schedule');
   }
 
   return (
@@ -315,7 +315,7 @@ export default function PostSurvey() {
                 variant="outline"
                 size={isMobileView ? 'sm' : 'lg'}
                 fullWidth
-                onClick={() => router.push('/schedule-meeting/weekly-schedule')}
+                onClick={() => router.push('/my-schedule')}
               >
                 {t('go_to_schedule')}
               </Button>
