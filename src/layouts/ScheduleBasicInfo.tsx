@@ -1,16 +1,17 @@
 import { ArrowLeft, Heart, Info, Timer } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import type z from 'zod';
-
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { SessionAttendees } from '@/components/schedule/sessionCard/SessionAttendees';
+import type z from 'zod';
+
+import { ScheduleInfoItemLayout } from './scheduling/ScheduleInfoItemLayout';
+import { SessionAttendees } from './scheduling/SessionAttendees';
+
+import Button from '@/components/button/Button';
 import { useAppSelector } from '@/libs/hooks';
 import type { HuberStep1Validation } from '@/validations/HuberValidation';
 import type { ProfileValidation } from '@/validations/ProfileValidation';
-import { ScheduleInfoItemLayout } from '@/components/schedule/ScheduleInfoItemLayout';
-import Button from '@/components/button/Button';
 
 const ScheduleBasicInfo = ({ huber, onOpenHuberConv }: { huber: z.infer<typeof ProfileValidation> & Pick<z.infer<ReturnType<typeof HuberStep1Validation>>, 'topics'> & { rating: number; photo: { id: string; path: string } }; onOpenHuberConv: () => void }) => {
   const router = useRouter();

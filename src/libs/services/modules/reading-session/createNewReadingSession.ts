@@ -1,8 +1,9 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
+import type { z } from 'zod';
 import type { PaginatedResponse } from '../../type';
 import type { Story } from '../stories/storiesType';
-import type { User } from '@/features/users/types';
+import type { ProfileValidation } from '@/validations/ProfileValidation';
 
 type FeedBack = {
   id: string;
@@ -20,6 +21,7 @@ export type StatusType =
   | 'approved'
   | 'unInitialized';
 
+type User = Omit<z.infer<typeof ProfileValidation>, 'isUnderGuard'> & { id: string; photo?: { path: string } };
 export type ReadingSession = {
   id: string;
   humanBookId: string;
