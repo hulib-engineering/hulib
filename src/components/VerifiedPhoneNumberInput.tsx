@@ -2,12 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { ConfirmationResult } from 'firebase/auth';
-import {
-  PhoneAuthProvider,
-  RecaptchaVerifier,
-  signInWithCredential,
-  signInWithPhoneNumber,
-} from 'firebase/auth';
+import { PhoneAuthProvider, RecaptchaVerifier, signInWithCredential, signInWithPhoneNumber } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -17,6 +12,13 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import TextInput from '@/components/core/textInput/TextInput';
 import { auth } from '@/libs/Firebase';
 import { PhoneNumberValidation } from '@/validations/RegisterValidation';
+
+declare global {
+  // eslint-disable-next-line ts/consistent-type-definitions
+  interface Window {
+    recaptchaVerifier?: RecaptchaVerifier;
+  }
+}
 
 const VerifiedPhoneNumberInput = ({
   isError,
@@ -93,18 +95,26 @@ const VerifiedPhoneNumberInput = ({
   }, [verifiedNumber]);
 
   const setupRecaptcha = () => {
-    // @ts-ignore
     if (!window.recaptchaVerifier) {
-      // @ts-ignore
-
       window.recaptchaVerifier = new RecaptchaVerifier(auth, 'verify-button', {
         size: 'invisible',
       });
-      // @ts-ignore
-
       window.recaptchaVerifier.render();
     }
   };
+  // const setupRecaptcha = () => {
+  //   // @ts-ignore
+  //   if (!window.recaptchaVerifier) {
+  //     // @ts-ignore
+  //
+  //     window.recaptchaVerifier = new RecaptchaVerifier(auth, 'verify-button', {
+  //       size: 'invisible',
+  //     });
+  //     // @ts-ignore
+  //
+  //     window.recaptchaVerifier.render();
+  //   }
+  // };
 
   const handleSendCode = async () => {
     try {
@@ -137,6 +147,7 @@ const VerifiedPhoneNumberInput = ({
         confirmationResponse && !watch('isVerified') && 'items-start',
       )}
     >
+      <div id="recaptcha-container" className="sr-only" />
       <fieldset className="w-2/3">
         <TextInput
           type="tel"
