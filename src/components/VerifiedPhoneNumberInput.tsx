@@ -59,7 +59,7 @@ const VerifiedPhoneNumberInput = ({
         message: hintText || 'Invalid',
       });
     }
-  }, [isError, hintText]);
+  }, [isError, hintText, setError]);
 
   useEffect(() => {
     const handleOtp = async (otp: string) => {
@@ -86,21 +86,26 @@ const VerifiedPhoneNumberInput = ({
     if (watch('verificationCode').length === 6) {
       handleOtp(watch('verificationCode'));
     }
-  }, [watch('verificationCode'), confirmationResponse]);
+  }, [watch('verificationCode'), confirmationResponse, setError, setValue]);
 
   useEffect(() => {
     if (verifiedNumber !== '') {
       onChange(verifiedNumber);
     }
-  }, [verifiedNumber]);
+  }, [onChange, verifiedNumber]);
 
   const setupRecaptcha = () => {
-    if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'verify-button', {
-        size: 'invisible',
-      });
-      window.recaptchaVerifier.render();
+    if (window.recaptchaVerifier) {
+      window.recaptchaVerifier.clear();
     }
+
+    window.recaptchaVerifier = new RecaptchaVerifier(
+      auth,
+      'recaptcha-container',
+      { size: 'invisible' },
+    );
+
+    window.recaptchaVerifier.render();
   };
   // const setupRecaptcha = () => {
   //   // @ts-ignore
@@ -115,7 +120,6 @@ const VerifiedPhoneNumberInput = ({
   //     window.recaptchaVerifier.render();
   //   }
   // };
-
   const handleSendCode = async () => {
     try {
       setupRecaptcha(); // Setup Recaptcha
@@ -165,7 +169,7 @@ const VerifiedPhoneNumberInput = ({
           && verifiedNumber !== '')
           ? (
               <Button
-                id="verify-button"
+                // id="verify-button"
                 type="button"
                 className="w-full"
                 disabled={
