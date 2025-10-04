@@ -5,7 +5,7 @@ import React from 'react';
 
 import Huber from '@/components/huber/Huber';
 import NoResultFound from '@/components/research/NoResultFound';
-import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
+import { StoriesSkeleton } from '@/components/stories/StoriesSkeleton';
 import { useTopics } from '@/libs/hooks';
 import type { Huber as HuberType } from '@/libs/services/modules/huber/huberType';
 

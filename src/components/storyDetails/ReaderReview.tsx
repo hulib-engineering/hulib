@@ -4,8 +4,8 @@ import { CaretDown, CaretUp } from '@phosphor-icons/react';
 import { cloneDeep } from 'lodash';
 import * as React from 'react';
 
-import IconButton from '../iconButton/IconButton';
 import ReviewItem from './ReviewItem';
+import IconButton from '@/components/core/iconButton/IconButton';
 import { useGetStoryReviewsByStoryIdQuery } from '@/libs/services/modules/story-reviews';
 
 type ReaderReviewProps = {

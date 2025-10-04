@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import ExploreStory from '@/components/exploreStory/ExploreStory';
 import Banner from '@/components/home/Banner';
 import ShortDescription from '@/components/home/ShortDescription';
-import Loader from '@/components/loader/Loader';
+import Loader from '@/components/core/loader/Loader';
 import AdminLayout from '@/layouts/AdminLayout';
 import CommonLayout from '@/layouts/CommonLayout';
 import { useAppSelector } from '@/libs/hooks';

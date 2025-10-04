@@ -2,7 +2,7 @@ import localFont from 'next/font/local';
 import type { ReactNode } from 'react';
 
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 import Footer from '@/layouts/Footer';
 import Header from '@/layouts/Header';
 

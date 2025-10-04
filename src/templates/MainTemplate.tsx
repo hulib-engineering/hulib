@@ -2,11 +2,12 @@
 
 import localFont from 'next/font/local';
 import { redirect, usePathname } from 'next/navigation';
+import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
 
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
-import type { WithChildren } from '@/components/private/types';
-import { mergeClassnames } from '@/components/private/utils';
+import type { WithChildren } from '@/components/core/private/types';
+import { mergeClassnames } from '@/components/core/private/utils';
 import FooterWebApp from '@/layouts/FooterWebApp';
 import Header from '@/layouts/webapp/Header';
 import MessengerWidget from '@/layouts/webapp/MultipleChatWidget';
@@ -90,32 +91,34 @@ const MainTemplate = (props: WithChildren) => {
       dispatch(setUserInfo(data));
       dispatch(setAvatarUrl(data.photo));
     }
-  }, [data]);
+  }, [data, dispatch]);
 
   if (error) {
     return redirect('/auth/login');
   }
 
   return (
-    <div
-      className={mergeClassnames(
-        poppins.className,
-        'relative antialiased h-screen flex flex-col',
-      )}
-    >
-      <div className="flex size-full flex-col">
-        <Header />
-        <main className="flex-1 overflow-y-auto bg-neutral-98">
-          <div className="min-h-[calc(100vh-410px)] bg-neutral-98">
-            {props.children}
-          </div>
+    <SessionProvider>
+      <div
+        className={mergeClassnames(
+          poppins.className,
+          'relative antialiased h-screen flex flex-col',
+        )}
+      >
+        <div className="flex size-full flex-col">
+          <Header />
+          <main className="flex-1 overflow-y-auto bg-neutral-98">
+            <div className="min-h-[calc(100vh-410px)] bg-neutral-98">
+              {props.children}
+            </div>
 
-          <FooterWebApp />
-        </main>
-        {!pathname.includes('messages') && <MessengerWidget />}
+            <FooterWebApp />
+          </main>
+          {!pathname.includes('messages') && <MessengerWidget />}
+        </div>
+        <CustomToastifyContainer />
       </div>
-      <CustomToastifyContainer />
-    </div>
+    </SessionProvider>
   );
 };
 

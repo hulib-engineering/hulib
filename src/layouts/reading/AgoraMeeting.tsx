@@ -1,9 +1,5 @@
 'use client';
 
-import AgoraRTC from 'agora-rtc-sdk-ng';
-import { useSearchParams } from 'next/navigation';
-import React, { useEffect, useRef, useState } from 'react';
-import { useTranslations } from 'next-intl';
 import {
   Chat,
   Heart,
@@ -14,23 +10,26 @@ import {
   VideoCamera,
   VideoCameraSlash,
 } from '@phosphor-icons/react';
+import AgoraRTC from 'agora-rtc-sdk-ng';
+import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import React, { useEffect, useRef, useState } from 'react';
 
-import IconButton from '../../components/iconButton/IconButton';
-
-import { PlayableAgoraMeetView } from '@/components/meeting/PlayableAgoraMeetView';
-import { useAppSelector } from '@/libs/hooks';
-import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
-import { Env } from '@/libs/Env.mjs';
-import { mergeClassnames } from '@/components/private/utils';
-import { HeaderIconButtonWithBadge } from '@/layouts/webapp/Header';
-import Modal from '@/components/Modal';
-import Button from '@/components/button/Button';
-import { useStartCloudRecordingMutation } from '@/libs/services/modules/agora';
+import Button from '@/components/core/button/Button';
+import IconButton from '@/components/core/iconButton/IconButton';
+import Popover from '@/components/core/popover/Popover';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { pushError } from '@/components/CustomToastifyContainer';
-import RecordingTimer from '@/layouts/reading/RecordingTimer';
-import { useSocket } from '@/libs/hooks/useSocket';
+import Modal from '@/components/Modal';
+import { PlayableAgoraMeetView } from '@/components/meeting/PlayableAgoraMeetView';
 import ChatInCall from '@/layouts/reading/ChatInCall';
-import Popover from '@/components/popover/Popover';
+import RecordingTimer from '@/layouts/reading/RecordingTimer';
+import { HeaderIconButtonWithBadge } from '@/layouts/webapp/Header';
+import { Env } from '@/libs/Env.mjs';
+import { useAppSelector } from '@/libs/hooks';
+import { useSocket } from '@/libs/hooks/useSocket';
+import { useStartCloudRecordingMutation } from '@/libs/services/modules/agora';
+import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
 
 export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?: { resourceId: string; sid: string; uid: string }) => void }) {
   const urlParams = useSearchParams();

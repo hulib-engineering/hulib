@@ -7,13 +7,13 @@ import type { UseControllerProps } from 'react-hook-form';
 import { useController, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
-import Button from '@/components/button/Button';
-import Form from '@/components/form/Form';
+import Button from '@/components/core/button/Button';
+import Form from '@/components/core/form/Form';
 import Label from '@/components/Label';
 import Modal from '@/components/Modal';
-import { mergeClassnames } from '@/components/private/utils';
-import Radio from '@/components/radio/Radio';
-import TextInput from '@/components/textInput/TextInput';
+import { mergeClassnames } from '@/components/core/private/utils';
+import Radio from '@/components/core/radio/Radio';
+import TextInput from '@/components/core/textInput/TextInput';
 import { EmailRegistrationValidation } from '@/validations/EventRegistrationValidation';
 
 type IEventRegistration = Omit<

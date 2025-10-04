@@ -28,10 +28,10 @@ const getHubers = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
     providesTags: result =>
       result
         ? [
-            ...result.data.map(({ id }) => ({ type: 'Hubers' as const, id })),
-            { type: 'Hubers' as const, id: 'LIST' },
+            ...result.data.map(({ id }) => ({ type: 'Huber' as const, id })),
+            { type: 'Huber' as const, id: 'LIST' },
           ]
-        : [{ type: 'Hubers' as const, id: 'LIST' }],
+        : [{ type: 'Huber' as const, id: 'LIST' }],
   });
 
 export default getHubers;

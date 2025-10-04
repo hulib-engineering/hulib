@@ -15,19 +15,22 @@ const getStories = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
         sortBy: params?.sortBy,
       },
     }),
-    serializeQueryArgs: ({ endpointName, queryArgs }) => {
-      return `${endpointName}(${JSON.stringify(queryArgs?.topicIds)})`;
-    },
-    forceRefetch: ({ currentArg, previousArg }) => {
-      return currentArg?.limit !== previousArg?.limit;
-    },
+    // serializeQueryArgs: ({ endpointName, queryArgs }) => {
+    //   return `${endpointName}(${JSON.stringify(queryArgs?.topicIds)})`;
+    // },
+    // forceRefetch: ({ currentArg, previousArg }) => {
+    //   return currentArg?.limit !== previousArg?.limit;
+    // },
     providesTags: result =>
       result
         ? [
-            ...result.data.map(({ id }) => ({ type: 'Stories' as const, id })),
-            { type: 'Stories' as const, id: 'LIST' },
+            ...result.data.map(({ id }) => ({ type: 'Story' as const, id })),
+            { type: 'Story' as const, id: 'LIST' }, // ✅ always present
+            // arg.humanBookId
+            //   ? { type: 'Stories' as const, id: `MY_LIST-${arg.humanBookId}` }
+            //   : {},
           ]
-        : [{ type: 'Stories' as const, id: 'LIST' }],
+        : [{ type: 'Story' as const, id: 'LIST' }],
   });
 
 export default getStories;
