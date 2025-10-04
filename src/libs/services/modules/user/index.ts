@@ -3,7 +3,12 @@ import getUsersById from './getUserById';
 import getUsers from './getUsers';
 import updateUserStatus from './updateUserStatus';
 import upgradeUser from './upgradeUser';
-import getAuthorDetail from '@/libs/services/modules/user/getAuthorDetail';
+import addStoryToMyFavorites from './addStoryToMyFavorites';
+import getAuthorDetail from './getAuthorDetail';
+import removeStoryFromMyFavorites from './removeStoryFromMyFavorites';
+import getMyFavorites from './getMyFavorites';
+import removeMyFavorites from './removeMyFavorites';
+
 import { api } from '@/libs/services/api';
 
 const authenticationApiWithTag = api.enhanceEndpoints?.({
@@ -18,6 +23,10 @@ export const userApi = authenticationApiWithTag.injectEndpoints({
     updateUserStatus: updateUserStatus(build),
     upgradeUser: upgradeUser(build),
     getReadingSessionOfUser: getReadingSessionOfUser(build),
+    addStoryToMyFavorites: addStoryToMyFavorites(build),
+    removeStoryFromMyFavorites: removeStoryFromMyFavorites(build),
+    getMyFavorites: getMyFavorites(build),
+    removeMyFavorites: removeMyFavorites(build),
   }),
   overrideExisting: false,
 });
@@ -29,4 +38,8 @@ export const {
   useUpdateUserStatusMutation,
   useUpgradeUserMutation,
   useGetReadingSessionOfUserQuery,
+  useAddStoryToMyFavoritesMutation,
+  useRemoveStoryFromMyFavoritesMutation,
+  useGetMyFavoritesQuery,
+  useRemoveMyFavoritesMutation,
 }: any = userApi;

@@ -12,15 +12,15 @@ import registerHuber from './registerHumanBook';
 import resendOTP from './resendOTP';
 import resetPassword from './resetPassword';
 import updateProfile from './updateProfile';
+import getPersonalAvatar from '@/libs/services/modules/auth/getPersonalAvatar';
 
 type Enum = {
-  id: string;
+  id: number;
   name: string;
-  __entity: string;
 };
 
 export type User = {
-  id: string;
+  id: number;
   email: string;
   provider: string;
   socialId?: string;
@@ -29,10 +29,13 @@ export type User = {
   gender: Enum;
   role: Enum;
   status: Enum;
-  phone: string;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt?: Date;
+  phoneNumber?: string;
+  address?: string;
+  parentPhoneNumber?: string;
+  parentFullname?: string;
+  // createdAt: Date;
+  // updatedAt: Date;
+  // deletedAt?: Date;
 };
 
 export type EmailLoginResponse = {
@@ -51,6 +54,7 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
     checkEmail: checkEmail(build),
     confirmEmail: confirmEmail(build),
     getPersonalInfo: getPersonalInfo(build),
+    getPersonalAvatar: getPersonalAvatar(build),
     loginAsAdmin: loginAsAdmin(build),
     loginAsManager: loginAsUser(build),
     refresh: refresh(build),
@@ -77,4 +81,5 @@ export const {
   useChangePasswordMutation,
   useUpdateProfileMutation,
   useRegisterHuberMutation,
+  useLazyGetPersonalAvatarQuery,
 }: any = authApi;

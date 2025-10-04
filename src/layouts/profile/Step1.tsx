@@ -10,7 +10,7 @@ import { Controller, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 import { isEmpty } from 'lodash';
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import TermAndCondition from '@/layouts/profile/TermAndCondition';
 import { useAppSelector, useTopics } from '@/libs/hooks';

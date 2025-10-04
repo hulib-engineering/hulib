@@ -203,6 +203,8 @@ export default {
           '0 4px 5px 0 rgba(28, 30, 33, 0.10), 0 0 4px 0 rgba(15, 15, 16, 0.06)',
         'spinner': '0 0 0 7px #42a5f5, inset 0 0 0 1px #42a5f5',
         'cover': '4px 4px 0 0 #87878759',
+        'book-left': '-1px 1px 0 0 #6B6B6B73',
+        'book-right': '4px 4px 0 0 #87878759',
       },
       rotate: {
         30: '30deg',

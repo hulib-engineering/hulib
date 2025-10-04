@@ -1,21 +1,14 @@
 'use client';
 
-import { CaretCircleRight } from '@phosphor-icons/react';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import Button from '@/components/button/Button';
-import { FlipBook } from '@/components/flipBook/FlipBook';
-import { mergeClassnames } from '@/components/private/utils';
+import { StoryCard } from '@/components/stories/StoryCard';
 import StoryPagination from '@/components/storyDetails/StoryPagination';
 import AdminLayout from '@/layouts/AdminLayout';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
 
 export default function AwaitingApprovalStories() {
-  // Router for navigation
-  const router = useRouter();
-
   // State for current page
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -30,24 +23,24 @@ export default function AwaitingApprovalStories() {
     setCurrentPage(page);
   };
 
-  // Custom renderActions for FlipBook: just a 'View Detail' button
-  const renderActions = (storyId: number) => (
-    <div
-      className={mergeClassnames(
-        'flex w-full items-center gap-2 justify-self-end mt-3 absolute bottom-[10px]',
-        'md:flex-row md:mt-2 md:px-3 md:pl-0',
-      )}
-    >
-      <Button
-        iconLeft={<CaretCircleRight size={20} />}
-        variant="primary"
-        className="w-full rounded-full py-2 text-base font-medium"
-        onClick={() => router.push(`/admin/stories/approval/${storyId}`)}
-      >
-        View Detail
-      </Button>
-    </div>
-  );
+  // Custom renderActions for StoryCard: just a 'View Detail' button
+  // const renderActions = (storyId: number) => (
+  //   <div
+  //     className={mergeClassnames(
+  //       'flex w-full items-center gap-2 justify-self-end mt-3 absolute bottom-[10px]',
+  //       'md:flex-row md:mt-2 md:px-3 md:pl-0',
+  //     )}
+  //   >
+  //     <Button
+  //       iconLeft={<CaretCircleRight size={20} />}
+  //       variant="primary"
+  //       className="w-full rounded-full py-2 text-base font-medium"
+  //       onClick={() => router.push(`/admin/stories/approval/${storyId}`)}
+  //     >
+  //       View Detail
+  //     </Button>
+  //   </div>
+  // );
 
   return (
     // AdminLayout provides sidebar and main content area
@@ -73,11 +66,12 @@ export default function AwaitingApprovalStories() {
             : storiesAwaitingApproval?.data?.length > 0
               ? (
                   storiesAwaitingApproval?.data?.map((story: Story) => (
-                    <FlipBook
+                    <StoryCard
                       key={story.id}
                       data={story}
-                      renderActions={() => renderActions(story.id)}
-                      refetch={() => {}}
+                      showAdminControls
+                      // renderActions={() => renderActions(story.id)}
+                      // refetch={() => {}}
                     />
                   ))
                 )

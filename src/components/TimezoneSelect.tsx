@@ -2,9 +2,9 @@ import { CaretDown, Globe } from '@phosphor-icons/react';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 
-import Button from '@/components/button/Button';
-import Dropdown from '@/components/dropdown/Dropdown';
-import MenuItem from '@/components/menuItem/MenuItem';
+import Button from '@/components/core/button/Button';
+import Dropdown from '@/components/core/dropdown/Dropdown';
+import MenuItem from '@/components/core/menuItem/MenuItem';
 import { POPULAR_TIMEZONES } from '@/libs/constants';
 import { formatTimezone } from '@/utils/dateUtils';
 

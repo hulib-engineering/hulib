@@ -6,10 +6,10 @@ import { PhoneAuthProvider, RecaptchaVerifier, signInWithCredential, signInWithP
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/common/chip/Chip';
-import { mergeClassnames } from '@/components/private/utils';
-import TextInput from '@/components/textInput/TextInput';
+import { mergeClassnames } from '@/components/core/private/utils';
+import TextInput from '@/components/core/textInput/TextInput';
 import { auth } from '@/libs/Firebase';
 import { PhoneNumberValidation } from '@/validations/RegisterValidation';
 

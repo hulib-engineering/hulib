@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 // Badge component for showing counts
 const CountBadge = ({ count }: { count: number }) => {

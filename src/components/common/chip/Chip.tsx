@@ -3,8 +3,8 @@ import React, { forwardRef } from 'react';
 
 import type { ChipPolymorphicProps } from './private/type';
 import { getActive, getDisabled, getPadding } from './private/utils';
-import type { PolymorphicRef } from '@/components/private/types';
-import { mergeClassnames } from '@/components/private/utils';
+import type { PolymorphicRef } from '@/components/core/private/types';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const Chip = forwardRef(
   // @ts-ignore

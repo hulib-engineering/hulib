@@ -13,8 +13,8 @@ import {
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 
-import Button from '@/components/button/Button';
-import { mergeClassnames } from '@/components/private/utils';
+import Button from '@/components/core/button/Button';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 import type { ReadingSession } from '@/libs/services/modules/reading-session/createNewReadingSession';
 

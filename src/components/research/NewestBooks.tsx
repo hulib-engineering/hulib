@@ -1,14 +1,11 @@
 'use client';
 
-import { Bookmarks } from '@phosphor-icons/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import React, { useCallback } from 'react';
+import React from 'react';
 
-import Button from '../button/Button';
-import { mergeClassnames } from '../private/utils';
-import StoriesSkeleton from '../stories/StoriesSkeleton';
-import { FlipBook } from '@/components/flipBook/FlipBook';
+import { StoriesSkeleton } from '../stories/StoriesSkeleton';
+import { StoryCard } from '@/components/stories/StoryCard';
 import NoResultFound from '@/components/research/NoResultFound';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
 
@@ -22,48 +19,8 @@ const NewestBooks: React.FC<NewestBooksProps> = ({
   loadingStories,
 }) => {
   const t = useTranslations('Research');
-  const router = useRouter();
+
   const searchParams = useSearchParams();
-
-  const handleAddToFavorites = useCallback(() => {
-    // TODO: Implement add to favorites
-  }, []);
-
-  const renderActions = useCallback(
-    (storyId: number) => {
-      return (
-        <div
-          className={mergeClassnames(
-            'flex w-full items-center gap-2 justify-self-end mt-3 absolute bottom-[10px]',
-            'md:flex-row md:mt-2 md:px-3 md:pl-0',
-          )}
-        >
-          <Button
-            variant="primary"
-            className={mergeClassnames(
-              'text-base h-8 max-h-8 w-[120px] flex-none rounded-full px-[12px] py-[12px]',
-              'md:h-[44px] md:max-h-[44px] md:w-[105px]',
-            )}
-            onClick={() => router.push(`/explore-story/${storyId}`)}
-          >
-            {t('stories.read_all')}
-          </Button>
-          <Button
-            variant="outline"
-            className={mergeClassnames(
-              'w-full h-8',
-              'md:size-10 md:min-h-10 md:min-w-10',
-            )}
-            iconOnly
-            onClick={handleAddToFavorites}
-          >
-            <Bookmarks size={20} />
-          </Button>
-        </div>
-      );
-    },
-    [router, handleAddToFavorites, t],
-  );
 
   React.useEffect(() => {
     const element = document.getElementById('books-title');
@@ -112,11 +69,9 @@ const NewestBooks: React.FC<NewestBooksProps> = ({
           ? (
               <div className="relative mt-4 flex flex-wrap items-center justify-center gap-8 xl:justify-start 2xl:gap-12">
                 {stories.map(item => (
-                  <FlipBook
+                  <StoryCard
                     key={item.id}
                     data={item}
-                    renderActions={() => renderActions(item.id)}
-                    refetch={() => {}}
                   />
                 ))}
               </div>

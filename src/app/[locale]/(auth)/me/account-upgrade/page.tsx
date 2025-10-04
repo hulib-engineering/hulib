@@ -5,14 +5,14 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { redirect, useRouter } from 'next/navigation';
 
-import Button from '@/components/button/Button';
-import { Step, StepLabel, Stepper } from '@/components/stepper/Stepper';
-import { mergeClassnames } from '@/components/private/utils';
+import Button from '@/components/core/button/Button';
+import { Step, StepLabel, Stepper } from '@/components/core/stepper/Stepper';
+import { mergeClassnames } from '@/components/core/private/utils';
 import Step1 from '@/layouts/profile/Step1';
 import Step2 from '@/layouts/profile/Step2';
-import Step3 from '@/layouts/profile/Step3';
 import { useAppSelector } from '@/libs/hooks';
 import { Role, StatusEnum } from '@/types/common';
+import StoryForm from '@/layouts/stories/StoryForm';
 
 const STEPS = ['Info', 'Choose Available slot', 'First Story'];
 
@@ -30,7 +30,7 @@ export default function AccountUpgrade() {
       setActiveStep(3);
     }
     if (userInfo && userInfo?.role?.id === Role.HUBER) {
-      redirect('/profile');
+      redirect(`/users/${userInfo.id}`);
     }
   }, [userInfo]);
 
@@ -65,7 +65,11 @@ export default function AccountUpgrade() {
           <Step2 next={handleNextStep} onBack={() => setActiveStep(prev => prev - 1)} />
         )}
         {activeStep === 2 && (
-          <Step3 next={handleNextStep} />
+          <StoryForm
+            type="create-first"
+            onSucceed={handleNextStep}
+            onBack={() => setActiveStep(prev => prev - 1)}
+          />
         )}
         {activeStep === 3 && (
           <div className="flex w-full flex-col items-center gap-4 rounded-[20px] bg-white p-4 shadow-sm">
