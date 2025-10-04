@@ -3,9 +3,9 @@
 import Image from 'next/image';
 import React from 'react';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import Modal from '@/components/Modal';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 export type ISuccessFormModalProps = {
   name: string;

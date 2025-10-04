@@ -4,8 +4,8 @@ import { useState } from 'react';
 import ModalBanningAction from '../ModalBanningAction';
 import ModalWarningAction from '../ModalWarningAction';
 import { pushSuccess } from '@/components/CustomToastifyContainer';
-import Dropdown from '@/components/dropdown/Dropdown';
-import MenuItem from '@/components/menuItem/MenuItem';
+import Dropdown from '@/components/core/dropdown/Dropdown';
+import MenuItem from '@/components/core/menuItem/MenuItem';
 import type { User } from '@/features/users/types';
 
 const ProfileActionDropdown = ({ data }: { data: User }) => {

@@ -12,12 +12,12 @@ import clsx from 'clsx';
 import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { pushError } from '@/components/CustomToastifyContainer';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
-import { ContactInformationSection } from '@/components/profile/ContactInformationSection';
-import OverviewSection from '@/components/profile/OverviewSection';
-import WorkAndEducationSection from '@/components/profile/WorkAndEducationSection';
+import ContactSection from '@/layouts/profile/ContactSection';
+import OverviewSection from '@/layouts/profile/OverviewSection';
+import WorkAndEducationSection from '@/layouts/profile/WorkAndEduSection';
 import HeaderProfileInfo from '@/features/users/components/HeaderProfileInfo';
 import ModalApprovalHuber from '@/features/users/components/ModalApprovalHuber';
 import StorySession from '@/features/users/components/StorySession';
@@ -184,13 +184,13 @@ const UserApprovalPage = () => {
           {/* Main Content: Switch by selected section */}
           <div className="min-h-[400px] flex-1 p-8">
             {selectedSection === 'overview' && (
-              <OverviewSection isLiber={false} data={user} />
+              <OverviewSection data={user} />
             )}
             {selectedSection === 'work' && (
               <WorkAndEducationSection data={user} />
             )}
             {selectedSection === 'contact' && (
-              <ContactInformationSection data={user} />
+              <ContactSection data={user} />
             )}
             {selectedSection === 'story' && (
               <StorySession

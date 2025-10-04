@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { useUpdateUserStatusMutation } from '@/libs/services/modules/user';
 
 // Props for the modal component

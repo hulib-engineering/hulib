@@ -422,7 +422,9 @@
       "submit": "Submit",
       "success_report_title": "Report submitted successfully",
       "success_report_detail": "Thank you for your report. We truly appreciate your help in keeping this community safe and respectful. Our team will carefully review the information you’ve provided."
-    }
+    },
+    "create_story": "Create Your Story",
+    "edit_story": "Edit Your Story"
   },
   "MyFavorites": {
     "choose_all": "Choose all",
@@ -526,7 +528,8 @@
     "save_for_late": "Save for later",
     "schedule_meeting": "Schedule a meeting",
     "saved_for_later_success": "Story saved for later successfully",
-    "remove_from_saved_for_later": "Remove from saved for later"
+    "remove_from_saved_for_later": "Remove from saved for later",
+    "share_story": "Share another story"
   },
   "Huber": {
     "title": "Explore our Hubers",
@@ -698,6 +701,7 @@
     "custom": "Custom",
     "style": "Style",
     "back": "Back",
+    "cancel": "Cancel",
     "submit": "Submit",
     "placeholder_title": "Please enter the title of your story",
     "placeholder_abstract": "Please enter the abstract of your story",

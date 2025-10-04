@@ -19,9 +19,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import * as React from 'react';
 
-import Button from '@/components/button/Button';
-import IconButton from '@/components/iconButton/IconButton';
-import { mergeClassnames } from '@/components/private/utils';
+import Button from '@/components/core/button/Button';
+import IconButton from '@/components/core/iconButton/IconButton';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
 import { useTimeslotGrouping } from '@/libs/hooks/useTimeslotGrouping';
 import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';

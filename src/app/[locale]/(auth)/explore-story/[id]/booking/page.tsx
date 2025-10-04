@@ -10,11 +10,11 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import * as React from 'react';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { Spinner } from '@/components/common/Spinner';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import { mergeClassnames } from '@/components/private/utils';
-import TextArea from '@/components/textArea/TextArea';
+import { mergeClassnames } from '@/components/core/private/utils';
+import TextArea from '@/components/core/textArea/TextArea';
 import { TimezoneSelect } from '@/components/TimezoneSelect';
 
 import ScheduleBasicInfo from '@/layouts/ScheduleBasicInfo';

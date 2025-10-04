@@ -9,7 +9,7 @@ import type { TDaySlots } from './TimeslotRegistrationSection';
 import TimeslotRegistrationSection from './TimeslotRegistrationSection';
 import TimeSlotListHeader from './TimeSlotListHeader';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 import Modal from '@/components/Modal';
 import {

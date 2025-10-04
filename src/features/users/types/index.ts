@@ -2,15 +2,16 @@ import type { Topic } from '@/libs/services/modules/user/userType';
 
 export type User = {
   id: number;
-  email: string | null;
-  provider: string | null;
-  socialId: string | null;
-  fullName: string | null;
-  birthday: string | null;
+  email: string;
+  provider: string;
+  socialId?: string;
+  fullName: string;
+  birthday: string;
   approval: string | null;
-  address: string | null;
-  parentPhoneNumber: string | null;
-  phoneNumber: string | null;
+  address?: string;
+  parentFullname?: string;
+  parentPhoneNumber?: string;
+  phoneNumber?: string;
   bio: string | null;
   videoUrl: string | null;
   education: string | null;
@@ -37,4 +38,15 @@ export type User = {
   }[];
   topicsOfInterest: Topic[];
   sharingTopics: Topic[];
+  feedbackBys: {
+    id: number;
+    content: string;
+    rating: number;
+    createdAt: string;
+    feedbackBy: {
+      id: number;
+      fullName: string;
+      photo?: string;
+    };
+  }[];
 };

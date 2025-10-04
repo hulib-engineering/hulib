@@ -3,10 +3,10 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import Modal from '@/components/Modal';
-import type { WithChildren } from '@/components/private/types';
-import { mergeClassnames } from '@/components/private/utils';
+import type { WithChildren } from '@/components/core/private/types';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 export type IPolicyModalProps = {
   type: string;

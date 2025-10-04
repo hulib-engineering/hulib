@@ -1,9 +1,9 @@
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import React, { forwardRef } from 'react';
 
-import { useFormContext, useFormItemContext } from './form/private/utils';
-import type { WithChildren } from './private/types';
-import { mergeClassnames } from './private/utils';
+import { useFormContext, useFormItemContext } from '@/components/core/form/private/utils';
+import type { WithChildren } from '@/components/core/private/types';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const getSizeStyles = (size?: string) => {
   switch (size) {

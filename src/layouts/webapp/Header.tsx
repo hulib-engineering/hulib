@@ -2,35 +2,27 @@
 
 import {
   Bell,
-  CaretDown,
-  Gear,
-  House,
   MessengerLogo,
-  Pencil,
-  SignOut,
-  UserCircle,
 } from '@phosphor-icons/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import type { FC, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import React, { useCallback, useMemo } from 'react';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
+import Popover from '@/components/core/popover/Popover';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
-import MenuItem from '@/components/menuItem/MenuItem';
-import Popover from '@/components/popover/Popover';
-import { mergeClassnames } from '@/components/private/utils';
 import SearchInput from '@/components/SearchInput';
-import { ContactItem } from '@/layouts/webapp/Messages/ChatList';
+import AvatarPopover from '@/layouts/webapp/AvatarPopover';
+import MessengerPopover from '@/layouts/webapp/MessengerPopover';
+import NotificationPopover from '@/layouts/webapp/NotificationPopover';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
 import {
-  type Contact,
   type MessageResponse,
   chatApi,
   useGetConversationContactsQuery,
@@ -43,196 +35,8 @@ import { useLazyGetUsersByIdQuery } from '@/libs/services/modules/user';
 import type { Message } from '@/libs/store/messenger';
 import { openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
-import NotificationPopover from '@/layouts/webapp/NotificationPopover';
 
-type AvatarPopoverMenuItem = {
-  label: string;
-  icon: React.ReactNode;
-  href?: string;
-  onClick?: () => void;
-};
-
-type RenderProps = {
-  open: boolean;
-  close: () => void;
-};
-
-const AvatarPopoverContent: FC<RenderProps> = ({
-  open,
-  close,
-}: RenderProps) => {
-  const { role } = useAppSelector(state => state.auth.userInfo);
-  const t = useTranslations('HeaderWebApp');
-
-  const handleClick = (item: AvatarPopoverMenuItem) => {
-    if (open) {
-      close();
-    }
-    item.onClick?.();
-  };
-
-  const AvatarPopoverMenuItems = useMemo(
-    () => [
-      {
-        label: t('dashboard'),
-        icon: <House size={20} color="primary-20" />,
-        href: '/home',
-        roles: [Role.ADMIN],
-      },
-      {
-        label: t('my_profile'),
-        icon: <UserCircle size={20} color="primary-20" />,
-        href: '/profile',
-        roles: [Role.LIBER, Role.HUBER],
-      },
-      {
-        label: t('change_password'),
-        icon: <Gear size={20} color="primary-20" />,
-        href: '/change-password',
-        roles: [Role.LIBER, Role.HUBER],
-      },
-      {
-        label: t('register_huber'),
-        icon: <Pencil size={20} color="primary-20" />,
-        href: '/me/account-upgrade',
-        roles: [Role.LIBER],
-      },
-      {
-        label: t('sign_out'),
-        icon: <SignOut size={20} color="primary-20" />,
-        onClick: () => signOut({ callbackUrl: '/auth/login' }),
-      },
-    ],
-    [t],
-  );
-
-  const menuItemsByRole = useMemo(() => {
-    return (
-      AvatarPopoverMenuItems.filter((item) => {
-        if (item?.roles) {
-          return item.roles.includes(role?.id as Role);
-        }
-        return true;
-      }) || []
-    );
-  }, [role]);
-
-  return (
-    <div data-testid="popover-content">
-      {menuItemsByRole.map((item, index) =>
-        item.href
-          ? (
-              <Link href={item.href} key={index} onClick={close}>
-                <MenuItem>
-                  {item.icon}
-                  <MenuItem.Title>{item.label}</MenuItem.Title>
-                </MenuItem>
-              </Link>
-            )
-          : (
-              <MenuItem key={index} onClick={() => handleClick(item)}>
-                {item.icon}
-                <MenuItem.Title>{item.label}</MenuItem.Title>
-              </MenuItem>
-            ),
-      )}
-    </div>
-  );
-};
-
-const AvatarPopover = ({ children }: { children?: ReactNode }) => (
-  <Popover position="bottom-end" className="h-full w-11">
-    <Popover.Trigger
-      data-testid="popover-trigger-arrow"
-      {...{
-        className: 'h-full',
-      }}
-    >
-      {children}
-    </Popover.Trigger>
-    <Popover.Panel className="flex flex-col gap-1 p-2">
-      {({ open = false, close }) => (
-        <AvatarPopoverContent close={close} open={open} />
-      )}
-    </Popover.Panel>
-  </Popover>
-);
-
-const MessengerPopover = ({
-  conversations = [],
-  onSeeAllMessagesClick,
-  onItemClick,
-}: {
-  conversations: Contact[];
-  onSeeAllMessagesClick: () => void;
-  onItemClick?: () => void;
-}) => {
-  const dispatch = useAppDispatch();
-
-  const handleMessageItemClick = ({
-    participant,
-    unreadCount,
-    lastMessage,
-  }: Omit<Contact, 'id' | 'isOnline'>) => {
-    if (onItemClick) {
-      onItemClick();
-    }
-    dispatch(
-      openChat({
-        id: participant.id.toString(),
-        name: participant.fullName,
-        avatarUrl: participant.photo?.path,
-        isOpen: true,
-        isMinimized: false,
-        unread: unreadCount,
-        lastMessage,
-      }),
-    );
-  };
-
-  return (
-    <div data-testid="messenger-popover-content" className="flex flex-col">
-      <div className="px-5 pb-2 text-2xl font-bold leading-8">
-        Your messages
-      </div>
-      {conversations.length === 0
-        ? (
-            <div className="flex flex-1 items-center justify-center">
-              You have no conversations yet!
-            </div>
-          )
-        : (
-            <>
-              <div className="flex h-[280px] flex-col overflow-y-auto">
-                {conversations.map(({ unreadCount, lastMessage, ...rest }) => (
-                  <ContactItem
-                    key={rest.participant.id}
-                    {...rest}
-                    lastMessage={{ ...lastMessage, isRead: !!lastMessage.readAt }}
-                    onClick={() =>
-                      handleMessageItemClick({
-                        participant: rest.participant,
-                        unreadCount,
-                        lastMessage,
-                      })}
-                  />
-                ))}
-              </div>
-              <div className="px-2.5">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  fullWidth
-                  onClick={onSeeAllMessagesClick}
-                >
-                  See all
-                </Button>
-              </div>
-            </>
-          )}
-    </div>
-  );
-};
+;
 
 export const HeaderIconButtonWithBadge = ({
   children,
@@ -264,7 +68,7 @@ const Header = () => {
   const router = useRouter();
 
   const user = useAppSelector(state => state.auth.userInfo);
-  const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
+  // const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
 
   const { data, isLoading, error } = useGetNotificationsQuery({ page: 1, limit: 5 });
   const { data: conversations = [] } = useGetConversationContactsQuery(
@@ -348,32 +152,9 @@ const Header = () => {
     listeners: chatListeners,
   });
 
-  const renderNavbar = () => {
-    if (!user || user?.role?.id === Role.ADMIN) {
-      return null;
-    }
-    return (
-      <div className="flex items-center justify-between gap-x-2">
-        {user && user?.id && (
-          <Link
-            href="/my-schedule"
-            className="mx-2 text-neutral-10"
-          >
-            {t('my_schedule')}
-          </Link>
-        )}
-        <Link href="/explore-story" className="mx-2 text-neutral-10">
-          {t('books')}
-        </Link>
-        <Link href="/explore-huber" className="mx-2 text-neutral-10">
-          {t('mentors')}
-        </Link>
-      </div>
-    );
-  };
-
   return (
     <>
+      {/* Mobile version */}
       <header className="flex w-screen flex-col gap-5 bg-white px-4 pb-2 pt-4 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:hidden">
         <div className="flex items-center justify-between">
           <Link href={user?.id ? '/home' : '/'}>
@@ -381,9 +162,7 @@ const Header = () => {
           </Link>
           {!user || !user?.id
             ? (
-                <div className="flex gap-3 px-10 ">
-                  <SkeletonHeader />
-                </div>
+                <SkeletonHeader />
               )
             : (
                 <div className="flex items-center gap-2">
@@ -415,38 +194,64 @@ const Header = () => {
                       </HeaderIconButtonWithBadge>
                     </button>
                   )}
-                  <div className="relative ml-2">
-                    <AvatarPopover>
-                      <Image
-                        alt="Avatar Icon"
-                        width={44}
-                        height={44}
-                        loading="lazy"
-                        src={
-                          avatarUrl
-                          || '/assets/images/ava-placeholder.png'
-                        }
-                        unoptimized={!!avatarUrl}
-                        className="size-11 rounded-full object-contain"
-                      />
-                    </AvatarPopover>
-                    <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
-                      <CaretDown size={12} />
-                    </div>
+                  <div className="ml-2">
+                    <AvatarPopover />
                   </div>
-                  <LocaleSwitcher className="shrink" />
                 </div>
               )}
         </div>
-        <SearchInput />
-        <div className="flex flex-col gap-2">{renderNavbar()}</div>
+        <div className="flex flex-col gap-2">
+          <SearchInput />
+          {user && user?.role?.id !== Role.ADMIN && (
+            <div className="flex items-center justify-between gap-3">
+              <Button
+                variant="ghost"
+                size="lg"
+                className="text-neutral-10"
+                onClick={() => router.push('/my-schedule')}
+              >
+                {t('my_schedule')}
+              </Button>
+              <Button
+                variant="ghost"
+                size="lg"
+                className="text-neutral-10"
+                onClick={() => router.push('/explore-story')}
+              >
+                {t('books')}
+              </Button>
+              <Button
+                variant="ghost"
+                size="lg"
+                className="text-neutral-10"
+                onClick={() => router.push('/explore-hubere')}
+              >
+                {t('mentors')}
+              </Button>
+            </div>
+          )}
+        </div>
       </header>
+
+      {/* PC version */}
       <header className="hidden w-screen items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
         <div className="flex items-center gap-6">
           <Link href={user?.id ? '/home' : '/'}>
             <Logo size="small" />
           </Link>
-          {renderNavbar()}
+          {user && user?.role?.id !== Role.ADMIN && (
+            <div className="flex items-center justify-between gap-3">
+              <Link href="/my-schedule" className="px-4 py-3 font-medium leading-5 text-neutral-10">
+                {t('my_schedule')}
+              </Link>
+              <Link href="/explore-story" className="px-4 py-3 font-medium leading-5 text-neutral-10">
+                {t('books')}
+              </Link>
+              <Link href="/explore-huber" className="px-4 py-3 font-medium leading-5 text-neutral-10">
+                {t('mentors')}
+              </Link>
+            </div>
+          )}
         </div>
         <div className="w-[300px]">
           <SearchInput />
@@ -478,23 +283,8 @@ const Header = () => {
                   )}
                 </Popover>
                 {!isLoading && !error && <NotificationPopover unreadNotifCount={data ? data.unseenCount : 0} />}
-                <div className="relative ml-2 size-11">
-                  <AvatarPopover>
-                    <Image
-                      alt="Avatar Icon"
-                      layout="fill"
-                      className="size-11 rounded-full object-contain"
-                      loading="lazy"
-                      src={
-                        avatarUrl
-                        || '/assets/images/ava-placeholder.png'
-                      }
-                      unoptimized={!!avatarUrl}
-                    />
-                  </AvatarPopover>
-                  <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
-                    <CaretDown size={12} />
-                  </div>
+                <div className="ml-2">
+                  <AvatarPopover />
                 </div>
                 <LocaleSwitcher className="shrink" />
               </div>

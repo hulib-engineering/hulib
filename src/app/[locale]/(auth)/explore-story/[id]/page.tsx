@@ -1,7 +1,7 @@
 'use client';
 
 import { ArrowLeft } from '@phosphor-icons/react';
-import { useParams, useRouter } from 'next/navigation';
+import { notFound, redirect, useParams, useRouter } from 'next/navigation';
 import * as React from 'react';
 
 import SimilarStory from '@/components/exploreStory/SimilarStory';
@@ -11,6 +11,7 @@ import RatingOverview from '@/components/storyDetails/RatingOverview';
 import ReaderReview from '@/components/storyDetails/ReaderReview';
 import StoryDetailsSkeleton from '@/components/storyDetails/StoryDetailsSkeleton';
 import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
+import { PublishStatusEnum } from '@/libs/services/modules/stories/storiesType';
 
 export default function Index() {
   const { id } = useParams();
@@ -20,6 +21,14 @@ export default function Index() {
 
   if (isLoading) {
     return <StoryDetailsSkeleton />;
+  }
+
+  if (data && data?.publishStatus !== PublishStatusEnum.PUBLISHED) {
+    return redirect(`/explore-story/${data.id}/preview`);
+  }
+
+  if (data && data?.publishStatus === PublishStatusEnum.DELETED) {
+    return notFound();
   }
 
   return (

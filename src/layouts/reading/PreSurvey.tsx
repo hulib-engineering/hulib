@@ -10,7 +10,7 @@ import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { isEmpty } from 'lodash';
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import RatingScale from '@/components/meeting/RatingScale';
 import { SurveyValidation } from '@/validations/SurveyValidation';
 import { newLineMessage } from '@/utils/i18NRichTextUtils';

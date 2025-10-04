@@ -2,8 +2,8 @@ import Image from 'next/image';
 import type { ReactNode } from 'react';
 import React from 'react';
 
-import IconButton from '@/components/iconButton/IconButton';
-import { mergeClassnames } from '@/components/private/utils';
+import IconButton from '@/components/core/iconButton/IconButton';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const SocialIcon = ({ iconUrl }: { iconUrl: string }) => (
   <Image

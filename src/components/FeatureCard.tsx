@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 type IFeatureCardProps = {
   bgColor: string;

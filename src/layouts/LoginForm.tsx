@@ -9,12 +9,12 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
-import Button from '@/components/button/Button';
-import Form from '@/components/form/Form';
-import Input from '@/components/input/Input';
+import Button from '@/components/core/button/Button';
+import Form from '@/components/core/form/Form';
+import Input from '@/components/core/input/Input';
 import Label from '@/components/Label';
 import SocialButton from '@/components/SocialButton';
-import TextInput from '@/components/textInput/TextInput';
+import TextInput from '@/components/core/textInput/TextInput';
 import type { EmailLoginResponse } from '@/libs/services/modules/auth';
 import { useLoginAsManagerMutation } from '@/libs/services/modules/auth';
 import GoogleIcon from '@/public/assets/icons/google-icon.svg';
