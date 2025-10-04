@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Record } from '@phosphor-icons/react';
 
 import { useEffect, useState } from 'react';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { Chip } from '@/components/common/chip/Chip';
 
 export default function RecordingTimer() {

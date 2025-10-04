@@ -7,7 +7,7 @@ const getHuberBookedSessions = (
     query: ({ id }) => ({
       url: `hubers/${id}/booked-sessions`,
     }),
-    providesTags: [{ type: 'Hubers' as const, id: 'BOOKED-LIST' }],
+    providesTags: [{ type: 'Huber' as const, id: 'BOOKED-LIST' }],
   });
 
 export default getHuberBookedSessions;

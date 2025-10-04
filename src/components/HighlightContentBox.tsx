@@ -1,6 +1,6 @@
 import React, { type ReactNode } from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 type IHighlightContentBoxProps = {
   className: string;

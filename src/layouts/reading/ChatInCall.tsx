@@ -11,7 +11,7 @@ import { MessengerInput } from '@/components/messages/MessengerInput';
 import { useSocket } from '@/libs/hooks/useSocket';
 import { ChatTypeMap } from '@/libs/services/modules/chat';
 import type { TransformedMessage } from '@/libs/services/modules/chat/getConversationByUserId';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { MessageItem } from '@/layouts/webapp/Messages/ChatDetail';
 import { useAppSelector } from '@/libs/hooks';
 

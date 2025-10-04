@@ -11,8 +11,8 @@ import Image from 'next/image';
 import React, { useEffect, useRef } from 'react';
 
 import { MessengerInput } from '@/components/messages/MessengerInput';
-import type { WithChildren } from '@/components/private/types';
-import { mergeClassnames } from '@/components/private/utils';
+import type { WithChildren } from '@/components/core/private/types';
+import { mergeClassnames } from '@/components/core/private/utils';
 import StatusBadge from '@/components/StatusBadge';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';

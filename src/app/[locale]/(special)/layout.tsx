@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 import React from 'react';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import Modal from '@/components/Modal';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { useAppSelector } from '@/libs/hooks';
 
 const pacifico = Pacifico({

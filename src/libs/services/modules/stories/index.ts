@@ -1,4 +1,5 @@
 import { api } from '../../api';
+
 import createStory from './createStory';
 import deleteStory from './deleteStory';
 import getReviewsOverview from './getReviewsOverview';
@@ -7,12 +8,13 @@ import getSimilarStories from './getSimilarStories';
 import getStories from './getStories';
 import getStoryDetails from './getStoryDetails';
 import updateStory from './updateStory';
+import getRelatedTopics from './getRelatedTopics';
 
 const apiWithTag = api.enhanceEndpoints?.({
-  addTagTypes: ['Stories'],
+  addTagTypes: ['Story', 'FavoriteStory', 'StoryTopic'],
 });
 
-const storiesApi = apiWithTag.injectEndpoints({
+export const storyApi = apiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
     getStoryDetail: getStoryDetails(build),
     getStories: getStories(build),
@@ -22,6 +24,7 @@ const storiesApi = apiWithTag.injectEndpoints({
     createStory: createStory(build),
     updateStory: updateStory(build),
     deleteStory: deleteStory(build),
+    getRelatedTopics: getRelatedTopics(build),
   }),
   overrideExisting: false,
 });
@@ -35,4 +38,5 @@ export const {
   useCreateStoryMutation,
   useUpdateStoryMutation,
   useDeleteStoryMutation,
-}: any = storiesApi;
+  useGetRelatedTopicsQuery,
+}: any = storyApi;

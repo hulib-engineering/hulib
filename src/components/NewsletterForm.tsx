@@ -8,10 +8,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import IconButton from '@/components/iconButton/IconButton';
-import { mergeClassnames } from '@/components/private/utils';
+import IconButton from '@/components/core/iconButton/IconButton';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { Env } from '@/libs/Env.mjs';
 import { NewsletterValidation } from '@/validations/NewsletterValidation';
 

@@ -23,7 +23,8 @@ const createStory = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       method: 'POST',
       body,
     }),
-    invalidatesTags: [{ type: 'Stories', id: 'LIST' }],
+    invalidatesTags: [{ type: 'Story', id: 'LIST' }, { type: 'Huber' as const, id: 'MY-STORIES' },
+    ],
   });
 
 export default createStory;

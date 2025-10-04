@@ -2,16 +2,16 @@
 
 import { SmileySticker, TelegramLogo } from '@phosphor-icons/react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import React, { useRef, useState } from 'react';
 
-import { useTranslations } from 'next-intl';
-import IconButton from '../iconButton/IconButton';
-import Popover from '../popover/Popover';
-import TextInput from '../textInput/TextInput';
-import Tooltip from '../tooltip/Tooltip';
-import type { Sticker } from '@/libs/services/modules/stickers/getStickers';
+import IconButton from '@/components/core/iconButton/IconButton';
+import Popover from '@/components/core/popover/Popover';
+import { mergeClassnames } from '@/components/core/private/utils';
+import TextInput from '@/components/core/textInput/TextInput';
+import Tooltip from '@/components/core/tooltip/Tooltip';
 import { useGetStickersQuery } from '@/libs/services/modules/stickers';
-import { mergeClassnames } from '@/components/private/utils';
+import type { Sticker } from '@/libs/services/modules/stickers/getStickers';
 
 const StickerPicker = ({
   stickers = [],

@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { useJwt } from 'react-jwt';
 
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { publicRoutes } from '@/libs/constants';
 
 const HumanBookBanner = () => {

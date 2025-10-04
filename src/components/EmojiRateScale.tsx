@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const ratingImages = [
   '/assets/images/after-meeting/rate-1.png',

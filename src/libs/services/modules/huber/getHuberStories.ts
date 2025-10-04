@@ -3,6 +3,7 @@ import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 type GetHuberStoriesParams = {
   page?: number;
   limit?: number;
+  publishedOnly?: boolean;
 };
 
 type Story = {
@@ -32,14 +33,18 @@ const getHuberStories = (
     GetHuberStoriesResponse,
     { huberId: number } & GetHuberStoriesParams
   >({
-    query: ({ huberId, page = 1, limit = 100 }) => ({
+    query: ({ huberId, page = 1, limit = 100, publishedOnly }) => ({
       url: `hubers/${huberId}/stories`,
       method: 'GET',
       params: {
         page,
         limit,
+        publishedOnly,
       },
     }),
+    providesTags: [
+      { type: 'Huber' as const, id: 'MY-STORIES' },
+    ],
   });
 };
 

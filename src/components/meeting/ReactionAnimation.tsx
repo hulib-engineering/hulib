@@ -1,4 +1,4 @@
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const pixelMap = [
   ['', '', 'pink', 'pink', 'pink', '', '', '', 'pink', 'pink', 'pink', '', ''],

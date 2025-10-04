@@ -10,7 +10,7 @@ import { Logo } from '@/components/Logo';
 import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
 import TermOfUseModal from '@/components/TermOfUseModal';
 import { Env } from '@/libs/Env.mjs';
-import { useDeviceType } from '@/libs/hooks';
+import { useAppSelector, useDeviceType } from '@/libs/hooks';
 
 const socialLinks = [
   {
@@ -47,6 +47,9 @@ type FooterSection = {
 
 const FooterWebApp = () => {
   const t = useTranslations('FooterWebApp');
+
+  const userInfo = useAppSelector(state => state.auth.userInfo);
+
   const { deviceType } = useDeviceType();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -63,7 +66,7 @@ const FooterWebApp = () => {
       items: [
         { title: t('my_schedule'), href: '/my-schedule' },
         { title: t('books'), href: '/explore-story' },
-        { title: t('profile'), href: '/profile' },
+        { title: t('profile'), href: `/users/${userInfo?.id}` },
       ],
     },
     {

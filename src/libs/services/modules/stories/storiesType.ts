@@ -26,6 +26,13 @@ export type StoryDetailsParams = {
   id: number;
 };
 
+export enum PublishStatusEnum {
+  DRAFT = 1,
+  PUBLISHED = 2,
+  DELETED = 3,
+  REJECTED = 4,
+}
+
 export enum StoryPublishStatus {
   DELETED = 'deleted',
   PUBLISHED = 'published',

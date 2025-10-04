@@ -4,3 +4,4 @@ export { notificationApi } from './notifications';
 export { stickersApi } from './stickers';
 export { userApi } from './user';
 export { timeslotApi } from './time-slots';
+export { storyApi } from './stories';

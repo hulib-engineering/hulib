@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { mergeClassnames } from '../private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 type Props = {
   name: string;

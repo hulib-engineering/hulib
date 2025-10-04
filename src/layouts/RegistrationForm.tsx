@@ -13,18 +13,18 @@ import { Controller, useForm } from 'react-hook-form';
 import PasswordChecklist from 'react-password-checklist';
 import type { z } from 'zod';
 
-import AuthCode from '@/components/authCode/AuthCode';
-import Button from '@/components/button/Button';
+import AuthCode from '@/components/core/authCode/AuthCode';
+import Button from '@/components/core/button/Button';
 import { pushError } from '@/components/CustomToastifyContainer';
-import Form from '@/components/form/Form';
+import Form from '@/components/core/form/Form';
 import Hint from '@/components/Hint';
 import { Logo } from '@/components/Logo';
 import Modal from '@/components/Modal';
 import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
-import { ControlledSelect } from '@/components/Select';
+import { ControlledSelect } from '@/components/ControlledSelect';
 import SocialButton from '@/components/SocialButton';
 import TermOfUseModal from '@/components/TermOfUseModal';
-import TextInput from '@/components/textInput-v1/TextInput';
+import TextInput from '@/components/core/textInput-v1/TextInput';
 import { VerifiedPhoneNumberInput } from '@/components/VerifiedPhoneNumberInput';
 import { genders } from '@/libs/constants';
 import { useRouter } from '@/libs/i18nNavigation';
@@ -234,7 +234,6 @@ const Step2Form = ({
           <Form.Item>
             <VerifiedPhoneNumberInput
               value=""
-              // @ts-ignore
               onChange={value => setValue('parentPhoneNumber', value)}
             />
           </Form.Item>

@@ -1,6 +1,6 @@
 import { useController } from 'react-hook-form';
 import type { Control, FieldValues, Path } from 'react-hook-form';
-import Radio from '../radio/Radio';
+import Radio from '@/components/core/radio/Radio';
 
 type IRatingScaleProps<T extends FieldValues> = {
   question: string;

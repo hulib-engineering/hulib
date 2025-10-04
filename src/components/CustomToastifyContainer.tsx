@@ -1,7 +1,7 @@
 import type { ToastProps } from 'node_modules/react-toastify/dist/types';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const InfoIcon = () => (
   <svg
