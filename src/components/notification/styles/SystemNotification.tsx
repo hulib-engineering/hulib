@@ -4,9 +4,9 @@ import { useRouter } from 'next/navigation';
 import { notificationConfig } from '../private/config';
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { NotificationType } from '@/components/notification/private/types';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 export default function SystemNotificationCard({ notification, onClick }: INotificationItemRendererProps) {
   const cfg = notificationConfig[notification.type.name as NotificationType];

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useMemo, useState } from 'react';
 
-import Button from '../button/Button';
+import Button from '@/components/core/button/Button';
 import type { Huber as HuberType } from '@/libs/services/modules/huber/huberType';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 
@@ -159,7 +159,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
           <Button
             variant="primary"
             className="flex w-full items-center justify-center gap-2 py-2.5"
-            onClick={() => router.push(`/profile?huberId=${huber.id}`)}
+            onClick={() => router.push(`/users/${huber.id}`)}
           >
             <CaretCircleRight size={20} />
             <p>{t('visit_profile')}</p>
@@ -171,7 +171,7 @@ const Huber = ({ data: huber, topics }: HuberCommonProps) => {
           <Button
             variant="primary"
             className="flex w-full items-center justify-center gap-2 rounded-full py-2 text-sm"
-            onClick={() => router.push(`/profile?huberId=${huber.id}`)}
+            onClick={() => router.push(`/users/${huber.id}`)}
           >
             <p>Visit Profile</p>
           </Button>

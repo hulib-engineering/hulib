@@ -6,9 +6,9 @@ import Image from 'next/image';
 import React, { useEffect, useMemo, useState } from 'react';
 import type z from 'zod';
 
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 import StatusBadge from '@/components/StatusBadge';
-import TextInput from '@/components/textInput/TextInput';
+import TextInput from '@/components/core/textInput/TextInput';
 import { useAppDispatch, useDebounce } from '@/libs/hooks';
 import type { Contact } from '@/libs/services/modules/chat';
 import { useGetConversationContactsQuery } from '@/libs/services/modules/chat';

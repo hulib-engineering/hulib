@@ -7,10 +7,10 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useCallback, useState } from 'react';
 
-import Button from '@/components/button/Button';
-import Combobox from '@/components/combobox/Combobox';
-import MenuItem from '@/components/menuItem/MenuItem';
-import { mergeClassnames } from '@/components/private/utils';
+import Button from '@/components/core/button/Button';
+import Combobox from '@/components/core/combobox/Combobox';
+import MenuItem from '@/components/core/menuItem/MenuItem';
+import { mergeClassnames } from '@/components/core/private/utils';
 import type { TFilter } from '@/layouts/scheduling/BigCalendar';
 import BigCalendar from '@/layouts/scheduling/BigCalendar';
 import MiniCalendar from '@/layouts/scheduling/MiniCalendar';

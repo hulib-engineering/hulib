@@ -6,7 +6,7 @@ type UpdateStoryRequest = {
   id: number;
   title: string;
   abstract: string;
-  topicIds: number[];
+  topics: number[];
   cover: {
     id: string;
   };
@@ -28,7 +28,11 @@ const updateStory = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       },
       body,
     }),
-    invalidatesTags: [{ type: 'Stories', id: 'LIST' }],
+    invalidatesTags: (_result, _error, { id, topics }) => [
+      { type: 'Stories', id: 'LIST' },
+      { type: 'Stories', id },
+      topics ? { type: 'StoryTopic' as const, id: `LIST-${id}` } : 'Stories',
+    ],
   });
 
 export default updateStory;

@@ -6,9 +6,9 @@ import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 
 import type { HeroProps } from '.';
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { HighlightContentBox } from '@/components/HighlightContentBox';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { customMessage } from '@/utils/i18NRichTextUtils';
 
 const HeroDesktop = (props: HeroProps) => {

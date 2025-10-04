@@ -2,8 +2,8 @@ import Image from 'next/image';
 import type { RefObject } from 'react';
 import { Microphone, MicrophoneSlash } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
-import { mergeClassnames } from '@/components/private/utils';
-import IconButton from '@/components/iconButton/IconButton';
+import { mergeClassnames } from '@/components/core/private/utils';
+import IconButton from '@/components/core/iconButton/IconButton';
 import { ReactionAnimation } from '@/components/meeting/ReactionAnimation';
 
 type IPlayableAgoraMeetViewProps = {

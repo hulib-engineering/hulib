@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 import ListHuber from '@/components/huber/ListHuber';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 import ListTopics from '@/components/stories/ListTopics';
 import { useTopics } from '@/libs/hooks';
 

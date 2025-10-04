@@ -422,7 +422,9 @@
       "submit": "Báo cáo",
       "success_report_title": "Báo cáo đã được gửi thành công",
       "success_report_detail": "Cảm ơn bạn đã báo cáo. Chúng tôi trân trọng sự đóng góp của bạn trong việc giữ gìn một cộng đồng an toàn. Đội ngũ Hulib sẽ xem xét cẩn thận thông tin bạn cung cấp."
-    }
+    },
+    "create_story": "Viết nên câu chuyện",
+    "edit_story": "Trau chuốt câu chuyện"
   },
   "MyFavorites": {
     "choose_all": "Chọn tất cả",
@@ -530,7 +532,8 @@
     "save_for_late": "Lưu lại để đọc sau",
     "schedule_meeting": "Đặt lịch hẹn",
     "saved_for_later_success": "Đã lưu truyện thành công",
-    "remove_from_saved_for_later": "Xoá khỏi danh sách đã lưu"
+    "remove_from_saved_for_later": "Xoá khỏi danh sách đã lưu",
+    "share_story": "Chia sẽ thêm"
   },
   "Huber": {
     "title": "Xem danh sách Huber",
@@ -702,6 +705,7 @@
     "custom": "Chỉnh sửa",
     "style": "Mẫu",
     "back": "Quay lại",
+    "cancel": "Huỷ bỏ",
     "submit": "Hoàn thành",
     "placeholder_title": "Nhập tiêu đề câu chuyện của bạn",
     "placeholder_abstract": "Nhập tóm tắt câu chuyện của bạn",

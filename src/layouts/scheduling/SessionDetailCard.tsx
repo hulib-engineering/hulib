@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
 
-import Accordion from '@/components/accordion/Accordion';
-import Button from '@/components/button/Button';
+import Accordion from '@/components/core/accordion/Accordion';
+import Button from '@/components/core/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import { mergeClassnames } from '@/components/private/utils';
-import TextInput from '@/components/textInput-v1/TextInput';
+import { mergeClassnames } from '@/components/core/private/utils';
+import TextInput from '@/components/core/textInput-v1/TextInput';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
 import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
 import { useAppSelector } from '@/libs/hooks';

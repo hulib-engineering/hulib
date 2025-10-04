@@ -4,8 +4,8 @@ import type { MutableRefObject, ReactElement, ReactNode } from 'react';
 import React from 'react';
 
 import Backdrop from './Backdrop';
-import type { WithChildren } from '@/components/private/types';
-import { mergeClassnames } from '@/components/private/utils';
+import type { WithChildren } from '@/components/core/private/types';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const poppins = localFont({
   src: [
@@ -89,10 +89,12 @@ const ModalRoot: ModalComponentProps = ({
   onClose,
   children,
   disableClosingTrigger,
+  initialFocus,
 }) => (
   <Transition appear show={open} as={React.Fragment}>
     <Dialog
       as="div"
+      initialFocus={initialFocus}
       className={mergeClassnames(poppins.className, 'relative z-[1000]')}
       onClose={() => !disableClosingTrigger && onClose()}
     >

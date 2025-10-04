@@ -5,11 +5,11 @@ import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { MessageItem, groupMessagesByTime } from './Messages/ChatDetail';
-import IconButton from '@/components/iconButton/IconButton';
+import IconButton from '@/components/core/iconButton/IconButton';
 import { MessengerInput } from '@/components/messages/MessengerInput';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 import StatusBadge from '@/components/StatusBadge';
-import Tooltip from '@/components/tooltip/Tooltip';
+import Tooltip from '@/components/core/tooltip/Tooltip';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
 import type { MessageResponse } from '@/libs/services/modules/chat';

@@ -2,17 +2,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckCircle, X } from '@phosphor-icons/react';
 import { isEmpty } from 'lodash';
 import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import React, { useState } from 'react';
 import type z from 'zod';
 
 import Modal from '@/components/Modal';
-import Button from '@/components/button/Button';
-import TextArea from '@/components/textArea/TextArea';
-import Checkbox from '@/components/checkbox/Checkbox';
+import Button from '@/components/core/button/Button';
+import TextArea from '@/components/core/textArea/TextArea';
+import Checkbox from '@/components/core/checkbox/Checkbox';
 import { pushError } from '@/components/CustomToastifyContainer';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { useReportHuberMutation } from '@/libs/services/modules/huber';
 import { ReportValidation } from '@/validations/ReportValidation';
 
@@ -26,8 +26,7 @@ const reasonIndexes = [
 ] as const;
 
 export default function ReportModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const searchParams = useSearchParams();
-  const huberId = searchParams.get('huberId');
+  const { id: huberId } = useParams();
 
   const t = useTranslations('MyProfile');
 
@@ -40,7 +39,7 @@ export default function ReportModal({ open, onClose }: { open: boolean; onClose:
     },
   });
 
-  const [isSuccessful, setIsSuccessful] = useState(true);
+  const [isSuccessful, setIsSuccessful] = useState(false);
 
   const handleSubmitReport = handleSubmit(async (data) => {
     try {

@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { svnRio } from '@/templates/BaseTemplate';
 import { paginateText } from '@/utils/textUtils';
 
@@ -13,6 +14,7 @@ type IAnimatedCoverProps = {
   abstract: string;
   highlightTitle?: string;
   highlightAbstract?: string;
+  isPublished?: boolean;
   onClick: () => void;
 };
 
@@ -47,7 +49,13 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
   return (
     <div className="size-full bg-cover bg-no-repeat perspective-[1000px]">
       <div className="group relative size-full">
-        <div className="absolute m-0 flex size-full flex-col items-center justify-between gap-[10px] rounded-[5px] bg-gradient-to-r from-[#9C9C9C] via-[#D5D5D5] to-[#f8f8f8] p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)] group-hover:z-10">
+        <div
+          className={mergeClassnames(
+            'absolute m-0 flex size-full flex-col items-center justify-between gap-[10px] rounded-[5px]',
+            'bg-gradient-to-r from-[#9C9C9C] via-[#D5D5D5] to-[#f8f8f8] p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)]',
+            'group-hover:z-10',
+          )}
+        >
           <p className="font-['DVN-Poppins] text-xs leading-5 tracking-wider text-neutral-30 sm:text-sm">
             {props.highlightAbstract
               ? (
@@ -62,10 +70,15 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
             onClick={props.onClick}
             className="w-11/12 text-sm sm:text-base"
           >
-            Read all
+            {props.isPublished ? 'Read all' : 'Preview'}
           </Button>
         </div>
-        <div className="absolute size-full origin-left rounded bg-gray-200 transition-all duration-500 ease-[cubic-bezier(0.50,0.00,0.25,1.00)] transform-style-3d rotate-y-0 group-hover:rotate-y-180">
+        <div className={mergeClassnames(
+          'absolute size-full origin-left rounded bg-gray-200',
+          'transition-all duration-500 ease-[cubic-bezier(0.50,0.00,0.25,1.00)] transform-style-3d rotate-y-0',
+          'group-hover:rotate-y-180',
+        )}
+        >
           {/* Front Face */}
           <figure
             className="absolute m-0 size-full bg-cover bg-no-repeat backface-hidden"

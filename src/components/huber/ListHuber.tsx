@@ -5,8 +5,8 @@ import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react';
 
 import Huber from './Huber';
-import Button from '@/components/button/Button';
-import StoriesSkeleton from '@/components/stories/StoriesSkeleton';
+import Button from '@/components/core/button/Button';
+import { StoriesSkeleton } from '@/components/stories/StoriesSkeleton';
 import { useGetHubersQuery } from '@/libs/services/modules/huber';
 import type { Huber as HuberType } from '@/libs/services/modules/huber/huberType';
 import type { Topic } from '@/libs/services/modules/topics/topicType';

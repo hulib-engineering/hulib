@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { Role } from '@/types/common';
 
 const UserCard = ({ data }: any) => {
@@ -75,7 +75,7 @@ const UserCard = ({ data }: any) => {
                 if (data.approval === 'Pending') {
                   window.open(`/admin/users/approval/${data.id}`, '_blank');
                 } else {
-                  router.push(`/profile?huberId=${data.id}`);
+                  router.push(`/users/${data.id}`);
                 }
               }}
             >

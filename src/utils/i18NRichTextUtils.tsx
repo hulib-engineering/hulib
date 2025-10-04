@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import React from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 export const customMessage = (font: string): (() => ReactNode) => {
   return (...chunks: ReactNode[]): ReactNode => {

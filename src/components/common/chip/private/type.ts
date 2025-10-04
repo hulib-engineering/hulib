@@ -5,7 +5,7 @@ import type {
   ReactNode,
 } from 'react';
 
-import type { PolymorphicComponentPropWithRef } from '@/components/private/types';
+import type { PolymorphicComponentPropWithRef } from '@/components/core/private/types';
 
 type ChipProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   isActive?: boolean;

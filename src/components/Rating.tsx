@@ -1,6 +1,6 @@
 import { Heart } from '@phosphor-icons/react';
 import { useState } from 'react';
-import { mergeClassnames } from './private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 type IRatingProps = {
   value: number;

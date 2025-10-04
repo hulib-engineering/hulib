@@ -7,9 +7,9 @@ import type { JSX } from 'react';
 import { useState } from 'react';
 
 import { Chip } from '@/components/common/chip/Chip';
-import Dropdown from '@/components/dropdown/Dropdown';
-import MenuItem from '@/components/menuItem/MenuItem';
-import { mergeClassnames } from '@/components/private/utils';
+import Dropdown from '@/components/core/dropdown/Dropdown';
+import MenuItem from '@/components/core/menuItem/MenuItem';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
 
 const Locales = [
@@ -84,7 +84,7 @@ const LocaleSwitcher = ({ className }: { className?: string }) => {
     >
       {({ open }) => (
         <>
-          <Dropdown.Trigger className="rounded-full bg-white px-4 py-3">
+          <Dropdown.Trigger className="rounded-full bg-white p-2 lg:px-4 lg:py-3">
             <Chip
               iconLeft={option.flag}
               iconRight={(

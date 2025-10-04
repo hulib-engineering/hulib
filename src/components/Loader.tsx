@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const LoaderItem = ({ order }: { order: number }) => (
   <div

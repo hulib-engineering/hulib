@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 
 import CommunityGuidelinesModal from '@/components/CommunityGuidelinesModal';
 import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 import TermOfUseModal from '@/components/TermOfUseModal';
 import { Env } from '@/libs/Env.mjs';
 

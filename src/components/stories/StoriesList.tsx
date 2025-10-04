@@ -8,14 +8,14 @@ import {
 import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 
-import Button from '../button/Button';
 import ListTopics from './ListTopics';
-import StoriesSkeleton from './StoriesSkeleton';
-import { FlipBook } from '@/components/flipBook/FlipBook';
-import { mergeClassnames } from '@/components/private/utils';
-import { useAppSelector } from '@/libs/hooks';
-import { useGetFavoritesStoryQuery } from '@/libs/services/modules/fav-stories';
+import { StoriesSkeleton } from './StoriesSkeleton';
+
+import Button from '@/components/core/button/Button';
+import { mergeClassnames } from '@/components/core/private/utils';
+import { StoryCard } from '@/components/stories/StoryCard';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
+import { useGetMyFavoritesQuery } from '@/libs/services/modules/user';
 
 type StoriesListProps = {
   title: string;
@@ -48,12 +48,10 @@ const StoriesList = ({
   hideAllText = 'Hide All',
   navigateToExplore = false,
 }: StoriesListProps) => {
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  // const userInfo = useAppSelector(state => state.auth.userInfo);
   const router = useRouter();
 
-  const { data: favoriteStories } = useGetFavoritesStoryQuery(userInfo?.id, {
-    skip: !userInfo?.id,
-  });
+  const { data: favoriteStories } = useGetMyFavoritesQuery();
 
   const storiesWithFavorites = useMemo(() => {
     return stories?.map((story: StoryType) => {
@@ -90,7 +88,7 @@ const StoriesList = ({
               )}
             >
               {storiesWithFavorites?.map((item: StoryType) => (
-                <FlipBook key={item.id} data={item} refetch={() => {}} />
+                <StoryCard key={item.id} data={item} />
               ))}
             </div>
           )

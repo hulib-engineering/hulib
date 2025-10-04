@@ -2,8 +2,8 @@ import type { FC } from 'react';
 import React from 'react';
 
 import Modal from '@/components/Modal';
-import { mergeClassnames } from '@/components/private/utils';
-import type { WithChildren } from '@/components/private/types';
+import type { WithChildren } from '@/components/core/private/types';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 type IApprovalModalLayoutProps = WithChildren<{
   open?: boolean;

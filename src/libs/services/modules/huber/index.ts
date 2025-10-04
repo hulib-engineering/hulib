@@ -7,7 +7,7 @@ import checkAvailability from './validateHuberSessionAvailability';
 import reportHuber from './reportHuber';
 
 const apiWithTag = api.enhanceEndpoints?.({
-  addTagTypes: ['Hubers'],
+  addTagTypes: ['Huber'],
 });
 
 const hubersApi = apiWithTag.injectEndpoints({

@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { NewsletterForm } from '@/components/NewsletterForm';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const Newsletter = () => {
   const t = useTranslations('Index');

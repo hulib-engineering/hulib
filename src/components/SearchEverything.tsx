@@ -3,8 +3,8 @@
 import type { ReactNode } from 'react';
 import React, { useMemo, useState } from 'react';
 
-import MenuItem from './menuItem/MenuItem';
-import Search, { searchFilterItems, searchGetItemIndex } from './search/Search';
+import MenuItem from '@/components/core/menuItem/MenuItem';
+import Search, { searchFilterItems, searchGetItemIndex } from '@/components/core/search/Search';
 
 type Item = {
   children?: ReactNode;

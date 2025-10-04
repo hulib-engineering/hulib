@@ -1,7 +1,7 @@
 import { Pacifico } from 'next/font/google';
 import React from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const Firework = ({ className }: { className?: string }) => (
   <div

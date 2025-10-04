@@ -75,7 +75,9 @@
   --toastify-color-warning: #ffd21f;
   --toastify-color-error: #f04438;
   --neutral-variant-98: rgba(243, 244, 246, 1);
+  --neutral-90: rgba(227, 228, 229, 1);
   --primary-50: rgba(4, 66, 191, 1);
+  --primary-60: rgba(8, 88, 250, 1);
   --primary-90: rgba(205, 221, 254, 1);
   --swiper-pagination-progressbar-length: 1.25rem;
 }
@@ -298,4 +300,33 @@ html {
 /* Highlight current time */
 .rbc-current-time-indicator {
   visibility: hidden !important;
+}
+
+/* Custom scrollbar for dropdown options only */
+.dropdown-scrollbar::-webkit-scrollbar {
+  width: 2px; /* thinner scrollbar */
+}
+
+.dropdown-scrollbar::-webkit-scrollbar-track {
+  background: var(--neutral-90); /* or use a subtle gray if you prefer */
+  border-radius: 20px;
+}
+
+.dropdown-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--primary-60);
+  border-radius: 20px;
+}
+
+/* Firefox support */
+.dropdown-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-60) var(--neutral-90);
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

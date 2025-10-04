@@ -3,7 +3,7 @@
 import Image from 'next/image';
 
 // import { useState } from 'react';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { useAppSelector } from '@/libs/hooks';
 // import {
 //   handleGuess,

@@ -9,9 +9,9 @@ import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import PasswordChecklist from 'react-password-checklist';
 
-import Button from '@/components/button/Button';
-import Form from '@/components/form/Form';
-import TextInput from '@/components/textInput/TextInput';
+import Button from '@/components/core/button/Button';
+import Form from '@/components/core/form/Form';
+import TextInput from '@/components/core/textInput/TextInput';
 import { useResetPasswordMutation } from '@/libs/services/modules/auth';
 import { ResetPasswordValidation } from '@/validations/ResetPasswordValidation';
 

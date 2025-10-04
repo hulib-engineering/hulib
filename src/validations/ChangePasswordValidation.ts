@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const ChangePasswordValidation = z
   .object({
-    oldPassword: z.string().trim().min(8),
+    oldPassword: z.string().trim().min(1),
     newPassword: z
       .string()
       .trim()
