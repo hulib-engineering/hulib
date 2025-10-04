@@ -1,6 +1,6 @@
 'use client';
 
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 type TWeekDay = {
   title: string;

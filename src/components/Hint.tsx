@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useFormItemContext } from './form/private/utils';
-import { mergeClassnames } from './private/utils';
+import { useFormItemContext } from '@/components/core/form/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 type HintProps = {
   error?: boolean;

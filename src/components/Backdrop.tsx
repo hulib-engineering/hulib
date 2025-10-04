@@ -1,7 +1,7 @@
 import { Transition } from '@headlessui/react';
 import React from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const Backdrop = ({
   className,

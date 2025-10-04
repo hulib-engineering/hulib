@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
-import Button from '../button/Button';
+import Button from '@/components/core/button/Button';
 
 const ShortDescription = () => {
   const t = useTranslations('Home');

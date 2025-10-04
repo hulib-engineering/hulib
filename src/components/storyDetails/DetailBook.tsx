@@ -1,14 +1,14 @@
 'use client';
 
-import clsx from 'clsx';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import { Playfair_Display } from 'next/font/google';
 
-import IconButton from '@/components/iconButton/IconButton';
-import { mergeClassnames } from '@/components/private/utils';
+import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import IconButton from '@/components/core/iconButton/IconButton';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -26,12 +26,12 @@ const Page = forwardRef<HTMLDivElement, PageProps>(
   ({ number, title, children, density = 'soft' }, ref) => (
     <div
       className={mergeClassnames(
-        'bg-white pb-0 pl-8 pr-6 pt-8',
-        `before:absolute before:inset-y-0 before:${
-          number % 2 !== 0 ? 'right' : 'left'
-        }-0 before:h-full before:w-8 before:bg-gradient-to-${
-          number % 2 === 0 ? 'l' : 'r'
-        } before:from-transparent before:to-[#C7C9CB] before:opacity-30 before:content-['']`,
+        'rounded-xl bg-white pb-0 pt-8 overflow-visible',
+        'before:content-[""] before:absolute before:inset-y-0 before:h-full before:w-8 before:border-neutral-80',
+        'before:from-white before:from-20% before:via-[#C7C9CB]/10 before:via-40% before:to-[#C7C9CB]/40 before:to-100%',
+        number % 2 === 0
+          ? 'pl-8 pr-6 shadow-book-right before:left-0 before:border-l-[0.5px] before:bg-gradient-to-l'
+          : 'pr-8 pl-6 shadow-book-left before:right-0 before:border-r-[0.5px] before:bg-gradient-to-r',
       )}
       ref={ref}
       data-density={density}
@@ -185,7 +185,7 @@ export function DetailBook({
         const containerWidth = containerRect.width;
         const aspectRatio = 4 / 3;
 
-        // If container width is >= 768, we should render 2 pages
+        // If the container width is >= 768, we should render 2 pages
         if (containerWidth >= 768) {
           const dynamicWidth = containerWidth / 2;
           const dynamicHeight = dynamicWidth * aspectRatio;
@@ -251,8 +251,8 @@ export function DetailBook({
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="w-full overflow-hidden" id="demoBlock">
+    <div className="flex flex-col items-center gap-5">
+      <div className="w-full" id="demoBlock">
         <div
           className="relative z-50 m-auto flex size-full justify-center overflow-visible"
           ref={contentRef}
@@ -325,7 +325,7 @@ export function DetailBook({
                     )
                   : (
                       <div
-                        className={clsx(
+                        className={mergeClassnames(
                           'whitespace-pre-line tracking-wider text-[#45484A]',
                           'text-sm leading-5', // Mobile: 14px, line-height: 20px
                           'md:text-base md:leading-6', // Desktop: 16px, line-height: 24px
@@ -341,26 +341,24 @@ export function DetailBook({
           </HTMLFlipBook>
         </div>
       </div>
-      <div className="flex w-full items-center justify-between p-4">
+      <div className="flex w-full items-center justify-between">
         <IconButton
+          variant="secondary"
+          size="lg"
           onClick={goToPrevPage}
           disabled={index === 0}
-          className={`flex size-8 items-center justify-center rounded-full border border-blue-500 ${
-            index === 0 ? 'cursor-not-allowed opacity-50' : 'hover:bg-blue-100'
-          }`}
+          className="!h-8 w-8"
         >
-          &lt;
+          <CaretLeft size={8} weight="bold" className="text-primary-40" />
         </IconButton>
         <IconButton
+          variant="secondary"
+          size="lg"
           onClick={goToNextPage}
           disabled={index + 2 === pagesRender.length}
-          className={`flex size-8 items-center justify-center rounded-full border border-blue-500 ${
-            index + 2 >= pagesRender.length
-              ? 'cursor-not-allowed opacity-50'
-              : 'hover:bg-blue-100'
-          }`}
+          className="!h-8 w-8"
         >
-          &gt;
+          <CaretRight size={8} weight="bold" className="text-primary-40" />
         </IconButton>
       </div>
     </div>

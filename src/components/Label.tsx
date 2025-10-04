@@ -5,8 +5,8 @@ import type {
 } from 'react';
 import React, { forwardRef } from 'react';
 
-import type { WithChildren } from './private/types';
-import { mergeClassnames } from './private/utils';
+import type { WithChildren } from '@/components/core/private/types';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 type LabelProps = {
   className?: string;

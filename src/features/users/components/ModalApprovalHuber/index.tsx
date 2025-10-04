@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 
 // Props for the modal component
 type ModalApprovalHuberProps = {

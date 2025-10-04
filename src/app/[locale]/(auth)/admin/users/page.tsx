@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import React, { useEffect } from 'react';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import UserCard from '@/features/users/components/UserCard';
 import AdminLayout from '@/layouts/AdminLayout';
 import { useGetUsersQuery } from '@/libs/services/modules/user';

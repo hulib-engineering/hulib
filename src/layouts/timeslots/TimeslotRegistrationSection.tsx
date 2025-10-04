@@ -5,12 +5,12 @@ import { useState } from 'react';
 import { parse } from 'date-fns';
 import { formatInTimeZone, fromZonedTime } from 'date-fns-tz';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import TimeSlotListHeader from '@/layouts/timeslots/TimeSlotListHeader';
 import { useCreateTimeslotsMutation } from '@/libs/services/modules/time-slots';
 import { REFERENCE_MONDAY } from '@/utils/dateUtils';
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const TimeslotsByPeriod = {
   morning: [

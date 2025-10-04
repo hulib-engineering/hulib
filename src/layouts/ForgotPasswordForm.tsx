@@ -7,9 +7,9 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
-import Button from '@/components/button/Button';
-import Form from '@/components/form/Form';
-import TextInput from '@/components/textInput/TextInput';
+import Button from '@/components/core/button/Button';
+import Form from '@/components/core/form/Form';
+import TextInput from '@/components/core/textInput/TextInput';
 import { useForgotPasswordMutation } from '@/libs/services/modules/auth';
 import { ForgotPasswordValidation } from '@/validations/ForgotPasswordValidation';
 

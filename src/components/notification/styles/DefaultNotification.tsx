@@ -8,9 +8,9 @@ import { notificationConfig } from '../private/config';
 import { NotificationType } from '../private/types';
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
 
-import Avatar from '@/components/avatar/Avatar';
-import Button from '@/components/button/Button';
-import { mergeClassnames } from '@/components/private/utils';
+import Avatar from '@/components/core/avatar/Avatar';
+import Button from '@/components/core/button/Button';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { useAppSelector } from '@/libs/hooks';
 import useNotificationActions from '@/libs/hooks/useNotificationActions';
 import { Role, StatusEnum } from '@/types/common';
@@ -110,7 +110,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
             )}
           </div>
           {showExtras && notification.type.name === NotificationType.HUBER_REPORT && (
-            <Link href="/my-schedule" className="text-sm font-medium text-primary-60 underline">
+            <Link href={`/admin/users/manage/${notification.relatedEntity.reportee?.id}`} className="text-sm font-medium text-primary-60 underline">
               See detail
             </Link>
           )}

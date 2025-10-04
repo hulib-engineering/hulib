@@ -8,7 +8,7 @@ import type z from 'zod';
 import { ScheduleInfoItemLayout } from './scheduling/ScheduleInfoItemLayout';
 import { SessionAttendees } from './scheduling/SessionAttendees';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { useAppSelector } from '@/libs/hooks';
 import type { HuberStep1Validation } from '@/validations/HuberValidation';
 import type { ProfileValidation } from '@/validations/ProfileValidation';

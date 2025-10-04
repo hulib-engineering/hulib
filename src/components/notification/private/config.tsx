@@ -81,13 +81,13 @@ export const notificationConfig: NotificationConfig = {
         , has not published successfully. Reason:
       </>
     ),
-    route: () => '/profile?tab=my-stories',
+    route: relatedEntityId => `/explore-story/${relatedEntityId}/preview`,
   },
   [NotificationType.HUBER_REPORT]: {
     getMessage: (m: Notification) => (
       <>
         <span className="font-bold">Huber “</span>
-        <span className="font-bold text-red-50">{m.relatedEntity?.reportedUser?.name}</span>
+        <span className="font-bold text-red-50">{m.relatedEntity?.reportee?.fullName}</span>
         <span className="font-bold">” is reported.</span>
       </>
     ),

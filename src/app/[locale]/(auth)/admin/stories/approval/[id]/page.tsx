@@ -6,7 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import * as React from 'react';
 
 import { useState } from 'react';
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { DetailBook } from '@/components/storyDetails/DetailBook';
 import StoryDetailsSkeleton from '@/components/storyDetails/StoryDetailsSkeleton';
 import {

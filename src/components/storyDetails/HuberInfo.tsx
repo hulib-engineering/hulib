@@ -9,18 +9,18 @@ import React, { useState } from 'react';
 
 import CustomCoverBook from '../common/CustomCoverBook';
 import { pushError, pushSuccess } from '../CustomToastifyContainer';
-import IconButton from '../iconButton/IconButton';
-import { mergeClassnames } from '../private/utils';
+import IconButton from '@/components/core/iconButton/IconButton';
+import { mergeClassnames } from '@/components/core/private/utils';
 
-import Button from '@/components/button/Button';
+import Button from '@/components/core/button/Button';
 import { useAppSelector } from '@/libs/hooks';
-import {
-  useAddStoryToFavoritesMutation,
-  useDeleteFavoriteStoryMutation,
-  useGetFavoritesStoryQuery,
-} from '@/libs/services/modules/fav-stories';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
 import type { Topic as TopicType } from '@/libs/services/modules/topics/topicType';
+import {
+  useAddStoryToMyFavoritesMutation,
+  useGetMyFavoritesQuery,
+  useRemoveStoryFromMyFavoritesMutation,
+} from '@/libs/services/modules/user';
 
 type Props = {
   humanBook: {
@@ -56,18 +56,14 @@ const HumanBookInfo = ({
     console.log('huber error image');
   };
 
-  const [addStoryToFavorites] = useAddStoryToFavoritesMutation();
-  const [deleteFavoriteStory] = useDeleteFavoriteStoryMutation();
-  const userId = userInfo?.id;
+  const { data: stories } = useGetMyFavoritesQuery();
+  const [addStoryToFavorites] = useAddStoryToMyFavoritesMutation();
+  const [deleteFavoriteStory] = useRemoveStoryFromMyFavoritesMutation();
 
   const [isFavorite, setIsFavorite] = useState(false);
   const handleNameClick = () => {
-    router.push(`/profile?huberId=${humanBook.id}`);
+    router.push(`/users/${humanBook.id}`);
   };
-
-  const { data: stories } = useGetFavoritesStoryQuery(userInfo?.id, {
-    skip: !userInfo?.id,
-  });
 
   React.useEffect(() => {
     if (stories) {
@@ -79,17 +75,11 @@ const HumanBookInfo = ({
   const handleAddToFavorites = async () => {
     try {
       if (isFavorite) {
-        const response = await deleteFavoriteStory({
-          storyId,
-          userId,
-        }).unwrap();
+        const response = await deleteFavoriteStory(storyId).unwrap();
         pushSuccess(response?.message || t('remove_from_saved_for_later'));
         setIsFavorite(false);
       } else {
-        const response = await addStoryToFavorites({
-          storyId,
-          userId,
-        }).unwrap();
+        const response = await addStoryToFavorites(storyId).unwrap();
         pushSuccess(response?.message || t('saved_for_later_success'));
         setIsFavorite(true);
       }
@@ -99,7 +89,7 @@ const HumanBookInfo = ({
   };
 
   return (
-    <div className="size-full overflow-hidden rounded-2xl bg-white shadow-lg">
+    <div className="w-full">
       <div className="px-6 py-4">
         <div className="flex flex-col items-start justify-between px-3 py-1">
           <h2 className="mb-2 text-xl font-bold">{title}</h2>

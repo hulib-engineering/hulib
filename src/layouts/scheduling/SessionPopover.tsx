@@ -6,8 +6,8 @@ import type { MouseEventHandler } from 'react';
 import React, { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import Popover from '@/components/popover/Popover';
-import { mergeClassnames } from '@/components/private/utils';
+import Popover from '@/components/core/popover/Popover';
+import { mergeClassnames } from '@/components/core/private/utils';
 import SessionDetailCard from '@/layouts/scheduling/SessionDetailCard';
 import { useAppSelector } from '@/libs/hooks';
 import type { ReadingSession } from '@/libs/services/modules/reading-session/createNewReadingSession';

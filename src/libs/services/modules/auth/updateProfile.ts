@@ -10,5 +10,5 @@ export default (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       method: 'PATCH',
       body: patch,
     }),
-    invalidatesTags: [{ type: 'User', id: 'ME' }],
+    invalidatesTags: [{ type: 'User', id: 'ME' }, { type: 'User', id: 'MY-AVATAR' }],
   });

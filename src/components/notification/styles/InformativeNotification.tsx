@@ -8,9 +8,9 @@ import type { INotificationItemRendererProps } from '../NotificationItemRenderer
 import { notificationConfig } from '../private/config';
 import { NotificationType } from '../private/types';
 
-import Avatar from '@/components/avatar/Avatar';
-import { mergeClassnames } from '@/components/private/utils';
-import Button from '@/components/button/Button';
+import Avatar from '@/components/core/avatar/Avatar';
+import { mergeClassnames } from '@/components/core/private/utils';
+import Button from '@/components/core/button/Button';
 import { toLocaleDateString } from '@/utils/dateUtils';
 
 export default function InformativeNotificationCard({ notification, showExtras, onClick }: INotificationItemRendererProps) {

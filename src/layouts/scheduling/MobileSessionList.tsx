@@ -10,7 +10,7 @@ import { useTranslations } from 'next-intl';
 import type { FC, ReactNode } from 'react';
 import React, { useMemo, useState } from 'react';
 
-import { mergeClassnames } from '@/components/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 import SessionDetailCard from '@/layouts/scheduling/SessionDetailCard';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';

@@ -3,12 +3,12 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import type { z } from 'zod';
 
-import { mergeClassnames } from '@/components/private/utils';
-import Avatar from '@/components/avatar/Avatar';
-import Button from '@/components/button/Button';
+import { mergeClassnames } from '@/components/core/private/utils';
+import Avatar from '@/components/core/avatar/Avatar';
+import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/common/chip/Chip';
 import { Cover } from '@/components/Cover';
-import TextArea from '@/components/textArea/TextArea';
+import TextArea from '@/components/core/textArea/TextArea';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { ApprovalModalLayout } from '@/layouts/admin/ApprovalModalLayout';
 import { useUpdateStoryMutation } from '@/libs/services/modules/stories';
@@ -17,12 +17,15 @@ import type { ProfileValidation } from '@/validations/ProfileValidation';
 import type { StoriesValidation } from '@/validations/StoriesValidation';
 
 type IApprovalConfirmationModalProps = {
-  story: z.infer<typeof StoriesValidation> & {
+  story: Omit<z.infer<typeof StoriesValidation>, 'cover'> & {
     id: number;
     humanBook: z.infer<typeof ProfileValidation> & { photo?: { id: string; path: string } };
     storyReviews?: {
       rating: number;
       numberOfRatings: number;
+    };
+    cover: {
+      path: string;
     };
   };
   type: 'approve' | 'reject';
