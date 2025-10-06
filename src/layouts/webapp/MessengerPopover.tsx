@@ -4,6 +4,7 @@ import { useAppDispatch } from '@/libs/hooks';
 import { openChat } from '@/libs/store/messenger';
 import { ContactItem } from '@/layouts/webapp/Messages/ChatList';
 import Button from '@/components/core/button/Button';
+import { useTranslations } from 'next-intl';
 
 const MessengerPopover = ({
   conversations = [],
@@ -15,7 +16,7 @@ const MessengerPopover = ({
   onItemClick?: () => void;
 }) => {
   const dispatch = useAppDispatch();
-
+  const t = useTranslations('Message');
   const handleMessageItemClick = ({
     participant,
     unreadCount,
@@ -40,12 +41,12 @@ const MessengerPopover = ({
   return (
     <div data-testid="messenger-popover-content" className="flex flex-col">
       <div className="px-5 pb-2 text-2xl font-bold leading-8">
-        Your messages
+        {t('your_messages')}
       </div>
       {conversations.length === 0
         ? (
             <div className="flex flex-1 items-center justify-center">
-              You have no conversations yet!
+              {t('text')}
             </div>
           )
         : (

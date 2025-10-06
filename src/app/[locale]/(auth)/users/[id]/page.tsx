@@ -22,6 +22,7 @@ import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import { openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
+import { useTranslations } from 'next-intl';
 
 const ProfileTabs = [
   { value: 'about', label: 'About' },
@@ -33,7 +34,7 @@ type TProfileTab = 'about' | 'stories' | 'favorite-list' | string;
 
 export default function Index() {
   const { status } = useSession();
-
+  const t = useTranslations('MyProfile');
   const router = useRouter();
   const currentPathname = usePathname();
   const { id: userId } = useParams();
@@ -161,7 +162,7 @@ export default function Index() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Heart className="text-pink-50" weight="fill" />
-                  <p className="text-sm text-black opacity-80">/5 (hearts)</p>
+                  <p className="text-sm text-black opacity-80">/5 ({t('hearts')})</p>
                 </div>
               </div>
               {notMe && userDetail?.role?.id === Role.HUBER && (

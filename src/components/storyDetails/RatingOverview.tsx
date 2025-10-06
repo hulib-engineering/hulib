@@ -2,7 +2,7 @@
 
 import { Heart } from '@phosphor-icons/react';
 import * as React from 'react';
-
+import { useTranslations } from 'next-intl';
 import ReviewItem from './ReviewItem';
 import { useGetReviewsOverviewQuery } from '@/libs/services/modules/stories';
 
@@ -74,14 +74,14 @@ type Props = {
 
 const RatingOverview = ({ id }: Props) => {
   const { data, isLoading } = useGetReviewsOverviewQuery(id);
-
+  const t = useTranslations('reviews_reader');
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="flex w-full flex-col gap-4 rounded-3xl border border-solid p-6 shadow-[0px_0px_4px_0px_#0F0F100F] md:w-1/4">
-      <h6 className="text-xl font-bold text-neutral-20">Rating overview</h6>
+      <h6 className="text-xl font-bold text-neutral-20">{t('rating_overview')}</h6>
       <RateScore score={data?.rating} reviews={data?.numberOfReviews} />
       <RateChart histogram={data?.histogram} />
       {/* <div className="flex flex-col gap-y-2">
@@ -98,7 +98,7 @@ const RatingOverview = ({ id }: Props) => {
         </div>
       </div> */}
       <div className="flex flex-col gap-y-2">
-        <p>Outstanding review</p>
+        <p>{t('outstanding_review')}</p>
         <ReviewItem {...data?.outStanding} />
       </div>
     </div>
