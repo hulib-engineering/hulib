@@ -54,19 +54,19 @@ export default function AvatarPopover() {
         roles: [Role.LIBER],
       },
       {
-        label: 'My Favorite',
+        label: t('favorite_list'),
         icon: <Bookmarks className="text-xl text-primary-60" />,
         href: `/users/${id}?tab=favorite-list`,
         roles: [Role.LIBER],
       },
       {
-        label: 'Stories Management',
+        label: t('stories_management'),
         icon: <Books className="text-xl text-primary-60" />,
         href: `/users/${id}?tab=stories`,
         roles: [Role.HUBER],
       },
       {
-        label: 'My Schedule',
+        label: t('my_schedule'),
         icon: <CalendarDots className="text-xl text-primary-60" />,
         href: '/my-schedule',
         roles: [Role.HUBER],

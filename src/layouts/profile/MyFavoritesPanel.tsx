@@ -104,7 +104,7 @@ export default function MyFavoritesPanel() {
                 <p>{tMyFavorites('explore_stories')}</p>
               </div>
               <Button size="lg" onClick={() => router.push('/explore-story')}>
-                Explore more stories
+                {tExplore('explore_more_stories')}
               </Button>
             </div>
           )}

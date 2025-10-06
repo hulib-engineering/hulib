@@ -151,11 +151,11 @@ export default function Index() {
             <div className="flex items-center justify-between px-4">
               <div className="flex-1">
                 <h4 className="text-[28px] font-medium leading-9 text-primary-10">
-                  Meeting schedule
+                  {t('meeting_schedule')}
                 </h4>
               </div>
               <div className="flex items-center gap-2">
-                <span>View:</span>
+                <span>{t('view')}:</span>
                 <Combobox
                   value={statusFilters}
                   onChange={value => setStatusFilters(value as TFilter[])}
@@ -219,7 +219,7 @@ export default function Index() {
             className="w-fit font-medium text-black"
             onClick={() => setShowMobileTimeslotRegistration(false)}
           >
-            Back
+            {t('MainScreen.back')}
           </Button>
           <TimeslotRegistrationSection
             onBack={() => setShowMobileTimeslotRegistration(false)}

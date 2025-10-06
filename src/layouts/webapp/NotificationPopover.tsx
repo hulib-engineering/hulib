@@ -3,7 +3,7 @@
 import { Bell } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
-
+import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import { NotificationType } from '@/components/notification/private/types';
 import NotificationItemRenderer from '@/components/notification/NotificationItemRenderer';
@@ -21,7 +21,7 @@ export default function NotificationPopover({
   unreadNotifCount = 0,
 }: NotificationButtonProps) {
   const router = useRouter();
-
+  const t = useTranslations('notifications');
   const { data, error, isLoading } = useGetNotificationsQuery({
     page: 1,
     limit: 5,
@@ -54,7 +54,7 @@ export default function NotificationPopover({
             <div data-testid="notifications-popover-content" className="flex flex-col gap-2.5">
               <div className="px-2.5">
                 <h4 className="text-[28px] font-bold leading-9 text-black">
-                  Notification
+                  {t('title')}
                 </h4>
               </div>
               {sessionRequestNotifications.length > 0 && (
@@ -100,7 +100,7 @@ export default function NotificationPopover({
                           fullWidth
                           onClick={() => router.push('/notifications')}
                         >
-                          See all
+                          {t('seeAll')}
                         </Button>
                       </div>
                     </>

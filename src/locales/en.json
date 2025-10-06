@@ -2,6 +2,10 @@
   "Header": {
     "contact_us": "contact us"
   },
+  "Message": {
+    "your_messages": "Your messages",
+    "text": "You have no conversations yet!"
+  },
   "HeaderWebApp": {
     "contact_us": "contact us",
     "my_schedule": "My schedule",
@@ -16,7 +20,9 @@
     "my_profile": "My profile",
     "change_password": "Change password",
     "register_huber": "Register to become human book",
-    "sign_out": "Sign out"
+    "sign_out": "Sign out",
+    "stories_management": "Stories Management",
+    "favorite_list": "Favorite List"
   },
   "HumanBookBanner": {
     "explore_now": "Explore the Human Book bookshelf now",
@@ -396,6 +402,7 @@
     "meta_description": "Manage your profile effectively",
     "upload": "upload photo",
     "delete_ava": "delete avatar",
+    "hearts": "Hearts",
     "tabs": {
       "about": "About",
       "my_stories": "My Stories",
@@ -529,7 +536,13 @@
     "schedule_meeting": "Schedule a meeting",
     "saved_for_later_success": "Story saved for later successfully",
     "remove_from_saved_for_later": "Remove from saved for later",
-    "share_story": "Share another story"
+    "share_story": "Share another story",
+    "explore_more_stories": "Explore more stories"
+  },
+  "reviews_reader": {
+    "reader_reviews": "Reader Reviews",
+    "rating_overview": "Rating Overview",
+    "outstanding_review": "Outstanding Review"
   },
   "Huber": {
     "title": "Explore our Hubers",
@@ -563,6 +576,8 @@
     "detail": "Detail"
   },
   "Schedule": {
+    "meeting_schedule": " Meeting schedule",
+    "view": "View",
     "appointment_schedule": "Appointment schedule",
     "type_meeting": "Type of meeting",
     "waiting": "Waiting",
@@ -709,7 +724,10 @@
     "notification": "Thanks for your story! HuLib will keep you informed when our process completes. We look forward to your participation as a Huber!",
     "btn_name_notification": "Explore",
     "back_to_home": "Back to Homepage",
-    "placeholder": "Placeholder"
+    "placeholder": "Placeholder",
+    "info": "Info",
+    "choose_available_slot": "Choose available slot",
+    "first_story": "First story"
   },
   "feedback_form": {
     "session_feedback": "Feedback for the session",

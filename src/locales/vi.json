@@ -2,6 +2,10 @@
   "Header": {
     "contact_us": "liên hệ"
   },
+  "Message": {
+    "your_messages": "Tin nhắn của bạn",
+    "text": "Bạn chưa có cuộc trò chuyện nào!"
+  },
   "HeaderWebApp": {
     "contact_us": "liên hệ",
     "my_schedule": "Lịch trình của tôi",
@@ -16,7 +20,9 @@
     "my_profile": "Hồ sơ của tôi",
     "change_password": "Đổi mật khẩu",
     "register_huber": "Đăng kí trở thành Huber",
-    "sign_out": "Đăng xuất"
+    "sign_out": "Đăng xuất",
+    "stories_management": "Quản lý câu chuyện",
+    "favorite_list": "Danh sách yêu thích"
   },
   "HumanBookBanner": {
     "explore_now": "Khám phá tủ sách Human Book ngay",
@@ -396,6 +402,7 @@
     "meta_description": "Quản lý hồ sơ của bạn một cách hiệu quả",
     "upload": "tải ảnh đại diện",
     "delete_ava": "xoá ảnh đại diện",
+    "hearts": "Tim",
     "tabs": {
       "about": "Giới thiệu",
       "my_stories": "Câu chuyện của tôi",
@@ -533,7 +540,13 @@
     "schedule_meeting": "Đặt lịch hẹn",
     "saved_for_later_success": "Đã lưu truyện thành công",
     "remove_from_saved_for_later": "Xoá khỏi danh sách đã lưu",
-    "share_story": "Chia sẽ thêm"
+    "share_story": "Chia sẽ thêm",
+    "explore_more_stories": "Khám phá thêm các câu chuyện"
+  },
+  "reviews_reader": {
+    "reader_reviews": "Đánh giá của người đọc",
+    "rating_overview": "Tổng quan đánh giá",
+    "outstanding_review": "Đánh giá nổi bật"
   },
   "Huber": {
     "title": "Xem danh sách Huber",
@@ -567,6 +580,8 @@
     "detail": "Chi tiết"
   },
   "Schedule": {
+    "meeting_schedule": "Lịch trò chuyện",
+    "view": "Xem",
     "appointment_schedule": "Lịch trò chuyện tháng",
     "type_meeting": "Loại cuộc hẹn",
     "waiting": "Đang chờ",
@@ -713,7 +728,10 @@
     "notification": "Cảm ơn bạn đã gửi câu chuyện! Hẹn gặp bạn trong suốt hành trình làm Huber nhé!",
     "btn_name_notification": "Khám phá thêm",
     "back_to_home": "Trở lại trang chủ",
-    "placeholder": "Bạn đang nghĩ gì..."
+    "placeholder": "Bạn đang nghĩ gì...",
+    "info": "Thông tin",
+    "choose_available_slots": "Chọn khung giờ trống",
+    "first_story": "Câu chuyện đầu tiên"
   },
   "feedback_form": {
     "session_feedback": "Phản hồi cho buổi học",

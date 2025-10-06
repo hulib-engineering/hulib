@@ -7,6 +7,7 @@ import * as React from 'react';
 import ReviewItem from './ReviewItem';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { useGetStoryReviewsByStoryIdQuery } from '@/libs/services/modules/story-reviews';
+import { useTranslations } from 'next-intl';
 
 type ReaderReviewProps = {
   storyId: number;
@@ -16,7 +17,7 @@ const SHOW_LIMIT_REVIEWS = 5;
 
 const ReaderReview = ({ storyId }: ReaderReviewProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
-
+  const t = useTranslations('reviews_reader');
   const { data: storyReviewsData, isLoading }
     = useGetStoryReviewsByStoryIdQuery({ storyId, limit: 200 });
 
@@ -31,7 +32,7 @@ const ReaderReview = ({ storyId }: ReaderReviewProps) => {
   return (
     <div className="flex w-full flex-col gap-4 rounded-3xl border border-solid p-6 shadow-[0px_0px_4px_0px_#0F0F100F]">
       <h6 className="text-xl font-bold text-neutral-20">
-        {`Reader reviews (${
+        {`${t('reader_reviews')} (${
           storyReviewsData?.data?.length || 0
         })`}
       </h6>
