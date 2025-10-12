@@ -47,6 +47,20 @@
   }
 }
 
+@layer utilities {
+  .book-page-padding {
+    --page-padding-left: 32px; /* pl-8 */
+    --page-padding-right: 24px; /* pr-6 */
+  }
+
+  @media (max-width: 767px) {
+    .book-page-padding {
+      --page-padding-left: 32px; /* pl-6 */
+      --page-padding-right: 32px; /* pr-6 */
+    }
+  }
+}
+
 :root {
   --black: rgba(20, 18, 19, 1);
   --foundation-blue-dark: rgba(0, 73, 179, 1);
@@ -279,8 +293,13 @@ html {
 .rbc-day-slot .rbc-timeslot-group {
   background-color: #f9f9f9;
 }
-.rbc-day-slot.rbc-time-column:last-child {
-  border-right: 1px solid #ddd; /* or your theme color */
+/* Select the last .rbc-day-slot that comes before a custom indicator */
+.rbc-time-content:has(.rbc-current-time-indicator) > .rbc-day-slot:nth-last-of-type(3) {
+  border-right: 1px solid #ddd;
+}
+/* Fallback when indicator disappears → normal last child */
+.rbc-time-content:not(:has(.rbc-current-time-indicator)) > .rbc-day-slot:last-child {
+  border-right: 1px solid #ddd;
 }
 .rbc-day-slot .rbc-time-slot {
   border: none !important;

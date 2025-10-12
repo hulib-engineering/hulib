@@ -3,19 +3,20 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { X } from '@phosphor-icons/react';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
-import { isEmpty } from 'lodash';
 import Button from '@/components/core/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import TermAndCondition from '@/layouts/profile/TermAndCondition';
-import { useAppSelector, useTopics } from '@/libs/hooks';
+import { useAppSelector } from '@/libs/hooks';
 import { useRegisterHuberMutation } from '@/libs/services/modules/auth';
 import {
+  useGetTopicsQuery,
   usePostTopicsMutation,
 } from '@/libs/services/modules/topics';
 import { HuberStep1Validation } from '@/validations/HuberValidation';
@@ -35,7 +36,7 @@ const Step1 = ({ next }: { next: () => void }) => {
 
   const [registerHuber, { isLoading }] = useRegisterHuberMutation();
   const [createTopic, { isLoading: isCreatingTopic }] = usePostTopicsMutation();
-  const { topics, isLoading: isTopicsLoading } = useTopics();
+  const { topics, isLoading: isTopicsLoading } = useGetTopicsQuery();
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 

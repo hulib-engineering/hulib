@@ -1,12 +1,16 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
 import type { PaginatedResponse } from '../../type';
-import type { Huber, HuberlistParams } from './huberType';
+
+import type { Huber, HuberListParams } from './huberType';
 
 const getHubers = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
-  build.query<PaginatedResponse<Huber>, HuberlistParams>({
+  build.query<PaginatedResponse<Huber>, HuberListParams>({
     query: (params) => {
       const searchParams = new URLSearchParams();
+      if (params?.type) {
+        searchParams.append('type', params.type);
+      }
       searchParams.set('page', params?.page?.toString() || '1');
       searchParams.set('limit', params?.limit?.toString() || '12');
       if (params?.topicIds) {
@@ -18,12 +22,6 @@ const getHubers = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       return {
         url: finalUrl,
       };
-    },
-    serializeQueryArgs: ({ endpointName, queryArgs }) => {
-      return `${endpointName}(${JSON.stringify(queryArgs?.topicIds)})`;
-    },
-    forceRefetch: ({ currentArg, previousArg }) => {
-      return currentArg?.limit !== previousArg?.limit;
     },
     providesTags: result =>
       result

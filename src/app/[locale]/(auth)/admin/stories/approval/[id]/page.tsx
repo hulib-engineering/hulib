@@ -7,13 +7,13 @@ import * as React from 'react';
 
 import { useState } from 'react';
 import Button from '@/components/core/button/Button';
-import { DetailBook } from '@/components/storyDetails/DetailBook';
-import StoryDetailsSkeleton from '@/components/storyDetails/StoryDetailsSkeleton';
+import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
+import { DetailedStory } from '@/components/stories/DetailedStory';
+import StoryConfirmationModal from '@/layouts/admin/StoryConfirmationModal';
 import {
   useGetStoryDetailQuery,
 } from '@/libs/services/modules/stories';
 import type { Topic } from '@/libs/services/modules/user/userType';
-import StoryConfirmationModal from '@/layouts/admin/StoryConfirmationModal';
 
 export default function Index() {
   const { id } = useParams();
@@ -25,7 +25,7 @@ export default function Index() {
   const [isRejectionConfirmationModalOpen, setIsRejectionConfirmationModalOpen] = useState(false);
 
   if (isLoading) {
-    return <StoryDetailsSkeleton />;
+    return <StoryDetailSkeleton />;
   }
 
   return (
@@ -97,7 +97,7 @@ export default function Index() {
           </div>
         </div>
       </div>
-      <DetailBook
+      <DetailedStory
         title={data?.title || ''}
         cover="/assets/images/ava-placeholder.png"
         abstract={data?.abstract || ''}

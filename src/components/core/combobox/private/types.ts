@@ -140,5 +140,5 @@ export type {
   OptionProps,
   OptionsProps,
   SelectProps,
-  Size,
+  // Size,
 };

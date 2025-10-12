@@ -5,8 +5,8 @@ import { useDeepCompareMemo } from 'use-deep-compare';
 import { AFTERNOON_TIME_START, EVENING_TIME_START, MORNING_TIME_START } from '@/libs/constants/date';
 import { REFERENCE_MONDAY } from '@/utils/dateUtils';
 
-export type TPeriodLabel = 'morning' | 'afternoon' | 'evening';
-export type TDaySlots = Record<TPeriodLabel, string[]>;
+type TPeriodLabel = 'morning' | 'afternoon' | 'evening';
+type TDaySlots = Record<TPeriodLabel, string[]>;
 
 type UtcSlot = {
   dayOfWeek: number;

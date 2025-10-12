@@ -48,7 +48,6 @@
       "description": "We cannot find any result that matches your search. Please try search again."
     }
   },
-
   "Footer": {
     "footer_description": "There is a story and experience within each of us, so we are born to be somebody.",
     "copyright": "© 2025 HuLib. All rights reserved.",
@@ -433,8 +432,11 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "delete_confirm_all": "Are you sure want to remove all stories from your favorite list ?",
+    "delete_confirm_all_hubers": "Are you sure want to remove all hubers from your favorite list ?",
     "no_favorite_story": "No favorite story",
-    "explore_stories": "Your favorite list is empty! Browse stories and mark your favorites to keep them handy."
+    "no_favorite_huber": "No favorite hubers",
+    "explore_stories": "Your favorite list is empty! Browse stories and mark your favorites to keep them handy.",
+    "explore_hubers": "Your favorite list is empty! Browse hubers and mark your favorites to keep them handy."
   },
   "HumanBookRegister": {
     "register_as_a_human_book": "Register as a Human Book",
@@ -524,6 +526,7 @@
     "hide_all": "Hide All",
     "story_added_to_favorites": "Favorite added successfully",
     "story_removed_from_favorites": "Favorite removed successfully",
+    "huber_removed_from_favorites": "Successfully removed huber from favorite list",
     "error_contact_admin": "An error occurred, please contact admin for support!",
     "save_for_late": "Save for later",
     "schedule_meeting": "Schedule a meeting",

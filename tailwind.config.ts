@@ -143,6 +143,7 @@ export default {
           variant: {
             10: '#15161B',
             80: '#C2C6CF',
+            90: '#E3E5EB',
             98: '#F3F4F6',
           },
         },
@@ -177,6 +178,7 @@ export default {
           40: '#38AA16',
           50: '#46D51B',
           60: '#66E73F',
+          70: '#8CED6F',
           80: '#B2F39F',
           90: '#D9F9CF',
           98: '#FBFEFA',
@@ -237,6 +239,8 @@ export default {
           'url(\'/assets/images/bg-special-pattern.webp\')',
         'radial-gradient':
           'radial-gradient(at 52% 57%, hsla(11,83%,72%,1) 0px, transparent 50%), radial-gradient(at 37% 57%, hsla(175,78%,66%,1) 0px, transparent 50%)',
+        'left-page': 'linear-gradient(to right, #f8f8f8, #ffffff, #e3e3e3, #b1b1b1)',
+        'right-page': 'linear-gradient(to right, #9c9c9c, #d5d5d5, #f7f6f6, #f8f8f8)',
       },
       lineClamp: {
         7: '7',
@@ -524,6 +528,9 @@ export default {
             boxShadow: '0 0 15px rgba(255, 234, 234, 0.8)',
           },
         },
+        shimmer: {
+          '100%': { transform: 'translateX(300px)' },
+        },
       },
       animation: {
         'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
@@ -554,14 +561,7 @@ export default {
         'pink-pulse': 'pinkPulse 2.5s infinite ease-in-out',
         'soft-pink-pulse': 'softPinkPulse 2.2s infinite ease-in-out',
         'white-pulse': 'whitePulse 2.8s infinite ease-in-out',
-      },
-    },
-    animation: {
-      shimmer: 'shimmer 1.5s infinite',
-    },
-    keyframes: {
-      shimmer: {
-        '100%': { transform: 'translateX(300px)' },
+        'shimmer': 'shimmer 1.5s infinite',
       },
     },
   },

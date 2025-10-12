@@ -6,7 +6,7 @@ import { useLocale } from 'next-intl';
 import type { JSX } from 'react';
 import { useState } from 'react';
 
-import { Chip } from '@/components/common/chip/Chip';
+import { Chip } from '@/components/core/chip/Chip';
 import Dropdown from '@/components/core/dropdown/Dropdown';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';

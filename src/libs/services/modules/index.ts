@@ -1,7 +1,9 @@
 export { authApi } from './auth';
+export { agoraApi } from './agora';
 export { chatApi } from './chat';
 export { notificationApi } from './notifications';
 export { stickersApi } from './stickers';
 export { userApi } from './user';
 export { timeslotApi } from './time-slots';
 export { storyApi } from './stories';
+export { storyReviewsApi } from './story-reviews';
