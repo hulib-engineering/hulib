@@ -154,25 +154,68 @@ const SearchRoot = ({
   );
   const selectValues = useMemo(() => ({ selected }), [selected]);
 
-  const openSearch = useCallback(() => onChangeOpen(true), []);
+  // const openSearch = useCallback(() => onChangeOpen(true), []);
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div ref={ref} onKeyDown={onKeyDown} onClick={openSearch}>
-      <div
-        className={mergeClassnames(
-          'relative w-full h-full border border-neutral-90 flex flex-col transition-all',
-          isOpen
-            ? 'border-none rounded-t-2xl bg-white shadow-[0_8px_18px_-1px_#1C1E2124,_0_0_4px_0_#0F0F1014]'
-            : 'rounded-2xl bg-neutral-98',
-          className,
-        )}
-      >
-        <SearchContext.Provider value={searchValues}>
-          <SelectContext.Provider value={selectValues}>
-            {children}
-          </SelectContext.Provider>
-        </SearchContext.Provider>
+    <div className="relative">
+      {isOpen && (
+        <div
+          role="button" // announce as interactive
+          tabIndex={0} // focusable via keyboard
+          aria-label="Close overlay"
+          className="fixed inset-0 z-[998] bg-[#2E3032]/50"
+          onClick={() => onChangeOpen(false)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape' || e.key === 'Enter') {
+              e.preventDefault();
+              e.stopPropagation(); // ✅ add this
+              onChangeOpen(false);
+            }
+          }}
+        />
+      )}
+
+      <div className="relative z-[999] mx-auto w-full max-w-md transition-all">
+        <div
+          ref={ref}
+          role="button"
+          tabIndex={0}
+          onKeyDown={onKeyDown}
+        >
+          <div
+            role="button" // announce as interactive
+            tabIndex={0} // focusable via keyboard
+            className={mergeClassnames(
+              'relative size-full flex flex-col transition-all',
+              isOpen
+                ? 'rounded-t-2xl bg-neutral-98'
+                : 'rounded-2xl outline outline-1 outline-neutral-variant-90 bg-neutral-variant-98 hover:bg-neutral-variant-90',
+              search.trim().length > 0 && 'outline-2 outline-primary-80',
+              className,
+            )}
+            onClick={() => {
+              // Only open if the click is on input, not on the results
+              if (!isOpen) {
+                onChangeOpen(true);
+              }
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                e.stopPropagation(); // ✅ stop bubbling to parent
+                if (!isOpen) {
+                  onChangeOpen(true);
+                }
+              }
+            }}
+          >
+            <SearchContext.Provider value={searchValues}>
+              <SelectContext.Provider value={selectValues}>
+                {children}
+              </SelectContext.Provider>
+            </SearchContext.Provider>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -220,6 +263,7 @@ const Result = ({
       className={mergeClassnames(
         'search-result',
         'absolute w-full rounded-b-2xl p-2 flex-1 bg-white shadow-[0_8px_18px_-1px_#1C1E2124,_0_0_4px_0_#0F0F1014] focus:outline-none',
+        isOpen && 'pt-0 shadow-none',
         className,
       )}
       tabIndex={-1}
@@ -237,7 +281,7 @@ const ResultHeading = ({
 }: HTMLAttributes<HTMLHeadingElement>) => (
   <h5
     className={mergeClassnames(
-      'text-neutral-10 text-sm font-medium pl-1 pt-1',
+      ' rounded-lg px-3 py-1 text-neutral-10 text-sm leading-4 font-medium',
       className,
     )}
     {...props}

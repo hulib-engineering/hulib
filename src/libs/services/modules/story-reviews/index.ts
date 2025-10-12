@@ -2,10 +2,10 @@ import { api } from '../../api';
 import getStoryReviewsByStoryId from './getStoryReviewsByStoryId';
 
 const apiWithTag = api.enhanceEndpoints?.({
-  addTagTypes: ['StoryReviews'],
+  addTagTypes: ['StoryReview'],
 });
 
-const storyReviewsApi = apiWithTag.injectEndpoints({
+export const storyReviewsApi = apiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
     getStoryReviewsByStoryId: getStoryReviewsByStoryId(build),
   }),
