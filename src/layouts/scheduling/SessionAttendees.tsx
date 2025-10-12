@@ -8,7 +8,7 @@ import type z from 'zod';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
 import { mergeClassnames } from '@/components/core/private/utils';
 import Avatar from '@/components/core/avatar/Avatar';
-import { Chip } from '@/components/common/chip/Chip';
+import { Chip } from '@/components/core/chip/Chip';
 import { ROLE_NAME, Role } from '@/types/common';
 import type { ProfileValidation } from '@/validations/ProfileValidation';
 

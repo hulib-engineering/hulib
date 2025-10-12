@@ -68,14 +68,14 @@ export default function Index() {
   );
 
   return (
-    <div className="flex flex-col gap-6 px-0 py-8 xl:flex-row xl:p-8">
+    <div className="flex flex-col gap-6 px-0 py-8 lg:flex-row lg:p-8">
       {!showMobileTimeslotRegistration ? (
         <>
-          <div className="flex w-full flex-col gap-4 xl:w-1/4 xl:max-w-[344px]">
+          <div className="flex w-full flex-col gap-4 lg:w-1/2 lg:max-w-[25rem] xl:w-1/4">
             {/* Upcoming event */}
             {!isLoading
             && hasUpcomingEvent && (
-              <div className="hidden flex-col gap-1 rounded-xl bg-white px-4 py-3 shadow-sm xl:flex">
+              <div className="hidden flex-col gap-1 rounded-xl bg-white px-4 py-3 shadow-sm lg:flex">
                 <p className="text-xl font-medium text-primary-10">
                   {t('upcoming.upcoming_event')}
                 </p>
@@ -137,14 +137,14 @@ export default function Index() {
                 </div>
               </div>
             )}
-            <div className="px-4 xl:px-0">
+            <div className="px-4 lg:px-0">
               <MiniCalendar onChange={setDateInWeekView} onUpdateTimeslots={() => setShowMobileTimeslotRegistration(true)} />
             </div>
-            <div className="hidden xl:block">
+            <div className="hidden lg:block">
               <TimeSlotList />
             </div>
           </div>
-          <div className="flex flex-col gap-6 xl:hidden">
+          <div className="flex w-full flex-col gap-6 xl:hidden">
             <MobileSessionList />
           </div>
           <div className="hidden flex-1 flex-col gap-4 bg-white py-4 xl:flex">

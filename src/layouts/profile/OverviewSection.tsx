@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
-import { Chip } from '@/components/common/chip/Chip';
+import { Chip } from '@/components/core/chip/Chip';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';
@@ -238,46 +238,48 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
           )}
         </div>
       )}
-      <div className="flex flex-col gap-3 py-3 lg:gap-4 lg:py-0">
-        <div className="py-2 font-medium text-black">
-          What libers say
-        </div>
-        <div className="flex max-h-[684px] flex-col gap-6 overflow-y-auto px-5">
-          {data?.feedbackBys.length > 0 && data?.feedbackBys.map((feedback, index) => (
-            <div
-              key={feedback.id}
-              className={mergeClassnames(
-                'flex flex-col gap-2 pb-5',
-                index !== data?.feedbackBys.length - 1 && 'border-b-[0.5px] border-neutral-90',
-              )}
-            >
-              <div className="flex items-center gap-2">
-                <Avatar imageUrl={feedback.feedbackBy.photo} className="size-11" />
-                <div className="flex flex-col">
-                  <p className="text-sm font-medium text-black">{feedback.feedbackBy.fullName}</p>
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1">
-                      {[...Array(5)].map((_, index) => (
-                        <Heart
-                          key={index}
-                          weight="fill"
-                          className={mergeClassnames(
-                            feedback.rating > index ? 'text-pink-50' : 'text-neutral-90',
-                          )}
-                        />
-                      ))}
+      {data?.feedbackBys?.length > 0 && (
+        <div className="flex flex-col gap-3 py-3 lg:gap-4 lg:py-0">
+          <div className="py-2 font-medium text-black">
+            What libers say
+          </div>
+          <div className="flex max-h-[684px] flex-col gap-6 overflow-y-auto px-5">
+            {data?.feedbackBys?.map((feedback, index) => (
+              <div
+                key={feedback.id}
+                className={mergeClassnames(
+                  'flex flex-col gap-2 pb-5',
+                  index !== data?.feedbackBys.length - 1 && 'border-b-[0.5px] border-neutral-90',
+                )}
+              >
+                <div className="flex items-center gap-2">
+                  <Avatar imageUrl={feedback.feedbackBy.photo} className="size-11" />
+                  <div className="flex flex-col">
+                    <p className="text-sm font-medium text-black">{feedback.feedbackBy.fullName}</p>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1">
+                        {[...Array(5)].map((_, index) => (
+                          <Heart
+                            key={index}
+                            weight="fill"
+                            className={mergeClassnames(
+                              feedback.rating > index ? 'text-pink-50' : 'text-neutral-90',
+                            )}
+                          />
+                        ))}
+                      </div>
+                      <span className="text-xs leading-6 text-black/50">
+                        {toLocaleDateString(feedback.createdAt, locale === 'en' ? 'en-GB' : 'vi-VN')}
+                      </span>
                     </div>
-                    <span className="text-xs leading-6 text-black/50">
-                      {toLocaleDateString(feedback.createdAt, locale === 'en' ? 'en-GB' : 'vi-VN')}
-                    </span>
                   </div>
                 </div>
+                <p className="text-sm text-black/80">{feedback.content}</p>
               </div>
-              <p className="text-sm text-black/80">{feedback.content}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

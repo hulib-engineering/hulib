@@ -23,7 +23,7 @@ import {
 } from '@/libs/services/modules/chat';
 import type { TransformedMessage } from '@/libs/services/modules/chat/getConversationByUserId';
 
-export type ChatItem =
+type ChatItem =
   | { type: 'separator'; label: string }
   | { type: 'message'; message: TransformedMessage };
 

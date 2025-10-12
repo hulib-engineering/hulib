@@ -11,7 +11,7 @@ import { useState } from 'react';
 import * as React from 'react';
 
 import Button from '@/components/core/button/Button';
-import { Spinner } from '@/components/common/Spinner';
+import { Spinner } from '@/components/loadingState/Spinner';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';

@@ -15,7 +15,7 @@ import Popover from '@/components/core/popover/Popover';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
-import SearchInput from '@/components/SearchInput';
+import AdvancedSearch from '@/layouts/webapp/AdvancedSearch';
 import AvatarPopover from '@/layouts/webapp/AvatarPopover';
 import MessengerPopover from '@/layouts/webapp/MessengerPopover';
 import NotificationPopover from '@/layouts/webapp/NotificationPopover';
@@ -201,7 +201,7 @@ const Header = () => {
               )}
         </div>
         <div className="flex flex-col gap-2">
-          <SearchInput />
+          <AdvancedSearch />
           {user && user?.role?.id !== Role.ADMIN && (
             <div className="flex items-center justify-between gap-3">
               <Button
@@ -224,7 +224,7 @@ const Header = () => {
                 variant="ghost"
                 size="lg"
                 className="text-neutral-10"
-                onClick={() => router.push('/explore-hubere')}
+                onClick={() => router.push('/explore-hubers')}
               >
                 {t('mentors')}
               </Button>
@@ -247,14 +247,14 @@ const Header = () => {
               <Link href="/explore-story" className="px-4 py-3 font-medium leading-5 text-neutral-10">
                 {t('books')}
               </Link>
-              <Link href="/explore-huber" className="px-4 py-3 font-medium leading-5 text-neutral-10">
+              <Link href="/explore-hubers" className="px-4 py-3 font-medium leading-5 text-neutral-10">
                 {t('mentors')}
               </Link>
             </div>
           )}
         </div>
         <div className="w-[300px]">
-          <SearchInput />
+          <AdvancedSearch />
         </div>
         {!user || !user?.id
           ? (

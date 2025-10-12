@@ -64,10 +64,11 @@ export default function MiniCalendar({ onChange, onUpdateTimeslots }: MonthCalen
   }, [data]);
 
   return (
-    <div className="flex w-full flex-col gap-1 rounded-lg bg-white px-4 py-2 shadow-sm xl:px-2">
+    <div className="flex w-full flex-col gap-1 rounded-lg bg-white px-4 py-2 shadow-sm lg:max-w-[25rem] xl:px-2">
       {/* Header */}
       <div className="flex items-center justify-between gap-3 p-2">
         <button
+          type="button"
           onClick={() => setCurrentMonth(addMonths(currentMonth, -1))}
         >
           <CaretLeft className="text-primary-50" />
@@ -76,6 +77,7 @@ export default function MiniCalendar({ onChange, onUpdateTimeslots }: MonthCalen
           {format(currentMonth, 'MMMM - yyyy')}
         </span>
         <button
+          type="button"
           onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
         >
           <CaretRight className="text-primary-50" />
@@ -119,7 +121,7 @@ export default function MiniCalendar({ onChange, onUpdateTimeslots }: MonthCalen
         })}
       </div>
 
-      <div className="flex flex-col gap-2.5 py-4 xl:hidden">
+      <div className="flex flex-col gap-2.5 py-4 lg:hidden">
         <Button
           size="lg"
           onClick={onUpdateTimeslots}
