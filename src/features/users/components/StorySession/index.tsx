@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { DetailBook } from '@/components/storyDetails/DetailBook';
+import { DetailedStory } from '@/components/stories/DetailedStory';
 import type { Topic } from '@/libs/services/modules/user/userType';
 
 const StorySession = ({ data }: any) => {
@@ -46,7 +46,7 @@ const StorySession = ({ data }: any) => {
           </div>
         </div>
       </div>
-      <DetailBook
+      <DetailedStory
         title={data?.title || ''}
         cover="/assets/images/ava-placeholder.png"
         abstract={data?.abstract || ''}

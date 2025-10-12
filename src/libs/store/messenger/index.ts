@@ -21,7 +21,7 @@ type ChatWindow = {
   messages?: Message[];
   lastMessage?: MessageResponse;
 };
-export type ChatState = {
+type ChatState = {
   chats: ChatWindow[];
   currentChatDetail: Pick<ChatWindow, 'id' | 'name' | 'avatarUrl'> | null;
 };

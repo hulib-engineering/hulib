@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { StoryCard } from '@/components/stories/StoryCard';
-import StoryPagination from '@/components/storyDetails/StoryPagination';
+import StoryPagination from '@/components/stories/StoryPagination';
 import AdminLayout from '@/layouts/AdminLayout';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story } from '@/libs/services/modules/stories/storiesType';

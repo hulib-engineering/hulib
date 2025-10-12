@@ -11,7 +11,7 @@ import updateStory from './updateStory';
 import getRelatedTopics from './getRelatedTopics';
 
 const apiWithTag = api.enhanceEndpoints?.({
-  addTagTypes: ['Story', 'FavoriteStory', 'StoryTopic'],
+  addTagTypes: ['Story', 'FavoriteStory', 'StoryTopic', 'StoryReviewOverview'],
 });
 
 export const storyApi = apiWithTag.injectEndpoints({

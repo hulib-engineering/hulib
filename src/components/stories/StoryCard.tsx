@@ -11,14 +11,44 @@ import AnimatedCover from './AnimatedCover';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
-import { Chip } from '@/components/common/chip/Chip';
-import Modal from '@/components/Modal';
+import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
+import Modal from '@/components/Modal';
+import { CustomCover } from '@/components/stories/CustomCover';
 import StoryForm from '@/layouts/stories/StoryForm';
 import { useDeleteStoryMutation } from '@/libs/services/modules/stories';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
 import { useAddStoryToMyFavoritesMutation, useRemoveStoryFromMyFavoritesMutation } from '@/libs/services/modules/user';
+
+function renderHighlightedText(text: string, highlightClass = 'bg-green-70/50') {
+  if (!text) {
+    return null;
+  }
+
+  // Split by <b> and </b>, keep track of highlighted segments
+  const parts = text.split(/(<b>|<\/b>)/g);
+
+  let isBold = false;
+  return parts.map((part, index) => {
+    if (part === '<b>') {
+      isBold = true;
+      return null;
+    }
+    if (part === '</b>') {
+      isBold = false;
+      return null;
+    }
+    if (isBold) {
+      return (
+        <span key={index} className={highlightClass}>
+          {part}
+        </span>
+      );
+    }
+    return <span key={index}>{part}</span>;
+  });
+}
 
 type IStoryCardProps = {
   data: TStory;
@@ -188,7 +218,7 @@ export const StoryCard = ({
                   </h6>
                 </div>
                 {data.topics && data.topics?.length > 0 && (
-                  <div className="scrollbar-hide flex w-full items-center gap-2 overflow-x-auto">
+                  <div className="scrollbar-hide flex w-full items-center gap-2 overflow-x-auto py-2">
                     {data.topics?.map(topic => (
                       <Chip
                         key={topic.id}
@@ -215,8 +245,10 @@ export const StoryCard = ({
                   </div>
                 </div>
                 <div className="mt-0.5 flex flex-1 flex-col">
-                  <p className="line-clamp-4 text-xs leading-5 text-neutral-30">
-                    {data.abstract}
+                  <p className="line-clamp-3 text-xs leading-5 text-neutral-30">
+                    {data?.highlightAbstract
+                      ? renderHighlightedText(data?.highlightAbstract)
+                      : data?.abstract}
                   </p>
                 </div>
               </div>
@@ -233,15 +265,10 @@ export const StoryCard = ({
           </div>
           <div className="relative flex w-[140px] flex-col justify-between md:w-1/2">
             <div className="h-[198px] rounded-2xl md:h-[255px]">
-              <AnimatedCover
-                abstract={data?.abstract ?? ''}
-                title={data?.title ?? ''}
+              <CustomCover
+                titleStory={data?.title ?? ''}
                 authorName={data?.humanBook?.fullName || ''}
-                coverUrl={data?.cover?.path || ''}
-                highlightTitle={data?.highlightTitle}
-                highlightAbstract={data?.highlightAbstract}
-                isPublished={data.publishStatus === 'published'}
-                onClick={() => router.push(`/explore-story/${data?.id}${data.publishStatus !== 'published' ? '/preview' : ''}`)}
+                srcImage={data?.cover?.path || ''}
               />
             </div>
             {!withoutActions && (

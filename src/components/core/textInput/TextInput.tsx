@@ -8,7 +8,7 @@ import type { TextInputSizeType, TextInputTypes } from './private/types';
 import { Size } from '@/components/core/private/types';
 import type { ColorProps } from '@/components/core/private/types';
 
-export type TextInputProps = {
+type TextInputProps = {
   id?: string;
   inputSize?: TextInputSizeType | undefined;
   type: TextInputTypes | string;

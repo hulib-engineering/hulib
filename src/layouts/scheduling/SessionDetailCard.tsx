@@ -76,7 +76,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({ session }) => {
 
   if (isMissed) {
     return (
-      <div className="w-full overflow-hidden rounded-2xl bg-red-98 px-5 py-4 font-medium shadow-sm sm:max-w-[396px]">
+      <div className="w-full overflow-hidden rounded-2xl bg-red-98 px-5 py-4 font-medium shadow-sm sm:max-w-[25rem]">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
             <div className="rounded-full bg-red-60 px-4 py-2 text-sm font-medium uppercase leading-4 text-white">missed</div>

@@ -8,7 +8,7 @@ import { mergeClassnames } from '@/components/core/private/utils';
 
 const commonClasses = 'search-list-item w-full';
 
-export const CustomLink = ({
+const CustomLink = ({
   closeOnSelect = true,
   disabled = false,
   className,
@@ -57,7 +57,7 @@ export const CustomLink = ({
   );
 };
 
-export const Button = ({
+const Button = ({
   closeOnSelect = true,
   className,
   children,

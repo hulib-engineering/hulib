@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Button from '@/components/core/button/Button';
-import { Chip } from '@/components/common/chip/Chip';
+import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextInput from '@/components/core/textInput/TextInput';
 import { auth } from '@/libs/Firebase';
