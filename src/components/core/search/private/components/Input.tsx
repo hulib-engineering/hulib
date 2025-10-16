@@ -27,9 +27,7 @@ const Icon = ({
 }: ComponentProps<typeof MagnifyingGlass>) => (
   <div>
     <MagnifyingGlass
-      color="#5C6063"
-      size={24}
-      className={mergeClassnames('pointer-events-none', className)}
+      className={mergeClassnames('text-2xl text-primary-60 pointer-events-none', className)}
       {...props}
     />
   </div>
@@ -86,42 +84,42 @@ const InnerInput = forwardRef(
 );
 InnerInput.displayName = 'InnerInput';
 
-export const ButtonClear = ({
-  children,
-  className,
-  onClick,
-  ...props
-}: HTMLAttributes<HTMLButtonElement>) => {
-  const { onChangeSearch } = useContext(SearchContext);
-  return (
-    <button
-      tabIndex={-1}
-      type="button"
-      className={mergeClassnames(
-        'cursor-pointer text-neutral-10 text-sm transition transform',
-        className,
-      )}
-      onClick={(e) => {
-        onChangeSearch('');
-        const inputElement = e.currentTarget.parentNode?.querySelectorAll(
-          '.moon-search-input',
-        )[0] as HTMLInputElement;
-        if (inputElement) {
-          inputElement.focus();
-        }
-        if (typeof onClick === 'function') {
-          onClick(e);
-        }
-      }}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-};
+// export const ButtonClear = ({
+//   children,
+//   className,
+//   onClick,
+//   ...props
+// }: HTMLAttributes<HTMLButtonElement>) => {
+//   const { onChangeSearch } = useContext(SearchContext);
+//   return (
+//     <button
+//       tabIndex={-1}
+//       type="button"
+//       className={mergeClassnames(
+//         'cursor-pointer text-neutral-10 text-sm transition transform',
+//         className,
+//       )}
+//       onClick={(e) => {
+//         onChangeSearch('');
+//         const inputElement = e.currentTarget.parentNode?.querySelectorAll(
+//           '.moon-search-input',
+//         )[0] as HTMLInputElement;
+//         if (inputElement) {
+//           inputElement.focus();
+//         }
+//         if (typeof onClick === 'function') {
+//           onClick(e);
+//         }
+//       }}
+//       {...props}
+//     >
+//       {children}
+//     </button>
+//   );
+// };
 
 export const Input = Object.assign(Wrapper, {
   Icon,
   Input: InnerInput,
-  ButtonClear,
+  // ButtonClear,
 });

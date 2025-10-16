@@ -8,29 +8,12 @@ const getTopics = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
     query: params => ({
       url: 'topics',
       params: {
-        page: params?.page || 1,
+        type: params?.type,
+        page: params?.page,
         limit: params?.limit,
         name: params?.name,
       },
     }),
-    serializeQueryArgs: ({ endpointName, queryArgs }) => {
-      return `${endpointName}(${queryArgs?.name})`;
-    },
-    merge: (currentCache, newItems, { arg }) => {
-      if (arg?.page === 1) {
-        return newItems;
-      }
-      return {
-        ...newItems,
-        data: [...currentCache.data, ...newItems.data],
-      };
-    },
-    forceRefetch: ({ currentArg, previousArg }) => {
-      return (
-        currentArg?.page !== previousArg?.page
-        || currentArg?.name !== previousArg?.name
-      );
-    },
     providesTags: result =>
       result
         ? [

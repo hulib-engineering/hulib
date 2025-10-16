@@ -8,12 +8,14 @@ import * as React from 'react';
 import { useState } from 'react';
 
 import Button from '@/components/core/button/Button';
-import CustomCoverBook from '@/components/common/CustomCoverBook';
+import { Chip } from '@/components/core/chip/Chip';
 import { pushError } from '@/components/CustomToastifyContainer';
+import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
 import Label from '@/components/Label';
 import Modal from '@/components/Modal';
-import { DetailBook } from '@/components/storyDetails/DetailBook';
-import StoryDetailsSkeleton from '@/components/storyDetails/StoryDetailsSkeleton';
+import { CustomCover } from '@/components/stories/CustomCover';
+import { DetailedStory } from '@/components/stories/DetailedStory';
+import StoryForm from '@/layouts/stories/StoryForm';
 import { useAppSelector } from '@/libs/hooks';
 import {
   useDeleteStoryMutation,
@@ -22,8 +24,6 @@ import {
 } from '@/libs/services/modules/stories';
 import { PublishStatusEnum } from '@/libs/services/modules/stories/storiesType';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
-import StoryForm from '@/layouts/stories/StoryForm';
-import { Chip } from '@/components/common/chip/Chip';
 
 export default function Index() {
   const { id } = useParams();
@@ -56,7 +56,7 @@ export default function Index() {
   if (isLoading) {
     return (
       <div className="mx-auto w-full max-w-screen-sm py-8 lg:max-w-screen-xl">
-        <StoryDetailsSkeleton />
+        <StoryDetailSkeleton />
       </div>
     );
   }
@@ -88,7 +88,7 @@ export default function Index() {
         {!isEditing ? (
           <div className="flex flex-col gap-8 lg:flex-row">
             <div className="flex-1">
-              <DetailBook
+              <DetailedStory
                 title={data?.title || ''}
                 cover={data?.humanBook?.photo?.path ?? '/assets/images/half-title-illus.png'}
                 authorName={data?.humanBook?.fullName || ''}
@@ -127,12 +127,12 @@ export default function Index() {
                     </div>
                   </div>
                 )}
-                <CustomCoverBook
+                <CustomCover
                   titleStory={data?.title}
                   authorName={data?.humanBook?.fullName ?? ''}
                   srcImage={
                     data?.cover?.path
-                    || '/assets/images/cover-book/story_background_yellow.png'
+                    ?? '/assets/images/cover-book/story_background_yellow.png'
                   }
                 />
                 {data?.publishStatus === PublishStatusEnum.REJECTED ? (

@@ -8,8 +8,8 @@ import { useEffect, useMemo, useState } from 'react';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
-import { Chip } from '@/components/common/chip/Chip';
-import { Spinner } from '@/components/common/Spinner';
+import { Chip } from '@/components/core/chip/Chip';
+import { Spinner } from '@/components/loadingState/Spinner';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { ProfileCover } from '@/components/ProfileCover';
@@ -159,10 +159,12 @@ export default function Index() {
                     {userDetail?.role?.name}
                   </Chip>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Heart className="text-pink-50" weight="fill" />
-                  <p className="text-sm text-black opacity-80">/5 (hearts)</p>
-                </div>
+                {userDetail?.role?.id === Role.HUBER && (
+                  <div className="flex items-center gap-2">
+                    <Heart className="text-pink-50" weight="fill" />
+                    <p className="text-sm text-black opacity-80">/5 (hearts)</p>
+                  </div>
+                )}
               </div>
               {notMe && userDetail?.role?.id === Role.HUBER && (
                 <div className="flex gap-2 lg:hidden">

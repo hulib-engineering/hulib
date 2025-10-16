@@ -1,11 +1,40 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { svnRio } from '@/templates/BaseTemplate';
-import { paginateText } from '@/utils/textUtils';
+import { paginateText } from '@/utils/paginateTextUtil';
+
+function renderHighlightedText(text: string, highlightClass = 'bg-green-70/50') {
+  if (!text) {
+    return null;
+  }
+
+  // Split by <b> and </b>, keep track of highlighted segments
+  const parts = text.split(/(<b>|<\/b>)/g);
+
+  let isBold = false;
+  return parts.map((part, index) => {
+    if (part === '<b>') {
+      isBold = true;
+      return null;
+    }
+    if (part === '</b>') {
+      isBold = false;
+      return null;
+    }
+    if (isBold) {
+      return (
+        <span key={index} className={highlightClass}>
+          {part}
+        </span>
+      );
+    }
+    return <span key={index}>{part}</span>;
+  });
+}
 
 type IAnimatedCoverProps = {
   title: string;
@@ -19,31 +48,19 @@ type IAnimatedCoverProps = {
 };
 
 export default function AnimatedCover(props: IAnimatedCoverProps) {
+  const textContainerRef = useRef<HTMLDivElement>(null);
+
   const [abstractPages, setAbstractPages] = useState<string[]>([]);
 
   useEffect(() => {
-    const calculateMaxCharWidth = () => {
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      const fontSize = '14.21px'; // Example font size
-      const fontFamily = 'DVN-Poppins'; // Example font family
-      if (context) {
-        context.font = `${fontSize} ${fontFamily}`;
-        const testCharacter = 'W'; // Or 'M', or a string of characters
-        const metrics = context.measureText(testCharacter);
-        return metrics.width;
-      }
-      return 0;
-    };
-
     const pages = paginateText(
       props.highlightAbstract || props.abstract,
       164,
-      160,
-      2,
-      calculateMaxCharWidth(),
+      173,
+      textContainerRef,
+      true,
     );
-    setAbstractPages(pages);
+    setAbstractPages(pages.map((page: { content: string }) => page.content));
   }, [props.abstract, props.highlightAbstract]);
 
   return (
@@ -51,20 +68,15 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
       <div className="group relative size-full">
         <div
           className={mergeClassnames(
-            'absolute m-0 flex size-full flex-col items-center justify-between gap-[10px] rounded-[5px]',
-            'bg-gradient-to-r from-[#9C9C9C] via-[#D5D5D5] to-[#f8f8f8] p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)]',
+            'absolute m-0 flex size-full flex-col items-center justify-between gap-[10px] rounded-[5px] p-2',
+            'bg-right-page drop-shadow-[2px_2px_0_0_rgba(0,0,0,0.15)]',
             'group-hover:z-10',
           )}
         >
-          <p className="font-['DVN-Poppins] text-xs leading-5 tracking-wider text-neutral-30 sm:text-sm">
+          <p ref={textContainerRef} className="font-['DVN-Poppins] break-all text-xs leading-5 tracking-[0.015em] text-neutral-30 lg:text-sm">
             {props.highlightAbstract
-              ? (
-                // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
-                  <div dangerouslySetInnerHTML={{ __html: `${abstractPages[1]}...` }} />
-                )
-              : (
-                  `${abstractPages[1]}...`
-                )}
+              ? renderHighlightedText(`${abstractPages[1]}...`)
+              : `${abstractPages[1]}...`}
           </p>
           <Button
             onClick={props.onClick}
@@ -90,35 +102,40 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
             }}
           >
             <div
-              className={`absolute left-0 top-[8px] line-clamp-3 w-full max-w-[180px] text-wrap px-3 text-center text-lg text-primary-50 sm:px-5 sm:text-[22px] ${svnRio.className} whitespace-pre-line`}
+              className={mergeClassnames(
+                'absolute left-0 top-2 line-clamp-3 w-full max-w-[180px] whitespace-pre-line text-wrap px-3 text-center text-lg text-primary-50',
+                'sm:px-5 sm:text-[22px]',
+                svnRio.className,
+              )}
             >
               {props.title}
             </div>
-            <div className="absolute bottom-[8px] left-0 line-clamp-3 w-full max-w-[180px] text-wrap px-3 text-center text-[10px] font-bold italic text-primary-50 sm:px-5 sm:text-xs">
+            <div
+              className={mergeClassnames(
+                'absolute bottom-2 left-0 line-clamp-3 w-full max-w-[180px] text-wrap px-3 text-center text-[10px] font-bold italic text-primary-50',
+                'sm:px-5 sm:text-xs',
+              )}
+            >
               {`_${props.authorName}_`}
             </div>
           </figure>
           {/* Back Face */}
-          <figure className="absolute m-0 flex size-full flex-col justify-between gap-[10px] rounded bg-gradient-to-l from-[#b1b1b1] via-[#e3e3e3] to-[#f8f8f8] p-2 backface-hidden rotate-y-180">
+          <figure className="absolute m-0 flex size-full flex-col justify-between gap-[10px] rounded bg-left-page p-2 backface-hidden rotate-y-180">
             <h6 className="line-clamp-2 text-lg font-medium leading-6 text-primary-10 sm:text-xl sm:leading-7">
-              {props.highlightTitle
-                ? (
-                  // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
-                    <div dangerouslySetInnerHTML={{ __html: props.highlightTitle || '' }} />
-                  )
-                : (
-                    `${props.title}`
-                  )}
+              {props.title}
+              {/* {props.highlightTitle */}
+              {/*  ? ( */}
+              {/*    // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml */}
+              {/*      <div dangerouslySetInnerHTML={{ __html: props.highlightTitle || '' }} /> */}
+              {/*    ) */}
+              {/*  : ( */}
+              {/*      `${props.title}` */}
+              {/*    )} */}
             </h6>
-            <p className="font-['DVN-Poppins] text-xs leading-5 tracking-wider text-neutral-30 sm:text-sm">
+            <p className="font-['DVN-Poppins] break-all text-xs leading-5 tracking-wider text-neutral-30 sm:text-sm">
               {props.highlightAbstract
-                ? (
-                  // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
-                    <div dangerouslySetInnerHTML={{ __html: `${abstractPages[1]}...` }} />
-                  )
-                : (
-                    `${abstractPages[1]}...`
-                  )}
+                ? renderHighlightedText(`${abstractPages[0]}...`)
+                : `${abstractPages[0]}...`}
             </p>
           </figure>
         </div>

@@ -1,6 +1,7 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
 import type { PaginatedResponse } from '../../type';
+
 import type { StoryReviewsOverview } from './storiesType';
 
 const getReviewsOverview = (
@@ -10,9 +11,6 @@ const getReviewsOverview = (
     query: id => ({
       url: `stories/${id}/reviews-overview`,
     }),
-    serializeQueryArgs: ({ endpointName }) => {
-      return `${endpointName}`;
-    },
     providesTags: result =>
       result
         ? [

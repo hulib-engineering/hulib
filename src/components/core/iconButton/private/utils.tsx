@@ -43,7 +43,7 @@ export const getButtonSize = (size?: ButtonSizes): string => {
     return 'h-8 p-2 text-base';
   }
   if (size === 'lg') {
-    return 'h-12 p-3 text-xl';
+    return 'h-11 p-3 text-xl';
   }
   return 'h-10 p-[10px] text-xl';
 };

@@ -9,6 +9,7 @@ export type GetTopicsParams = {
   page?: number;
   limit?: number;
   name?: string;
+  type?: 'most-popular' | string;
 };
 
 export type CreateTopicParams = {

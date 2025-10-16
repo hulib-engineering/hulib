@@ -1,3 +1,5 @@
+import type { Topic } from '@/libs/services/modules/topics/topicType';
+
 export type Huber = {
   id: number;
   email: string;
@@ -32,10 +34,12 @@ export type Huber = {
     userId: number;
     topicId: number;
   }>;
+  sharingTopics?: Topic[];
 };
 
-export type HuberlistParams = {
+export type HuberListParams = {
   page: number;
   limit: number;
   topicIds: string[];
+  type?: 'recommended' | string;
 };

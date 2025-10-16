@@ -6,7 +6,7 @@ import type { z } from 'zod';
 import { mergeClassnames } from '@/components/core/private/utils';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
-import { Chip } from '@/components/common/chip/Chip';
+import { Chip } from '@/components/core/chip/Chip';
 import { Cover } from '@/components/Cover';
 import TextArea from '@/components/core/textArea/TextArea';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
