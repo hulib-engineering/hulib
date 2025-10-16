@@ -433,8 +433,11 @@
     "cancel": "Hủy",
     "confirm": "Xác nhận",
     "delete_confirm_all": "Bạn có chắc chắn muốn xoá tất cả ảnh đại diện của mình không?",
+    "delete_confirm_all_hubers": "Bạn có chắc chắn muốn xoá tất huber yêu thích của mình không?",
     "no_favorite_story": "Không có câu chuyện yêu thích nào",
-    "explore_stories": "Khám phá các câu chuyện"
+    "no_favorite_huber": "Không có huber yêu thích nào",
+    "explore_stories": "Khám phá các câu chuyện",
+    "explore_hubers": "Khám phá hubers"
   },
   "HumanBookRegister": {
     "register_as_a_human_book": "Đăng ký làm Người Sách",
@@ -528,6 +531,7 @@
     "hide_all": "Ẩn tất cả",
     "story_added_to_favorites": "Thêm vào danh sách yêu thích thành công",
     "story_removed_from_favorites": "Xóa khỏi danh sách yêu thích thành công",
+    "huber_removed_from_favorites": "Thành công xoá huber hỏi danh sách yêu thích",
     "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
     "save_for_late": "Lưu lại để đọc sau",
     "schedule_meeting": "Đặt lịch hẹn",

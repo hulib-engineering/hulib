@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import Image from 'next/image';
 import Button from '@/components/core/button/Button';
-import { Chip } from '@/components/common/chip/Chip';
+import { Chip } from '@/components/core/chip/Chip';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { StoryCard } from '@/components/stories/StoryCard';
@@ -13,8 +13,8 @@ import { useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
 import type { Topic } from '@/libs/services/modules/user/userType';
 import Modal from '@/components/Modal';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
-import { StoriesSkeleton } from '@/components/stories/StoriesSkeleton';
 import StoryForm from '@/layouts/stories/StoryForm';
+import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
 
 type TTopic = {
   userId: number;

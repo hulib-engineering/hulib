@@ -2,36 +2,36 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { CaretDown } from '@phosphor-icons/react';
+import { omit } from 'lodash';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import type { z } from 'zod';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import type { z } from 'zod';
 
-import { CaretDown } from '@phosphor-icons/react';
-import { omit } from 'lodash';
 import Button from '@/components/core/button/Button';
-import CustomCoverBook from '@/components/common/CustomCoverBook';
-import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import Combobox from '@/components/core/combobox/Combobox';
 import Form from '@/components/core/form/Form';
+import MenuItem from '@/components/core/menuItem/MenuItem';
+import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';
+import TextInput from '@/components/core/textInput-v1/TextInput';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import Label from '@/components/Label';
+import type { TFilter } from '@/layouts/scheduling/BigCalendar';
 import { useAppSelector } from '@/libs/hooks';
+import { useUploadMutation } from '@/libs/services/modules/files';
 import {
   useCreateStoryMutation,
   useGetRelatedTopicsQuery,
   useUpdateStoryMutation,
 } from '@/libs/services/modules/stories';
-import { StoriesValidation } from '@/validations/StoriesValidation';
-import { mergeClassnames } from '@/components/core/private/utils';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
-import Combobox from '@/components/core/combobox/Combobox';
-import MenuItem from '@/components/core/menuItem/MenuItem';
 import { useGetTopicsQuery } from '@/libs/services/modules/topics';
-import type { TFilter } from '@/layouts/scheduling/BigCalendar';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
-import TextInput from '@/components/core/textInput-v1/TextInput';
-import { useUploadMutation } from '@/libs/services/modules/files';
-import Label from '@/components/Label';
+import { StoriesValidation } from '@/validations/StoriesValidation';
+import { CustomCover } from '@/components/stories/CustomCover';
 
 const CoverAssets = [
   '/assets/images/cover-book/story_background_yellow.png',
@@ -133,7 +133,6 @@ export default function StoryForm(props: IStoryFormProps) {
   const [currentCoverIndex, setCurrentCoverIndex] = useState(0);
   const [topicQuery, setTopicQuery] = useState('');
   const [selectedTopics, setSelectedTopics] = useState<TFilter[]>(storyRelatedTopics);
-  console.log('selectedTopics', selectedTopics);
   const queriedTopicOptions = filter(topicQuery, topicOptions || []);
 
   useEffect(() => {
@@ -336,11 +335,9 @@ export default function StoryForm(props: IStoryFormProps) {
                     <div className="flex gap-2">
                       {CoverAssets.map((cover, index) => (
                         <div key={index} className="flex flex-col gap-2">
-                          <CustomCoverBook
+                          <CustomCover
                             titleStory={title}
                             authorName={userInfo?.fullName}
-                            widthImage={180}
-                            heightImage={255}
                             srcImage={cover}
                             active={selectedCoverSample === cover}
                           />
@@ -373,11 +370,9 @@ export default function StoryForm(props: IStoryFormProps) {
                       {CoverAssets.map((cover, index) => (
                         <SwiperSlide key={index}>
                           <div className="flex items-center justify-center">
-                            <CustomCoverBook
+                            <CustomCover
                               titleStory={title}
                               authorName={userInfo?.fullName}
-                              widthImage={180}
-                              heightImage={255}
                               srcImage={cover}
                               active={selectedCoverSample === cover}
                             />

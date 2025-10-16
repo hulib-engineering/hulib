@@ -15,15 +15,12 @@ export type StoriesParams = {
   page: number;
   limit: number;
   topicIds?: string[];
-  sortBy?: string;
+  sort?: { orderBy: string; order: 'ASC' | 'DESC' }[];
+  type?: 'most-popular' | string;
 };
 
 export type SearchParams = {
   keyword: string;
-};
-
-export type StoryDetailsParams = {
-  id: number;
 };
 
 export enum PublishStatusEnum {

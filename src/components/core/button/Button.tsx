@@ -14,7 +14,7 @@ import {
 } from '@/components/core/button/ButtonComponent';
 import type { ButtonProps } from '@/components/core/button/private/types';
 
-export type Props<C extends ElementType> = PropsWithChildren<ButtonProps<C>> &
+type Props<C extends ElementType> = PropsWithChildren<ButtonProps<C>> &
   Omit<ComponentPropsWithoutRef<C>, keyof ButtonProps<C>>;
 
 const Button = <C extends ElementType = 'button'>({

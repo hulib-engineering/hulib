@@ -11,9 +11,9 @@ import Image from 'next/image';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
-import { Chip } from '@/components/common/chip/Chip';
+import { Chip } from '@/components/core/chip/Chip';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import { Spinner } from '@/components/common/Spinner';
+import { Spinner } from '@/components/loadingState/Spinner';
 import { EmojiRateScale } from '@/components/EmojiRateScale';
 import IconButton from '@/components/core/iconButton/IconButton';
 import Label from '@/components/Label';

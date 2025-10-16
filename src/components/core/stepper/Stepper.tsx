@@ -73,7 +73,7 @@ export const StepLabel = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export function StepConnector({ index }: { index: number }) {
+function StepConnector({ index }: { index: number }) {
   const { activeStep } = useStepperContext('StepConnector');
 
   const isCompleted = activeStep > index;

@@ -11,7 +11,7 @@ import {
   useUpdateReadingSessionMutation,
 } from '@/libs/services/modules/reading-session';
 import PreSurvey from '@/layouts/reading/PreSurvey';
-import { Spinner } from '@/components/common/Spinner';
+import { Spinner } from '@/components/loadingState/Spinner';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { StatusEnum } from '@/types/common';
 import { useStopCloudRecordingMutation } from '@/libs/services/modules/agora';

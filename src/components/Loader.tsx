@@ -1,3 +1,5 @@
+// TO-DO: need to be removed in the future
+
 import React from 'react';
 
 import { mergeClassnames } from '@/components/core/private/utils';
