@@ -24,6 +24,7 @@ type IOverviewSectionProps = {
 
 const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
   const isHuber = data.role?.id === Role.HUBER;
+  const toBeHuber = data.role?.id === Role.LIBER && data.approval === 'Pending';
 
   const locale = useLocale();
 
@@ -67,7 +68,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
 
   return (
     <>
-      {isHuber && data?.humanBookTopic && data?.humanBookTopic?.length > 0 && (
+      {(isHuber || toBeHuber) && data?.humanBookTopic && data?.humanBookTopic?.length > 0 && (
         <div className="flex flex-col gap-2 border-b-[0.5px] border-neutral-90 py-3 lg:gap-4 lg:border-none lg:py-0">
           <p className="font-medium text-black">Topic</p>
           <div className="flex flex-row gap-x-2">
@@ -125,7 +126,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
               <p className="text-sm text-neutral-20">{data?.bio}</p>
             )}
       </div>
-      {isHuber && (
+      {(isHuber || toBeHuber) && (
         <div className="flex flex-col gap-5 border-b-[0.5px] border-neutral-90 py-3 lg:gap-4 lg:border-none lg:py-0">
           <div className="flex items-center justify-between">
             <p className="font-medium text-black">Video Introduction</p>

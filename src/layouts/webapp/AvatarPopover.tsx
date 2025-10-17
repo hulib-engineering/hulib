@@ -11,7 +11,7 @@ import {
 } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import React, { useMemo } from 'react';
 
 import Avatar from '@/components/core/avatar/Avatar';
@@ -22,10 +22,30 @@ import { useAppSelector } from '@/libs/hooks';
 import { Role } from '@/types/common';
 
 export default function AvatarPopover() {
+  const locale = useLocale();
   const t = useTranslations('HeaderWebApp');
 
   const { id, role } = useAppSelector(state => state.auth.userInfo);
   const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
+
+  const handleSignOut = async () => {
+    const { protocol, hostname, port } = window.location;
+    const localePrefix = locale === 'vi' ? '' : `/${locale}`;
+    const isAdminHost = hostname.startsWith('admin.');
+
+    const targetOrigin = isAdminHost
+      ? `${protocol}//admin.localhost:${port || '3000'}`
+      : `${protocol}//localhost:${port || '3000'}`;
+
+    // optional: clear local/session storage if you stash anything there
+    localStorage.clear();
+    sessionStorage.clear();
+
+    await signOut({
+      redirect: true,
+      callbackUrl: `${targetOrigin}${localePrefix}/auth/login`,
+    });
+  };
 
   const AvatarPopoverMenuItems = useMemo(
     () => [
@@ -74,10 +94,10 @@ export default function AvatarPopover() {
       {
         label: t('sign_out'),
         icon: <SignOut className="text-xl text-red-60" />,
-        onClick: () => signOut({ callbackUrl: '/auth/login' }),
+        onClick: handleSignOut,
       },
     ],
-    [id, t],
+    [handleSignOut, id, t],
   );
   const AvatarPopoverMenuItemsByRole = useMemo(() => {
     return (
@@ -99,7 +119,11 @@ export default function AvatarPopover() {
         }}
       >
         <div className="relative size-11">
-          <Avatar imageUrl={avatarUrl} className="size-11" />
+          <Avatar
+            imageUrl={role?.id === Role.ADMIN
+              ? '/assets/images/admin-ava.png' : (avatarUrl || '/assets/images/ava-placeholder.png')}
+            className="size-11"
+          />
           <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
             <CaretDown size={12} />
           </div>
