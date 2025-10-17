@@ -72,7 +72,7 @@ type PageContentData =
   };
 type IDetailedStoryProps = {
   title: string;
-  cover: string;
+  cover?: string;
   authorName: string;
   abstract: string;
   onDynamicHeightChange?: (height: number) => void;
@@ -80,7 +80,7 @@ type IDetailedStoryProps = {
 
 export const DetailedStory = ({
   title,
-  cover,
+  cover = '/assets/images/half-title-illus.png',
   authorName,
   abstract,
   onDynamicHeightChange,
@@ -242,7 +242,7 @@ export const DetailedStory = ({
                           className="absolute -left-24 -top-20 size-56 overflow-hidden rounded-full border-4 border-white shadow-xl md:size-96"
                         >
                           <Image
-                            src={cover}
+                            src={cover ?? '/assets/images/half-title-illus.png'}
                             alt="Author avatar"
                             width={500}
                             height={500}

@@ -10,30 +10,30 @@ const getUsers = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       url: 'users',
       params: {
         page: params?.page || 1,
-        limit: params?.limit,
+        limit: params?.limit || 12,
         filter: params?.filter || '',
         sort: params?.sort || '',
         role: params?.role || '',
       },
     }),
-    serializeQueryArgs: ({ endpointName, queryArgs }) => {
-      return `${endpointName}(${queryArgs?.filter})`;
-    },
-    merge: (currentCache, newItems, { arg }) => {
-      if (arg?.page === 1) {
-        return newItems;
-      }
-      return {
-        ...newItems,
-        data: [...currentCache.data, ...newItems.data],
-      };
-    },
-    forceRefetch: ({ currentArg, previousArg }) => {
-      return (
-        currentArg?.page !== previousArg?.page
-        || currentArg?.filter !== previousArg?.filter
-      );
-    },
+    // serializeQueryArgs: ({ endpointName, queryArgs }) => {
+    //   return `${endpointName}(${queryArgs?.filter})`;
+    // },
+    // merge: (currentCache, newItems, { arg }) => {
+    //   if (arg?.page === 1) {
+    //     return newItems;
+    //   }
+    //   return {
+    //     ...newItems,
+    //     data: [...currentCache.data, ...newItems.data],
+    //   };
+    // },
+    // forceRefetch: ({ currentArg, previousArg }) => {
+    //   return (
+    //     currentArg?.page !== previousArg?.page
+    //     || currentArg?.filter !== previousArg?.filter
+    //   );
+    // },
     providesTags: result =>
       result
         ? [

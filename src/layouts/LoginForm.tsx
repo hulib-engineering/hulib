@@ -9,6 +9,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
+import { useLocale } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import Input from '@/components/core/input/Input';
@@ -21,6 +22,8 @@ import GoogleIcon from '@/public/assets/icons/google-icon.svg';
 import { LoginValidation } from '@/validations/LoginValidation';
 
 const LoginForm = () => {
+  const currentLocale = useLocale();
+
   const { update } = useSession();
 
   const [login] = useLoginAsManagerMutation();
@@ -55,7 +58,9 @@ const LoginForm = () => {
           id: result.user.id,
           accessToken: result.token,
           role: result.user.role.name,
-          callbackUrl: `${window.location.origin}/home`,
+          redirect: true,
+          // Use relative URL (important!)
+          callbackUrl: `/${currentLocale}/home`,
         });
       }
     } catch (error: any) {

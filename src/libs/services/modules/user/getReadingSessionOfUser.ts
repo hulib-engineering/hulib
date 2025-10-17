@@ -38,7 +38,7 @@ const getReadingSessionOfUser = (
         }`,
       };
     },
-    providesTags: [{ type: 'ReadingSession' }],
+    providesTags: [{ type: 'ReadingSession', id: 'LIST' }],
   });
 
 export default getReadingSessionOfUser;

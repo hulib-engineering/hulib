@@ -10,6 +10,7 @@ export const authOptions = {
   // Configure one or more authentication providers
   debug: true,
   strategy: 'jwt',
+  trustHost: true,
   // secret: Env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
@@ -109,6 +110,26 @@ export const authOptions = {
       session.role = token.role; // 🔹 expose role to client session
 
       return session;
+    },
+    redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+      try {
+        if (url.startsWith('/')) {
+          if (url.includes('/admin/')) {
+            return `http://admin.localhost:3000${url}`;
+          }
+          return `http://localhost:3000${url}`;
+        }
+
+        const u = new URL(url);
+        const allowed = ['http://localhost:3000', 'http://admin.localhost:3000'];
+        if (allowed.includes(`${u.protocol}//${u.host}`)) {
+          return url;
+        }
+
+        return baseUrl;
+      } catch {
+        return baseUrl;
+      }
     },
   },
 };

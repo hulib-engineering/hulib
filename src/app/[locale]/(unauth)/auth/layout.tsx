@@ -1,3 +1,6 @@
+'use client';
+
+import { SessionProvider } from 'next-auth/react';
 import type { ReactNode } from 'react';
 
 import { UnauthTemplate } from '@/templates/UnauthTemplate';
@@ -7,5 +10,9 @@ export default function Layout({
 }: {
   children: ReactNode;
 }) {
-  return <UnauthTemplate>{children}</UnauthTemplate>;
+  return (
+    <SessionProvider>
+      <UnauthTemplate>{children}</UnauthTemplate>
+    </SessionProvider>
+  );
 }

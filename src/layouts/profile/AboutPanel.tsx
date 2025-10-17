@@ -17,6 +17,9 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import type { User } from '@/features/users/types';
 import AboutSectionRenderer from '@/layouts/profile/AboutSectionRenderer';
 import { Role } from '@/types/common';
+import { CustomCover } from '@/components/stories/CustomCover';
+import { DetailedStory } from '@/components/stories/DetailedStory';
+import type { Story } from '@/libs/services/modules/stories/storiesType';
 
 type TAboutSectionMenu = {
   type: string;
@@ -24,7 +27,13 @@ type TAboutSectionMenu = {
   icon: ReactNode;
 };
 
-const AboutPanel = ({ data, editable }: { data: User; editable?: boolean }) => {
+const AboutPanel = ({
+  data,
+  editable,
+  awaiting = false,
+}: { data: User & { firstStory: Story }; editable?: boolean; awaiting?: boolean }) => {
+  console.log('Data', data);
+
   const t = useTranslations('MyProfile.about_panel');
 
   const [currentSection, setCurrentSection] = useState('overview');
@@ -69,11 +78,11 @@ const AboutPanel = ({ data, editable }: { data: User; editable?: boolean }) => {
   ];
 
   return (
-    <div className="size-full bg-white">
+    <div className="w-full overflow-hidden bg-white lg:rounded-xl lg:shadow-sm">
       {/* Mobile View - Accordion Style */}
       <div className="flex w-full flex-col rounded-xl border-neutral-90 px-5 py-4 lg:hidden">
         <div className="px-3 py-1 font-medium leading-5 text-neutral-10">
-          Giới thiệu
+          {awaiting ? 'Information' : 'Giới thiệu'}
         </div>
         <Accordion defaultValue="about-section-overview" singleOpen>
           {sectionMenu.map(section => (
@@ -108,33 +117,80 @@ const AboutPanel = ({ data, editable }: { data: User; editable?: boolean }) => {
       </div>
 
       {/* Desktop View - Side by Side */}
-      <div className="hidden rounded-xl border-neutral-90 bg-white shadow-md lg:flex">
-        <div className="flex w-1/4 flex-col gap-1 border-r border-neutral-80 bg-white px-4 py-5">
-          <div className="rounded-lg bg-white px-3 py-1 font-medium text-neutral-10">
-            Giới thiệu
-          </div>
-          {sectionMenu.map((section, index) => (
-            <MenuItem
-              key={index}
-              as="button"
-              isSelected={currentSection === section.type}
-              onClick={() => setCurrentSection(section.type)}
-            >
-              {section.icon}
-              <MenuItem.Title
-                className={mergeClassnames(
-                  'text-neutral-10 ',
-                  currentSection === section.type && 'text-primary-60',
-                )}
+      <div className="hidden rounded-xl border-neutral-90 bg-white lg:flex">
+        <div className="flex w-1/4 flex-col gap-3 border-r border-neutral-80 bg-white px-4 py-5">
+          <div className="flex flex-col gap-1">
+            <div className="rounded-lg bg-white px-3 py-1 font-medium text-neutral-10">
+              {awaiting ? 'Information' : 'Giới thiệu'}
+            </div>
+            {sectionMenu.map((section, index) => (
+              <MenuItem
+                key={index}
+                as="button"
+                isSelected={currentSection === section.type}
+                onClick={() => setCurrentSection(section.type)}
               >
-                {section.label}
-              </MenuItem.Title>
-            </MenuItem>
-          ))}
+                {section.icon}
+                <MenuItem.Title
+                  className={mergeClassnames(
+                    'text-neutral-10 ',
+                    currentSection === section.type && 'text-primary-60',
+                  )}
+                >
+                  {section.label}
+                </MenuItem.Title>
+              </MenuItem>
+            ))}
+          </div>
+          {awaiting && (
+            <div className="flex flex-col gap-1">
+              <div className="rounded-lg bg-white px-3 py-1 font-medium text-neutral-10">
+                Story
+              </div>
+              <MenuItem
+                as="button"
+                type="button"
+                isSelected={currentSection === 'first-story'}
+                onClick={() => setCurrentSection('first-story')}
+              >
+                <Books
+                  className={mergeClassnames(
+                    'text-neutral-20 text-xl hulib-open:text-primary-20 lg:hover:text-primary-60',
+                    currentSection === 'first-story' && 'lg:text-primary-60',
+                  )}
+                />
+                <MenuItem.Title
+                  className={mergeClassnames(
+                    'text-neutral-10 ',
+                    currentSection === 'first-story' && 'text-primary-60',
+                  )}
+                >
+                  Story
+                </MenuItem.Title>
+              </MenuItem>
+            </div>
+          )}
         </div>
-        <div className="flex flex-1 flex-col gap-6 rounded-xl border-r bg-white px-7 py-5">
-          <AboutSectionRenderer type={currentSection} data={data} editable={editable} />
-        </div>
+        {currentSection !== 'first-story' ? (
+          <div className="flex flex-1 flex-col gap-6 rounded-xl border-r bg-white px-7 py-5">
+            <AboutSectionRenderer type={currentSection} data={data} editable={editable} />
+          </div>
+        ) : (
+          <div className="flex flex-1 flex-col gap-3 rounded-xl border-r bg-white p-2">
+            <div className="flex gap-4 rounded-2xl p-3">
+              <CustomCover titleStory={data?.firstStory?.title} authorName={data?.fullName} />
+              <div className="flex flex-col gap-3">
+                <h5 className="text-2xl font-medium leading-8 text-primary-10">{data?.fullName}</h5>
+              </div>
+            </div>
+            <DetailedStory
+              title={data?.firstStory?.title}
+              cover={data?.photo?.path}
+              authorName={data?.fullName}
+              abstract={data?.firstStory?.abstract}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
