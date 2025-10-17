@@ -35,6 +35,7 @@ export type ReadingSession = {
   review: string;
   recordingUrl: string;
   sessionStatus: string;
+  rejectReason: string;
   startedAt: string;
   endedAt: string;
   startTime: string;
