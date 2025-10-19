@@ -57,6 +57,7 @@ const HuberCard = (
             width={270}
             height={270}
             className="aspect-[1/1] h-auto w-full rounded-[32px] object-cover"
+            unoptimized
           />
           {props.awaiting && (
             <div className="absolute bottom-2 left-0 flex w-full items-center justify-center">
@@ -72,6 +73,7 @@ const HuberCard = (
             width={270}
             height={270}
             className="aspect-[1/1] h-auto w-full rounded-[32px] object-cover"
+            unoptimized
           />
 
           <div className="absolute bottom-0 left-0 hidden h-[140px] w-full bg-gradient-to-b from-[#343330]/0 to-[#343330] bg-blend-multiply lg:group-hover:block" />
