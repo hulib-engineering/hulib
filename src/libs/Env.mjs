@@ -16,6 +16,7 @@ export const Env = createEnv({
     GOOGLE_SECRET: z.string().min(1),
     NEXTAUTH_SECRET: z.string().min(1),
     LOGTAIL_SOURCE_TOKEN: z.string().optional(),
+    ADMIN_HOST: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_REACT_APP_BACKEND_VERSION: z.string().trim().min(1),
@@ -29,6 +30,7 @@ export const Env = createEnv({
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().trim().min(9),
     NEXT_PUBLIC_UPLOAD_PRESET: z.string().trim().min(9),
     NEXT_PUBLIC_AGORA_APP_ID: z.string().trim().min(1),
+    NEXT_PUBLIC_APP_URL: z.string().trim().min(1),
   },
   shared: {
     NODE_ENV: z.enum(['test', 'development', 'production']).optional(),
@@ -47,6 +49,7 @@ export const Env = createEnv({
     GOOGLE_SECRET: process.env.GOOGLE_SECRET,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NODE_ENV: process.env.NODE_ENV,
+    ADMIN_HOST: process.env.ADMIN_HOST,
     NEXT_PUBLIC_REACT_APP_BACKEND_VERSION:
       process.env.NEXT_PUBLIC_REACT_APP_BACKEND_VERSION,
     NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT:
@@ -65,5 +68,6 @@ export const Env = createEnv({
     NEXT_PUBLIC_UPLOAD_PRESET: process.env.NEXT_PUBLIC_UPLOAD_PRESET,
     LOGTAIL_SOURCE_TOKEN: process.env.LOGTAIL_SOURCE_TOKEN,
     NEXT_PUBLIC_AGORA_APP_ID: process.env.NEXT_PUBLIC_AGORA_APP_ID,
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   },
 });

@@ -83,6 +83,7 @@ export const getButtonVariants = ({
           'text-neutral-20 bg-transparent',
           'hover:bg-neutral-90 hover:border hover:border-solid hover:border-neutral-90',
           'focus:bg-neutral-90 focus:shadow-[0 0 0 2px focus:shadow-primary-60',
+          disabled && 'text-neutral-70',
         );
   }
   return animation === 'error'
