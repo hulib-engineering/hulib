@@ -96,6 +96,7 @@ export default {
         blue: {
           50: '#009BEE',
           90: '#C9ECFF',
+          98: '#F5FBFF',
           100: '#ebf8ff',
           200: '#bee3f8',
           250: '#a8d5fe',
@@ -124,6 +125,7 @@ export default {
           40: '#DBAE0A',
           50: '#F3C00C',
           60: '#F6CE3C',
+          70: '#F9DA6C',
           80: '#FBE79D',
           90: '#FDF3CE',
           98: '#FFFDF5',

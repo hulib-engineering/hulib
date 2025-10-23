@@ -13,6 +13,7 @@ export type Huber = {
   deletedAt?: string | null;
   genderId: number;
   roleId: number;
+  role?: { id: number; path: string };
   statusId: number;
   approval: string;
   photoId: string;
