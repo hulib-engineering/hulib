@@ -1,8 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
-import { AuthLayout } from '@/layouts/AuthLayout';
-import { LoginWithSession } from '@/layouts/LoginForm';
+import AdminLoginForm from '@/layouts/admin/AdminLoginForm';
 
 export async function generateMetadata({
   params: { locale },
@@ -18,12 +17,5 @@ export async function generateMetadata({
 }
 
 export default async function Index() {
-  return (
-    <AuthLayout
-      illustrationImage="/assets/images/login-illustration.svg"
-      pathName="login"
-    >
-      <LoginWithSession />
-    </AuthLayout>
-  );
+  return <AdminLoginForm />;
 }

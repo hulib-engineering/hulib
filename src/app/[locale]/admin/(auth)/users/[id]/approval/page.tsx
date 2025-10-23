@@ -1,19 +1,20 @@
 'use client';
 
-import { ArrowLeft, CheckFat, X } from '@phosphor-icons/react';
+import { ArrowLeft, Check, X } from '@phosphor-icons/react';
 import { redirect, useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import * as React from 'react';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
-import { Chip } from '@/components/core/chip/Chip';
 import { Spinner } from '@/components/loadingState/Spinner';
 import { ProfileCover } from '@/components/ProfileCover';
 import AboutPanel from '@/layouts/profile/AboutPanel';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import HuberConfirmationModal from '@/layouts/admin/HuberConfirmationModal';
+import { Chip } from '@/components/core/chip/Chip';
 
 export default function Index() {
   const { status } = useSession();
@@ -63,9 +64,9 @@ export default function Index() {
           size="lg"
           iconLeft={<ArrowLeft />}
           className="w-fit text-black"
-          onClick={() => router.push('/home')}
+          onClick={() => router.push('/admin/home')}
         >
-          Back to Awaiting approval - Hubers
+          Back
         </Button>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col overflow-hidden shadow-sm lg:rounded-xl">
@@ -73,35 +74,43 @@ export default function Index() {
             <div className="border-b border-neutral-90 bg-white px-4 pb-6 lg:px-10">
               <div className="flex items-center justify-between">
                 <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
-                  <div className="relative h-[68px] w-[100px] lg:h-[120px] lg:w-40">
+                  <div className="relative h-[68px] w-[100px] lg:h-[120px] lg:w-48">
                     <Avatar
                       imageUrl={data?.photo?.path ?? ''}
-                      className="absolute -top-8 left-0 size-[100px] lg:size-40"
+                      className="absolute -top-10 left-[18px] size-[100px] lg:size-40"
                     />
-                  </div>
-
-                  <div className="flex flex-col gap-1 lg:gap-4 lg:py-6">
-                    <div className="flex flex-col gap-3">
-                      <Chip
-                        disabled
-                        className="h-full w-fit rounded-full bg-orange-90 px-4 py-1 text-xs leading-[14px] text-orange-50 opacity-100"
-                      >
-                        Waiting for approval
-                      </Chip>
-                      <h4 className="text-[28px] font-medium leading-9 text-black">{data?.fullName}</h4>
+                    <div className="absolute bottom-0 left-0 flex w-full">
+                      <span className="flex w-full items-center justify-center rounded-full bg-primary-60 px-4 py-2 text-xs leading-[14px] text-white">Waiting for approval</span>
                     </div>
                   </div>
-
+                  <div className="flex items-center gap-4">
+                    <h4 className="text-[28px] font-medium leading-9 text-black">{data?.fullName}</h4>
+                    <div className="flex items-center gap-1">
+                      <Chip
+                        disabled
+                        className="w-fit rounded-full border border-yellow-70 bg-yellow-98 px-4 py-1 text-xl font-medium uppercase leading-tight text-yellow-40 opacity-100"
+                      >
+                        Liber
+                      </Chip>
+                      <Image src="/assets/icons/gradient-arrow-right.svg" alt="Arrow right" width={32} height={32} />
+                      <Chip
+                        disabled
+                        className="w-fit rounded-full border border-primary-80 bg-primary-90 px-4 py-1 text-xl font-medium uppercase leading-tight text-primary-60 opacity-100"
+                      >
+                        Huber
+                      </Chip>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <AboutPanel data={data} editable={false} awaiting />
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-end gap-3">
           <Button
             size="lg"
-            iconLeft={<CheckFat />}
+            iconLeft={<Check />}
             className="w-60"
             onClick={() => setIsApproveHuberModalOpen(true)}
           >

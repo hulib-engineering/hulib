@@ -99,7 +99,7 @@ export default function AdvancedSearch() {
       search={qString}
       onChangeSearch={setQString}
       onChangeOpen={setOpen}
-      className={mergeClassnames(open && 'w-[317px]')}
+      className={mergeClassnames(open && 'w-full lg:w-[317px]')}
     >
       <Search.Input
         className={mergeClassnames(

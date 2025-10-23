@@ -8,18 +8,15 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
-import { useLocale } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
+import TextInput from '@/components/core/textInput-v1/TextInput';
 import type { EmailLoginResponse } from '@/libs/services/modules/auth';
 import { useLoginAsManagerMutation } from '@/libs/services/modules/auth';
 import { LoginValidation } from '@/validations/LoginValidation';
-import TextInput from '@/components/core/textInput-v1/TextInput';
 
 export default function AdminLoginForm() {
   const { update } = useSession();
-
-  const currentLocale = useLocale();
 
   const [login] = useLoginAsManagerMutation();
 
@@ -55,9 +52,7 @@ export default function AdminLoginForm() {
           id: result.user.id,
           accessToken: result.token,
           role: result.user.role.name,
-          redirect: true,
-          // Use relative URL (important!)
-          callbackUrl: `/${currentLocale}/admin/home`,
+          callbackUrl: `${window.location.origin}/admin/home`,
         });
       }
     } catch (error: any) {

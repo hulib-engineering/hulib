@@ -10,7 +10,7 @@ export const authOptions = {
   // Configure one or more authentication providers
   debug: true,
   strategy: 'jwt',
-  trustHost: true,
+  basePath: '/api/auth', // ensures it won’t prefix locale
   // secret: Env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
@@ -105,31 +105,12 @@ export const authOptions = {
 
       return tokenParsed;
     },
+
     async session({ session, token }: { session: any; token: any }) {
       session.accessToken = token.accessToken;
       session.role = token.role; // 🔹 expose role to client session
 
       return session;
-    },
-    redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
-      try {
-        if (url.startsWith('/')) {
-          if (url.includes('/admin/')) {
-            return `http://admin.localhost:3000${url}`;
-          }
-          return `http://localhost:3000${url}`;
-        }
-
-        const u = new URL(url);
-        const allowed = ['http://localhost:3000', 'http://admin.localhost:3000'];
-        if (allowed.includes(`${u.protocol}//${u.host}`)) {
-          return url;
-        }
-
-        return baseUrl;
-      } catch {
-        return baseUrl;
-      }
     },
   },
 };

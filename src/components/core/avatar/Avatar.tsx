@@ -8,19 +8,15 @@ const AvatarRoot = ({
   children,
   size = 'md',
   className,
-}: AvatarProps) => {
-  console.log('imageUrl', imageUrl);
-
-  return (
-    <Wrapper
-      size={size}
-      imageUrl={imageUrl}
-      className={mergeClassnames(getStatusSize(size), className)}
-    >
-      {children && children}
-    </Wrapper>
-  );
-};
+}: AvatarProps) => (
+  <Wrapper
+    size={size}
+    imageUrl={imageUrl}
+    className={mergeClassnames(getStatusSize(size), className)}
+  >
+    {children && children}
+  </Wrapper>
+);
 
 const Status = ({
   position = { vertical: 'bottom', horizontal: 'right' },

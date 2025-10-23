@@ -1,6 +1,6 @@
 'use client';
 
-import { Books, UserList } from '@phosphor-icons/react';
+import { ArrowLeft, ArrowRight, Books, UserList } from '@phosphor-icons/react';
 import * as React from 'react';
 
 import { useState } from 'react';
@@ -15,44 +15,54 @@ import { ROLE_NAME, Role } from '@/types/common';
 import type { Huber } from '@/libs/services/modules/huber/huberType';
 import { HuberCard } from '@/components/hubers/HuberCard';
 import { TopicChip } from '@/layouts/webapp/ChipFilter';
+import Pagination from '@/components/core/pagination/Pagination';
+import IconButton from '@/components/core/iconButton/IconButton';
 
 const AdminPanels = [
   {
     type: 'storiesToPublish',
     label: 'Awaiting approval stories',
     icon: (
-      <Books />
+      <Books className="text-xl" />
     ),
   },
   {
     type: 'users',
     label: 'User management',
     icon: (
-      <UserList />
+      <UserList className="text-xl" />
     ),
   },
 ] as const;
 
 export default function Index() {
   const [currentSection, setCurrentSection] = useState<'storiesToPublish' | 'users'>('storiesToPublish');
-  // const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [byRole, setByRole] = useState<Role>(Role.HUBER);
 
   const { data: awaitingStories, isLoading: isAwaitingStoriesLoading } = useGetStoriesQuery({
-    page: 1,
-    limit: 50,
+    page: currentPage,
+    limit: 6,
   });
+  console.log('awaitingStories', awaitingStories);
   const {
     data: users,
     isLoading: isUsersLoading,
   } = useGetUsersQuery({
-    page: 1,
-    limit: 50,
-    role: ROLE_NAME[byRole].toLowerCase() ?? undefined,
+    page: currentPage,
+    limit: 12,
+    role: ROLE_NAME[byRole].toLowerCase(),
   });
   console.log('users', users);
   const isLoading = isAwaitingStoriesLoading || isUsersLoading;
 
+  const handleSectionClick = (type: 'storiesToPublish' | 'users') => {
+    setCurrentPage(1);
+    if (type === 'users') {
+      setByRole(Role.HUBER);
+    }
+    setCurrentSection(type);
+  };
   const renderEmptyState = () => (
     <div className="flex h-full flex-col items-center justify-center gap-5">
       <h1 className="text-[2.5rem] font-medium leading-tight">💕</h1>
@@ -84,12 +94,37 @@ export default function Index() {
                 <StoryCard key={item.id} data={item} showAdminControls />
               ))}
             </div>
-            {/* {awaitingStories?.hasNextPage && ( */}
-            {/* <StoryPagination */}
-            {/*  currentPage={currentPage} */}
-            {/*  totalPages={awaitingStories?.data?.totalPages || 0} */}
-            {/*  onPageChange={() => {}} */}
-            {/* /> */}
+            {awaitingStories?.meta && (
+              <Pagination
+                totalPages={awaitingStories?.meta?.totalPages || 0}
+                currentPage={awaitingStories?.meta?.currentPage - 1 || 0}
+                setCurrentPage={page => setCurrentPage(page + 1)}
+              >
+                <Pagination.PrevButton as="div">
+                  {({ disabled }) => (
+                    <IconButton
+                      icon={<ArrowLeft />}
+                      variant="ghost"
+                      size="lg"
+                      disabled={disabled}
+                      aria-label="Previous"
+                    />
+                  )}
+                </Pagination.PrevButton>
+                <Pagination.Pages as="button" type="button" />
+                <Pagination.NextButton as="div">
+                  {({ disabled }) => (
+                    <IconButton
+                      icon={<ArrowRight />}
+                      variant="ghost"
+                      size="lg"
+                      disabled={disabled}
+                      aria-label="Next"
+                    />
+                  )}
+                </Pagination.NextButton>
+              </Pagination>
+            )}
           </>
         ) : (
           <>
@@ -119,6 +154,37 @@ export default function Index() {
                 />
               ))}
             </div>
+            {users?.meta && (
+              <Pagination
+                totalPages={users?.meta?.totalPages || 0}
+                currentPage={users?.meta?.currentPage - 1 || 0}
+                setCurrentPage={page => setCurrentPage(page + 1)}
+              >
+                <Pagination.PrevButton as="div">
+                  {({ disabled }) => (
+                    <IconButton
+                      icon={<ArrowLeft />}
+                      variant="ghost"
+                      size="lg"
+                      disabled={disabled}
+                      aria-label="Previous"
+                    />
+                  )}
+                </Pagination.PrevButton>
+                <Pagination.Pages as="button" type="button" />
+                <Pagination.NextButton as="div">
+                  {({ disabled }) => (
+                    <IconButton
+                      icon={<ArrowRight />}
+                      variant="ghost"
+                      size="lg"
+                      disabled={disabled}
+                      aria-label="Next"
+                    />
+                  )}
+                </Pagination.NextButton>
+              </Pagination>
+            )}
           </>
 
         )}
@@ -135,7 +201,7 @@ export default function Index() {
               as="button"
               type="button"
               isSelected={currentSection === section.type}
-              onClick={() => setCurrentSection(section.type)}
+              onClick={() => handleSectionClick(section.type)}
             >
               {section.icon}
               <MenuItem.Title
@@ -146,6 +212,13 @@ export default function Index() {
               >
                 {section.label}
               </MenuItem.Title>
+              {section.type === 'storiesToPublish' && awaitingStories?.meta?.totalItems > 0 && (
+                <div
+                  className="flex h-4 w-[18px] items-center justify-center rounded-lg border border-white bg-red-50 px-1 py-[0.5px] text-[10px] font-medium leading-3 text-white"
+                >
+                  {awaitingStories?.meta?.totalItems}
+                </div>
+              )}
             </MenuItem>
           </div>
         ))}
