@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, ArrowRight, DotsThreeOutlineVertical, Heart } from '@phosphor-icons/react';
+import { ArrowLeft, DotsThreeOutline, Hammer, Heart, Warning } from '@phosphor-icons/react';
 import { redirect, useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import * as React from 'react';
@@ -10,7 +10,6 @@ import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import { Spinner } from '@/components/loadingState/Spinner';
-import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { ProfileCover } from '@/components/ProfileCover';
 import AboutPanel from '@/layouts/profile/AboutPanel';
@@ -18,10 +17,28 @@ import MyStoriesPanel from '@/layouts/profile/MyStoriesPanel';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import { Role } from '@/types/common';
 import UserActivityList from '@/layouts/profile/UserActivityList';
+import IconButton from '@/components/core/iconButton/IconButton';
+import MenuItem from '@/components/core/menuItem/MenuItem';
+import Popover from '@/components/core/popover/Popover';
+import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+import { ActionOnUserModal } from '@/layouts/admin/ActionOnUserModal';
 
 const ProfileTabs = [
   { value: 'about', label: 'About' },
   { value: 'stories', label: 'Stories' },
+  { value: 'activities', label: 'Activities' },
+];
+const ActionsOnUser = [
+  {
+    name: 'Warn this account',
+    icon: <Warning className="text-xl text-orange-50" />,
+    type: 'warn',
+  },
+  {
+    name: 'Ban this Account',
+    icon: <Hammer className="text-xl text-red-50" weight="fill" />,
+    type: 'ban',
+  },
 ];
 
 type TProfileTab = 'about' | 'stories' | string;
@@ -46,15 +63,16 @@ export default function Index() {
 
   const visibleTabs = useMemo(() => {
     // Someone else's profile
-    if (isHuber) {
-      return ProfileTabs.filter(tab => ['about', 'stories'].includes(tab.value));
+    if (!isHuber) {
+      return ProfileTabs.filter(tab => tab.value !== 'stories');
     }
 
-    return ProfileTabs.filter(tab => tab.value === 'about');
+    return ProfileTabs;
   }, [isHuber]);
 
   const [currentTab, setCurrentTab] = useState<TProfileTab>(tab || 'about');
-  const [showActivities, setShowActivities] = useState(false);
+  const [isWarnHuberModalOpen, setWarnHuberModalOpen] = useState(false);
+  const [isBanHuberModalOpen, setBanHuberModalOpen] = useState(false);
 
   useEffect(() => {
     // Update the URL query param
@@ -85,13 +103,10 @@ export default function Index() {
               size="lg"
               iconLeft={<ArrowLeft />}
               className="absolute inset-0 w-fit text-black"
-              onClick={() => router.push('/home')}
+              onClick={() => router.push('/admin/home')}
             >
-              Back to User management
+              Back
             </Button>
-            <IconButton variant="ghost" size="sm" className="absolute right-4 top-4" onClick={() => {}}>
-              <DotsThreeOutlineVertical weight="thin" />
-            </IconButton>
           </div>
         </ProfileCover>
         <div className="border-b border-neutral-90 bg-white px-4 pb-6 lg:px-10">
@@ -121,72 +136,83 @@ export default function Index() {
                   </div>
                 )}
               </div>
-
             </div>
-            {!showActivities && (
-              <Button
-                size="lg"
-                iconRight={<ArrowRight />}
-                onClick={() => setShowActivities(true)}
-              >
-                View Activity
-              </Button>
-            )}
+            <div className="py-6">
+              <Popover position="bottom-end" className="size-full">
+                <Popover.Trigger data-testid="actions-popover-trigger">
+                  <IconButton variant="ghost" size="lg">
+                    <DotsThreeOutline />
+                  </IconButton>
+                </Popover.Trigger>
+                <Popover.Panel className="flex w-60 flex-col gap-2 p-2">
+                  {({ open = false, close }) => (
+                    <div data-testid="actions-popover-content">
+                      {ActionsOnUser.map((item, index) =>
+                        (
+                          <MenuItem
+                            key={index}
+                            onClick={() => {
+                              if (open) {
+                                close();
+                              }
+                              if (item.type === 'warn') {
+                                setWarnHuberModalOpen(true);
+                              } else {
+                                setBanHuberModalOpen(true);
+                              }
+                            }}
+                          >
+                            {item.icon}
+                            <MenuItem.Title>{item.name}</MenuItem.Title>
+                          </MenuItem>
+                        ),
+                      )}
+                      <LocaleSwitcher className="lg:hidden" />
+                    </div>
+                  )}
+                </Popover.Panel>
+              </Popover>
+            </div>
           </div>
         </div>
-        {!showActivities && (
-          <div className="border-b-[0.5px] border-neutral-90 bg-white">
-            <div className="mx-auto flex w-full items-center gap-6 px-4 pt-6 lg:w-5/6 lg:gap-8 lg:px-0 lg:pt-4">
-              {visibleTabs.map(({ value, label }) => (
-                <div
-                  key={value}
-                  role="button"
-                  tabIndex={0}
-                  className={mergeClassnames(
-                    'h-full pb-2 pl-2 border-b-2 transition-colors font-medium text-sm',
-                    'lg:h-11 lg:px-2 lg:pt-1',
-                    currentTab === value ? 'border-primary-60 text-primary-60' : 'text-neutral-20',
-                  )}
-                  onClick={() => setCurrentTab(value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      setCurrentTab(value);
-                    }
-                  }}
-                >
-                  {label}
-                </div>
-              ))}
-            </div>
+        <div className="border-b-[0.5px] border-neutral-90 bg-white">
+          <div className="mx-auto flex w-full items-center gap-6 px-4 pt-6 lg:w-5/6 lg:gap-8 lg:px-0 lg:pt-4">
+            {visibleTabs.map(({ value, label }) => (
+              <div
+                key={value}
+                role="button"
+                tabIndex={0}
+                className={mergeClassnames(
+                  'h-full pb-2 pl-2 border-b-2 transition-colors font-medium text-sm',
+                  'lg:h-11 lg:px-2 lg:pt-1',
+                  currentTab === value ? 'border-primary-60 text-primary-60' : 'text-neutral-20',
+                )}
+                onClick={() => setCurrentTab(value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    setCurrentTab(value);
+                  }
+                }}
+              >
+                {label}
+              </div>
+            ))}
           </div>
-        )}
+        </div>
       </div>
-      {!showActivities ? (
-        <>
-          {currentTab === 'about' && (<AboutPanel data={data} editable={false} />)}
-          {currentTab === 'stories' && (
-            <MyStoriesPanel
-              topics={data?.humanBookTopic}
-              storyOwnerId={data.id}
-              showOthers
-            />
-          )}
-        </>
-      ) : (
-        <>
-          <Button
-            variant="ghost"
-            size="lg"
-            iconLeft={<ArrowLeft />}
-            fullWidth={false}
-            className="w-fit text-black"
-            onClick={() => setShowActivities(false)}
-          >
-            Back to Profile
-          </Button>
-          <UserActivityList userInfo={data} />
-        </>
+      {currentTab === 'about' && (<AboutPanel data={data} editable={false} />)}
+      {currentTab === 'stories' && (
+        <MyStoriesPanel
+          topics={data?.humanBookTopic}
+          storyOwnerId={data.id}
+          showOthers
+        />
       )}
+      {currentTab === 'activities' && (
+        <UserActivityList userInfo={data} />
+      )}
+      <ActionOnUserModal data={data} type="warn" open={isWarnHuberModalOpen} onClose={() => setWarnHuberModalOpen(false)} />
+      <ActionOnUserModal data={data} type="ban" open={isBanHuberModalOpen} onClose={() => setBanHuberModalOpen(false)} />
     </div>
   );
 }

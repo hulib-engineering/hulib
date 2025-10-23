@@ -153,7 +153,7 @@ export const StoryCard = ({
           <Button
             size="lg"
             iconLeft={<CaretCircleRight size={20} />}
-            onClick={() => router.push(`/admin/stories/approval/${data.id}`)}
+            onClick={() => router.push(`/admin/stories/${data.id}/approval`)}
           >
             View Detail
           </Button>
@@ -337,7 +337,7 @@ export const StoryCard = ({
             highlightTitle={data?.highlightTitle}
             highlightAbstract={data?.highlightAbstract}
             isPublished={data.publishStatus === 'published'}
-            onClick={() => router.push(`/explore-story/${data?.id}${data.publishStatus !== 'published' ? '/preview' : ''}`)}
+            onClick={() => router.push(showAdminControls ? `/admin/stories/${data?.id}/approval` : `/explore-story/${data?.id}${data.publishStatus !== 'published' ? '/preview' : ''}`)}
           />
         </div>
       </div>

@@ -3,6 +3,7 @@ import React from 'react';
 
 import type { IconButtonProps } from './private/types';
 import { getButtonSize, getButtonVariants } from './private/utils';
+
 import getAnimation from '@/components/core/button/private/utils/getButtonAnimation';
 import { getIconSize } from '@/components/core/button/private/utils/getButtonSizes';
 import { getButtonCommonStyles } from '@/components/core/button/private/utils/getButtonStyles';

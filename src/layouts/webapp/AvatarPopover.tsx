@@ -20,39 +20,21 @@ import Popover from '@/components/core/popover/Popover';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { useAppSelector } from '@/libs/hooks';
 import { Role } from '@/types/common';
+import { Env } from '@/libs/Env.mjs';
 
 export default function AvatarPopover() {
-  const locale = useLocale();
+  const currentLocale = useLocale();
   const t = useTranslations('HeaderWebApp');
 
   const { id, role } = useAppSelector(state => state.auth.userInfo);
   const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
-
-  const handleSignOut = async () => {
-    const { protocol, hostname, port } = window.location;
-    const localePrefix = locale === 'vi' ? '' : `/${locale}`;
-    const isAdminHost = hostname.startsWith('admin.');
-
-    const targetOrigin = isAdminHost
-      ? `${protocol}//admin.localhost:${port || '3000'}`
-      : `${protocol}//localhost:${port || '3000'}`;
-
-    // optional: clear local/session storage if you stash anything there
-    localStorage.clear();
-    sessionStorage.clear();
-
-    await signOut({
-      redirect: true,
-      callbackUrl: `${targetOrigin}${localePrefix}/auth/login`,
-    });
-  };
 
   const AvatarPopoverMenuItems = useMemo(
     () => [
       {
         label: t('dashboard'),
         icon: <House className="text-xl text-primary-60" />,
-        href: '/home',
+        href: '/admin/home',
         roles: [Role.ADMIN],
       },
       {
@@ -94,10 +76,12 @@ export default function AvatarPopover() {
       {
         label: t('sign_out'),
         icon: <SignOut className="text-xl text-red-60" />,
-        onClick: handleSignOut,
+        onClick: () => signOut({
+          callbackUrl: `${Env.NEXT_PUBLIC_APP_URL}${currentLocale === 'vi' ? '' : '/en'}${role?.id === Role.ADMIN ? '/admin/auth/login' : '/auth/login'}`,
+        }),
       },
     ],
-    [handleSignOut, id, t],
+    [id, role?.id, t],
   );
   const AvatarPopoverMenuItemsByRole = useMemo(() => {
     return (

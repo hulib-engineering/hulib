@@ -13,7 +13,7 @@ import type { Huber as THuber } from '@/libs/services/modules/huber/huberType';
 import { useAddHuberToMyFavoritesMutation, useRemoveHuberFromMyFavoritesMutation } from '@/libs/services/modules/user';
 
 const HuberCard = (
-  props: Partial<THuber> & {
+  { isHuber = true, ...props }: Partial<THuber> & {
     isFavorite?: boolean;
     showAdminControls?: boolean;
     awaiting?: boolean;
@@ -49,7 +49,7 @@ const HuberCard = (
 
   return (
     <div className="flex flex-col gap-2">
-      {props.awaiting ? (
+      {!isHuber ? (
         <div className="relative w-full overflow-hidden rounded-[32px] bg-neutral-90">
           <Image
             src={props.photo?.path ?? '/assets/images/ava-placeholder.png'}
@@ -58,9 +58,11 @@ const HuberCard = (
             height={270}
             className="aspect-[1/1] h-auto w-full rounded-[32px] object-cover"
           />
-          <div className="absolute bottom-4 left-0 flex w-full items-center justify-center">
-            <span className="rounded-full bg-orange-90 px-4 py-1 text-xs leading-[14px] text-orange-50">Waiting for approval</span>
-          </div>
+          {props.awaiting && (
+            <div className="absolute bottom-2 left-0 flex w-full items-center justify-center">
+              <span className="rounded-full bg-primary-60 px-4 py-2 text-xs leading-[14px] text-white">Waiting for approval</span>
+            </div>
+          )}
         </div>
       ) : (
         <div className="group relative w-full overflow-hidden rounded-[32px] bg-neutral-90">
@@ -126,7 +128,7 @@ const HuberCard = (
         <p className="line-clamp-1 text-2xl font-medium leading-8 text-primary-10">
           {props.fullName}
         </p>
-        {!props.awaiting && props.isHuber && (
+        {isHuber && (
           <div className="flex items-center gap-3 text-sm text-gray-500">
             <div className="flex items-center gap-1">
               <span className="text-xs leading-[14px] text-neutral-20">
@@ -157,7 +159,7 @@ const HuberCard = (
                 size="lg"
                 fullWidth
                 className="hidden lg:flex"
-                onClick={() => router.push(`/users/${props.id}`)}
+                onClick={() => router.push(`${props.showAdminControls ? '/admin' : ''}/users/${props.id}`)}
               >
                 <span className="flex items-center gap-2">
                   <CaretCircleRight className="text-xl" />
@@ -169,7 +171,7 @@ const HuberCard = (
                 size="lg"
                 fullWidth
                 className="lg:hidden"
-                onClick={() => router.push(`/users/${props.id}`)}
+                onClick={() => router.push(`${props.showAdminControls ? '/admin' : ''}/users/${props.id}`)}
               >
                 <span className="flex items-center gap-2">
                   <CaretCircleRight className="text-xl" />
@@ -181,7 +183,7 @@ const HuberCard = (
             <Button
               size="lg"
               fullWidth
-              onClick={() => router.push(`/users/${props.id}/approval`)}
+              onClick={() => router.push(`/admin/users/${props.id}/approval`)}
             >
               <span className="flex items-center gap-2">
                 <CaretCircleRight className="text-xl" />

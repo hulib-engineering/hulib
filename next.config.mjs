@@ -68,6 +68,15 @@ export default withSentryConfig(
           },
         ],
       },
+      // 👇 Add this to fix /en/api/... 404s
+      async rewrites() {
+        return [
+          {
+            source: '/:locale/api/:path*',
+            destination: '/api/:path*',
+          },
+        ];
+      },
     }),
   ),
   {
