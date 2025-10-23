@@ -18,6 +18,7 @@ const RecommendedHuberCard = (props: Partial<THuber>) => {
         width={140}
         height={140}
         className="size-[140px] rounded-[32px] object-cover lg:size-40"
+        unoptimized
       />
 
       <div className="flex flex-col gap-1">
