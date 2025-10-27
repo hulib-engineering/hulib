@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Modal from '@/components/Modal';
@@ -130,9 +130,8 @@ const Testimonial = () => {
           }}
           loop
           centeredSlides
-          navigation
-          modules={[Pagination, Navigation]}
-          // slideToClickedSlide
+          // navigation
+          modules={[Pagination]}
         >
           {TestimonialItems.map((each, index) => (
             <SwiperSlide key={index}>
