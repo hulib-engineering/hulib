@@ -16,7 +16,6 @@ export const Env = createEnv({
     GOOGLE_SECRET: z.string().min(1),
     NEXTAUTH_SECRET: z.string().min(1),
     LOGTAIL_SOURCE_TOKEN: z.string().optional(),
-    ADMIN_HOST: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_REACT_APP_BACKEND_VERSION: z.string().trim().min(1),
@@ -49,7 +48,6 @@ export const Env = createEnv({
     GOOGLE_SECRET: process.env.GOOGLE_SECRET,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NODE_ENV: process.env.NODE_ENV,
-    ADMIN_HOST: process.env.ADMIN_HOST,
     NEXT_PUBLIC_REACT_APP_BACKEND_VERSION:
       process.env.NEXT_PUBLIC_REACT_APP_BACKEND_VERSION,
     NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT:
