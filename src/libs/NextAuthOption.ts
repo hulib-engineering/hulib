@@ -10,6 +10,7 @@ export const authOptions = {
   // Configure one or more authentication providers
   debug: true,
   strategy: 'jwt',
+  basePath: '/api/auth', // ensures it won’t prefix locale
   // secret: Env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
@@ -104,6 +105,7 @@ export const authOptions = {
 
       return tokenParsed;
     },
+
     async session({ session, token }: { session: any; token: any }) {
       session.accessToken = token.accessToken;
       session.role = token.role; // 🔹 expose role to client session

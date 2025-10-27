@@ -3,21 +3,22 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import type { z } from 'zod';
 
-import { mergeClassnames } from '@/components/core/private/utils';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
-import { Chip } from '@/components/core/chip/Chip';
-import { Cover } from '@/components/Cover';
+import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';
+import { Cover } from '@/components/Cover';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { ApprovalModalLayout } from '@/layouts/admin/ApprovalModalLayout';
+import { TopicChip } from '@/layouts/webapp/ChipFilter';
 import { useUpdateStoryMutation } from '@/libs/services/modules/stories';
 import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
+import type { Topic } from '@/libs/services/modules/topics/topicType';
 import type { ProfileValidation } from '@/validations/ProfileValidation';
 import type { StoriesValidation } from '@/validations/StoriesValidation';
 
 type IApprovalConfirmationModalProps = {
-  story: Omit<z.infer<typeof StoriesValidation>, 'cover'> & {
+  story: Omit<z.infer<typeof StoriesValidation>, 'cover' | 'topics'> & {
     id: number;
     humanBook: z.infer<typeof ProfileValidation> & { photo?: { id: string; path: string } };
     storyReviews?: {
@@ -27,6 +28,7 @@ type IApprovalConfirmationModalProps = {
     cover: {
       path: string;
     };
+    topics: Topic[];
   };
   type: 'approve' | 'reject';
   open: boolean;
@@ -68,7 +70,7 @@ export default function StoryConfirmationModal({
     onClose();
     setIsSuccessful(false);
     setRejectionReason('');
-    router.push('/admin/stories/approval');
+    router.push('/admin/home');
   };
 
   return (
@@ -78,11 +80,20 @@ export default function StoryConfirmationModal({
           <div className="flex h-64 flex-1 flex-col justify-center pr-4 pt-2">
             <div className="flex flex-col gap-2">
               <h6 className="text-xl font-medium text-primary-10">{story.title}</h6>
-              <Chip className="w-fit rounded-2xl bg-blue-90 px-2 py-1 text-xs leading-[14px] text-primary-50">Productivity</Chip>
+              <div className="flex gap-2 overflow-x-auto scroll-smooth py-1">
+                {story?.topics.map((topic: Topic) => (
+                  <TopicChip
+                    className="h-[22px] border-none bg-blue-90 text-primary-50 lg:text-xs"
+                    key={topic.id}
+                    isActive
+                  >
+                    {topic.name}
+                  </TopicChip>
+                ))}
+              </div>
               <div className="flex items-center gap-1 text-xs font-medium">
                 <Avatar className="!size-[14px]" size="xs" imageUrl={story.humanBook.photo?.path} />
-                <p className="text-red-50">[Huber]</p>
-                <p className="text-neutral-50">{story.humanBook.fullName}</p>
+                <p className="line-clamp-1 text-neutral-50">{story.humanBook.fullName}</p>
               </div>
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1">
@@ -113,8 +124,8 @@ export default function StoryConfirmationModal({
       <div className="flex w-full flex-col gap-3">
         <p className={mergeClassnames('text-center text-sm', (type === 'approve' || isSuccessful) ? 'text-neutral-30' : 'text-red-70')}>
           {type === 'approve'
-            ? isSuccessful ? 'You have confirmed the request to become a Huber.' : 'You are accepting the request to become a Huber.'
-            : isSuccessful ? 'You declined the request to become a Huber.' : 'You are declining the request to become a Huber.'}
+            ? isSuccessful ? 'You have confirmed the request to publish this story.' : 'You are accepting the request to publish this story.'
+            : isSuccessful ? 'You declined the request to publish this story.' : 'You are declining the request to publish this story.'}
         </p>
         {isSuccessful ? (
           <Button

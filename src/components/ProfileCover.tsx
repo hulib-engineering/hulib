@@ -16,7 +16,7 @@ const ProfileCover = ({
   return (
     <div
       className={mergeClassnames(
-        'size-full relative overflow-hidden flex items-center justify-center bg-cover',
+        'size-full relative flex items-center justify-center bg-cover',
         className,
       )}
       style={{ backgroundImage: imageUrl ? `url('${imageUrl}')` : 'url(\'/assets/images/default-cover.png\')' }}

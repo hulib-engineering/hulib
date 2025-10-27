@@ -33,6 +33,7 @@ export type User = {
   address?: string;
   parentPhoneNumber?: string;
   parentFullname?: string;
+  photo?: { id: string; path: string };
   // createdAt: Date;
   // updatedAt: Date;
   // deletedAt?: Date;
