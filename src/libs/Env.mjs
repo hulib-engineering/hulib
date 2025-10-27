@@ -29,6 +29,7 @@ export const Env = createEnv({
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().trim().min(9),
     NEXT_PUBLIC_UPLOAD_PRESET: z.string().trim().min(9),
     NEXT_PUBLIC_AGORA_APP_ID: z.string().trim().min(1),
+    NEXT_PUBLIC_APP_URL: z.string().trim().min(1),
   },
   shared: {
     NODE_ENV: z.enum(['test', 'development', 'production']).optional(),
@@ -65,5 +66,6 @@ export const Env = createEnv({
     NEXT_PUBLIC_UPLOAD_PRESET: process.env.NEXT_PUBLIC_UPLOAD_PRESET,
     LOGTAIL_SOURCE_TOKEN: process.env.LOGTAIL_SOURCE_TOKEN,
     NEXT_PUBLIC_AGORA_APP_ID: process.env.NEXT_PUBLIC_AGORA_APP_ID,
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   },
 });

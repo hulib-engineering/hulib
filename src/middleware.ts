@@ -1,109 +1,82 @@
+import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 import createMiddleware from 'next-intl/middleware';
 
 import { AppConfig } from './utils/AppConfig';
 
+import { Env } from '@/libs/Env.mjs';
+
 const intlMiddleware = createMiddleware({
   locales: AppConfig.locales,
-  localePrefix: AppConfig.localePrefix,
   defaultLocale: AppConfig.defaultLocale,
+  localePrefix: AppConfig.localePrefix,
+  localeDetection: false, // Disable browser-based locale detection
 });
 
 export default async function middleware(request: NextRequest) {
-  // const url = request.nextUrl.clone();
-  // const hostname = request.nextUrl.hostname;
-  const parts = request.nextUrl.pathname.split('/').filter(Boolean);
-  const [maybeLocale, ...rest] = parts;
+  const { pathname } = request.nextUrl;
 
-  const supportedLocales = ['en', 'vi']; // adjust to your project
-  const hasLocale = maybeLocale && supportedLocales.includes(maybeLocale);
-  const locale = hasLocale ? maybeLocale : null;
-  const segments = hasLocale ? rest : parts;
-  //
-  // // Admin subdomain handling
-  // if (hostname.startsWith('admin.')) {
-  //   // If locale is present
-  //   if (locale) {
-  //     url.pathname = `/${locale}/admin/${rest}`;
-  //   } else {
-  //     url.pathname = `/admin/${rest}`;
-  //   }
-  //
-  //   return NextResponse.rewrite(url);
-  // }
-
-  const response = intlMiddleware(request);
-
-  // Rewrites URL
-  if (locale != null && segments.join('/') === 'profile') {
-    const usesNewProfile
-      = (request.cookies.get('NEW_PROFILE')?.value || 'false') === 'true';
-
-    if (usesNewProfile) {
-      request.nextUrl.pathname = `/${locale}/profile/new`;
-    }
+  // Skip API routes, Next.js internals, and static files
+  if (
+    pathname.startsWith('/api')
+    || pathname.startsWith('/_next')
+    || pathname.match(/\.(jpg|jpeg|png|gif|svg|ico|css|js|map|json)$/)
+  ) {
+    return NextResponse.next();
   }
 
-  // --- Admin handling ---
-  // if ((locale && segments[0] === 'admin') || (!locale && parts[0] === 'admin')) {
-  //   const token = await getToken({ req: request, secret: Env.NEXTAUTH_SECRET });
-  //
-  //   if (token?.role === 'Admin') {
-  //     // ✅ If already on admin.localhost → allow
-  //     if (hostname === 'admin.localhost') {
-  //       return response;
-  //     }
-  //
-  //     // ✅ Otherwise redirect to admin.localhost
-  //     const url = request.nextUrl.clone();
-  //     url.hostname = 'admin.localhost';
-  //
-  //     if (locale) {
-  //       url.pathname = `/${locale}/${segments.slice(1).join('/')}`;
-  //     } else {
-  //       url.pathname = `/${parts.slice(1).join('/')}`;
-  //     }
-  //
-  //     return NextResponse.redirect(url);
-  //   }
-  //
-  //   // ❌ Not admin → redirect to log in
-  //   const loginPath = locale ? `/${locale}/auth/login` : `/auth/login`;
-  //   return NextResponse.redirect(new URL(loginPath, request.url));
-  // }
+  // Get session token
+  const token = await getToken({ req: request, secret: Env.NEXTAUTH_SECRET });
+
+  // Let next-intl handle locale
+  const response = intlMiddleware(request);
+
+  // Determine a normalized path (strip locale if present)
+  const parts = pathname.split('/').filter(Boolean);
+  const normalizedPath
+    = parts.length > 0 && AppConfig.locales.includes(parts[0]!)
+      ? `/${parts.slice(1).join('/')}`
+      : pathname;
+
+  // Public routes
+  const publicRoutes = [
+    '/',
+    '/auth/login',
+    '/auth/register',
+    '/auth/forgot-password',
+    '/auth/reset-password',
+    '/admin/auth/login',
+  ];
+  const isPublic = publicRoutes.some(
+    route => normalizedPath === route || normalizedPath.startsWith(`${route}/`),
+  );
+  if (isPublic) {
+    return response;
+  }
+
+  const isAdminPage = pathname.includes('/admin');
+  const loginPath = isAdminPage ? '/admin/auth/login' : '/auth/login';
+
+  // Not logged in → redirect to the right login
+  if (!token) {
+    return NextResponse.redirect(new URL(loginPath, request.url));
+  }
+
+  // Role checks
+  const isAdmin = token.role === 'Admin';
+
+  if (isAdmin && !isAdminPage) {
+    return NextResponse.redirect(new URL('/auth/login', request.url));
+  }
+
+  if (!isAdmin && isAdminPage) {
+    return NextResponse.redirect(new URL('/admin/auth/login', request.url));
+  }
 
   return response;
 }
 
-// export default intlMiddleware;
-// export default authMiddleware({
-//   publicRoutes: (req: NextRequest) =>
-//     !req.nextUrl.pathname.includes('/dashboard'),
-//
-//   beforeAuth: (req) => {
-//     // Execute next-intl middleware before Clerk's profile middleware
-//     return intlMiddleware(req);
-//   },
-//
-//   // eslint-disable-next-line consistent-return
-//   afterAuth(profile, req) {
-//     // Handle users who aren't authenticated
-//     if (!profile.userId && !profile.isPublicRoute) {
-//       return redirectToSignIn({ returnBackUrl: req.url });
-//     }
-//   },
-// });
-
 export const config = {
-  // matcher: [
-  /*
-   * Match all paths except for:
-   * 1. /api routes
-   * 2. /_next (Next.js internals)
-   * 3. /_static (inside /public)
-   * 4. all root files inside /public (e.g. /favicon.ico)
-   */
-  // '/((?!api/|_next/|_static/|_next/image|_vercel/|[\\w-]+\\.\\w+).*)',
-  // ],
-  matcher: ['/((?!.+\\.[\\w]+$|_next|monitoring).*)', '/', '/(api|trpc)(.*)'], // Also exclude tunnelRoute used in Sentry from the matcher
+  matcher: ['/((?!_next|_vercel|.*\\..*).*)'],
 };

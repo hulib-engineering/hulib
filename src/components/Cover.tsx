@@ -30,7 +30,7 @@ export const Cover = ({
     </div>
     <div className="absolute bottom-2 left-0 mx-auto flex w-full items-baseline justify-center gap-1 text-wrap text-center text-[10px] text-primary-50">
       <div className="h-0 w-4 border-t border-primary-50" />
-      {authorName}
+      <span className="line-clamp-1">{authorName}</span>
       <div className="h-0 w-4 border-t border-primary-50" />
     </div>
   </div>
