@@ -18,6 +18,9 @@
   .input-active {
     @apply border border-primary-60;
   }
+  .outlined-input {
+    @apply outline outline-1 outline-neutral-variant-90;
+  }
   /* Heart container */
   .heart {
     @apply inline-grid gap-[1px] p-5;

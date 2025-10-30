@@ -32,8 +32,6 @@ const AboutPanel = ({
   editable,
   awaiting = false,
 }: { data: User & { firstStory: Story }; editable?: boolean; awaiting?: boolean }) => {
-  console.log('Data', data);
-
   const t = useTranslations('MyProfile.about_panel');
 
   const [currentSection, setCurrentSection] = useState('overview');
@@ -78,7 +76,7 @@ const AboutPanel = ({
   ];
 
   return (
-    <div className="w-full overflow-hidden bg-white lg:rounded-xl lg:shadow-sm">
+    <div className="w-full overflow-visible bg-white lg:rounded-xl lg:shadow-sm">
       {/* Mobile View - Accordion Style */}
       <div className="flex w-full flex-col rounded-xl border-neutral-90 px-5 py-4 lg:hidden">
         <div className="px-3 py-1 font-medium leading-5 text-neutral-10">
@@ -118,7 +116,7 @@ const AboutPanel = ({
 
       {/* Desktop View - Side by Side */}
       <div className="hidden rounded-xl border-neutral-90 bg-white lg:flex">
-        <div className="flex w-1/4 flex-col gap-3 border-r border-neutral-80 bg-white px-4 py-5">
+        <div className="flex w-1/4 flex-col gap-3 rounded-l-xl border-r border-neutral-80 bg-white px-4 py-5">
           <div className="flex flex-col gap-1">
             <div className="rounded-lg bg-white px-3 py-1 font-medium text-neutral-10">
               {awaiting ? 'Information' : 'Giới thiệu'}

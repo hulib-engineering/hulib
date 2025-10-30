@@ -18,6 +18,7 @@ const useRegisterChild = () => {
     dispatch(registerChild({ child }));
     return () => dispatch(unregisterChild({ child }));
   }, []);
+
   return { items, register };
 };
 
