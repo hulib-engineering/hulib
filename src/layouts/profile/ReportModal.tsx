@@ -1,19 +1,19 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckCircle, X } from '@phosphor-icons/react';
 import { isEmpty } from 'lodash';
-import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import type z from 'zod';
 
-import Modal from '@/components/Modal';
 import Button from '@/components/core/button/Button';
-import TextArea from '@/components/core/textArea/TextArea';
 import Checkbox from '@/components/core/checkbox/Checkbox';
-import { pushError } from '@/components/CustomToastifyContainer';
+import TextArea from '@/components/core/textArea/TextArea';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { useReportHuberMutation } from '@/libs/services/modules/huber';
+import { pushError } from '@/components/CustomToastifyContainer';
+import Modal from '@/components/Modal';
+import { useCreateReportMutation } from '@/libs/services/modules/report';
 import { ReportValidation } from '@/validations/ReportValidation';
 
 const reasonIndexes = [
@@ -30,12 +30,13 @@ export default function ReportModal({ open, onClose }: { open: boolean; onClose:
 
   const t = useTranslations('MyProfile');
 
-  const [report, { isLoading }] = useReportHuberMutation();
+  const [report, { isLoading }] = useCreateReportMutation();
 
   const { register, watch, setValue, handleSubmit, formState: { errors } } = useForm<z.infer<typeof ReportValidation>>({
     resolver: zodResolver(ReportValidation),
     defaultValues: {
-      reasons: Array(7).fill(''),
+      reasons: Array(6).fill(''),
+      customReason: '',
     },
   });
 
@@ -44,8 +45,9 @@ export default function ReportModal({ open, onClose }: { open: boolean; onClose:
   const handleSubmitReport = handleSubmit(async (data) => {
     try {
       await report({
-        id: Number(huberId) ?? 0,
-        reasons: data.reasons.filter(r => r.trim().length > 0).join('\n'),
+        reportedUserId: Number(huberId) ?? 0,
+        reason: data.reasons.filter(r => r.trim().length > 0).join('\n'),
+        customReason: data.customReason?.trim() ?? '',
       }).unwrap();
       setIsSuccessful(true);
     } catch (error: any) {
@@ -89,11 +91,11 @@ export default function ReportModal({ open, onClose }: { open: boolean; onClose:
                     </div>
                   ))}
                   <TextArea
-                    id="other"
+                    id="customReason"
                     aria-multiline
                     rows={7}
                     placeholder={t('report_modal.other_reason_placeholder')}
-                    {...register('reasons.6')}
+                    {...register('customReason')}
                   />
                 </div>
               </>

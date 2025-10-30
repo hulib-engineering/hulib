@@ -1,5 +1,3 @@
-'use client';
-
 import type { ReactNode } from 'react';
 
 import { UnauthTemplate } from '@/templates/UnauthTemplate';

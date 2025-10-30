@@ -1,6 +1,6 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
-export type SessionStatus =
+type SessionStatus =
   | 'finished'
   | 'unInitialized'
   | 'canceled'
