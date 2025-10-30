@@ -16,9 +16,16 @@ type ICustomDatePickerProps = {
   value?: string;
   onChange?: (value: string) => void;
   className?: string;
+  excludeDay?: boolean;
 };
 
-const CustomDatePicker = ({ label, value = new Date().toLocaleDateString(), onChange, className }: ICustomDatePickerProps) => {
+const CustomDatePicker = ({
+  label,
+  value = new Date().toLocaleDateString(),
+  onChange,
+  className,
+  excludeDay = false,
+}: ICustomDatePickerProps) => {
   const {
     watch,
     setValue,
@@ -46,39 +53,41 @@ const CustomDatePicker = ({ label, value = new Date().toLocaleDateString(), onCh
       {label && <Label>{label}</Label>}
       <div className="flex items-center gap-2">
         {/* Day */}
-        <fieldset className="flex-1">
-          <Dropdown
-            value={watch('day')}
-            onChange={value => setValue('day', value as unknown as number)}
-            isError={!!errors.day}
-          >
-            {({ open }) => (
-              <>
-                <Dropdown.Select open={open} label="">
-                  {watch('day')}
-                </Dropdown.Select>
-                <Dropdown.Options>
-                  {Array.from({ length: 31 }, (_, i) => i + 1).map((day, index) => (
-                    <Dropdown.Option value={day} key={index}>
-                      {({ selected, active }) => (
-                        <MenuItem
-                          isActive={active}
-                          isSelected={selected}
-                          data-testid={`test-${index}`}
-                        >
-                          {day}
-                        </MenuItem>
-                      )}
-                    </Dropdown.Option>
-                  ))}
-                </Dropdown.Options>
-                <Dropdown.Hint>
-                  {errors.month?.message && errors.month.message}
-                </Dropdown.Hint>
-              </>
-            )}
-          </Dropdown>
-        </fieldset>
+        {!excludeDay && (
+          <fieldset className="flex-1">
+            <Dropdown
+              value={watch('day')}
+              onChange={value => setValue('day', value as unknown as number)}
+              isError={!!errors.day}
+            >
+              {({ open }) => (
+                <>
+                  <Dropdown.Select open={open} label="">
+                    {watch('day')}
+                  </Dropdown.Select>
+                  <Dropdown.Options>
+                    {Array.from({ length: 31 }, (_, i) => i + 1).map((day, index) => (
+                      <Dropdown.Option value={day} key={index}>
+                        {({ selected, active }) => (
+                          <MenuItem
+                            isActive={active}
+                            isSelected={selected}
+                            data-testid={`test-${index}`}
+                          >
+                            {day}
+                          </MenuItem>
+                        )}
+                      </Dropdown.Option>
+                    ))}
+                  </Dropdown.Options>
+                  <Dropdown.Hint>
+                    {errors.month?.message && errors.month.message}
+                  </Dropdown.Hint>
+                </>
+              )}
+            </Dropdown>
+          </fieldset>
+        )}
         {/* Month */}
         <fieldset className="flex-1">
           <Dropdown

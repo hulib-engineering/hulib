@@ -35,3 +35,17 @@ export const ProfileValidation = z
       });
     }
   });
+
+export const WorkExperienceValidation = z.object({
+  position: z.string().trim().min(1),
+  company: z.string().trim().min(1),
+  startedAt: z.string().trim().min(1),
+  endedAt: z.string().optional(),
+});
+
+export const EducationValidation = z.object({
+  major: z.string().trim().min(1),
+  institution: z.string().trim().min(1),
+  startedAt: z.string().trim().min(1),
+  endedAt: z.string().optional(),
+});
