@@ -66,10 +66,6 @@ export default async function middleware(request: NextRequest) {
   // Role checks
   const isAdmin = token.role === 'Admin';
 
-  if (isAdmin && !isAdminPage) {
-    return NextResponse.redirect(new URL('/auth/login', request.url));
-  }
-
   if (!isAdmin && isAdminPage) {
     return NextResponse.redirect(new URL('/admin/auth/login', request.url));
   }

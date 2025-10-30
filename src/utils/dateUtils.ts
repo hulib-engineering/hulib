@@ -3,13 +3,6 @@ import { enUS, vi } from 'date-fns/locale';
 import type { Locale } from 'date-fns/locale';
 import { TZ_ABBREVS } from '@/libs/constants'; // in v3, Locale is here
 
-export const toLocaleISO = (dateToConvert: Date) => {
-  const offsetMs = dateToConvert.getTimezoneOffset() * 60 * 1000;
-  const msLocal = dateToConvert.getTime() - offsetMs;
-  const dateLocal = new Date(msLocal);
-  return dateLocal.toISOString();
-};
-
 export const formatRelativeTime = (timestamp: number) => {
   const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
   const secondsAgo = Math.floor((timestamp - Date.now()) / 1000);

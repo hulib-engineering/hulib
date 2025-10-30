@@ -2,12 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { ConfirmationResult } from 'firebase/auth';
-import {
-  PhoneAuthProvider,
-  RecaptchaVerifier,
-  signInWithCredential,
-  signInWithPhoneNumber,
-} from 'firebase/auth';
+import { PhoneAuthProvider, RecaptchaVerifier, signInWithCredential, signInWithPhoneNumber } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -17,6 +12,13 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import TextInput from '@/components/core/textInput/TextInput';
 import { auth } from '@/libs/Firebase';
 import { PhoneNumberValidation } from '@/validations/RegisterValidation';
+
+declare global {
+  // eslint-disable-next-line ts/consistent-type-definitions
+  interface Window {
+    recaptchaVerifier?: RecaptchaVerifier;
+  }
+}
 
 const VerifiedPhoneNumberInput = ({
   isError,
@@ -57,7 +59,7 @@ const VerifiedPhoneNumberInput = ({
         message: hintText || 'Invalid',
       });
     }
-  }, [isError, hintText]);
+  }, [isError, hintText, setError]);
 
   useEffect(() => {
     const handleOtp = async (otp: string) => {
@@ -84,28 +86,40 @@ const VerifiedPhoneNumberInput = ({
     if (watch('verificationCode').length === 6) {
       handleOtp(watch('verificationCode'));
     }
-  }, [watch('verificationCode'), confirmationResponse]);
+  }, [watch('verificationCode'), confirmationResponse, setError, setValue]);
 
   useEffect(() => {
     if (verifiedNumber !== '') {
       onChange(verifiedNumber);
     }
-  }, [verifiedNumber]);
+  }, [onChange, verifiedNumber]);
 
   const setupRecaptcha = () => {
-    // @ts-ignore
-    if (!window.recaptchaVerifier) {
-      // @ts-ignore
-
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'verify-button', {
-        size: 'invisible',
-      });
-      // @ts-ignore
-
-      window.recaptchaVerifier.render();
+    if (window.recaptchaVerifier) {
+      window.recaptchaVerifier.clear();
     }
-  };
 
+    window.recaptchaVerifier = new RecaptchaVerifier(
+      auth,
+      'recaptcha-container',
+      { size: 'invisible' },
+    );
+
+    window.recaptchaVerifier.render();
+  };
+  // const setupRecaptcha = () => {
+  //   // @ts-ignore
+  //   if (!window.recaptchaVerifier) {
+  //     // @ts-ignore
+  //
+  //     window.recaptchaVerifier = new RecaptchaVerifier(auth, 'verify-button', {
+  //       size: 'invisible',
+  //     });
+  //     // @ts-ignore
+  //
+  //     window.recaptchaVerifier.render();
+  //   }
+  // };
   const handleSendCode = async () => {
     try {
       setupRecaptcha(); // Setup Recaptcha
@@ -137,6 +151,7 @@ const VerifiedPhoneNumberInput = ({
         confirmationResponse && !watch('isVerified') && 'items-start',
       )}
     >
+      <div id="recaptcha-container" className="sr-only" />
       <fieldset className="w-2/3">
         <TextInput
           type="tel"
@@ -154,7 +169,7 @@ const VerifiedPhoneNumberInput = ({
           && verifiedNumber !== '')
           ? (
               <Button
-                id="verify-button"
+                // id="verify-button"
                 type="button"
                 className="w-full"
                 disabled={

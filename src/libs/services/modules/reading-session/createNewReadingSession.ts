@@ -19,7 +19,8 @@ export type StatusType =
   | 'canceled'
   | 'rejected'
   | 'approved'
-  | 'unInitialized';
+  | 'unInitialized'
+  | 'missed';
 
 type User = Omit<z.infer<typeof ProfileValidation>, 'isUnderGuard'> & { id: string; photo?: { path: string } };
 export type ReadingSession = {

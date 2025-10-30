@@ -1,4 +1,5 @@
 import { api } from '../../api';
+
 import changePassword from './changePassword';
 import checkEmail from './checkEmail';
 import confirmEmail from './confirmEmail';
@@ -12,7 +13,7 @@ import registerHuber from './registerHumanBook';
 import resendOTP from './resendOTP';
 import resetPassword from './resetPassword';
 import updateProfile from './updateProfile';
-import getPersonalAvatar from '@/libs/services/modules/auth/getPersonalAvatar';
+import getPersonalAvatar from './getPersonalAvatar';
 
 type Enum = {
   id: number;
