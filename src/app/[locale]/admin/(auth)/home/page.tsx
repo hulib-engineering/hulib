@@ -44,7 +44,6 @@ export default function Index() {
     page: currentPage,
     limit: 6,
   });
-  console.log('awaitingStories', awaitingStories);
   const {
     data: users,
     isLoading: isUsersLoading,
@@ -53,7 +52,6 @@ export default function Index() {
     limit: 12,
     role: ROLE_NAME[byRole].toLowerCase(),
   });
-  console.log('users', users);
   const isLoading = isAwaitingStoriesLoading || isUsersLoading;
 
   const handleSectionClick = (type: 'storiesToPublish' | 'users') => {
