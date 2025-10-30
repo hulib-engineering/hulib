@@ -37,6 +37,4 @@ const getTypeStyles = (type?: InputProps['type']): string | undefined => {
   }
 };
 
-export default getTypeStyles;
-
 export { getMaxDate, getSizeStyles, getTypeStyles };

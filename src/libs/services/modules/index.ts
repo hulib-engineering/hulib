@@ -7,3 +7,6 @@ export { userApi } from './user';
 export { timeslotApi } from './time-slots';
 export { storyApi } from './stories';
 export { storyReviewsApi } from './story-reviews';
+export { reportApi } from './report';
+export { moderationApi } from './moderation';
+export { appealApi } from './appeal';

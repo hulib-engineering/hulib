@@ -9,7 +9,3 @@ export const getBaseUrl = () => {
 
   return 'http://localhost:3000';
 };
-
-export const isServer = () => {
-  return typeof window === 'undefined';
-};

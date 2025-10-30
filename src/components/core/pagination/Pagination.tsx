@@ -44,7 +44,7 @@ const PaginationRoot = ({
   );
 };
 
-export const PrevButton = <C extends React.ElementType = 'button'>({
+const PrevButton = <C extends React.ElementType = 'button'>({
   className,
   children,
   as,
@@ -94,7 +94,7 @@ export const PrevButton = <C extends React.ElementType = 'button'>({
   );
 };
 
-export const NextButton = <C extends React.ElementType = 'button'>({
+const NextButton = <C extends React.ElementType = 'button'>({
   className,
   children,
   as,

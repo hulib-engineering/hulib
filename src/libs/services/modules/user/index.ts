@@ -1,7 +1,6 @@
 import getReadingSessionOfUser from './getReadingSessionOfUser';
 import getUsersById from './getUserById';
 import getUsers from './getUsers';
-import updateUserStatus from './updateUserStatus';
 import upgradeUser from './upgradeUser';
 import addStoryToMyFavorites from './addStoryToMyFavorites';
 import getAuthorDetail from './getAuthorDetail';
@@ -24,7 +23,7 @@ export const userApi = authenticationApiWithTag.injectEndpoints({
     getUsers: getUsers(build),
     getAuthorDetail: getAuthorDetail(build),
     getUsersById: getUsersById(build),
-    updateUserStatus: updateUserStatus(build),
+    // updateUserStatus: updateUserStatus(build),
     upgradeUser: upgradeUser(build),
     getReadingSessionOfUser: getReadingSessionOfUser(build),
     addStoryToMyFavorites: addStoryToMyFavorites(build),
@@ -43,7 +42,6 @@ export const {
   useGetUsersQuery,
   useGetUsersByIdQuery,
   useLazyGetUsersByIdQuery,
-  useUpdateUserStatusMutation,
   useUpgradeUserMutation,
   useGetReadingSessionOfUserQuery,
   useAddStoryToMyFavoritesMutation,
