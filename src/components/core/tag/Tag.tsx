@@ -1,5 +1,7 @@
 import React from 'react';
+
 import type { TagProps } from './private/types';
+
 import { mergeClassnames } from '@/components/core/private/utils';
 
 const Tag = ({

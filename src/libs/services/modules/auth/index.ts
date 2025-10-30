@@ -14,6 +14,10 @@ import resendOTP from './resendOTP';
 import resetPassword from './resetPassword';
 import updateProfile from './updateProfile';
 import getPersonalAvatar from './getPersonalAvatar';
+import addWorkExperience from './addWorkExperience';
+import editWorkExperience from './editWorkExperience';
+import addEducation from './addEducation';
+import editEducation from './editEducation';
 
 type Enum = {
   id: number;
@@ -67,6 +71,10 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
     changePassword: changePassword(build),
     updateProfile: updateProfile(build),
     registerHuber: registerHuber(build),
+    addWorkExperience: addWorkExperience(build),
+    editWorkExperience: editWorkExperience(build),
+    addEducation: addEducation(build),
+    editEducation: editEducation(build),
   }),
   overrideExisting: false,
 });
@@ -84,4 +92,8 @@ export const {
   useUpdateProfileMutation,
   useRegisterHuberMutation,
   useLazyGetPersonalAvatarQuery,
+  useAddWorkExperienceMutation,
+  useEditWorkExperienceMutation,
+  useAddEducationMutation,
+  useEditEducationMutation,
 }: any = authApi;
