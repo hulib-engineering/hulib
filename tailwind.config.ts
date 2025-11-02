@@ -239,6 +239,7 @@ export default {
         'main-pattern': 'url(\'/assets/images/bg-pattern.png\')',
         'special-section-pattern':
           'url(\'/assets/images/bg-special-pattern.webp\')',
+        'default-story-cover': 'url(\'/assets/images/cover-book/story_background_yellow.png\')',
         'radial-gradient':
           'radial-gradient(at 52% 57%, hsla(11,83%,72%,1) 0px, transparent 50%), radial-gradient(at 37% 57%, hsla(175,78%,66%,1) 0px, transparent 50%)',
         'left-page': 'linear-gradient(to right, #f8f8f8, #ffffff, #e3e3e3, #b1b1b1)',
@@ -533,6 +534,11 @@ export default {
         shimmer: {
           '100%': { transform: 'translateX(300px)' },
         },
+        highlightBounce: {
+          '0%, 25%, 50%, 75%, 100%': { transform: 'translateY(0)' },
+          '40%': { transform: 'translateY(-20px)' },
+          '60%': { transform: 'translateY(-12px)' },
+        },
       },
       animation: {
         'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
@@ -564,6 +570,7 @@ export default {
         'soft-pink-pulse': 'softPinkPulse 2.2s infinite ease-in-out',
         'white-pulse': 'whitePulse 2.8s infinite ease-in-out',
         'shimmer': 'shimmer 1.5s infinite',
+        'bounce-to-highlight': 'highlightBounce 2s infinite',
       },
     },
   },

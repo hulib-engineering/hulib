@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Modal from '@/components/Modal';
@@ -106,7 +106,7 @@ const Testimonial = () => {
         <p className="mb-3 text-xs font-semibold uppercase text-lp-primary-blue sm:text-lg">
           {t('testimonial_title')}
         </p>
-        <h1 className="text-[1.75rem] font-medium sm:text-[3.5rem]">
+        <h1 className="text-[1.75rem] font-bold sm:text-[3.5rem]">
           {t('testimonial_description')}
         </h1>
       </div>
@@ -130,9 +130,8 @@ const Testimonial = () => {
           }}
           loop
           centeredSlides
-          navigation
-          modules={[Pagination, Navigation]}
-          // slideToClickedSlide
+          // navigation
+          modules={[Pagination]}
         >
           {TestimonialItems.map((each, index) => (
             <SwiperSlide key={index}>
