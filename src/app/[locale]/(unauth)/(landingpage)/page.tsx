@@ -1,9 +1,11 @@
 import dynamic from 'next/dynamic';
+import { getServerSession } from 'next-auth';
 import { getTranslations } from 'next-intl/server';
 
-import Hero from '@/layouts/hero/index';
+import Hero from '@/layouts/hero';
 import HumanBookBanner from '@/layouts/HumanBookBanner';
 import OurMascot from '@/layouts/OurMascot';
+import { authOptions } from '@/libs/NextAuthOption';
 
 const Features = dynamic(() => import('@/layouts/Features'), {
   loading: () => <div>Loading...</div>,
@@ -62,10 +64,12 @@ export async function generateMetadata({
   };
 }
 
-export default function Index() {
+export default async function Index() {
+  const session = await getServerSession(authOptions);
+
   return (
     <>
-      <HumanBookBanner />
+      {!session && <HumanBookBanner />}
       <Hero />
       <Features />
       <About />

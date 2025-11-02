@@ -76,3 +76,9 @@ export const strongMessage = (): (() => ReactNode) => {
     return <strong>{chunks}</strong>;
   };
 };
+
+export const italicMessage = (): (() => ReactNode) => {
+  return (...chunks: ReactNode[]): ReactNode => {
+    return <i>{chunks}</i>;
+  };
+};
