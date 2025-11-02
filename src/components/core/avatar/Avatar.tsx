@@ -20,19 +20,21 @@ const AvatarRoot = ({
 
 const Status = ({
   position = { vertical: 'bottom', horizontal: 'right' },
+  children,
   className,
 }: StatusProps) => (
   <div
     className={mergeClassnames(
-      'status',
-      'absolute border-solid border-gohan rounded-full bg-roshi',
-      position && position.vertical === 'top' && 'top-0',
-      position && position.vertical === 'bottom' && 'bottom-0',
-      position && position.horizontal === 'left' && 'start-0',
-      position && position.horizontal === 'right' && 'end-0',
+      'absolute',
+      position && position.vertical === 'top' && '-top-1.5',
+      position && position.vertical === 'bottom' && '-bottom-1.5',
+      position && position.horizontal === 'left' && '-start-1.5',
+      position && position.horizontal === 'right' && '-end-1.5',
       className,
     )}
-  />
+  >
+    {children}
+  </div>
 );
 
 const Avatar = Object.assign(AvatarRoot, { Status });

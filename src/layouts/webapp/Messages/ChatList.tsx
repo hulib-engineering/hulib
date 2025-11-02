@@ -7,9 +7,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import type z from 'zod';
 
 import { mergeClassnames } from '@/components/core/private/utils';
-import StatusBadge from '@/components/StatusBadge';
 import TextInput from '@/components/core/textInput/TextInput';
-import { useAppDispatch, useDebounce } from '@/libs/hooks';
+import StatusBadge from '@/components/StatusBadge';
+import { useAppDispatch, useAppSelector, useDebounce } from '@/libs/hooks';
 import type { Contact } from '@/libs/services/modules/chat';
 import { useGetConversationContactsQuery } from '@/libs/services/modules/chat';
 import { openChatDetail } from '@/libs/store/messenger';
@@ -85,8 +85,10 @@ export const ContactItem = ({
   </button>
 );
 
-export default function ChatList() {
+export default function ChatList({ onConvoSelect }: { onConvoSelect?: () => void }) {
   const { data: conversations = [] } = useGetConversationContactsQuery();
+
+  const currentChat = useAppSelector(state => state.messenger.currentChatDetail);
 
   const dispatch = useAppDispatch();
 
@@ -115,12 +117,13 @@ export default function ChatList() {
     });
 
     return fuse.search(normalizeText(debouncedSearch)).map(res => res.item);
-  }, [qString, conversations]);
+  }, [debouncedSearch, conversations]);
 
   useEffect(() => {
-    if (conversations.length === 0) {
+    if (conversations.length === 0 || currentChat) {
       return;
     }
+
     const latestConversation = conversations[0];
 
     dispatch(
@@ -130,11 +133,24 @@ export default function ChatList() {
         avatarUrl: latestConversation.participant.photo?.path,
       }),
     );
-  }, [conversations]);
+  }, [conversations, currentChat, dispatch]);
+
+  const handleItemClick = (contact: Contact) => {
+    dispatch(
+      openChatDetail({
+        id: `${contact.participant.id}`,
+        name: contact.participant.fullName,
+        avatarUrl: contact.participant.photo?.path,
+      }),
+    );
+    if (onConvoSelect) {
+      onConvoSelect();
+    }
+  };
 
   return (
     <>
-      <div className="px-4 py-2 pt-0">
+      <div className={mergeClassnames('px-4 py-2 pt-0', !onConvoSelect && 'bg-white')}>
         <TextInput
           name="search"
           type="text"
@@ -143,7 +159,7 @@ export default function ChatList() {
           onChange={event => setQString(event.target.value)}
         />
       </div>
-      <div className="flex flex-col overflow-y-auto">
+      <div className="flex flex-1 flex-col overflow-y-auto">
         {filteredConversations.map((contact: Contact) => (
           <ContactItem
             key={contact.participant.id}
@@ -152,14 +168,7 @@ export default function ChatList() {
               ...contact.lastMessage,
               isRead: !!contact.lastMessage.readAt,
             }}
-            onClick={() =>
-              dispatch(
-                openChatDetail({
-                  id: `${contact.participant.id}`,
-                  name: contact.participant.fullName,
-                  avatarUrl: contact.participant.photo?.path,
-                }),
-              )}
+            onClick={() => handleItemClick(contact)}
           />
         ))}
       </div>
