@@ -1,5 +1,6 @@
 'use client';
 
+import { ArrowLeft } from '@phosphor-icons/react';
 import {
   differenceInMinutes,
   format,
@@ -10,9 +11,11 @@ import {
 import Image from 'next/image';
 import React, { useEffect, useRef } from 'react';
 
-import { MessengerInput } from '@/components/messages/MessengerInput';
+import Avatar from '@/components/core/avatar/Avatar';
+import Button from '@/components/core/button/Button';
 import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
+import { MessengerInput } from '@/components/messages/MessengerInput';
 import StatusBadge from '@/components/StatusBadge';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
@@ -117,7 +120,7 @@ export const MessageItem = ({
   </div>
 );
 
-export default function ChatDetail() {
+export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixed?: boolean; onBack?: () => void }) {
   const currentOpeningChat = useAppSelector(
     state => state.messenger.currentChatDetail,
   );
@@ -144,6 +147,30 @@ export default function ChatDetail() {
       messageContainerRef.current.scrollTop = 0;
     }
   }, [data]);
+  useEffect(() => {
+    const container = messageContainerRef.current;
+    if (!container || !data || !data[0] || data[0]?.direction !== 'received') {
+      return;
+    }
+
+    const markAsRead = () => {
+      const isScrollable = container.scrollHeight > container.clientHeight;
+      const atBottom = container.scrollTop <= 10;
+
+      if (!isScrollable || atBottom) {
+        emit('read', { senderId: Number(currentOpeningChat?.id) });
+        dispatch(chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${currentOpeningChat?.id}` }]));
+      }
+    };
+
+    container.addEventListener('scroll', markAsRead);
+    // Check immediately, in case there are not enough messages to scroll
+    markAsRead();
+
+    return () => {
+      container.removeEventListener('scroll', markAsRead);
+    };
+  }, [data, currentOpeningChat?.id, emit, dispatch]);
 
   const playSentMessageSound = () => {
     const audio = new Audio('/assets/media/message-sent.mp3');
@@ -178,73 +205,68 @@ export default function ChatDetail() {
   }
 
   return (
-    <div className="flex flex-1 flex-col">
-      <div className="flex gap-4 bg-white px-[13px] py-[11px] shadow-sm">
-        <div className="relative">
-          <Image
-            className="size-12 rounded-full"
-            src={
-              currentOpeningChat?.avatarUrl
-              ?? '/assets/images/ava-placeholder.png'
-            }
-            alt="Sender Avatar"
-            width={48}
-            height={48}
-            objectFit="cover"
-            objectPosition="center"
-            quality={100}
-            placeholder="blur"
-            blurDataURL="/assets/images/ava-placeholder.png"
-          />
-          <StatusBadge
-            onLine={isOnline}
-            className="absolute bottom-[-6px] right-[-6px]"
-          />
-        </div>
-        <span className="text-2xl font-bold text-black">
-          {currentOpeningChat?.name}
-        </span>
+    <div className="flex size-full flex-1 flex-col">
+      <div className="w-full bg-white lg:hidden">
+        <Button variant="ghost" size="sm" onClick={onBack}>
+          <div className="flex items-center gap-1.5 text-black">
+            <ArrowLeft />
+            <span>Back</span>
+          </div>
+        </Button>
       </div>
-      <div
-        ref={messageContainerRef}
-        className="flex max-h-[604px] flex-1 flex-col-reverse overflow-y-auto"
-      >
-        {data && data.map((each: TransformedMessage) => {
-          if (each.chatType === 'img') {
+      <div className="flex flex-1 flex-col bg-green-98">
+        <div className="flex gap-4 border-t border-neutral-90 bg-white px-[13px] py-[11px] shadow-sm">
+          <Avatar size="lg" imageUrl={currentOpeningChat?.avatarUrl}>
+            <Avatar.Status>
+              <StatusBadge onLine={isOnline} />
+            </Avatar.Status>
+          </Avatar>
+          <span className="text-2xl font-bold text-black">
+            {currentOpeningChat?.name}
+          </span>
+        </div>
+        <div
+          ref={messageContainerRef}
+          className="flex max-h-screen flex-1 flex-col-reverse overflow-y-auto"
+        >
+          {data && data.map((each: TransformedMessage) => {
+            if (each.chatType === 'img') {
+              return (
+                <div
+                  key={each.id}
+                  className={mergeClassnames(
+                    'flex',
+                    each.direction === 'sent' ? 'justify-end' : 'justify-start',
+                  )}
+                >
+                  <Image
+                    alt={`Sticker ${each.msg}`}
+                    width={120}
+                    height={120}
+                    className="size-[120px] object-contain"
+                    src={each.stickerUrl ?? ''}
+                  />
+                </div>
+              );
+            }
             return (
-              <div
+              <MessageItem
                 key={each.id}
-                className={mergeClassnames(
-                  'flex',
-                  each.direction === 'sent' ? 'justify-end' : 'justify-start',
-                )}
+                type={each.direction}
+                participantAvatarUrl={currentOpeningChat?.avatarUrl}
+                markedAsRead={each.direction === 'sent' && each.isRead}
               >
-                <Image
-                  alt={`Sticker ${each.msg}`}
-                  width={120}
-                  height={120}
-                  className="size-[120px] object-contain"
-                  src={each.stickerUrl ?? ''}
-                />
-              </div>
+                {each.msg}
+              </MessageItem>
             );
-          }
-          return (
-            <MessageItem
-              key={each.id}
-              type={each.direction}
-              participantAvatarUrl={currentOpeningChat?.avatarUrl}
-              markedAsRead={each.direction === 'sent' && each.isRead}
-            >
-              {each.msg}
-            </MessageItem>
-          );
-        })}
+          })}
+        </div>
       </div>
       <MessengerInput
         onSend={(value, type) =>
           handleSendMessage(currentOpeningChat?.id, value, type)}
-        outerStickerPicker
+        outerStickerPicker={!isTypeFixed}
+        // className={mergeClassnames(isTypeFixed && 'fixed bottom-0 left-0 right-0 z-10')}
       />
     </div>
   );

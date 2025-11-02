@@ -9,15 +9,17 @@ const Wrapper = ({
   children,
   className,
 }: AvatarProps) => (
-  <div
-    className={mergeClassnames(
-      'relative rounded-full overflow-hidden flex items-center justify-center bg-cover',
-      getWrapperSize(size),
-      className,
-    )}
-    style={{ backgroundImage: `url('${imageUrl || '/assets/images/ava-placeholder.png'}')` }}
-  >
-    {children}
+  <div className="relative inline-flex items-center justify-center">
+    <div
+      className={mergeClassnames(
+        'rounded-full overflow-hidden flex items-center justify-center bg-cover',
+        getWrapperSize(size),
+        className,
+      )}
+      style={{ backgroundImage: `url('${imageUrl || '/assets/images/ava-placeholder.png'}')` }}
+    >
+      {children}
+    </div>
   </div>
 );
 
