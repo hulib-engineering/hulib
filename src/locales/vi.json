@@ -76,12 +76,12 @@
     "meta_title": "HuLib | Trang chủ",
     "meta_description": "Ân sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
     "hero_title": "dự án cộng đồng",
-    "hero_motto": "Khám phá tủ sách Human Book ngay",
-    "hero_description": "Mỗi người đều có một câu chuyện và trải nghiệm riêng nên chúng ta sinh ra để trở thành một ai đó, phần đặc biệt của thế giới này.",
+    "hero_motto": "Nơi những trải nghiệm được sẻ chia để lắng nghe, thấu hiểu và kết nối.",
+    "hero_description": "Mỗi người đều có câu chuyện riêng. Ở HuLib, bạn được sẻ chia, được lắng nghe và được kết nối trong không gian an toàn, đầy thấu hiểu.",
     "hero_call_to_action": "Tìm hiểu thêm",
     "hero_message_1": "Vạn vật ẩn dấu <important>các vết nứt</important>, đó là nơi <important>ánh sáng</important> chiếu rọi.",
     "hero_message_2": "Bạn <important>không đơn độc</important> trước <important>những rào cản</important> của chính mình.",
-    "hero_mentor_quantity": "100+ <normal>Human Book (Sách Sống) với nhiều trải nghiệm phong phú</normal>",
+    "hero_mentor_quantity": "<normal>Hơn</normal> 200 <normal>câu chuyện được Huber sẻ chia</normal>",
     "event_title": "đón chờ sự kiện mới toanh  -  14/12/2024",
     "event_description": "Hãy tham gia &quot;Đi học - Đi làm. Hướng nào dễ hơn ?&quot;, để cùng lắng nghe những câu chuyện nửa cuộc đời của anh chị em Human Books nhà HuLib nha.",
     "event_call_to_action": "đăng ký ngay",
@@ -123,6 +123,33 @@
       "title": "<highlight>tầm nhìn</highlight> <br></br> của chúng tớ",
       "description": "HuLib hướng tới gây dựng cộng đồng các bạn trẻ hỗ trợ lẫn nhau cùng sự cộng tác từ các anh chị có kinh nghiệm nhằm thúc đẩy giá trị hạnh phúc và chia sẻ trải nghiệm cá nhân."
     },
+    "outstanding_features_title": "ngôi nhà của chúng tớ",
+    "outstanding_features_description": "HULIB - Nền tảng kết nối trực tuyến",
+    "outstanding_features": {
+      "index_0": {
+        "heading": "Kho tàng sách sống trực tuyến",
+        "content": "Hơn 200 “cuốn sách sống”, nơi Huber kể lại những trải nghiệm về công việc, hành trình tự khám phá bản thân, tình cảm và gia đình..."
+      },
+      "index_1": {
+        "heading": "Mỗi câu chuyện là một mảnh ghép",
+        "content": "Mỗi câu chuyện không chỉ giúp ta hiểu hơn về chính mình, mà chính câu chuyện ấy còn âm thầm lan tỏa ý nghĩa, truyền cảm hứng động lực đến những người đang lắng nghe."
+      },
+      "index_2": {
+        "heading": "Quản lý thời gian hiệu quả",
+        "content": "Với công cụ quản lý lịch trình tích hợp trên webapp HuLib, việc lên kế hoạch thời gian cho các buổi trò chuyện giữa Huber và Liber trở nên thuận tiện, và linh động hơn bao giờ hết."
+      },
+      "index_3": {
+        "heading": "Trò chuyện trực tuyến an toàn",
+        "content": "Mọi cuộc trò chuyện trên HuLib đều được bảo mật tuyệt đối. Tính năng gặp gỡ thông qua video được thiết kế riêng, không dựa vào các nền tảng bên ngoài như Google Meet hay Zoom, nhằm đảm bảo sự riêng tư và an toàn cho mỗi trải nghiệm của bạn."
+      }
+    },
+    "outstanding_features_cta_button": "Trải nghiệm ngay",
+
+    "our_mascots_title": "ngôi nhà của chúng tớ",
+    "our_mascots_description": "Từ sẻ chia đến thấu hiểu",
+    "our_mascots_hubers": "Mình là <highlight>Huber</highlight>, <highlight>người gom nhặt</highlight> những <highlight>lát cắt của cuộc sống</highlight> và kể lại <highlight>câu chuyện</highlight> ấy bằng <highlight>sự chân thành</highlight> cho <highlight>Liber</highlight>.<br></br><br></br> <i>Mỗi câu chuyện được sẻ chia không chỉ để truyền cảm hứng, mà còn để gieo lại chút <highlight>ấm áp</highlight>, chút <highlight>đồng cảm</highlight> như <highlight>ánh sáng</highlight> khẽ len qua những ngày chênh vênh.</i>",
+    "our_mascots_libers": "Mình là <highlight>Liber</highlight>, người <highlight>lắng nghe, tìm kiếm sự đồng cảm và đồng hành</highlight>.<br></br><br></br> <i>Tại HuLib, mình có thể lựa chọn những <highlight>“cuốn sách sống”</highlight> gần gũi, kết nối với Huber mà mình cảm thấy <highlight>đồng điệu</highlight>, để từ đó <highlight>khám phá</highlight> thêm chính mình.</i>",
+
     "testimonial_title": "cùng gặp gỡ HuLib",
     "testimonial_description": "Các thành viên HuLib đã chia sẻ những gì?",
     "sponsors_title": "nhà tài trợ",
@@ -163,6 +190,39 @@
           "p1": "Với tư cách reader (bạn đọc), bạn có thể đăng ký chia sẻ câu chuyện của mình, kết nối với human book (sách sống), hoặc tham gia gặp gỡ HuLibers khác trực tuyến.",
           "p2": "Nếu bạn là chuyên gia hoặc tình nguyện viên quan tâm đến việc lan toả câu chuyện và trải nghiệm độc đáo, HuLib rất hoan nghênh đóng góp của bạn. Hãy theo dõi HuLib để cập nhật các sự kiện ý nghĩa nhé. Khám phá, đóng góp và tạo ảnh hưởng tích cực cùng chúng tớ nghen."
         }
+      }
+    },
+    "news_title": "Sự kiện - Tin tức",
+    "news_info": {
+      "index_0": {
+        "location": "Đà Nẵng, Việt Nam",
+        "heading": "Sự kiện “Hiểu mình, thương mình”",
+        "content": "\uD83D\uDC99 Recap Sự kiện “Hiểu Mình, Thương Mình”, nơi những cảm xúc được lắng nghe, và bản thân được ôm trọn \uD83D\uDC99\nThứ bảy vừa rồi thật đặc biệt. Một ngày đầy cảm xúc, nơi ai cũng đến với câu chuyện riêng - rồi cùng nhau ngồi lại, lắng nghe và được lắng nghe.\n\uD83E\uDD70Cảm ơn Chị Chi Phan và thầy Minh Quang đã giúp tụi mình nhìn sâu vào bên trong, đã mở ra những khoảng lặng, giúp ta gọi tên cảm xúc và học cách ôm lấy chúng bằng lòng bao dung.\n\uD83E\uDD70Phần đấu giá cảm xúc khiến cả khán phòng như gần nhau hơn - khi ai đó nói ra điều mình giấu kỹ, ai đó khác lại mỉm cười đồng cảm.\n\uD83E\uDD70Và khi vẽ tranh, dường như mỗi nét vẽ là một cái ôm, gửi đến chính mình.\nCảm ơn bạn đã đến, đã chia sẻ, đã để trái tim mở ra thêm một chút \uD83C\uDF38.Hy vọng sau hôm nay, bạn vẫn sẽ tiếp tục hiểu mình hơn, thương mình hơn — nhẹ nhàng thôi, nhưng thật lòng \uD83C\uDF43\nĐừng quên ghé Hulib, nơi những cuộc trò chuyện nhỏ nhưng ấm áp vẫn đang chờ bạn \uD83E\uDD0D\n\uD83D\uDCF8 Xem thêm những khoảnh khắc đáng nhớ tại đây nhé: https://drive.google.com/.../1ASeOumuqQ6...\n\uD83D\uDC99 Kết nối webapp của tụi mình tại đây: https://www.hulib.org"
+      },
+      "index_1": {
+        "location": "Sài Gòn, Việt Nam",
+        "heading": "Triển lãm VietFuture Awards 2025",
+        "content": "\uD83C\uDF31 HuLib @ VietFuture Awards 2025 – Booth Recap \uD83C\uDF31\n\nVậy là triển lãm VietFuture Awards 2025 đã khép lại với thật nhiều cảm xúc! Trong 2 ngày vừa rồi, tụi mình đã:\n✨ Gặp gỡ hơn 100+ bạn sinh viên quan tâm đến HuLib\n✨ Kết nối với 20+ bạn đăng ký Huber/Liber\n✨ Đạt hơn 3,500 lượt tương tác trên mạng xã hội trong 2 ngày sự kiện\n\nĐây là một dấu mốc quan trọng trên hành trình HuLib lan toả thông điệp về well-being & sức khỏe tinh thần.\n\n\uD83D\uDE4F HuLib xin gửi lời cảm ơn chân thành đến BTC VietFuture Awards, các Huber, Liber tương lai, và tất cả những bạn đã ghé booth, lắng nghe, chia sẻ và đồng hành cùng tụi mình.\n\n\uD83D\uDC99 Hẹn gặp mọi người ở những sự kiện tiếp theo (vào tháng 10 này!!!), nơi HuLib sẽ tiếp tục trở thành “thư viện cảm xúc” để mỗi người tìm thấy sự lắng nghe và thấu hiểu."
+      },
+      "index_2": {
+        "location": "Trực tuyến",
+        "heading": "Workshop “Tôi là ai giữa ngã ba đường”",
+        "content": "[RECAP EVENT] BẠN ĐÃ CÓ SỰ LỰA CHỌN CHO RIÊNG MÌNH CHƯA?\n\n\uD83C\uDF3FChúng mình xin chân thành cảm ơn ban tổ chức chương trình, các nhà tài trợ, diễn giả, và quan trọng nhất, sự hiện diện của các bạn tham gia đã làm cho buổi workshop trở nên thật ấm áp và náo nhiệt!\n\n\uD83C\uDF1FNhững sự chia sẻ và giảng giải nhiệt tình của anh Hiền và chị Ngọc Rinh trong buổi workshop chắc hẳn sẽ một phần giúp ích cho sự lựa chọn của bạn trên con đường sau này!\n\n✨Một vài điểm nổi bật ở buổi workshop “TÔI LÀ AI GIỮA NGÃ BA ĐƯỜNG”\n\nCác bạn có vẻ đã “thư giãn” hơn rất nhiều qua phần Quiz không chỉ vui nhộn mà còn ‘hơi’ căng thẳng nữa đó nha!\n\nChị Ngọc Rinh sẽ trình bày quan điểm và chia sẻ kinh nghiệm, câu chuyện để giúp bạn hiểu hơn về con đường mà bạn chọn.\n\nCác bạn sẽ được khám phá về bản thân mình hơn qua bài test của chúng mình và anh Hiền sẽ trình bày quan điểm để có thể hình dung rõ hơn và sâu sắc hơn.\n\nCuối cùng, các bạn có thể Q&A với speaker về những điều mà các bạn thắc mắc. Đồng thời, chúng mình cũng có một chiếc GA nhỏ xinh để cổ vũ các bạn nè!<br></br>\uD83C\uDF37Qua buổi event lần này, chúng mình mong sẽ đóng góp được dù chỉ là một phần nhỏ để bạn có thể thật quyết đoán, tự tin đi trên con đường của mình.<br></br>\uD83D\uDC9DĐừng quên để lại cho chúng mình những góp ý yêu thương về buổi workshop này nha! Ý kiến của mọi người sẽ góp rất nhiều động lực cho chúng mình cho các buổi event tiếp theo đó!\uD83D\uDC96"
+      },
+      "index_3": {
+        "location": "Trực tuyến",
+        "heading": "Cuộc thi “Nhặc lại khoảnh khắc”",
+        "content": "\uD83C\uDF3F NHẶT LẠI KHOẢNH KHẮC – MỘT HÀNH TRÌNH ĐẸP ĐÃ KHÉP LẠI \uD83C\uDF3F\n\uD83D\uDC96Vậy là sau hơn một tháng đồng hành cùng nhau. Đã đến lúc chúng ta cùng nhau khép lại khoảng thời gian thật đặc biệt. Nhặt lại khoảnh khắc không chỉ là một buổi chia sẻ, mà còn là một không gian để mỗi người có dịp nhìn lại, trải lòng và trân trọng những điều đã trải qua. \uD83D\uDC99\n\uD83D\uDC8C Cảm ơn các bạn và tất cả những câu chuyện mà các bạn đã gửi gắm. Mỗi bài viết là một mảnh ghép đầy cảm xúc, giúp chúng ta hiểu và nhận ra rằng, dù ở đâu hay trong hoàn cảnh nào, ai cũng có những khoảnh khắc đáng trân quý. Đó là một khoảnh khắc nhỏ, một niềm vui hay nỗi buồn, tất cả đều đã góp phần tạo nên một hành trình tuyệt vời của chúng ta\n\uD83C\uDF88 Buổi chia sẻ này đã kết thúc và điều đặc biệt nhất chính là những cung bậc cảm xúc mà chúng mình đã cùng nhau trải qua. Hy vọng rằng sau hành trình lần này, các bạn vẫn sẽ tiếp tục yêu thương nhiều hơn, gìn giữ và viết tiếp những câu chuyện tuyệt vời của bản thân nhé!\nMột lần nữa, cảm ơn vì đã đồng hành! Hy vọng ta sẽ tiếp tục gặp lại nhau trong những sự kiện sắp tới của HuLib và Hugo nhé! \uD83D\uDCAB"
+      },
+      "index_4": {
+        "location": "Trực tuyến",
+        "heading": "Sự kiện “Tiếng chuông tỉnh thức”",
+        "content": "[RECAP EVENT] BẠN ĐÃ ĐÁNH THỨC ĐƯỢC CHÍNH MÌNH CHƯA?<br></br>\uD83D\uDC96 HuLib gửi lời cảm ơn sâu sắc đến Ban tổ chức, các diễn giả, các sponsors , Dr Jennifer thuộc nhà tài trợ KIP và tất cả các bạn đã cùng tạo nên một không gian sẻ chia thật ấm áp và ý nghĩa vào ngày 14/12 vừa qua.<br></br>\uD83D\uDCAC Những gì còn đọng lại sau sự kiện không chỉ là câu chuyện chân thành từ chị Ly, chị Trúc, chị Nắng, anh Phước và anh Phúc, mà còn là những bài học gần gũi, có thể áp dụng ngay trong cuộc sống:<br></br>✨ Điều HuLib mong bạn ghi nhớ:\n1\uFE0F⃣ Bắt đầu từ chính mình:\nTrước khi cố gắng kết nối với người khác, hãy dành thời gian hiểu bản thân trước. Khi bạn biết mình cần gì và muốn gì, bạn sẽ dễ dàng xây dựng mối quan hệ phù hợp hơn.\n\n2\uFE0F⃣ Mối quan hệ độc hại không đáng để níu giữ:\nĐôi khi, yêu thương bản thân có nghĩa là dám giảm tương tác hoặc bước đi thật xa để bảo vệ mình, dù đó là người thân, bạn bè hay người yêu.\n\n3\uFE0F⃣ Gia đình không hoàn hảo? Không sao cả. Giảm kỳ vọng, giữ một khoảng cách vừa đủ và luôn cư xử tử tế có thể là chìa khóa để giữ hòa khí.<br></br>\uD83C\uDF31 Và khi bạn thấy mình mệt mỏi, lạc lối trong một mối quan hệ nào đó, hãy tự hỏi:\n\"Mình thực sự trân trọng người này chứ?\"\n\"Điều gì mình đang tìm kiếm từ họ mà chính mình không thể tự làm cho bản thân?\"<br></br>\uD83D\uDC96 Đôi khi, tất cả những gì bạn cần chỉ là dừng lại, yêu thương bản thân nhiều hơn và tự mang đến hạnh phúc cho chính mình trước khi mong chờ điều đó từ người khác.<br></br>\uD83D\uDC8C Hy vọng sau buổi trò chuyện này, tiếng chuông từ các diễn giả đã có thể đánh thức được bạn phần nào đó, và bạn cũng tìm được điều gì đó ý nghĩa và thiết thực cho chính mình. HuLib tin rằng mỗi hành trình đều cần bắt đầu từ sự thấu hiểu và yêu thương bản thân.<br></br>\uD83C\uDF1F Đừng quên để lại góp ý cho HuLib về event đợt này qua form dưới đây nha! Ý kiến của bạn chính là động lực để chúng mình mang đến những sự kiện giá trị hơn nữa.\nHẹn gặp lại bạn ở những buổi trò chuyện tiếp theo!"
+      },
+      "index_5": {
+        "location": "Trực tuyến",
+        "heading": "Sự kiện “Đi học, đi làm - hướng nào dễ hơn”",
+        "content": "[RECAP EVENT] HULIB MONG BẠN \"THU HOẠCH\" ĐƯỢC GÌ ĐÓ TỪ BUỔI SHARING 28/9.<br></br>\uD83D\uDC96Trước tiên, HuLib xin gửi lời cảm ơn chân thành đến Ban tổ chức, các diễn giả, và đặc biệt là các bạn – những người đã nhiệt tình tham gia và tạo nên không khí tuyệt vời cho sự kiện vừa qua!<br></br>\uD83D\uDCACDù sự kiện đã khép lại, nhưng những bài học quý báu, những chia sẻ chân thành từ chú Hoàng Xuân Vinh, chị Nguyên Phan, anh Phi Trương và anh Phú Cường chắc chắn vẫn còn đọng lại đâu đó trong tâm trí mỗi chúng ta – và cả HuLib nữa.<br></br>✨HuLib hy vọng rằng sau buổi chia sẻ này, bạn đã có thêm những góc nhìn mới mẻ và cụ thể hơn về việc \"từng bước\" học tập, phát triển bản thân và chuẩn bị hành trang cho con đường phía trước sao cho thật phù hợp với hoàn cảnh của chính mình.<br></br>\uD83C\uDF31 Có một điều mà HuLib nhận ra sau buổi hôm qua: Việc đi đúng hướng rất quan trọng, nhưng để chạm đến thành công, sự lạc quan và kiên trì là hai chìa khóa không thể thiếu. Trên hành trình học hỏi, mỗi bước đi đều đòi hỏi sức bền và tinh thần không bao giờ bỏ cuộc.<br></br>\uD83D\uDCA1 Và nếu một ngày bạn không đậu vào ngành học mà mình đã chọn? Đừng vội nản lòng! Hãy dành thời gian ngồi lại, suy ngẫm và tự hỏi bản thân: Mình thực sự đam mê, \"giữ lửa\" được với ngành nào? Khi đã có câu trả lời, hãy tiếp tục cố gắng chinh phục nó!<br></br>\uD83D\uDC8CMột lần nữa, HuLib xin gửi lời cảm ơn sâu sắc đến tất cả các bạn. HuLib mong rằng sẽ sớm có cơ hội gặp lại mọi người trong một ngày gần nhất, để chúng ta lại cùng nhau ngồi lại, lắng nghe, học hỏi và trau dồi thêm nhiều điều mới mẻ từ các \"Human Books\".<br></br>\uD83D\uDCA1Để nâng cao chất lượng các sự kiện trong tương lai, HuLib mong các bạn sẽ dành 2-3 phút điền vào biểu mẫu dưới đây. HuLib rất trân trọng ý kiến của các bạn, vì điều đó sẽ giúp cải thiện chất lượng và nội dung, từ đó mang đến nhiều buổi chia sẻ có giá trị hơn."
       }
     },
     "newsletter_title": "tham gia cùng chúng mình",
@@ -717,7 +777,8 @@
     "notification": "Cảm ơn bạn đã gửi câu chuyện! Hẹn gặp bạn trong suốt hành trình làm Huber nhé!",
     "btn_name_notification": "Khám phá thêm",
     "back_to_home": "Trở lại trang chủ",
-    "placeholder": "Bạn đang nghĩ gì..."
+    "placeholder": "Bạn đang nghĩ gì...",
+    "location": "Địa điểm"
   },
   "feedback_form": {
     "session_feedback": "Phản hồi cho buổi học",
