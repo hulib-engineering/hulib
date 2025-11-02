@@ -5,7 +5,7 @@ import {
   MessengerLogo,
 } from '@phosphor-icons/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import React, { useCallback, useMemo } from 'react';
@@ -49,8 +49,8 @@ export const HeaderIconButtonWithBadge = ({
 }) => (
   <div
     className={mergeClassnames(
-      'relative w-fit rounded-[100px] p-2 text-[#343330] hover:bg-[#E3E4E5]',
-      open && 'bg-[#CDDDFE] text-primary-50',
+      'relative w-fit rounded-[100px] p-2 text-[#343330] hover:bg-neutral-90',
+      open && 'bg-primary-90 text-primary-50 hover:bg-primary-90',
     )}
   >
     {children}
@@ -66,6 +66,7 @@ const Header = () => {
   const t = useTranslations('HeaderWebApp');
 
   const router = useRouter();
+  const currentPathname = usePathname();
 
   const user = useAppSelector(state => state.auth.userInfo);
   // const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
@@ -166,30 +167,14 @@ const Header = () => {
               )
             : (
                 <div className="flex items-center gap-2">
-                  <Popover position="bottom-start">
-                    {({ open, close }) => (
-                      <>
-                        <Popover.Trigger data-testid="messenger-popover-trigger">
-                          <HeaderIconButtonWithBadge
-                            badge={totalUnread}
-                            open={open}
-                          >
-                            <MessengerLogo className="text-[28px]" />
-                          </HeaderIconButtonWithBadge>
-                        </Popover.Trigger>
-                        <Popover.Panel className="flex flex-col gap-1 p-2">
-                          <MessengerPopover
-                            conversations={conversations}
-                            onSeeAllMessagesClick={() => router.push('/messages')}
-                            onItemClick={close}
-                          />
-                        </Popover.Panel>
-                      </>
-                    )}
-                  </Popover>
+                  <button type="button" className="xl:hidden" onClick={() => router.push('/messages')}>
+                    <HeaderIconButtonWithBadge badge={totalUnread} open={currentPathname === '/messages'}>
+                      <MessengerLogo className="text-[28px]" />
+                    </HeaderIconButtonWithBadge>
+                  </button>
                   {(!isLoading && !error) && (
                     <button type="button" className="xl:hidden" onClick={() => router.push('/notifications')}>
-                      <HeaderIconButtonWithBadge badge={data ? data.unseenCount : 0} open={false}>
+                      <HeaderIconButtonWithBadge badge={data ? data.unseenCount : 0} open={currentPathname === '/notifications'}>
                         <Bell className="text-[28px]" />
                       </HeaderIconButtonWithBadge>
                     </button>
