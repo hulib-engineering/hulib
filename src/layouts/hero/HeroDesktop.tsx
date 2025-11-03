@@ -5,6 +5,7 @@ import Image from 'next/image';
 import WavesurferPlayer from '@wavesurfer/react';
 import { useLocale, useTranslations } from 'next-intl';
 
+import React from 'react';
 import type { HeroProps } from '.';
 
 import Button from '@/components/core/button/Button';
@@ -162,7 +163,7 @@ const HeroDesktop = (props: HeroProps) => {
                 </div>
                 <Image
                   alt="Hero artwork"
-                  src="/assets/images/fs-hero-artwork.png"
+                  src="/assets/images/hero-artwork.png"
                   priority
                   width={748}
                   height={511}
@@ -182,7 +183,7 @@ const HeroDesktop = (props: HeroProps) => {
               : '/assets/docs/project-proposal-vi.pdf'
           }
           size="lg"
-          className="!size-fit rounded-full bg-lp-primary-blue px-6 py-4 text-xl uppercase leading-7"
+          className="!size-fit rounded-full bg-lp-primary-blue px-6 py-4 text-xl uppercase leading-7 hover:bg-primary-hover"
           iconRight={<ArrowRight weight="bold" className="text-2xl" />}
         >
           {t('hero_call_to_action')}
