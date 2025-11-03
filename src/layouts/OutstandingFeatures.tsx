@@ -2,6 +2,7 @@
 
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useMemo, useRef, useState } from 'react';
 import type { Swiper as SwiperType } from 'swiper';
@@ -14,6 +15,8 @@ import IconButton from '@/components/core/iconButton/IconButton';
 const contentIndexes = ['index_0', 'index_1', 'index_2', 'index_3'] as const;
 
 export default function OutstandingFeatures() {
+  const router = useRouter();
+
   const t = useTranslations('Index');
 
   const swiperRef = useRef<SwiperType>();
@@ -85,7 +88,7 @@ export default function OutstandingFeatures() {
             <h6 className="font-bold leading-7 text-primary-50 lg:text-xl lg:leading-tight">{translations[safeIndex]?.heading ?? ''}</h6>
             <p className="text-sm leading-loose text-[#212121] lg:text-lg lg:leading-normal">{translations[safeIndex]?.content ?? ''}</p>
           </div>
-          <Button size="lg" className="bg-lp-primary-blue hover:bg-primary-hover">
+          <Button size="lg" className="bg-lp-primary-blue hover:bg-primary-hover" onClick={() => router.push('/auth/login')}>
             {t('outstanding_features_cta_button')}
           </Button>
         </div>

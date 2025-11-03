@@ -50,6 +50,7 @@ const HeroMobile = (props: HeroProps) => {
             }
             size="lg"
             iconRight={<ArrowRight />}
+            className="bg-lp-primary-blue hover:bg-primary-hover"
           >
             {t('hero_call_to_action')}
           </Button>
@@ -72,7 +73,7 @@ const HeroMobile = (props: HeroProps) => {
           <div className="relative flex w-full flex-col items-center justify-center">
             <Image
               alt="Hero artwork"
-              src="/assets/images/fs-hero-artwork.png"
+              src="/assets/images/hero-artwork.png"
               priority
               width={276}
               height={188}
