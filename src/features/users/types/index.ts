@@ -1,4 +1,7 @@
+import type { z } from 'zod';
+
 import type { Topic } from '@/libs/services/modules/user/userType';
+import type { EducationValidation, WorkExperienceValidation } from '@/validations/ProfileValidation';
 
 export type User = {
   id: number;
@@ -49,4 +52,6 @@ export type User = {
       photo?: string;
     };
   }[];
+  works: (z.infer<typeof WorkExperienceValidation> & { id: number })[];
+  educations: (z.infer<typeof EducationValidation> & { id: number })[];
 };

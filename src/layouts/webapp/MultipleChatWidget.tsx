@@ -143,17 +143,28 @@ const ChatWindow = (props: IChatWindowProps) => {
       return undefined;
     }
 
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
     const shouldMarkAsRead = () => {
+      const isScrollable = container.scrollHeight > container.clientHeight;
       const atBottom = container.scrollTop <= 10;
-      if (atBottom) {
-        props.onMarkAsRead();
-        dispatch(markAsRead(props.id));
+      if (!isScrollable || atBottom) {
+        // Delay slightly before marking as read
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(() => {
+          props.onMarkAsRead();
+          dispatch(markAsRead(props.id));
+        }, 300);
+      } else if (timeoutId) {
+        clearTimeout(timeoutId);
       }
     };
 
-    container.addEventListener('scroll', shouldMarkAsRead);
-
     shouldMarkAsRead();
+
+    container.addEventListener('scroll', shouldMarkAsRead);
 
     // Cleanup
     return () => {

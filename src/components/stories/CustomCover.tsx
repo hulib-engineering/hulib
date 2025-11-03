@@ -20,7 +20,7 @@ const CustomCover = ({
     id="cover-book"
     className={mergeClassnames(
       'relative h-[198px] w-[140px] rounded bg-cover bg-no-repeat lg:h-[255px] lg:w-[180px]',
-      active ? 'grayscale-0' : 'grayscale',
+      !active && 'grayscale',
     )}
     style={{
       backgroundImage: `url(${

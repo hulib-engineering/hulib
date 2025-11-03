@@ -13,9 +13,9 @@ type AvatarProps = WithChildren<{
   className?: string;
 }>;
 
-type StatusProps = {
+type StatusProps = WithChildren<{
   position?: StatusOriginProps;
   className?: string;
-};
+}>;
 
 export type { AvatarProps, SizeProps, StatusProps };

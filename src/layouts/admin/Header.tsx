@@ -3,10 +3,10 @@
 import { Bell } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import type { ReactNode } from 'react';
 import React from 'react';
 
-import { mergeClassnames } from '@/components/core/private/utils';
+import { HeaderIconButtonWithBadge } from '../webapp/Header';
+
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import AdvancedSearch from '@/layouts/webapp/AdvancedSearch';
@@ -15,35 +15,10 @@ import NotificationPopover from '@/layouts/webapp/NotificationPopover';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
-
 import {
   notificationApi,
   useGetNotificationsQuery,
 } from '@/libs/services/modules/notifications';
-
-export const HeaderIconButtonWithBadge = ({
-  children,
-  badge,
-  open = false,
-}: {
-  children: ReactNode;
-  badge: number;
-  open?: boolean;
-}) => (
-  <div
-    className={mergeClassnames(
-      'relative w-fit rounded-[100px] p-2 text-[#343330] hover:bg-[#E3E4E5]',
-      open && 'bg-[#CDDDFE] text-primary-50',
-    )}
-  >
-    {children}
-    {badge > 0 && (
-      <div className="absolute right-0 top-1 flex h-4 w-[18px] items-center justify-center rounded-lg border border-white bg-red-50 px-1 py-[0.5px] text-[10px] font-medium leading-3 text-white">
-        {badge}
-      </div>
-    )}
-  </div>
-);
 
 const Header = () => {
   const router = useRouter();

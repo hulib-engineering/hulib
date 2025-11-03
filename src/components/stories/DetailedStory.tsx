@@ -17,7 +17,7 @@ type PageProps = {
   density?: 'soft' | 'hard';
 };
 
-const Page = forwardRef<HTMLDivElement, PageProps>(
+export const Page = forwardRef<HTMLDivElement, PageProps>(
   ({ number, title, children, density = 'soft' }, ref) => (
     <div
       className={mergeClassnames(
