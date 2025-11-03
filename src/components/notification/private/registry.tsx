@@ -16,16 +16,21 @@ export const notificationRegistry: Record<
   ComponentType<NotificationComponentProps>
 > = {
   [NotificationType.ACCOUNT_UPGRADE]: DefaultNotificationCard,
-  [NotificationType.STORY_PUBLISH]: DefaultNotificationCard,
+  // [NotificationType.STORY_PUBLISH_REQUEST]: DefaultNotificationCard,
   [NotificationType.SESSION_REQUEST]: DefaultNotificationCard,
   [NotificationType.STORY_REVIEW]: DefaultNotificationCard,
+  [NotificationType.STORY_PUBLISH]: DefaultNotificationCard,
   [NotificationType.STORY_REJECTION]: InformativeNotificationCard,
   [NotificationType.HUBER_REPORT]: DefaultNotificationCard,
+  [NotificationType.HUBER_WARNING]: InformativeNotificationCard,
   [NotificationType.HUBER_REJECTION]: InformativeNotificationCard,
   [NotificationType.SESSION_REJECTION]: InformativeNotificationCard,
   [NotificationType.SESSION_APPROVAL]: InformativeNotificationCard,
   [NotificationType.SESSION_MISS]: InformativeNotificationCard,
   [NotificationType.SESSION_CANCELLATION]: InformativeNotificationCard,
   [NotificationType.SESSION_COMPLETION]: SystemNotificationCard,
+  [NotificationType.USER_APPEAL]: DefaultNotificationCard,
+  [NotificationType.APPEAL_APPROVAL]: DefaultNotificationCard,
+  [NotificationType.APPEAL_REJECTION]: DefaultNotificationCard,
   [NotificationType.OTHER]: SystemNotificationCard,
 };

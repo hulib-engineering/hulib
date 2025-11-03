@@ -75,16 +75,19 @@
   "Index": {
     "meta_title": "HuLib | Landing Page",
     "meta_description": "There is a story and experience within each of us, so we are born to be somebody.",
+
     "hero_title": "a social project",
-    "hero_motto": "Explore the Human Book bookshelf now",
+    "hero_motto": "Stories shared, hearts heard, and connections made.",
     "hero_description": "There is a story and experience within each of us, so we are born to be somebody.",
     "hero_call_to_action": "Learn more",
     "hero_message_1": "'There is <important>a crack</important> in everything, that's how <important>the light</important> gets in.'",
     "hero_message_2": "'You are <important>not alone</important> in your <important>struggles</important>.'",
-    "hero_mentor_quantity": "100+ <normal>Experienced Human Books</normal>",
+    "hero_mentor_quantity": "200+ <normal>Shared Stories</normal>",
+
     "event_title": "upcoming event on December 14, 2024",
     "event_description": "Join us for 'Work or Study' Event, focused on different stories and backgrounds to pursue our dreams.",
     "event_call_to_action": "register",
+
     "feature_peers": {
       "title": "People with the same stories",
       "description": "100+ human books and volunteers having personal experience with the same problem you're into."
@@ -97,6 +100,7 @@
       "title": "Safely Sharing",
       "description": "Feel free to share your stories without being judged."
     },
+
     "event_feature_peers": {
       "title": "Meeting with experts",
       "description": "Engaging with experts to gain valuable insights into achieving emotional balance and well-being."
@@ -109,6 +113,7 @@
       "title": "Safely Sharing",
       "description": "Feel free to share your stories without being judged."
     },
+
     "about_title": "what is hulib",
     "about_description": "a community project promotes well-being through shared stories with human books.",
     "about_stories": {
@@ -123,6 +128,34 @@
       "title": "our <br></br><highlight>vision</highlight>",
       "description": "Our vision is to create a safe and proactive community, offering support from human books, to promote well-being and shared experiences."
     },
+
+    "outstanding_features_title": "ngôi nhà của chúng tớ",
+    "outstanding_features_description": "HULIB - Nền tảng kết nối trực tuyến",
+    "outstanding_features": {
+      "index_0": {
+        "heading": "Human Book Collection",
+        "content": "Explore 100+ “online human books,” where Hubers share real stories about career, self-discovery, relationships, family, and more."
+      },
+      "index_1": {
+        "heading": "Every stories is a puzzle",
+        "content": "Piecing together every story, we believe each one helps us discover ourselves and quietly inspires those who listen"
+      },
+      "index_2": {
+        "heading": "Effective time management",
+        "content": "HuLib’s integrated scheduling makes connecting with Hubers easier and more flexible than ever."
+      },
+      "index_3": {
+        "heading": "Safe online sharing",
+        "content": "Every conversation on HuLib is fully confidential. Our video feature is built in-house, not using external platforms like Google Meet or Zoom, to keep your experience private and secure."
+      }
+    },
+    "outstanding_features_cta_button": "Experience now",
+
+    "our_mascots_title": "our brand buddies",
+    "our_mascots_description": "From Sharing to Understanding",
+    "our_mascots_hubers": "Hey, I’m <highlight>Huber</highlight> - just someone <highlight>sharing</highlight> small pieces of <highlight>my stories</highlight>, hoping to bring <highlight>a little light</highlight> and remind <highlight>Liber</highlight> you’re not alone.<br></br><br></br> <i>Every story isn’t just meant to inspire, but to carry <highlight>warmth</highlight> and <highlight>understanding</highlight> through uncertain days.</i>",
+    "our_mascots_libers": "Hi I am <highlight>Liber</highlight> — someone who <highlight>listen, seek empathy and accompany</highlight>.<br></br><br></br> <i>At HuLib, I can pick the <highlight>“human books”</highlight> that <highlight>resonate with me</highlight> and connect with <highlight>Hubers</highlight>, <highlight>discovering</highlight> more about myself.</i>",
+
     "testimonial_title": "meet our team",
     "testimonial_description": "What do our members say?",
     "sponsors_title": "sponsors",
@@ -163,6 +196,39 @@
           "p1": "As a participant, you can sign up to share your story, connect with human books, or engage in virtual discussions.",
           "p2": "If you're an expert or volunteer interested in mentoring, we welcome your contribution. Stay tuned for updates on workshops and community projects. Explore the possibilities of involvement and make a positive impact with HuLib."
         }
+      }
+    },
+    "news_title": "Events - News",
+    "news_info": {
+      "index_0": {
+        "location": "Da Nang, Viet Nam",
+        "heading": "Workshop “Hiểu mình, thương mình”",
+        "content": "Last Saturday was truly special. A day full of emotions, everyone came with their own story and together, we were heard."
+      },
+      "index_1": {
+        "location": "Ho Chi Minh City, Vietnam",
+        "heading": "Exhibition - VietFuture Awards 2025",
+        "content": "A milestone in HuLib’s journey, spreading the message of well-being and mental health."
+      },
+      "index_2": {
+        "location": "Online",
+        "heading": "Event “Tôi là ai giữa ngã ba đường”",
+        "content": "May this event give you the courage to move forward with confidence and heart."
+      },
+      "index_3": {
+        "location": "Online",
+        "heading": "Story Competition “Nhặc lại khoảnh khắc”",
+        "content": "Not just a contest but a space for us to pause, reflect, and appreciate our experiences. Happiness and sadness come together to create incredible journeys."
+      },
+      "index_4": {
+        "location": "Online",
+        "heading": "Event “Tiếng chuông tỉnh thức”",
+        "content": "No one enjoys toxic relationships. The event reminds us to love ourself, and create our own happiness before expecting it from others."
+      },
+      "index_5": {
+        "location": "Online",
+        "heading": "Event “Đi học, đi làm - hướng nào dễ hơn”",
+        "content": "Sharing was truly meaningful. Going in the right direction is important, but optimism and perseverance are key to success."
       }
     },
     "newsletter_title": "join with us",
@@ -712,7 +778,8 @@
     "notification": "Thanks for your story! HuLib will keep you informed when our process completes. We look forward to your participation as a Huber!",
     "btn_name_notification": "Explore",
     "back_to_home": "Back to Homepage",
-    "placeholder": "Placeholder"
+    "placeholder": "Placeholder",
+    "location": "Location"
   },
   "feedback_form": {
     "session_feedback": "Feedback for the session",

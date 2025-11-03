@@ -22,10 +22,17 @@ import { toLocaleDateString, toLocaleTimeString } from '@/utils/dateUtils';
 
 type SessionCardProps = {
   session: ReadingSession;
+  expandByDefault?: boolean;
+  sharingMissingReason?: boolean;
   className?: string;
 };
 
-const SessionDetailCard: FC<SessionCardProps> = ({ session }) => {
+const SessionDetailCard: FC<SessionCardProps> = ({
+  session,
+  expandByDefault = false,
+  sharingMissingReason = false,
+  className,
+}) => {
   const isMissed = session.sessionStatus === StatusEnum.Missed;
   const isDone = session.sessionStatus === StatusEnum.Finished;
 
@@ -36,7 +43,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({ session }) => {
   const userId = useAppSelector(state => state.auth.userInfo?.id);
   const isLiber = Number(userId) === Number(session?.reader?.id);
 
-  const [isAddingReason, setIsAddingReason] = useState(false);
+  const [isAddingReason, setIsAddingReason] = useState(sharingMissingReason);
   const [isRejecting, setIsRejecting] = useState(false);
   const [reason, setReason] = useState('');
 
@@ -52,14 +59,18 @@ const SessionDetailCard: FC<SessionCardProps> = ({ session }) => {
     try {
       const payload: any = {
         id: session.id,
-        sessionStatus: newStatus,
       };
 
-      if (newStatus === StatusEnum.Canceled) {
+      if (newStatus === 'missed') {
         payload.note = reason;
-      }
-      if (newStatus === StatusEnum.Rejected) {
-        payload.rejectReason = reason;
+      } else {
+        payload.sessionStatus = newStatus;
+        if (newStatus === StatusEnum.Canceled) {
+          payload.note = reason;
+        }
+        if (newStatus === StatusEnum.Rejected) {
+          payload.rejectReason = reason;
+        }
       }
 
       await updateStatus(payload).unwrap();
@@ -71,12 +82,12 @@ const SessionDetailCard: FC<SessionCardProps> = ({ session }) => {
   };
   const handleConfirmReason = async () => {
     setReason('');
-    await handleUpdateStatus(isRejecting ? 'rejected' : 'canceled', reason);
+    await handleUpdateStatus((isMissed && sharingMissingReason) ? 'missed' : isRejecting ? 'rejected' : 'canceled', reason);
   };
 
-  if (isMissed) {
+  if (isMissed && !sharingMissingReason) {
     return (
-      <div className="w-full overflow-hidden rounded-2xl bg-red-98 px-5 py-4 font-medium shadow-sm sm:max-w-[25rem]">
+      <div className="w-full overflow-hidden rounded-2xl bg-red-98 px-5 py-4 font-medium shadow-sm sm:w-[25rem]">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
             <div className="rounded-full bg-red-60 px-4 py-2 text-sm font-medium uppercase leading-4 text-white">missed</div>
@@ -110,11 +121,12 @@ const SessionDetailCard: FC<SessionCardProps> = ({ session }) => {
   return (
     <div
       className={mergeClassnames(
-        'w-full overflow-hidden rounded-2xl py-4 px-5 shadow-sm sm:max-w-[396px] font-medium',
+        'w-full overflow-hidden rounded-2xl py-4 px-5 shadow-sm font-medium sm:w-[25rem]',
         isLiber ? 'bg-primary-98' : 'bg-yellow-98',
+        className,
       )}
     >
-      <Accordion>
+      <Accordion defaultValue={expandByDefault ? 'single-session' : undefined}>
         <Accordion.Item value="single-session">
           <Accordion.Header
             className={mergeClassnames(
@@ -124,7 +136,10 @@ const SessionDetailCard: FC<SessionCardProps> = ({ session }) => {
           >
             <Accordion.Button className="p-0">
               <div className="flex items-center gap-2.5">
-                <h5 className="text-2xl font-medium text-neutral-10">{isLiber ? 'Vibing with Huber' : 'Session with Liber'}</h5>
+                <h5 className="text-2xl font-medium text-neutral-10">
+                  {isMissed && sharingMissingReason
+                    ? 'Meeting not attended' : isLiber ? 'Vibing with Huber' : 'Session with Liber'}
+                </h5>
                 {session.sessionStatus === StatusEnum.Pending && (
                   <span
                     className="rounded-[100px] bg-orange-90 p-[7px] text-sm font-medium leading-4 text-orange-50 hulib-open:hidden"
@@ -162,13 +177,18 @@ const SessionDetailCard: FC<SessionCardProps> = ({ session }) => {
               <span>From:</span>
               <span className="text-primary-60">{session.story.title}</span>
             </div>
-            {session.sessionStatus !== StatusEnum.Finished && (
-              <ScheduleInfoItemLayout
-                icon={<CalendarDot className="text-[#343330]" />}
-                title={`${toLocaleDateString(session.startedAt, locale === 'en' ? 'en-US' : 'vi-VI')} | ${toLocaleTimeString(session.startedAt, locale)} - ${toLocaleTimeString(session.endedAt, locale)}`}
-                className="mt-2"
-              />
-            )}
+            <div className="flex items-center justify-between">
+              {session.sessionStatus !== StatusEnum.Finished && (
+                <ScheduleInfoItemLayout
+                  icon={<CalendarDot className="text-[#343330]" />}
+                  title={`${toLocaleDateString(session.startedAt, locale === 'en' ? 'en-US' : 'vi-VI')} | ${toLocaleTimeString(session.startedAt, locale)} - ${toLocaleTimeString(session.endedAt, locale)}`}
+                  className="mt-2"
+                />
+              )}
+              {expandByDefault && !isMissed && (
+                <Link href="#" className="text-sm font-medium leading-4 text-primary-60">View on schedule</Link>
+              )}
+            </div>
             {session.sessionStatus === StatusEnum.Approved && (
               <div className="mt-2 flex items-center gap-2 text-black">
                 <MapPinArea className="text-[#343330]" />
@@ -263,7 +283,8 @@ const SessionDetailCard: FC<SessionCardProps> = ({ session }) => {
                   <TextInput
                     id="reason"
                     type="text"
-                    label="Reason"
+                    label="Reason:"
+                    placeholder={sharingMissingReason ? 'Share the reason here' : ''}
                     isError={isAddingReason && reason === ''}
                     onChange={e => setReason(e.target.value)}
                   />

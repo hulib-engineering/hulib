@@ -42,7 +42,6 @@ export const notificationConfig: NotificationConfig = {
         would love to have a meeting with you.
       </>
     ),
-    route: () => '/my-schedule',
   },
   [NotificationType.STORY_REVIEW]: {
     getMessage: (m: Notification) => (
@@ -55,7 +54,7 @@ export const notificationConfig: NotificationConfig = {
     ),
   },
   [NotificationType.STORY_PUBLISH]: {
-    getMessage: (m: Notification, roleId?: number) => roleId === Role.LIBER ? (
+    getMessage: (m: Notification, roleId?: number) => roleId === Role.HUBER ? (
       <>
         Your story,
         {' '}
@@ -70,7 +69,7 @@ export const notificationConfig: NotificationConfig = {
       </>
     ),
     route: (relatedEntityId: number, roleId?: number) => (roleId && roleId === Role.ADMIN)
-      ? `/admin/stories/approval/${relatedEntityId}` : '',
+      ? `/admin/stories/${relatedEntityId}/approval` : `/explore-story/${relatedEntityId}`,
   },
   [NotificationType.STORY_REJECTION]: {
     getMessage: (m: Notification) => (
@@ -91,6 +90,14 @@ export const notificationConfig: NotificationConfig = {
         <span className="font-bold">” is reported.</span>
       </>
     ),
+  },
+  [NotificationType.HUBER_WARNING]: {
+    getMessage: () => (
+      <>
+        Your account has received a warning due to a report. Your account will be ban if you receive 3 reports.
+      </>
+    ),
+    title: <span className="text-orange-50">You’ve been warned</span>,
   },
   [NotificationType.HUBER_REJECTION]: {
     getMessage: () => (
@@ -193,5 +200,24 @@ export const notificationConfig: NotificationConfig = {
       </>
     ),
     title: <span className="text-orange-50">Meeting not attended !</span>,
+  },
+  [NotificationType.USER_APPEAL]: {
+    getMessage: (m: Notification) => (
+      <span className="font-bold text-red-50">{`User appeal report #${m.relatedEntity?.reportId}`}</span>
+    ),
+  },
+  [NotificationType.APPEAL_APPROVAL]: {
+    getMessage: () => (
+      <>
+        Your appeal request is accepted, your account does not receive warning. Thank you for clarifying the situation.
+      </>
+    ),
+  },
+  [NotificationType.APPEAL_REJECTION]: {
+    getMessage: () => (
+      <>
+        After reviewing your appeal, we’ve decided to keep the warning. Please be careful that your account will be ban if you receive 3 reports.
+      </>
+    ),
   },
 } as const;

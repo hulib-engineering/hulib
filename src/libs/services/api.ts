@@ -132,6 +132,7 @@ export const api = createApi({
     'StoryTopic',
     'StoryReview',
     'StoryReviewOverview',
+    'Report',
   ],
   endpoints: () => ({}),
 });

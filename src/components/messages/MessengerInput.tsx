@@ -48,9 +48,11 @@ const StickerPicker = ({
 
 export const MessengerInput = ({
   outerStickerPicker = false,
+  className,
   onSend,
 }: {
   outerStickerPicker?: boolean;
+  className?: string;
   onSend: (msg: string, type?: 'txt' | 'img') => void;
 }) => {
   const t = useTranslations('Common');
@@ -76,7 +78,7 @@ export const MessengerInput = ({
   };
 
   return (
-    <div className="flex flex-col gap-2 border-t bg-white py-2.5">
+    <div className={mergeClassnames('flex flex-col gap-2 border-t bg-white py-2.5', className)}>
       <div className="flex items-center justify-between gap-2.5 px-3">
         <TextInput
           id="message"

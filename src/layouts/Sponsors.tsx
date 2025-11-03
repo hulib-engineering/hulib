@@ -87,18 +87,19 @@ const SponsorList = [
     refUrl: 'https://ybox.vn',
   },
   {
+    name: 'DIAMOND',
+    logoUrl: '/assets/images/sponsors/UNESCO.jpg',
+    type: 'diamond-sponsor',
+    tooltipKey: 'diamond_sponsor',
+    refUrl:
+      'https://www.unesco.org/en/articles/unesco-and-seventeen-award-grants-100-youth-led-projects-around-world?hub=701',
+  },
+  {
     name: 'Edu2Review',
     logoUrl: '/assets/images/sponsors/E2R.png',
     type: 'media-sponsor',
     tooltipKey: 'media_sponsor',
     refUrl: 'https://edu2review.com',
-  },
-  {
-    name: 'I Can Connect',
-    logoUrl: '/assets/images/sponsors/ICC.png',
-    type: 'silver-sponsor',
-    tooltipKey: 'silver_sponsor',
-    refUrl: 'https://www.icanconnect.vn',
   },
   {
     name: 'Eduwing Global',
@@ -114,27 +115,19 @@ const SponsorList = [
     tooltipKey: 'scholarship_sponsor',
     refUrl: 'https://ieltsonlinetests.com',
   },
-  // {
-  //   name: 'JCI',
-  //   logoUrl: '/assets/images/sponsors/JCI.png',
-  //   type: 'media-sponsor',
-  //   tooltipKey: 'media_support',
-  //   refUrl: 'https://jci.vn/category/chapters/jci-danang',
-  // },
-  {
-    name: 'DIAMOND',
-    logoUrl: '/assets/images/sponsors/DIAMOND_NEW.PNG',
-    type: 'diamond-sponsor',
-    tooltipKey: 'diamond_sponsor',
-    refUrl:
-      'https://www.unesco.org/en/articles/unesco-and-seventeen-award-grants-100-youth-led-projects-around-world?hub=701',
-  },
   {
     name: 'YOUTHXYOUTH',
     logoUrl: '/assets/images/sponsors/YOUTHXYOUTH.png',
     type: 'gold-sponsor',
     tooltipKey: 'gold_sponsor',
     refUrl: 'https://www.youthxyouth.com/',
+  },
+  {
+    name: 'I Can Connect',
+    logoUrl: '/assets/images/sponsors/ICC.png',
+    type: 'silver-sponsor',
+    tooltipKey: 'silver_sponsor',
+    refUrl: 'https://www.icanconnect.vn',
   },
 ] as const;
 

@@ -76,18 +76,6 @@ const chatSlice = createSlice({
         chat.isMinimized = false;
       }
     },
-    // addMessage: (
-    //   state,
-    //   action: PayloadAction<{ id: string; message: Message }>,
-    // ) => {
-    //   const chat = state.chats.find((c) => c.id === action.payload.id);
-    //   if (chat) {
-    //     chat.messages.push(action.payload.message);
-    //     if (!chat.isOpen || chat.isMinimized) {
-    //       chat.unread += 1;
-    //     }
-    //   }
-    // },
     markAsRead: (state, action: PayloadAction<string>) => {
       const chat = state.chats.find(c => c.id === action.payload);
       if (chat) {
