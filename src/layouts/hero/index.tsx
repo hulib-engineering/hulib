@@ -26,7 +26,6 @@ export type HeroProps = {
 
 const StarIcons: IconType[] = [
   { size: 16, yPosition: 'top-[99px] -translate-y-1/2', xPosition: 'right-[277px] translate-x-1/2' },
-  { size: 60, yPosition: 'top-1/2 -translate-y-1/2', xPosition: 'left-1/2 -translate-x-1/2' },
 ];
 const VectorIcons: IconType[] = [
   {
