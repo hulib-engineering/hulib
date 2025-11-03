@@ -45,7 +45,7 @@ export default function OutstandingFeatures() {
               loop
               mousewheel
               modules={[Mousewheel]}
-              className="pb-0"
+              className="!pb-0"
               onSwiper={swiper => (swiperRef.current = swiper)}
               onSlideChange={swiper => setCurrentSlideIndex(swiper.realIndex)}
             >

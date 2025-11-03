@@ -45,7 +45,7 @@ export default function RecommendedHuberList() {
             },
           }}
           loop
-          className="w-full pb-0"
+          className="w-full !pb-0"
           onSwiper={swiper => (swiperRef.current = swiper)}
         >
           {data.data.map((huber: Huber) => (
