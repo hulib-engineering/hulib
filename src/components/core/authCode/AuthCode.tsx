@@ -22,6 +22,7 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
       placeholder,
       onChange,
       isValid = true,
+      size = 'md',
     },
     ref,
   ) => {
@@ -158,11 +159,12 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
           }}
           maxLength={1}
           className={mergeClassnames(
-            'h-[68px] w-[68px] rounded-xl bg-neutral-98 text-2xl appearance-none',
+            'rounded-xl bg-neutral-98 text-2xl appearance-none',
             'border-2 border-solid border-neutral-90',
             'font-medium text-neutral-40 text-center hover:border-primary-50 py-4',
             'focus:shadow-[0px_0px_0px_4px_#CDDDFE] focus:outline-none',
             'focus-visible::shadow-[0px_0px_0px_4px_#CDDDFE] focus-visible::outline-none',
+            size === 'md' ? 'h-[68px] w-[68px]' : 'w-full h-10',
             !isValid && 'text-chichi border-red-50',
             disabled && 'bg-neutral-90 cursor-not-allowed',
           )}

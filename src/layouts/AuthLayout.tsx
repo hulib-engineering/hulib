@@ -33,7 +33,7 @@ const AuthLayout = (props: IAuthLayoutProps) => {
           height={1024}
         />
       </div>
-      <div className="size-full bg-white p-12 sm:h-fit sm:w-3/4 sm:rounded-[26px] md:w-7/12 xl:h-full xl:p-0">
+      <div className="size-full bg-white px-[1.125rem] py-8 sm:h-fit sm:w-3/4 sm:rounded-[26px] md:w-7/12 xl:h-full xl:px-0 xl:py-12">
         <div className="m-auto flex size-full flex-col items-center justify-center gap-8 sm:w-5/6 xl:w-7/12">
           <Link href="/">
             <Logo />
