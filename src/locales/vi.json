@@ -420,13 +420,24 @@
   },
   "SignIn": {
     "meta_title": "Đăng nhập",
-    "meta_description": "Đăng nhập vào tài khoản của bạn thông qua quá trình đăng nhập thân thiện với người dùng."
+    "meta_description": "Đăng nhập vào tài khoản của bạn thông qua quá trình đăng nhập thân thiện với người dùng.",
+    "welcome_back": "Chào mừng bạn đến với HuLib!",
+    "login_to_hulib": "Đăng nhập vào tài khoản HuLib của bạn nào",
+    "email": "Địa chỉ email",
+    "password": "Mật khẩu",
+    "keep_logged_in": "Giữ mình luôn đăng nhập nha",
+    "forgot_password": "Quên mật khẩu?",
+    "or": "Hoặc",
+    "new_user": "Bạn mới đến Hulib?",
+    "register": "Tạo tài khoản ngay",
+    "log_in": "Đăng nhập",
+    "with_gg": "với Google"
   },
   "SignUp": {
-    "meta_title": "Sign up",
+    "meta_title": "Đăng ký",
     "meta_description": "Đăng ký một tài khoản thông qua quá trình đăng ký thân thiện với người dùng.",
     "title": "Tạo tài khoản",
-    "step": "Step {step}/3",
+    "step": "Bước {step}/3",
     "email": "Email",
     "password": "Mật khẩu",
     "confirm_password": "Nhập lại mật khẩu",
@@ -434,6 +445,7 @@
     "or_social_login": "Hoặc đăng ký bằng",
     "registered": "Đã có tài khoản?",
     "log_in": "Đăng nhập",
+    "with_gg": "với Google",
     "fullname": "Họ và tên",
     "gender": "Giới tính",
     "birthday": "Ngày sinh",
@@ -449,7 +461,22 @@
     "support_otp": "Hãy nhập mã xác minh 6 chữ số được gửi đến",
     "not_receive_otp": "Chưa nhận được email?",
     "resend": "Gửi lại",
-    "contact_us": "Nếu cần giúp đỡ, liên lạc với chúng tôi qua email"
+    "contact_us": "Nếu cần giúp đỡ, liên lạc với chúng tôi qua email",
+    "welcome": "Chào mừng đến với",
+    "account_created": "Xin chúc mừng, tài khoản của bạn đã được tạo",
+    "get_started": "Bắt đầu",
+    "huber_register": "Đăng ký thờ thành Huber"
+  },
+  "ForgotPassword": {
+    "meta_title": "Quên mật khẩu",
+    "meta_description": "Quên mật khẩu ...",
+    "forgot_password": "Bạn đã quên mất mật khẩu?",
+    "forgot_password_subheading": "Đừng lo lắng, hãy nhập email tài khoản của bạn và chúng mình sẽ gửi cho bạn liên kết để đặt lại mật khẩu.",
+    "email": "Địa chỉ email",
+    "send_reset_link": "Gửi link đến email",
+    "back_to_login": "Quay lại Đăng nhập",
+    "check_mail": "Hãy kiểm tra email của bạn nào.",
+    "check_mail_subheading": "Liên kết đặt lại mật khẩu đã được gửi đến email của bạn"
   },
   "MyProfile": {
     "meta_title": "HuLib | Thông tin của tôi",
