@@ -44,28 +44,30 @@ export default function News() {
   const swiperRef = useRef<SwiperType>();
 
   return (
-    <section className="flex w-full flex-col items-center justify-center gap-3 py-3 text-[#002254] lg:gap-8 lg:py-[100px]">
+    <section className="flex w-full flex-col items-center justify-center gap-3 py-3 text-[#002254] xl:gap-8 xl:py-[100px]">
       <h1 className="text-center text-[1.75rem] font-bold leading-none sm:text-[56px]">
         {t('news_title')}
       </h1>
-      <div className="relative size-full overflow-visible px-4 lg:px-0">
+      <div className="relative size-full max-w-7xl overflow-visible px-4">
         <Swiper
-          spaceBetween={8}
+          spaceBetween={32}
+          slidesPerView={1}
           breakpoints={{
-            1280: { spaceBetween: -94 },
+            1280: {
+              spaceBetween: -84,
+              slidesPerView: 1.5,
+            },
           }}
-          slidesPerView="auto"
           centeredSlides
-          initialSlide={1}
           loop
           className="overflow-visible"
           onSwiper={swiper => (swiperRef.current = swiper)}
         >
           {NewsAndEvents.map((each, index) => (
-            <SwiperSlide key={index} className="flex w-full justify-center overflow-visible lg:!w-2/3">
+            <SwiperSlide key={index} className="flex w-full justify-center overflow-visible">
               {({ isActive }) => (
                 <>
-                  <Link href={each.link} target="_blank" className="hidden size-full lg:block">
+                  <Link href={each.link} target="_blank" className="hidden size-full xl:block">
                     <div
                       className={mergeClassnames(
                         'relative size-full rounded-[2rem] overflow-hidden transition-transform duration-500 ease-in-out origin-center',
@@ -102,7 +104,7 @@ export default function News() {
                       </div>
                     </div>
                   </Link>
-                  <div className="flex size-full flex-col gap-2 lg:hidden">
+                  <div className="flex size-full flex-col gap-2 xl:hidden">
                     <Link href={each.link} target="_blank" className="size-full">
                       <Image
                         src={`/assets/images/news/news_${index}.jpg`}
@@ -139,7 +141,7 @@ export default function News() {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className="pointer-events-none absolute left-0 top-1/2 z-[9999] mx-auto hidden w-full items-center justify-between -translate-y-1/2 lg:flex">
+        <div className="pointer-events-none absolute left-0 top-1/2 z-[9999] mx-auto hidden w-full items-center justify-between -translate-y-1/2 xl:flex">
           <div className="pointer-events-auto mx-auto flex w-3/4 items-center justify-between">
             <IconButton
               variant="secondary"
@@ -160,7 +162,7 @@ export default function News() {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center gap-4 lg:hidden">
+      <div className="flex items-center justify-center gap-4 xl:hidden">
         <IconButton
           variant="secondary"
           size="lg"
