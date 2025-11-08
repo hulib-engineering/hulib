@@ -16,6 +16,7 @@ type AuthCodeProps = {
   placeholder?: string;
   onChange: (res: string) => void;
   isValid?: boolean;
+  size?: 'sm' | 'md';
 };
 
 type InputType = 'text' | 'tel' | 'password';

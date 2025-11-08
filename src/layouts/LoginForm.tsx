@@ -1,7 +1,6 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Eye } from '@phosphor-icons/react';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { SessionProvider, signIn, useSession } from 'next-auth/react';
@@ -9,18 +8,21 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
+import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import Input from '@/components/core/input/Input';
 import Label from '@/components/Label';
 import SocialButton from '@/components/SocialButton';
-import TextInput from '@/components/core/textInput/TextInput';
 import type { EmailLoginResponse } from '@/libs/services/modules/auth';
 import { useLoginAsManagerMutation } from '@/libs/services/modules/auth';
 import GoogleIcon from '@/public/assets/icons/google-icon.svg';
 import { LoginValidation } from '@/validations/LoginValidation';
+import TextInput from '@/components/core/textInput-v1/TextInput';
 
 const LoginForm = () => {
+  const t = useTranslations('SignIn');
+
   const { update } = useSession();
 
   const [login] = useLoginAsManagerMutation();
@@ -69,10 +71,10 @@ const LoginForm = () => {
   return (
     <>
       <div className="text-center text-neutral-10">
-        <h2 className="text-4xl font-medium leading-[44px] tracking-[-2%]">
-          Welcome Back
+        <h2 className="text-2xl font-medium leading-8 tracking-[-2%] xl:text-4xl xl:leading-[44px]">
+          {t('welcome_back')}
         </h2>
-        <p className="tracking-[0.5%]">Login to your HuLib account</p>
+        <p className="text-sm tracking-[0.5%] xl:text-base">{t('login_to_hulib')}</p>
       </div>
       <Form
         className="flex w-full flex-col gap-4"
@@ -82,7 +84,7 @@ const LoginForm = () => {
           <TextInput
             id="email"
             type="email"
-            label="Email address"
+            label={t('email')}
             placeholder="hulib@gmail.com"
             {...register('email')}
             isError={!!errors.email}
@@ -93,26 +95,25 @@ const LoginForm = () => {
           <TextInput
             id="password"
             type="password"
-            label="Password"
-            showPasswordText={<Eye />}
+            label={t('password')}
             {...register('password')}
             isError={!!errors.password}
             hintText={errors.password?.message}
           />
         </Form.Item>
-        <Form.Item className="flex justify-between">
-          <fieldset className="flex items-center gap-2">
+        <Form.Item className="flex items-center justify-between">
+          <fieldset className="flex items-center gap-1">
             <Input type="checkbox" id="remember" readOnly={false} />
             <Label
               htmlFor="remember"
               type="checkbox"
-              className="cursor-pointer pb-0 pt-1 text-neutral-30"
+              className="cursor-pointer py-0 text-xs leading-[14px] text-neutral-30"
             >
-              Keep me logged in
+              {t('keep_logged_in')}
             </Label>
           </fieldset>
-          <Link href="forgot-password" className="text-primary-50">
-            Forgot password?
+          <Link href="forgot-password" className="text-xs leading-[14px] text-primary-50">
+            {t('forgot_password')}
           </Link>
         </Form.Item>
         <Form.Item className="py-4">
@@ -123,13 +124,13 @@ const LoginForm = () => {
             disabled={isSubmitting}
             animation={isSubmitting && 'progress'}
           >
-            Login
+            {t('log_in')}
           </Button>
         </Form.Item>
       </Form>
       <div className="inline-flex h-6 items-center justify-start gap-2 self-stretch">
         <div className="h-px w-full shrink grow basis-0 bg-neutral-90" />
-        <div className="text-center tracking-tight text-neutral-30">Or</div>
+        <div className="text-center tracking-tight text-neutral-30">{t('or')}</div>
         <div className="h-px w-full shrink grow basis-0 bg-neutral-90" />
       </div>
       <div className="w-full">
@@ -138,7 +139,7 @@ const LoginForm = () => {
           className="w-full"
           onClick={() => signIn('google', { callbackUrl: '/home' })}
         >
-          Log in with Google
+          {`${t('log_in')} ${t('with_gg')}`}
         </SocialButton>
         {/* <SocialButton
           iconUrl={FacebookIcon}
@@ -149,9 +150,9 @@ const LoginForm = () => {
         </SocialButton> */}
       </div>
       <div className="inline-flex items-center justify-center gap-4 py-3">
-        <div className="tracking-tight text-neutral-30">New to HuLib?</div>
+        <div className="tracking-tight text-neutral-30">{t('new_user')}</div>
         <Link href="register" className="font-medium text-primary-50 underline">
-          Create an account
+          {t('register')}
         </Link>
       </div>
     </>
