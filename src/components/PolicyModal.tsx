@@ -28,17 +28,24 @@ const PolicyModal = (props: WithChildren<IPolicyModalProps>) => {
               src="/assets/images/minified-HULIB-logo.png"
               width={36}
               height={42}
-              className="object-contain"
+              className="hidden object-contain xl:block"
               loading="eager"
             />
-            <h1 className="text-[28px] font-semibold capitalize text-slate-1000">
+            <h1 className="hidden text-[28px] font-semibold capitalize text-slate-1000 xl:block">
               {props.type === 'privacy-policy'
                 ? t('privacy_policy_title')
                 : props.type === 'community-guidelines'
                   ? t('community_guidelines_title')
                   : t('term_of_use_title')}
             </h1>
-            <button type="button" onClick={props.onClose}>
+            <h6 className="text-xl font-medium capitalize leading-7 text-neutral-10 xl:hidden">
+              {props.type === 'privacy-policy'
+                ? t('privacy_policy_title')
+                : props.type === 'community-guidelines'
+                  ? t('community_guidelines_title')
+                  : t('term_of_use_title')}
+            </h6>
+            <button type="button" className="hidden xl:flex" onClick={props.onClose}>
               <XMarkIcon width={24} height={24} />
             </button>
           </div>
