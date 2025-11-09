@@ -12,9 +12,10 @@ export type GetUsersParams = {
 };
 
 // Allowed user status values for update
-type UserStatus = 'active' | 'inactive' | 'under_warning';
+export type UserStatus = 'active' | 'inactive' | 'under_warning';
 
-// Request body for updating user status
-export type UpdateUserStatusRequest = {
-  status: UserStatus;
-};
+export enum UserStatusEnum {
+  ACTIVE = 1,
+  INACTIVE = 2,
+  UNDER_WARNING = 3,
+}

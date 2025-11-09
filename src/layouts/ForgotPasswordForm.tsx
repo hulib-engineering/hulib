@@ -7,6 +7,7 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
+import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import TextInput from '@/components/core/textInput/TextInput';
@@ -20,6 +21,8 @@ type SendLinkEmailSuccessProps = {
 const SendLinkEmailSuccess = ({ inputEmail }: SendLinkEmailSuccessProps) => {
   const router = useRouter();
 
+  const t = useTranslations('ForgotPassword');
+
   return (
     <>
       <div className="text-center text-neutral-10">
@@ -32,13 +35,12 @@ const SendLinkEmailSuccess = ({ inputEmail }: SendLinkEmailSuccessProps) => {
             loading="lazy"
           />
           <h2 className="text-[2rem] font-medium leading-[40px] tracking-[-2%]">
-            Check your email
+            {t('check_mail')}
           </h2>
         </div>
 
         <p className="mt-4 text-base font-normal leading-6 tracking-[0.5%] text-neutral-40">
-          A password reset link has been send to your email
-          {' '}
+          {`${t('check_mail_subheading')} `}
           <a
             target="_blank"
             href="https://mail.google.com/mail/u/1/#inbox"
@@ -62,7 +64,7 @@ const SendLinkEmailSuccess = ({ inputEmail }: SendLinkEmailSuccessProps) => {
           loading="lazy"
         />
         <span className="text-base font-medium leading-5 text-primary-50 underline">
-          Back to login
+          {t('back_to_login')}
         </span>
       </button>
     </>
@@ -71,6 +73,9 @@ const SendLinkEmailSuccess = ({ inputEmail }: SendLinkEmailSuccessProps) => {
 
 const ForgotPasswordForm = () => {
   const router = useRouter();
+
+  const t = useTranslations('ForgotPassword');
+
   const [forgotPassword] = useForgotPasswordMutation();
 
   const {
@@ -105,13 +110,12 @@ const ForgotPasswordForm = () => {
 
   return (
     <>
-      <div className="text-center text-neutral-10">
+      <div className="flex flex-col gap-2 text-center text-neutral-10">
         <h2 className="text-[2rem] font-medium leading-[40px] tracking-[-2%]">
-          Forgot your password?
+          {t('forgot_password')}
         </h2>
         <p className="text-base font-normal leading-6 tracking-[0.5%] text-neutral-40">
-          No worries, enter your account email and we’ll send you a link to
-          reset your password.
+          {t('forgot_password_subheading')}
         </p>
       </div>
       <Form className="flex w-full flex-col gap-4" onSubmit={onHandleSubmit}>
@@ -120,7 +124,7 @@ const ForgotPasswordForm = () => {
             {...register('email')}
             id="email"
             type="email"
-            label="Email"
+            label={t('email')}
             placeholder="hulib@gmail.com"
             className={
               errors.email?.message && 'border border-solid border-red-500'
@@ -137,7 +141,7 @@ const ForgotPasswordForm = () => {
             onClick={onHandleSubmit}
             animation={isSubmitting && 'progress'}
           >
-            Send link to email
+            {t('send_reset_link')}
           </Button>
         </Form.Item>
       </Form>
@@ -155,7 +159,7 @@ const ForgotPasswordForm = () => {
           loading="lazy"
         />
         <span className="text-base font-medium leading-5 text-primary-50 underline">
-          Back to login
+          {t('back_to_login')}
         </span>
       </button>
     </>

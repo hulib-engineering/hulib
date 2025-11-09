@@ -11,8 +11,19 @@ export enum ModerationStatus {
 
 export type ModerationHistory = {
   id: number;
-  reasons: string;
-  customReason?: string;
   actionType: ModerationActionType;
   status: ModerationStatus;
+  manualReason?: string;
+  report?: {
+    id: number;
+    reason: string;
+    customReason?: string;
+  };
+  createdAt: string;
+};
+
+export type ModerationHistoryParams = {
+  page?: number;
+  limit?: number;
+  userId: number;
 };

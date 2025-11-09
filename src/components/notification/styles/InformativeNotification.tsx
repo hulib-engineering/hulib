@@ -1,4 +1,4 @@
-import { XCircle } from '@phosphor-icons/react';
+import { Warning, XCircle } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
@@ -55,8 +55,9 @@ export default function InformativeNotificationCard({ notification, showExtras, 
           'flex w-full items-center gap-3 bg-white py-2.5 px-4 text-left transition-colors delay-300 hover:bg-primary-98',
           'xl:py-4 xl:rounded-lg',
           [NotificationType.SESSION_MISS, NotificationType.HUBER_WARNING].includes(notification.type.name as NotificationType)
-          && 'bg-orange-98 hover:bg-orange-90',
-          !notification.seen && 'bg-green-90 xl:bg-white',
+          && 'hover:bg-orange-90',
+          !notification.seen && (![NotificationType.SESSION_MISS, NotificationType.HUBER_WARNING].includes(notification.type.name as NotificationType) ? 'bg-green-90' : 'bg-orange-98'),
+          !notification.seen && 'xl:bg-white',
         )}
         onClick={handleClick}
       >
@@ -83,8 +84,8 @@ export default function InformativeNotificationCard({ notification, showExtras, 
           <div className="flex w-full flex-col gap-2">
             <p className="line-clamp-2 font-bold">{cfg.title}</p>
             <p className="font-medium">{cfg.getMessage(notification)}</p>
-            {![NotificationType.SESSION_APPROVAL, NotificationType.SESSION_MISS].includes(notification.type.name as NotificationType)
-            && (
+            {![NotificationType.SESSION_APPROVAL, NotificationType.SESSION_MISS, NotificationType.HUBER_WARNING]
+              .includes(notification.type.name as NotificationType) && (
               <p
                 className={mergeClassnames(
                   'rounded-2xl border border-red-60 bg-neutral-98 p-3 text-sm leading-4 text-neutral-40',
@@ -140,7 +141,7 @@ export default function InformativeNotificationCard({ notification, showExtras, 
             {notification.type.name === NotificationType.HUBER_WARNING && (
               <Button size="sm" onClick={() => setIsShareReasonModalOpen(true)}>Appeal</Button>)}
           </div>
-          {!notification.seen && (
+          {!notification.seen && (notification.type.name !== NotificationType.HUBER_WARNING ? (
             <Image
               src="/assets/icons/leaf.svg"
               alt="Seen icon"
@@ -148,23 +149,29 @@ export default function InformativeNotificationCard({ notification, showExtras, 
               height={20}
               className="hidden size-5 object-cover object-center xl:block"
             />
-          )}
+          ) : (
+            <Warning className="hidden text-xl text-orange-50 xl:block" />
+          ))}
+
         </div>
       </button>
+
       {/* Share missing session reason modal */}
-      <Modal open={isShareReasonModalOpen} onClose={() => setIsShareReasonModalOpen(false)}>
-        <Modal.Backdrop />
-        <Modal.Panel className="w-fit">
-          <SessionDetailCard
-            session={{
-              ...notification.relatedEntity,
-              story: { ...notification.relatedEntity.story, title: notification.relatedEntity.storyTitle },
-            }}
-            expandByDefault
-            sharingMissingReason
-          />
-        </Modal.Panel>
-      </Modal>
+      {notification.type.name === NotificationType.SESSION_MISS && (
+        <Modal open={isShareReasonModalOpen} onClose={() => setIsShareReasonModalOpen(false)}>
+          <Modal.Backdrop />
+          <Modal.Panel className="w-fit">
+            <SessionDetailCard
+              session={{
+                ...notification.relatedEntity,
+                story: { ...notification.relatedEntity.story, title: notification.relatedEntity.storyTitle },
+              }}
+              expandByDefault
+              sharingMissingReason
+            />
+          </Modal.Panel>
+        </Modal>
+      )}
 
       {/* Appeal a moderation modal */}
       {notification.type.name === NotificationType.HUBER_WARNING && (

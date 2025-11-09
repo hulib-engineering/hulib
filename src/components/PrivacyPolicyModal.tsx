@@ -48,7 +48,7 @@ const PrivacyPolicyModal = ({
         <h2 className="mt-1 text-xl font-semibold text-gray-800">
           {t('privacy_policy_table_of_content.title')}
         </h2>
-        <ul className="text-primary block list-none">
+        <ul className="block list-none text-lp-primary-blue">
           {contentIndexes.map((index, i) => (
             <li key={index}>
               <Link href={`#privacy-policy-${i}`}>

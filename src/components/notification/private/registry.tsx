@@ -30,7 +30,6 @@ export const notificationRegistry: Record<
   [NotificationType.SESSION_CANCELLATION]: InformativeNotificationCard,
   [NotificationType.SESSION_COMPLETION]: SystemNotificationCard,
   [NotificationType.USER_APPEAL]: DefaultNotificationCard,
-  [NotificationType.APPEAL_APPROVAL]: DefaultNotificationCard,
-  [NotificationType.APPEAL_REJECTION]: DefaultNotificationCard,
+  [NotificationType.APPEAL_RESPONSE]: DefaultNotificationCard,
   [NotificationType.OTHER]: SystemNotificationCard,
 };

@@ -203,20 +203,13 @@ export const notificationConfig: NotificationConfig = {
   },
   [NotificationType.USER_APPEAL]: {
     getMessage: (m: Notification) => (
-      <span className="font-bold text-red-50">{`User appeal report #${m.relatedEntity?.reportId}`}</span>
+      <span className="font-bold text-red-50">{`User appeal report #${m.relatedEntity?.moderationRelatedReport?.id}`}</span>
     ),
   },
-  [NotificationType.APPEAL_APPROVAL]: {
-    getMessage: () => (
+  [NotificationType.APPEAL_RESPONSE]: {
+    getMessage: (m: Notification) => (
       <>
-        Your appeal request is accepted, your account does not receive warning. Thank you for clarifying the situation.
-      </>
-    ),
-  },
-  [NotificationType.APPEAL_REJECTION]: {
-    getMessage: () => (
-      <>
-        After reviewing your appeal, we’ve decided to keep the warning. Please be careful that your account will be ban if you receive 3 reports.
+        {m.relatedEntity?.status === 'accepted' ? 'Your appeal request is accepted, your account does not receive warning. Thank you for clarifying the situation.' : 'After reviewing your appeal, we’ve decided to keep the warning. Please be careful that your account will be ban if you receive 3 reports.'}
       </>
     ),
   },
