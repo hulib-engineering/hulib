@@ -45,7 +45,10 @@ export default function Index() {
     page,
     limit: 9,
     topicIds: filterBy.length > 0 ? filterBy : undefined,
-    sort: [{ orderBy: 'createdAt', order: orderBy === 'newest' ? 'DESC' : 'ASC' }],
+    sort: [
+      { orderBy: 'createdAt', order: orderBy === 'newest' ? 'DESC' : 'ASC' },
+      ...orderBy === 'favorites' ? [{ orderBy: 'favorite', order: 'DESC' }] : [],
+    ],
   });
   const { data: favoriteStories } = useGetMyFavoritesQuery();
 
