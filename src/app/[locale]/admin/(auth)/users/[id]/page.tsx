@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, DotsThreeOutline, Hammer, Heart, Warning } from '@phosphor-icons/react';
+import { ArrowLeft, DotsThreeOutline, Hammer, Heart, UserCheck, Warning } from '@phosphor-icons/react';
 import { redirect, useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import * as React from 'react';
@@ -9,19 +9,22 @@ import { useEffect, useMemo, useState } from 'react';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
-import { Spinner } from '@/components/loadingState/Spinner';
-import { mergeClassnames } from '@/components/core/private/utils';
-import { ProfileCover } from '@/components/ProfileCover';
-import AboutPanel from '@/layouts/profile/AboutPanel';
-import MyStoriesPanel from '@/layouts/profile/MyStoriesPanel';
-import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
-import { Role } from '@/types/common';
-import UserActivityList from '@/layouts/profile/UserActivityList';
 import IconButton from '@/components/core/iconButton/IconButton';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import Popover from '@/components/core/popover/Popover';
+import { mergeClassnames } from '@/components/core/private/utils';
+import { pushSuccess } from '@/components/CustomToastifyContainer';
+import { Spinner } from '@/components/loadingState/Spinner';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+import { ProfileCover } from '@/components/ProfileCover';
 import { ActionOnUserModal } from '@/layouts/admin/ActionOnUserModal';
+import AboutPanel from '@/layouts/profile/AboutPanel';
+import MyStoriesPanel from '@/layouts/profile/MyStoriesPanel';
+import UserActivityList from '@/layouts/profile/UserActivityList';
+import { useUnbanUserMutation, useUnwarnUserMutation } from '@/libs/services/modules/moderation';
+import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
+import { UserStatusEnum } from '@/libs/services/modules/user/userType';
+import { Role } from '@/types/common';
 
 const ProfileTabs = [
   { value: 'about', label: 'About' },
@@ -30,9 +33,19 @@ const ProfileTabs = [
 ];
 const ActionsOnUser = [
   {
+    name: 'Un-warn this account',
+    icon: <UserCheck className="text-xl text-green-40" />,
+    type: 'unwarn',
+  },
+  {
     name: 'Warn this account',
     icon: <Warning className="text-xl text-orange-50" />,
     type: 'warn',
+  },
+  {
+    name: 'Un-ban this account',
+    icon: <UserCheck className="text-xl text-green-40" />,
+    type: 'unban',
   },
   {
     name: 'Ban this Account',
@@ -58,8 +71,12 @@ export default function Index() {
   } = useGetUsersByIdQuery(userId, {
     skip: !userId,
   });
+  const [unWarnUser] = useUnwarnUserMutation();
+  const [unBanUser] = useUnbanUserMutation();
 
   const isHuber = data?.role?.id === Role.HUBER;
+  const isUnderWarning = data?.status?.id === UserStatusEnum.UNDER_WARNING;
+  const isBanned = data?.status?.id === UserStatusEnum.INACTIVE;
 
   const visibleTabs = useMemo(() => {
     // Someone else's profile
@@ -69,6 +86,17 @@ export default function Index() {
 
     return ProfileTabs;
   }, [isHuber]);
+  const visibleDropdownMenuItems = useMemo(() => {
+    if (isUnderWarning) {
+      return ActionsOnUser.filter(action => action.type !== 'unban');
+    }
+
+    if (isBanned) {
+      return ActionsOnUser.filter(action => action.type === 'unban');
+    }
+
+    return ActionsOnUser.filter(action => action.type === 'ban' || action.type === 'warn');
+  }, [isUnderWarning, isBanned]);
 
   const [currentTab, setCurrentTab] = useState<TProfileTab>(tab || 'about');
   const [isWarnHuberModalOpen, setWarnHuberModalOpen] = useState(false);
@@ -92,6 +120,21 @@ export default function Index() {
       </div>
     );
   }
+
+  const handleActionItemClick = async (actionType: 'ban' | 'unban' | 'warn' | 'unwarn' | string) => {
+    switch (actionType) {
+      case 'ban':
+        return setBanHuberModalOpen(true);
+      case 'warn':
+        return setWarnHuberModalOpen(true);
+      case 'unban':
+        await unBanUser({ userId: Number(userId) ?? 0 }).unwrap();
+        return pushSuccess('Un-banned successfully!');
+      case 'unwarn':
+        await unWarnUser({ userId: Number(userId) ?? 0 }).unwrap();
+        return pushSuccess('Un-warned successfully!');
+    }
+  };
 
   return (
     <div className="-mt-8 flex w-full flex-col xl:gap-5">
@@ -147,19 +190,15 @@ export default function Index() {
                 <Popover.Panel className="flex w-60 flex-col gap-2 p-2">
                   {({ open = false, close }) => (
                     <div data-testid="actions-popover-content">
-                      {ActionsOnUser.map((item, index) =>
+                      {visibleDropdownMenuItems.map((item, index) =>
                         (
                           <MenuItem
                             key={index}
-                            onClick={() => {
+                            onClick={async () => {
                               if (open) {
                                 close();
                               }
-                              if (item.type === 'warn') {
-                                setWarnHuberModalOpen(true);
-                              } else {
-                                setBanHuberModalOpen(true);
-                              }
+                              await handleActionItemClick(item.type);
                             }}
                           >
                             {item.icon}
@@ -200,7 +239,7 @@ export default function Index() {
           </div>
         </div>
       </div>
-      {currentTab === 'about' && (<AboutPanel data={data} editable={false} />)}
+      {currentTab === 'about' && (<AboutPanel data={data} editable={false} underAdminControls />)}
       {currentTab === 'stories' && (
         <MyStoriesPanel
           topics={data?.humanBookTopic}

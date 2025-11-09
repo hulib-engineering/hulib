@@ -7,6 +7,9 @@ const getUsersById = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
     query: id => ({
       url: `users/${id}`,
     }),
+    providesTags: result => [
+      { type: 'Users', id: result && result.id },
+    ],
   });
 
 export default getUsersById;
