@@ -3,18 +3,19 @@ import React from 'react';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
-import { pushError } from '@/components/CustomToastifyContainer';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import Modal from '@/components/Modal';
 import type { FileType } from '@/libs/services/modules/files/fileType';
 import { useRespondAppealMutation } from '@/libs/services/modules/appeal';
+import { pad } from '@/utils/numberUtils';
 
 type IHandleReportModalProps = {
   open?: boolean;
   onClose?: () => void;
   data?: {
     id: number;
-    reportId: number;
     message: string;
+    reportId: number;
     reportee: {
       id: number;
       fullName: string;
@@ -35,9 +36,10 @@ const HandleAppealModal = ({
       onClose();
     }
   };
-  const handleRespondAppeal = async (status: 'approved' | 'rejected') => {
+  const handleRespondAppeal = async (status: 'accepted' | 'rejected') => {
     try {
       await respond({ id: data?.id, status }).unwrap();
+      pushSuccess(`Appeal request has been ${status === 'accepted' ? 'approved' : 'rejected'} successfully.`);
       handleClose();
     } catch (error: any) {
       pushError(`Error: ${error.message}`);
@@ -61,7 +63,7 @@ const HandleAppealModal = ({
           {/* Modal Body */}
           <div className="flex w-full flex-col">
             <div className="inline-flex items-center justify-between bg-neutral-98 px-6 py-2">
-              <p className="text-lg font-medium">{data?.reportId}</p>
+              <p className="text-lg font-medium">{`Report #${pad(data?.reportId ?? 0)}`}</p>
               <ArrowRight
                 className="size-6 cursor-pointer text-primary-60"
                 // onClick={handleClose}
@@ -71,12 +73,12 @@ const HandleAppealModal = ({
               <div className="bg-red-60 px-6 py-2 text-lg font-medium text-white outline outline-1 -outline-offset-1">
                 Reported user
               </div>
-              <div className="flex h-[72px] items-center gap-2 px-6 text-sm font-medium leading-4">
-                <Avatar imageUrl="/assets/images/ava-placeholder.png" className="size-11" />
+              <div className="flex h-[72px] items-center gap-2 border-b border-neutral-80 px-6 text-sm font-medium leading-4">
+                <Avatar imageUrl={data?.reportee.photo.path} className="size-11" />
                 <span className="rounded-full bg-primary-90 px-2.5 py-0.5 text-primary-50">
                   Huber
                 </span>
-                <span>{data?.reportee?.fullName}</span>
+                <span>{data?.reportee.fullName}</span>
               </div>
             </div>
             <div className="flex flex-col gap-4 p-6">
@@ -104,7 +106,7 @@ const HandleAppealModal = ({
               variant="outline"
               fullWidth
               disabled={isLoading}
-              onClick={() => handleRespondAppeal('approved')}
+              onClick={() => handleRespondAppeal('accepted')}
             >
               Approve
             </Button>

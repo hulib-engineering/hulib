@@ -12,8 +12,7 @@ export enum NotificationType {
   SESSION_CANCELLATION = 'cancelReadingSession',
   SESSION_MISS = 'missReadingSession',
   SESSION_COMPLETION = 'sessionFinish',
-  USER_APPEAL = 'appealRequest',
-  APPEAL_APPROVAL = 'approveAppeal',
-  APPEAL_REJECTION = 'rejectAppeal',
+  USER_APPEAL = 'userAppeal',
+  APPEAL_RESPONSE = 'appealResponse',
   OTHER = 'other',
 }
