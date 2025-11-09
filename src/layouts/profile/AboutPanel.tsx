@@ -3,6 +3,7 @@
 import {
   Books,
   CaretDown,
+  SealWarning,
   Suitcase,
   Users,
 } from '@phosphor-icons/react';
@@ -31,7 +32,8 @@ const AboutPanel = ({
   data,
   editable,
   awaiting = false,
-}: { data: User & { firstStory: Story }; editable?: boolean; awaiting?: boolean }) => {
+  underAdminControls = false,
+}: { data: User & { firstStory: Story }; editable?: boolean; awaiting?: boolean; underAdminControls?: boolean }) => {
   const t = useTranslations('MyProfile.about_panel');
 
   const [currentSection, setCurrentSection] = useState('overview');
@@ -73,6 +75,18 @@ const AboutPanel = ({
         />
       ),
     },
+    ...underAdminControls ? [{
+      type: 'moderations',
+      label: t('moderations'),
+      icon: (
+        <SealWarning
+          className={mergeClassnames(
+            'text-neutral-20 text-xl hulib-open:text-primary-20 lg:hover:text-primary-60',
+            currentSection === 'moderations' && 'lg:text-primary-60',
+          )}
+        />
+      ),
+    }] : [],
   ];
 
   return (
@@ -126,6 +140,10 @@ const AboutPanel = ({
                 key={index}
                 as="button"
                 isSelected={currentSection === section.type}
+                className={mergeClassnames(
+                  currentSection === section.type && 'bg-red-60 border-none',
+                  section.type === 'moderations' && 'border border-red-90',
+                )}
                 onClick={() => setCurrentSection(section.type)}
               >
                 {section.icon}
@@ -137,6 +155,13 @@ const AboutPanel = ({
                 >
                   {section.label}
                 </MenuItem.Title>
+                {/* {section.type === 'moderations' && awaitingStories?.meta?.totalItems > 0 && ( */}
+                {/*  <div */}
+                {/*    className="flex h-4 w-[18px] items-center justify-center rounded-lg border border-white bg-red-50 px-1 py-[0.5px] text-[10px] font-medium leading-3 text-white" */}
+                {/*  > */}
+                {/*    {awaitingStories?.meta?.totalItems} */}
+                {/*  </div> */}
+                {/* )} */}
               </MenuItem>
             ))}
           </div>
