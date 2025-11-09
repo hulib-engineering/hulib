@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import React, { useState } from 'react';
 
+import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
 import { notificationConfig } from '../private/config';
 import { NotificationType } from '../private/types';
-import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import { mergeClassnames } from '@/components/core/private/utils';

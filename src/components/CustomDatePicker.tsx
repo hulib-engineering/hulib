@@ -1,15 +1,17 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { startOfMonth } from 'date-fns';
 import type { ReactNode } from 'react';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import type { z } from 'zod';
-import Label from '@/components/Label';
+
 import Dropdown from '@/components/core/dropdown/Dropdown';
-import { DateOfBirthFieldsetValidation } from '@/validations/ProfileValidation';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
+import Label from '@/components/Label';
+import { DateOfBirthFieldsetValidation } from '@/validations/ProfileValidation';
 
 type ICustomDatePickerProps = {
   label?: ReactNode;
@@ -26,6 +28,11 @@ const CustomDatePicker = ({
   className,
   excludeDay = false,
 }: ICustomDatePickerProps) => {
+  const currentDate = new Date(new Date(value).getFullYear(), new Date(value).getMonth());
+
+  // Get the first day of that month using startOfMonth
+  const firstDayOfCurrentMonth = startOfMonth(currentDate);
+
   const {
     watch,
     setValue,
@@ -33,13 +40,14 @@ const CustomDatePicker = ({
   } = useForm <z.infer<typeof DateOfBirthFieldsetValidation>>({
     resolver: zodResolver(DateOfBirthFieldsetValidation),
     defaultValues: {
-      day: new Date(value).getDate(),
-      month: new Date(value).getMonth() + 1,
-      year: new Date(value).getFullYear(),
+      day: firstDayOfCurrentMonth.getDate(),
+      month: firstDayOfCurrentMonth.getMonth() + 1,
+      year: firstDayOfCurrentMonth.getFullYear(),
     },
     mode: 'onChange',
   });
   const { day, month, year } = watch();
+  console.log(day, month, year);
 
   useEffect(() => {
     const pad = (n: number) => n.toString().padStart(2, '0');
