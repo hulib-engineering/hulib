@@ -54,23 +54,29 @@ const AppealToReportModal = ({
   return (
     <Modal open={open} onClose={onClose}>
       <Modal.Backdrop />
-      <Modal.Panel>
+      <Modal.Panel className="max-w-2xl overflow-hidden">
         <div
           className={mergeClassnames(
             'flex w-full flex-col items-center justify-center',
-            !isSuccessful ? 'bg-white' : 'bg-neutral-98',
+            isSuccessful && 'bg-neutral-98',
           )}
         >
           {/* Modal Header */}
-          <div className={mergeClassnames('flex w-full items-center justify-center p-4', isSuccessful && 'pb-0')}>
-            {isAppealing && (
+          <div
+            className={mergeClassnames(
+              'flex w-full items-center justify-center p-4',
+              isAppealing && 'justify-between',
+              isSuccessful ? 'justify-between pb-0' : 'outline outline-1 outline-neutral-90 -outline-offset-1',
+            )}
+          >
+            {(isAppealing || isSuccessful) && (
               <ArrowLeft
                 className={mergeClassnames('size-6 cursor-pointer text-[#343330]', isSuccessful && 'invisible')}
                 onClick={() => isAppealing && setIsAppealing(false)}
               />
             )}
             {!isSuccessful && <h5 className="text-2xl font-medium leading-8">Appeal report</h5>}
-            {isAppealing && (
+            {(isAppealing || isSuccessful) && (
               <X
                 className={mergeClassnames('size-6 cursor-pointer text-[#343330]', !isSuccessful && 'invisible')}
                 onClick={() => isSuccessful && onClose()}
@@ -78,7 +84,7 @@ const AppealToReportModal = ({
             )}
           </div>
           {/* Modal Body */}
-          <div className={mergeClassnames('flex flex-col gap-4 p-6', isSuccessful && 'pt-0')}>
+          <div className={mergeClassnames('w-full flex flex-col gap-4 p-6', isSuccessful && 'pt-0')}>
             {!isSuccessful ? (
               <>
                 <p className="text-lg font-medium">
@@ -89,15 +95,15 @@ const AppealToReportModal = ({
                 {!isAppealing ? (
                   <>
                     <ul className="list-disc space-y-2 pl-6">
-                      {moderation?.reasons?.split('\n').map((each: string, index: number) => (
+                      {moderation?.report?.reason?.split('\n').map((each: string, index: number) => (
                         <li key={index}>{each}</li>
                       ))}
                     </ul>
-                    {moderation?.customReason && (
+                    {moderation?.report?.customReason && (
                       <div
                         className="h-[162px] rounded-2xl bg-neutral-98 px-3 py-0.5 leading-10 text-neutral-40 outline outline-1 -outline-offset-1 outline-neutral-90"
                       >
-                        {moderation?.customReason}
+                        {moderation?.report?.customReason}
                       </div>
                     )}
                   </>
@@ -122,47 +128,53 @@ const AppealToReportModal = ({
             )}
           </div>
           {/* Modal Footer */}
-          <div className="flex w-full items-center gap-2.5 px-6 py-5 outline outline-1 outline-offset-1 outline-neutral-90">
-            {!isAppealing ? (
-              <>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  fullWidth
-                  onClick={onClose}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  size="lg"
-                  fullWidth
-                  onClick={() => setIsAppealing(true)}
-                >
-                  Appeal
-                </Button>
-              </>
-            ) : (
-              <div className="flex flex-col gap-4">
-                <div className="flex gap-2">
-                  <Checkbox
-                    id="commit"
-                    checked={isCommitChecked}
-                    onChange={event => setIsCommitChecked(event.target.checked)}
-                  />
-                  <p>I confirm that the information I provided is accurate to the best of my knowledge.</p>
+          {!isSuccessful && (
+            <div
+              className="flex w-full items-center gap-2.5 px-6 py-5 outline outline-1 outline-offset-1 outline-neutral-90"
+            >
+              {!isAppealing ? (
+                <>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    fullWidth
+                    onClick={onClose}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    size="lg"
+                    fullWidth
+                    onClick={() => setIsAppealing(true)}
+                  >
+                    Appeal
+                  </Button>
+                </>
+              ) : (
+                <div className="flex w-full flex-col gap-4">
+                  <div className="flex gap-2">
+                    <Checkbox
+                      id="commit"
+                      checked={isCommitChecked}
+                      onChange={event => setIsCommitChecked(event.target.checked)}
+                    />
+                    <p className="shrink">
+                      I confirm that the information I provided is accurate to the best of my knowledge.
+                    </p>
+                  </div>
+                  <Button
+                    size="lg"
+                    fullWidth
+                    disabled={!isCommitChecked || appealingMessage.trim().length === 0 || isLoading}
+                    animation={isLoading && 'progress'}
+                    onClick={handleSubmitAppeal}
+                  >
+                    Submit an Appeal
+                  </Button>
                 </div>
-                <Button
-                  size="lg"
-                  fullWidth
-                  disabled={!isCommitChecked || appealingMessage.trim().length === 0 || isLoading}
-                  animation={isLoading && 'progress'}
-                  onClick={handleSubmitAppeal}
-                >
-                  Submit an Appeal
-                </Button>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </div>
       </Modal.Panel>
     </Modal>

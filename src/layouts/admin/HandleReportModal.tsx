@@ -11,7 +11,7 @@ import Button from '@/components/core/button/Button';
 import Checkbox from '@/components/core/checkbox/Checkbox';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';
-import { pushError } from '@/components/CustomToastifyContainer';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import Modal from '@/components/Modal';
 import type { FileType } from '@/libs/services/modules/files/fileType';
 import { useBanUserMutation, useWarnUserMutation } from '@/libs/services/modules/moderation';
@@ -52,6 +52,8 @@ const HandleReportModal = ({
   onClose,
   data,
 }: IHandleReportModalProps) => {
+  console.log('Report Data', data);
+
   const t = useTranslations('MyProfile');
 
   const [rejectSingleReport, { isLoading }] = useUpdateReportByIdMutation();
@@ -94,9 +96,11 @@ const HandleReportModal = ({
   const handleModerate = async (action: 'ban' | 'warn') => {
     try {
       if (action === 'ban') {
-        await banUser({ userId: data?.reportee?.id }).unwrap();
+        await banUser({ userId: data?.reportee?.id, reportId: data?.id }).unwrap();
+        pushSuccess('User has been banned successfully.');
       } else {
-        await warnUser({ userId: data?.reportee?.id }).unwrap();
+        await warnUser({ userId: data?.reportee?.id, reportId: data?.id }).unwrap();
+        pushSuccess('User has been warned successfully.');
       }
       handleClose();
     } catch (error: any) {
