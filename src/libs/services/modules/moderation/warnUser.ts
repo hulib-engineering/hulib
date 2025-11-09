@@ -9,4 +9,7 @@ export default (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       method: 'POST',
       body: payload,
     }),
+    invalidatesTags: (_result, _error, { userId }) => [
+      { type: 'Users', id: userId.toString() },
+    ],
   });

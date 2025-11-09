@@ -499,7 +499,8 @@
       "liber_overview": "Liber Overview",
       "huber_overview": "Huber Overview",
       "work_and_education": "Work and Education",
-      "contact_information": "Contact Information"
+      "contact_information": "Contact Information",
+      "moderations": "Warnning/Banned history"
     },
     "report_modal": {
       "header_title": "You’re about to report this person.",
