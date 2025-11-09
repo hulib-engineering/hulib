@@ -425,7 +425,18 @@
   },
   "SignIn": {
     "meta_title": "Sign in",
-    "meta_description": "Seamlessly sign in to your account with our user-friendly login process."
+    "meta_description": "Seamlessly sign in to your account with our user-friendly login process.",
+    "welcome_back": "Welcome back!",
+    "login_to_hulib": "Log in to your Hulib account",
+    "email": "Email address",
+    "password": "Password",
+    "log_in": "Log in",
+    "keep_logged_in": "Keep me logged in",
+    "forgot_password": "Forgot password?",
+    "or": "Or",
+    "new_user": "New to HuLib?",
+    "register": "Create an account",
+    "with_gg": "with Google"
   },
   "SignUp": {
     "meta_title": "HuLib | Create an account",
@@ -439,6 +450,7 @@
     "or_social_login": "Or sign up with",
     "registered": "Already have an account?",
     "log_in": "Log in",
+    "with_gg": "with Google",
     "fullname": "Full name",
     "gender": "Gender",
     "birthday": "Date of birth",
@@ -454,7 +466,22 @@
     "support_otp": "It’s almost done. please enter the 6-digit verification code we just sent to",
     "not_receive_otp": "Haven’t receive the email?",
     "resend": "Resend",
-    "contact_us": "If you need help, contact us via email"
+    "contact_us": "If you need help, contact us via email",
+    "welcome": "Welcome to",
+    "account_created": "Your account has been created",
+    "get_started": "Get started",
+    "huber_register": "Register to become a Huber"
+  },
+  "ForgotPassword": {
+    "meta_title": "Forgot password",
+    "meta_description": "Forgot password ...",
+    "forgot_password": "Forgot your password?",
+    "forgot_password_subheading": "No worries, enter your account email and we’ll send you a link to reset your password.",
+    "email": "Email",
+    "send_reset_link": "Send link to email",
+    "back_to_login": "Back to login",
+    "check_mail": "Check your email",
+    "check_mail_subheading": "A password reset link has been send to your email"
   },
   "MyProfile": {
     "meta_title": "HuLib | My Profile",
@@ -472,7 +499,8 @@
       "liber_overview": "Liber Overview",
       "huber_overview": "Huber Overview",
       "work_and_education": "Work and Education",
-      "contact_information": "Contact Information"
+      "contact_information": "Contact Information",
+      "moderations": "Warnning/Banned history"
     },
     "report_modal": {
       "header_title": "You’re about to report this person.",

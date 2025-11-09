@@ -5,7 +5,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PencilSimple } from '@phosphor-icons/react';
 import { isEmpty } from 'lodash';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import type { z } from 'zod';
@@ -150,7 +150,17 @@ type IEducationItemProps = {
 };
 
 const EducationItem = ({ data, editable = false }: IEducationItemProps) => {
+  const locale = useLocale();
+
   const { id, ...rest } = data;
+  const startedAtDateString = new Date(rest.startedAt).toLocaleDateString(locale, {
+    year: 'numeric',
+    month: 'long',
+  });
+  const endedAtDateString = rest.endedAt && new Date(rest.endedAt).toLocaleDateString(locale, {
+    year: 'numeric',
+    month: 'long',
+  });
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -168,7 +178,9 @@ const EducationItem = ({ data, editable = false }: IEducationItemProps) => {
           <span className="font-light"> at </span>
           {data.institution}
         </p>
-        <p className="text-xs leading-[14px]">{`${data.startedAt} - ${!data.endedAt ? 'Present' : data.endedAt}`}</p>
+        <p className="text-xs capitalize leading-[14px]">
+          {`${startedAtDateString} - ${!data.endedAt ? 'Present' : endedAtDateString}`}
+        </p>
       </div>
       {editable && (
         <IconButton variant="secondary" size="sm" className="p-2" onClick={() => setIsEditing(true)}>

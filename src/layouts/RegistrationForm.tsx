@@ -40,6 +40,7 @@ import {
   RegisterStep2Validation,
   RegisterStep3Validation,
 } from '@/validations/RegisterValidation';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const Step1Form = ({
   onSubmit,
@@ -294,6 +295,8 @@ type IStep3FormProps = {
 };
 
 const Step3Form = (props: IStep3FormProps) => {
+  const t = useTranslations('SignUp');
+
   const [confirmEmail] = useConfirmEmailMutation();
   const [resendOTP] = useResendOTPMutation();
 
@@ -363,18 +366,16 @@ const Step3Form = (props: IStep3FormProps) => {
       disableClosingTrigger
       className="z-50"
     >
-      <Modal.Backdrop className="bg-neutral-variant-98/100 bg-gradient-to-bl from-white/20 to-[#0442bf]/20 bg-blend-multiply" />
-      <Modal.Panel className="flex max-w-xl flex-col items-center gap-12 p-8">
+      <Modal.Backdrop className="bg-white xl:bg-neutral-variant-98/100 xl:bg-gradient-to-bl xl:from-white/20 xl:to-[#0442bf]/20 xl:bg-blend-multiply" />
+      <Modal.Panel className="flex max-w-full flex-col items-center gap-12 shadow-none xl:p-8">
         <Logo />
         <div className="flex flex-col gap-4 text-center text-neutral-10">
           <h2 className="text-4xl font-medium leading-[44px] tracking-[-2%]">
-            Enter verification code
+            {t('enter_otp')}
           </h2>
-          <p className="tracking-[0.5%]">Step 3 of 3</p>
+          <p className="tracking-[0.5%]">{t('step', { step: 3 })}</p>
           <p className="tracking-[0.5%]">
-            It’s almost done. please enter the 6-digit verification code we just
-            sent to
-            {' '}
+            {`${t('support_otp')} `}
             <span>
               <Link
                 href="https://mail.google.com/mail/u/1/#inbox"
@@ -399,6 +400,7 @@ const Step3Form = (props: IStep3FormProps) => {
                 <>
                   <AuthCode
                     {...field}
+                    size="sm"
                     onChange={(value) => {
                       field.onChange(value);
                       handleAuthCodeSubmit({ verificationCode: value });
@@ -416,19 +418,19 @@ const Step3Form = (props: IStep3FormProps) => {
         <div className="flex flex-col items-center justify-center">
           <div className="inline-flex items-center justify-center self-stretch">
             <div className="tracking-tight text-neutral-40">
-              Haven’t receive the email?
+              {`${t('not_receive_otp')} `}
             </div>
             <Button
               variant="ghost"
               className="leading-[18px] underline"
               onClick={handleResendOTP}
             >
-              Resend
+              {t('resend')}
             </Button>
           </div>
           <div className="inline-flex items-center justify-center self-stretch">
             <div className="tracking-tight text-neutral-40">
-              If you need help, contact us via email
+              {t('contact_us')}
             </div>
             <Button
               as="a"
@@ -448,17 +450,27 @@ const Step3Form = (props: IStep3FormProps) => {
 const Step4Form = () => {
   const router = useRouter();
 
+  const t = useTranslations('SignUp');
+
   const handleNavigateToLogin = () => router.push('/auth/login');
 
   return (
     <Modal open onClose={handleNavigateToLogin} className="z-50">
       <Modal.Backdrop className="bg-neutral-variant-98/100 bg-gradient-to-bl from-white/20 to-[#F9DA6C20] bg-blend-multiply" />
-      <Modal.Panel className="flex max-w-xl flex-col items-center gap-12 bg-transparent p-8 shadow-none">
-        <div className="flex flex-row items-center justify-center gap-4 py-2">
-          <h2 className="text-right text-4xl font-medium leading-tight text-neutral-10">
-            Welcome to
-          </h2>
-          <Logo />
+      <Modal.Panel
+        className={mergeClassnames(
+          'flex h-[568px] max-w-full flex-col items-center justify-between gap-12 bg-transparent p-0 shadow-none',
+          'xl:h-fit xl:max-w-2xl xl:justify-start xl:p-8',
+        )}
+      >
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-row items-center justify-center gap-4 py-2">
+            <h2 className="text-right text-2xl font-medium leading-8 text-neutral-10 xl:text-4xl xl:leading-tight">
+              {t('welcome')}
+            </h2>
+            <Logo />
+          </div>
+          <p className="text-center text-neutral-20 xl:hidden">{t('account_created')}</p>
         </div>
         <Image
           alt="Success illustration"
@@ -468,10 +480,16 @@ const Step4Form = () => {
           height={200}
           className="mx-auto object-contain"
         />
-        <div className="w-full">
-          <Button className="mx-auto w-3/4" onClick={handleNavigateToLogin}>
-            Get started
+        <div className="flex w-full flex-col gap-5">
+          <Button size="sm" className="mx-auto w-full xl:hidden xl:w-3/4" onClick={handleNavigateToLogin}>
+            {t('get_started')}
           </Button>
+          <Button size="lg" className="mx-auto hidden w-full xl:flex xl:w-3/4" onClick={handleNavigateToLogin}>
+            {t('get_started')}
+          </Button>
+          {/* <Button className="mx-auto w-full xl:w-3/4" onClick={handleNavigateToLogin}> */}
+          {/*  {t('huber_register')} */}
+          {/* </Button> */}
         </div>
       </Modal.Panel>
     </Modal>
@@ -572,8 +590,11 @@ const RegistrationForm = () => {
         /> */}
         <SocialButton
           iconUrl={GoogleIcon}
+          className="w-full"
           onClick={() => signIn('google', { callbackUrl: '/home' })}
-        />
+        >
+          {`${t('log_in')} ${t('with_gg')}`}
+        </SocialButton>
       </div>
       <div className="inline-flex items-center justify-center gap-4 py-3">
         <div className="tracking-tight text-neutral-30">{t('registered')}</div>
