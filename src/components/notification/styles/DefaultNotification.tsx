@@ -33,7 +33,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
   const [isHandleAppealModalOpen, setIsHandleAppealModalOpen] = useState(false);
 
   const renderUnseenIcon = () => {
-    if (![NotificationType.HUBER_REPORT, NotificationType.USER_APPEAL, NotificationType.APPEAL_REJECTION].includes(notification.type.name as NotificationType)) {
+    if (![NotificationType.HUBER_REPORT, NotificationType.USER_APPEAL, NotificationType.APPEAL_RESPONSE].includes(notification.type.name as NotificationType)) {
       return (
         <Image
           src="/assets/icons/leaf.svg"
@@ -49,6 +49,19 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
           return <SealWarning weight="fill" className="text-2xl text-red-50" />;
         case NotificationType.USER_APPEAL:
           return <PenNib weight="fill" className="text-2xl text-red-50" />;
+        case NotificationType.APPEAL_RESPONSE:
+          if (notification.relatedEntity?.status === 'rejected') {
+            return <Warning className="text-xl text-red-60" />;
+          }
+          return (
+            <Image
+              src="/assets/icons/leaf.svg"
+              alt="Seen icon"
+              width={20}
+              height={20}
+              className="hidden size-5 object-cover object-center xl:block"
+            />
+          );
         default:
           return <Warning className="text-xl text-red-60" />;
       }
@@ -64,6 +77,10 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
     }
     if (notification.type.name === NotificationType.HUBER_REPORT) {
       setIsHandleReportModalOpen(true);
+      return;
+    }
+    if (notification.type.name === NotificationType.USER_APPEAL) {
+      setIsHandleAppealModalOpen(true);
       return;
     }
     const relatedEntityId = notification.type.name === NotificationType.ACCOUNT_UPGRADE ? notification.sender.id : notification.relatedEntityId;
@@ -83,9 +100,12 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
         className={mergeClassnames(
           'flex w-full items-start gap-3 rounded-none bg-white py-2.5 px-4 text-left transition-colors delay-300 hover:bg-primary-98',
           'xl:py-4 xl:rounded-lg',
-          [NotificationType.HUBER_REPORT, NotificationType.USER_APPEAL, NotificationType.APPEAL_REJECTION].includes(notification.type.name as NotificationType)
-          && 'bg-red-98 hover:bg-red-90',
-          !notification.seen && 'bg-green-90 xl:bg-white',
+          notification.type.name === NotificationType.APPEAL_RESPONSE && 'items-center',
+          ([NotificationType.HUBER_REPORT, NotificationType.USER_APPEAL].includes(notification.type.name as NotificationType)
+            || (notification.type.name === NotificationType.APPEAL_RESPONSE && notification.relatedEntity?.status === 'rejected'))
+          && 'hover:bg-red-90',
+          !notification.seen && (notification.type.name === NotificationType.APPEAL_RESPONSE && notification.relatedEntity.status !== 'rejected' ? 'bg-green-90' : 'bg-red-98'),
+          !notification.seen && 'xl:bg-white',
         )}
         onClick={handleClick}
       >
@@ -112,22 +132,33 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
         <div className="flex flex-1 items-center gap-3">
           <div className="flex flex-1 flex-col gap-1">
             <div className="flex items-center justify-between">
-              <p className="line-clamp-2 font-medium">{cfg.getMessage(notification, userInfo?.role?.id ?? Role.LIBER)}</p>
+              <p
+                className={mergeClassnames(
+                  'font-medium',
+                  notification.type.name !== NotificationType.APPEAL_RESPONSE && 'line-clamp-2',
+                )}
+              >
+                {cfg.getMessage(notification, userInfo?.role?.id ?? Role.LIBER)}
+              </p>
               {notification.type.name === NotificationType.SESSION_REQUEST && (
                 <Link href="#" className="text-sm font-medium text-primary-60 underline" onClick={() => setIsSessionRequestModalOpen(true)}>
                   Detail
                 </Link>
               )}
             </div>
-            <div className="flex items-center justify-between">
-              <p className="text-sm">{toLocaleDateString(notification.createdAt, locale === 'en' ? 'en-GB' : 'vi-VI')}</p>
-              {showExtras && notification.type.name === NotificationType.STORY_REVIEW && (
-                <div className="flex items-center gap-5 text-sm font-medium text-primary-50">
-                  <p>{`${notification.relatedEntity?.numOfRatings ?? 0} rating`}</p>
-                  <p>{`${notification.relatedEntity?.numOfComments ?? 0} comment`}</p>
-                </div>
-              )}
-            </div>
+            {![NotificationType.USER_APPEAL, NotificationType.APPEAL_RESPONSE].includes(notification.type.name as NotificationType) && (
+              <div className="flex items-center justify-between">
+                <p className="text-sm">
+                  {toLocaleDateString(notification.createdAt, locale === 'en' ? 'en-GB' : 'vi-VI')}
+                </p>
+                {showExtras && notification.type.name === NotificationType.STORY_REVIEW && (
+                  <div className="flex items-center gap-5 text-sm font-medium text-primary-50">
+                    <p>{`${notification.relatedEntity?.numOfRatings ?? 0} rating`}</p>
+                    <p>{`${notification.relatedEntity?.numOfComments ?? 0} comment`}</p>
+                  </div>
+                )}
+              </div>
+            )}
             {[NotificationType.HUBER_REPORT, NotificationType.USER_APPEAL].includes(notification.type.name as NotificationType) && (
               <Link
                 href="#"
@@ -144,19 +175,21 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
       </button>
 
       {/* Session request detail modal */}
-      <Modal open={isSessionRequestModalOpen} onClose={() => setIsSessionRequestModalOpen(false)}>
-        <Modal.Backdrop />
-        <Modal.Panel className="w-fit">
-          <SessionDetailCard
-            session={{
-              ...notification.relatedEntity,
-              story: { ...notification.relatedEntity.story, title: notification.relatedEntity.storyTitle },
-            }}
-            expandByDefault
-            className="sm:w-[463px]"
-          />
-        </Modal.Panel>
-      </Modal>
+      {notification.type.name === NotificationType.SESSION_REQUEST && (
+        <Modal open={isSessionRequestModalOpen} onClose={() => setIsSessionRequestModalOpen(false)}>
+          <Modal.Backdrop />
+          <Modal.Panel className="w-fit">
+            <SessionDetailCard
+              session={{
+                ...notification.relatedEntity,
+                story: { ...notification.relatedEntity.story, title: notification.relatedEntity.storyTitle },
+              }}
+              expandByDefault
+              className="sm:w-[463px]"
+            />
+          </Modal.Panel>
+        </Modal>
+      )}
 
       {/* Handle report modal */}
       {notification.type.name === NotificationType.HUBER_REPORT && (
@@ -170,7 +203,11 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
       {/* Handle appeal modal */}
       {notification.type.name === NotificationType.USER_APPEAL && (
         <HandleAppealModal
-          data={notification?.relatedEntity}
+          data={{
+            ...notification?.relatedEntity,
+            reportId: notification?.relatedEntity?.moderationRelatedReport?.id ?? 0,
+            reportee: notification?.sender,
+          }}
           open={isHandleAppealModalOpen}
           onClose={() => setIsHandleAppealModalOpen(false)}
         />
