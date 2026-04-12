@@ -4,18 +4,19 @@ import { z } from 'zod';
 // Don't add NODE_ENV into T3 Env, it changes the tree-shaking behavior
 export const Env = createEnv({
   server: {
-    CLIENT_EMAIL: z.string().min(1),
-    CLIENT_ID: z.string().min(1),
-    PRIVATE_KEY: z.string().min(1),
-    SPREADSHEET_ID: z.string().min(1),
-    CLOUDINARY_API_KEY: z.string().min(1),
-    CLOUDINARY_API_SECRET: z.string().min(1),
-    FACEBOOK_ID: z.string().min(1),
-    FACEBOOK_SECRET: z.string().min(1),
-    GOOGLE_ID: z.string().min(1),
-    GOOGLE_SECRET: z.string().min(1),
-    NEXTAUTH_SECRET: z.string().min(1),
+    CLIENT_EMAIL: z.string().min(1).optional(),
+    CLIENT_ID: z.string().min(1).optional(),
+    PRIVATE_KEY: z.string().min(1).optional(),
+    SPREADSHEET_ID: z.string().min(1).optional(),
+    CLOUDINARY_API_KEY: z.string().min(1).optional(),
+    CLOUDINARY_API_SECRET: z.string().min(1).optional(),
+    FACEBOOK_ID: z.string().min(1).optional(),
+    FACEBOOK_SECRET: z.string().min(1).optional(),
+    GOOGLE_ID: z.string().min(1).optional(),
+    GOOGLE_SECRET: z.string().min(1).optional(),
+    NEXTAUTH_SECRET: z.string().min(1).optional(),
     LOGTAIL_SOURCE_TOKEN: z.string().optional(),
+    GG_FONTS_API_KEY: z.string().min(1).optional(),
   },
   client: {
     NEXT_PUBLIC_REACT_APP_BACKEND_VERSION: z.string().trim().min(1),
@@ -48,6 +49,7 @@ export const Env = createEnv({
     GOOGLE_SECRET: process.env.GOOGLE_SECRET,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NODE_ENV: process.env.NODE_ENV,
+    GG_FONTS_API_KEY: process.env.GG_FONTS_API_KEY,
     NEXT_PUBLIC_REACT_APP_BACKEND_VERSION:
       process.env.NEXT_PUBLIC_REACT_APP_BACKEND_VERSION,
     NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT:

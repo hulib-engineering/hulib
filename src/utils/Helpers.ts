@@ -7,5 +7,13 @@ export const getBaseUrl = () => {
     return `https://${process.env.VERCEL_URL}`;
   }
 
+  if (process.env.URL) {
+    return process.env.URL;
+  }
+
+  if (process.env.DEPLOY_URL) {
+    return process.env.DEPLOY_URL;
+  }
+
   return 'http://localhost:3000';
 };

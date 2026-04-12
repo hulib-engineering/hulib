@@ -28,8 +28,6 @@ export default withSentryConfig(
       experimental: {
         // Related to Pino error with RSC: https://github.com/orgs/vercel/discussions/3150
         serverComponentsExternalPackages: ['pino'],
-        // Use Turbo if available
-        turbo: true,
       },
       webpack: (config) => {
         // config.externals is needed to resolve the following errors:
@@ -39,6 +37,8 @@ export default withSentryConfig(
           'bufferutil': 'bufferutil',
           'utf-8-validate': 'utf-8-validate',
           '@headlessui/react': '@headlessui/react',
+          'googleapis': 'googleapis',
+          'buffer-equal-constant-time': 'buffer-equal-constant-time',
         });
 
         return config;
@@ -103,7 +103,7 @@ export default withSentryConfig(
     // See the following for more information:
     // https://docs.sentry.io/product/crons/
     // https://vercel.com/docs/cron-jobs
-    automaticVercelMonitors: true,
+    automaticVercelMonitors: false,
 
     // Disable Sentry telemetry
     telemetry: false,
