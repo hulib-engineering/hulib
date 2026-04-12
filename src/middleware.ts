@@ -5,8 +5,6 @@ import createMiddleware from 'next-intl/middleware';
 
 import { AppConfig } from './utils/AppConfig';
 
-import { Env } from '@/libs/Env.mjs';
-
 const intlMiddleware = createMiddleware({
   locales: AppConfig.locales,
   defaultLocale: AppConfig.defaultLocale,
@@ -26,8 +24,8 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Get session token
-  const token = await getToken({ req: request, secret: Env.NEXTAUTH_SECRET });
+  // Get session token - use process.env directly for Edge Runtime compatibility
+  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
 
   // Let next-intl handle locale
   const response = intlMiddleware(request);

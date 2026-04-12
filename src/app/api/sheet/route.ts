@@ -1,15 +1,20 @@
-import { google } from 'googleapis';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
 import { Env } from '@/libs/Env.mjs';
 import { EmailRegistrationValidation } from '@/validations/EventRegistrationValidation';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 const EventRegistrationValidation = EmailRegistrationValidation.extend({
   transferBill: z.string(),
 });
 
 export const POST = async (request: Request) => {
+  // Dynamically import googleapis to avoid build-time issues
+  const { google } = await import('googleapis');
+  
   const json = await request.json();
   const parse = EventRegistrationValidation.safeParse(json);
 
@@ -30,6 +35,10 @@ export const POST = async (request: Request) => {
     transferBill,
     willingToBecomeAmbassador,
   } = parse.data;
+
+  if (!Env.CLIENT_EMAIL || !Env.CLIENT_ID || !Env.PRIVATE_KEY || !Env.SPREADSHEET_ID) {
+    return NextResponse.json({ error: 'Missing required environment variables' }, { status: 500 });
+  }
 
   const auth = new google.auth.GoogleAuth({
     credentials: {

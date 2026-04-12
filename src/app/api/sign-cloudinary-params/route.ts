@@ -4,6 +4,10 @@ import { NextResponse } from 'next/server';
 import { Env } from '@/libs/Env.mjs';
 import { BillUploadValidation } from '@/validations/EventRegistrationValidation';
 
+if (!Env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || !Env.CLOUDINARY_API_KEY || !Env.CLOUDINARY_API_SECRET || !Env.NEXT_PUBLIC_UPLOAD_PRESET) {
+  throw new Error('Missing required Cloudinary environment variables');
+}
+
 cloudinary.config({
   cloud_name: Env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
   api_key: Env.CLOUDINARY_API_KEY,
