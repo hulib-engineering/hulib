@@ -10,11 +10,11 @@ export const authOptions = {
   // Configure one or more authentication providers
   debug: true,
   strategy: 'jwt',
-  // secret: Env.NEXTAUTH_SECRET,
+  secret: Env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
-      clientId: Env.GOOGLE_ID,
-      clientSecret: Env.GOOGLE_SECRET,
+      clientId: Env.GOOGLE_ID!,
+      clientSecret: Env.GOOGLE_SECRET!,
       authorization: {
         params: {
           prompt: 'consent',
@@ -24,8 +24,8 @@ export const authOptions = {
       },
     }),
     FacebookProvider({
-      clientId: Env.FACEBOOK_ID,
-      clientSecret: Env.FACEBOOK_SECRET,
+      clientId: Env.FACEBOOK_ID!,
+      clientSecret: Env.FACEBOOK_SECRET!,
     }),
     CredentialsProvider({
       name: 'Credentials',
