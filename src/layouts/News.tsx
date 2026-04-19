@@ -13,25 +13,26 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import { newLineMessage } from '@/utils/i18NRichTextUtils';
 
 const NewsAndEvents = [
-  { index: 'index_0', date: '18/10/2025', link: 'https://www.facebook.com/share/p/17efkGXzfr' },
+  { index: 'index_0', date: '16/4/2026', link: 'https://www.facebook.com/share/p/1GKWz8fCkF' },
+  { index: 'index_1', date: '18/10/2025', link: 'https://www.facebook.com/share/p/17efkGXzfr' },
   {
-    index: 'index_1',
+    index: 'index_2',
     date: '18 - 19/09/2025',
     link: 'https://www.facebook.com/photo.php?fbid=122226102632058653&set=pb.61551759614724.-2207520000&type=3&locale=vi_VN',
   },
   {
-    index: 'index_2',
+    index: 'index_3',
     date: '14/6/2025',
     link: 'https://www.facebook.com/photo/?fbid=122213856482058653&set=pb.61551759614724.-2207520000&locale=vi_VN',
   },
-  { index: 'index_3', date: '22/02 - 23/03/2025', link: 'https://www.facebook.com/share/p/182uL1J1jX' },
+  { index: 'index_4', date: '22/02 - 23/03/2025', link: 'https://www.facebook.com/share/p/182uL1J1jX' },
   {
-    index: 'index_4',
+    index: 'index_5',
     date: '14/12/2024',
     link: 'https://www.facebook.com/photo.php?fbid=122186787512058653&set=pb.61551759614724.-2207520000&type=3&locale=vi_VN',
   },
   {
-    index: 'index_5',
+    index: 'index_6',
     date: '28/09/2024',
     link: 'https://www.facebook.com/photo.php?fbid=122176139972058653&set=pb.61551759614724.-2207520000&type=3&locale=vi_VN',
   },
