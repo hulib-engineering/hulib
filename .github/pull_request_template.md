@@ -1,5 +1,6 @@
 ## What this PR does
-<!-- Describe the changes, why they were made, and what problem they solve -->
+- [ ] Add something new
+- [ ] Fix some issues
 
 ## Related Issue
 <!-- Link to related GitHub issue -->
