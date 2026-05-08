@@ -35,7 +35,10 @@ const FAQs = () => {
               key={index}
               trigger={t(`${item.key}.question`)}
               content={{
-                heading: t(`${item.key}.answer.heading`),
+                heading:
+                // @ts-ignore
+
+                  t.has(`${item.key}.answer.heading`) ? t(`${item.key}.answer.heading`) : '',
                 bodyParams: item.bodyParas.map(paraIndex =>
                   // @ts-ignore
                   t(`${item.key}.answer.body_paras.${paraIndex}`),

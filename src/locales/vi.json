@@ -176,7 +176,6 @@
     "faqs_question_1": {
       "question": "2. Đối tượng mà HuLib hướng đến?",
       "answer": {
-        "heading": "",
         "body_paras": {
           "p1": "HuLib dành cho học sinh trung học phổ thông, sinh viên đại học và những người mới tốt nghiệp (từ 16-25 tuổi) sinh sống ở miền Trung, Việt Nam. Bạn đang tìm kiếm human book (sách sống), không gian chia sẻ câu chuyện của mình, hoặc mong muốn tham gia vào các buổi trao đổi trực tuyến thì HuLib chính là cộng đồng hỗ trợ bạn phát triển cá nhân cũng như chuyên nghiệp."
         }
@@ -538,6 +537,7 @@
     "select_topics": "Bạn muốn gắn thẻ Huber như thế nào? (Tùy chọn)",
     "placeholder_topics": "Chọn thể loại...",
     "add_more_topics": "Thêm thể loại...",
+    "create_new_topic": "Tạo chủ đề mới",
     "no_topics_found": "Không tìm thấy thể loại nào",
     "creating": "Đang tạo...",
     "add_new": "Thêm mới",
@@ -585,6 +585,7 @@
     "validation": {
       "required": "Bắt buộc",
       "invalidYear": "Năm không hợp lệ",
+      "invalidYearRange": "Khoảng năm không hợp lệ",
       "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại",
       "bio_required": "Vui lòng nhập tiểu sử của bạn",
       "terms_required": "Vui lòng chấp thuận các điều khoản và điều kiện"
@@ -855,7 +856,7 @@
   },
   "Messages": {
     "meta_title": "Messenger | HuLib",
-    "meta_description": ""
+    "meta_description": "Kết nối và trò chuyện với Huber và Liber trên HuLib"
   },
   "ScheduleBasicInfo": {
     "topics": "Chủ đề",
