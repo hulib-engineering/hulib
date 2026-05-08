@@ -6,7 +6,7 @@ const createJestConfig = nextJest({
   dir: './',
 });
 
-const esModules = ['@wavesurfer/react', 'swiper'].join('|');
+const esModules = ['@wavesurfer/react', 'swiper', 'lodash-es'].join('|');
 
 const customJestConfig: Config = {
   moduleNameMapper: {
