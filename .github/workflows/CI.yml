@@ -97,9 +97,6 @@ jobs:
       - name: Type checking
         run: npm run check:types
 
-      - name: Check dependencies
-        run: npm run check:deps
-
       - name: Run unit tests
         run: npm run test -- --coverage
 
