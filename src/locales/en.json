@@ -3,15 +3,9 @@
     "contact_us": "contact us"
   },
   "HeaderWebApp": {
-    "contact_us": "contact us",
     "my_schedule": "My schedule",
     "books": "Stories",
     "mentors": "Hubers",
-    "log_in": "Log in",
-    "sign_up": "Sign up",
-    "clear": "Clear",
-    "recent_searches": "Recent Searches:",
-    "search_by_keyword": "Search by keyword",
     "dashboard": "Dashboard",
     "my_profile": "My profile",
     "change_password": "Change password",
@@ -49,20 +43,16 @@
     }
   },
   "Footer": {
-    "footer_description": "There is a story and experience within each of us, so we are born to be somebody.",
     "copyright": "© 2025 HuLib. All rights reserved.",
     "privacy_policy": "privacy policy",
     "term_of_service": "term of service",
-    "cookie_settings": "cookie settings",
     "community_guidelines": "community guidelines"
   },
   "FooterWebApp": {
     "footer_description": "Promote happiness values by connecting very personal stories with human books.",
-    "copyright": "© 2025 HuLib. All rights reserved.",
     "privacy_policy": "Privacy policy",
     "term_of_service": "Term of service",
     "community_guidelines": "Community guidelines",
-    "cookie_settings": "Cookie settings",
     "site": "Site",
     "my_schedule": "My Schedule",
     "books": "Stories",
@@ -75,7 +65,6 @@
   "Index": {
     "meta_title": "HuLib | Landing Page",
     "meta_description": "There is a story and experience within each of us, so we are born to be somebody.",
-
     "hero_title": "a social project",
     "hero_motto": "Stories shared, hearts heard, and connections made.",
     "hero_description": "There is a story and experience within each of us, so we are born to be somebody.",
@@ -83,11 +72,9 @@
     "hero_message_1": "'There is <important>a crack</important> in everything, that's how <important>the light</important> gets in.'",
     "hero_message_2": "'You are <important>not alone</important> in your <important>struggles</important>.'",
     "hero_mentor_quantity": "200+ <normal>Shared Stories</normal>",
-
     "event_title": "upcoming event on December 14, 2024",
     "event_description": "Join us for 'Work or Study' Event, focused on different stories and backgrounds to pursue our dreams.",
     "event_call_to_action": "register",
-
     "feature_peers": {
       "title": "People with the same stories",
       "description": "100+ human books and volunteers having personal experience with the same problem you're into."
@@ -100,7 +87,6 @@
       "title": "Safely Sharing",
       "description": "Feel free to share your stories without being judged."
     },
-
     "event_feature_peers": {
       "title": "Meeting with experts",
       "description": "Engaging with experts to gain valuable insights into achieving emotional balance and well-being."
@@ -113,7 +99,6 @@
       "title": "Safely Sharing",
       "description": "Feel free to share your stories without being judged."
     },
-
     "about_title": "what is hulib",
     "about_description": "a community project promotes well-being through shared stories with human books.",
     "about_stories": {
@@ -128,7 +113,6 @@
       "title": "our <br></br><highlight>vision</highlight>",
       "description": "Our vision is to create a safe and proactive community, offering support from human books, to promote well-being and shared experiences."
     },
-
     "outstanding_features_title": "ngôi nhà của chúng tớ",
     "outstanding_features_description": "HULIB - Nền tảng kết nối trực tuyến",
     "outstanding_features": {
@@ -150,12 +134,10 @@
       }
     },
     "outstanding_features_cta_button": "Experience now",
-
     "our_mascots_title": "our brand buddies",
     "our_mascots_description": "From Sharing to Understanding",
     "our_mascots_hubers": "Hey, I’m <highlight>Huber</highlight> - just someone <highlight>sharing</highlight> small pieces of <highlight>my stories</highlight>, hoping to bring <highlight>a little light</highlight> and remind <highlight>Liber</highlight> you’re not alone.<br></br><br></br> <i>Every story isn’t just meant to inspire, but to carry <highlight>warmth</highlight> and <highlight>understanding</highlight> through uncertain days.</i>",
     "our_mascots_libers": "Hi I am <highlight>Liber</highlight> — someone who <highlight>listen, seek empathy and accompany</highlight>.<br></br><br></br> <i>At HuLib, I can pick the <highlight>“human books”</highlight> that <highlight>resonate with me</highlight> and connect with <highlight>Hubers</highlight>, <highlight>discovering</highlight> more about myself.</i>",
-
     "testimonial_title": "meet our team",
     "testimonial_description": "What do our members say?",
     "sponsors_title": "sponsors",
@@ -182,7 +164,6 @@
     "faqs_question_1": {
       "question": "2. Who can benefit from HuLib?",
       "answer": {
-        "heading": "",
         "body_paras": {
           "p1": "HuLib is designed for high school students, university students, and new graduates (ages 16-25), with a focus on those in Coastal Central Vietnam. Whether you're seeking mentorship, looking to share your story, or participating in virtual discussions and workshops, HuLib provides a space for personal and professional growth."
         }
@@ -429,8 +410,6 @@
     "meta_description": "Mini game for year of Dragon"
   },
   "SignIn": {
-    "meta_title": "Sign in",
-    "meta_description": "Seamlessly sign in to your account with our user-friendly login process.",
     "welcome_back": "Welcome back!",
     "login_to_hulib": "Log in to your Hulib account",
     "email": "Email address",
@@ -464,9 +443,6 @@
       "first": "By creating an account, I accept",
       "second": "and"
     },
-    "male": "Male",
-    "female": "Female",
-    "other": "Other",
     "enter_otp": "Enter verification code",
     "support_otp": "It’s almost done. please enter the 6-digit verification code we just sent to",
     "not_receive_otp": "Haven’t receive the email?",
@@ -474,8 +450,7 @@
     "contact_us": "If you need help, contact us via email",
     "welcome": "Welcome to",
     "account_created": "Your account has been created",
-    "get_started": "Get started",
-    "huber_register": "Register to become a Huber"
+    "get_started": "Get started"
   },
   "ForgotPassword": {
     "meta_title": "Forgot password",
@@ -527,7 +502,6 @@
   "MyFavorites": {
     "choose_all": "Choose all",
     "remove": "Remove",
-    "delete_confirm": "Are you sure want to remove this story from your favorite list ?",
     "cancel": "Cancel",
     "confirm": "Confirm",
     "delete_confirm_all": "Are you sure want to remove all stories from your favorite list ?",
@@ -538,66 +512,26 @@
     "explore_hubers": "Your favorite list is empty! Browse hubers and mark your favorites to keep them handy."
   },
   "HumanBookRegister": {
-    "register_as_a_human_book": "Register as a Human Book",
-    "register_confirm_message": "Are you sure you to register as a Human Book?",
     "select_topics": "What do you want to tag Huber as? (Optional)",
     "placeholder_topics": "Search topics...",
     "add_more_topics": "Add more topics...",
-    "create_new_topic": "Create new topic",
-    "no_topics_found": "No topics found",
     "creating": "Creating...",
     "add_new": "Add new",
     "all_topics_selected": "All topics selected",
-    "About": "About",
-    "placeholder_about": "Tell us about yourself...",
-    "Session": "Session",
-    "placeholder_session": "Search Session",
-    "Education": "Education",
-    "placeholder_education": "Placeholder",
-    "From": "From",
-    "placeholder_from": "2024",
-    "To": "To",
-    "placeholder_to": "2024",
-    "footer_description_underline": "Note:",
-    "footer_description": "Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar tempor dui massa ut.",
-    "Next": "Next",
-    "introduction_video": "Introduction Video",
-    "Back": "Back",
-    "Register": "Register",
-    "error_browser_not_support_video": "Your browser does not support the video tag.",
-    "drag_or_drop_files_here": "Drag or Drop files here",
-    "choose_file": "Choose File",
-    "maxSize": "Maximum at 100MB",
-    "delete_selected_video": "Delete",
-    "success_submit_form_header": "Successful Submission",
-    "success_submit_form_description": "Submitted successfully! Your application will be processed within 7-10 business days.",
-    "back_to_home": "Back to Home",
-    "searchSession": "Search Session",
-    "insert_url": "Insert URL",
-    "supporting_text": "Supporting Text",
-    "Submit": "Submit",
-    "humanBookRegistered": "You have registered to become a Human Book. Wait for Admin approval!",
     "Step2": {
-      "title": "Register as a Huber",
-      "available_slots": "My available slots",
-      "available_slots_description": "When can you make time for Liber?",
-      "error_contact_admin": "An error occurred, please contact admin for support!",
-      "success_time_slots": "Time slots created successfully!",
-      "success_time_slots_description": "You have successfully created your time slots",
-      "validation": {
-        "error_select_at_least_one_time_slot": "Please select at least one time slot"
-      }
+      "title": "Register as a Huber"
     },
     "validation": {
-      "required": "Required",
-      "invalidYear": "Invalid Year",
-      "invalidYearRange": "Invalid Year Range",
-      "invalid_url": "Invalid URL link. Check link and try again",
-      "bio_required": "Please enter your bio",
-      "terms_required": "Please accept the terms and conditions"
+      "invalid_url": "Invalid URL link. Check link and try again"
     },
-    "bio": { "text": "Bio", "placeholder": "Placeholder" },
-    "intro_video": { "text": "Introduction Video", "placeholder": "https://" },
+    "bio": {
+      "text": "Bio",
+      "placeholder": "Placeholder"
+    },
+    "intro_video": {
+      "text": "Introduction Video",
+      "placeholder": "https://"
+    },
     "read_community": "Read community guideline",
     "confirm": "I confirm that I have read and understood the terms and conditions of Hulib, and I agree to be bound by them.",
     "cancel": "Cancel",
@@ -606,85 +540,44 @@
     "general": "General"
   },
   "ExploreStory": {
-    "title": "Explore",
     "description": "Discover and find your perfect story",
-    "view_more": "View More",
-    "topics": "Topics",
     "ratings": "ratings",
-    "abstract": "Abstract",
     "read_story": "Read all",
-    "productivity": "Productivity",
-    "all": "All",
-    "health": "Health",
-    "emotional": "emotional",
-    "motivationAndInspiration": "Motivation & Inspiration",
-    "career": "Career",
-    "education": "Education",
     "similar_stories": "Similar Stories",
-    "see_all": "See All",
-    "hide_all": "Hide All",
     "story_added_to_favorites": "Favorite added successfully",
     "story_removed_from_favorites": "Favorite removed successfully",
     "huber_removed_from_favorites": "Successfully removed huber from favorite list",
     "error_contact_admin": "An error occurred, please contact admin for support!",
-    "save_for_late": "Save for later",
-    "schedule_meeting": "Schedule a meeting",
-    "saved_for_later_success": "Story saved for later successfully",
-    "remove_from_saved_for_later": "Remove from saved for later",
     "share_story": "Share another story"
   },
   "Huber": {
     "title": "Explore our Hubers",
     "description": "Discover and find your suitable huber",
-    "huber_btn_all": "See all",
-    "huber_view_more": "View more",
-    "explore_all_huber": " Explore all Hubers",
     "card": {
-      "introduce": "My name is {fullName}, I am a book lover and enjoy sharing knowledge. I have read many books and want to share what I have learned with everyone.",
-      "topics": "Topics",
-      "ratings": "Ratings",
-      "visit_profile": "Visit Profile"
+      "topics": "Topics"
     }
   },
   "Time_slots": {
-    "title": "Time Slots",
-    "description": "Select your available time slots",
-    "time_slots": "Time Slots",
     "available_time_slots": "My available slots",
     "available_time_slots_description": "Wow below are slots you chose",
-    "select_time_slots": "Select the times you’re available for Liber!",
     "update_time_slots": "Update My Slots",
-    "select_time_slots_description": "Select the time slots you are available for the session",
-    "error_time_slots": "An error has occurred. Please check your time slots and try again.",
     "success_time_slots_description": "You have successfully created your time slots"
   },
   "Meeting": {
-    "cancel_meeting": "I don't want to meeting anymore",
     "survey_submitted_successfully": "Survey is submitted successfully. Hope you to have a good time with Huber",
     "you_have_meeting_now": "You have meeting now",
     "detail": "Detail"
   },
   "Schedule": {
-    "appointment_schedule": "Appointment schedule",
-    "type_meeting": "Type of meeting",
     "waiting": "Waiting",
     "upcoming": {
-      "upcoming_event": "Upcoming event",
-      "meeting_with": "Meeting with"
+      "upcoming_event": "Upcoming event"
     },
     "tabs_all": "All",
     "meeting_status": {
       "meetings_today": "Meetings today",
       "next_meetings": "Next meetings",
       "done_meetings": "Done meetings"
-    },
-    "this_week": "This week",
-    "no_meetings": {
-      "huber_description": "No meetings yet? You can start by sharing your own story so others can find and meet you, or browse stories from others and book a meeting.",
-      "user_description": "You haven't joined a meeting yet. Take a moment to explore, read some stories, and connect with a Huber.",
-      "share_story_btn": "Share my story",
-      "explore_story_btn": "Explore story",
-      "noMeetingsFound": "No meetings found"
     },
     "MainScreen": {
       "title": "Schedule your meeting",
@@ -720,86 +613,28 @@
   },
   "notifications": {
     "title": "Notifications",
-    "unknownUser": "Unknown User",
-    "seeDetail": "See detail",
-    "seeAll": "See all",
-    "newNotification": "New notification",
     "noNotifications": "No notifications",
     "loadingFailed": "Failed to load notifications",
-    "loading": "Loading...",
-    "seePreviousNotifications": "See previous notifications",
-    "sessionRequest": {
-      "message": "would love to have a meeting with you."
-    },
-    "reviewStory": {
-      "message": "have also reviewed your story"
-    },
-    "publishStory": {
-      "user": {
-        "prefix": "Your book,",
-        "suffix": ",has been successfully published."
-      },
-      "admin": {
-        "message": "has sent a request to create a new Story"
-      }
-    },
-    "account": {
-      "user": {
-        "prefix": "Your registration to become a Huber",
-        "suffix": "has been accepted. Welcome onboard!"
-      },
-      "admin": {
-        "message": "has submitted a request to become a Huber."
-      }
-    },
-    "upComming": {
-      "title": "It's time for your session",
-      "meetingWith": "Meeting with",
-      "startingNow": "is starting now.",
-      "encouragement": "Hurry up to make it happen with a great soul.",
-      "callToAction": "Click below to join."
-    }
+    "seePreviousNotifications": "See previous notifications"
   },
   "Home": {
     "banner": {
       "title": "Hi!",
       "sub_title": "Welcome to the platform that connects beautiful souls"
     },
-    "newest_stories": {
-      "title": "Newest Stories",
-      "btn1": "See all"
-    },
-    "recommended_hubers": {
-      "title": "Recommended Hubers"
-    },
-    "explore_stories": {
-      "title": "Explore",
-      "btn1": "See all",
-      "btn2": "View more",
-      "btn3": " Explore all Hubers",
-      "card": {
-        "text1": "Topics",
-        "text2": "Ratings"
-      }
-    },
     "short_descriptions": {
       "title": "Become our Huber",
       "btn": "Join as Huber"
-    },
-    "no_data": "No Data"
+    }
   },
   "Common": {
-    "no_data": "No Data",
     "error_contact_admin": "An error occurred, please contact admin for support!",
-    "validation_error": "Data is not valid",
-    "update_failed": "Update failed",
     "update_successfully": "Update successfully",
     "create_first_story": "Create your first story",
     "topics": "Topics",
     "title": "Title",
     "abstract": "Abstract",
     "cover_picture": "Cover picture",
-    "select_topics": "Select topics",
     "custom": "Custom",
     "style": "Style",
     "back": "Back",
@@ -817,8 +652,6 @@
   "feedback_form": {
     "session_feedback": "Feedback for the session",
     "feedback_for_huber": "Feedback for the Huber",
-    "attendees": "{count} Attendees",
-    "you": "You",
     "how_do_you_feel": "How do you feel after joining the session?",
     "not_good": "Not good",
     "very_good": "Very good",
@@ -829,26 +662,11 @@
     "share_thought": "Share your thought about the story",
     "cancel": "Cancel",
     "next": "Next",
-    "back": "Back",
     "skip": "Skip",
     "confirm": "Confirm",
     "how_many_love": "How many love do you want to send to Huber",
     "say_something": "Say something to your Huber",
     "write_something": "Write something here",
-    "what_tag": "What do you want to tag Huber as? (Optional)",
-    "choose_tag": "Choose a tag",
-    "tags": {
-      "self_taught": "Self-taught",
-      "optimistic": "Optimistic",
-      "energy": "Energy",
-      "select_option": "Select option"
-    },
-    "thank_you": "Thank you for your feedback",
-    "feedback_value": "Your feedback is valuable to us. This content need to be modify",
-    "go_to_schedule": "Go to schedule",
-    "back_to_home": "Back to Home"
-  },
-  "thanks_page": {
     "thank_you": "Thank you for your feedback",
     "feedback_value": "Your feedback is valuable to us. This content need to be modify",
     "go_to_schedule": "Go to schedule",
@@ -866,10 +684,6 @@
     "back": "Back",
     "attendees": "Attendees",
     "you": "You"
-  },
-  "Messages": {
-    "meta_title": "Messenger | HuLib",
-    "meta_description": ""
   },
   "Reading": {
     "PreSurvey": {
