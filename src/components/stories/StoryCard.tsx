@@ -95,7 +95,7 @@ export const StoryCard = ({
       await deleteStory(data.id).unwrap();
       setIsDeleteModalOpen(false);
       pushSuccess('Story deleted successfully');
-    } catch (error) {
+    } catch {
       pushError('Error deleting story');
     }
   };

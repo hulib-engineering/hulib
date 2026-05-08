@@ -187,7 +187,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
         });
 
         await Promise.all(subscribePromises);
-      } catch (error) {
+      } catch {
         // Silent error handling could be replaced with proper error reporting
       }
     };
@@ -220,7 +220,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
       }).unwrap();
       setIsRecording(true);
       setCloudRecordingData(recordingData);
-    } catch (e) {
+    } catch {
       pushError('Cannot start recording this session!');
     }
   };
@@ -286,7 +286,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
           }
           await client.publish(newTracks);
         });
-      } catch (error) {
+      } catch (error: any) {
         console.error('Share screen failed!', error);
       }
     } else {
@@ -325,7 +325,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
       // Enable/disable camera track
       await localTracks[1].setEnabled(newState);
       setIsCameraOn(newState);
-    } catch (error) {
+    } catch {
       // Silent error handling could be replaced with proper error reporting
     }
   };
@@ -344,7 +344,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
       // Enable/disable microphone track
       await localTracks[0].setEnabled(newState);
       setIsMicOn(newState);
-    } catch (error) {
+    } catch {
       // Silent error handling could be replaced with proper error reporting
     }
   };
@@ -368,7 +368,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
       setReady(false); // avoid rejoining
 
       onEndCall(cloudRecordingData);
-    } catch (error) {
+    } catch {
       // Silent error handling could be replaced with proper error reporting
     }
   };

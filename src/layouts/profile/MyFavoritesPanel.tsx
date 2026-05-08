@@ -156,7 +156,7 @@ export default function MyFavoritesPanel() {
       }
       setIsSelectAll(false);
       setIsShowModalRemoveAll(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error removing all favorites:', error);
     }
   };

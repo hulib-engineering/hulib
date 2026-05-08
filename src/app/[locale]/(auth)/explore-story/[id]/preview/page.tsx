@@ -44,7 +44,7 @@ export default function Index() {
     try {
       await deleteStory(data.id).unwrap();
       setIsDeleteSuccessModalOpen(true);
-    } catch (error) {
+    } catch {
       pushError('Error deleting story');
     }
   };

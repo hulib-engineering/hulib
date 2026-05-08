@@ -28,7 +28,7 @@ const useNotificationActions = () => {
         sessionStatus: newStatus,
       }).unwrap();
       pushSuccess('Status updated successfully!');
-    } catch (error) {
+    } catch {
       pushError('Failed to update status. Please try again.');
     }
   };
