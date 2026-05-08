@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { svnRio } from '@/templates/BaseTemplate';
+import { svnRio } from '@/styles/fonts';
 import { paginateText } from '@/utils/paginateTextUtil';
 
 function renderHighlightedText(text: string, highlightClass = 'bg-green-70/50') {
