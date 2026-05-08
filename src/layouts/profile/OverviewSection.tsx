@@ -49,7 +49,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
       await updateProfile({ bio: formData.bio, videoUrl: formData.videoUrl }).unwrap();
       setIsEditingVideoSrc(false);
       setOpenEditPopup(false);
-    } catch (error) {
+    } catch {
       setErrorMessage('Failed to update profile. Please try again.');
     }
   };

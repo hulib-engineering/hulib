@@ -86,7 +86,7 @@ export default function PostSurvey() {
         storyReview: storyFeedback,
       }).unwrap();
       pushSuccess('Sent feedback successfully');
-    } catch (error) {
+    } catch {
       pushError('Sent feedback failed');
     } finally {
       setStep('feedback-huber');
@@ -104,7 +104,7 @@ export default function PostSurvey() {
         huberFeedback,
       }).unwrap();
       pushSuccess('Sent feedback successfully');
-    } catch (error) {
+    } catch {
       pushError('Sent feedback failed');
     } finally {
       setStep('feedback-success');

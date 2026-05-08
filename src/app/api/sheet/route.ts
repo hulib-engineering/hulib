@@ -14,7 +14,7 @@ const EventRegistrationValidation = EmailRegistrationValidation.extend({
 export const POST = async (request: Request) => {
   // Dynamically import googleapis to avoid build-time issues
   const { google } = await import('googleapis');
-  
+
   const json = await request.json();
   const parse = EventRegistrationValidation.safeParse(json);
 

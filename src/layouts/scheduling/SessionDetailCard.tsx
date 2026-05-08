@@ -76,7 +76,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
       await updateStatus(payload).unwrap();
 
       pushSuccess('Status updated successfully!');
-    } catch (error) {
+    } catch {
       pushError('Failed to update status. Please try again.');
     }
   };
