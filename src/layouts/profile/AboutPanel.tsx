@@ -141,7 +141,6 @@ const AboutPanel = ({
                 as="button"
                 isSelected={currentSection === section.type}
                 className={mergeClassnames(
-                  currentSection === section.type && 'bg-red-60 border-none',
                   section.type === 'moderations' && 'border border-red-90',
                 )}
                 onClick={() => setCurrentSection(section.type)}
