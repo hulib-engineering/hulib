@@ -61,31 +61,31 @@ const ButtonComponent = <C extends ElementType>({
   );
 };
 
+const HOVER_BACKGROUNDS: Record<ButtonVariants, string> = {
+  fill: 'bg-primary-40',
+  primary: 'bg-primary-40',
+  secondary: 'bg-primary-80',
+  tertiary: 'bg-primary-98',
+  ghost: 'bg-primary-98',
+  outline: 'bg-primary-98',
+};
+
 const Hover = ({
   isHover,
   variant,
 }: {
   isHover: boolean;
   variant: ButtonVariants;
-}) => {
-  const hoverBackground
-    = variant === 'ghost'
-      ? 'bg-light-active'
-      : variant === 'outline'
-        ? 'bg-light-hover'
-        : 'bg-primary-40';
-
-  return (
-    <span
-      aria-hidden="true"
-      className={mergeClassnames(
-        'z-[-1] block absolute inset-0 pointer-events-none',
-        'transition-colors duration-300',
-        isHover ? hoverBackground : '',
-      )}
-    />
-  );
-};
+}) => (
+  <span
+    aria-hidden="true"
+    className={mergeClassnames(
+      'z-[-1] block absolute inset-0 pointer-events-none',
+      'transition-colors duration-200 ease-out',
+      isHover ? HOVER_BACKGROUNDS[variant] : '',
+    )}
+  />
+);
 
 const IconLeft = ({ fullWidth, iconLeft, size }: ButtonSettingsProps) => (
   <span
