@@ -22,44 +22,37 @@ export const getButtonVariants = ({
     return animation === 'error'
       ? mergeClassnames(
           'text-red-50 bg-transparent ring-inset ring-1 ring-red-50',
-          !disabled && 'hover:bg-red-10',
         )
       : mergeClassnames(
           'text-primary-50 bg-transparent border border-[#C2C6CF]',
           'disabled:border-neutral-90 disabled:text-neutral-70',
           !disabled
-          && 'hover:bg-primary-98 focus:border focus:border-[#C2C6CF] focus:shadow-primary-60',
+          && 'focus:border focus:border-[#C2C6CF] focus:shadow-primary-60',
         );
   }
   if (variant === 'tertiary') {
     return animation === 'error'
       ? 'text-goten bg-chichi'
-      : 'text-primary-50 hover:bg-primary-98';
+      : 'text-primary-50';
   }
   if (variant === 'ghost') {
     return animation === 'error'
-      ? mergeClassnames(
-          'text-red-50 bg-transparent',
-          !disabled && 'hover:bg-red-10',
-        )
+      ? mergeClassnames('text-red-50 bg-transparent')
       : mergeClassnames(
           'text-primary-50 bg-transparent',
           disabled && 'text-neutral-70',
           !disabled
-          && 'hover:bg-primary-98 focus:border-2 focus:border-[#858DA0] focus:shadow-primary-60',
+          && 'focus:border-2 focus:border-[#858DA0] focus:shadow-primary-60',
         );
   }
   if (variant === 'secondary') {
     return animation === 'error'
-      ? mergeClassnames(
-          'text-chichi bg-primary-90',
-          !disabled && 'hover:bg-chichi-10',
-        )
+      ? mergeClassnames('text-chichi bg-primary-90')
       : mergeClassnames(
           'text-primary-50 bg-primary-90',
           disabled && 'bg-neutral-90 text-neutral-70',
           !disabled
-          && 'hover:bg-primary-80 focus:border focus:border-primary-80 focus:shadow-primary-60',
+          && 'focus:border focus:border-primary-80 focus:shadow-primary-60',
         );
   }
   return animation === 'error'
@@ -68,7 +61,7 @@ export const getButtonVariants = ({
         'text-white bg-primary-50',
         disabled && 'bg-neutral-90 text-neutral-70',
         !disabled
-        && 'hover:bg-primary-80 focus:border focus:border-primary-80 focus:shadow-primary-60',
+        && 'focus:border focus:border-primary-80 focus:shadow-primary-60',
       );
 };
 
