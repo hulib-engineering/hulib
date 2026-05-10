@@ -39,7 +39,7 @@ const HuberConfirmationModal = ({
         body,
       }).unwrap();
       setIsSuccessful(true);
-    } catch (error) {
+    } catch {
       pushError('Failed to approve Huber. Please try again.');
     }
   };

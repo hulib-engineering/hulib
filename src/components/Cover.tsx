@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { mergeClassnames } from '@/components/core/private/utils';
-import { svnRio } from '@/templates/BaseTemplate';
+import { svnRio } from '@/styles/fonts';
 
 type ICoverProps = {
   coverUrl: string;

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { poppins } from './BaseTemplate';
+import { poppins } from '@/styles/fonts';
 import { mergeClassnames } from '@/components/core/private/utils';
 
 type IUnauthTemplateProps = {

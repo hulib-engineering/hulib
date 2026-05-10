@@ -33,7 +33,6 @@ export enum PublishStatusEnum {
 export enum StoryPublishStatus {
   DELETED = 'deleted',
   PUBLISHED = 'published',
-  DRAFT = 'draft',
   REJECTED = 'rejected',
 }
 

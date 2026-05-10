@@ -61,7 +61,7 @@ export default function PreSurvey({ sessionId, onFinish }: { sessionId: number; 
         setIsSuccessfullySubmitted(false);
         onFinish();
       }, 2000);
-    } catch (error: any) {
+    } catch {
       setIsSuccessfullySubmitted(false);
       onFinish();
     } finally {

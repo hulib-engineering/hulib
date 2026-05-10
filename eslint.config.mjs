@@ -94,7 +94,7 @@ export default antfu(
       'ts/ban-ts-comment': [
         'error',
         {
-          'ts-ignore': false, // 👈 allow `@ts-ignore` again
+          'ts-ignore': false, // allow `@ts-ignore` again
           'ts-expect-error': 'allow-with-description',
           'minimumDescriptionLength': 3,
         },
@@ -103,6 +103,21 @@ export default antfu(
       'no-restricted-globals': 'warn',
       'no-alert': 'warn',
       'ts/no-empty-object-type': 'off',
+      // Switch to TypeScript no-unused-vars which correctly tracks enum member usage across files
+      'unused-imports/no-unused-vars': 'off',
+      'ts/no-unused-vars': [
+        'error',
+        {
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+          vars: 'all',
+          varsIgnorePattern: '^_',
+        },
+      ],
     },
   },
 );

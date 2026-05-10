@@ -62,7 +62,7 @@ export default function StoryConfirmationModal({
           : 'Story rejected successfully',
       );
       setIsSuccessful(true);
-    } catch (error) {
+    } catch {
       pushError('Failed to approve story');
     }
   };

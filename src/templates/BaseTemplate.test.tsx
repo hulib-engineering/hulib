@@ -5,6 +5,14 @@ import { BaseTemplate } from './BaseTemplate';
 import StoreProvider from '@/app/StoreProvider';
 import messages from '@/locales/en.json';
 
+beforeAll(() => {
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+});
+
+afterAll(() => {
+  jest.restoreAllMocks();
+});
+
 // Mock useRouter and usePathname of next-intl:
 jest.mock('next-intl/navigation', () => ({
   createSharedPathnamesNavigation() {

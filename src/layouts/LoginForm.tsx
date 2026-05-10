@@ -60,7 +60,7 @@ const LoginForm = () => {
           callbackUrl: `${window.location.origin}/home`,
         });
       }
-    } catch (error: any) {
+    } catch {
       setError('password', {
         type: 'custom',
         message: 'Incorrect password, please try again.',
