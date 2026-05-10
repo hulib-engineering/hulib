@@ -13,7 +13,7 @@ import React, { useCallback, useMemo } from 'react';
 import Button from '@/components/core/button/Button';
 import Popover from '@/components/core/popover/Popover';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+// import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import AdvancedSearch from '@/layouts/webapp/AdvancedSearch';
 import AvatarPopover from '@/layouts/webapp/AvatarPopover';
@@ -271,7 +271,7 @@ const Header = () => {
                 <div className="ml-2">
                   <AvatarPopover />
                 </div>
-                <LocaleSwitcher className="shrink" />
+                {/* <LocaleSwitcher className="shrink" /> */}
               </div>
             )}
       </header>
