@@ -74,7 +74,7 @@ const VerifiedPhoneNumberInput = ({
         await signInWithCredential(auth, credential);
         setVerifiedNumber(watch('parentPhoneNumber'));
         setValue('isVerified', true);
-      } catch (error) {
+      } catch (error: any) {
         console.error('OTP Verification Error:', error);
         setError('verificationCode', {
           type: 'unverified',

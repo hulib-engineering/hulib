@@ -90,7 +90,7 @@ const baseQueryWithInterceptor = async (
             return result;
           }
         }
-      } catch (err) {
+      } catch {
         // If any error occurs during refresh, logout
         api.dispatch(logout());
         return result;

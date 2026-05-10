@@ -40,7 +40,7 @@ const NewsletterForm = () => {
         Env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
       );
       pushSuccess(t('newsletter_success_message'));
-    } catch (error: any) {
+    } catch {
       pushError(t('newsletter_error_message'));
     } finally {
       setIsLoading(false);
