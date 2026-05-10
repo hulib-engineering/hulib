@@ -17,7 +17,7 @@ import React, { useMemo } from 'react';
 import Avatar from '@/components/core/avatar/Avatar';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import Popover from '@/components/core/popover/Popover';
-import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+// import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { useAppSelector } from '@/libs/hooks';
 import { Role } from '@/types/common';
 import { Env } from '@/libs/Env.mjs';
@@ -141,7 +141,7 @@ export default function AvatarPopover() {
                     </MenuItem>
                   ),
             )}
-            <LocaleSwitcher className="lg:hidden" />
+            {/* <LocaleSwitcher className="lg:hidden" /> */}
           </div>
         )}
       </Popover.Panel>
