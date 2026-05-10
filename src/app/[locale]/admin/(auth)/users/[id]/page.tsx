@@ -15,7 +15,7 @@ import Popover from '@/components/core/popover/Popover';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { pushSuccess } from '@/components/CustomToastifyContainer';
 import { Spinner } from '@/components/loadingState/Spinner';
-import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+// import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { ProfileCover } from '@/components/ProfileCover';
 import { ActionOnUserModal } from '@/layouts/admin/ActionOnUserModal';
 import AboutPanel from '@/layouts/profile/AboutPanel';
@@ -206,7 +206,7 @@ export default function Index() {
                           </MenuItem>
                         ),
                       )}
-                      <LocaleSwitcher className="lg:hidden" />
+                      {/* <LocaleSwitcher className="lg:hidden" /> */}
                     </div>
                   )}
                 </Popover.Panel>
