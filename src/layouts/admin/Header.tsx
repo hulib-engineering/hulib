@@ -7,7 +7,7 @@ import React from 'react';
 
 import { HeaderIconButtonWithBadge } from '../webapp/Header';
 
-import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+// import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import AdvancedSearch from '@/layouts/webapp/AdvancedSearch';
 import AvatarPopover from '@/layouts/webapp/AvatarPopover';
@@ -104,7 +104,7 @@ const Header = () => {
                 <div className="ml-2">
                   <AvatarPopover />
                 </div>
-                <LocaleSwitcher className="shrink" />
+                {/* <LocaleSwitcher className="shrink" /> */}
               </div>
             )}
       </header>
