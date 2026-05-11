@@ -20,6 +20,7 @@ import { useDeleteStoryMutation } from '@/libs/services/modules/stories';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
 import { useAddStoryToMyFavoritesMutation, useRemoveStoryFromMyFavoritesMutation } from '@/libs/services/modules/user';
+import { useMobile } from '@/libs/hooks';
 
 function renderHighlightedText(text: string, highlightClass = 'bg-green-70/50') {
   if (!text) {
@@ -68,6 +69,8 @@ export const StoryCard = ({
   className,
 }: IStoryCardProps) => {
   const router = useRouter();
+
+  const isMobile = useMobile();
 
   const t = useTranslations('ExploreStory');
 
@@ -201,7 +204,7 @@ export const StoryCard = ({
       {data.publishStatus === StoryPublishStatus.PUBLISHED && !editable && (
         <div
           className={mergeClassnames(
-            'w-full flex items-stretch gap-2.5 max-w-[392px] rounded-xl bg-white p-4 shadow-sm md:hidden',
+            'w-full flex items-stretch gap-2.5 rounded-xl bg-white p-4 shadow-sm md:hidden',
             className,
           )}
         >
@@ -218,7 +221,7 @@ export const StoryCard = ({
                   </h6>
                 </div>
                 {data.topics && data.topics?.length > 0 && (
-                  <div className="scrollbar-hide flex w-full items-center gap-2 overflow-x-auto py-2">
+                  <div className="scrollbar-none flex w-full items-center gap-2 overflow-x-auto overflow-y-hidden py-2">
                     {data.topics?.map(topic => (
                       <Chip
                         key={topic.id}
@@ -283,7 +286,7 @@ export const StoryCard = ({
       {/* PC version */}
       <div
         className={mergeClassnames(
-          'w-full items-stretch max-w-[392px] rounded-xl bg-white p-4 shadow-sm flex',
+          'items-stretch w-[392px] rounded-xl bg-white p-4 shadow-sm flex',
           data.publishStatus === StoryPublishStatus.PUBLISHED && !editable && 'hidden md:flex',
           className,
         )}
@@ -291,7 +294,7 @@ export const StoryCard = ({
         <div className="relative flex w-1/2 flex-1 flex-col justify-between pr-4 pt-2">
           <div className="flex flex-1 flex-col gap-2">
             <div className="flex flex-col">
-              <h6 className="line-clamp-2 min-h-14 text-xl font-medium capitalize text-primary-10">
+              <h6 className="line-clamp-2 min-h-14 text-xl font-medium capitalize leading-7 text-primary-10">
                 {data?.title.toLowerCase()}
               </h6>
               {data.publishStatus === 'rejected' && (
@@ -299,11 +302,11 @@ export const StoryCard = ({
               )}
             </div>
             {data.topics && data.topics?.length > 0 && (
-              <div className="flex w-full items-center gap-2 overflow-x-auto">
+              <div className="scrollbar-none flex w-full items-center gap-2 overflow-x-auto overflow-y-hidden pb-0.5">
                 {data.topics?.map(topic => (
                   <Chip
                     key={topic.id}
-                    className="h-full overflow-visible rounded-2xl bg-primary-90 px-2 py-1 text-xs leading-[14px] text-primary-50"
+                    className="h-auto shrink-0 overflow-visible whitespace-nowrap rounded-2xl bg-primary-90 px-2 py-1 text-xs leading-[14px] text-primary-50 md:py-2"
                   >
                     {topic.name}
                   </Chip>
@@ -311,8 +314,8 @@ export const StoryCard = ({
               </div>
             )}
             <div className="flex items-center gap-1">
-              <Avatar imageUrl={data.humanBook.photo?.path} className="size-6" />
-              <span className="line-clamp-1 text-sm font-medium leading-4 text-[#73787C]">
+              <Avatar imageUrl={data.humanBook.photo?.path} className={!isMobile ? 'size-4' : 'size-3.5'} size="xs" />
+              <span className="line-clamp-1 text-xs font-medium text-neutral-50">
                 {data?.humanBook?.fullName}
               </span>
             </div>
@@ -322,7 +325,7 @@ export const StoryCard = ({
                 {data?.storyReview?.rating || 0}
               </p>
               <p className="ml-1 text-xs font-normal leading-[14px] text-neutral-40">
-                {`${data?.storyReview?.numberOfReviews || 0} ${t('ratings')}`}
+                {`(${data?.storyReview?.numberOfReviews || 0} ${t('ratings')})`}
               </p>
             </div>
           </div>
