@@ -57,7 +57,7 @@ const AccordionItem = ({
         }`}
       >
         <div className="overflow-hidden px-6 pt-0 text-sm font-light lg:text-base">
-          {content.heading !== '' && content.heading}
+          {content.heading && content.heading !== '' && content.heading}
           <ul className="list-disc px-6">
             {content.bodyParams.map((each, index) => (
               <li key={index}>{each}</li>

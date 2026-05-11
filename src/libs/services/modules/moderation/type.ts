@@ -1,13 +1,5 @@
-export enum ModerationActionType {
-  BAN = 'ban',
-  UNBAN = 'unban',
-  WARN = 'warn',
-  UNWARN = 'unwarn',
-}
-export enum ModerationStatus {
-  ACTIVE = 'active',
-  REVERSED = 'reversed',
-}
+export type ModerationActionType = 'ban' | 'unban' | 'warn' | 'unwarn';
+export type ModerationStatus = 'active' | 'reversed';
 
 export type ModerationHistory = {
   id: number;

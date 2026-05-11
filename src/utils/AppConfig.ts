@@ -8,7 +8,7 @@ const localePrefix: LocalePrefixMode = 'as-needed';
 export const AppConfig = {
   name: 'Human Library',
   locales: ['en', 'vi'],
-  defaultLocale: 'vi',
+  defaultLocale: 'en',
   localePrefix,
   api: {
     version: Env.NEXT_PUBLIC_REACT_APP_BACKEND_VERSION,

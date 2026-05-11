@@ -71,7 +71,7 @@ export default function Index() {
       }).unwrap();
       pushSuccess('Request sent successfully');
       setCurrentStep('success');
-    } catch (error: any) {
+    } catch {
       pushError('Failed to book meeting');
     }
   };
