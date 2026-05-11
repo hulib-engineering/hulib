@@ -88,10 +88,9 @@ const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) =
       )}
       <div
         className={mergeClassnames(
-          'grid grid-cols-1 gap-4 rounded-lg',
-          'sm:gap-6 sm:px-4',
-          'md:grid-cols-2 md:gap-8 md:px-0',
-          'xl:grid-cols-3',
+          'grid grid-cols-1 gap-5 rounded-lg',
+          'md:grid-cols-[repeat(2,392px)]',
+          'xl:grid-cols-[repeat(3,392px)] xl:justify-center',
         )}
       >
         {storiesWithFav?.map(item => (

@@ -118,6 +118,12 @@ export default antfu(
           varsIgnorePattern: '^_',
         },
       ],
+      'tailwindcss/no-custom-classname': [
+        'warn',
+        {
+          whitelist: ['scrollbar-hide', 'scrollbar-none', 'status'],
+        },
+      ],
     },
   },
 );
