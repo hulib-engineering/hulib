@@ -55,7 +55,7 @@ export default function AdminLoginForm() {
           callbackUrl: `${window.location.origin}/admin/home`,
         });
       }
-    } catch (error: any) {
+    } catch {
       setError('password', {
         type: 'custom',
         message: 'Incorrect password, please try again.',

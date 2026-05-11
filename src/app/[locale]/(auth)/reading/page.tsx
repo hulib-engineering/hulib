@@ -79,7 +79,7 @@ export default function ReadingPage() {
           ...recordedInfo,
         }).unwrap();
         pushSuccess('Session has finished successfully');
-      } catch (error) {
+      } catch {
         pushError('Failed to stop recording!');
       }
     }
@@ -90,7 +90,7 @@ export default function ReadingPage() {
         sessionStat: StatusEnum.Finished,
       }).unwrap();
       pushSuccess('Session has finished successfully');
-    } catch (error) {
+    } catch {
       pushError('Failed to finish session');
     } finally {
       router.push('/notifications');

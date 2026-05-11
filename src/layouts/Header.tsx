@@ -5,7 +5,7 @@ import { getSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
-import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+// import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import { mergeClassnames } from '@/components/core/private/utils';
 
@@ -47,7 +47,7 @@ const Header = () => {
           </Link>
         </div>
         <div className="relative flex items-center justify-end gap-6">
-          <LocaleSwitcher className="shrink" />
+          {/* <LocaleSwitcher className="shrink" /> */}
           <Link
             href="#newsletter"
             className={mergeClassnames(

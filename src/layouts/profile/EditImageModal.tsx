@@ -94,7 +94,7 @@ export default function EditImageModal({ type, data, open, onClose }: IEditImage
           await getNewlyUpdatedAvatar();
         }
         onClose();
-      } catch (error) {
+      } catch {
         pushError(`Error editing ${type}`);
       }
     }

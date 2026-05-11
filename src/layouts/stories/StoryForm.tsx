@@ -169,7 +169,7 @@ export default function StoryForm(props: IStoryFormProps) {
       });
       setValue('cover', { id: uploadResult.data?.file.id });
       return uploadResult.data?.file.id;
-    } catch (err) {
+    } catch (err: any) {
       console.error('Upload failed', err);
     }
   };

@@ -35,7 +35,7 @@ export async function POST(request: Request) {
 
     // Send the uploaded image URL back to the frontend
     return NextResponse.json({ imageURL: uploadResponse.secure_url });
-  } catch (error) {
+  } catch (error: any) {
     // Handle any errors that may occur during the upload process
     console.error('Error uploading image:', error);
     return NextResponse.json({
