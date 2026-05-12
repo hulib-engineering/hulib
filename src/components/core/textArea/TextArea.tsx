@@ -2,7 +2,8 @@ import React, { forwardRef } from 'react';
 
 import type { TextAreaProps } from './private/types';
 import { getSizeStyles } from './private/utils';
-import { useFormContext, useFormItemContext } from '@/components/core/form/private/utils';
+
+import { useFormContext, useFormField } from '@/components/core/form/private/utils';
 import { mergeClassnames } from '@/components/core/private/utils';
 
 const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
@@ -19,16 +20,10 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     ref,
   ) => {
     const { size: formSize } = useFormContext('TextArea');
-
-    const {
-      size: formItemSize,
-      disabled: formItemDisabled,
-      error: formItemError,
-    } = useFormItemContext('TextArea');
-
-    const size = inputSize || formItemSize || formSize;
-    const disabled = inputDisabled || formItemDisabled;
-    const error = inputError || formItemError;
+    const field = useFormField();
+    const size = inputSize || formSize;
+    const disabled = inputDisabled;
+    const error = inputError || field.invalid;
 
     return (
       <textarea

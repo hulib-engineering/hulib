@@ -85,7 +85,7 @@ const Step2 = () => {
           size="md"
           fullWidth
           animation={isRegisteringTimeslots && 'progress'}
-          disabled={!!errors.timeSlots || isRegisteringTimeslots}
+          disabled={timeSlots.length === 0 || !!errors.timeSlots || isRegisteringTimeslots}
           onClick={handleNext}
         >
           {tHr('next')}

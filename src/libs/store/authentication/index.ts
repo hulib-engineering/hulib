@@ -13,7 +13,7 @@ type SliceState = {
     id: string;
     photo: { id: string; path: string };
     role: { id: number; name: string };
-    approvalStatus: StatusEnum;
+    approval: StatusEnum;
   };
 };
 

@@ -36,11 +36,11 @@ const TermAndCondition = () => {
   const t = useTranslations('Index');
 
   return (
-    <div className="flex h-40 flex-col overflow-auto text-sm leading-5 text-neutral-40">
+    <div className="flex flex-col text-sm leading-5 text-neutral-40">
       <Section>
         {t.rich('community_guidelines_sections.index_0.content', {
           br: newLineMessage(),
-          ul: unorderedMessageList('list-disc pl-6'),
+          ul: unorderedMessageList('list-disc space-y-3 pl-6'),
           li: listMessageItem(),
           strong: strongMessage(),
         })}
@@ -49,7 +49,7 @@ const TermAndCondition = () => {
       <Section title={t('community_guidelines_sections.index_1.heading')}>
         {t.rich('community_guidelines_sections.index_1.content', {
           br: newLineMessage(),
-          ul: unorderedMessageList('list-disc pl-6'),
+          ul: unorderedMessageList('list-disc space-y-3 pl-6'),
           li: listMessageItem(),
           strong: strongMessage(),
         })}
@@ -65,7 +65,7 @@ const TermAndCondition = () => {
             'community_guidelines_sections.index_2.content_sections.index_0.content',
             {
               br: newLineMessage(),
-              ul: unorderedMessageList('list-disc pl-6'),
+              ul: unorderedMessageList('list-disc space-y-3 pl-6'),
               li: listMessageItem(),
               strong: strongMessage(),
             },
@@ -81,7 +81,7 @@ const TermAndCondition = () => {
             'community_guidelines_sections.index_2.content_sections.index_1.content',
             {
               br: newLineMessage(),
-              ul: unorderedMessageList('list-disc pl-6'),
+              ul: unorderedMessageList('list-disc space-y-3 pl-6'),
               li: listMessageItem(),
               strong: strongMessage(),
             },
@@ -97,7 +97,7 @@ const TermAndCondition = () => {
             'community_guidelines_sections.index_2.content_sections.index_2.content',
             {
               br: newLineMessage(),
-              ul: unorderedMessageList('list-disc pl-6'),
+              ul: unorderedMessageList('list-disc space-y-3 pl-6'),
               li: listMessageItem(),
               strong: strongMessage(),
             },
@@ -108,7 +108,7 @@ const TermAndCondition = () => {
       <Section title={t('community_guidelines_sections.index_3.heading')}>
         {t.rich('community_guidelines_sections.index_3.content', {
           br: newLineMessage(),
-          ul: unorderedMessageList('list-disc pl-6'),
+          ul: unorderedMessageList('list-disc space-y-3 pl-6'),
           li: listMessageItem(),
           strong: strongMessage(),
         })}
