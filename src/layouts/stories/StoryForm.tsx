@@ -222,7 +222,7 @@ export default function StoryForm(props: IStoryFormProps) {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-5">
+    <div className="flex flex-col gap-6 rounded-[20px] bg-white p-5">
       <h2 className="text-2xl font-medium tracking-[-0.02em] lg:text-4xl lg:leading-[44px]">
         {formTitle}
       </h2>
@@ -311,7 +311,7 @@ export default function StoryForm(props: IStoryFormProps) {
                 </Label>
                 <TextArea
                   {...register('abstract')}
-                  rows={7}
+                  rows={9}
                   error={!!errors.abstract}
                   placeholder={t('placeholder_abstract')}
                   size="sm"

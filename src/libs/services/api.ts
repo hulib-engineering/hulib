@@ -110,7 +110,19 @@ const baseQueryWithInterceptor = async (
   }
 
   if (result.error) {
-    throw new Error('error_contact_admin');
+    // 304 Not Modified = treat is treated as error by the server, so we need to return null
+    const rawError = result.error as any;
+    const isNotModifiedStatus = rawError.originalStatus === 304
+      || rawError.status === 304
+      || (typeof rawError.status === 'string' && rawError.status.includes('304'));
+
+    if (isNotModifiedStatus) {
+      return { data: null };
+    }
+
+    const error = new Error('error_contact_admin');
+    (error as any).status = result.error.status;
+    throw error;
   }
 
   return result;
