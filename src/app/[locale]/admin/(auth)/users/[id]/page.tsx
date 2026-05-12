@@ -143,7 +143,6 @@ export default function Index() {
           <div className="relative size-full">
             <Button
               variant="ghost"
-              size="lg"
               iconLeft={<ArrowLeft />}
               className="absolute inset-0 w-fit text-black"
               onClick={() => router.push('/admin/home')}
