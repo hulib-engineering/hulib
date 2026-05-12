@@ -12,7 +12,7 @@ import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import Input from '@/components/core/input/Input';
-import Label from '@/components/Label';
+import LabelComponent from '@/components/Label';
 import SocialButton from '@/components/SocialButton';
 import type { EmailLoginResponse } from '@/libs/services/modules/auth';
 import { useLoginAsManagerMutation } from '@/libs/services/modules/auth';
@@ -27,18 +27,20 @@ const LoginForm = () => {
 
   const [login] = useLoginAsManagerMutation();
 
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors, isSubmitting },
-  } = useForm<z.infer<typeof LoginValidation>>({
+  const form = useForm<z.infer<typeof LoginValidation>>({
     resolver: zodResolver(LoginValidation),
     defaultValues: {
       email: '',
       password: '',
     },
   });
+
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { isSubmitting },
+  } = form;
 
   const handleFormSubmit = async (data: z.infer<typeof LoginValidation>) => {
     try {
@@ -77,40 +79,49 @@ const LoginForm = () => {
         <p className="text-sm tracking-[0.5%] xl:text-base">{t('login_to_hulib')}</p>
       </div>
       <Form
+        form={form}
         className="flex w-full flex-col gap-4"
         onSubmit={handleSubmit(handleFormSubmit)}
       >
-        <Form.Item>
-          <TextInput
-            id="email"
-            type="email"
-            label={t('email')}
-            placeholder="hulib@gmail.com"
-            {...register('email')}
-            isError={!!errors.email}
-            hintText={errors.email?.message}
-          />
-        </Form.Item>
-        <Form.Item>
-          <TextInput
-            id="password"
-            type="password"
-            label={t('password')}
-            {...register('password')}
-            isError={!!errors.password}
-            hintText={errors.password?.message}
-          />
-        </Form.Item>
+        <Form.Field
+          control={control}
+          name="email"
+          render={({ field, fieldState: { error } }) => (
+            <TextInput
+              type="email"
+              id="email"
+              label={t('email')}
+              placeholder="hulib@gmail.com"
+              isError={!!error}
+              hintText={error?.message}
+              {...field}
+            />
+          )}
+        />
+        <Form.Field
+          control={control}
+          name="password"
+          render={({ field, fieldState: { error } }) => (
+            <TextInput
+              type="password"
+              id="password"
+              label={t('password')}
+              isError={!!error}
+              hintText={error?.message}
+              {...field}
+            />
+          )}
+        />
         <Form.Item className="flex items-center justify-between">
           <fieldset className="flex items-center gap-1">
             <Input type="checkbox" id="remember" readOnly={false} />
-            <Label
+            <LabelComponent
               htmlFor="remember"
               type="checkbox"
               className="cursor-pointer py-0 text-xs leading-[14px] text-neutral-30"
             >
               {t('keep_logged_in')}
-            </Label>
+            </LabelComponent>
           </fieldset>
           <Link href="forgot-password" className="text-xs leading-[14px] text-primary-50">
             {t('forgot_password')}

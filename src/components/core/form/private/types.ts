@@ -1,9 +1,20 @@
-import type { DetailedHTMLProps, FormHTMLAttributes, ReactNode } from 'react';
+import type {
+  DetailedHTMLProps,
+  FormHTMLAttributes,
+  ReactNode,
+} from 'react';
+import type {
+  ControllerProps,
+  FieldPath,
+  FieldValues,
+  UseFormReturn,
+} from 'react-hook-form';
 
 type FormProps = {
   size?: Size;
   className?: string;
   onSubmit?: (event: React.FormEvent) => void;
+  form?: UseFormReturn<any>;
 } & Omit<
   DetailedHTMLProps<FormHTMLAttributes<HTMLFormElement>, HTMLFormElement>,
   'size'
@@ -14,24 +25,25 @@ type FormState = {
 };
 
 type ItemProps = {
-  size?: Size;
   disabled?: boolean;
-  error?: boolean;
   className?: string;
   children?: ReactNode;
 };
 
-type ItemState = {
-  size?: Size;
-  disabled?: boolean;
-  error?: boolean;
-};
-
 type Size = 'sm' | 'md' | 'lg';
 
-export type { FormProps, FormState, ItemProps, ItemState };
-
-export type LabelProps = {
+type LabelProps = {
   children?: React.ReactNode;
   required?: boolean;
+  htmlFor?: string;
 };
+
+export type {
+  FormProps,
+  FormState,
+  ItemProps,
+};
+
+export type { LabelProps };
+
+export type { ControllerProps, FieldPath, FieldValues };

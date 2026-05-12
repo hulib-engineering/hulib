@@ -22,7 +22,7 @@ export function useAccountUpgradeForm(t: HumanBookRegisterT) {
 
   const form = useForm<AccountUpgradeValidationType>({
     resolver: zodResolver(schema) as Resolver<AccountUpgradeValidationType>,
-    mode: 'onChange',
+    mode: 'onSubmit',
     defaultValues: {
       bio: '',
       videoUrl: '',

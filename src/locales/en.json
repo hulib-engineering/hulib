@@ -512,12 +512,12 @@
     "explore_hubers": "Your favorite list is empty! Browse hubers and mark your favorites to keep them handy."
   },
   "HumanBookRegister": {
-    "select_topics": "What do you want to tag Huber as? (Optional)",
+    "select_topics": "What do you want to tag Huber as?",
     "placeholder_topics": "Search topics...",
     "add_more_topics": "Add more topics...",
     "creating": "Creating...",
     "add_new": "Add new",
-    "all_topics_selected": "All topics selected",
+    "all_topics_selected": "No results found.",
     "Step2": {
       "title": "Register as a Huber"
     },
@@ -525,6 +525,7 @@
       "invalid_url": "Invalid URL link. Check link and try again",
       "bio_required": "Bio is required",
       "terms_required": "Please accept the terms and conditions",
+      "topics_required": "Please select at least one topic",
       "time_slots_required": "Please select at least one time slot"
     },
     "bio": {
@@ -647,9 +648,10 @@
     "submit": "Submit",
     "placeholder_title": "Please enter the title of your story",
     "placeholder_abstract": "Please enter the abstract of your story",
-    "title_notification": "Summited",
-    "notification": "Thanks for your story! HuLib will keep you informed when our process completes. We look forward to your participation as a Huber!",
-    "btn_name_notification": "Explore",
+    "title_notification": "Submitted",
+    "notification": "\"Thanks for your story! HuLib will keep you informed when our process completes. We look forward to your participation as a Huber!\"",
+    "btn_name_notification": "Explore Other Stories",
+    "mobile_btn_name_notification": "Explore",
     "back_to_home": "Back to Homepage",
     "placeholder": "Placeholder",
     "location": "Location"
