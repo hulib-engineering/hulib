@@ -522,7 +522,10 @@
       "title": "Register as a Huber"
     },
     "validation": {
-      "invalid_url": "Invalid URL link. Check link and try again"
+      "invalid_url": "Invalid URL link. Check link and try again",
+      "bio_required": "Bio is required",
+      "terms_required": "Please accept the terms and conditions",
+      "time_slots_required": "Please select at least one time slot"
     },
     "bio": {
       "text": "Bio",
@@ -535,6 +538,7 @@
     "read_community": "Read community guideline",
     "confirm": "I confirm that I have read and understood the terms and conditions of Hulib, and I agree to be bound by them.",
     "cancel": "Cancel",
+    "back": "Back",
     "next": "Next",
     "step_1_title": "Register as a Huber",
     "general": "General"
@@ -561,7 +565,8 @@
     "available_time_slots": "My available slots",
     "available_time_slots_description": "Wow below are slots you chose",
     "update_time_slots": "Update My Slots",
-    "success_time_slots_description": "You have successfully created your time slots"
+    "success_time_slots_description": "You have successfully created your time slots",
+    "error_contact_admin": "An error occurred, please contact admin for support!"
   },
   "Meeting": {
     "survey_submitted_successfully": "Survey is submitted successfully. Hope you to have a good time with Huber",
@@ -630,7 +635,7 @@
   "Common": {
     "error_contact_admin": "An error occurred, please contact admin for support!",
     "update_successfully": "Update successfully",
-    "create_first_story": "Create your first story",
+    "create_first_story": "Create First Story",
     "topics": "Topics",
     "title": "Title",
     "abstract": "Abstract",

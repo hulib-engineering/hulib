@@ -10,7 +10,7 @@ type CreateTimeSlotRequest = {
 };
 
 const createTimeslots = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
-  build.mutation<TimeSlot, CreateTimeSlotRequest>({
+  build.mutation<TimeSlot | null, CreateTimeSlotRequest>({
     query: body => ({
       url: 'time-slots',
       method: 'POST',
