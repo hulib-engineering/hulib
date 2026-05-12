@@ -90,7 +90,7 @@ const Button = <C extends ElementType = 'button'>({
               {iconOnly}
             </>
           )}
-      {!hasCustomHoverClasses && <Hover isHover={isHover} variant={variant} />}
+      {!hasCustomHoverClasses && <Hover isHover={isHover} variant={variant} animation={animation} />}
     </ButtonComponent>
   );
 };
