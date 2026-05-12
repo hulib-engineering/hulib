@@ -168,7 +168,7 @@ const ComboboxRoot = ({
 
 const Trigger = forwardRef<HTMLDivElement, WithChildren<SelectProps>>(
   ({ children, className, innerLabel, open, onClose }, ref) => {
-    const { value, size, input, popper, disabled }
+    const { value, size, input, popper, disabled, isError }
       = useComboboxContext('Combobox.Trigger');
 
     useEffect(() => {
@@ -188,7 +188,7 @@ const Trigger = forwardRef<HTMLDivElement, WithChildren<SelectProps>>(
           input?.isFocused && 'border-primary-60',
           'focus:border-primary-60 focus:outline-none',
           'focus-visible::border-primary-60 focus-visible::outline-none',
-          // isError && 'shadow-input-err hover:shadow-input-err focus:shadow-input-err focus-visible:shadow-input-err',
+          isError && 'border-red-50',
           disabled && 'opacity-60 border-neutral-90 focus:border-neutral-90 hover:border-neutral-90 cursor-not-allowed',
           className,
         )}
@@ -278,7 +278,6 @@ const VisualSelectInput = forwardRef<HTMLElement, InputProps>(
       // size,
       popper,
       disabled,
-      isError,
       onQueryChange,
       handleOnFocus,
       handleOnBlur,
@@ -309,6 +308,7 @@ const VisualSelectInput = forwardRef<HTMLElement, InputProps>(
           placeholder={placeholder === undefined ? '' : `${placeholder}`}
           type={type || 'text'}
           disabled={disabled}
+          error={false}
           className={mergeClassnames(
             'flex-grow w-full h-full border-0 !rounded-none bg-transparent px-0 py-2 pr-1',
             'font-medium text-sm text-neutral-10 leading-4',
@@ -320,7 +320,6 @@ const VisualSelectInput = forwardRef<HTMLElement, InputProps>(
             // getTextSizes(size),
             className,
           )}
-          error={isError}
           aria-label={rest['aria-label']}
           {...rest}
           ref={(nodeElement) => {

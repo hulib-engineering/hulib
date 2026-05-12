@@ -25,12 +25,7 @@ export default function Index() {
 
   const [changePassword] = useChangePasswordMutation();
 
-  const {
-    handleSubmit,
-    register,
-    watch,
-    formState: { errors, isValid, touchedFields },
-  } = useForm<z.infer<typeof ChangePasswordValidation>>({
+  const form = useForm<z.infer<typeof ChangePasswordValidation>>({
     resolver: zodResolver(ChangePasswordValidation),
     defaultValues: {
       oldPassword: '',
@@ -38,6 +33,12 @@ export default function Index() {
       confirmPassword: '',
     },
   });
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { isValid, touchedFields },
+  } = form;
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
@@ -67,40 +68,53 @@ export default function Index() {
           Change Your Password
         </h2>
         <Form
+          form={form}
           className="flex w-full flex-col items-center gap-5 lg:gap-[60px]"
           onSubmit={handleSubmit(onHandleClickChangeBtn)}
         >
           <div className="flex w-full flex-col gap-4 lg:gap-8">
-            <Form.Item>
-              <TextInput
-                type="password"
-                id="oldPassword"
-                label="Old Password"
-                {...register('oldPassword')}
-                isError={!!errors.oldPassword}
-                hintText={errors.oldPassword?.message}
-              />
-            </Form.Item>
-            <Form.Item>
-              <TextInput
-                type="password"
-                id="newPassword"
-                label="New Password"
-                {...register('newPassword')}
-                isError={!!errors.newPassword}
-                hintText={errors.newPassword?.message}
-              />
-            </Form.Item>
-            <Form.Item>
-              <TextInput
-                type="password"
-                id="confirmPassword"
-                label="Re-enter New Password"
-                {...register('confirmPassword')}
-                isError={!!errors.confirmPassword}
-                hintText={errors.confirmPassword?.message}
-              />
-            </Form.Item>
+            <Form.Field
+              control={control}
+              name="oldPassword"
+              render={({ field, fieldState: { error } }) => (
+                <TextInput
+                  id="oldPassword"
+                  type="password"
+                  label="Old Password"
+                  isError={!!error}
+                  hintText={error?.message}
+                  {...field}
+                />
+              )}
+            />
+            <Form.Field
+              control={control}
+              name="newPassword"
+              render={({ field, fieldState: { error } }) => (
+                <TextInput
+                  id="newPassword"
+                  type="password"
+                  label="New Password"
+                  isError={!!error}
+                  hintText={error?.message}
+                  {...field}
+                />
+              )}
+            />
+            <Form.Field
+              control={control}
+              name="confirmPassword"
+              render={({ field, fieldState: { error } }) => (
+                <TextInput
+                  id="confirmPassword"
+                  type="password"
+                  label="Re-enter New Password"
+                  isError={!!error}
+                  hintText={error?.message}
+                  {...field}
+                />
+              )}
+            />
             {/* Password Requirements Checklist */}
             {touchedFields.newPassword && (
               <div className="w-full lg:-mt-6">
@@ -157,14 +171,14 @@ export default function Index() {
             <div className="flex w-full flex-col items-center gap-3 lg:flex-row">
               <Button
                 variant="outline"
-                size="lg"
+                size="md"
                 fullWidth
                 onClick={() => setIsConfirmModalOpen(false)}
               >
                 Cancel
               </Button>
               <Button
-                size="lg"
+                size="md"
                 fullWidth
                 onClick={handleSubmitChangingPassword}
               >

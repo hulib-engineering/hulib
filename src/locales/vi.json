@@ -535,13 +535,13 @@
   "HumanBookRegister": {
     "register_as_a_human_book": "Đăng ký làm Người Sách",
     "register_confirm_message": "Bạn có chắc chắn đăng ký làm Human Book không?",
-    "select_topics": "Bạn muốn gắn thẻ Huber như thế nào? (Tùy chọn)",
+    "select_topics": "Bạn muốn gắn thẻ Huber như thế nào?",
     "placeholder_topics": "Chọn thể loại...",
     "add_more_topics": "Thêm thể loại...",
     "no_topics_found": "Không tìm thấy thể loại nào",
     "creating": "Đang tạo...",
     "add_new": "Thêm mới",
-    "all_topics_selected": "Tất cả thể loại đã được chọn",
+    "all_topics_selected": "Không tìm thấy kết quả.",
     "About": "Giới thiệu",
     "placeholder_about": "Hãy kể về bản thân bạn...",
     "Session": "Phiên",
@@ -587,7 +587,8 @@
       "invalidYear": "Năm không hợp lệ",
       "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại",
       "bio_required": "Vui lòng nhập tiểu sử của bạn",
-      "terms_required": "Vui lòng chấp thuận các điều khoản và điều kiện"
+      "terms_required": "Vui lòng chấp thuận các điều khoản và điều kiện",
+      "topics_required": "Vui lòng chọn ít nhất một thể loại"
     },
     "bio": {
       "text": "Tiểu sử",
@@ -811,6 +812,7 @@
     "title_notification": "Hoàn tất đăng kí",
     "notification": "Cảm ơn bạn đã gửi câu chuyện! Hẹn gặp bạn trong suốt hành trình làm Huber nhé!",
     "btn_name_notification": "Khám phá thêm",
+    "mobile_btn_name_notification": "Khám phá",
     "back_to_home": "Trở lại trang chủ",
     "placeholder": "Bạn đang nghĩ gì...",
     "location": "Địa điểm"
