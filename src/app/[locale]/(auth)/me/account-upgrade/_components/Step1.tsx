@@ -1,14 +1,11 @@
 // Deprecated, need to refactor using reusable components
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import { X } from '@phosphor-icons/react';
-import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import type { z } from 'zod';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import Button from '@/components/core/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
@@ -19,14 +16,12 @@ import {
   useGetTopicsQuery,
   usePostTopicsMutation,
 } from '@/libs/services/modules/topics';
-import { HuberStep1Validation } from '@/validations/HuberValidation';
+import type { AccountUpgradeValidationType } from '@/validations/AccountUpgradeValidation';
 
 type Topic = {
   id: number;
   name: string;
 };
-
-type FormData = z.infer<ReturnType<typeof HuberStep1Validation>>;
 
 const Step1 = ({ next }: { next: () => void }) => {
   const router = useRouter();
@@ -45,17 +40,13 @@ const Step1 = ({ next }: { next: () => void }) => {
     handleSubmit,
     watch,
     setValue,
+    clearErrors,
     formState: { errors, isSubmitting },
-  } = useForm({
-    resolver: zodResolver(HuberStep1Validation(t)),
-    mode: 'onChange',
-    defaultValues: {
-      bio: '',
-      videoUrl: '',
-      topics: [],
-      isConfirmed: false,
-    },
-  });
+  } = useFormContext<AccountUpgradeValidationType>();
+
+  useEffect(() => {
+    clearErrors('timeSlots');
+  }, [clearErrors]);
   const selectedTopics = watch('topics') || [];
   const isFormDisabled = isLoading || isSubmitting;
 
@@ -66,7 +57,7 @@ const Step1 = ({ next }: { next: () => void }) => {
 
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
-      const firstError = Object.keys(errors)[0] as keyof FormData;
+      const firstError = Object.keys(errors)[0] as keyof AccountUpgradeValidationType;
       const element = document.getElementById(firstError);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -158,9 +149,10 @@ const Step1 = ({ next }: { next: () => void }) => {
     setTopicSearchQuery(e.target.value);
     setIsTopicDropdownOpen(true);
   };
-  const onSubmit = async (formData: FormData) => {
+  const onSubmit = async (formData: AccountUpgradeValidationType) => {
+    const { timeSlots: _timeSlots, ...huberPayload } = formData;
     try {
-      await registerHuber(formData).unwrap();
+      await registerHuber(huberPayload).unwrap();
       const userKey = `${userInfo.id}_huber_registration_step`;
       localStorage.setItem(userKey, '2');
       pushSuccess('Registration successful!');
@@ -169,7 +161,7 @@ const Step1 = ({ next }: { next: () => void }) => {
       pushError(tCommon(error?.message || 'error_contact_admin'));
     }
   };
-  const getInputClassName = (fieldName: keyof FormData) => {
+  const getInputClassName = (fieldName: keyof Pick<AccountUpgradeValidationType, 'bio' | 'videoUrl'>) => {
     const baseClass
       = 'rounded-lg border border-solid p-3 text-sm leading-4 text-neutral-40 outline-none';
     const errorClass = errors[fieldName]
@@ -392,7 +384,10 @@ const Step1 = ({ next }: { next: () => void }) => {
           className="w-full"
           type="submit"
           animation={isFormDisabled && 'progress'}
-          disabled={!isEmpty(errors) || isFormDisabled}
+          disabled={
+            !!(errors.bio || errors.videoUrl || errors.topics || errors.isConfirmed)
+            || isFormDisabled
+          }
         >
           {t('next')}
         </Button>
