@@ -1,21 +1,22 @@
 // Deprecated, need to refactor using reusable components
 'use client';
 
-import { X } from '@phosphor-icons/react';
+import { CaretDown } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useEffect, useRef, useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useEffect, useMemo, useState } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import Button from '@/components/core/button/Button';
+import Combobox from '@/components/core/combobox/Combobox';
+import Form from '@/components/core/form/Form';
+import MenuItem from '@/components/core/menuItem/MenuItem';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import TermAndCondition from '@/layouts/profile/TermAndCondition';
+import type { TFilter } from '@/layouts/scheduling/BigCalendar';
 import { useAppSelector } from '@/libs/hooks';
 import { useRegisterHuberMutation } from '@/libs/services/modules/auth';
-import {
-  useGetTopicsQuery,
-  usePostTopicsMutation,
-} from '@/libs/services/modules/topics';
+import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import type { AccountUpgradeValidationType } from '@/validations/AccountUpgradeValidation';
 
 type Topic = {
@@ -30,34 +31,30 @@ const Step1 = ({ next }: { next: () => void }) => {
   const tCommon = useTranslations('Common');
 
   const [registerHuber, { isLoading }] = useRegisterHuberMutation();
-  const [createTopic, { isLoading: isCreatingTopic }] = usePostTopicsMutation();
-  const { topics, isLoading: isTopicsLoading } = useGetTopicsQuery();
+  const { data: topicsResponse, isLoading: isTopicsLoading } = useGetTopicsQuery();
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
   const {
     control,
     handleSubmit,
-    watch,
-    setValue,
     clearErrors,
-    formState: { errors, isSubmitting },
+    formState: { errors, isValid, isSubmitting },
   } = useFormContext<AccountUpgradeValidationType>();
+
+  const watchedTopics = useWatch({ control, name: 'topics' });
+
+  const [topicQuery, setTopicQuery] = useState('');
 
   useEffect(() => {
     clearErrors('timeSlots');
   }, [clearErrors]);
-  const selectedTopics = watch('topics') || [];
-  const isFormDisabled = isLoading || isSubmitting;
-
-  const [isTopicDropdownOpen, setIsTopicDropdownOpen] = useState(false);
-  const [topicSearchQuery, setTopicSearchQuery] = useState('');
-  const topicDropdownRef = useRef<HTMLDivElement>(null);
-  const topicInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
-      const firstError = Object.keys(errors)[0] as keyof AccountUpgradeValidationType;
+      const firstError = Object.keys(
+        errors,
+      )[0] as keyof AccountUpgradeValidationType;
       const element = document.getElementById(firstError);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -66,89 +63,33 @@ const Step1 = ({ next }: { next: () => void }) => {
     }
   }, [errors]);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        topicDropdownRef.current
-        && !topicDropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsTopicDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  const handleTopicToggle = (topicId: number) => {
-    const currentTopics: { id: number }[] = selectedTopics || [];
-    const topicIds = currentTopics.map((topic: any) => topic.id);
-
-    if (topicIds.includes(topicId)) {
-      setValue(
-        'topics',
-        currentTopics.filter(topic => topic.id !== topicId),
-      );
-    } else {
-      setValue('topics', [...currentTopics, { id: topicId }]);
-    }
-
-    setTopicSearchQuery('');
-    setTimeout(() => {
-      if (topicInputRef.current) {
-        topicInputRef.current.focus();
-      }
-    }, 0);
-  };
-  const handleTopicRemove = (topicId: number) => {
-    setValue(
-      'topics',
-      selectedTopics.filter((topic: any) => topic.id !== topicId),
-    );
-  };
-  const handleCreateNewTopic = async () => {
-    const trimmedQuery = topicSearchQuery.trim();
-    if (!trimmedQuery || trimmedQuery.length > 30) {
-      return;
-    }
-
-    try {
-      const newTopic = await createTopic({ name: trimmedQuery }).unwrap();
-      setValue('topics', [...selectedTopics, { id: newTopic.id }]);
-      setTopicSearchQuery('');
-      setIsTopicDropdownOpen(false);
-      setTimeout(() => topicInputRef.current?.focus(), 0);
-      pushSuccess('Topic created successfully!');
-    } catch (error: any) {
-      pushError(tCommon(error?.message || 'error_contact_admin'));
-    }
-  };
-  const filteredTopics = (topics || []).filter((topic: Topic) => {
-    const isAlreadySelected = selectedTopics.some(
-      (selectedTopic: any) => selectedTopic.id === topic.id,
-    );
-    const matchesSearch = topic.name
-      .toLowerCase()
-      .includes(topicSearchQuery.toLowerCase());
-    return !isAlreadySelected && matchesSearch;
-  });
-  const hasExactMatch = filteredTopics.some(
-    (topic: Topic) =>
-      topic.name.toLowerCase() === topicSearchQuery.toLowerCase(),
+  const topicOptions = useMemo(
+    () =>
+      (topicsResponse?.data ?? []).map((topic: Topic) => ({
+        id: topic.id,
+        label: topic.name,
+        value: topic.id.toString(),
+      })),
+    [topicsResponse],
   );
-  const showAddNewOption
-    = topicSearchQuery.trim()
-      && !hasExactMatch
-      && topicSearchQuery.trim().length <= 30;
-  const handleTopicInputFocus = () => {
-    setIsTopicDropdownOpen(true);
-  };
-  const handleTopicInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTopicSearchQuery(e.target.value);
-    setIsTopicDropdownOpen(true);
-  };
+  const queriedTopicOptions = useMemo(
+    () =>
+      topicOptions.filter(
+        (t: TFilter) => !(watchedTopics || []).some((wt: any) => wt.id === t.id),
+      ),
+    [topicOptions, watchedTopics],
+  );
+  const filteredTopicOptions = useMemo(() => {
+    if (!topicQuery) {
+      return queriedTopicOptions;
+    }
+    const query = topicQuery.toLowerCase().replace(/\s+/g, '');
+    return queriedTopicOptions.filter((t: TFilter) =>
+      t.label.toLowerCase().replace(/\s+/g, '').includes(query),
+    );
+  }, [queriedTopicOptions, topicQuery]);
+  const isFormDisabled = isLoading || isSubmitting;
+
   const onSubmit = async (formData: AccountUpgradeValidationType) => {
     const { timeSlots: _timeSlots, ...huberPayload } = formData;
     try {
@@ -161,7 +102,9 @@ const Step1 = ({ next }: { next: () => void }) => {
       pushError(tCommon(error?.message || 'error_contact_admin'));
     }
   };
-  const getInputClassName = (fieldName: keyof Pick<AccountUpgradeValidationType, 'bio' | 'videoUrl'>) => {
+  const getInputClassName = (
+    fieldName: keyof Pick<AccountUpgradeValidationType, 'bio' | 'videoUrl'>,
+  ) => {
     const baseClass
       = 'rounded-lg border border-solid p-3 text-sm leading-4 text-neutral-40 outline-none';
     const errorClass = errors[fieldName]
@@ -184,7 +127,6 @@ const Step1 = ({ next }: { next: () => void }) => {
       <label className="mt-6 flex w-full flex-col gap-2" htmlFor="bio">
         <span className="text-sm leading-4 text-neutral-10">
           {t('bio.text')}
-          {' '}
           <span className="text-red-50">*</span>
         </span>
         <Controller
@@ -208,6 +150,99 @@ const Step1 = ({ next }: { next: () => void }) => {
           )}
         />
       </label>
+
+      <Form.Field
+        control={control}
+        name="topics"
+        render={({ field, fieldState: { error } }) => {
+          const selectedTopics = (field.value || [])
+            .map((selectedTopic) => {
+              const topic = (topicsResponse?.data ?? []).find(
+                (tp: Topic) => tp.id === selectedTopic.id,
+              );
+              return topic
+                ? {
+                    id: topic.id,
+                    label: topic.name,
+                    value: topic.id.toString(),
+                  }
+                : null;
+            })
+            .filter((t): t is TFilter => t !== null);
+
+          return (
+            <Form.Item className="mt-6 flex w-full flex-col gap-2">
+              <Combobox
+                value={selectedTopics}
+                onChange={(value) => {
+                  field.onChange(
+                    (value as TFilter[]).map(v => ({ id: v.id })),
+                  );
+                }}
+                onQueryChange={setTopicQuery}
+                onClear={(index) => {
+                  const current = (field.value || []) as { id: number }[];
+                  field.onChange(current.filter(t => t.id !== index));
+                }}
+                isError={!!error}
+                disabled={isFormDisabled || isTopicsLoading}
+                multiple
+                size="lg"
+                className="w-full"
+              >
+                {({ open }) => (
+                  <>
+                    <Combobox.VisualMultiSelect
+                      open={open}
+                      label={(
+                        <p className="text-sm leading-4 text-neutral-10">
+                          {t('select_topics')}
+                          <span className="text-red-50">*</span>
+                        </p>
+                      )}
+                      placeholder={
+                        selectedTopics?.length > 0
+                          ? t('add_more_topics')
+                          : t('placeholder_topics')
+                      }
+                      className="border-neutral-90"
+                      inputClassname="px-0 font-normal leading-4"
+                      displayValue={({ label }) => label}
+                    >
+                      <CaretDown />
+                    </Combobox.VisualMultiSelect>
+                    <Combobox.Transition>
+                      <Combobox.Options className="flex flex-col gap-2">
+                        {filteredTopicOptions.length === 0
+                        && topicQuery !== '' ? (
+                              <div className="relative cursor-default select-none text-neutral-40">
+                                {t('all_topics_selected')}
+                              </div>
+                            ) : (
+                              filteredTopicOptions.map((option: TFilter) => (
+                                <Combobox.Option value={option} key={option.id}>
+                                  {({ selected, active }) => (
+                                    <MenuItem
+                                      isActive={active}
+                                      isSelected={selected}
+                                      className="gap-0.5"
+                                    >
+                                      {option.label}
+                                    </MenuItem>
+                                  )}
+                                </Combobox.Option>
+                              ))
+                            )}
+                      </Combobox.Options>
+                    </Combobox.Transition>
+                  </>
+                )}
+              </Combobox>
+              <Form.Message />
+            </Form.Item>
+          );
+        }}
+      />
 
       <label className="mt-6 flex w-full flex-col gap-2" htmlFor="videoUrl">
         <span className="text-sm leading-4 text-neutral-10">
@@ -239,111 +274,18 @@ const Step1 = ({ next }: { next: () => void }) => {
         />
       </label>
 
-      <div className="mt-6 flex w-full flex-col gap-2">
-        <span className="text-sm leading-4 text-neutral-10">
-          {t('select_topics')}
-        </span>
-        <div className="relative" ref={topicDropdownRef}>
-          <div className="flex min-h-[40px] w-full flex-wrap items-center gap-2 rounded-lg border bg-neutral-98 px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
-            {selectedTopics?.map((selectedTopic: any) => {
-              const topic = (topics || []).find(
-                (i: Topic) => i.id === selectedTopic.id,
-              );
-              if (!topic) {
-                return null;
-              }
-              return (
-                <div
-                  key={topic.id}
-                  className="inline-flex items-center gap-2 rounded-full bg-primary-90 px-3 py-1 text-sm text-primary-40"
-                >
-                  {topic.name}
-                  <X
-                    size={14}
-                    className="cursor-pointer text-primary-40 hover:text-primary-30"
-                    onClick={() => handleTopicRemove(topic.id)}
-                  />
-                </div>
-              );
-            })}
-
-            <input
-              ref={topicInputRef}
-              type="text"
-              value={topicSearchQuery}
-              onChange={handleTopicInputChange}
-              onFocus={handleTopicInputFocus}
-              placeholder={
-                selectedTopics?.length > 0
-                  ? t('add_more_topics')
-                  : t('placeholder_topics')
-              }
-              className="min-w-[120px] flex-1 bg-transparent text-sm outline-none placeholder:text-gray-500"
-              disabled={isFormDisabled}
-              maxLength={30}
-            />
-          </div>
-
-          {isTopicDropdownOpen && !isTopicsLoading && (
-            <div className="absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-lg border bg-white shadow-lg">
-              <div className="p-2">
-                {showAddNewOption && (
-                  <div
-                    className={`flex items-center gap-2 px-3 py-1 ${
-                      filteredTopics.length > 0 ? 'border-b pb-2' : ''
-                    }`}
-                  >
-                    <button
-                      type="button"
-                      className="rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-700 hover:bg-blue-200 disabled:opacity-50"
-                      onClick={handleCreateNewTopic}
-                      disabled={isCreatingTopic}
-                    >
-                      {isCreatingTopic ? t('creating') : t('add_new')}
-                    </button>
-                    <span className="text-sm text-blue-700">
-                      {topicSearchQuery}
-                    </span>
-                  </div>
-                )}
-
-                {filteredTopics.map((topic: Topic) => (
-                  <button
-                    key={topic.id}
-                    type="button"
-                    className="mb-1 w-full cursor-pointer rounded px-3 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-primary-90 hover:text-primary-50"
-                    onClick={() => handleTopicToggle(topic.id)}
-                  >
-                    {topic.name}
-                  </button>
-                ))}
-
-                {filteredTopics.length === 0 && !showAddNewOption && (
-                  <div className="px-3 py-2 text-sm text-gray-500">
-                    {t('all_topics_selected')}
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-        {errors?.topics && (
-          <span className="text-sm text-red-500">
-            {errors?.topics?.message}
-          </span>
-        )}
-      </div>
-
       <div className="mt-6 flex w-full flex-col gap-2 rounded-lg bg-neutral-98 p-5">
         <span className="text-sm leading-4 text-neutral-10">
           {`${t('read_community')} `}
           <span className="text-red-50">*</span>
         </span>
-        <div className="rounded-xl bg-neutral-90 p-4">
-          <span className="text-sm uppercase leading-5 text-primary-40">
-            {t('general')}
-          </span>
-          <TermAndCondition />
+        <div className="h-40 rounded-xl bg-neutral-90 p-4">
+          <div className="account-upgrade-guidelines-scrollbar max-h-full overflow-auto pr-3">
+            <span className="text-sm uppercase leading-5 text-primary-40">
+              {t('general')}
+            </span>
+            <TermAndCondition />
+          </div>
         </div>
         <Controller
           name="isConfirmed"
@@ -384,10 +326,7 @@ const Step1 = ({ next }: { next: () => void }) => {
           className="w-full"
           type="submit"
           animation={isFormDisabled && 'progress'}
-          disabled={
-            !!(errors.bio || errors.videoUrl || errors.topics || errors.isConfirmed)
-            || isFormDisabled
-          }
+          disabled={!isValid || isFormDisabled}
         >
           {t('next')}
         </Button>

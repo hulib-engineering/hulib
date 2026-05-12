@@ -91,8 +91,10 @@
   --toastify-color-success: #32d583;
   --toastify-color-warning: #ffd21f;
   --toastify-color-error: #f04438;
+  --neutral-variant-70: rgba(164, 170, 183, 1);
   --neutral-variant-98: rgba(243, 244, 246, 1);
   --neutral-50: rgba(115, 120, 124, 1);
+  --neutral-80: rgba(199, 201, 203, 1);
   --neutral-90: rgba(227, 228, 229, 1);
   --primary-50: rgba(4, 66, 191, 1);
   --primary-60: rgba(8, 88, 250, 1);
@@ -388,4 +390,48 @@ html {
 .scrollbar-none {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+/*
+ * Account upgrade → Step 1 community guidelines panel only (Step1.tsx).
+ * Unlayered on purpose so Tailwind utility ordering does not override the rules.
+ * Figma: https://www.figma.com/design/2l5ivSRzvyE7ihSwrYrKaI/Hulib-Webapp?node-id=8834-66388
+ */
+.account-upgrade-guidelines-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--neutral-variant-70) var(--neutral-80);
+}
+
+.account-upgrade-guidelines-scrollbar::-webkit-scrollbar {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 6px;
+  height: 6px;
+  background: transparent;
+}
+
+.account-upgrade-guidelines-scrollbar::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.account-upgrade-guidelines-scrollbar::-webkit-scrollbar-track,
+.account-upgrade-guidelines-scrollbar::-webkit-scrollbar-track-piece {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--neutral-80);
+  border-radius: 9999px;
+  border: 0;
+  margin: 0;
+}
+
+.account-upgrade-guidelines-scrollbar::-webkit-scrollbar-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--neutral-variant-70);
+  border-radius: 9999px;
+  border: 0;
+  margin: 0;
+  padding: 0;
 }

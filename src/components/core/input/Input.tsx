@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import { useFormContext, useFormItemContext } from '../form/private/utils';
+import { useFormContext, useFormField } from '../form/private/utils';
 import type InputProps from './private/types';
 import { getMaxDate, getSizeStyles, getTypeStyles } from './private/utils';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -19,14 +19,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) => {
     const { size: formSize } = useFormContext('Input');
-    const {
-      size: formItemSize,
-      disabled: formItemDisabled,
-      error: formItemError,
-    } = useFormItemContext('Input');
-    const size = inputSize || formItemSize || formSize;
-    const disabled = inputDisabled || formItemDisabled;
-    const error = inputError || formItemError;
+    const field = useFormField();
+    const size = inputSize || formSize;
+    const disabled = inputDisabled;
+    const error = inputError !== undefined ? inputError : field.invalid;
 
     if (type === 'checkbox') {
       return (

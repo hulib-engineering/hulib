@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useFormItemContext } from '@/components/core/form/private/utils';
+import { useFormField } from '@/components/core/form/private/utils';
 import { mergeClassnames } from '@/components/core/private/utils';
 
 type HintProps = {
@@ -16,8 +16,9 @@ const Hint = ({
   disabled,
   className,
 }: HintProps) => {
-  const { error: formItemError } = useFormItemContext('Hint');
-  const error = hintError || formItemError;
+  const field = useFormField();
+  const error = hintError || field.invalid;
+
   return (
     <p
       role="alert"

@@ -19,7 +19,7 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import type { WithChildren } from '@/components/core/private/types';
 import {
   useFormContext,
-  useFormItemContext,
+  useFormField,
 } from '@/components/core/form/private/utils';
 
 const DropdownRoot = ({
@@ -38,15 +38,10 @@ const DropdownRoot = ({
   const [popperEl, setPopperEl] = useState<HTMLElement | null>();
 
   const { size: formSize } = useFormContext('Input');
-  const {
-    size: formItemSize,
-    disabled: formItemDisabled,
-    error: formItemError,
-  } = useFormItemContext('Input');
-
-  const size = dropdownSize || formItemSize || formSize;
-  const disabled = dropdownDisabled || formItemDisabled;
-  const isError = dropdownError || formItemError;
+  const field = useFormField();
+  const size = dropdownSize || formSize;
+  const disabled = dropdownDisabled;
+  const isError = dropdownError || field.invalid;
 
   const { styles, attributes } = usePopper(anchorEl, popperEl, {
     placement: position,
