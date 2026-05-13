@@ -5,6 +5,7 @@ import { redirect, useParams, usePathname, useRouter, useSearchParams } from 'ne
 import { useSession } from 'next-auth/react';
 import * as React from 'react';
 import { useEffect, useMemo, useState } from 'react';
+import NiceAvatar, { genConfig } from 'react-nice-avatar';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
@@ -137,7 +138,16 @@ export default function Index() {
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
               <div className="group relative h-[68px] w-[100px] lg:h-[120px] lg:w-40">
-                <Avatar imageUrl={userDetail.photo?.path ?? ''} className="absolute -top-8 left-0 size-[100px] lg:size-40" />
+                {userDetail.photo?.path
+                  ? (
+                      <Avatar imageUrl={userDetail.photo.path} className="absolute -top-8 left-0 size-[100px] lg:size-40" />
+                    )
+                  : (
+                      <NiceAvatar
+                        className="absolute -top-8 left-0 size-[100px] rounded-full lg:size-40"
+                        {...genConfig(userDetail?.fullName ?? String(userDetail?.id ?? 'huber'))}
+                      />
+                    )}
                 {!notMe && (
                   <IconButton
                     variant="secondary"

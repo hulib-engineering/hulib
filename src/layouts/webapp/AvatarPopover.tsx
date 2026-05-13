@@ -14,6 +14,8 @@ import { signOut } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
 import React, { useMemo } from 'react';
 
+import NiceAvatar, { genConfig } from 'react-nice-avatar';
+
 import Avatar from '@/components/core/avatar/Avatar';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import Popover from '@/components/core/popover/Popover';
@@ -26,7 +28,7 @@ export default function AvatarPopover() {
   const currentLocale = useLocale();
   const t = useTranslations('HeaderWebApp');
 
-  const { id, role } = useAppSelector(state => state.auth.userInfo);
+  const { id, role, fullName } = useAppSelector(state => state.auth.userInfo);
   const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
 
   const AvatarPopoverMenuItems = useMemo(
@@ -103,11 +105,19 @@ export default function AvatarPopover() {
         }}
       >
         <div className="relative size-11">
-          <Avatar
-            imageUrl={role?.id === Role.ADMIN
-              ? '/assets/images/admin-ava.png' : (avatarUrl || '/assets/images/ava-placeholder.png')}
-            className="size-11"
-          />
+          {role?.id === Role.ADMIN || avatarUrl
+            ? (
+                <Avatar
+                  imageUrl={role?.id === Role.ADMIN ? '/assets/images/admin-ava.png' : avatarUrl}
+                  className="size-11"
+                />
+              )
+            : (
+                <NiceAvatar
+                  className="size-11 rounded-full"
+                  {...genConfig(fullName ?? String(id ?? 'huber'))}
+                />
+              )}
           <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
             <CaretDown size={12} />
           </div>
