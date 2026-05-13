@@ -22,13 +22,13 @@ import Label from '@/components/Label';
 import type { TFilter } from '@/layouts/scheduling/BigCalendar';
 import { useAppSelector } from '@/libs/hooks';
 import { useUploadMutation } from '@/libs/services/modules/files';
+import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import {
   useCreateStoryMutation,
   useGetRelatedTopicsQuery,
   useUpdateStoryMutation,
 } from '@/libs/services/modules/stories';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
-import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 import { StoriesValidation } from '@/validations/StoriesValidation';
 import { CustomCover } from '@/components/stories/CustomCover';
@@ -78,7 +78,11 @@ export default function StoryForm(props: IStoryFormProps) {
     ? t('create_first_story')
     : props.type === 'create' ? tProfile('create_story') : tProfile('edit_story');
 
-  const { data: topics } = useGetTopicsQuery();
+  const userInfo = useAppSelector(state => state.auth.userInfo);
+
+  const { data: me } = useGetPersonalInfoQuery(undefined, {
+    skip: !userInfo?.id,
+  });
   const { data: relatedTopics } = useGetRelatedTopicsQuery(
     Number(props.type === 'edit' && props.story.id),
     { skip: props.type !== 'edit' || props.story.topics?.length > 0 },
@@ -87,21 +91,20 @@ export default function StoryForm(props: IStoryFormProps) {
   const [createStory] = useCreateStoryMutation();
   const [editStory] = useUpdateStoryMutation();
 
-  const userInfo = useAppSelector(state => state.auth.userInfo);
-
   const topicOptions = useMemo(
     () =>
-      topics?.data?.map((topic: Topic) => ({
+      (me?.sharingTopics ?? []).map((topic: Topic) => ({
         label: topic.name,
         value: topic.id.toString(),
         id: topic.id,
-      })) ?? [],
-    [topics],
+      })),
+    [me],
   );
+  const storyTopicsFromProps = props.type === 'edit' ? props.story.topics : undefined;
   const storyRelatedTopics = useMemo(() => {
     if (props.type === 'edit') {
-      const storyTopics: Topic[] = props.story.topics && props.story.topics?.length > 0
-        ? props.story.topics : (relatedTopics ?? []);
+      const storyTopics: Topic[] = storyTopicsFromProps && storyTopicsFromProps.length > 0
+        ? storyTopicsFromProps : (relatedTopics ?? []);
       return storyTopics?.map(topic => ({
         label: topic.name,
         value: topic.id.toString(),
@@ -109,7 +112,7 @@ export default function StoryForm(props: IStoryFormProps) {
       }));
     }
     return [];
-  }, [props.type, relatedTopics]);
+  }, [props.type, relatedTopics, storyTopicsFromProps]);
 
   const {
     register,
@@ -222,7 +225,7 @@ export default function StoryForm(props: IStoryFormProps) {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-5">
+    <div className="flex flex-col gap-6 rounded-[20px] bg-white p-5">
       <h2 className="text-2xl font-medium tracking-[-0.02em] lg:text-4xl lg:leading-[44px]">
         {formTitle}
       </h2>
@@ -249,7 +252,6 @@ export default function StoryForm(props: IStoryFormProps) {
                         label={(
                           <p className="text-sm leading-4 text-neutral-10">
                             {t('topics')}
-                            {' '}
                             <span className="text-red-50">*</span>
                           </p>
                         )}
@@ -291,7 +293,6 @@ export default function StoryForm(props: IStoryFormProps) {
                   label={(
                     <p className="text-sm leading-4 text-neutral-10">
                       {t('title')}
-                      {' '}
                       <span className="text-red-50">*</span>
                     </p>
                   )}
@@ -304,14 +305,13 @@ export default function StoryForm(props: IStoryFormProps) {
                 />
               </Form.Item>
               <Form.Item>
-                <Label>
+                <Label className="mb-2">
                   {t('abstract')}
-                  {' '}
                   <span className="text-red-50">*</span>
                 </Label>
                 <TextArea
                   {...register('abstract')}
-                  rows={7}
+                  rows={9}
                   error={!!errors.abstract}
                   placeholder={t('placeholder_abstract')}
                   size="sm"
@@ -385,6 +385,7 @@ export default function StoryForm(props: IStoryFormProps) {
                       {CoverAssets.map((_, idx) => (
                         <button
                           key={idx}
+                          type="button"
                           className={mergeClassnames(
                             'size-2 rounded-full transition-all duration-300',
                             currentCoverIndex === idx ? 'w-10 bg-neutral-80' : 'bg-neutral-90',

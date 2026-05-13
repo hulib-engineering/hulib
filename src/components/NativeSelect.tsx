@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import React, { forwardRef } from 'react';
 
-import { useFormContext, useFormItemContext } from '@/components/core/form/private/utils';
+import { useFormContext, useFormField } from '@/components/core/form/private/utils';
 import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
 
@@ -42,14 +42,10 @@ const NativeSelect = forwardRef<
     ref,
   ) => {
     const { size: formSize } = useFormContext('Select');
-    const {
-      size: formItemSize,
-      disabled: formItemDisabled,
-      error: formItemError,
-    } = useFormItemContext('Select');
-    const size = selectSize || formItemSize || formSize;
-    const disabled = selectDisabled || formItemDisabled;
-    const error = selectError || formItemError;
+    const field = useFormField();
+    const size = selectSize || formSize;
+    const disabled = selectDisabled;
+    const error = selectError || field.invalid;
 
     return (
       <span

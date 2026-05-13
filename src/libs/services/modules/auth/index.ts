@@ -19,6 +19,8 @@ import editWorkExperience from './editWorkExperience';
 import addEducation from './addEducation';
 import editEducation from './editEducation';
 
+import type { Topic } from '@/libs/services/modules/topics/topicType';
+
 type Enum = {
   id: number;
   name: string;
@@ -39,6 +41,7 @@ export type User = {
   parentPhoneNumber?: string;
   parentFullname?: string;
   photo?: { id: string; path: string };
+  sharingTopics?: Topic[];
   // createdAt: Date;
   // updatedAt: Date;
   // deletedAt?: Date;
