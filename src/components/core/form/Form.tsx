@@ -9,6 +9,7 @@ import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
 
 import type { FormProps, ItemProps, LabelProps } from './private/types';
 import {
+  FieldStateContext,
   FormContext,
   FormFieldContext,
   FormItemIdContext,
@@ -46,15 +47,25 @@ FormRoot.displayName = 'FormRoot';
 const Field = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->(props: ControllerProps<TFieldValues, TName>) => {
+>({
+  render,
+  ...controllerProps
+}: ControllerProps<TFieldValues, TName>) => {
   const fieldContextValue = useMemo(
-    () => ({ name: props.name }),
-    [props.name],
+    () => ({ name: controllerProps.name }),
+    [controllerProps.name],
   );
 
   return (
     <FormFieldContext.Provider value={fieldContextValue}>
-      <Controller {...props} />
+      <Controller
+        {...controllerProps}
+        render={({ field, fieldState, formState }) => (
+          <FieldStateContext.Provider value={fieldState}>
+            {render({ field, fieldState, formState })}
+          </FieldStateContext.Provider>
+        )}
+      />
     </FormFieldContext.Provider>
   );
 };
