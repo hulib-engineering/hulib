@@ -130,7 +130,7 @@ export default function StoryForm(props: IStoryFormProps) {
       cover: { id: '' },
     },
   });
-  const title = watch('title') || '';
+  const title = watch('title') || 'Sample Title';
 
   const [selectedCoverSample, setSelectedCoverSample] = useState(CoverAssets[0]);
   const [currentCoverIndex, setCurrentCoverIndex] = useState(0);
@@ -340,6 +340,7 @@ export default function StoryForm(props: IStoryFormProps) {
                             authorName={userInfo?.fullName}
                             srcImage={cover}
                             active={selectedCoverSample === cover}
+                            onClick={() => setSelectedCoverSample(cover)}
                           />
                           <Button
                             disabled={selectedCoverSample === cover}
