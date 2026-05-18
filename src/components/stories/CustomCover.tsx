@@ -8,6 +8,7 @@ type ICustomCoverProps = {
   authorName: string;
   active?: boolean;
   srcImage?: string;
+  onClick?: () => void;
 };
 
 const CustomCover = ({
@@ -15,12 +16,23 @@ const CustomCover = ({
   authorName,
   active = true,
   srcImage = '',
+  onClick,
 }: ICustomCoverProps) => (
   <div
     id="cover-book"
+    role={onClick ? 'button' : undefined}
+    tabIndex={onClick ? 0 : undefined}
+    onClick={onClick}
+    onKeyDown={onClick ? (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onClick();
+      }
+    } : undefined}
     className={mergeClassnames(
       'relative h-[198px] w-[140px] rounded bg-cover bg-no-repeat lg:h-[255px] lg:w-[180px]',
       !active && 'grayscale',
+      onClick && 'cursor-pointer',
     )}
     style={{
       backgroundImage: `url(${

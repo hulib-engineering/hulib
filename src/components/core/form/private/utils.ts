@@ -1,12 +1,6 @@
 import { createContext, useContext } from 'react';
-import {
-  useFormState,
-  useFormContext as useRHFContext,
-} from 'react-hook-form';
 
-import type {
-  FormState,
-} from './types';
+import type { FormState } from './types';
 
 const FormContext = createContext<FormState>({});
 FormContext.displayName = 'FormContext';
@@ -25,13 +19,25 @@ FormFieldContext.displayName = 'FormFieldContext';
 const FormItemIdContext = createContext<{ id: string } | null>(null);
 FormItemIdContext.displayName = 'FormItemIdContext';
 
-/** Field + item ids and RHF `getFieldState` (same flow as shadcn/ui form). */
+type FieldStateValue = {
+  invalid?: boolean;
+  isTouched?: boolean;
+  isDirty?: boolean;
+  error?: { message?: string; type?: string };
+};
+
+const FieldStateContext = createContext<FieldStateValue | null>(null);
+FieldStateContext.displayName = 'FieldStateContext';
+
+/**
+ * Reads field state exclusively from FieldStateContext (set by Form.Field's
+ * Controller render prop). No direct RHF hooks — this keeps the component
+ * tree decoupled from FormProvider and follows the dlvn insight pattern.
+ */
 const useFormField = () => {
   const fieldContext = useContext(FormFieldContext);
   const itemContext = useContext(FormItemIdContext);
-
-  const { getFieldState } = useRHFContext();
-  const formState = useFormState({ name: fieldContext?.name ?? '' });
+  const fieldStateFromContext = useContext(FieldStateContext);
 
   const id = itemContext?.id ?? '';
 
@@ -53,12 +59,13 @@ const useFormField = () => {
     };
   }
 
-  const fieldState = getFieldState(fieldContext.name, formState);
-
   return {
     ...baseIds,
     name: fieldContext.name,
-    ...fieldState,
+    invalid: fieldStateFromContext?.invalid ?? false,
+    isTouched: fieldStateFromContext?.isTouched ?? false,
+    isDirty: fieldStateFromContext?.isDirty ?? false,
+    error: fieldStateFromContext?.error,
   };
 };
 
@@ -67,5 +74,6 @@ export {
   useFormContext,
   FormFieldContext,
   FormItemIdContext,
+  FieldStateContext,
   useFormField,
 };
