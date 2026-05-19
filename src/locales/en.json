@@ -625,13 +625,15 @@
   },
   "Home": {
     "banner": {
-      "title": "Hi!",
-      "sub_title": "Welcome to the platform that connects beautiful souls"
+      "title": "Welcome to a platform that connects",
+      "sub_title": "unique souls and Youth voices"
     },
     "short_descriptions": {
       "title": "Become our Huber",
-      "btn": "Join as Huber"
-    }
+      "btn": "Join as Huber",
+      "subtitle": "Short description"
+    },
+    "no_data": "No Data"
   },
   "Common": {
     "error_contact_admin": "An error occurred, please contact admin for support!",
