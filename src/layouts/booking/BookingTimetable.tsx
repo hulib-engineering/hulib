@@ -83,6 +83,14 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHube
       return;
     }
     setSelectedDate(item);
+    if (selectedTime) {
+      const [h = 0, m = 0] = selectedTime.split(':').map(v => Number(v || 0));
+      const newTimestamp = new Date(item);
+      newTimestamp.setHours(h, m, 0, 0);
+      if (differenceInHours(newTimestamp, new Date()) < 24) {
+        setSelectedTime('');
+      }
+    }
   };
   const handleNextToTimeConfirmation = () => {
     const [hours, minutes] = selectedTime.split(':').map(v => Number(v || 0));
@@ -182,8 +190,8 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHube
                     {groupingTimeslots[weekday][each].map((item) => {
                       const hour = Number.parseInt(item.split(':')[0] ?? '0', 10) ?? 0;
                       const minute = Number.parseInt(item.split(':')[1] ?? '0', 10) ?? 0;
-                      const timeObj = selectedDate.setHours(hour, minute, 0, 0);
-                      const selectedTimestamp = new Date(timeObj);
+                      const selectedTimestamp = new Date(selectedDate);
+                      selectedTimestamp.setHours(hour, minute, 0, 0);
                       const isBooked
                       = bookedSlots
                         && bookedSlots.length
