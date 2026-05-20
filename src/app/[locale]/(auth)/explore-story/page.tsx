@@ -18,7 +18,7 @@ import Loader from '@/components/core/loader/Loader';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { StoryCard } from '@/components/stories/StoryCard';
+import { StoryCard } from '@/features/stories/components/StoryCard';
 import ChipFilter from '@/layouts/webapp/ChipFilter';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';

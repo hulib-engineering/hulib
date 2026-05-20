@@ -9,7 +9,7 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import { pushSuccess } from '@/components/CustomToastifyContainer';
 import { HuberCard } from '@/components/hubers/HuberCard';
 import Modal from '@/components/Modal';
-import { StoryCard } from '@/components/stories/StoryCard';
+import { StoryCard } from '@/features/stories/components/StoryCard';
 import { HuberCardListSkeleton, StoriesSkeleton } from '@/components/loadingState/Skeletons';
 import { TopicChip } from '@/layouts/webapp/ChipFilter';
 import type { Huber } from '@/libs/services/modules/huber/huberType';

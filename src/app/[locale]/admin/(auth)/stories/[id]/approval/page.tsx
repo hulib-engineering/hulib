@@ -3,19 +3,20 @@
 import { ArrowLeft, Check, X } from '@phosphor-icons/react';
 import { useParams, useRouter } from 'next/navigation';
 import * as React from 'react';
-
 import { useState } from 'react';
+
 import Button from '@/components/core/button/Button';
 import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
 import { DetailedStory } from '@/components/stories/DetailedStory';
-import StoryConfirmationModal from '@/layouts/admin/StoryConfirmationModal';
+import StoryConfirmationModal from '@/app/[locale]/admin/_components/StoryConfirmationModal';
 import {
   useGetStoryDetailQuery,
 } from '@/libs/services/modules/stories';
 import type { Topic } from '@/libs/services/modules/user/userType';
 import Avatar from '@/components/core/avatar/Avatar';
 import { TopicChip } from '@/layouts/webapp/ChipFilter';
-import { Cover } from '@/components/Cover';
+import { Cover } from '@/features/stories/components/Cover';
+import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
 
 export default function Index() {
   const { id } = useParams();
@@ -58,19 +59,9 @@ export default function Index() {
       {/* Story information */}
       <div className="h-[210px] p-2">
         <div className="flex w-full gap-4 rounded-2xl bg-white p-3">
-          {/* TO - DO: update when installing custom cover feature */}
-          {/* <CustomCover */}
-          {/*  titleStory={data?.title} */}
-          {/*  authorName={data?.humanBook?.fullName} */}
-          {/*  srcImage={data?.cover?.path ?? '/assets/images/cover-book/story_background_yellow.png'} */}
-          {/*  className="lg:h-[170px] lg:w-[120px]" */}
-          {/* /> */}
-          <Cover
-            coverUrl={data?.cover?.path ?? '/assets/images/cover-book/story_background_yellow.png'}
-            title={data?.title ?? ''}
-            authorName={data?.humanBook?.fullName ?? ''}
-            className="lg:h-[170px] lg:w-[120px]"
-          />
+          <div className="lg:h-[170px] lg:w-[120px]">
+            <Cover src={data?.cover?.path ?? DEFAULT_STORY_COVER_ASSET} />
+          </div>
           <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-1">
               <h5 className="text-2xl font-medium leading-8 text-primary-10">{data?.title}</h5>
