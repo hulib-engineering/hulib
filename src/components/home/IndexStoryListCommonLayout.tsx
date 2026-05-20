@@ -7,7 +7,7 @@ import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
-import { StoryCard } from '@/components/stories/StoryCard';
+import { StoryCard } from '@/features/stories/components/StoryCard';
 import type { Story as StoryType, Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import { useGetMyFavoritesQuery } from '@/libs/services/modules/user';
 

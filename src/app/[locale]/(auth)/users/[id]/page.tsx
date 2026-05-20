@@ -6,6 +6,9 @@ import { useSession } from 'next-auth/react';
 import * as React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
+import MyFavoritesPanel from './_components/MyFavoritesPanel';
+import MyStoriesPanel from './_components/MyStoriesPanel';
+
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
@@ -15,8 +18,6 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import { ProfileCover } from '@/components/ProfileCover';
 import AboutPanel from '@/layouts/profile/AboutPanel';
 import EditImageModal from '@/layouts/profile/EditImageModal';
-import MyStoriesPanel from '@/layouts/profile/MyStoriesPanel';
-import MyFavoritesPanel from '@/layouts/profile/MyFavoritesPanel';
 import ReportModal from '@/layouts/profile/ReportModal';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';

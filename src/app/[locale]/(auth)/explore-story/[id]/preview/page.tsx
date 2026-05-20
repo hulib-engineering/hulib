@@ -13,9 +13,10 @@ import { pushError } from '@/components/CustomToastifyContainer';
 import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
 import Label from '@/components/Label';
 import Modal from '@/components/Modal';
-import { CustomCover } from '@/components/stories/CustomCover';
+import { Cover } from '@/features/stories/components/Cover';
+import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
 import { DetailedStory } from '@/components/stories/DetailedStory';
-import StoryForm from '@/layouts/stories/StoryForm';
+import StoryForm from '@/features/stories/components/StoryForm';
 import { useAppSelector } from '@/libs/hooks';
 import {
   useDeleteStoryMutation,
@@ -127,14 +128,7 @@ export default function Index() {
                     </div>
                   </div>
                 )}
-                <CustomCover
-                  titleStory={data?.title}
-                  authorName={data?.humanBook?.fullName ?? ''}
-                  srcImage={
-                    data?.cover?.path
-                    ?? '/assets/images/cover-book/story_background_yellow.png'
-                  }
-                />
+                <Cover src={data?.cover?.path ?? DEFAULT_STORY_COVER_ASSET} />
                 {data?.publishStatus === PublishStatusEnum.REJECTED ? (
                   <Button
                     size="lg"

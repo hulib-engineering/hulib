@@ -15,7 +15,7 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import { useAccountUpgradeStep } from '@/features/users/hooks/useAccountUpgradeStep';
 import { useAppSelector, useMobile } from '@/libs/hooks';
 import { Role, StatusEnum } from '@/types/common';
-import StoryForm from '@/layouts/stories/StoryForm';
+import StoryForm from '@/features/stories/components/StoryForm';
 
 const STEPS = ['Fill Information', 'Select Available Slots', 'Creaete Story'];
 
