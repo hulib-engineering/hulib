@@ -8,7 +8,7 @@ import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { HuberCardListSkeleton, StoriesSkeleton } from '@/components/loadingState/Skeletons';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
-import { StoryCard } from '@/components/stories/StoryCard';
+import { StoryCard } from '@/features/stories/components/StoryCard';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import { useGetUsersQuery } from '@/libs/services/modules/user';
 import { ROLE_NAME, Role } from '@/types/common';

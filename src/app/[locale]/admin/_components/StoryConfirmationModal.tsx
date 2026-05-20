@@ -7,7 +7,8 @@ import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';
-import { Cover } from '@/components/Cover';
+import { Cover } from '@/features/stories/components/Cover';
+import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { ApprovalModalLayout } from '@/layouts/admin/ApprovalModalLayout';
 import { TopicChip } from '@/layouts/webapp/ChipFilter';
@@ -105,10 +106,8 @@ export default function StoryConfirmationModal({
             </div>
           </div>
           <Cover
-            coverUrl={story.cover?.path}
-            title={story.title}
-            authorName={story.humanBook.fullName}
-            className="flex-1"
+            src={story.cover?.path ?? DEFAULT_STORY_COVER_ASSET}
+            className="shrink-0"
           />
         </div>
 

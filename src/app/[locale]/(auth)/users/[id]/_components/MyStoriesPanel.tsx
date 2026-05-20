@@ -8,12 +8,12 @@ import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { StoryCard } from '@/components/stories/StoryCard';
+import { StoryCard } from '@/features/stories/components/StoryCard';
 import { useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
 import type { Topic } from '@/libs/services/modules/user/userType';
 import Modal from '@/components/Modal';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
-import StoryForm from '@/layouts/stories/StoryForm';
+import StoryForm from '@/features/stories/components/StoryForm';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
 
 type TTopic = {

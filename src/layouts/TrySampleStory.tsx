@@ -5,7 +5,8 @@ import React, { useState } from 'react';
 import { ArrowDown } from '@phosphor-icons/react';
 import IconButton from '@/components/core/iconButton/IconButton';
 import Modal from '@/components/Modal';
-import { CustomCover } from '@/components/stories/CustomCover';
+import { Cover } from '@/features/stories/components/Cover';
+import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
 import { DetailedStoryWithCover } from '@/components/stories/DetailedStoryWithCover';
 
 export default function TrySampleStory() {
@@ -29,7 +30,7 @@ export default function TrySampleStory() {
       </div>
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
       <div onClick={() => setIsDetailStoryShown(true)}>
-        <CustomCover titleStory="Cơn ác mộng đã lâu không trở lại" authorName="Bùi Tôn Mỹ Hảo" />
+        <Cover src={DEFAULT_STORY_COVER_ASSET} />
       </div>
       <Modal open={isDetailStoryShown} onClose={() => setIsDetailStoryShown(false)}>
         <Modal.Backdrop />

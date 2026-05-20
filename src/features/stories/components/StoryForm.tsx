@@ -1,15 +1,14 @@
-// deprecated, need to refactor using reusable components
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CaretDown } from '@phosphor-icons/react';
-import { omit } from 'lodash';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { z } from 'zod';
 
+import { CustomCoverModal } from './CustomCoverModal';
 import Button from '@/components/core/button/Button';
 import Combobox from '@/components/core/combobox/Combobox';
 import Form from '@/components/core/form/Form';
@@ -31,13 +30,18 @@ import {
 import type { Story } from '@/libs/services/modules/stories/storiesType';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 import { StoriesValidation } from '@/validations/StoriesValidation';
-import { CustomCover } from '@/components/stories/CustomCover';
-
-const CoverAssets = [
-  '/assets/images/cover-book/story_background_yellow.png',
-  '/assets/images/cover-book/story_background_red.png',
-  '/assets/images/cover-book/story_background_blue.png',
-];
+import { CustomCoverBuilder } from '@/features/stories/components/CustomCoverBuilder';
+import type { CoverCustomization } from '@/features/stories/types';
+import type { CoverPresetAsset } from '@/features/stories/constants';
+import {
+  COVER_EXPORT_ELEMENT_ID,
+  COVER_PRESET_ASSETS,
+} from '@/features/stories/constants';
+import {
+  getDefaultCustomization,
+  rasterizeCoverElement,
+  uploadCoverBlob,
+} from '@/features/stories/utils';
 
 const filter = (
   query: string,
@@ -119,7 +123,7 @@ export default function StoryForm(props: IStoryFormProps) {
     watch,
     setValue,
     handleSubmit,
-    formState: { errors, isSubmitting, dirtyFields },
+    formState: { errors, isSubmitting },
   } = useForm<z.infer<typeof StoriesValidation>>({
     resolver: zodResolver(StoriesValidation),
     defaultValues: {
@@ -130,9 +134,16 @@ export default function StoryForm(props: IStoryFormProps) {
       cover: { id: '' },
     },
   });
-  const title = watch('title') || 'Sample Title';
+  const title = watch('title') || '';
 
-  const [selectedCoverSample, setSelectedCoverSample] = useState(CoverAssets[0]);
+  const [selectedCoverSample, setSelectedCoverSample] = useState<CoverPresetAsset>(
+    COVER_PRESET_ASSETS[0],
+  );
+  const [isCustomCoverActive, setIsCustomCoverActive] = useState(false);
+  const [coverCustomization, setCoverCustomization] = useState<CoverCustomization>(
+    () => getDefaultCustomization(COVER_PRESET_ASSETS[0]!),
+  );
+  const [isCustomCoverModalOpen, setIsCustomCoverModalOpen] = useState(false);
   const [currentCoverIndex, setCurrentCoverIndex] = useState(0);
   const [topicQuery, setTopicQuery] = useState('');
   const [selectedTopics, setSelectedTopics] = useState<TFilter[]>(storyRelatedTopics);
@@ -142,47 +153,66 @@ export default function StoryForm(props: IStoryFormProps) {
     setValue('topics', selectedTopics.map(topic => ({ id: topic.id.toString() })));
   }, [selectedTopics, setValue]);
 
+  const handleSelectPreset = useCallback((cover: CoverPresetAsset) => {
+    setSelectedCoverSample(cover);
+    setIsCustomCoverActive(false);
+    setCoverCustomization(getDefaultCustomization(cover));
+    setValue('cover', { id: '' }, { shouldDirty: true });
+  }, [setValue]);
+
   const handleSwipeAndSelectCover = (swiper: any) => {
-    setCurrentCoverIndex(swiper.activeIndex);
-    setSelectedCoverSample(CoverAssets[swiper.activeIndex] ?? '');
+    const index = swiper.activeIndex;
+    setCurrentCoverIndex(index);
+    const cover = COVER_PRESET_ASSETS[index];
+    if (cover) {
+      handleSelectPreset(cover);
+    }
   };
+
+  const handleCustomCoverDone = useCallback((payload: {
+    customization: CoverCustomization;
+  }) => {
+    setCoverCustomization(payload.customization);
+    setIsCustomCoverActive(true);
+    setValue('cover', { id: '' }, { shouldDirty: true });
+  }, [setValue]);
+
+  const getThumbnailCustomization = useCallback((cover: string) => {
+    if (selectedCoverSample === cover) {
+      return coverCustomization;
+    }
+    return getDefaultCustomization(cover);
+  }, [coverCustomization, selectedCoverSample]);
   const handleRemoveTopic = useCallback(
     (index: unknown) => {
       setSelectedTopics(selectedTopics.filter(({ id }) => id !== index));
     },
     [selectedTopics],
   );
-  const handlePresignS3Url = async () => {
+  const rasterizeAndUploadCover = async (): Promise<string | undefined> => {
     try {
-      const res = await fetch(`${selectedCoverSample}`);
-      if (!res.ok) {
-        pushError(`Failed to fetch ${selectedCoverSample}`);
-      };
-
-      const blob = await res.blob();
-      const fileName = `${title}-${new Date().getTime()}.${blob.type.split('/')[1]}`;
-      const uploadResult = await uploadCover({
-        fileName,
-        fileSize: blob.size,
-      });
-      await fetch(uploadResult.data?.uploadSignedUrl, {
-        method: 'PUT',
-        headers: { 'Content-Type': blob.type },
-        body: blob,
-      });
-      setValue('cover', { id: uploadResult.data?.file.id });
-      return uploadResult.data?.file.id;
-    } catch (err: any) {
-      console.error('Upload failed', err);
+      const blob = await rasterizeCoverElement(COVER_EXPORT_ELEMENT_ID);
+      const extension = blob.type.split('/')[1] || 'png';
+      const fileName = `${title.trim() || 'story-cover'}-${Date.now()}.${extension}`;
+      return uploadCoverBlob(blob, fileName, uploadCover);
+    } catch (err) {
+      console.error('Cover upload failed', err);
+      pushError(t('error_contact_admin'));
+      return undefined;
     }
   };
+
+  const resolveCoverIdForSubmit = async (): Promise<string | undefined> =>
+    rasterizeAndUploadCover();
+
   const onSubmit = async (formValues: z.infer<typeof StoriesValidation>) => {
     try {
       if (props.type !== 'edit') {
-        const uploadedCoverId = await handlePresignS3Url();
+        const uploadedCoverId = await resolveCoverIdForSubmit();
         if (!uploadedCoverId || uploadedCoverId === '') {
           return;
         }
+
         await createStory({
           ...formValues,
           humanBook: {
@@ -194,28 +224,16 @@ export default function StoryForm(props: IStoryFormProps) {
         pushSuccess('Story created successfully');
         props.onSucceed();
       } else {
-        const hasUploadedNew = dirtyFields.cover;
-        let uploadedCoverId = '';
-        if (hasUploadedNew) {
-          uploadedCoverId = await handlePresignS3Url();
-          if (!uploadedCoverId || uploadedCoverId === '') {
-            return;
-          }
+        const uploadedCoverId = await resolveCoverIdForSubmit();
+        if (!uploadedCoverId || uploadedCoverId === '') {
+          return;
         }
-        if (hasUploadedNew && props.story.cover?.id !== uploadedCoverId) {
-          await editStory({
-            ...formValues,
-            id: props.story.id,
-            cover: { id: uploadedCoverId },
-            publishStatus: 'draft',
-          }).unwrap();
-        } else {
-          await editStory({
-            ...omit(formValues, 'cover'),
-            id: props.story.id,
-            publishStatus: 'draft',
-          }).unwrap();
-        }
+        await editStory({
+          ...formValues,
+          id: props.story.id,
+          cover: { id: uploadedCoverId },
+          publishStatus: 'draft',
+        }).unwrap();
         pushSuccess('Story edited successfully');
         props.onSucceed();
       }
@@ -333,28 +351,35 @@ export default function StoryForm(props: IStoryFormProps) {
                 <div className="mt-2 flex justify-between gap-2 rounded-2xl border border-neutral-90 bg-neutral-98 p-5">
                   <div className="hidden cursor-pointer flex-col gap-4 xl:flex">
                     <div className="flex gap-2">
-                      {CoverAssets.map((cover, index) => (
-                        <div key={index} className="flex flex-col gap-2">
-                          <CustomCover
-                            titleStory={title}
+                      {COVER_PRESET_ASSETS.map((cover, index) => (
+                        <div key={cover} className="flex flex-col gap-2">
+                          <CustomCoverBuilder
+                            storyTitle={title.trim() || t('placeholder_title')}
                             authorName={userInfo?.fullName}
-                            srcImage={cover}
+                            coverImgSrc={
+                              isCustomCoverActive && selectedCoverSample === cover
+                                ? ''
+                                : cover
+                            }
+                            customization={getThumbnailCustomization(cover)}
                             active={selectedCoverSample === cover}
-                            onClick={() => setSelectedCoverSample(cover)}
+                            onClick={() => handleSelectPreset(cover)}
                           />
-                          <Button
-                            disabled={selectedCoverSample === cover}
-                            onClick={() => setSelectedCoverSample(cover)}
-                            className={`${
-                              selectedCoverSample === cover
-                                ? 'bg-primary-90'
-                                : 'border-neutral-80 bg-white'
-                            } text-primary-50 hover:text-white`}
-                          >
-                            {selectedCoverSample === cover
-                              ? t('custom')
-                              : `${t('style')} ${index + 1}`}
-                          </Button>
+                          {selectedCoverSample === cover ? (
+                            <Button
+                              onClick={() => setIsCustomCoverModalOpen(true)}
+                              className="bg-primary-90 text-primary-50 hover:text-white"
+                            >
+                              {t('custom')}
+                            </Button>
+                          ) : (
+                            <Button
+                              onClick={() => handleSelectPreset(cover)}
+                              className="border-neutral-80 bg-white text-primary-50 hover:text-white"
+                            >
+                              {`${t('style')} ${index + 1}`}
+                            </Button>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -368,13 +393,18 @@ export default function StoryForm(props: IStoryFormProps) {
                       onSwiper={swiper => (swiperRef = swiper)}
                       onSlideChange={handleSwipeAndSelectCover}
                     >
-                      {CoverAssets.map((cover, index) => (
-                        <SwiperSlide key={index}>
+                      {COVER_PRESET_ASSETS.map(cover => (
+                        <SwiperSlide key={cover}>
                           <div className="flex items-center justify-center">
-                            <CustomCover
-                              titleStory={title}
+                            <CustomCoverBuilder
+                              storyTitle={title.trim() || t('placeholder_title')}
                               authorName={userInfo?.fullName}
-                              srcImage={cover}
+                              coverImgSrc={
+                                isCustomCoverActive && selectedCoverSample === cover
+                                  ? ''
+                                  : cover
+                              }
+                              customization={getThumbnailCustomization(cover)}
                               active={selectedCoverSample === cover}
                             />
                           </div>
@@ -383,9 +413,9 @@ export default function StoryForm(props: IStoryFormProps) {
                     </Swiper>
                     {/* Custom Pagination */}
                     <div className="mt-3 flex justify-center space-x-2">
-                      {CoverAssets.map((_, idx) => (
+                      {COVER_PRESET_ASSETS.map((cover, idx) => (
                         <button
-                          key={idx}
+                          key={cover}
                           type="button"
                           className={mergeClassnames(
                             'size-2 rounded-full transition-all duration-300',
@@ -399,8 +429,7 @@ export default function StoryForm(props: IStoryFormProps) {
                       variant="secondary"
                       size="sm"
                       className="w-[180px]"
-                      disabled
-                      onClick={() => {}}
+                      onClick={() => setIsCustomCoverModalOpen(true)}
                     >
                       {t('custom')}
                     </Button>
@@ -430,6 +459,25 @@ export default function StoryForm(props: IStoryFormProps) {
           </Button>
         </div>
       </Form>
+      <div
+        className="pointer-events-none fixed left-[-10000px] top-0"
+        aria-hidden
+      >
+        <CustomCoverBuilder
+          previewId={COVER_EXPORT_ELEMENT_ID}
+          storyTitle={title.trim() || t('placeholder_title')}
+          authorName={userInfo?.fullName ?? ''}
+          customization={coverCustomization}
+        />
+      </div>
+      <CustomCoverModal
+        open={isCustomCoverModalOpen}
+        onClose={() => setIsCustomCoverModalOpen(false)}
+        title={title}
+        authorName={userInfo?.fullName ?? ''}
+        initialCustomization={coverCustomization}
+        onDoneClick={handleCustomCoverDone}
+      />
     </div>
   );
 };

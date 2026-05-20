@@ -5,51 +5,22 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useRef, useState } from 'react';
 
-import { pushError, pushSuccess } from '../CustomToastifyContainer';
-
-import AnimatedCover from './AnimatedCover';
-
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
 import Modal from '@/components/Modal';
-import { CustomCover } from '@/components/stories/CustomCover';
-import StoryForm from '@/layouts/stories/StoryForm';
+import { Cover } from '@/features/stories/components/Cover';
+import AnimatedCover from '@/features/stories/components/AnimatedCover';
+import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
+import { renderHighlightedText } from '@/features/stories/utils/renderHighlightedText';
+import StoryForm from '@/features/stories/components/StoryForm';
 import { useDeleteStoryMutation } from '@/libs/services/modules/stories';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
 import { useAddStoryToMyFavoritesMutation, useRemoveStoryFromMyFavoritesMutation } from '@/libs/services/modules/user';
 import { useMobile } from '@/libs/hooks';
-
-function renderHighlightedText(text: string, highlightClass = 'bg-green-70/50') {
-  if (!text) {
-    return null;
-  }
-
-  // Split by <b> and </b>, keep track of highlighted segments
-  const parts = text.split(/(<b>|<\/b>)/g);
-
-  let isBold = false;
-  return parts.map((part, index) => {
-    if (part === '<b>') {
-      isBold = true;
-      return null;
-    }
-    if (part === '</b>') {
-      isBold = false;
-      return null;
-    }
-    if (isBold) {
-      return (
-        <span key={index} className={highlightClass}>
-          {part}
-        </span>
-      );
-    }
-    return <span key={index}>{part}</span>;
-  });
-}
 
 type IStoryCardProps = {
   data: TStory;
@@ -267,11 +238,10 @@ export const StoryCard = ({
             )}
           </div>
           <div className="relative flex w-[140px] flex-col justify-between md:w-1/2">
-            <div className="h-[198px] rounded-2xl md:h-[255px]">
-              <CustomCover
-                titleStory={data?.title ?? ''}
-                authorName={data?.humanBook?.fullName || ''}
-                srcImage={data?.cover?.path || ''}
+            <div className="h-[198px] overflow-visible rounded-2xl md:h-[255px]">
+              <Cover
+                src={data?.cover?.path || DEFAULT_STORY_COVER_ASSET}
+                className="size-full"
               />
             </div>
             {!withoutActions && (
@@ -331,11 +301,11 @@ export const StoryCard = ({
           </div>
           {renderActionButtons()}
         </div>
-        <div className="relative h-[255px] w-1/2 rounded-2xl">
+        <div className="relative h-[255px] w-1/2 overflow-visible rounded-2xl">
           <AnimatedCover
             abstract={data?.abstract ?? ''}
             title={data?.title ?? ''}
-            authorName={data?.humanBook?.fullName || ''}
+            authorName={data?.humanBook?.fullName ?? ''}
             coverUrl={data?.cover?.path || ''}
             highlightTitle={data?.highlightTitle}
             highlightAbstract={data?.highlightAbstract}
