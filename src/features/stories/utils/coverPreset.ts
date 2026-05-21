@@ -99,3 +99,9 @@ export const getDefaultCustomization = (backgroundSrc: string): CoverCustomizati
     authorColor,
   };
 };
+
+/** Admin backfill: preset PNG as-is + title/author only (no 35% editing swatch wash). */
+export const getAdminPresetCustomization = (backgroundSrc: string): CoverCustomization => {
+  const base = getDefaultCustomization(backgroundSrc);
+  return { ...base, backgroundColor: undefined };
+};
