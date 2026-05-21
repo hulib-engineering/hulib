@@ -1,6 +1,7 @@
 export {
   getCoverFontClassName,
   getDefaultCustomization,
+  getAdminPresetCustomization,
   getPresetPlainBackgroundColor,
   getPresetStyle,
   hasBakedPresetChrome,
@@ -11,3 +12,4 @@ export {
 export { rasterizeCoverElement } from './rasterizeCover';
 export { renderHighlightedText } from './renderHighlightedText';
 export { uploadCoverBlob } from './uploadCoverBlob';
+export { saveStoryCoverFile } from './saveStoryCover';
