@@ -99,6 +99,17 @@ export default function Index() {
         abstract={data?.abstract || ''}
       />
 
+      <div className="flex items-center justify-end gap-3">
+        <Button
+          variant="outline"
+          size="lg"
+          className="w-60"
+          onClick={() => router.push(`/admin/stories/${id}/cover`)}
+        >
+          Regenerate cover
+        </Button>
+      </div>
+
       {/* Approve/Decline buttons at the bottom */}
       <div className="flex items-center justify-end gap-3">
         <Button

@@ -31,6 +31,8 @@ export type ICustomCoverBuilderProps = {
   coverImgSrc?: string;
   onClick?: () => void;
   previewId?: string;
+  /** Desktop export size (184×259) while keeping normal visible chrome — use with `previewId` on admin save preview. */
+  useExportDimensions?: boolean;
   customization?: CoverCustomization;
   className?: string;
 };
@@ -64,13 +66,15 @@ export function CustomCoverBuilder({
   coverImgSrc = '',
   onClick,
   previewId,
+  useExportDimensions = false,
   customization,
   className,
 }: ICustomCoverBuilderProps) {
   const isMobile = useMobile();
 
   const isExportTarget = previewId === COVER_EXPORT_ELEMENT_ID;
-  const size = isExportTarget ? COVER_EXPORT_SIZE : (isMobile ? 'mobile' : 'desktop');
+  const useDesktopExportLayout = isExportTarget || useExportDimensions;
+  const size = useDesktopExportLayout ? COVER_EXPORT_SIZE : (isMobile ? 'mobile' : 'desktop');
 
   const tokens = COVER_SIZE_TOKENS[size];
   const desktopTokens = COVER_SIZE_TOKENS.desktop;
@@ -271,23 +275,19 @@ export function CustomCoverBuilder({
 
   const ChromeWrapper = useBakedPresetChrome ? CoverBakedPreset : CoverExport;
   const chromeProps = useBakedPresetChrome
-    ? { fixedDesktopSize: isExportTarget, id: isExportTarget ? previewId : undefined }
-    : { fixedDesktopSize: isExportTarget, paperColor, id: isExportTarget ? previewId : undefined };
+    ? { fixedDesktopSize: useDesktopExportLayout, id: previewId }
+    : { fixedDesktopSize: useDesktopExportLayout, paperColor, id: previewId };
 
   return (
     <ChromeWrapper
       {...chromeProps}
       {...(isExportTarget ? {} : interactiveProps)}
-      className={
-        isExportTarget
-          ? undefined
-          : mergeClassnames(
-              'outline-none focus:outline-none',
-              !active && 'grayscale',
-              onClick && 'cursor-pointer',
-              className,
-            )
-      }
+      className={mergeClassnames(
+        'shrink-0 outline-none focus:outline-none',
+        !active && 'grayscale',
+        onClick && 'cursor-pointer',
+        className,
+      )}
     >
       {coverContent}
     </ChromeWrapper>
