@@ -16,8 +16,8 @@ import Pagination from '@/components/core/pagination/Pagination';
 import Switch from '@/components/core/switch';
 import Table from '@/components/core/table/Table';
 import type { TablePagination } from '@/components/core/table/private/types';
-import TopicBadge from '@/app/[locale]/admin/_components/TopicBadge';
-import TopicFormModal from '@/layouts/admin/TopicFormModal';
+import TopicBadge from '@/app/[locale]/admin/(auth)/_components/TopicBadge';
+import TopicFormModal from '@/app/[locale]/admin/(auth)/_components/TopicFormModal';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 import { isTopicActive } from '@/libs/services/modules/topics/topicType';
 import {
@@ -38,9 +38,6 @@ const TagsTable = ({ topics, isLoading, pagination }: TagsTableProps) => {
   const [editingTopic, setEditingTopic] = useState<Topic | null>(null);
 
   const handleDelete = useCallback(async (topic: Topic) => {
-    if (!window.confirm(`Delete topic "${topic.name}"?`)) {
-      return;
-    }
     try {
       await deleteTopic(topic.id).unwrap();
       pushSuccess('Topic deleted successfully');

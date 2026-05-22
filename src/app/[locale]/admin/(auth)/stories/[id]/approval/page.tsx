@@ -8,7 +8,7 @@ import { useState } from 'react';
 import Button from '@/components/core/button/Button';
 import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
 import { DetailedStory } from '@/components/stories/DetailedStory';
-import StoryConfirmationModal from '@/app/[locale]/admin/_components/StoryConfirmationModal';
+import StoryConfirmationModal from '@/app/[locale]/admin/(auth)/_components/StoryConfirmationModal';
 import {
   useGetStoryDetailQuery,
 } from '@/libs/services/modules/stories';
