@@ -47,7 +47,6 @@ const CustomDatePicker = ({
     mode: 'onChange',
   });
   const { day, month, year } = watch();
-  console.log(day, month, year);
 
   useEffect(() => {
     const pad = (n: number) => n.toString().padStart(2, '0');

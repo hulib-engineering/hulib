@@ -91,12 +91,27 @@
   --toastify-color-success: #32d583;
   --toastify-color-warning: #ffd21f;
   --toastify-color-error: #f04438;
+  --neutral-variant-70: rgba(164, 170, 183, 1);
+  --neutral-variant-90: rgba(227, 229, 235, 1);
   --neutral-variant-98: rgba(243, 244, 246, 1);
+  --neutral-50: rgba(115, 120, 124, 1);
+  --neutral-80: rgba(199, 201, 203, 1);
   --neutral-90: rgba(227, 228, 229, 1);
   --primary-50: rgba(4, 66, 191, 1);
   --primary-60: rgba(8, 88, 250, 1);
   --primary-90: rgba(205, 221, 254, 1);
   --swiper-pagination-progressbar-length: 1.25rem;
+
+  /*
+   * Themed scrollbar tokens — used only by .custom-scrollbar and .dropdown-scrollbar (not *).
+   * Figma: https://www.figma.com/design/2l5ivSRzvyE7ihSwrYrKaI/Hulib-Webapp?node-id=1108-946
+   * scrollbar-color order: thumb, then track.
+   */
+  --scrollbar-track: var(--foundation-grey-100);
+  --scrollbar-thumb: var(--foundation-blue-normal);
+  --scrollbar-thumb-hover: var(--foundation-blue-normal-hover);
+  --scrollbar-size: 6px;
+  --scrollbar-radius: 12px;
 }
 
 *,
@@ -178,24 +193,36 @@ html {
   background: url('/assets/images/icons/arrow-right.png') center no-repeat;
 }
 
-/* Webkit Scrollbar custom styles */
+/* Opt-in themed scrollbar (uses :root --scrollbar-* tokens). */
 @layer utilities {
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
+  .custom-scrollbar::-webkit-scrollbar:vertical {
+    width: var(--scrollbar-size);
+  }
+  .custom-scrollbar::-webkit-scrollbar:horizontal {
+    height: var(--scrollbar-size);
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: var(--foundation-grey-100);
-    border-radius: 12px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--scrollbar-track);
+    border-radius: var(--scrollbar-radius);
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: var(--foundation-blue-normal);
-    border-radius: 12px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--scrollbar-thumb);
+    border-radius: var(--scrollbar-radius);
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #c0a0b9;
+    background: var(--scrollbar-thumb-hover);
+  }
+
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   }
 }
 
@@ -324,31 +351,88 @@ html {
   visibility: hidden !important;
 }
 
-/* Custom scrollbar for dropdown options only */
-.dropdown-scrollbar::-webkit-scrollbar {
-  width: 2px; /* thinner scrollbar */
+/* Dropdown menus: thinner bar, same tokens as global. */
+.dropdown-scrollbar::-webkit-scrollbar:vertical {
+  width: 2px;
+}
+.dropdown-scrollbar::-webkit-scrollbar:horizontal {
+  height: 2px;
 }
 
 .dropdown-scrollbar::-webkit-scrollbar-track {
-  background: var(--neutral-90); /* or use a subtle gray if you prefer */
-  border-radius: 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--scrollbar-track);
+  border-radius: var(--scrollbar-radius);
 }
 
 .dropdown-scrollbar::-webkit-scrollbar-thumb {
-  background-color: var(--primary-60);
-  border-radius: 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--scrollbar-thumb);
+  border-radius: var(--scrollbar-radius);
 }
 
-/* Firefox support */
+.dropdown-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
 .dropdown-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: var(--primary-60) var(--neutral-90);
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
-.scrollbar-hide::-webkit-scrollbar {
+/* Scroll still works; scrollbar hidden (e.g. StoryCard topic chips). */
+.scrollbar-hide::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
   display: none;
 }
-.scrollbar-hide {
+.scrollbar-hide,
+.scrollbar-none {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+/*
+ * Account upgrade → Step 1 community guidelines panel only (Step1.tsx).
+ * Unlayered on purpose so Tailwind utility ordering does not override the rules.
+ * Figma: https://www.figma.com/design/2l5ivSRzvyE7ihSwrYrKaI/Hulib-Webapp?node-id=8834-66388
+ */
+.account-upgrade-guidelines-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--neutral-variant-70) var(--neutral-80);
+}
+
+.account-upgrade-guidelines-scrollbar::-webkit-scrollbar {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 6px;
+  height: 6px;
+  background: transparent;
+}
+
+.account-upgrade-guidelines-scrollbar::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.account-upgrade-guidelines-scrollbar::-webkit-scrollbar-track,
+.account-upgrade-guidelines-scrollbar::-webkit-scrollbar-track-piece {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--neutral-80);
+  border-radius: 9999px;
+  border: 0;
+  margin: 0;
+}
+
+.account-upgrade-guidelines-scrollbar::-webkit-scrollbar-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--neutral-variant-70);
+  border-radius: 9999px;
+  border: 0;
+  margin: 0;
+  padding: 0;
 }

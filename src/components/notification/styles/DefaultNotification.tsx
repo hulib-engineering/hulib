@@ -89,7 +89,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
     }
   };
 
-  if (!notification || !notification?.relatedEntity || (notification.type.name === NotificationType.SESSION_REQUEST && notification.relatedEntity.sessionStatus !== StatusEnum.Pending)) {
+  if (!notification || (notification.type.name === NotificationType.SESSION_REQUEST && notification.relatedEntity?.sessionStatus !== StatusEnum.Pending)) {
     return undefined;
   }
 
@@ -104,7 +104,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
           ([NotificationType.HUBER_REPORT, NotificationType.USER_APPEAL].includes(notification.type.name as NotificationType)
             || (notification.type.name === NotificationType.APPEAL_RESPONSE && notification.relatedEntity?.status === 'rejected'))
           && 'hover:bg-red-90',
-          !notification.seen && (notification.type.name === NotificationType.APPEAL_RESPONSE && notification.relatedEntity.status !== 'rejected' ? 'bg-green-90' : 'bg-red-98'),
+          !notification.seen && (notification.type.name === NotificationType.APPEAL_RESPONSE && notification.relatedEntity?.status !== 'rejected' ? 'bg-green-90' : 'bg-red-98'),
           !notification.seen && 'xl:bg-white',
         )}
         onClick={handleClick}
@@ -181,8 +181,8 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
           <Modal.Panel className="w-fit">
             <SessionDetailCard
               session={{
-                ...notification.relatedEntity,
-                story: { ...notification.relatedEntity.story, title: notification.relatedEntity.storyTitle },
+                ...(notification.relatedEntity ?? {}),
+                story: { ...(notification.relatedEntity?.story ?? {}), title: notification.relatedEntity?.storyTitle },
               }}
               expandByDefault
               className="sm:w-[463px]"

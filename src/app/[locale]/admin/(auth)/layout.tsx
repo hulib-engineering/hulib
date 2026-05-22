@@ -1,6 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import { Suspense } from 'react';
 
 import { AdminTemplate } from '@/templates/AdminTemplate';
 
@@ -10,6 +11,8 @@ export default function Layout({
   children: ReactNode;
 }) {
   return (
-    <AdminTemplate>{children}</AdminTemplate>
+    <AdminTemplate>
+      <Suspense fallback={null}>{children}</Suspense>
+    </AdminTemplate>
   );
 }

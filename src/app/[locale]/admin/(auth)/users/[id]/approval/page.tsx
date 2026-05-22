@@ -61,10 +61,9 @@ export default function Index() {
       <div className="flex flex-col gap-6">
         <Button
           variant="ghost"
-          size="lg"
           iconLeft={<ArrowLeft />}
           className="w-fit text-black"
-          onClick={() => router.push('/admin/home')}
+          onClick={() => router.push('/admin/users')}
         >
           Back
         </Button>
@@ -109,7 +108,6 @@ export default function Index() {
         </div>
         <div className="flex items-center justify-end gap-3">
           <Button
-            size="lg"
             iconLeft={<Check />}
             className="w-60"
             onClick={() => setIsApproveHuberModalOpen(true)}
@@ -118,7 +116,7 @@ export default function Index() {
           </Button>
           <Button
             variant="secondary"
-            size="lg"
+
             iconLeft={<X />}
             className="w-60 bg-red-90 text-red-50"
             onClick={() => setIsRejectHuberModalOpen(true)}

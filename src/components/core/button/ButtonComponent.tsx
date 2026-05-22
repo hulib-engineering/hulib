@@ -61,27 +61,37 @@ const ButtonComponent = <C extends ElementType>({
   );
 };
 
+type HoverConfig = { normal: string; error?: string };
+
+const HOVER_BACKGROUNDS: Record<ButtonVariants, HoverConfig> = {
+  fill: { normal: 'bg-primary-40' },
+  primary: { normal: 'bg-primary-40' },
+  secondary: { normal: 'bg-primary-80', error: 'bg-chichi-10' },
+  tertiary: { normal: 'bg-primary-98' },
+  ghost: { normal: 'bg-primary-98', error: 'bg-red-10' },
+  outline: { normal: 'bg-light-hover', error: 'bg-red-10' },
+};
+
 const Hover = ({
   isHover,
   variant,
+  animation,
 }: {
   isHover: boolean;
   variant: ButtonVariants;
+  animation?: ButtonSettingsProps['animation'];
 }) => {
-  const hoverBackground
-    = variant === 'ghost'
-      ? 'bg-light-active'
-      : variant === 'outline'
-        ? 'bg-light-hover'
-        : 'bg-primary-40';
+  const config = HOVER_BACKGROUNDS[variant];
+  const hoverBg
+    = animation === 'error' && config.error ? config.error : config.normal;
 
   return (
     <span
       aria-hidden="true"
       className={mergeClassnames(
         'z-[-1] block absolute inset-0 pointer-events-none',
-        'transition-colors duration-300',
-        isHover ? hoverBackground : '',
+        'transition-colors duration-200 ease-out',
+        isHover ? hoverBg : '',
       )}
     />
   );

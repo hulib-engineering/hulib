@@ -173,7 +173,7 @@ export const getButtonSizes = ({
   }
   return mergeClassnames(
     getMdPadding({ icon, iconLeft, iconRight, iconOnly, fullWidth }),
-    'py-2 gap-2 text-base leading-5 rounded-full',
+    'py-3 px-4 gap-2 text-base leading-5 rounded-full',
   );
 };
 

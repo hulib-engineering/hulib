@@ -18,7 +18,8 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import type { User } from '@/features/users/types';
 import AboutSectionRenderer from '@/layouts/profile/AboutSectionRenderer';
 import { Role } from '@/types/common';
-import { CustomCover } from '@/components/stories/CustomCover';
+import { Cover } from '@/features/stories/components/Cover';
+import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
 import { DetailedStory } from '@/components/stories/DetailedStory';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
 
@@ -135,13 +136,13 @@ const AboutPanel = ({
             <div className="rounded-lg bg-white px-3 py-1 font-medium text-neutral-10">
               {awaiting ? 'Information' : 'Giới thiệu'}
             </div>
-            {sectionMenu.map((section, index) => (
+            {sectionMenu.map(section => (
               <MenuItem
-                key={index}
+                key={section.type}
                 as="button"
+                type="button"
                 isSelected={currentSection === section.type}
                 className={mergeClassnames(
-                  currentSection === section.type && 'bg-red-60 border-none',
                   section.type === 'moderations' && 'border border-red-90',
                 )}
                 onClick={() => setCurrentSection(section.type)}
@@ -201,7 +202,7 @@ const AboutPanel = ({
         ) : (
           <div className="flex flex-1 flex-col gap-3 rounded-xl border-r bg-white p-2">
             <div className="flex gap-4 rounded-2xl p-3">
-              <CustomCover titleStory={data?.firstStory?.title} authorName={data?.fullName} />
+              <Cover src={data?.firstStory?.cover?.path ?? DEFAULT_STORY_COVER_ASSET} />
               <div className="flex flex-col gap-3">
                 <h5 className="text-2xl font-medium leading-8 text-primary-10">{data?.fullName}</h5>
               </div>
