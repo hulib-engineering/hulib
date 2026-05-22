@@ -43,7 +43,7 @@ export default function InformativeNotificationCard({ notification, showExtras, 
     }
   };
 
-  if (!notification || !notification?.relatedEntity) {
+  if (!notification) {
     return undefined;
   }
 
@@ -163,8 +163,8 @@ export default function InformativeNotificationCard({ notification, showExtras, 
           <Modal.Panel className="w-fit">
             <SessionDetailCard
               session={{
-                ...notification.relatedEntity,
-                story: { ...notification.relatedEntity.story, title: notification.relatedEntity.storyTitle },
+                ...(notification.relatedEntity ?? {}),
+                story: { ...(notification.relatedEntity?.story ?? {}), title: notification.relatedEntity?.storyTitle },
               }}
               expandByDefault
               sharingMissingReason
