@@ -94,7 +94,6 @@ export const authOptions = {
           };
         }
         if (account?.provider === 'credentials') {
-          console.log('User', user);
           tokenParsed = {
             ...tokenParsed,
             accessToken: user.accessToken,

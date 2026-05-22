@@ -81,6 +81,7 @@ type ColorNames =
 type ColorProps = ColorNames | string;
 
 export type {
+  ColorNames,
   ColorProps,
   PolymorphicComponentPropWithRef,
   PolymorphicRef,

@@ -36,7 +36,7 @@ export default function AvatarPopover() {
       {
         label: t('dashboard'),
         icon: <House className="text-xl text-primary-60" />,
-        href: '/admin/home',
+        href: '/admin/awaiting-stories',
         roles: [Role.ADMIN],
       },
       {

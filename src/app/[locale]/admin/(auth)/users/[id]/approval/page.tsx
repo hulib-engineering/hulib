@@ -63,7 +63,7 @@ export default function Index() {
           variant="ghost"
           iconLeft={<ArrowLeft />}
           className="w-fit text-black"
-          onClick={() => router.push('/admin/home')}
+          onClick={() => router.push('/admin/users')}
         >
           Back
         </Button>
