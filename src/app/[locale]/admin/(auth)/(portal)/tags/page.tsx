@@ -20,7 +20,7 @@ export default function AdminTagsPage() {
 
   const { data, isLoading } = useGetTopicsQuery({
     page: currentPage,
-    limit: 20,
+    limit: 10,
   });
 
   const topics = data?.data ?? [];
