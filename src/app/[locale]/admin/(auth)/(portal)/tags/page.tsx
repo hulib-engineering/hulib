@@ -4,8 +4,8 @@ import { Plus } from '@phosphor-icons/react';
 import { useState } from 'react';
 
 import Button from '@/components/core/button/Button';
-import TagsTable from '@/app/[locale]/admin/_components/TagsTable';
-import TopicFormModal from '@/layouts/admin/TopicFormModal';
+import TagsTable from '@/app/[locale]/admin/(auth)/_components/TagsTable';
+import TopicFormModal from '@/app/[locale]/admin/(auth)/_components/TopicFormModal';
 import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 
