@@ -61,7 +61,7 @@ export const useSocket = <TEvents = Record<string, any>>({
       });
 
       socketInstance.on('message', (msg) => {
-        console.log(`[${namespace}] Default message:`, msg);
+        console.info(`[${namespace}] Default message:`, msg);
       });
 
       socketInstance.onAny((event, ...args) => {

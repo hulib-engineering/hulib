@@ -22,7 +22,6 @@ const MenuItemRoot = forwardRef(
     }: MenuItemPolymorphicProps<C>,
     ref?: PolymorphicRef<C>,
   ) => {
-    console.log('MenuItemRoot', isSelected, children);
     const Component = as || 'button';
 
     const { items, register } = useRegisterChild();
@@ -36,7 +35,6 @@ const MenuItemRoot = forwardRef(
       [isSelected, isActive, isDisabled, register],
     );
 
-    console.log('Items', items);
     const isNoBg = items?.find(
       (name: string) => name === 'Radio' || name === 'Checkbox',
     );

@@ -52,8 +52,6 @@ const HandleReportModal = ({
   onClose,
   data,
 }: IHandleReportModalProps) => {
-  console.log('Report Data', data);
-
   const t = useTranslations('MyProfile');
 
   const [rejectSingleReport, { isLoading }] = useUpdateReportByIdMutation();

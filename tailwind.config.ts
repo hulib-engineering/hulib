@@ -95,6 +95,9 @@ export default {
         },
         blue: {
           50: '#009BEE',
+          40: '#007CBE',
+          60: '#25B3FF',
+          80: '#92D9FF',
           90: '#C9ECFF',
           98: '#F5FBFF',
           100: '#ebf8ff',
@@ -172,7 +175,10 @@ export default {
         },
         pink: {
           30: '#E0006F',
+          40: '#FF2C94',
           50: '#FF77BA',
+          60: '#FF92C8',
+          80: '#FFC9E3',
           90: '#FFE4F1',
         },
         green: {
@@ -194,8 +200,14 @@ export default {
           50: '#FF8207',
           60: '#FF8F34',
           70: '#FFAB67',
+          80: '#FFC799',
           90: '#FFE4D1',
           98: '#FFF9F5',
+        },
+        lavender: {
+          40: '#8845C6',
+          80: '#DDC9EF',
+          90: '#EEE4F7',
         },
       },
       boxShadow: {

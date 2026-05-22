@@ -145,7 +145,7 @@ export default function Index() {
               variant="ghost"
               iconLeft={<ArrowLeft />}
               className="absolute inset-0 w-fit text-black"
-              onClick={() => router.push('/admin/home')}
+              onClick={() => router.push('/admin/users')}
             >
               Back
             </Button>
