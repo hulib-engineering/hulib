@@ -10,7 +10,8 @@ import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { IndexStoryListSectionLayout } from '@/components/home/IndexStoryListCommonLayout';
 import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
-import { CustomCover } from '@/components/stories/CustomCover';
+import { Cover } from '@/features/stories/components/Cover';
+import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
 import { DetailedStory } from '@/components/stories/DetailedStory';
 import StoryReviewsWithOverview from '@/layouts/stories/StoryReviewsWithOverview';
 import { TopicChip } from '@/layouts/webapp/ChipFilter';
@@ -125,14 +126,7 @@ export default function Index() {
                   ))}
                 </div>
               </div>
-              <CustomCover
-                titleStory={data?.title}
-                authorName={data?.humanBook?.fullName ?? ''}
-                srcImage={
-                  data?.cover?.path
-                  ?? '/assets/images/cover-book/story_background_yellow.png'
-                }
-              />
+              <Cover src={data?.cover?.path ?? DEFAULT_STORY_COVER_ASSET} />
               <div className="flex w-full flex-col gap-2">
                 <Button
                   size="lg"

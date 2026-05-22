@@ -13,7 +13,7 @@ type SliceState = {
     id: string;
     photo: { id: string; path: string };
     role: { id: number; name: string };
-    approvalStatus: StatusEnum;
+    approval: StatusEnum;
   };
 };
 
@@ -25,13 +25,16 @@ const slice = createSlice({
       const accessToken = action.payload;
       localStorage.setItem('access_token', accessToken);
     },
-    logout: () => {
+    logout: (state) => {
       localStorage.clear();
       Cookies.remove('refresh_token');
       Cookies.remove('currentUser');
       Cookies.set('NEXT_LOCALE', 'vi');
       Cookies.remove('defaultLocale');
       Cookies.remove('locales');
+      state.userInfo = {} as SliceState['userInfo'];
+      state.avatarUrl = '';
+      state.avatarId = '';
       // Sign out and redirect to the login page
       signOut({ callbackUrl: '/auth/login' });
     },

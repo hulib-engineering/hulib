@@ -26,7 +26,9 @@ export default function AvatarPopover() {
   const currentLocale = useLocale();
   const t = useTranslations('HeaderWebApp');
 
-  const { id, role } = useAppSelector(state => state.auth.userInfo);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const id = userInfo?.id;
+  const role = userInfo?.role;
   const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
 
   const AvatarPopoverMenuItems = useMemo(
@@ -34,7 +36,7 @@ export default function AvatarPopover() {
       {
         label: t('dashboard'),
         icon: <House className="text-xl text-primary-60" />,
-        href: '/admin/home',
+        href: '/admin/awaiting-stories',
         roles: [Role.ADMIN],
       },
       {

@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useMemo } from 'react';
 
-import { useFormItemContext } from '../form/private/utils';
+import { useFormField } from '../form/private/utils';
 import { getMaxDate, getTypeStyles } from '../input/private/utils';
 
 import type { InsetInputProps, LabelProps } from './private/types';
@@ -10,10 +10,9 @@ import { mergeClassnames, useRegisterChild } from '@/components/core/private/uti
 
 const InsetInputRoot = forwardRef<HTMLInputElement, InsetInputProps>(
   ({ className, error: inputError, children, ...rest }, ref) => {
-    const { disabled: formItemDisabled, error: formItemError }
-      = useFormItemContext('Input');
-    const disabled = rest.disabled || formItemDisabled;
-    const error = inputError || formItemError;
+    const field = useFormField();
+    const disabled = rest.disabled;
+    const error = inputError || field.invalid;
 
     const { items: state, register } = useRegisterChild();
 

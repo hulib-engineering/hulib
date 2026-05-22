@@ -10,6 +10,7 @@ import { useCallback, useState } from 'react';
 import Button from '@/components/core/button/Button';
 import Combobox from '@/components/core/combobox/Combobox';
 import MenuItem from '@/components/core/menuItem/MenuItem';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import type { TFilter } from '@/layouts/scheduling/BigCalendar';
 import BigCalendar from '@/layouts/scheduling/BigCalendar';
@@ -17,7 +18,9 @@ import MiniCalendar from '@/layouts/scheduling/MiniCalendar';
 import MobileSessionList from '@/layouts/scheduling/MobileSessionList';
 import TimeSlotList from '@/layouts/timeslots/TimeSlotList';
 import TimeslotRegistrationSection from '@/layouts/timeslots/TimeslotRegistrationSection';
+import { convertTimeSlotToUtc } from '@/utils/convertTimeSlotToUtc';
 import { useAppSelector } from '@/libs/hooks';
+import { useCreateTimeslotsMutation } from '@/libs/services/modules/time-slots';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
 import { toLocaleDateString, toLocaleTimeString } from '@/utils/dateUtils';
@@ -55,10 +58,27 @@ export default function Index() {
   const isHuber = user?.role?.name === 'Huber';
 
   const [showMobileTimeslotRegistration, setShowMobileTimeslotRegistration] = useState(false);
+  const [selectedSlots, setSelectedSlots] = useState<{ dayOfWeek: number; startTime: string }[]>([]);
   const [dateInWeekView, setDateInWeekView] = useState<Date>(new Date());
   const [filterQuery, setFilterQuery] = useState<string>('');
   const [statusFilters, setStatusFilters] = useState<TFilter[]>([]);
   const queriedFilters = filter(filterQuery, filters);
+
+  const [registerTimeSlots, { isLoading: isRegisteringTimeslots }] = useCreateTimeslotsMutation();
+
+  const handleSaveMobileTimeSlots = async () => {
+    try {
+      const result = await registerTimeSlots({
+        timeSlots: selectedSlots.map(slot => convertTimeSlotToUtc(slot)),
+      }).unwrap();
+      if (result !== null) {
+        pushSuccess('Time slots saved successfully!');
+      }
+      setShowMobileTimeslotRegistration(false);
+    } catch (error: any) {
+      pushError(error?.message || 'Failed to save time slots');
+    }
+  };
 
   const onRemoveFilter = useCallback(
     (index: unknown) => {
@@ -214,7 +234,6 @@ export default function Index() {
         <div className="flex flex-col gap-0.5">
           <Button
             variant="ghost"
-            size="lg"
             iconLeft={<ArrowLeft weight="bold" className="text-xl" />}
             className="w-fit font-medium text-black"
             onClick={() => setShowMobileTimeslotRegistration(false)}
@@ -222,9 +241,17 @@ export default function Index() {
             Back
           </Button>
           <TimeslotRegistrationSection
-            onBack={() => setShowMobileTimeslotRegistration(false)}
-            onSucceed={() => setShowMobileTimeslotRegistration(false)}
+            selectedSlots={selectedSlots}
+            onSlotToggle={slot => setSelectedSlots(prev => [...prev, slot])}
           />
+          <Button
+            fullWidth
+            animation={isRegisteringTimeslots && 'progress'}
+            disabled={selectedSlots.length === 0 || isRegisteringTimeslots}
+            onClick={handleSaveMobileTimeSlots}
+          >
+            Save
+          </Button>
         </div>
       )}
     </div>

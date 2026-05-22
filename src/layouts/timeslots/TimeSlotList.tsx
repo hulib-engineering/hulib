@@ -12,14 +12,19 @@ import TimeSlotListHeader from './TimeSlotListHeader';
 import Button from '@/components/core/button/Button';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 import Modal from '@/components/Modal';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import {
   AFTERNOON_TIME_START,
   EVENING_TIME_START,
   MORNING_TIME_START,
 } from '@/libs/constants/date';
 import { useAppSelector } from '@/libs/hooks';
-import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
+import {
+  useCreateTimeslotsMutation,
+  useGetTimeslotsByHuberQuery,
+} from '@/libs/services/modules/time-slots';
 import { ROLE_NAME, Role } from '@/types/common';
+import { convertTimeSlotToUtc } from '@/utils/convertTimeSlotToUtc';
 import { REFERENCE_MONDAY } from '@/utils/dateUtils';
 
 type TPeriodLabel = 'morning' | 'afternoon' | 'evening';
@@ -35,9 +40,12 @@ export default function TimeSlotList() {
     { skip: !userInfo?.id || !isHuber },
   );
 
+  const [registerTimeSlots, { isLoading: isRegisteringTimeslots }] = useCreateTimeslotsMutation();
+
   const [weekDay, setWeekDay] = useState(new Date().getDay());
   const [timeslotsByDayAndPeriod, setTimeslotsByDayAndPeriod] = useState<Record<string, TDaySlots>>({});
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedSlots, setSelectedSlots] = useState<{ dayOfWeek: number; startTime: string }[]>([]);
 
   useEffect(() => {
     const getPeriodLabel = (timeslot: string): TPeriodLabel => {
@@ -110,6 +118,20 @@ export default function TimeSlotList() {
   const currentDayEveningSlots = timeslotsByDayAndPeriod[weekDay]?.evening || [];
   const totalSlotNum = currentDayMorningSlots.length + currentDayAfternoonSlots.length + currentDayEveningSlots.length;
 
+  const handleSaveEditedTimeSlots = async () => {
+    try {
+      const result = await registerTimeSlots({
+        timeSlots: selectedSlots.map(slot => convertTimeSlotToUtc(slot)),
+      }).unwrap();
+      if (result !== null) {
+        pushSuccess(t('success_time_slots_description'));
+      }
+      setIsEditModalOpen(false);
+    } catch (error: any) {
+      pushError(t(error?.message || 'error_contact_admin'));
+    }
+  };
+
   if (!isHuber) {
     return null;
   }
@@ -138,9 +160,9 @@ export default function TimeSlotList() {
         <div className="flex flex-col gap-2.5">
           {currentDayMorningSlots.length > 0 && (
             <div className="flex w-full items-center gap-1 overflow-x-auto rounded-lg bg-white p-2">
-              {currentDayMorningSlots.map((time, index) => (
+              {currentDayMorningSlots.map(time => (
                 <div
-                  key={index}
+                  key={time}
                   className="flex items-center gap-1 rounded-[100px] border border-green-80 bg-green-90 px-2 py-1 text-sm font-medium leading-4 text-green-30"
                 >
                   {time}
@@ -151,9 +173,9 @@ export default function TimeSlotList() {
 
           {currentDayAfternoonSlots.length > 0 && (
             <div className="flex w-full items-center gap-1 overflow-x-auto rounded-lg bg-white p-2">
-              {currentDayAfternoonSlots.map((time, index) => (
+              {currentDayAfternoonSlots.map(time => (
                 <div
-                  key={index}
+                  key={time}
                   className="flex items-center gap-1 rounded-[100px] border border-green-80 bg-green-90 px-2 py-1 text-sm font-medium leading-4 text-green-30"
                 >
                   {time}
@@ -164,9 +186,9 @@ export default function TimeSlotList() {
 
           {currentDayEveningSlots.length > 0 && (
             <div className="flex w-full items-center gap-1 overflow-x-auto rounded-lg bg-white p-2">
-              {currentDayEveningSlots.map((time, index) => (
+              {currentDayEveningSlots.map(time => (
                 <div
-                  key={index}
+                  key={time}
                   className="flex items-center gap-1 rounded-[100px] border border-green-80 bg-green-90 px-2 py-1 text-sm font-medium leading-4 text-green-30"
                 >
                   {time}
@@ -194,9 +216,18 @@ export default function TimeSlotList() {
             <div className="flex flex-col gap-6">
               <h2 className="text-4xl font-medium leading-[44px] text-black">Update your slots</h2>
               <TimeslotRegistrationSection
-                onBack={() => setIsEditModalOpen(false)}
-                onSucceed={() => setIsEditModalOpen(false)}
+                selectedSlots={selectedSlots}
+                onSlotToggle={slot => setSelectedSlots(prev => [...prev, slot])}
               />
+              <Button
+                size="lg"
+                fullWidth
+                animation={isRegisteringTimeslots && 'progress'}
+                disabled={selectedSlots.length === 0 || isRegisteringTimeslots}
+                onClick={handleSaveEditedTimeSlots}
+              >
+                Save
+              </Button>
             </div>
           </Modal.Panel>
         </Modal>

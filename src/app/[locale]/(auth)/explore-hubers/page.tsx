@@ -58,7 +58,6 @@ export default function Index() {
   }, [hubers, page]);
 
   const hubersWithIsFavoriteStatus = useMemo(() => {
-    console.log('favoriteHubers', favoriteHubers);
     return items && items.map((item: HuberType) => {
       const isFavorite
         = favoriteHubers
@@ -66,7 +65,6 @@ export default function Index() {
       return { ...item, isFavorite };
     });
   }, [items, favoriteHubers]);
-  console.log('hubersWithIsFavoriteStatus', hubersWithIsFavoriteStatus);
 
   const handleLoadMore = () => {
     if (hasNextPage) {

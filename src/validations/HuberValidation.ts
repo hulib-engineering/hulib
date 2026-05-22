@@ -16,7 +16,7 @@ export const HuberStep1Validation = (t: any) => {
           id: z.number(),
         }),
       )
-      .default([]),
+      .min(1, t('validation.topics_required')),
     isConfirmed: z.boolean().refine(val => val, {
       message: t('validation.terms_required'),
     }),

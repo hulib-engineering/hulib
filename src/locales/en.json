@@ -43,7 +43,7 @@
     }
   },
   "Footer": {
-    "copyright": "© 2025 HuLib. All rights reserved.",
+    "copyright": "© 2026 HuLib. All rights reserved.",
     "privacy_policy": "privacy policy",
     "term_of_service": "term of service",
     "community_guidelines": "community guidelines"
@@ -60,7 +60,7 @@
     "help": "Help",
     "contact": "Contact",
     "join_our_social_community": "JOIN OUR SOCIAL COMMUNITY",
-    "copy_right": "Copyright © 2024 HuLib Website. All rights reserved."
+    "copy_right": "Copyright © 2026 HuLib Website. All rights reserved."
   },
   "Index": {
     "meta_title": "HuLib | Landing Page",
@@ -512,17 +512,21 @@
     "explore_hubers": "Your favorite list is empty! Browse hubers and mark your favorites to keep them handy."
   },
   "HumanBookRegister": {
-    "select_topics": "What do you want to tag Huber as? (Optional)",
+    "select_topics": "What do you want to tag Huber as?",
     "placeholder_topics": "Search topics...",
     "add_more_topics": "Add more topics...",
     "creating": "Creating...",
     "add_new": "Add new",
-    "all_topics_selected": "All topics selected",
+    "all_topics_selected": "No results found.",
     "Step2": {
       "title": "Register as a Huber"
     },
     "validation": {
-      "invalid_url": "Invalid URL link. Check link and try again"
+      "invalid_url": "Invalid URL link. Check link and try again",
+      "bio_required": "Bio is required",
+      "terms_required": "Please accept the terms and conditions",
+      "topics_required": "Please select at least one topic",
+      "time_slots_required": "Please select at least one time slot"
     },
     "bio": {
       "text": "Bio",
@@ -535,6 +539,7 @@
     "read_community": "Read community guideline",
     "confirm": "I confirm that I have read and understood the terms and conditions of Hulib, and I agree to be bound by them.",
     "cancel": "Cancel",
+    "back": "Back",
     "next": "Next",
     "step_1_title": "Register as a Huber",
     "general": "General"
@@ -561,7 +566,8 @@
     "available_time_slots": "My available slots",
     "available_time_slots_description": "Wow below are slots you chose",
     "update_time_slots": "Update My Slots",
-    "success_time_slots_description": "You have successfully created your time slots"
+    "success_time_slots_description": "You have successfully created your time slots",
+    "error_contact_admin": "An error occurred, please contact admin for support!"
   },
   "Meeting": {
     "survey_submitted_successfully": "Survey is submitted successfully. Hope you to have a good time with Huber",
@@ -630,11 +636,20 @@
   "Common": {
     "error_contact_admin": "An error occurred, please contact admin for support!",
     "update_successfully": "Update successfully",
-    "create_first_story": "Create your first story",
+    "create_first_story": "Create First Story",
     "topics": "Topics",
     "title": "Title",
     "abstract": "Abstract",
     "cover_picture": "Cover picture",
+    "edit_cover": "Customize cover",
+    "cover_font": "Font",
+    "cover_font_size": "Font size",
+    "cover_text_color": "Text color",
+    "cover_background_color": "Background color",
+    "cover_preview": "Preview",
+    "increase_font_size": "Increase font size",
+    "decrease_font_size": "Decrease font size",
+    "done": "Done",
     "custom": "Custom",
     "style": "Style",
     "back": "Back",
@@ -642,9 +657,10 @@
     "submit": "Submit",
     "placeholder_title": "Please enter the title of your story",
     "placeholder_abstract": "Please enter the abstract of your story",
-    "title_notification": "Summited",
-    "notification": "Thanks for your story! HuLib will keep you informed when our process completes. We look forward to your participation as a Huber!",
-    "btn_name_notification": "Explore",
+    "title_notification": "Submitted",
+    "notification": "\"Thanks for your story! HuLib will keep you informed when our process completes. We look forward to your participation as a Huber!\"",
+    "btn_name_notification": "Explore Other Stories",
+    "mobile_btn_name_notification": "Explore",
     "back_to_home": "Back to Homepage",
     "placeholder": "Placeholder",
     "location": "Location"

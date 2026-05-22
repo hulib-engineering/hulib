@@ -197,7 +197,7 @@ const FooterWebApp = () => {
           </div>
 
           <p className="border-t border-solid border-neutral-90 bg-white py-5 text-center text-sm leading-4 text-neutral-30">
-            Copyright © 2025 HuLib Website. All rights reserved.
+            Copyright © 2026 HuLib Website. All rights reserved.
           </p>
         </footer>
 

@@ -19,7 +19,7 @@ import { Spinner } from '@/components/loadingState/Spinner';
 import { ProfileCover } from '@/components/ProfileCover';
 import { ActionOnUserModal } from '@/layouts/admin/ActionOnUserModal';
 import AboutPanel from '@/layouts/profile/AboutPanel';
-import MyStoriesPanel from '@/layouts/profile/MyStoriesPanel';
+import MyStoriesPanel from '@/app/[locale]/(auth)/users/[id]/_components/MyStoriesPanel';
 import UserActivityList from '@/layouts/profile/UserActivityList';
 import { useUnbanUserMutation, useUnwarnUserMutation } from '@/libs/services/modules/moderation';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
@@ -143,10 +143,9 @@ export default function Index() {
           <div className="relative size-full">
             <Button
               variant="ghost"
-              size="lg"
               iconLeft={<ArrowLeft />}
               className="absolute inset-0 w-fit text-black"
-              onClick={() => router.push('/admin/home')}
+              onClick={() => router.push('/admin/users')}
             >
               Back
             </Button>

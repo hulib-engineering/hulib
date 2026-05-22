@@ -24,7 +24,7 @@ export const ROLE_NAME = {
 
 export enum StatusEnum {
   Finished = 'finished',
-  Pending = 'pending',
+  Pending = 'Pending',
   Canceled = 'canceled',
   Rejected = 'rejected',
   Approved = 'approved',
