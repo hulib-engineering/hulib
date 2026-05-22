@@ -48,7 +48,6 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHube
   });
 
   const groupingTimeslots = useTimeslotGrouping(timeSlots, tz);
-  console.log('groupingTimeslots', groupingTimeslots);
 
   const [currentDate, setCurrentDate] = useState(today);
   const [selectedDate, setSelectedDate] = useState(today);

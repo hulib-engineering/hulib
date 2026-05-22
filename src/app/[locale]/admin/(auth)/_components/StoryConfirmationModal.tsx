@@ -71,7 +71,7 @@ export default function StoryConfirmationModal({
     onClose();
     setIsSuccessful(false);
     setRejectionReason('');
-    router.push('/admin/home');
+    router.push('/admin/awaiting-stories');
   };
 
   return (
