@@ -51,7 +51,7 @@ export default function Index() {
         size="lg"
         iconLeft={<ArrowLeft />}
         className="w-fit text-black"
-        onClick={() => router.push('/admin/home')}
+        onClick={() => router.push('/admin/awaiting-stories')}
       >
         Back to Awaiting approval - Stories
       </Button>

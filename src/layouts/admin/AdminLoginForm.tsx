@@ -52,7 +52,7 @@ export default function AdminLoginForm() {
           id: result.user.id,
           accessToken: result.token,
           role: result.user.role.name,
-          callbackUrl: `${window.location.origin}/admin/home`,
+          callbackUrl: `${window.location.origin}/admin/awaiting-stories`,
         });
       }
     } catch {
