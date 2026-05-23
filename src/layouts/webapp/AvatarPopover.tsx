@@ -31,6 +31,7 @@ export default function AvatarPopover() {
   const userInfo = useAppSelector((state) => state.auth.userInfo)
   const id = userInfo?.id
   const role = userInfo?.role
+  const fullName = userInfo?.fullName
   const avatarUrl = useAppSelector((state) => state.auth.avatarUrl)
 
   const AvatarPopoverMenuItems = useMemo(
