@@ -1,14 +1,12 @@
-import type { Config } from 'jest';
-import nextJest from 'next/jest';
+const nextJest = require('next/jest');
 
 const createJestConfig = nextJest({
-  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
   dir: './',
 });
 
 const esModules = ['@wavesurfer/react', 'swiper', 'lodash-es'].join('|');
 
-const customJestConfig: Config = {
+const customJestConfig = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@/public/(.*)$': '<rootDir>/public/$1',
@@ -39,9 +37,7 @@ const customJestConfig: Config = {
   ],
 };
 
-export default async (): Promise<Config> => {
-  return {
-    ...(await createJestConfig(customJestConfig)()),
-    transformIgnorePatterns: [`node_modules/(?!(${esModules})/)`],
-  };
-};
+module.exports = async () => ({
+  ...(await createJestConfig(customJestConfig)()),
+  transformIgnorePatterns: [`node_modules/(?!(${esModules})/)`],
+});

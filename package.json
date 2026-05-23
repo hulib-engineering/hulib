@@ -66,6 +66,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.2",
     "react-jwt": "^1.3.0",
+    "react-nice-avatar": "^1.5.0",
     "react-pageflip": "^2.0.3",
     "react-password-checklist": "^1.8.1",
     "react-popper": "^2.3.0",
@@ -82,6 +83,7 @@
     "ts-api-utils": "^2.5.0",
     "use-deep-compare": "^1.3.0",
     "use-deep-compare-effect": "^1.8.1",
+    "wavesurfer.js": "^7.12.6",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -123,7 +125,6 @@
     "encoding": "^0.1.13",
     "eslint": "^8.57.1",
     "eslint-plugin-format": "^0.1.2",
-    "eslint-plugin-jest": "^27.6.0",
     "eslint-plugin-jest-dom": "^5.4.0",
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "eslint-plugin-playwright": "^1.6.2",
