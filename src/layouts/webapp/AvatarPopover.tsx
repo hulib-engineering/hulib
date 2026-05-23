@@ -8,31 +8,32 @@ import {
   Pencil,
   SignOut,
   UserCircle,
-} from '@phosphor-icons/react'
-import Link from 'next/link'
-import { signOut } from 'next-auth/react'
-import { useLocale, useTranslations } from 'next-intl'
-import React, { useMemo } from 'react'
+} from '@phosphor-icons/react';
+import Link from 'next/link';
+import { signOut } from 'next-auth/react';
+import { useLocale, useTranslations } from 'next-intl';
+import React, { useMemo } from 'react';
+import NiceAvatar, { genConfig } from 'react-nice-avatar';
 
-import NiceAvatar, { genConfig } from 'react-nice-avatar'
-
-import Avatar from '@/components/core/avatar/Avatar'
-import MenuItem from '@/components/core/menuItem/MenuItem'
-import Popover from '@/components/core/popover/Popover'
+import Avatar from '@/components/core/avatar/Avatar';
+import MenuItem from '@/components/core/menuItem/MenuItem';
+import Popover from '@/components/core/popover/Popover';
 // import { LocaleSwitcher } from '@/components/LocaleSwitcher';
-import { useAppSelector } from '@/libs/hooks'
-import { Role } from '@/types/common'
-import { Env } from '@/libs/Env.mjs'
+import { useAppSelector } from '@/libs/hooks';
+import { Role } from '@/types/common';
+import { Env } from '@/libs/Env.mjs';
 
 export default function AvatarPopover() {
-  const currentLocale = useLocale()
-  const t = useTranslations('HeaderWebApp')
+  const currentLocale = useLocale();
 
-  const userInfo = useAppSelector((state) => state.auth.userInfo)
-  const id = userInfo?.id
-  const role = userInfo?.role
-  const fullName = userInfo?.fullName
-  const avatarUrl = useAppSelector((state) => state.auth.avatarUrl)
+  const t = useTranslations('HeaderWebApp');
+
+  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const id = userInfo?.id;
+  const role = userInfo?.role;
+  const fullName = userInfo?.fullName;
+
+  const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
 
   const AvatarPopoverMenuItems = useMemo(
     () => [
@@ -87,18 +88,18 @@ export default function AvatarPopover() {
           }),
       },
     ],
-    [id, role?.id, t],
-  )
+    [currentLocale, id, role?.id, t],
+  );
   const AvatarPopoverMenuItemsByRole = useMemo(() => {
     return (
       AvatarPopoverMenuItems.filter((item) => {
         if (item?.roles) {
-          return item.roles.includes(role?.id as Role)
+          return item.roles.includes(role?.id as Role);
         }
-        return true
+        return true;
       }) || []
-    )
-  }, [AvatarPopoverMenuItems, role?.id])
+    );
+  }, [AvatarPopoverMenuItems, role?.id]);
 
   return (
     <Popover position="bottom-end" className="h-full w-11">
@@ -132,9 +133,9 @@ export default function AvatarPopover() {
       <Popover.Panel className="flex flex-col gap-1 p-2">
         {({ open = false, close }) => (
           <div data-testid="popover-content">
-            {AvatarPopoverMenuItemsByRole.map((item, index) =>
+            {AvatarPopoverMenuItemsByRole.map(item =>
               item.href ? (
-                <Link href={item.href} key={index} onClick={close}>
+                <Link href={item.href} key={item.label} onClick={close}>
                   <MenuItem>
                     {item.icon}
                     <MenuItem.Title className="leading-4 text-neutral-10">
@@ -144,12 +145,12 @@ export default function AvatarPopover() {
                 </Link>
               ) : (
                 <MenuItem
-                  key={index}
+                  key={item.label}
                   onClick={() => {
                     if (open) {
-                      close()
+                      close();
                     }
-                    item.onClick?.()
+                    item.onClick?.();
                   }}
                 >
                   {item.icon}
@@ -164,5 +165,5 @@ export default function AvatarPopover() {
         )}
       </Popover.Panel>
     </Popover>
-  )
+  );
 }
