@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
+import NiceAvatar, { genConfig } from 'react-nice-avatar';
+
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
@@ -30,6 +32,7 @@ const HuberCard = (
   const [removeFromMyFavorites, { isLoading: isRemovingFromMyFavorites }] = useRemoveHuberFromMyFavoritesMutation();
 
   const [isFavorite, setIsFavorite] = useState(props.isFavorite);
+  const avatarConfig = genConfig(props.fullName ?? String(props.id ?? 'huber'));
 
   const handleAddToMyFavorites = async () => {
     try {
@@ -51,14 +54,23 @@ const HuberCard = (
     <div className="flex flex-col gap-2">
       {!isHuber ? (
         <div className="relative w-full overflow-hidden rounded-[32px] bg-neutral-90">
-          <Image
-            src={props.photo?.path ?? '/assets/images/ava-placeholder.png'}
-            alt="User Avatar"
-            width={270}
-            height={270}
-            className="aspect-[1/1] h-auto w-full rounded-[32px] object-cover"
-            unoptimized
-          />
+          {props.photo?.path
+            ? (
+                <Image
+                  src={props.photo.path}
+                  alt="User Avatar"
+                  width={270}
+                  height={270}
+                  className="aspect-[1/1] h-auto w-full rounded-[32px] object-cover"
+                  unoptimized
+                />
+              )
+            : (
+                <NiceAvatar
+                  className="aspect-square w-full rounded-[32px]"
+                  {...avatarConfig}
+                />
+              )}
           {props.awaiting && (
             <div className="absolute bottom-2 left-0 flex w-full items-center justify-center">
               <span className="rounded-full bg-primary-60 px-4 py-2 text-xs leading-[14px] text-white">Waiting for approval</span>
@@ -67,14 +79,23 @@ const HuberCard = (
         </div>
       ) : (
         <div className="group relative w-full overflow-hidden rounded-[32px] bg-neutral-90">
-          <Image
-            src={props.photo?.path ?? '/assets/images/ava-placeholder.png'}
-            alt="Huber Avatar"
-            width={270}
-            height={270}
-            className="aspect-[1/1] h-auto w-full rounded-[32px] object-cover"
-            unoptimized
-          />
+          {props.photo?.path
+            ? (
+                <Image
+                  src={props.photo.path}
+                  alt="Huber Avatar"
+                  width={270}
+                  height={270}
+                  className="aspect-[1/1] h-auto w-full rounded-[32px] object-cover"
+                  unoptimized
+                />
+              )
+            : (
+                <NiceAvatar
+                  className="aspect-square w-full rounded-[32px]"
+                  {...avatarConfig}
+                />
+              )}
 
           <div className="absolute bottom-0 left-0 hidden h-[140px] w-full bg-gradient-to-b from-[#343330]/0 to-[#343330] bg-blend-multiply lg:group-hover:block" />
 

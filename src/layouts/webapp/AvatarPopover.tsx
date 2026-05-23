@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
 import React, { useMemo } from 'react';
+import NiceAvatar, { genConfig } from 'react-nice-avatar';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import MenuItem from '@/components/core/menuItem/MenuItem';
@@ -24,11 +25,14 @@ import { Env } from '@/libs/Env.mjs';
 
 export default function AvatarPopover() {
   const currentLocale = useLocale();
+
   const t = useTranslations('HeaderWebApp');
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
   const id = userInfo?.id;
   const role = userInfo?.role;
+  const fullName = userInfo?.fullName;
+
   const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
 
   const AvatarPopoverMenuItems = useMemo(
@@ -78,12 +82,13 @@ export default function AvatarPopover() {
       {
         label: t('sign_out'),
         icon: <SignOut className="text-xl text-red-60" />,
-        onClick: () => signOut({
-          callbackUrl: `${Env.NEXT_PUBLIC_APP_URL}${currentLocale === 'vi' ? '' : '/en'}${role?.id === Role.ADMIN ? '/admin/auth/login' : '/auth/login'}`,
-        }),
+        onClick: () =>
+          signOut({
+            callbackUrl: `${Env.NEXT_PUBLIC_APP_URL}${currentLocale === 'vi' ? '' : '/en'}${role?.id === Role.ADMIN ? '/admin/auth/login' : '/auth/login'}`,
+          }),
       },
     ],
-    [id, role?.id, t],
+    [currentLocale, id, role?.id, t],
   );
   const AvatarPopoverMenuItemsByRole = useMemo(() => {
     return (
@@ -105,11 +110,21 @@ export default function AvatarPopover() {
         }}
       >
         <div className="relative size-11">
-          <Avatar
-            imageUrl={role?.id === Role.ADMIN
-              ? '/assets/images/admin-ava.png' : (avatarUrl || '/assets/images/ava-placeholder.png')}
-            className="size-11"
-          />
+          {role?.id === Role.ADMIN || avatarUrl ? (
+            <Avatar
+              imageUrl={
+                role?.id === Role.ADMIN
+                  ? '/assets/images/admin-ava.png'
+                  : avatarUrl
+              }
+              className="size-11"
+            />
+          ) : (
+            <NiceAvatar
+              className="size-11 rounded-full"
+              {...genConfig(fullName ?? String(id ?? 'huber'))}
+            />
+          )}
           <div className="absolute left-7 top-7 rounded-full border border-solid border-white bg-neutral-90 p-0.5">
             <CaretDown size={12} />
           </div>
@@ -118,30 +133,32 @@ export default function AvatarPopover() {
       <Popover.Panel className="flex flex-col gap-1 p-2">
         {({ open = false, close }) => (
           <div data-testid="popover-content">
-            {AvatarPopoverMenuItemsByRole.map((item, index) =>
-              item.href
-                ? (
-                    <Link href={item.href} key={index} onClick={close}>
-                      <MenuItem>
-                        {item.icon}
-                        <MenuItem.Title className="leading-4 text-neutral-10">{item.label}</MenuItem.Title>
-                      </MenuItem>
-                    </Link>
-                  )
-                : (
-                    <MenuItem
-                      key={index}
-                      onClick={() => {
-                        if (open) {
-                          close();
-                        }
-                        item.onClick?.();
-                      }}
-                    >
-                      {item.icon}
-                      <MenuItem.Title className="leading-4 text-red-60">{item.label}</MenuItem.Title>
-                    </MenuItem>
-                  ),
+            {AvatarPopoverMenuItemsByRole.map(item =>
+              item.href ? (
+                <Link href={item.href} key={item.label} onClick={close}>
+                  <MenuItem>
+                    {item.icon}
+                    <MenuItem.Title className="leading-4 text-neutral-10">
+                      {item.label}
+                    </MenuItem.Title>
+                  </MenuItem>
+                </Link>
+              ) : (
+                <MenuItem
+                  key={item.label}
+                  onClick={() => {
+                    if (open) {
+                      close();
+                    }
+                    item.onClick?.();
+                  }}
+                >
+                  {item.icon}
+                  <MenuItem.Title className="leading-4 text-red-60">
+                    {item.label}
+                  </MenuItem.Title>
+                </MenuItem>
+              ),
             )}
             {/* <LocaleSwitcher className="lg:hidden" /> */}
           </div>
@@ -149,4 +166,4 @@ export default function AvatarPopover() {
       </Popover.Panel>
     </Popover>
   );
-};
+}

@@ -3,23 +3,38 @@
 import { Heart } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import React from 'react';
 
 import type { Huber as THuber } from '@/libs/services/modules/huber/huberType';
 
 const RecommendedHuberCard = (props: Partial<THuber>) => {
   const t = useTranslations('Huber.card');
+  const router = useRouter();
+  const avatarConfig = genConfig(props.fullName ?? String(props.id ?? 'huber'));
 
   return (
-    <div className="flex flex-col gap-2">
-      <Image
-        src={props.photo?.path ?? '/assets/images/ava-placeholder.png'}
-        alt={props.fullName ?? 'Huber Avatar'}
-        width={140}
-        height={140}
-        className="size-[140px] rounded-[32px] object-cover lg:size-40"
-        unoptimized
-      />
+    <button
+      type="button"
+      className="flex cursor-pointer flex-col gap-2 text-left"
+      onClick={() => router.push(`/users/${props.id}`)}
+    >
+      {props.photo?.path ? (
+        <Image
+          src={props.photo.path}
+          alt={props.fullName ?? 'Huber Avatar'}
+          width={140}
+          height={140}
+          className="size-[140px] rounded-[32px] object-cover lg:size-40"
+          unoptimized
+        />
+      ) : (
+        <NiceAvatar
+          className="size-[140px] rounded-[32px] lg:size-40"
+          {...avatarConfig}
+        />
+      )}
 
       <div className="flex flex-col gap-1">
         <p className="line-clamp-1 text-xs font-medium leading-[14px] text-primary-10 lg:text-base lg:leading-6">
@@ -49,7 +64,7 @@ const RecommendedHuberCard = (props: Partial<THuber>) => {
           </div>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
