@@ -125,7 +125,6 @@
     "encoding": "^0.1.13",
     "eslint": "^8.57.1",
     "eslint-plugin-format": "^0.1.2",
-    "eslint-plugin-jest": "^27.6.0",
     "eslint-plugin-jest-dom": "^5.4.0",
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "eslint-plugin-playwright": "^1.6.2",
