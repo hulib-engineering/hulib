@@ -763,10 +763,6 @@
     }
   },
   "Home": {
-    "banner": {
-      "title": "Xin chào!",
-      "sub_title": "Chào mừng bạn đến với nền tảng kết nối những tâm hồn đẹp"
-    },
     "newest_stories": {
       "title": "Câu chuyện mới nhất",
       "btn1": "Xem tất cả"
@@ -786,7 +782,8 @@
     },
     "short_descriptions": {
       "title": "Trở thành Huber của chúng tôi",
-      "btn": "Tham gia với tư cách Huber"
+      "btn": "Tham gia với tư cách Huber",
+      "subtitle": "Mô tả ngắn gọn"
     },
     "no_data": "Không có dữ liệu"
   },
