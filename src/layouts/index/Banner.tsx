@@ -20,7 +20,7 @@ export default function Banner() {
       {/* Desktop Banner */}
       <div className="relative hidden aspect-[1440/94] w-full overflow-hidden md:block">
         <Image
-          src="/assets/images/Banner.jpg"
+          src="/assets/images/banner.jpg"
           alt="Home Banner"
           fill
           className="object-cover object-center"
