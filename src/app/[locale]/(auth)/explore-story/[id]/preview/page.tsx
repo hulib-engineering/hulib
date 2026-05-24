@@ -9,6 +9,7 @@ import { useState } from 'react';
 
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { pushError } from '@/components/CustomToastifyContainer';
 import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
 import Label from '@/components/Label';
@@ -16,6 +17,7 @@ import Modal from '@/components/Modal';
 import { Cover } from '@/features/stories/components/Cover';
 import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
 import { DetailedStory } from '@/components/stories/DetailedStory';
+import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import StoryForm from '@/features/stories/components/StoryForm';
 import { useAppSelector } from '@/libs/hooks';
 import {
@@ -111,9 +113,11 @@ export default function Index() {
                   <div className="flex w-full snap-x snap-mandatory gap-2 overflow-x-auto scroll-smooth">
                     {(relatedTopics ?? []).map((topic: Topic) => (
                       <Chip
-                        className="h-fit w-full snap-start overflow-visible rounded-2xl bg-blue-90 p-2 text-xs leading-[14px] text-primary-50"
                         key={topic.id}
-                        disabled
+                        className={mergeClassnames(
+                          'h-fit snap-start overflow-visible rounded-2xl border p-2 text-xs leading-[14px]',
+                          getTopicBadgeClasses(topic.color),
+                        )}
                       >
                         {topic.name}
                       </Chip>

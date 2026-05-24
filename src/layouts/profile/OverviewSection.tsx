@@ -12,6 +12,7 @@ import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';
 import type { User } from '@/features/users/types';
+import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { Role } from '@/types/common';
 import { toLocaleDateString } from '@/utils/dateUtils';
@@ -75,7 +76,11 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
             {data?.humanBookTopic?.map(topic => (
               <Chip
                 key={topic?.topicId}
-                className="h-full rounded-2xl border border-primary-80 bg-primary-90 p-2 text-xs font-medium leading-[14px] text-primary-60"
+                as="span"
+                className={mergeClassnames(
+                  'h-full rounded-2xl border p-2 text-xs font-medium leading-[14px]',
+                  getTopicBadgeClasses(topic?.topic?.color),
+                )}
               >
                 {topic?.topic?.name}
               </Chip>
