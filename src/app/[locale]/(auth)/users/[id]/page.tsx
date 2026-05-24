@@ -126,7 +126,7 @@ export default function Index() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-[1216px] flex-1 flex-col pt-3 lg:w-5/6 lg:gap-5 lg:pb-12">
+    <div className="mx-auto flex w-full flex-1 flex-col pt-3 lg:gap-5 lg:pb-12 xl:max-w-[1216px]">
       <div className="flex flex-col overflow-hidden shadow-sm lg:rounded-b-xl">
         <ProfileCover imageUrl={userDetail?.cover?.path} className="h-[100px] lg:h-[283px]">
           {!notMe && (
