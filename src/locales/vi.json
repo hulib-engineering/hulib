@@ -763,10 +763,6 @@
     }
   },
   "Home": {
-    "banner": {
-      "title": "Welcome to a platform that connects",
-      "sub_title": "unique souls and Youth voices"
-    },
     "newest_stories": {
       "title": "Câu chuyện mới nhất",
       "btn1": "Xem tất cả"
