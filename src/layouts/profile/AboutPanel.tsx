@@ -91,7 +91,7 @@ const AboutPanel = ({
   ];
 
   return (
-    <div className="mx-auto w-full max-w-[1216px] overflow-visible bg-white lg:rounded-xl lg:shadow-sm">
+    <div className="w-full overflow-visible bg-white lg:rounded-xl lg:shadow-sm">
       {/* Mobile View - Accordion Style */}
       <div className="flex w-full flex-col rounded-xl border-neutral-90 px-5 py-4 lg:hidden">
         <div className="px-3 py-1 font-medium leading-5 text-neutral-10">
