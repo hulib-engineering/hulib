@@ -8,13 +8,15 @@ import { useState } from 'react';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
+import { Chip } from '@/components/core/chip/Chip';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { IndexStoryListSectionLayout } from '@/components/home/IndexStoryListCommonLayout';
 import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
 import { Cover } from '@/features/stories/components/Cover';
 import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
 import { DetailedStory } from '@/components/stories/DetailedStory';
 import StoryReviewsWithOverview from '@/layouts/stories/StoryReviewsWithOverview';
-import { TopicChip } from '@/layouts/webapp/ChipFilter';
+import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import {
   useGetReviewsOverviewQuery,
   useGetSimilarStoriesQuery,
@@ -114,15 +116,19 @@ export default function Index() {
                     </p>
                   </div>
                 </div>
-                <div className="hidden w-auto gap-2 overflow-x-auto scroll-smooth py-1 lg:flex">
+                <div className="scrollbar-none hidden w-auto gap-2 overflow-x-auto scroll-smooth py-1 lg:flex">
                   {data?.topics.map((topic: Topic) => (
-                    <TopicChip
-                      className="border-none bg-blue-90 text-primary-50"
+                    <Chip
                       key={topic.id}
-                      isActive
+                      as="span"
+                      className={mergeClassnames(
+                        'h-8 min-w-0 shrink-0 overflow-visible whitespace-nowrap rounded-2xl border py-1 px-2 lg:py-2',
+                        'text-xs font-medium leading-[14px] lg:text-sm lg:font-normal lg:leading-4',
+                        getTopicBadgeClasses(topic.color),
+                      )}
                     >
                       {topic.name}
-                    </TopicChip>
+                    </Chip>
                   ))}
                 </div>
               </div>
