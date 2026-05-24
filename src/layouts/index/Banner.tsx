@@ -1,13 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import React from 'react';
 
 export default function Banner() {
   return (
     <div className="relative left-1/2 -mt-4 mb-2 flex w-screen items-center justify-center -translate-x-1/2 sm:-mt-6 sm:mb-3 md:-mt-8 md:mb-4">
       {/* Mobile Banner */}
-      <div className="relative h-20 w-full sm:hidden">
+      <div className="relative aspect-[430/94] w-full overflow-hidden md:hidden">
         <Image
           src="/assets/images/banner-mb.jpg"
           alt="Home Banner Mobile"
@@ -19,9 +18,9 @@ export default function Banner() {
       </div>
 
       {/* Desktop Banner */}
-      <div className="relative hidden h-[94px] w-full sm:block">
+      <div className="relative hidden aspect-[1440/94] w-full overflow-hidden md:block">
         <Image
-          src="/assets/images/banner-new.png"
+          src="/assets/images/Banner.jpg"
           alt="Home Banner"
           fill
           className="object-cover object-center"
