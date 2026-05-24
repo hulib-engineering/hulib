@@ -137,7 +137,7 @@ export default function Index() {
   };
 
   return (
-    <div className="-mt-8 flex w-full flex-col xl:gap-5">
+    <div className="mx-auto -mt-8 flex w-full max-w-[1216px] flex-col xl:gap-5">
       <div className="flex flex-col overflow-hidden shadow-sm lg:rounded-b-xl">
         <ProfileCover imageUrl={data?.cover?.path} className="h-[100px] xl:h-[283px]">
           <div className="relative size-full">
