@@ -5,12 +5,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
-
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import type { Huber as THuber } from '@/libs/services/modules/huber/huberType';
 import { useAddHuberToMyFavoritesMutation, useRemoveHuberFromMyFavoritesMutation } from '@/libs/services/modules/user';
 
@@ -73,7 +74,9 @@ const HuberCard = (
               )}
           {props.awaiting && (
             <div className="absolute bottom-2 left-0 flex w-full items-center justify-center">
-              <span className="rounded-full bg-primary-60 px-4 py-2 text-xs leading-[14px] text-white">Waiting for approval</span>
+              <span className="rounded-full bg-primary-60 px-4 py-2 text-xs leading-[14px] text-white">
+                Waiting for approval
+              </span>
             </div>
           )}
         </div>
@@ -104,26 +107,8 @@ const HuberCard = (
           </div>
 
           {props.sharingTopics && (
-            <div className="absolute inset-0 flex h-fit items-center gap-2 p-4 lg:hidden lg:group-hover:flex">
-              {props.sharingTopics.map((topic, index) => {
-                const colors = [
-                  {
-                    backgroundColor: 'rgba(217, 249, 207, 1)',
-                    borderColor: 'rgba(178, 243, 159, 1)',
-                  },
-                  {
-                    backgroundColor: 'rgba(255, 228, 241, 1)',
-                    borderColor: 'rgba(255, 201, 227, 1)',
-                  },
-                  {
-                    backgroundColor: 'rgba(205, 221, 254, 1)',
-                    borderColor: 'rgba(132, 172, 252, 1)',
-                  },
-                ];
-
-                const colorIndex = index % colors.length;
-                const tagColor = colors[colorIndex];
-
+            <div className="absolute inset-0 flex h-fit flex-wrap gap-2 p-4 lg:hidden lg:group-hover:flex">
+              {props.sharingTopics.map((topic) => {
                 if (!props.humanBookTopic || props.humanBookTopic.length === 0) {
                   return null;
                 }
@@ -131,13 +116,12 @@ const HuberCard = (
                 return (
                   <span
                     key={topic.id}
-                    className="rounded-full px-3 py-2 text-xs font-medium leading-[14px] text-opacity-80"
-                    style={{
-                      backgroundColor: tagColor?.backgroundColor,
-                      border: `1px solid ${tagColor?.borderColor}`,
-                    }}
+                    className={mergeClassnames(
+                      'inline-flex max-w-full items-center overflow-hidden rounded-full border px-3 py-2 text-xs font-medium leading-[14px]',
+                      getTopicBadgeClasses(topic.color),
+                    )}
                   >
-                    {topic.name}
+                    <span className="truncate">{topic.name}</span>
                   </span>
                 );
               })}
@@ -179,7 +163,6 @@ const HuberCard = (
           {!props.awaiting ? (
             <>
               <Button
-                size="lg"
                 fullWidth
                 className="hidden lg:flex"
                 onClick={() => router.push(`${props.showAdminControls ? '/admin' : ''}/users/${props.id}`)}
@@ -191,7 +174,6 @@ const HuberCard = (
               </Button>
               <Button
                 variant="secondary"
-                size="lg"
                 fullWidth
                 className="lg:hidden"
                 onClick={() => router.push(`${props.showAdminControls ? '/admin' : ''}/users/${props.id}`)}
@@ -204,7 +186,6 @@ const HuberCard = (
             </>
           ) : (
             <Button
-              size="lg"
               fullWidth
               onClick={() => router.push(`/admin/users/${props.id}/approval`)}
             >

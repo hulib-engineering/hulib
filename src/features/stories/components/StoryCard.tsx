@@ -5,15 +5,17 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useRef, useState } from 'react';
 
-import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import { DEFAULT_STORY_COVER_ASSET } from '../constants';
+
+import AnimatedCover from './AnimatedCover';
+import { Cover } from './Cover';
+
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
 import Modal from '@/components/Modal';
-import { Cover } from '@/features/stories/components/Cover';
-import AnimatedCover from '@/features/stories/components/AnimatedCover';
-import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
+import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import { renderHighlightedText } from '@/features/stories/utils/renderHighlightedText';
 import StoryForm from '@/features/stories/components/StoryForm';
 import { useDeleteStoryMutation } from '@/libs/services/modules/stories';
@@ -21,6 +23,7 @@ import type { Story as TStory } from '@/libs/services/modules/stories/storiesTyp
 import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
 import { useAddStoryToMyFavoritesMutation, useRemoveStoryFromMyFavoritesMutation } from '@/libs/services/modules/user';
 import { useMobile } from '@/libs/hooks';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 
 type IStoryCardProps = {
   data: TStory;
@@ -196,7 +199,11 @@ export const StoryCard = ({
                     {data.topics?.map(topic => (
                       <Chip
                         key={topic.id}
-                        className="h-full min-w-0 shrink-0 overflow-visible whitespace-nowrap rounded-2xl bg-primary-90 px-2 py-1 text-[10px] leading-3 text-primary-50"
+                        as="span"
+                        className={mergeClassnames(
+                          'h-full min-w-0 shrink-0 overflow-visible whitespace-nowrap rounded-2xl border px-2 py-1 text-[10px] leading-3',
+                          getTopicBadgeClasses(topic.color),
+                        )}
                       >
                         {topic.name}
                       </Chip>
@@ -276,7 +283,12 @@ export const StoryCard = ({
                 {data.topics?.map(topic => (
                   <Chip
                     key={topic.id}
-                    className="h-auto shrink-0 overflow-visible whitespace-nowrap rounded-2xl bg-primary-90 px-2 py-1 text-xs leading-[14px] text-primary-50 md:py-2"
+                    as="span"
+                    className={mergeClassnames(
+                      'h-auto shrink-0 overflow-visible whitespace-nowrap rounded-2xl px-2 py-1 text-xs leading-[14px] md:py-2',
+                      'border',
+                      getTopicBadgeClasses(topic.color),
+                    )}
                   >
                     {topic.name}
                   </Chip>
