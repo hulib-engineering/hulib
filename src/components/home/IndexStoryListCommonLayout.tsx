@@ -62,7 +62,7 @@ const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) =
   return (
     <div className={mergeClassnames(
       'flex w-full flex-col gap-4 px-4 py-4 shadow-sm bg-white',
-      'lg:gap-8 lg:py-5 lg:shadow-none lg:bg-transparent',
+      'lg:gap-8 lg:py-5 lg:shadow-none lg:bg-transparent xl:px-0',
       props.showFilter && 'gap-4',
       props.containerClassName,
     )}
@@ -89,8 +89,8 @@ const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) =
       <div
         className={mergeClassnames(
           'grid grid-cols-1 gap-5 rounded-lg',
-          'md:grid-cols-[repeat(2,392px)]',
-          'xl:grid-cols-[repeat(3,392px)] xl:justify-center',
+          'md:grid-cols-[repeat(2,392px)] md:justify-center',
+          'xl:grid-cols-[repeat(3,392px)]',
         )}
       >
         {storiesWithFav?.map(item => (
