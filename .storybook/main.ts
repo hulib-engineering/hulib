@@ -9,8 +9,8 @@ process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TE
 process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? 'mock';
 process.env.NEXT_PUBLIC_CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'mock@example.com';
 process.env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER = process.env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER ?? '1234567890';
-process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? 'mock-cloud-name';
-process.env.NEXT_PUBLIC_UPLOAD_PRESET = process.env.NEXT_PUBLIC_UPLOAD_PRESET ?? 'mock-upload-preset';
+process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? 'mockcl0ud9';
+process.env.NEXT_PUBLIC_UPLOAD_PRESET = process.env.NEXT_PUBLIC_UPLOAD_PRESET ?? 'mockpr3set9';
 process.env.NEXT_PUBLIC_AGORA_APP_ID = process.env.NEXT_PUBLIC_AGORA_APP_ID ?? 'mock';
 process.env.NEXT_PUBLIC_APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001';
 
