@@ -142,6 +142,14 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
   const { data } = useGetConversationQuery(currentOpeningChat?.id, {
     skip: !currentOpeningChat,
   });
+  const reversedData = data ? data.toReversed() : [];
+  const groupedMessages = groupMessagesByTime(reversedData);
+  const lastReadMessageId
+    = (data
+      && data?.filter(
+        (msg: TransformedMessage) => msg.direction === 'sent' && msg.isRead,
+      )[0]?.id)
+      ?? null;
 
   const handleReceiveMessage = useCallback(
     (payload: { id: number; from: number; to: number; msg: string; time: number }) => {
@@ -275,7 +283,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
         </Button>
       </div>
       <div className="flex flex-1 flex-col bg-green-98">
-        <div className="flex gap-4 border-t border-neutral-90 bg-white px-[13px] py-[11px] shadow-sm">
+        <div className="flex gap-4 border-neutral-90 bg-white px-[13px] py-[11px] shadow-sm md:border-t">
           <Avatar size="lg" imageUrl={currentOpeningChat?.avatarUrl}>
             <Avatar.Status>
               <StatusBadge onLine={isOnline} />
@@ -287,38 +295,54 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
         </div>
         <div
           ref={messageContainerRef}
-          className="flex max-h-screen flex-1 flex-col-reverse overflow-y-auto"
+          className="flex flex-1 flex-col-reverse overflow-y-auto"
         >
-          {data && data.map((each: TransformedMessage) => {
-            if (each.chatType === 'img') {
+          {groupedMessages.reverse().map((item, index) => {
+            if (item.type === 'separator') {
               return (
                 <div
-                  key={each.id}
-                  id={`msg-${each.id}`}
+                  key={`separator-${index}`}
+                  className="py-2 text-center text-sm leading-5 text-neutral-30"
+                >
+                  {item.label}
+                </div>
+              );
+            }
+
+            const { message } = item;
+            if (message.chatType === 'img') {
+              return (
+                <div
+                  key={message.id}
+                  id={`msg-${message.id}`}
                   className={mergeClassnames(
                     'flex',
-                    each.direction === 'sent' ? 'justify-end' : 'justify-start',
+                    message.direction === 'sent' ? 'justify-end' : 'justify-start',
                   )}
                 >
                   <Image
-                    alt={`Sticker ${each.msg}`}
+                    alt={`Sticker ${message.msg}`}
                     width={120}
                     height={120}
                     className="size-[120px] object-contain"
-                    src={each.stickerUrl ?? ''}
+                    src={message.stickerUrl ?? ''}
                   />
                 </div>
               );
             }
             return (
               <MessageItem
-                key={each.id}
-                id={`msg-${each.id}`}
-                type={each.direction}
+                key={message.id}
+                id={`msg-${message.id}`}
+                type={message.direction}
                 participantAvatarUrl={currentOpeningChat?.avatarUrl}
-                markedAsRead={each.direction === 'sent' && each.isRead}
+                markedAsRead={
+                  message.id === lastReadMessageId
+                  && message.direction === 'sent'
+                  && message.isRead
+                }
               >
-                {each.msg}
+                {message.msg}
               </MessageItem>
             );
           })}

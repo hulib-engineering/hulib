@@ -107,12 +107,12 @@ const MainTemplate = (props: WithChildren) => {
       >
         <div className="flex size-full flex-col">
           <Header />
-          <main className="flex-1 overflow-y-auto bg-neutral-98">
-            <div className="min-h-[calc(100vh-410px)] bg-neutral-98">
+          <main className={mergeClassnames('flex-1 bg-neutral-98', !pathname.includes('messages') && 'overflow-y-auto')}>
+            <div className={mergeClassnames('bg-neutral-98', pathname.includes('messages') ? 'h-full' : 'min-h-[calc(100vh-410px)]')}>
               {props.children}
             </div>
 
-            <FooterWebApp />
+            {!pathname.includes('messages') && <FooterWebApp />}
           </main>
           {!pathname.includes('messages') && <MessengerWidget />}
         </div>
