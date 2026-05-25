@@ -173,7 +173,10 @@ export default function Index() {
                 {userDetail?.role?.id === Role.HUBER && (
                   <div className="flex items-center gap-2">
                     <Heart className="text-pink-50" weight="fill" />
-                    <p className="text-sm text-black opacity-80">/5 (hearts)</p>
+                    <p className="text-sm text-black opacity-80">
+                      {userDetail?.rating ?? 0}
+                      /5 (hearts)
+                    </p>
                   </div>
                 )}
               </div>
