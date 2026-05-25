@@ -34,6 +34,7 @@ export type User = {
   };
   file: any | null;
   photo?: { id: string; path: string };
+  rating?: number | null;
   humanBookTopic: {
     userId: number;
     topicId: number;
