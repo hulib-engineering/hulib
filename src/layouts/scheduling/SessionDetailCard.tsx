@@ -192,7 +192,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
             {session.sessionStatus === StatusEnum.Approved && (
               <div className="mt-2 flex items-center gap-2 text-black">
                 <MapPinArea className="text-[#343330]" />
-                {session.sessionUrl !== ''
+                {session.sessionUrl
                   ? (
                       <Link
                         href={session.sessionUrl}
@@ -206,7 +206,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
             {session.sessionStatus === StatusEnum.Finished && (
               <div className="mt-2 flex items-center gap-2 text-black">
                 <FilmReel className="text-sm text-neutral-10" width={140} />
-                {session.recordingUrl !== ''
+                {session.recordingUrl
                   ? (
                       <Link
                         href={session.recordingUrl}
