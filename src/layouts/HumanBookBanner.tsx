@@ -41,7 +41,7 @@ const HumanBookBanner = () => {
   }, [isUserLoggedInButTokenHasExpired]);
 
   return (
-    // eslint-disable-next-line tailwindcss/no-contradicting-classname
+
     <div className="relative animate-flashing bg-[linear-gradient(120deg,_#0442bf_30%,_#0858fa80_38%,_#0858fa80_40%,_#0442bf_48%)] bg-[length:200%_100%] bg-right-top">
       <div
         className={mergeClassnames(
