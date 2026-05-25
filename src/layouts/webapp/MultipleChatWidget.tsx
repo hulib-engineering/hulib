@@ -2,7 +2,7 @@
 
 import { Minus, X } from '@phosphor-icons/react';
 import Image from 'next/image';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { MessageItem, groupMessagesByTime } from './Messages/ChatDetail';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -120,10 +120,11 @@ type IChatWindowProps = {
 };
 
 const ChatWindow = (props: IChatWindowProps) => {
-  const { data: isOnline } = useGetUserOnlineStatusQuery(props.id, {
+  const { id, onMarkAsRead } = props;
+  const { data: isOnline } = useGetUserOnlineStatusQuery(id, {
     pollingInterval: 10 * 60 * 1000,
   });
-  const { data } = useGetConversationQuery(props.id);
+  const { data } = useGetConversationQuery(id);
   const reversedData = data ? data.toReversed() : [];
   const groupedMessages = groupMessagesByTime(reversedData);
   const lastReadMessageId
@@ -135,55 +136,74 @@ const ChatWindow = (props: IChatWindowProps) => {
 
   const dispatch = useAppDispatch();
 
-  const messageContainerRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    const container = messageContainerRef.current;
-    if (!container || !data || !data[0] || data[0]?.direction !== 'received') {
-      return undefined;
+    const latestMessage = data?.[0];
+    if (!latestMessage || latestMessage.direction !== 'received') {
+      return;
     }
 
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+    const el = document.getElementById(`msg-${latestMessage.id}`);
+    if (!el) {
+      return;
+    }
 
-    const shouldMarkAsRead = () => {
-      const isScrollable = container.scrollHeight > container.clientHeight;
-      const atBottom = container.scrollTop <= 10;
-      if (!isScrollable || atBottom) {
-        // Delay slightly before marking as read
-        if (timeoutId) {
-          clearTimeout(timeoutId);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          onMarkAsRead();
+          dispatch(markAsRead(id));
+          observer.disconnect();
         }
-        timeoutId = setTimeout(() => {
-          props.onMarkAsRead();
-          dispatch(markAsRead(props.id));
-        }, 300);
-      } else if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
+      },
+      { threshold: 0 },
+    );
 
-    shouldMarkAsRead();
-
-    container.addEventListener('scroll', shouldMarkAsRead);
-
-    // Cleanup
-    return () => {
-      container.removeEventListener('scroll', shouldMarkAsRead);
-    };
-  }, [props.id, props.onMarkAsRead, dispatch, data, props]);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [data, id, onMarkAsRead, dispatch]);
 
   const handleMarkParticipantMessageAsRead = () => {
     dispatch(
       chatApi.util.invalidateTags([
-        { type: 'Messages', id: `LIST-${Number(props.id)}` },
+        { type: 'Messages', id: `LIST-${Number(id)}` },
       ]),
     );
   };
+  const handleReceiveMessage = useCallback(
+    (payload: { id: number; from: number; to: number; msg: string; time: number }) => {
+      if (payload.from !== Number(id)) {
+        return;
+      }
+      dispatch(
+        chatApi.util.updateQueryData(
+          'getConversation',
+          Number(id),
+          (draft) => {
+            if (draft.some(m => m.id === String(payload.id))) {
+              return;
+            }
+            draft.unshift({
+              id: String(payload.id),
+              from: payload.from,
+              to: payload.to,
+              msg: payload.msg,
+              chatType: 'txt',
+              time: new Date(payload.time).toISOString(),
+              direction: 'received' as const,
+              isRead: false,
+            });
+          },
+        ),
+      );
+    },
+    [id, dispatch],
+  );
 
   useSocket({
     namespace: 'chat',
     listeners: {
       read: handleMarkParticipantMessageAsRead,
+      receive: handleReceiveMessage,
     },
   });
 
@@ -225,7 +245,6 @@ const ChatWindow = (props: IChatWindowProps) => {
 
       {/* Messages */}
       <div
-        ref={messageContainerRef}
         className="flex flex-1 flex-col-reverse overflow-y-auto bg-green-98 p-3 text-xs leading-5 text-neutral-30"
       >
         {groupedMessages.reverse().map((item, index) => {
@@ -245,6 +264,7 @@ const ChatWindow = (props: IChatWindowProps) => {
             return (
               <div
                 key={message.id}
+                id={`msg-${message.id}`}
                 className={mergeClassnames(
                   'flex',
                   message.direction === 'sent'
@@ -266,6 +286,7 @@ const ChatWindow = (props: IChatWindowProps) => {
           return (
             <MessageItem
               key={message.id}
+              id={`msg-${message.id}`}
               type={message.direction}
               participantAvatarUrl={props.participant.avatarUrl}
               markedAsRead={
@@ -282,7 +303,7 @@ const ChatWindow = (props: IChatWindowProps) => {
 
       {/* Input */}
       <MessengerInput
-        onSend={(value, type) => props.onSend(props.id, value, type)}
+        onSend={(value, type) => props.onSend(id, value, type)}
       />
     </div>
   );
@@ -290,6 +311,7 @@ const ChatWindow = (props: IChatWindowProps) => {
 
 export default function MessengerWidget() {
   const chats = useAppSelector(state => state.messenger.chats);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
 
   const dispatch = useAppDispatch();
 
@@ -304,27 +326,46 @@ export default function MessengerWidget() {
       console.warn('Audio play blocked:', e);
     });
   };
-  const handleSendMessage = async (
-    id: string,
-    text: string,
-    type?: 'txt' | 'img',
-  ) => {
-    if (!text.trim()) {
-      return;
-    }
+  const handleSendMessage = useCallback(
+    async (id: string, text: string, type?: 'txt' | 'img') => {
+      if (!text.trim() || !userInfo) {
+        return;
+      }
 
-    if (!isConnected) {
-      console.warn('[Chat] Cannot send — not connected');
-      return;
-    }
-    emit('send', { recipientId: id, message: text, chatType: type ?? 'txt' });
+      if (!isConnected) {
+        console.warn('[Chat] Cannot send — not connected');
+        return;
+      }
 
-    dispatch(
-      chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${id}` }]),
-    );
+      dispatch(
+        chatApi.util.updateQueryData(
+          'getConversation',
+          Number(id),
+          (draft) => {
+            draft.unshift({
+              id: `-${Date.now()}`,
+              from: Number(userInfo.id),
+              to: Number(id),
+              msg: text,
+              chatType: type ?? 'txt',
+              time: new Date().toISOString(),
+              direction: 'sent' as const,
+              isRead: false,
+            });
+          },
+        ),
+      );
 
-    playSentMessageSound();
-  };
+      emit('send', { recipientId: id, message: text, chatType: type ?? 'txt' });
+
+      dispatch(
+        chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${id}` }]),
+      );
+
+      playSentMessageSound();
+    },
+    [isConnected, emit, dispatch, userInfo],
+  );
   const openChats = chats.filter(chat => chat.isOpen && !chat.isMinimized);
   const closedChats = chats.filter(chat => !chat.isOpen || chat.isMinimized);
   const handleMinimizeChat = (id: string) => {
