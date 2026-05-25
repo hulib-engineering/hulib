@@ -9,12 +9,14 @@ export default function MessagesPage() {
   const [showDetailOnMobile, setShowDetailOnMobile] = useState(false);
 
   return (
-    <>
+    <div className="flex h-full flex-1 flex-col overflow-hidden">
       {/* Mobile version (conditional view) */}
-      <div className="flex w-full flex-1 flex-col bg-neutral-98 lg:hidden">
-        <div className="px-5 py-2 text-xl font-bold leading-7">
-          <h6 className="">Your messages</h6>
-        </div>
+      <div className="flex size-full flex-col overflow-hidden bg-neutral-98 lg:hidden">
+        {!showDetailOnMobile && (
+          <div className="shrink-0 px-5 py-2 text-xl font-bold leading-7">
+            <h6>Your messages</h6>
+          </div>
+        )}
         {!showDetailOnMobile ? (
           <ChatList onConvoSelect={() => setShowDetailOnMobile(true)} />
         ) : (
@@ -26,9 +28,9 @@ export default function MessagesPage() {
       </div>
 
       {/* Desktop version (always both visible) */}
-      <div className="hidden size-full h-screen flex-1 lg:flex">
-        <div className="flex w-[25rem] flex-col border-r border-t border-neutral-90">
-          <div className="bg-white px-4 py-5 text-[28px] font-bold leading-9">
+      <div className="hidden size-full flex-1 overflow-hidden bg-neutral-98 lg:flex">
+        <div className="flex h-full w-[25rem] shrink-0 flex-col border-r border-t border-neutral-90 bg-white">
+          <div className="shrink-0 bg-white px-4 py-5 text-[28px] font-bold leading-9">
             <h4>Messages</h4>
           </div>
           <ChatList />
@@ -36,6 +38,6 @@ export default function MessagesPage() {
 
         <ChatDetail />
       </div>
-    </>
+    </div>
   );
 }
