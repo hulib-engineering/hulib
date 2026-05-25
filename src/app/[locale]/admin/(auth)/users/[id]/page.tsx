@@ -174,7 +174,10 @@ export default function Index() {
                 {isHuber && (
                   <div className="flex items-center gap-2">
                     <Heart className="text-pink-50" weight="fill" />
-                    <p className="text-sm text-black opacity-80">/5 (hearts)</p>
+                    <p className="text-sm text-black opacity-80">
+                      {data?.rating ?? 0}
+                      /5 (hearts)
+                    </p>
                   </div>
                 )}
               </div>
