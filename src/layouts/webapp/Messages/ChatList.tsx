@@ -159,7 +159,7 @@ export default function ChatList({ onConvoSelect }: { onConvoSelect?: () => void
           onChange={event => setQString(event.target.value)}
         />
       </div>
-      <div className="flex flex-1 flex-col overflow-y-auto">
+      <div className="flex flex-1 flex-col overflow-y-auto bg-white">
         {filteredConversations.map((contact: Contact) => (
           <ContactItem
             key={contact.participant.id}
