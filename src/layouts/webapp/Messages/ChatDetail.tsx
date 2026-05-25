@@ -9,7 +9,7 @@ import {
   isYesterday,
 } from 'date-fns';
 import Image from 'next/image';
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
@@ -70,17 +70,20 @@ export function groupMessagesByTime(
   return result;
 }
 
-export const MessageItem = ({
+export const MessageItem = React.memo(({
   type,
   participantAvatarUrl,
   markedAsRead = false,
+  id,
   children,
 }: WithChildren<{
   type: 'sent' | 'received';
   participantAvatarUrl?: string;
   markedAsRead?: boolean;
+  id?: string;
 }>) => (
   <div
+    id={id}
     className={mergeClassnames(
       'flex flex-col gap-1 px-5 py-2',
       markedAsRead && 'items-end',
@@ -107,7 +110,7 @@ export const MessageItem = ({
       <Image
         className="size-5 rounded-full"
         src={participantAvatarUrl ?? '/assets/images/ava-placeholder.png'}
-        alt="Sender Avatar"
+        alt="Read by"
         width={20}
         height={20}
         objectFit="cover"
@@ -118,12 +121,14 @@ export const MessageItem = ({
       />
     )}
   </div>
-);
+));
+MessageItem.displayName = 'MessageItem';
 
 export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixed?: boolean; onBack?: () => void }) {
   const currentOpeningChat = useAppSelector(
     state => state.messenger.currentChatDetail,
   );
+  const userInfo = useAppSelector(state => state.auth.userInfo);
 
   const dispatch = useAppDispatch();
 
@@ -138,7 +143,42 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
     skip: !currentOpeningChat,
   });
 
-  const { emit, isConnected } = useSocket({ namespace: 'chat', listeners: {} });
+  const handleReceiveMessage = useCallback(
+    (payload: { id: number; from: number; to: number; msg: string; time: number }) => {
+      if (!currentOpeningChat || payload.from !== Number(currentOpeningChat.id)) {
+        return;
+      }
+      dispatch(
+        chatApi.util.updateQueryData(
+          'getConversation',
+          Number(currentOpeningChat.id),
+          (draft) => {
+            if (draft.some(m => m.id === String(payload.id))) {
+              return;
+            }
+            draft.unshift({
+              id: String(payload.id),
+              from: payload.from,
+              to: payload.to,
+              msg: payload.msg,
+              chatType: 'txt',
+              time: new Date(payload.time).toISOString(),
+              direction: 'received' as const,
+              isRead: false,
+            });
+          },
+        ),
+      );
+    },
+    [currentOpeningChat, dispatch],
+  );
+
+  const { emit, isConnected } = useSocket({
+    namespace: 'chat',
+    listeners: {
+      receive: handleReceiveMessage,
+    },
+  });
 
   const messageContainerRef = useRef<HTMLDivElement>(null);
 
@@ -148,28 +188,29 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
     }
   }, [data]);
   useEffect(() => {
-    const container = messageContainerRef.current;
-    if (!container || !data || !data[0] || data[0]?.direction !== 'received') {
+    const latestMessage = data?.[0];
+    if (!latestMessage || latestMessage.direction !== 'received') {
       return;
     }
 
-    const markAsRead = () => {
-      const isScrollable = container.scrollHeight > container.clientHeight;
-      const atBottom = container.scrollTop <= 10;
+    const el = document.getElementById(`msg-${latestMessage.id}`);
+    if (!el) {
+      return;
+    }
 
-      if (!isScrollable || atBottom) {
-        emit('read', { senderId: Number(currentOpeningChat?.id) });
-        dispatch(chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${currentOpeningChat?.id}` }]));
-      }
-    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          emit('read', { senderId: Number(currentOpeningChat?.id) });
+          dispatch(chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${currentOpeningChat?.id}` }]));
+          observer.disconnect();
+        }
+      },
+      { threshold: 0 },
+    );
 
-    container.addEventListener('scroll', markAsRead);
-    // Check immediately, in case there are not enough messages to scroll
-    markAsRead();
-
-    return () => {
-      container.removeEventListener('scroll', markAsRead);
-    };
+    observer.observe(el);
+    return () => observer.disconnect();
   }, [data, currentOpeningChat?.id, emit, dispatch]);
 
   const playSentMessageSound = () => {
@@ -178,27 +219,46 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
       console.warn('Audio play blocked:', e);
     });
   };
-  const handleSendMessage = async (
-    id: string,
-    text: string,
-    type?: 'txt' | 'img',
-  ) => {
-    if (!text.trim()) {
-      return;
-    }
+  const handleSendMessage = useCallback(
+    async (id: string, text: string, type?: 'txt' | 'img') => {
+      if (!text.trim() || !userInfo) {
+        return;
+      }
 
-    if (!isConnected) {
-      console.warn('[Chat] Cannot send — not connected');
-      return;
-    }
-    emit('send', { recipientId: id, message: text, chatType: type ?? 'txt' });
+      if (!isConnected) {
+        console.warn('[Chat] Cannot send — not connected');
+        return;
+      }
 
-    dispatch(
-      chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${id}` }]),
-    );
+      dispatch(
+        chatApi.util.updateQueryData(
+          'getConversation',
+          Number(id),
+          (draft) => {
+            draft.unshift({
+              id: `-${Date.now()}`,
+              from: Number(userInfo.id),
+              to: Number(id),
+              msg: text,
+              chatType: type ?? 'txt',
+              time: new Date().toISOString(),
+              direction: 'sent' as const,
+              isRead: false,
+            });
+          },
+        ),
+      );
 
-    playSentMessageSound();
-  };
+      emit('send', { recipientId: id, message: text, chatType: type ?? 'txt' });
+
+      dispatch(
+        chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${id}` }]),
+      );
+
+      playSentMessageSound();
+    },
+    [isConnected, emit, dispatch, userInfo],
+  );
 
   if (!currentOpeningChat) {
     return undefined;
@@ -234,6 +294,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
               return (
                 <div
                   key={each.id}
+                  id={`msg-${each.id}`}
                   className={mergeClassnames(
                     'flex',
                     each.direction === 'sent' ? 'justify-end' : 'justify-start',
@@ -252,6 +313,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
             return (
               <MessageItem
                 key={each.id}
+                id={`msg-${each.id}`}
                 type={each.direction}
                 participantAvatarUrl={currentOpeningChat?.avatarUrl}
                 markedAsRead={each.direction === 'sent' && each.isRead}
