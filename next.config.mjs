@@ -24,6 +24,7 @@ export default withSentryConfig(
       },
       poweredByHeader: false,
       reactStrictMode: true,
+      productionBrowserSourceMaps: true,
       transpilePackages: ['@wavesurfer/react'],
       experimental: {
         // Related to Pino error with RSC: https://github.com/orgs/vercel/discussions/3150
@@ -94,7 +95,7 @@ export default withSentryConfig(
     tunnelRoute: '/monitoring',
 
     // Hides source maps from generated client bundles
-    hideSourceMaps: true,
+    hideSourceMaps: false,
 
     // Automatically tree-shake Sentry logger statements to reduce bundle size
     disableLogger: true,
