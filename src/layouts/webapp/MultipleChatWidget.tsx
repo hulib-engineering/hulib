@@ -137,29 +137,16 @@ const ChatWindow = (props: IChatWindowProps) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const latestMessage = data?.[0];
-    if (!latestMessage || latestMessage.direction !== 'received') {
+    if (!data || !onMarkAsRead) {
       return;
     }
-
-    const el = document.getElementById(`msg-${latestMessage.id}`);
-    if (!el) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          onMarkAsRead();
-          dispatch(markAsRead(id));
-          observer.disconnect();
-        }
-      },
-      { threshold: 0 },
+    const hasUnreadReceived = data.some(
+      (m: TransformedMessage) => m.direction === 'received' && !m.isRead,
     );
-
-    observer.observe(el);
-    return () => observer.disconnect();
+    if (hasUnreadReceived) {
+      onMarkAsRead();
+      dispatch(markAsRead(id));
+    }
   }, [data, id, onMarkAsRead, dispatch]);
 
   const handleMarkParticipantMessageAsRead = () => {
@@ -169,6 +156,7 @@ const ChatWindow = (props: IChatWindowProps) => {
       ]),
     );
   };
+
   const handleReceiveMessage = useCallback(
     (payload: { id: number; from: number; to: number; msg: string; time: number }) => {
       if (payload.from !== Number(id)) {
@@ -179,7 +167,7 @@ const ChatWindow = (props: IChatWindowProps) => {
           'getConversation',
           Number(id),
           (draft) => {
-            if (draft.some(m => m.id === String(payload.id))) {
+            if (draft.some((m: TransformedMessage) => m.id === String(payload.id))) {
               return;
             }
             draft.unshift({
@@ -190,13 +178,15 @@ const ChatWindow = (props: IChatWindowProps) => {
               chatType: 'txt',
               time: new Date(payload.time).toISOString(),
               direction: 'received' as const,
-              isRead: false,
+              isRead: true,
             });
           },
         ),
       );
+      onMarkAsRead();
+      dispatch(markAsRead(id));
     },
-    [id, dispatch],
+    [id, onMarkAsRead, dispatch],
   );
 
   useSocket({
@@ -264,7 +254,6 @@ const ChatWindow = (props: IChatWindowProps) => {
             return (
               <div
                 key={message.id}
-                id={`msg-${message.id}`}
                 className={mergeClassnames(
                   'flex',
                   message.direction === 'sent'
@@ -286,7 +275,6 @@ const ChatWindow = (props: IChatWindowProps) => {
           return (
             <MessageItem
               key={message.id}
-              id={`msg-${message.id}`}
               type={message.direction}
               participantAvatarUrl={props.participant.avatarUrl}
               markedAsRead={
