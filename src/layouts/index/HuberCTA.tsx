@@ -61,11 +61,11 @@ export default function HuberCTA() {
           )}
 
           {!isMobile ? (
-            <h6 className="text-xl font-medium leading-[28px] text-primary-10">
+            <h6 className="text-center text-xl font-medium leading-[28px] text-primary-10">
               {t('short_descriptions.subtitle')}
             </h6>
           ) : (
-            <p className="text-sm text-primary-10">
+            <p className="text-center text-sm text-primary-10">
               {t('short_descriptions.subtitle')}
             </p>
           )}
