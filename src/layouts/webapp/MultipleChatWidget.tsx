@@ -2,7 +2,7 @@
 
 import { Minus, X } from '@phosphor-icons/react';
 import Image from 'next/image';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { MessageItem, groupMessagesByTime } from './Messages/ChatDetail';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -136,30 +136,47 @@ const ChatWindow = (props: IChatWindowProps) => {
 
   const dispatch = useAppDispatch();
 
+  const isVisibleRef = useRef(true);
+  const lastAckedUnreadIdRef = useRef<string | null>(null);
+
   useEffect(() => {
-    const latestMessage = data?.[0];
-    if (!latestMessage || latestMessage.direction !== 'received') {
+    const handler = () => {
+      isVisibleRef.current = document.visibilityState === 'visible';
+    };
+    document.addEventListener('visibilitychange', handler);
+    isVisibleRef.current = document.visibilityState === 'visible';
+    return () => document.removeEventListener('visibilitychange', handler);
+  }, []);
+
+  useEffect(() => {
+    if (!data || !onMarkAsRead || !isVisibleRef.current) {
       return;
     }
-
-    const el = document.getElementById(`msg-${latestMessage.id}`);
-    if (!el) {
+    const newestUnreadId
+      = data.find(
+        (m: TransformedMessage) => m.direction === 'received' && !m.isRead,
+      )?.id ?? null;
+    if (!newestUnreadId || newestUnreadId === lastAckedUnreadIdRef.current) {
       return;
     }
+    lastAckedUnreadIdRef.current = newestUnreadId;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          onMarkAsRead();
-          dispatch(markAsRead(id));
-          observer.disconnect();
-        }
-      },
-      { threshold: 0 },
+    dispatch(
+      chatApi.util.updateQueryData(
+        'getConversation',
+        Number(id),
+        (draft) => {
+          draft.forEach((m: TransformedMessage) => {
+            if (m.direction === 'received' && !m.isRead) {
+              m.isRead = true;
+            }
+          });
+        },
+      ),
     );
 
-    observer.observe(el);
-    return () => observer.disconnect();
+    onMarkAsRead();
+    dispatch(markAsRead(id));
   }, [data, id, onMarkAsRead, dispatch]);
 
   const handleMarkParticipantMessageAsRead = () => {
@@ -169,17 +186,19 @@ const ChatWindow = (props: IChatWindowProps) => {
       ]),
     );
   };
+
   const handleReceiveMessage = useCallback(
     (payload: { id: number; from: number; to: number; msg: string; time: number }) => {
       if (payload.from !== Number(id)) {
         return;
       }
+      const isVisible = isVisibleRef.current;
       dispatch(
         chatApi.util.updateQueryData(
           'getConversation',
           Number(id),
           (draft) => {
-            if (draft.some(m => m.id === String(payload.id))) {
+            if (draft.some((m: TransformedMessage) => m.id === String(payload.id))) {
               return;
             }
             draft.unshift({
@@ -190,13 +209,17 @@ const ChatWindow = (props: IChatWindowProps) => {
               chatType: 'txt',
               time: new Date(payload.time).toISOString(),
               direction: 'received' as const,
-              isRead: false,
+              isRead: isVisible,
             });
           },
         ),
       );
+      if (isVisible) {
+        onMarkAsRead();
+        dispatch(markAsRead(id));
+      }
     },
-    [id, dispatch],
+    [id, onMarkAsRead, dispatch],
   );
 
   useSocket({
@@ -264,7 +287,6 @@ const ChatWindow = (props: IChatWindowProps) => {
             return (
               <div
                 key={message.id}
-                id={`msg-${message.id}`}
                 className={mergeClassnames(
                   'flex',
                   message.direction === 'sent'
@@ -286,7 +308,6 @@ const ChatWindow = (props: IChatWindowProps) => {
           return (
             <MessageItem
               key={message.id}
-              id={`msg-${message.id}`}
               type={message.direction}
               participantAvatarUrl={props.participant.avatarUrl}
               markedAsRead={

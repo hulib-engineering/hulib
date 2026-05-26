@@ -74,16 +74,13 @@ export const MessageItem = React.memo(({
   type,
   participantAvatarUrl,
   markedAsRead = false,
-  id,
   children,
 }: WithChildren<{
   type: 'sent' | 'received';
   participantAvatarUrl?: string;
   markedAsRead?: boolean;
-  id?: string;
 }>) => (
   <div
-    id={id}
     className={mergeClassnames(
       'flex flex-col gap-1 px-5 py-2',
       markedAsRead && 'items-end',
@@ -151,17 +148,31 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
       )[0]?.id)
       ?? null;
 
+  const emitRef = useRef<(event: string, ...args: any[]) => void>(() => {});
+  const isVisibleRef = useRef(true);
+  const lastAckedUnreadIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    const handler = () => {
+      isVisibleRef.current = document.visibilityState === 'visible';
+    };
+    document.addEventListener('visibilitychange', handler);
+    isVisibleRef.current = document.visibilityState === 'visible';
+    return () => document.removeEventListener('visibilitychange', handler);
+  }, []);
+
   const handleReceiveMessage = useCallback(
     (payload: { id: number; from: number; to: number; msg: string; time: number }) => {
       if (!currentOpeningChat || payload.from !== Number(currentOpeningChat.id)) {
         return;
       }
+      const isVisible = isVisibleRef.current;
       dispatch(
         chatApi.util.updateQueryData(
           'getConversation',
           Number(currentOpeningChat.id),
           (draft) => {
-            if (draft.some(m => m.id === String(payload.id))) {
+            if (draft.some((m: TransformedMessage) => m.id === String(payload.id))) {
               return;
             }
             draft.unshift({
@@ -172,11 +183,18 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
               chatType: 'txt',
               time: new Date(payload.time).toISOString(),
               direction: 'received' as const,
-              isRead: false,
+              isRead: isVisible,
             });
           },
         ),
       );
+      if (isVisible) {
+        emitRef.current('read', { senderId: payload.from });
+        dispatch(chatApi.util.invalidateTags([
+          { type: 'Messages', id: `LIST-${currentOpeningChat.id}` },
+          { type: 'Messages', id: 'LIST' },
+        ]));
+      }
     },
     [currentOpeningChat, dispatch],
   );
@@ -188,6 +206,8 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
     },
   });
 
+  emitRef.current = emit;
+
   const messageContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -196,30 +216,38 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
     }
   }, [data]);
   useEffect(() => {
-    const latestMessage = data?.[0];
-    if (!latestMessage || latestMessage.direction !== 'received') {
+    if (!data || !currentOpeningChat || !emit || !isVisibleRef.current) {
       return;
     }
-
-    const el = document.getElementById(`msg-${latestMessage.id}`);
-    if (!el) {
+    const newestUnreadId
+      = data.find(
+        (m: TransformedMessage) => m.direction === 'received' && !m.isRead,
+      )?.id ?? null;
+    if (!newestUnreadId || newestUnreadId === lastAckedUnreadIdRef.current) {
       return;
     }
+    lastAckedUnreadIdRef.current = newestUnreadId;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          emit('read', { senderId: Number(currentOpeningChat?.id) });
-          dispatch(chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${currentOpeningChat?.id}` }]));
-          observer.disconnect();
-        }
-      },
-      { threshold: 0 },
+    dispatch(
+      chatApi.util.updateQueryData(
+        'getConversation',
+        Number(currentOpeningChat.id),
+        (draft) => {
+          draft.forEach((m: TransformedMessage) => {
+            if (m.direction === 'received' && !m.isRead) {
+              m.isRead = true;
+            }
+          });
+        },
+      ),
     );
 
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [data, currentOpeningChat?.id, emit, dispatch]);
+    emit('read', { senderId: Number(currentOpeningChat.id) });
+    dispatch(chatApi.util.invalidateTags([
+      { type: 'Messages', id: `LIST-${currentOpeningChat.id}` },
+      { type: 'Messages', id: 'LIST' },
+    ]));
+  }, [data, currentOpeningChat, emit, dispatch]);
 
   const playSentMessageSound = () => {
     const audio = new Audio('/assets/media/message-sent.mp3');
@@ -314,7 +342,6 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
               return (
                 <div
                   key={message.id}
-                  id={`msg-${message.id}`}
                   className={mergeClassnames(
                     'flex',
                     message.direction === 'sent' ? 'justify-end' : 'justify-start',
@@ -333,7 +360,6 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
             return (
               <MessageItem
                 key={message.id}
-                id={`msg-${message.id}`}
                 type={message.direction}
                 participantAvatarUrl={currentOpeningChat?.avatarUrl}
                 markedAsRead={
