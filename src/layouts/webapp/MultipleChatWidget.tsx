@@ -2,7 +2,7 @@
 
 import { Minus, X } from '@phosphor-icons/react';
 import Image from 'next/image';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { MessageItem, groupMessagesByTime } from './Messages/ChatDetail';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -136,17 +136,47 @@ const ChatWindow = (props: IChatWindowProps) => {
 
   const dispatch = useAppDispatch();
 
+  const isVisibleRef = useRef(true);
+  const lastAckedUnreadIdRef = useRef<string | null>(null);
+
   useEffect(() => {
-    if (!data || !onMarkAsRead) {
+    const handler = () => {
+      isVisibleRef.current = document.visibilityState === 'visible';
+    };
+    document.addEventListener('visibilitychange', handler);
+    isVisibleRef.current = document.visibilityState === 'visible';
+    return () => document.removeEventListener('visibilitychange', handler);
+  }, []);
+
+  useEffect(() => {
+    if (!data || !onMarkAsRead || !isVisibleRef.current) {
       return;
     }
-    const hasUnreadReceived = data.some(
-      (m: TransformedMessage) => m.direction === 'received' && !m.isRead,
-    );
-    if (hasUnreadReceived) {
-      onMarkAsRead();
-      dispatch(markAsRead(id));
+    const newestUnreadId
+      = data.find(
+        (m: TransformedMessage) => m.direction === 'received' && !m.isRead,
+      )?.id ?? null;
+    if (!newestUnreadId || newestUnreadId === lastAckedUnreadIdRef.current) {
+      return;
     }
+    lastAckedUnreadIdRef.current = newestUnreadId;
+
+    dispatch(
+      chatApi.util.updateQueryData(
+        'getConversation',
+        Number(id),
+        (draft) => {
+          draft.forEach((m: TransformedMessage) => {
+            if (m.direction === 'received' && !m.isRead) {
+              m.isRead = true;
+            }
+          });
+        },
+      ),
+    );
+
+    onMarkAsRead();
+    dispatch(markAsRead(id));
   }, [data, id, onMarkAsRead, dispatch]);
 
   const handleMarkParticipantMessageAsRead = () => {
@@ -162,6 +192,7 @@ const ChatWindow = (props: IChatWindowProps) => {
       if (payload.from !== Number(id)) {
         return;
       }
+      const isVisible = isVisibleRef.current;
       dispatch(
         chatApi.util.updateQueryData(
           'getConversation',
@@ -178,13 +209,15 @@ const ChatWindow = (props: IChatWindowProps) => {
               chatType: 'txt',
               time: new Date(payload.time).toISOString(),
               direction: 'received' as const,
-              isRead: true,
+              isRead: isVisible,
             });
           },
         ),
       );
-      onMarkAsRead();
-      dispatch(markAsRead(id));
+      if (isVisible) {
+        onMarkAsRead();
+        dispatch(markAsRead(id));
+      }
     },
     [id, onMarkAsRead, dispatch],
   );

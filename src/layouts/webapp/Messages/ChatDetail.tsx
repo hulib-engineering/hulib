@@ -149,12 +149,24 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
       ?? null;
 
   const emitRef = useRef<(event: string, ...args: any[]) => void>(() => {});
+  const isVisibleRef = useRef(true);
+  const lastAckedUnreadIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    const handler = () => {
+      isVisibleRef.current = document.visibilityState === 'visible';
+    };
+    document.addEventListener('visibilitychange', handler);
+    isVisibleRef.current = document.visibilityState === 'visible';
+    return () => document.removeEventListener('visibilitychange', handler);
+  }, []);
 
   const handleReceiveMessage = useCallback(
     (payload: { id: number; from: number; to: number; msg: string; time: number }) => {
       if (!currentOpeningChat || payload.from !== Number(currentOpeningChat.id)) {
         return;
       }
+      const isVisible = isVisibleRef.current;
       dispatch(
         chatApi.util.updateQueryData(
           'getConversation',
@@ -171,16 +183,18 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
               chatType: 'txt',
               time: new Date(payload.time).toISOString(),
               direction: 'received' as const,
-              isRead: true,
+              isRead: isVisible,
             });
           },
         ),
       );
-      emitRef.current('read', { senderId: payload.from });
-      dispatch(chatApi.util.invalidateTags([
-        { type: 'Messages', id: `LIST-${currentOpeningChat.id}` },
-        { type: 'Messages', id: 'LIST' },
-      ]));
+      if (isVisible) {
+        emitRef.current('read', { senderId: payload.from });
+        dispatch(chatApi.util.invalidateTags([
+          { type: 'Messages', id: `LIST-${currentOpeningChat.id}` },
+          { type: 'Messages', id: 'LIST' },
+        ]));
+      }
     },
     [currentOpeningChat, dispatch],
   );
@@ -202,19 +216,37 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
     }
   }, [data]);
   useEffect(() => {
-    if (!data || !currentOpeningChat || !emit) {
+    if (!data || !currentOpeningChat || !emit || !isVisibleRef.current) {
       return;
     }
-    const hasUnreadReceived = data.some(
-      (m: TransformedMessage) => m.direction === 'received' && !m.isRead,
-    );
-    if (hasUnreadReceived) {
-      emit('read', { senderId: Number(currentOpeningChat.id) });
-      dispatch(chatApi.util.invalidateTags([
-        { type: 'Messages', id: `LIST-${currentOpeningChat.id}` },
-        { type: 'Messages', id: 'LIST' },
-      ]));
+    const newestUnreadId
+      = data.find(
+        (m: TransformedMessage) => m.direction === 'received' && !m.isRead,
+      )?.id ?? null;
+    if (!newestUnreadId || newestUnreadId === lastAckedUnreadIdRef.current) {
+      return;
     }
+    lastAckedUnreadIdRef.current = newestUnreadId;
+
+    dispatch(
+      chatApi.util.updateQueryData(
+        'getConversation',
+        Number(currentOpeningChat.id),
+        (draft) => {
+          draft.forEach((m: TransformedMessage) => {
+            if (m.direction === 'received' && !m.isRead) {
+              m.isRead = true;
+            }
+          });
+        },
+      ),
+    );
+
+    emit('read', { senderId: Number(currentOpeningChat.id) });
+    dispatch(chatApi.util.invalidateTags([
+      { type: 'Messages', id: `LIST-${currentOpeningChat.id}` },
+      { type: 'Messages', id: 'LIST' },
+    ]));
   }, [data, currentOpeningChat, emit, dispatch]);
 
   const playSentMessageSound = () => {
