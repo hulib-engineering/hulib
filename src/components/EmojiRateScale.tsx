@@ -3,11 +3,11 @@ import Image from 'next/image';
 import { mergeClassnames } from '@/components/core/private/utils';
 
 const ratingImages = [
-  '/assets/images/icons/session-ratings/rate-1.png',
-  '/assets/images/icons/session-ratings/rate-2.png',
-  '/assets/images/icons/session-ratings/rate-3.png',
-  '/assets/images/icons/session-ratings/rate-4.png',
-  '/assets/images/icons/session-ratings/rate-5.png',
+  '/assets/icons/session-ratings/rate-1.png',
+  '/assets/icons/session-ratings/rate-2.png',
+  '/assets/icons/session-ratings/rate-3.png',
+  '/assets/icons/session-ratings/rate-4.png',
+  '/assets/icons/session-ratings/rate-5.png',
 ];
 
 type IEmojiRateScaleProps = {

@@ -61,7 +61,7 @@ const HeroDesktop = (props: HeroProps) => {
                     width={each.width}
                     height={each.height}
                     alt={`Hero vector ${index}`}
-                    src={`/assets/images/icons/vectors/vector-${index}.svg`}
+                    src={`/assets/icons/vectors/vector-${index}.svg`}
                     className={mergeClassnames(
                       'absolute shrink-0',
                       each.xPosition && each.xPosition,
@@ -75,7 +75,7 @@ const HeroDesktop = (props: HeroProps) => {
                     width={each.size}
                     height={each.size}
                     alt={`Hero star ${index}`}
-                    src={`/assets/images/icons/stars/star-${index}.svg`}
+                    src={`/assets/icons/stars/star-${index}.svg`}
                     className={mergeClassnames(
                       'absolute shrink-0 -translate-y-1/2',
                       each.xPosition && each.xPosition,
@@ -122,7 +122,7 @@ const HeroDesktop = (props: HeroProps) => {
                       width={56}
                       height={56}
                       alt="Play icon"
-                      src={`/assets/images/icons/${
+                      src={`/assets/icons/${
                         isPlaying ? 'pause' : 'play'
                       }-circle.svg`}
                       className="cursor-pointer"
@@ -144,7 +144,7 @@ const HeroDesktop = (props: HeroProps) => {
                       width={32}
                       height={32}
                       alt="Play icon"
-                      src={`/assets/images/icons/${
+                      src={`/assets/icons/${
                         isPlaying ? 'pause' : 'play'
                       }-circle.png`}
                       className="size-8 cursor-pointer object-cover object-center"
