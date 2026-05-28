@@ -30,7 +30,10 @@ const SocialButton = (props: ISocialButtonProps) => {
     return (
       <IconButton
         variant="outline"
+        size="lg"
         className={mergeClassnames(
+          'bg-white border-neutral-variant-90',
+          'hover:bg-neutral-variant-98 hover:border-neutral-variant-80',
           props.className,
         )}
         onClick={props.onClick}
@@ -44,7 +47,11 @@ const SocialButton = (props: ISocialButtonProps) => {
     <Button
       variant="outline"
       iconLeft={<SocialIcon iconUrl={props.variant === 'facebook' ? '/assets/icons/Facebook.svg' : '/assets/icons/google-icon.svg'} />}
-      className={mergeClassnames('md:text-neutral-10', props.className)}
+      className={mergeClassnames(
+        'border-neutral-variant-90 bg-white md:text-neutral-10',
+        'hover:bg-neutral-variant-98 hover:border-neutral-variant-80',
+        props.className,
+      )}
       onClick={props.onClick}
     >
       {props.variant === 'google' ? `${t('log_in')} ${t('with_gg')}` : 'Log in with Facebook'}

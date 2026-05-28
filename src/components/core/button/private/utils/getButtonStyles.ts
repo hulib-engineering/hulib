@@ -24,10 +24,9 @@ export const getButtonVariants = ({
           'text-red-50 bg-transparent ring-inset ring-1 ring-red-50',
         )
       : mergeClassnames(
-          'text-primary-50 bg-transparent border border-[#C2C6CF]',
+          'text-primary-50 bg-transparent border border-neutral-variant-80',
           'disabled:border-neutral-90 disabled:text-neutral-70',
-          !disabled
-          && 'focus:text-primary-40',
+          !disabled && 'focus:text-primary-40 focus:border-neutral-80 focus:ring-2 focus:ring-primary-60',
         );
   }
   if (variant === 'ghost') {
