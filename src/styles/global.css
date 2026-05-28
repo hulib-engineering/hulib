@@ -187,10 +187,10 @@ html {
   right: 0;
 }
 .swiper-button-prev:after {
-  background: url('/assets/images/icons/arrow-left.png') center no-repeat;
+  background: url('/assets/icons/arrow-left.png') center no-repeat;
 }
 .swiper-button-next:after {
-  background: url('/assets/images/icons/arrow-right.png') center no-repeat;
+  background: url('/assets/icons/arrow-right.png') center no-repeat;
 }
 
 /* Opt-in themed scrollbar (uses :root --scrollbar-* tokens). */

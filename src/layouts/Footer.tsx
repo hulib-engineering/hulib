@@ -14,22 +14,22 @@ import { Env } from '@/libs/Env.mjs';
 
 const SocialLinks = [
   {
-    iconUrl: '/assets/images/icons/facebook.svg',
+    iconUrl: '/assets/icons/facebook.svg',
     link: 'https://www.facebook.com/hulibvietnam',
     name: 'Facebook',
   },
   {
-    iconUrl: '/assets/images/icons/instagram.svg',
+    iconUrl: '/assets/icons/instagram.svg',
     link: 'https://www.instagram.com/hulibvn/',
     name: 'Instagram',
   },
   {
-    iconUrl: '/assets/images/icons/tiktok.svg',
+    iconUrl: '/assets/icons/tiktok.svg',
     link: 'https://www.tiktok.com/@hulibvn?is_from_webapp=1&sender_device=pc',
     name: 'Tiktok',
   },
   {
-    iconUrl: '/assets/images/icons/threads-icon.svg',
+    iconUrl: '/assets/icons/threads-icon.svg',
     link: 'https://www.threads.net/@hulibofficial?is_from_webapp=1&sender_device=pc',
     name: 'Threads',
   },
