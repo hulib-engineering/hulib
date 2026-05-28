@@ -145,7 +145,7 @@ export default function News() {
         <div className="pointer-events-none absolute left-0 top-1/2 z-[9999] mx-auto hidden w-full items-center justify-between -translate-y-1/2 xl:flex">
           <div className="pointer-events-auto mx-auto flex w-3/4 items-center justify-between">
             <IconButton
-              variant="secondary"
+              variant="soft"
               size="lg"
               className="h-12 bg-white text-2xl text-lp-primary-blue  hover:bg-[#D9E6FD]"
               onClick={() => swiperRef.current?.slidePrev()}
@@ -153,7 +153,7 @@ export default function News() {
               <ArrowLeft />
             </IconButton>
             <IconButton
-              variant="secondary"
+              variant="soft"
               size="lg"
               className=" h-12 bg-white text-2xl text-lp-primary-blue hover:bg-[#D9E6FD]"
               onClick={() => swiperRef.current?.slideNext()}
@@ -165,7 +165,7 @@ export default function News() {
       </div>
       <div className="flex items-center justify-center gap-4 xl:hidden">
         <IconButton
-          variant="secondary"
+          variant="soft"
           size="lg"
           className="h-12 bg-transparent text-2xl text-lp-primary-blue hover:bg-[#D9E6FD]"
           onClick={() => swiperRef.current?.slidePrev()}
@@ -173,7 +173,7 @@ export default function News() {
           <ArrowLeft weight="bold" />
         </IconButton>
         <IconButton
-          variant="secondary"
+          variant="soft"
           size="lg"
           className="h-12 bg-transparent text-2xl text-lp-primary-blue hover:bg-[#D9E6FD]"
           onClick={() => swiperRef.current?.slideNext()}

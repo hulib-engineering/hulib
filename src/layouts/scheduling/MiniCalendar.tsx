@@ -104,7 +104,7 @@ export default function MiniCalendar({ onChange, onUpdateTimeslots }: MonthCalen
           return (
             <Button
               key={i}
-              variant={hasSessions ? 'outline' : !isToday ? 'ghost' : 'primary'}
+              variant={hasSessions ? 'outline' : !isToday ? 'ghost' : 'fill'}
               size="sm"
               disabled={!isCurrentMonth}
               onClick={() => onChange(day)}

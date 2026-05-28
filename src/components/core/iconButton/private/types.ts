@@ -3,14 +3,15 @@ import type React from 'react';
 
 import type {
   ButtonAnimations,
-  ButtonSizes,
   ButtonVariants,
 } from '@/components/core/button/private/types';
+
+type IconButtonSizes = 'sm' | 'md' | 'lg';
 
 export type IconButtonSettingsProps = {
   icon?: React.JSX.Element;
   children?: ReactNode;
-  size?: ButtonSizes;
+  size?: IconButtonSizes;
   animation?: ButtonAnimations;
   disabled?: boolean;
   variant?: ButtonVariants;
@@ -21,4 +22,4 @@ type IconButtonProps<C extends ElementType> = {
   className?: string;
 } & IconButtonSettingsProps;
 
-export type { IconButtonProps };
+export type { IconButtonProps, IconButtonSizes };

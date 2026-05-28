@@ -214,7 +214,7 @@ export default function Index() {
                         {t('back')}
                       </Button>
                       <Button
-                        variant="primary"
+                        variant="fill"
                         className="w-full"
                         disabled={isEmpty(note)}
                         onClick={handlePlaceRequest}

@@ -105,7 +105,7 @@ export default function ChipFilter({
       </div>
       {!scrollable && topics && topics?.data.length > 0 && (
         <IconButton
-          variant="secondary"
+          variant="soft"
           size="lg"
           className="shrink-0"
           onClick={() => setExpanded(prev => !prev)}

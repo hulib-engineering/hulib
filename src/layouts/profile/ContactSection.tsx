@@ -48,7 +48,7 @@ export default function ContactSection({ data, editable }: { data: User; editabl
       <div className="flex items-center justify-between">
         <p className="font-medium text-black">Contact Information</p>
         {editable && !editMode && (
-          <IconButton variant="secondary" size="sm" className="p-2" onClick={() => setEditMode(true)}>
+          <IconButton variant="soft" size="sm" className="p-2" onClick={() => setEditMode(true)}>
             <PencilSimple weight="bold" />
           </IconButton>
         )}
@@ -82,7 +82,7 @@ export default function ContactSection({ data, editable }: { data: User; editabl
                   </div>
                   <div className="rounded-full bg-neutral-90">
                     <IconButton
-                      variant="secondary"
+                      variant="soft"
                       size="sm"
                       className="p-2"
                       disabled

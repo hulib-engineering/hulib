@@ -171,14 +171,12 @@ export default function Index() {
             <div className="flex w-full flex-col items-center gap-3 lg:flex-row">
               <Button
                 variant="outline"
-                size="md"
                 fullWidth
                 onClick={() => setIsConfirmModalOpen(false)}
               >
                 Cancel
               </Button>
               <Button
-                size="md"
                 fullWidth
                 onClick={handleSubmitChangingPassword}
               >

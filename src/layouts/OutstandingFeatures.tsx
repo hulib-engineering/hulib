@@ -67,7 +67,7 @@ export default function OutstandingFeatures() {
             </Swiper>
           </div>
           <IconButton
-            variant="secondary"
+            variant="soft"
             size="lg"
             className="absolute bottom-0 left-1/2 h-12 bg-white text-2xl text-lp-primary-blue translate-x-[-68px] translate-y-14 hover:bg-[#D9E6FD] lg:-left-20 lg:top-1/2 lg:-translate-y-1/2"
             onClick={() => swiperRef.current?.slidePrev()}
@@ -75,7 +75,7 @@ export default function OutstandingFeatures() {
             <ArrowLeft />
           </IconButton>
           <IconButton
-            variant="secondary"
+            variant="soft"
             size="lg"
             className="absolute bottom-0 right-1/2 h-12 bg-white text-2xl text-lp-primary-blue translate-x-[68px] translate-y-14 hover:bg-[#D9E6FD] lg:-right-20 lg:top-1/2 lg:-translate-y-1/2"
             onClick={() => swiperRef.current?.slideNext()}

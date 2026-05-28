@@ -273,6 +273,17 @@ export default {
       // @ts-ignore
       transform: ['group-hover'],
       keyframes: {
+        error: {
+          '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+          '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+          '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+          '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
+        },
+        pulse2: {
+          '0%': { transform: 'scale(1)' },
+          '70%': { transform: 'scale(1)', boxShadow: '0 0 0 30px transparent' },
+          '100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 transparent' },
+        },
         moveUp: {
           to: { transform: 'translateY(50px)' },
         },
@@ -553,6 +564,8 @@ export default {
         },
       },
       animation: {
+        'error': 'error 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both',
+        'pulse2': 'pulse2 1.5s infinite',
         'move-up': 'moveUp 2s ease-in infinite alternate-reverse',
         'move-down': 'moveDown 2s ease-in infinite alternate-reverse',
         'slide': 'slide 10s infinite linear',
