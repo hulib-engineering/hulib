@@ -24,6 +24,7 @@ import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType'
 import { useAddStoryToMyFavoritesMutation, useRemoveStoryFromMyFavoritesMutation } from '@/libs/services/modules/user';
 import { useMobile } from '@/libs/hooks';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import IconButton from '@/components/core/iconButton/IconButton';
 
 type IStoryCardProps = {
   data: TStory;
@@ -149,24 +150,23 @@ export const StoryCard = ({
       return (
         <div className="hidden w-full items-center gap-2 lg:flex">
           <Button
-            size="lg"
-            className="grow"
+            className="flex-1"
             onClick={() => router.push(`/explore-story/${data.id}`)}
           >
             {t('read_story')}
           </Button>
-          <Button
+          <IconButton
             variant="outline"
             size="lg"
-            className="w-12 flex-none p-0"
+            className="shrink-0"
             onClick={handleManageFavoriteList}
           >
             {isFavorite ? (
-              <BookmarkSimple weight="fill" className="text-4xl text-yellow-60" />
+              <BookmarkSimple weight="fill" className="text-yellow-60" />
             ) : (
-              <Bookmarks className="text-xl text-primary-50" />
+              <Bookmarks weight="bold" className="text-primary-50" />
             )}
-          </Button>
+          </IconButton>
         </div>
       );
     }
