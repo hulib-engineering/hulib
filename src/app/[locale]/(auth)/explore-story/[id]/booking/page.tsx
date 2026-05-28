@@ -227,7 +227,7 @@ export default function Index() {
               : (
                   <>
                     <Image
-                      src="/assets/images/schedule-success.svg"
+                      src="/assets/images/misc/schedule-success.svg"
                       alt="Successful illustration"
                       width={480}
                       height={420}

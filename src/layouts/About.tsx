@@ -7,21 +7,21 @@ const InfoList = [
   {
     key: 'about_stories' as const,
     image: {
-      src: '/assets/images/visual.png',
+      src: '/assets/images/landing/visual.png',
       position: 'left' as const,
     },
   },
   {
     key: 'about_mission' as const,
     image: {
-      src: '/assets/images/visual-1.png',
+      src: '/assets/images/landing/visual-1.png',
       position: 'right' as const,
     },
   },
   {
     key: 'about_vision' as const,
     image: {
-      src: '/assets/images/visual-2.png',
+      src: '/assets/images/landing/visual-2.png',
       position: 'left' as const,
     },
   },

@@ -32,7 +32,7 @@ const ScheduleBasicInfo = ({ huber, onOpenHuberConv }: { huber: z.infer<typeof P
       </Button>
       <div className="flex items-center gap-x-2 rounded-3xl bg-neutral-98 p-4">
         <Image
-          src={huber.photo?.path ?? '/assets/images/ava-placeholder.png'}
+          src={huber.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
           alt="avatar author"
           width={76}
           height={76}

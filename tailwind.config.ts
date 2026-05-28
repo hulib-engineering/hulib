@@ -248,10 +248,10 @@ export default {
         'pixel-size-sm': '20px',
       },
       backgroundImage: {
-        'main-pattern': 'url(\'/assets/images/bg-pattern.png\')',
+        'main-pattern': 'url(\'/assets/images/backgrounds/bg-pattern.png\')',
         'special-section-pattern':
-          'url(\'/assets/images/bg-special-pattern.webp\')',
-        'default-story-cover': 'url(\'/assets/images/cover-book/story_background_yellow.png\')',
+          'url(\'/assets/images/backgrounds/bg-special-pattern.webp\')',
+        'default-story-cover': 'url(\'/assets/images/cover-bg-presets/story_background_yellow.png\')',
         'radial-gradient':
           'radial-gradient(at 52% 57%, hsla(11,83%,72%,1) 0px, transparent 50%), radial-gradient(at 37% 57%, hsla(175,78%,66%,1) 0px, transparent 50%)',
         'left-page': 'linear-gradient(to right, #f8f8f8, #ffffff, #e3e3e3, #b1b1b1)',
@@ -262,7 +262,7 @@ export default {
         9: '9',
       },
       content: {
-        flash: 'url("/assets/images/flash-vector.svg")',
+        flash: 'url("/assets/images/backgrounds/flash-vector.svg")',
       },
       transformOrigin: {
         right: 'right',

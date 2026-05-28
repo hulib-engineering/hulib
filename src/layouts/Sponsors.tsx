@@ -39,7 +39,7 @@ const SponsorItemCard = (props: ISponsorItemCardProps) => {
             width={52}
             height={52}
             alt={`Chip ${props.tooltipText}`}
-            src={`/assets/images/chips/${props.type}.svg`}
+            src={`/assets/images/sponsor-tiers/${props.type}.svg`}
             className="absolute right-0 top-0"
           />
           <div className="flex flex-col items-center justify-center">
@@ -60,35 +60,35 @@ const SponsorItemCard = (props: ISponsorItemCardProps) => {
 const SponsorList = [
   {
     name: 'VEO',
-    logoUrl: '/assets/images/sponsors/VEO.png',
+    logoUrl: '/assets/images/logos/sponsors/VEO.png',
     type: 'legal-sponsor',
     tooltipKey: 'legal_sponsor',
     refUrl: 'https://veo.com.vn',
   },
   {
     name: 'WEC',
-    logoUrl: '/assets/images/sponsors/WEC.png',
+    logoUrl: '/assets/images/logos/sponsors/WEC.png',
     type: 'diamond-sponsor',
     tooltipKey: 'diamond_sponsor',
     refUrl: 'https://www.facebook.com/WECOrlando',
   },
   {
     name: 'Blue Magnolia',
-    logoUrl: '/assets/images/sponsors/BM.png',
+    logoUrl: '/assets/images/logos/sponsors/BM.png',
     type: 'professional-sponsor',
     tooltipKey: 'professional_sponsor',
     refUrl: 'https://www.bluemagnoliacounselling.com',
   },
   {
     name: 'YBOX',
-    logoUrl: '/assets/images/sponsors/YB.png',
+    logoUrl: '/assets/images/logos/sponsors/YB.png',
     type: 'media-sponsor',
     tooltipKey: 'media_sponsor',
     refUrl: 'https://ybox.vn',
   },
   {
     name: 'DIAMOND',
-    logoUrl: '/assets/images/sponsors/UNESCO.jpg',
+    logoUrl: '/assets/images/logos/sponsors/UNESCO.jpg',
     type: 'diamond-sponsor',
     tooltipKey: 'diamond_sponsor',
     refUrl:
@@ -96,35 +96,35 @@ const SponsorList = [
   },
   {
     name: 'Edu2Review',
-    logoUrl: '/assets/images/sponsors/E2R.png',
+    logoUrl: '/assets/images/logos/sponsors/E2R.png',
     type: 'media-sponsor',
     tooltipKey: 'media_sponsor',
     refUrl: 'https://edu2review.com',
   },
   {
     name: 'Eduwing Global',
-    logoUrl: '/assets/images/sponsors/EWG.png',
+    logoUrl: '/assets/images/logos/sponsors/EWG.png',
     type: 'scholarship-sponsor',
     tooltipKey: 'scholarship_sponsor',
     refUrl: 'https://eduwingglobal.com',
   },
   {
     name: 'InterGreat',
-    logoUrl: '/assets/images/sponsors/IG.png',
+    logoUrl: '/assets/images/logos/sponsors/IG.png',
     type: 'scholarship-sponsor',
     tooltipKey: 'scholarship_sponsor',
     refUrl: 'https://ieltsonlinetests.com',
   },
   {
     name: 'YOUTHXYOUTH',
-    logoUrl: '/assets/images/sponsors/YOUTHXYOUTH.png',
+    logoUrl: '/assets/images/logos/sponsors/YOUTHXYOUTH.png',
     type: 'gold-sponsor',
     tooltipKey: 'gold_sponsor',
     refUrl: 'https://www.youthxyouth.com/',
   },
   {
     name: 'I Can Connect',
-    logoUrl: '/assets/images/sponsors/ICC.png',
+    logoUrl: '/assets/images/logos/sponsors/ICC.png',
     type: 'silver-sponsor',
     tooltipKey: 'silver_sponsor',
     refUrl: 'https://www.icanconnect.vn',

@@ -56,7 +56,7 @@ const ChatBubble = (props: IChatBubbleProps) => {
           <Image
             src={
               props.participant.avatarUrl
-              || '/assets/images/ava-placeholder.png'
+              || '/assets/images/avatars/ava-placeholder.png'
             }
             alt={props.participant.name}
             width={56}
@@ -240,7 +240,7 @@ const ChatWindow = (props: IChatWindowProps) => {
               className="size-[36px] rounded-full"
               src={
                 props.participant.avatarUrl
-                ?? '/assets/images/ava-placeholder.png'
+                ?? '/assets/images/avatars/ava-placeholder.png'
               }
               alt="Sender Avatar"
               width={36}
@@ -249,7 +249,7 @@ const ChatWindow = (props: IChatWindowProps) => {
               objectPosition="center"
               quality={100}
               placeholder="blur"
-              blurDataURL="/assets/images/ava-placeholder.png"
+              blurDataURL="/assets/images/avatars/ava-placeholder.png"
             />
             <StatusBadge
               onLine={isOnline}

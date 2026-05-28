@@ -178,7 +178,7 @@ export default function Index() {
           : (
               <div className="flex w-full flex-col items-center justify-center gap-5">
                 <Image
-                  src="/assets/images/no-results-found.png"
+                  src="/assets/images/landing/no-results-found.png"
                   className="h-auto w-full object-contain"
                   width={300}
                   height={300}

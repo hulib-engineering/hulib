@@ -474,7 +474,7 @@ const Step4Form = () => {
         </div>
         <Image
           alt="Success illustration"
-          src="/assets/images/success-illus.svg"
+          src="/assets/images/misc/success-illus.svg"
           priority
           width={250}
           height={200}

@@ -51,7 +51,7 @@ const ActionOnUserModal: FC<IActionOnUserModalProps> = ({
           <div className="flex size-full flex-col items-center justify-center gap-2 py-6">
             <div className="size-[12.5rem]">
               <Image
-                src={data.photo?.path ?? '/assets/images/ava-placeholder.png'}
+                src={data.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
                 alt="User Avatar"
                 width={200}
                 height={200}

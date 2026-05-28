@@ -80,7 +80,7 @@ type IDetailedStoryProps = {
 
 export const DetailedStory = ({
   title,
-  cover = '/assets/images/half-title-illus.png',
+  cover = '/assets/images/landing/half-title-illus.png',
   authorName,
   abstract,
   onDynamicHeightChange,
@@ -242,7 +242,7 @@ export const DetailedStory = ({
                           className="absolute -left-24 -top-20 size-56 overflow-hidden rounded-full border-4 border-white shadow-xl md:size-96"
                         >
                           <Image
-                            src={cover ?? '/assets/images/half-title-illus.png'}
+                            src={cover ?? '/assets/images/landing/half-title-illus.png'}
                             alt="Author avatar"
                             width={500}
                             height={500}

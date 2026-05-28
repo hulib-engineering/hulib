@@ -89,7 +89,7 @@ const HeroDesktop = (props: HeroProps) => {
                       <Image
                         width={72}
                         height={24}
-                        src="/assets/images/mentors.svg"
+                        src="/assets/images/heroes/mentors.svg"
                         alt="Mentor avatars"
                         className="h-6 w-[4.5rem] object-fill object-center"
                       />
@@ -98,7 +98,7 @@ const HeroDesktop = (props: HeroProps) => {
                       <Image
                         width={64}
                         height={16}
-                        src="/assets/images/mentors.svg"
+                        src="/assets/images/heroes/mentors.svg"
                         alt="Mentor avatars"
                         className="h-4 w-16 object-fill object-center"
                       />
@@ -163,7 +163,7 @@ const HeroDesktop = (props: HeroProps) => {
                 </div>
                 <Image
                   alt="Hero artwork"
-                  src="/assets/images/hero-artwork.png"
+                  src="/assets/images/heroes/hero-artwork.png"
                   priority
                   width={748}
                   height={511}

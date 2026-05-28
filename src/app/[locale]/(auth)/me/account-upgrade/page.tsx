@@ -91,7 +91,7 @@ export default function AccountUpgrade() {
         {showSuccess ? (
           <div className="flex w-full flex-col items-center gap-4 rounded-[20px] bg-white p-4 shadow-sm">
             <Image
-              src="/assets/images/schedule-success.svg"
+              src="/assets/images/misc/schedule-success.svg"
               alt="success"
               width={434}
               height={374}
