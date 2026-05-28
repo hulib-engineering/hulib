@@ -58,14 +58,14 @@ export default function RecommendedHuberList() {
         </Swiper>
         <div className="absolute left-0 top-1/4 z-10 flex w-full justify-between px-1 lg:hidden">
           <IconButton
-            variant="secondary"
+            variant="soft"
             size="sm"
             onClick={() => swiperRef.current?.slidePrev()}
           >
             <CaretLeft />
           </IconButton>
           <IconButton
-            variant="secondary"
+            variant="soft"
             size="sm"
             onClick={() => swiperRef.current?.slideNext()}
           >
@@ -74,14 +74,14 @@ export default function RecommendedHuberList() {
         </div>
         <div className="absolute left-0 top-1/2 z-10 hidden w-full justify-between px-2 translate-y-1/4 lg:group-hover:flex">
           <IconButton
-            variant="secondary"
+            variant="soft"
             size="lg"
             onClick={() => swiperRef.current?.slidePrev()}
           >
             <CaretLeft />
           </IconButton>
           <IconButton
-            variant="secondary"
+            variant="soft"
             size="lg"
             onClick={() => swiperRef.current?.slideNext()}
           >
@@ -90,7 +90,7 @@ export default function RecommendedHuberList() {
         </div>
       </div>
       <Button
-        variant="secondary"
+        variant="soft"
         size="sm"
         className="lg:hidden"
         onClick={() => router.push('/explore-hubers')}
@@ -98,8 +98,7 @@ export default function RecommendedHuberList() {
         Explore all Hubers
       </Button>
       <Button
-        variant="secondary"
-        size="lg"
+        variant="soft"
         className="hidden lg:flex"
         onClick={() => router.push('/explore-hubers')}
       >

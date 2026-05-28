@@ -26,9 +26,7 @@ const IconButtonComponent = <C extends ElementType>({
         getButtonSize(size),
         getButtonCommonStyles({ disabled }),
         getButtonVariants({ variant, disabled, animation }),
-        animation === 'pulse'
-        && (variant === 'fill' || variant === 'primary')
-        && getAnimation('pulse'),
+        animation === 'pulse' && getAnimation('pulse'),
         animation === 'error' && getAnimation('error'),
         getIconSize(size),
         className,

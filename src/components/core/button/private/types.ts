@@ -10,15 +10,13 @@ export type ButtonAnimations =
 
 type ButtonIcons = 'left' | 'right' | 'only';
 
-export type ButtonSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type ButtonSizes = 'sm' | 'lg';
 
 export type ButtonVariants =
   | 'fill'
+  | 'soft'
   | 'outline'
-  | 'ghost'
-  | 'primary'
-  | 'secondary'
-  | 'tertiary';
+  | 'ghost';
 
 export type ButtonSettingsProps = {
   icon?: ButtonIcons; // deprecated

@@ -263,7 +263,7 @@ export const DetailedStory = ({
       </div>
       <div className="flex w-full items-center justify-between">
         <IconButton
-          variant="secondary"
+          variant="soft"
           size="lg"
           onClick={goToPrevPage}
           disabled={index === 0}
@@ -272,7 +272,7 @@ export const DetailedStory = ({
           <CaretLeft size={8} weight="bold" className="text-primary-40" />
         </IconButton>
         <IconButton
-          variant="secondary"
+          variant="soft"
           size="lg"
           onClick={goToNextPage}
           disabled={index + 2 === pagesRender.length}

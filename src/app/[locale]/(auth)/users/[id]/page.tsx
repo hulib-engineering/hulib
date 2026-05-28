@@ -130,7 +130,12 @@ export default function Index() {
       <div className="flex flex-col overflow-hidden shadow-sm lg:rounded-b-xl">
         <ProfileCover imageUrl={userDetail?.cover?.path} className="h-[100px] lg:h-[283px]">
           {!notMe && (
-            <IconButton variant="secondary" size="sm" className="absolute right-4 top-4" onClick={handleEditCoverClick}>
+            <IconButton
+              variant="soft"
+              size="sm"
+              className="absolute right-4 top-4"
+              onClick={handleEditCoverClick}
+            >
               <PencilSimple weight="bold" />
             </IconButton>
           )}
@@ -151,7 +156,7 @@ export default function Index() {
                     )}
                 {!notMe && (
                   <IconButton
-                    variant="secondary"
+                    variant="soft"
                     size="sm"
                     className="absolute bottom-0 right-0 opacity-100 transition-opacity lg:opacity-0 lg:group-hover:opacity-100"
                     onClick={handleEditAvatarClick}

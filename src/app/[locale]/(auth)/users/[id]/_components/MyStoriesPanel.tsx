@@ -129,7 +129,7 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
           >
             <div className="flex flex-col items-center gap-6">
               <IconButton
-                variant="secondary"
+                variant="soft"
                 size="lg"
                 className="!h-[68px] w-[68px]"
                 onClick={() => setIsCreateModalOpen(true)}
