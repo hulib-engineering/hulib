@@ -11,7 +11,8 @@ import type { z } from 'zod';
 import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
-import Input from '@/components/core/input/Input';
+import Checkbox from '@/components/core/checkbox/Checkbox';
+import Label from '@/components/Label';
 
 import SocialButton from '@/components/SocialButton';
 import type { EmailLoginResponse } from '@/libs/services/modules/auth';
@@ -113,12 +114,13 @@ const LoginForm = () => {
           )}
         />
         <Form.Item className="flex items-center justify-between">
-          <fieldset className="flex items-center gap-1">
-            <Input type="checkbox" id="remember" readOnly={false} />
-            <Form.Label htmlFor="remember">
-              {t('keep_logged_in')}
-            </Form.Label>
-          </fieldset>
+          <Label
+            htmlFor="remember"
+            className="inline-flex w-auto cursor-pointer items-center gap-1 py-0 text-neutral-30"
+          >
+            <Checkbox id="remember" />
+            {t('keep_logged_in')}
+          </Label>
           <Link href="forgot-password" className="text-xs leading-[14px] text-primary-50">
             {t('forgot_password')}
           </Link>
