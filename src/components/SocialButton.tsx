@@ -1,9 +1,9 @@
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
-import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
 
 const SocialIcon = ({ iconUrl }: { iconUrl: string }) => (
@@ -16,44 +16,40 @@ const SocialIcon = ({ iconUrl }: { iconUrl: string }) => (
   />
 );
 
-type ISocialButtonProps = WithChildren<{
-  iconUrl: string;
+type ISocialButtonProps = {
   className?: string;
+  iconOnly?: boolean;
+  variant: 'facebook' | 'google';
   onClick: () => void;
-}>;
+};
 
-const SocialButton = (props: ISocialButtonProps) => (
-  <>
-    <IconButton
-      className={mergeClassnames(
-        'hidden h-11 border border-solid border-[#E3E5EB] bg-white text-center text-neutral-10 text-sm',
-        'hover:border-[#E3E5EB] hover:bg-neutral-variant-98',
-        'xl:flex',
-        props.className,
-      )}
-      onClick={props.onClick}
-    >
-      <SocialIcon iconUrl={props.iconUrl} />
-    </IconButton>
+const SocialButton = (props: ISocialButtonProps) => {
+  const t = useTranslations('SignIn');
+
+  if (props.iconOnly) {
+    return (
+      <IconButton
+        variant="outline"
+        className={mergeClassnames(
+          props.className,
+        )}
+        onClick={props.onClick}
+      >
+        <SocialIcon iconUrl={props.variant === 'facebook' ? '/assets/icons/Facebook.svg' : '/assets/icons/google-icon.svg'} />
+      </IconButton>
+    );
+  }
+
+  return (
     <Button
       variant="outline"
-      size="sm"
-      iconLeft={(
-        <Image
-          src={props.iconUrl}
-          alt="Social icon"
-          width={16}
-          height={16}
-          className="size-4 object-contain"
-        />
-      )}
-      className={mergeClassnames('xl:hidden', props.className)}
+      iconLeft={<SocialIcon iconUrl={props.variant === 'facebook' ? '/assets/icons/Facebook.svg' : '/assets/icons/google-icon.svg'} />}
+      className={mergeClassnames('md:text-neutral-10', props.className)}
       onClick={props.onClick}
     >
-      {props.children}
+      {props.variant === 'google' ? `${t('log_in')} ${t('with_gg')}` : 'Log in with Facebook'}
     </Button>
-  </>
-
-);
+  );
+};
 
 export default SocialButton;

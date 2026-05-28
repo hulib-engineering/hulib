@@ -34,7 +34,6 @@ import {
   useRegisterMutation,
   useResendOTPMutation,
 } from '@/libs/services/modules/auth';
-import GoogleIcon from '@/public/assets/icons/google-icon.svg';
 import {
   RegisterStep1Validation,
   RegisterStep2Validation,
@@ -187,7 +186,7 @@ const Step2Form = ({
     } else {
       setValue('isUnderGuard', false);
     }
-  }, [watch('birthday')]);
+  }, [setValue, watch]);
 
   const handleFormSubmit = handleSubmit((data) => {
     onSubmit(data);
@@ -589,12 +588,10 @@ const RegistrationForm = () => {
           onClick={() => signIn('facebook', { callbackUrl: '/home' })}
         /> */}
         <SocialButton
-          iconUrl={GoogleIcon}
-          className="w-full"
+          variant="google"
+          iconOnly
           onClick={() => signIn('google', { callbackUrl: '/home' })}
-        >
-          {`${t('log_in')} ${t('with_gg')}`}
-        </SocialButton>
+        />
       </div>
       <div className="inline-flex items-center justify-center gap-4 py-3">
         <div className="tracking-tight text-neutral-30">{t('registered')}</div>

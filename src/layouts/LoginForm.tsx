@@ -17,7 +17,6 @@ import Label from '@/components/Label';
 import SocialButton from '@/components/SocialButton';
 import type { EmailLoginResponse } from '@/libs/services/modules/auth';
 import { useLoginAsManagerMutation } from '@/libs/services/modules/auth';
-import GoogleIcon from '@/public/assets/icons/google-icon.svg';
 import { LoginValidation } from '@/validations/LoginValidation';
 import TextInput from '@/components/core/textInput-v1/TextInput';
 
@@ -144,12 +143,10 @@ const LoginForm = () => {
       </div>
       <div className="w-full">
         <SocialButton
-          iconUrl={GoogleIcon}
+          variant="google"
           className="w-full"
           onClick={() => signIn('google', { callbackUrl: '/home' })}
-        >
-          {`${t('log_in')} ${t('with_gg')}`}
-        </SocialButton>
+        />
         {/* <SocialButton
           iconUrl={FacebookIcon}
           className="w-full"
