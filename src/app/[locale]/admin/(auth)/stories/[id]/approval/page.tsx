@@ -101,7 +101,7 @@ export default function Index() {
       </div>
       <DetailedStory
         title={data?.title || ''}
-        cover={data?.humanBook?.photo?.path ?? '/assets/images/half-title-illus.png'}
+        cover={data?.humanBook?.photo?.path ?? '/assets/images/landing/half-title-illus.png'}
         authorName={data?.humanBook?.fullName || ''}
         abstract={data?.abstract || ''}
       />
@@ -120,7 +120,6 @@ export default function Index() {
       {/* Approve/Decline buttons at the bottom */}
       <div className="flex items-center justify-end gap-3">
         <Button
-          size="lg"
           iconLeft={<Check />}
           className="w-60"
           onClick={() => setIsApprovalConfirmationModalOpen(true)}
@@ -128,8 +127,7 @@ export default function Index() {
           Approve
         </Button>
         <Button
-          variant="secondary"
-          size="lg"
+          variant="soft"
           iconLeft={<X />}
           className="w-60 bg-red-90 text-red-50 hover:bg-white hover:text-red-90"
           onClick={() => setIsRejectionConfirmationModalOpen(true)}

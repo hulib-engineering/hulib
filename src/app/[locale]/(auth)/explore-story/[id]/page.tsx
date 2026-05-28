@@ -77,7 +77,7 @@ export default function Index() {
             <div className="flex-1">
               <DetailedStory
                 title={data?.title || ''}
-                cover={data?.humanBook?.photo?.path ?? '/assets/images/half-title-illus.png'}
+                cover={data?.humanBook?.photo?.path ?? '/assets/images/landing/half-title-illus.png'}
                 authorName={data?.humanBook?.fullName || ''}
                 abstract={data?.abstract || ''}
                 onDynamicHeightChange={height => setStoryInfoContainerHeight(height)}
@@ -93,7 +93,7 @@ export default function Index() {
                     <h5 className="line-clamp-2 text-2xl font-medium leading-9 text-primary-10">{data?.title}</h5>
                     <div className="flex items-center gap-1 lg:gap-3">
                       <Avatar
-                        imageUrl={data?.humanBook.photo?.path ?? '/assets/images/ava-placeholder.png'}
+                        imageUrl={data?.humanBook.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
                         size="sm"
                         className="size-9"
                       />

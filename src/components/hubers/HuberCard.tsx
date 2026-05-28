@@ -173,7 +173,7 @@ const HuberCard = (
                 </span>
               </Button>
               <Button
-                variant="secondary"
+                variant="soft"
                 fullWidth
                 className="lg:hidden"
                 onClick={() => router.push(`${props.showAdminControls ? '/admin' : ''}/users/${props.id}`)}

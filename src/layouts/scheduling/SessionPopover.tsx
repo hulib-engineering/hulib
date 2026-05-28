@@ -105,7 +105,7 @@ export default function SessionPopover({ isPending, extendedProps }: ISessionPop
               <div className="flex items-center gap-1">
                 <Image
                   alt="avatar"
-                  src="/assets/images/ava-placeholder.png"
+                  src="/assets/images/avatars/ava-placeholder.png"
                   width={14}
                   height={14}
                   loading="lazy"

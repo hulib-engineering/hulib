@@ -22,7 +22,7 @@ export default function TrySampleStory() {
         </span>
         <IconButton
           size="lg"
-          variant="secondary"
+          variant="soft"
           className="animate-bounce-to-highlight bg-white text-lp-primary-blue hover:bg-[#D9E6FD]"
         >
           <ArrowDown />

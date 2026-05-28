@@ -20,7 +20,7 @@ export async function generateMetadata({
 export default function Index() {
   return (
     <AuthLayout
-      illustrationImage="/assets/images/forgot-password-illustration.svg"
+      illustrationImage="/assets/images/illustrations/auth/forgot-password-illustration.svg"
       pathName="fotgot-password"
     >
       <ForgotPasswordForm />

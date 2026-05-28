@@ -8,7 +8,7 @@ export default function Banner() {
       {/* Mobile Banner */}
       <div className="relative aspect-[430/94] w-full overflow-hidden md:hidden">
         <Image
-          src="/assets/images/banner-mb.jpg"
+          src="/assets/images/banners/banner-mb.jpg"
           alt="Home Banner Mobile"
           fill
           className="object-cover object-center"
@@ -20,7 +20,7 @@ export default function Banner() {
       {/* Desktop Banner */}
       <div className="relative hidden aspect-[1440/94] w-full overflow-hidden md:block">
         <Image
-          src="/assets/images/banner.jpg"
+          src="/assets/images/banners/banner.jpg"
           alt="Home Banner"
           fill
           className="object-cover object-center"

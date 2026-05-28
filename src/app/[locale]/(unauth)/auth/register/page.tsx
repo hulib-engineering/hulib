@@ -19,7 +19,7 @@ export async function generateMetadata({
 
 export default function Index() {
   return (
-    <AuthLayout illustrationImage="/assets/images/register-illustration.svg">
+    <AuthLayout illustrationImage="/assets/images/illustrations/auth/register-illustration.svg">
       <RegistrationForm />
     </AuthLayout>
   );

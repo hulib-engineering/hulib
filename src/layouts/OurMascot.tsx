@@ -22,7 +22,7 @@ export default function OurMascot() {
       <div className="flex w-full items-center justify-center">
         <div className="relative hidden h-[478px] w-[470px] px-2 py-1 lg:block">
           <Image
-            src="/assets/images/our-mascots.png"
+            src="/assets/images/landing/our-mascots.png"
             alt="Our Mascot Illustration"
             width={462}
             height={462}
@@ -62,7 +62,7 @@ export default function OurMascot() {
           </div>
           <div className="flex w-full items-center justify-center py-1.5">
             <Image
-              src="/assets/images/our-mascots.png"
+              src="/assets/images/landing/our-mascots.png"
               alt="Our Mascot Illustration"
               width={462}
               height={462}

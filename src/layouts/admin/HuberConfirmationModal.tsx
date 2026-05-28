@@ -61,7 +61,7 @@ const HuberConfirmationModal = ({
         <div className="mx-auto flex w-full max-w-52 flex-col gap-2">
           <div className="relative w-full overflow-hidden rounded-[32px] bg-neutral-90">
             <Image
-              src={user.photo?.path ?? '/assets/images/ava-placeholder.png'}
+              src={user.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
               alt="User Avatar"
               width={270}
               height={270}

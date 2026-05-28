@@ -153,7 +153,7 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHube
             return (
               <Button
                 key={day.getTime()}
-                variant={isSelected ? 'primary' : 'ghost'}
+                variant={isSelected ? 'fill' : 'ghost'}
                 size="sm"
                 className={mergeClassnames('w-full rounded-lg py-2 px-3', isToday(day) && 'border border-primary-60')}
                 onClick={() => onClickDateItem(day)}
@@ -200,7 +200,7 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHube
                       return (
                         <Button
                           key={item}
-                          variant={selectedTime === item ? 'primary' : 'outline'}
+                          variant={selectedTime === item ? 'fill' : 'outline'}
                           size="sm"
                           disabled={isDisabled}
                           className={mergeClassnames(

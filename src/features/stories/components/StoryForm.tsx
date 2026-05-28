@@ -426,7 +426,7 @@ export default function StoryForm(props: IStoryFormProps) {
                       ))}
                     </div>
                     <Button
-                      variant="secondary"
+                      variant="soft"
                       size="sm"
                       className="w-[180px]"
                       onClick={() => setIsCustomCoverModalOpen(true)}

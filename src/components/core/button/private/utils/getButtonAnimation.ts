@@ -3,9 +3,9 @@ import type { ButtonAnimations } from '../types';
 const getAnimation = (animation?: ButtonAnimations): string => {
   switch (animation) {
     case 'error':
-      return 'anim-error animate-[error_0.82s_cubic-bezier(0.36,0.07,0.19,0.97)_1_both]';
+      return 'animate-error backface-hidden';
     case 'pulse':
-      return 'anim-pulse animate-[pulse2_1.5s_infinite]';
+      return 'animate-pulse2';
     default:
       return '';
   }

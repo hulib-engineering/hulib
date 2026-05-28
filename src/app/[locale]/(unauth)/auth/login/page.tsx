@@ -20,7 +20,7 @@ export async function generateMetadata({
 export default async function Index() {
   return (
     <AuthLayout
-      illustrationImage="/assets/images/login-illustration.svg"
+      illustrationImage="/assets/images/illustrations/auth/login-illustration.svg"
       pathName="login"
     >
       <LoginWithSession />

@@ -81,7 +81,7 @@ export default function RootLayout({
             <GoogleAnalytics measurementId={gaMeasurementId} />
           </>
         )}
-        <Suspense key={Date.now()}>
+        <Suspense>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <StoreProvider>{children}</StoreProvider>
             <ToastContainer />

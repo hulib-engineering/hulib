@@ -117,7 +117,6 @@ export default function PreSurvey({ sessionId, onFinish }: { sessionId: number; 
 
           {/* Submit Button */}
           <Button
-            variant="primary"
             onClick={handleSubmitSurvey}
             disabled={!isEmpty(errors) || isSubmitting}
             animation={isSubmitting && 'progress'}

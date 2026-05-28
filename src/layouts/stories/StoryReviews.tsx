@@ -19,7 +19,7 @@ export const ReviewItem = (params: TStoryReview) => (
   <div className="flex flex-col gap-4 rounded-[20px] p-4 shadow-[inset_0_-0.5px_0_0_#E3E5EB]">
     <div className="flex w-full items-center justify-between">
       <div className="flex items-center gap-2">
-        <Avatar imageUrl={params.user?.photo?.path ?? '/assets/images/ava-placeholder.png'} />
+        <Avatar imageUrl={params.user?.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'} />
         <div className="flex flex-col">
           <p className="text-sm font-medium leading-5">
             {params.user?.fullName}
@@ -113,7 +113,7 @@ export default function StoryReviews({ maxHeight }: { maxHeight?: number }) {
       {items?.length === 0
         ? (
             <Image
-              src="/assets/images/no-results-found.png"
+              src="/assets/images/landing/no-results-found.png"
               className="h-full w-auto object-contain"
               style={{ maxHeight: maxHeight && maxHeight > 0 ? maxHeight - 92 : 'auto' }}
               width={300}

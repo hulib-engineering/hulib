@@ -214,7 +214,7 @@ export default function Index() {
                         {t('back')}
                       </Button>
                       <Button
-                        variant="primary"
+                        variant="fill"
                         className="w-full"
                         disabled={isEmpty(note)}
                         onClick={handlePlaceRequest}
@@ -227,7 +227,7 @@ export default function Index() {
               : (
                   <>
                     <Image
-                      src="/assets/images/schedule-success.svg"
+                      src="/assets/images/misc/schedule-success.svg"
                       alt="Successful illustration"
                       width={480}
                       height={420}
