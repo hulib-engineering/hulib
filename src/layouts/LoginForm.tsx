@@ -12,7 +12,7 @@ import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import Input from '@/components/core/input/Input';
-import LabelComponent from '@/components/Label';
+
 import SocialButton from '@/components/SocialButton';
 import type { EmailLoginResponse } from '@/libs/services/modules/auth';
 import { useLoginAsManagerMutation } from '@/libs/services/modules/auth';
@@ -115,13 +115,9 @@ const LoginForm = () => {
         <Form.Item className="flex items-center justify-between">
           <fieldset className="flex items-center gap-1">
             <Input type="checkbox" id="remember" readOnly={false} />
-            <LabelComponent
-              htmlFor="remember"
-              type="checkbox"
-              className="cursor-pointer py-0 text-xs leading-[14px] text-neutral-30"
-            >
+            <Form.Label htmlFor="remember">
               {t('keep_logged_in')}
-            </LabelComponent>
+            </Form.Label>
           </fieldset>
           <Link href="forgot-password" className="text-xs leading-[14px] text-primary-50">
             {t('forgot_password')}
