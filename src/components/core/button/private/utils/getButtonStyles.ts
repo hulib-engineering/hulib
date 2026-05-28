@@ -10,7 +10,7 @@ export const getButtonCommonStyles = ({
     'relative z-0 flex justify-center items-center font-medium no-underline overflow-hidden rounded-full gap-2',
     'whitespace-nowrap select-none transition duration-200 text-base leading-tight',
     disabled ? 'cursor-not-allowed' : 'active:scale-90',
-    !disabled && 'focus:shadow-[0_0_0_2px] transition-colors ease-out',
+    !disabled && 'transition-colors ease-out',
   );
 
 export const getButtonVariants = ({
@@ -24,16 +24,10 @@ export const getButtonVariants = ({
           'text-red-50 bg-transparent ring-inset ring-1 ring-red-50',
         )
       : mergeClassnames(
-          'text-primary-50 bg-transparent border border-[#C2C6CF]',
+          'text-primary-50 bg-transparent border border-neutral-variant-80',
           'disabled:border-neutral-90 disabled:text-neutral-70',
-          !disabled
-          && 'focus:border focus:border-[#C2C6CF] focus:shadow-primary-60',
+          !disabled && 'focus:text-primary-40 focus:border-neutral-80 focus:ring-2 focus:ring-primary-60',
         );
-  }
-  if (variant === 'tertiary') {
-    return animation === 'error'
-      ? 'text-goten bg-chichi'
-      : 'text-primary-50';
   }
   if (variant === 'ghost') {
     return animation === 'error'
@@ -42,17 +36,17 @@ export const getButtonVariants = ({
           'text-primary-50 bg-transparent',
           disabled && 'text-neutral-70',
           !disabled
-          && 'focus:border-2 focus:border-[#858DA0] focus:shadow-primary-60',
+          && 'focus:border-2 focus:border-[#858DA0]',
         );
   }
-  if (variant === 'secondary') {
+  if (variant === 'soft') {
     return animation === 'error'
-      ? mergeClassnames('text-chichi bg-primary-90')
+      ? mergeClassnames('text-red-50 bg-primary-90')
       : mergeClassnames(
-          'text-primary-50 bg-primary-90',
+          'text-primary-40 bg-primary-90',
           disabled && 'bg-neutral-90 text-neutral-70',
           !disabled
-          && 'focus:border focus:border-primary-80 focus:shadow-primary-60',
+          && 'focus:ring-2 focus:ring-primary-60 focus:border focus:border-primary-80',
         );
   }
   return animation === 'error'
@@ -61,7 +55,7 @@ export const getButtonVariants = ({
         'text-white bg-primary-50',
         disabled && 'bg-neutral-90 text-neutral-70',
         !disabled
-        && 'focus:border focus:border-primary-80 focus:shadow-primary-60',
+        && 'focus:ring-2 focus:ring-primary-80',
       );
 };
 
@@ -73,37 +67,17 @@ export const getIconHorizontalPosition = ({
   size,
 }: Pick<Props, 'iconRight' | 'iconLeft' | 'size'>): string => {
   if (iconRight) {
-    switch (size) {
-      case 'xs':
-      case 'sm':
-        return 'end-1';
-      case 'lg':
-        return 'end-3';
-      case 'xl':
-        return 'end-4';
-      default:
-        return 'end-2';
-    }
+    return size === 'sm' ? 'end-1' : 'end-3';
   }
   if (iconLeft) {
-    switch (size) {
-      case 'xs':
-      case 'sm':
-        return 'start-1';
-      case 'lg':
-        return 'start-3';
-      case 'xl':
-        return 'start-4';
-      default:
-        return 'start-2';
-    }
+    return size === 'sm' ? 'start-1' : 'start-3';
   }
   return '';
 };
 
 export const getLoaderColor = (variant?: ButtonVariants): string => {
   switch (variant) {
-    case 'secondary':
+    case 'soft':
     case 'outline':
       return 'border-black';
     case 'ghost':

@@ -73,7 +73,7 @@ const HeroMobile = (props: HeroProps) => {
           <div className="relative flex w-full flex-col items-center justify-center">
             <Image
               alt="Hero artwork"
-              src="/assets/images/hero-artwork.png"
+              src="/assets/images/heroes/hero-artwork.png"
               priority
               width={276}
               height={188}
@@ -85,7 +85,7 @@ const HeroMobile = (props: HeroProps) => {
                 width={each.size}
                 height={each.size}
                 alt={`Hero star ${index}`}
-                src={`/assets/images/icons/stars/star-${index}.svg`}
+                src={`/assets/icons/stars/star-${index}.svg`}
                 className={mergeClassnames(
                   'absolute shrink-0',
                   each.xPosition && each.xPosition,
@@ -99,7 +99,7 @@ const HeroMobile = (props: HeroProps) => {
                 width={each.width}
                 height={each.height}
                 alt={`Hero vector ${index}`}
-                src={`/assets/images/icons/vectors/vector-${index}.svg`}
+                src={`/assets/icons/vectors/vector-${index}.svg`}
                 className={mergeClassnames(
                   'absolute shrink-0',
                   each.xPosition && each.xPosition,
@@ -115,7 +115,7 @@ const HeroMobile = (props: HeroProps) => {
               <Image
                 width={64}
                 height={16}
-                src="/assets/images/mentors.svg"
+                src="/assets/images/heroes/mentors.svg"
                 alt="Mentor avatars"
                 className="h-4 w-16 object-fill object-center"
               />
@@ -133,7 +133,7 @@ const HeroMobile = (props: HeroProps) => {
                 width={32}
                 height={32}
                 alt="Play icon"
-                src={`/assets/images/icons/${
+                src={`/icons/${
                   isPlaying ? 'pause' : 'play'
                 }-circle.svg`}
                 className="size-8 cursor-pointer object-cover object-center"

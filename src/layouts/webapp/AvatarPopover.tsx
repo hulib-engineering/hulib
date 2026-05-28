@@ -114,7 +114,7 @@ export default function AvatarPopover() {
             <Avatar
               imageUrl={
                 role?.id === Role.ADMIN
-                  ? '/assets/images/admin-ava.png'
+                  ? '/assets/images/avatars/admin-ava.png'
                   : avatarUrl
               }
               className="size-11"

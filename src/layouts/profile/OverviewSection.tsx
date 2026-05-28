@@ -92,7 +92,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
         <div className="flex items-center justify-between">
           <p className="font-medium text-black">Bio</p>
           {editable && !openEditPopup && !isEditingVideoSrc && (
-            <IconButton variant="secondary" size="sm" className="p-2" onClick={() => setOpenEditPopup(true)}>
+            <IconButton variant="soft" size="sm" className="p-2" onClick={() => setOpenEditPopup(true)}>
               <PencilSimple weight="bold" />
             </IconButton>
           )}
@@ -137,7 +137,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
             <p className="font-medium text-black">Video Introduction</p>
             {editable && !isEditingVideoSrc && !openEditPopup && (
               <IconButton
-                variant="secondary"
+                variant="soft"
                 size="sm"
                 className="p-2"
                 onClick={() => setIsEditingVideoSrc(true)}

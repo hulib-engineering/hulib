@@ -80,7 +80,7 @@ const NewsletterForm = () => {
               width={40}
               height={40}
               alt="Subscribe"
-              src="/assets/images/icons/arrow-right-2.svg"
+              src="/assets/icons/arrow-right-2.svg"
             />
           )}
           className="bg-lp-primary-blue p-0"

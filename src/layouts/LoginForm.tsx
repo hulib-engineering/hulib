@@ -11,12 +11,12 @@ import type { z } from 'zod';
 import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
-import Input from '@/components/core/input/Input';
-import LabelComponent from '@/components/Label';
+import Checkbox from '@/components/core/checkbox/Checkbox';
+import Label from '@/components/Label';
+
 import SocialButton from '@/components/SocialButton';
 import type { EmailLoginResponse } from '@/libs/services/modules/auth';
 import { useLoginAsManagerMutation } from '@/libs/services/modules/auth';
-import GoogleIcon from '@/public/assets/icons/google-icon.svg';
 import { LoginValidation } from '@/validations/LoginValidation';
 import TextInput from '@/components/core/textInput-v1/TextInput';
 
@@ -113,16 +113,13 @@ const LoginForm = () => {
           )}
         />
         <Form.Item className="flex items-center justify-between">
-          <fieldset className="flex items-center gap-1">
-            <Input type="checkbox" id="remember" readOnly={false} />
-            <LabelComponent
-              htmlFor="remember"
-              type="checkbox"
-              className="cursor-pointer py-0 text-xs leading-[14px] text-neutral-30"
-            >
-              {t('keep_logged_in')}
-            </LabelComponent>
-          </fieldset>
+          <Label
+            htmlFor="remember"
+            className="inline-flex w-auto cursor-pointer items-center gap-1 py-0 text-neutral-30"
+          >
+            <Checkbox id="remember" />
+            {t('keep_logged_in')}
+          </Label>
           <Link href="forgot-password" className="text-xs leading-[14px] text-primary-50">
             {t('forgot_password')}
           </Link>
@@ -146,12 +143,10 @@ const LoginForm = () => {
       </div>
       <div className="w-full">
         <SocialButton
-          iconUrl={GoogleIcon}
+          variant="google"
           className="w-full"
           onClick={() => signIn('google', { callbackUrl: '/home' })}
-        >
-          {`${t('log_in')} ${t('with_gg')}`}
-        </SocialButton>
+        />
         {/* <SocialButton
           iconUrl={FacebookIcon}
           className="w-full"

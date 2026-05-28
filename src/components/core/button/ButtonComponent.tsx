@@ -21,10 +21,8 @@ import { mergeClassnames } from '@/components/core/private/utils';
 const ButtonComponent = <C extends ElementType>({
   variant,
   size,
-  icon, // deprecated
   iconLeft,
   iconRight,
-  iconOnly, // deprecated
   fullWidth,
   disabled,
   animation,
@@ -39,19 +37,15 @@ const ButtonComponent = <C extends ElementType>({
       className={mergeClassnames(
         getButtonSizes({
           size,
-          icon,
           iconLeft,
           iconRight,
-          iconOnly,
           fullWidth,
         }),
         getButtonCommonStyles({ disabled }),
         getButtonVariants({ variant, disabled, animation }),
-        animation === 'pulse'
-        && (variant === 'fill' || variant === 'primary')
-        && getAnimation('pulse'),
+        animation === 'pulse' && getAnimation('pulse'),
         animation === 'error' && getAnimation('error'),
-        fullWidth && !iconOnly && 'w-full',
+        fullWidth && 'w-full',
         customClassName,
       )}
       {...((!as || as === 'button') && { type: 'button' })}
@@ -65,11 +59,9 @@ type HoverConfig = { normal: string; error?: string };
 
 const HOVER_BACKGROUNDS: Record<ButtonVariants, HoverConfig> = {
   fill: { normal: 'bg-primary-40' },
-  primary: { normal: 'bg-primary-40' },
-  secondary: { normal: 'bg-primary-80', error: 'bg-chichi-10' },
-  tertiary: { normal: 'bg-primary-98' },
-  ghost: { normal: 'bg-primary-98', error: 'bg-red-10' },
-  outline: { normal: 'bg-light-hover', error: 'bg-red-10' },
+  soft: { normal: 'bg-primary-80' },
+  outline: { normal: 'bg-primary-98' },
+  ghost: { normal: 'bg-primary-98' },
 };
 
 const Hover = ({

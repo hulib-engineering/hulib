@@ -20,11 +20,9 @@ type Props<C extends ElementType> = PropsWithChildren<ButtonProps<C>> &
 const Button = <C extends ElementType = 'button'>({
   children,
   variant = 'fill',
-  size = 'md',
-  icon, // deprecated
+  size = 'lg',
   iconLeft, // not boolean anymore
   iconRight, // not boolean anymore
-  iconOnly, // deprecated
   fullWidth,
   disabled,
   animation,
@@ -47,10 +45,8 @@ const Button = <C extends ElementType = 'button'>({
     <ButtonComponent
       size={size}
       variant={variant}
-      icon={icon}
       iconLeft={iconLeft}
       iconRight={iconRight}
-      iconOnly={iconOnly}
       fullWidth={fullWidth}
       disabled={disabled}
       animation={animation}
@@ -65,7 +61,6 @@ const Button = <C extends ElementType = 'button'>({
             <AnimationContent
               iconLeft={iconLeft}
               iconRight={iconRight}
-              iconOnly={iconOnly}
               animation={animation}
               size={size}
               fullWidth={fullWidth}
@@ -87,7 +82,6 @@ const Button = <C extends ElementType = 'button'>({
                   size={size}
                 />
               )}
-              {iconOnly}
             </>
           )}
       {!hasCustomHoverClasses && <Hover isHover={isHover} variant={variant} animation={animation} />}

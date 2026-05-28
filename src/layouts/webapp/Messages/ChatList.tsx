@@ -45,7 +45,7 @@ export const ContactItem = ({
     <div className="relative">
       <Image
         className="size-14 rounded-full"
-        src={participant.photo?.path ?? '/assets/images/ava-placeholder.png'}
+        src={participant.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
         alt="Sender Avatar"
         width={56}
         height={56}
@@ -53,7 +53,7 @@ export const ContactItem = ({
         objectPosition="center"
         quality={100}
         placeholder="blur"
-        blurDataURL="/assets/images/ava-placeholder.png"
+        blurDataURL="/assets/images/avatars/ava-placeholder.png"
       />
       <StatusBadge onLine={isOnline} className="absolute bottom-0 right-0" />
     </div>

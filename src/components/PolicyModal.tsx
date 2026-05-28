@@ -25,7 +25,7 @@ const PolicyModal = (props: WithChildren<IPolicyModalProps>) => {
           <div className="inline-flex w-full items-center justify-between">
             <Image
               alt="HULIB minified logo"
-              src="/assets/images/minified-HULIB-logo.png"
+              src="/assets/images/logos/minified-HULIB-logo.png"
               width={36}
               height={42}
               className="hidden object-contain xl:block"

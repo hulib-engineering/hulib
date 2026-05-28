@@ -145,7 +145,7 @@ const HandleReportModal = ({
                   <div className="flex flex-1 flex-col border-r border-neutral-90">
                     <div className="bg-primary-60 p-2 text-center text-lg font-medium text-white">Reporter</div>
                     <div className="flex h-20 items-center justify-center gap-2 py-2 text-sm font-medium leading-4">
-                      <Avatar imageUrl="/assets/images/ava-placeholder.png" className="size-11" />
+                      <Avatar imageUrl="/assets/images/avatars/ava-placeholder.png" className="size-11" />
                       <span className="rounded-full bg-orange-90 px-2.5 py-0.5 text-orange-50">
                         Liber
                       </span>
@@ -155,7 +155,7 @@ const HandleReportModal = ({
                   <div className="flex flex-1 flex-col">
                     <div className="bg-red-60 p-2 text-center text-lg font-medium text-white">Reported user</div>
                     <div className="flex h-20 items-center justify-center gap-2 py-2 text-sm font-medium leading-4">
-                      <Avatar imageUrl="/assets/images/ava-placeholder.png" className="size-11" />
+                      <Avatar imageUrl="/assets/images/avatars/ava-placeholder.png" className="size-11" />
                       <span className="rounded-full bg-primary-90 px-2.5 py-0.5 text-primary-50">
                         Huber
                       </span>
@@ -169,7 +169,7 @@ const HandleReportModal = ({
               <div className="flex flex-col">
                 <div className="bg-red-60 p-2 text-center text-lg font-medium text-white">Reported user</div>
                 <div className="flex h-20 items-center justify-center gap-2 py-2 text-sm font-medium leading-4">
-                  <Avatar imageUrl="/assets/images/ava-placeholder.png" className="size-11" />
+                  <Avatar imageUrl="/assets/images/avatars/ava-placeholder.png" className="size-11" />
                   <span className="rounded-full bg-primary-90 px-2.5 py-0.5 text-primary-50">
                     Huber
                   </span>

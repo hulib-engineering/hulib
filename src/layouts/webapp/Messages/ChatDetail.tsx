@@ -106,7 +106,7 @@ export const MessageItem = React.memo(({
     {markedAsRead && (
       <Image
         className="size-5 rounded-full"
-        src={participantAvatarUrl ?? '/assets/images/ava-placeholder.png'}
+        src={participantAvatarUrl ?? '/assets/images/avatars/ava-placeholder.png'}
         alt="Read by"
         width={20}
         height={20}
@@ -114,7 +114,7 @@ export const MessageItem = React.memo(({
         objectPosition="center"
         quality={100}
         placeholder="blur"
-        blurDataURL="/assets/images/ava-placeholder.png"
+        blurDataURL="/assets/images/avatars/ava-placeholder.png"
       />
     )}
   </div>

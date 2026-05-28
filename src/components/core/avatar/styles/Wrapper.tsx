@@ -16,7 +16,7 @@ const Wrapper = ({
         getWrapperSize(size),
         className,
       )}
-      style={{ backgroundImage: `url('${imageUrl || '/assets/images/ava-placeholder.png'}')` }}
+      style={{ backgroundImage: `url('${imageUrl || '/assets/images/avatars/ava-placeholder.png'}')` }}
     >
       {children}
     </div>

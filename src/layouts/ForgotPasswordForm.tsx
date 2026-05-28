@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 import { useTranslations } from 'next-intl';
+import { ArrowLeft } from '@phosphor-icons/react';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import TextInput from '@/components/core/textInput/TextInput';
@@ -133,7 +134,7 @@ const ForgotPasswordForm = () => {
             hintText={errors.email?.message}
           />
         </Form.Item>
-        <Form.Item className="py-4">
+        <Form.Item>
           <Button
             type="submit"
             value="Submit"
@@ -146,22 +147,14 @@ const ForgotPasswordForm = () => {
         </Form.Item>
       </Form>
 
-      <button
-        type="button"
-        className="flex items-center gap-x-2"
+      <Button
+        variant="ghost"
+        iconLeft={<ArrowLeft />}
+        className="underline"
         onClick={() => router.push('/auth/login')}
       >
-        <Image
-          src="/assets/icons/ArrowLeft-icon.svg"
-          width={24}
-          height={24}
-          alt="arrow-icon"
-          loading="lazy"
-        />
-        <span className="text-base font-medium leading-5 text-primary-50 underline">
-          {t('back_to_login')}
-        </span>
-      </button>
+        {t('back_to_login')}
+      </Button>
     </>
   );
 };

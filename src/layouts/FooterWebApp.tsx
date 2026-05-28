@@ -14,22 +14,22 @@ import { useAppSelector, useDeviceType } from '@/libs/hooks';
 
 const socialLinks = [
   {
-    iconUrl: '/assets/images/icons/facebook.svg',
+    iconUrl: '/assets/icons/facebook.svg',
     link: 'https://www.facebook.com/hulibvietnam',
     name: 'Facebook',
   },
   {
-    iconUrl: '/assets/images/icons/instagram.svg',
+    iconUrl: '/assets/icons/instagram.svg',
     link: 'https://www.instagram.com/hulibvn/',
     name: 'Instagram',
   },
   {
-    iconUrl: '/assets/images/icons/tiktok.svg',
+    iconUrl: '/assets/icons/tiktok.svg',
     link: 'https://www.tiktok.com/@hulibvn?is_from_webapp=1&sender_device=pc',
     name: 'Tiktok',
   },
   {
-    iconUrl: '/assets/images/icons/threads-icon.svg',
+    iconUrl: '/assets/icons/threads-icon.svg',
     link: 'https://www.threads.com/@hulibvn?igshid=NTc4MTIwNjQ2YQ%3D%3D',
     name: 'Threads',
   },
@@ -82,12 +82,12 @@ const FooterWebApp = () => {
       title: t('contact'),
       items: [
         {
-          iconUrl: '/assets/images/icons/phone.svg',
+          iconUrl: '/assets/icons/phone.svg',
           title: Env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER,
           href: `tel:${Env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER}`,
         },
         {
-          iconUrl: '/assets/images/icons/mail.svg',
+          iconUrl: '/assets/icons/mail.svg',
           title: Env.NEXT_PUBLIC_CONTACT_EMAIL,
           href: `mailto:${Env.NEXT_PUBLIC_CONTACT_EMAIL}`,
         },

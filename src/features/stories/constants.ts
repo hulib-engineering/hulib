@@ -71,7 +71,7 @@ export const COVER_EXPORT_SIZE: CoverSize = 'desktop';
 
 export const PRESET_COVER_ASSET_SEGMENT = 'story_background_';
 
-const COVER_BOOK_DIR = '/assets/images/cover-book';
+const COVER_BOOK_DIR = '/assets/images/cover-bg-presets';
 
 /** Preset cover backgrounds for the story form picker (yellow, red, blue). */
 export const COVER_PRESET_ASSETS = [
@@ -86,7 +86,7 @@ export const DEFAULT_STORY_COVER_ASSET = COVER_PRESET_ASSETS[0];
 
 // --- Custom cover illustrations (`public/assets/images/covers`)
 
-const COVER_ILLUSTRATIONS_DIR = '/assets/images/covers';
+const COVER_ILLUSTRATIONS_DIR = '/assets/images/illustrations/cover';
 
 const COVER_ILLUSTRATION_FILENAMES = [
   '1 Inner Peace.png',

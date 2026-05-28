@@ -115,7 +115,7 @@ export default function Index() {
             Approve
           </Button>
           <Button
-            variant="secondary"
+            variant="soft"
 
             iconLeft={<X />}
             className="w-60 bg-red-90 text-red-50"
