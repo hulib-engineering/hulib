@@ -300,7 +300,7 @@ export default function PostSurvey() {
         {step === 'feedback-success' && (
           <>
             <Image
-              src="/assets/images/Hulib Webapp.png"
+              src="/assets/images/heroes/Hulib Webapp.png"
               alt="Successful Feedback"
               width={isMobileView ? 256 : 366}
               height={isMobileView ? 331 : 445}

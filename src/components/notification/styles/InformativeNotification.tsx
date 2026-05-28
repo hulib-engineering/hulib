@@ -65,8 +65,8 @@ export default function InformativeNotificationCard({ notification, showExtras, 
           <Avatar
             imageUrl={[NotificationType.SESSION_MISS, NotificationType.SESSION_CANCELLATION].includes(notification.type.name as NotificationType)
               ? '/assets/icons/disabled-meeting-icon.svg' : notification.sender.id === 1
-                ? '/assets/images/admin-ava.png'
-                : (notification.sender.photo?.path ?? '/assets/images/ava-placeholder.png')}
+                ? '/assets/images/avatars/admin-ava.png'
+                : (notification.sender.photo?.path ?? '/assets/images/avatars/ava-placeholder.png')}
             size="xl"
             className={mergeClassnames(
               showExtras && 'xl:!size-[72px]',

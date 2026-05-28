@@ -14,19 +14,19 @@ const EventFeatureList = [
     key: 'event_feature_peers' as const,
     bgColor: 'bg-lime-350/[.75]',
     shadowColor: 'shadow-[0_12px_24px_0_rgba(187,249,158,0.25)]',
-    thumbnailUrl: '/assets/images/feature-0.png',
+    thumbnailUrl: '/assets/images/landing/feature-0.png',
   },
   {
     key: 'event_feature_online_meetings' as const,
     bgColor: 'bg-violet-350/[.75]',
     shadowColor: 'shadow-[0_12px_24px_0_rgba(204,186,254,0.25)]',
-    thumbnailUrl: '/assets/images/feature-1.png',
+    thumbnailUrl: '/assets/images/landing/feature-1.png',
   },
   {
     key: 'event_feature_safely_sharing' as const,
     bgColor: 'bg-amber-75/[.75]',
     shadowColor: 'shadow-[0_12px_24px_0_rgba(255,224,142,0.25)]',
-    thumbnailUrl: '/assets/images/feature-2.png',
+    thumbnailUrl: '/assets/images/landing/feature-2.png',
   },
 ];
 
@@ -66,7 +66,7 @@ const PromotedEvent = () => {
         <div className="w-full md:w-5/6">
           <Image
             alt="Event banner"
-            src="/assets/images/event-banner.png"
+            src="/assets/images/banners/event-banner.png"
             priority
             width={1920}
             height={960}
@@ -78,7 +78,7 @@ const PromotedEvent = () => {
           />
           <Image
             alt="Event banner"
-            src="/assets/images/event-banner-sp.png"
+            src="/assets/images/banners/event-banner-sp.png"
             priority
             width={375}
             height={375}

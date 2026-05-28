@@ -73,7 +73,7 @@ const HeroMobile = (props: HeroProps) => {
           <div className="relative flex w-full flex-col items-center justify-center">
             <Image
               alt="Hero artwork"
-              src="/assets/images/hero-artwork.png"
+              src="/assets/images/heroes/hero-artwork.png"
               priority
               width={276}
               height={188}
@@ -115,7 +115,7 @@ const HeroMobile = (props: HeroProps) => {
               <Image
                 width={64}
                 height={16}
-                src="/assets/images/mentors.svg"
+                src="/assets/images/heroes/mentors.svg"
                 alt="Mentor avatars"
                 className="h-4 w-16 object-fill object-center"
               />

@@ -29,7 +29,7 @@ const SuccessFormModal = (props: ISuccessFormModalProps) => (
           <div className="m-auto flex flex-col items-center justify-center gap-12">
             <Image
               alt="Illustration image"
-              src="/assets/images/success-illus.svg"
+              src="/assets/images/misc/success-illus.svg"
               priority
               width={450}
               height={400}

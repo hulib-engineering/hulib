@@ -44,7 +44,7 @@ export const SessionAttendees = ({
           <Avatar
             size="sm"
             imageUrl={isVibing ? huber?.photo?.path : liber?.photo?.path
-              ?? '/assets/images/ava-placeholder.png'}
+              ?? '/assets/images/avatars/ava-placeholder.png'}
           />
           <Chip
             disabled
@@ -68,7 +68,7 @@ export const SessionAttendees = ({
       <div className={mergeClassnames('flex flex-col space-y-2', childClassname)}>
         <div className="flex items-center">
           <Image
-            src={huber?.photo?.path ?? '/assets/images/ava-placeholder.png'}
+            src={huber?.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
             alt="Huber avatar"
             className="size-8 rounded-full object-cover"
             width={32}
@@ -93,7 +93,7 @@ export const SessionAttendees = ({
 
         <div className="flex items-center">
           <Image
-            src={liber?.photo?.path ?? '/assets/images/ava-placeholder.png'}
+            src={liber?.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
             alt="Huber avatar"
             className="size-8 rounded-full object-cover"
             width={32}

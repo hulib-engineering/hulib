@@ -55,7 +55,7 @@ export default function OutstandingFeatures() {
               {contentIndexes.map((each, index) => (
                 <SwiperSlide key={each}>
                   <Image
-                    src={`/assets/images/feature-ss-${index + 1}.png`}
+                    src={`/assets/images/landing/feature-ss-${index + 1}.png`}
                     alt={`Outstanding Feature ${index}`}
                     width={800}
                     height={568.9}

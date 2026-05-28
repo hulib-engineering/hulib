@@ -66,7 +66,7 @@ const HumanBookBanner = () => {
         </div>
         <div className="hidden shrink-0 lg:block">
           <Image
-            src="/assets/images/banner.png"
+            src="/assets/images/banners/banner.png"
             alt="banner"
             width={404}
             height={64}
