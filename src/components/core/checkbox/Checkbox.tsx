@@ -1,35 +1,32 @@
-import type { InputHTMLAttributes, ReactNode } from 'react';
+import type { InputHTMLAttributes } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 
-import { CheckSquare, MinusSquare, Square } from '@phosphor-icons/react';
+import { CheckCircle, CheckSquare, Circle, MinusSquare, Square } from '@phosphor-icons/react';
 import { mergeClassnames } from '@/components/core/private/utils';
 
 type CheckboxProps = InputHTMLAttributes<HTMLInputElement> & {
-  label?: ReactNode | string;
   ariaLabel?: string;
-  bgColor?: string;
   className?: string;
   indeterminate?: boolean;
+  shape?: 'square' | 'round';
 };
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {
       ariaLabel,
-      label,
       className,
       indeterminate,
+      shape = 'square',
       ...rest
     },
     ref,
   ) => {
-    const ariaLabelValue = label
-      ? undefined
-      : ariaLabel || (rest['aria-label']
-        ? rest['aria-label']
-        : rest.name
-          ? rest.name
-          : 'Checkbox');
+    const ariaLabelValue = ariaLabel || (rest['aria-label']
+      ? rest['aria-label']
+      : rest.name
+        ? rest.name
+        : 'Checkbox');
 
     const [isChecked, setIsChecked] = useState(rest.checked || false);
 
@@ -40,14 +37,12 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     }, [isChecked, rest.checked]);
 
     return (
-      <label
-        htmlFor={rest.id}
+      <div
         className={mergeClassnames(
-          'relative rounded-full flex p-1 items-center gap-3 text-sm text-neutral-10 cursor-pointer',
-          'hover:bg-neutral-90',
-          'focus-visible:border focus-visible:border-neutral-70 focus-visible:bg-neutral-90',
-          rest.disabled && 'opacity-60 cursor-not-allowed select-none',
-          rest.readOnly && 'cursor-not-allowed select-none',
+          'relative size-6 shrink-0',
+          rest.disabled && 'opacity-60 cursor-not-allowed',
+          rest.readOnly && 'cursor-not-allowed',
+          className && className,
         )}
       >
         <input
@@ -56,7 +51,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           readOnly={rest.readOnly}
           aria-label={ariaLabelValue}
           ref={ref}
-          className="peer size-5 select-none appearance-none align-top outline-none"
+          className="peer absolute inset-0 z-10 cursor-pointer opacity-0"
           type="checkbox"
           aria-checked={indeterminate ? 'mixed' : isChecked}
           checked={isChecked}
@@ -76,39 +71,56 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         />
         <span
           className={mergeClassnames(
-            'absolute inset-0 flex items-center justify-center p-1 transition-colors text-xl',
-            'peer-focus:bg-neutral-90 peer-checked:shadow-none peer-focus:shadow-[0_0_0_2px_#0858FA] peer-focus:p-1 peer-focus:rounded-full',
-            indeterminate && 'shadow-none',
-            className && className,
+            'absolute -inset-0.5 rounded-full transition-colors pointer-events-none',
+            'peer-hover:bg-neutral-90',
+            'peer-focus-visible:bg-neutral-90 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-60 peer-focus-visible:ring-offset-2',
+            'peer-active:bg-neutral-90 peer-active:border peer-active:border-neutral-70',
           )}
           aria-hidden="true"
+        />
+        <span
+          className="pointer-events-none absolute inset-0 flex items-center justify-center text-xl"
+          aria-hidden="true"
         >
-          {indeterminate ? (
-            <MinusSquare className="text-xl text-primary-50 opacity-100 transition-opacity" />
-          )
+          {indeterminate
+            ? (
+                <MinusSquare
+                  className={rest.disabled ? 'text-neutral-70' : 'text-primary-50'}
+                />
+              )
             : isChecked
               ? (
-                  <CheckSquare
-                    weight="fill"
-                    className={mergeClassnames(
-                      'transition-colors',
-                      isChecked ? 'opacity-100' : 'opacity-0',
-                      rest.disabled ? 'text-neutral-70' : 'text-primary-50',
-                    )}
-                  />
-                ) : (
-                  <Square
-                    weight="bold"
-                    className={mergeClassnames(
-                      'transition-opacity',
-                      isChecked ? 'opacity-0' : 'opacity-100',
-                      rest.disabled ? 'text-neutral-70' : 'text-neutral-40',
-                    )}
-                  />
+                  shape === 'round'
+                    ? (
+                        <CheckCircle
+                          weight="fill"
+                          className={rest.disabled ? 'text-neutral-70' : 'text-primary-50'}
+                        />
+                      )
+                    : (
+                        <CheckSquare
+                          weight="fill"
+                          className={rest.disabled ? 'text-neutral-70' : 'text-primary-50'}
+                        />
+                      )
+                )
+              : (
+                  shape === 'round'
+                    ? (
+                        <Circle
+                          weight="bold"
+                          className={rest.disabled ? 'text-neutral-70' : 'text-neutral-40'}
+                        />
+                      )
+                    : (
+                        <Square
+                          weight="bold"
+                          className={rest.disabled ? 'text-neutral-70' : 'text-neutral-40'}
+                        />
+                      )
                 )}
         </span>
-        {label}
-      </label>
+      </div>
     );
   },
 );
