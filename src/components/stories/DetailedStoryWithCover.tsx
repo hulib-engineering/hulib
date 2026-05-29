@@ -90,11 +90,10 @@ export const DetailedStoryWithCover = ({
         const containerRect = contentRef.current.getBoundingClientRect();
         const containerWidth = containerRect.width;
 
-        // If the container width is >= 768, we should render 2 pages
-        if (containerWidth >= 768) {
-          const aspectRatio = 656 / 458;
-          const dynamicWidth = containerWidth / 2;
-          const dynamicHeight = dynamicWidth * aspectRatio;
+        // If the container width is >= 916 (458*2), we should render 2 pages
+        if (containerWidth >= 916) {
+          const dynamicWidth = 458;
+          const dynamicHeight = 656;
 
           setFlipBookWidth(dynamicWidth);
           setFlipBookHeight(dynamicHeight);
