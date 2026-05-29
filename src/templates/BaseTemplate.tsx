@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
 
-import { poppins } from '@/styles/fonts';
+import Footer from '@/app/[locale]/(unauth)/(landingpage)/_components/Footer';
+import Header from '@/app/[locale]/(unauth)/(landingpage)/_components/Header';
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
-import Footer from '@/layouts/Footer';
-import Header from '@/layouts/Header';
+import { poppins } from '@/styles/fonts';
 
 type IBaseTemplateProps = {
   children: ReactNode;

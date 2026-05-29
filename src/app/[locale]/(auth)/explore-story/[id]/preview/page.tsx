@@ -16,7 +16,7 @@ import Label from '@/components/Label';
 import Modal from '@/components/Modal';
 import { Cover } from '@/features/stories/components/Cover';
 import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
-import { DetailedStory } from '@/components/stories/DetailedStory';
+import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import StoryForm from '@/features/stories/components/StoryForm';
 import { useAppSelector } from '@/libs/hooks';

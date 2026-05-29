@@ -20,7 +20,7 @@ import AboutSectionRenderer from '@/layouts/profile/AboutSectionRenderer';
 import { Role } from '@/types/common';
 import { Cover } from '@/features/stories/components/Cover';
 import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
-import { DetailedStory } from '@/components/stories/DetailedStory';
+import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
 
 type TAboutSectionMenu = {

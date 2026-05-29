@@ -5,14 +5,15 @@ import { notFound, redirect, useParams, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 
+import StoryReviewsWithOverview from './_components/StoryReviewsWithOverview';
+
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { IndexStoryListSectionLayout } from '@/components/home/IndexStoryListCommonLayout';
 import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
 import { Cover } from '@/features/stories/components/Cover';
-import { DetailedStory } from '@/components/stories/DetailedStory';
-import StoryReviewsWithOverview from '@/layouts/stories/StoryReviewsWithOverview';
+import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import {
   useGetReviewsOverviewQuery,
   useGetSimilarStoriesQuery,
