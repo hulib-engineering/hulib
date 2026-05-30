@@ -226,7 +226,7 @@ const SelectedItem = forwardRef<
     } & SelectProps,
     ref,
   ) => {
-    const { size, isError, disabled, onClear }
+    const { isError, disabled, onClear }
       = useComboboxContext('Combobox.Counter');
 
     return (
@@ -237,7 +237,6 @@ const SelectedItem = forwardRef<
         )}
       >
         <SelectButton
-          size={size}
           open={open}
           isError={isError}
           isDisabled={disabled}
@@ -469,7 +468,7 @@ const VisualMultiSelect = forwardRef<
     }: WithChildren<SelectProps & InputProps> & { forceUpdate?: boolean; inputClassname?: string },
     ref,
   ) => {
-    const { size, popper, disabled, value } = useComboboxContext(
+    const { popper, disabled, value } = useComboboxContext(
       'Combobox.VisualMultiSelect',
     );
 
@@ -490,7 +489,7 @@ const VisualMultiSelect = forwardRef<
     return (
       <Listbox by="id">
         {label && (
-          <SelectButton.Label labelSize={size} isDisabled={disabled}>
+          <SelectButton.Label isDisabled={disabled}>
             {label}
           </SelectButton.Label>
         )}

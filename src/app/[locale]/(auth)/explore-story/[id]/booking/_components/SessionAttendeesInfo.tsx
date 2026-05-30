@@ -1,15 +1,14 @@
 import { ArrowLeft, Heart, Info, Timer } from '@phosphor-icons/react';
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type z from 'zod';
 
-import { ScheduleInfoItemLayout } from './scheduling/ScheduleInfoItemLayout';
-import { SessionAttendees } from './scheduling/SessionAttendees';
-
+import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { useAppSelector } from '@/libs/hooks';
+import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
+import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
 import type { HuberStep1Validation } from '@/validations/HuberValidation';
 import type { ProfileValidation } from '@/validations/ProfileValidation';
 
@@ -31,12 +30,10 @@ const ScheduleBasicInfo = ({ huber, onOpenHuberConv }: { huber: z.infer<typeof P
         {t('back')}
       </Button>
       <div className="flex items-center gap-x-2 rounded-3xl bg-neutral-98 p-4">
-        <Image
-          src={huber.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
-          alt="avatar author"
-          width={76}
-          height={76}
-          className="size-[76px] rounded-xl object-contain"
+        <Avatar
+          imageUrl={huber.photo?.path}
+          size="2xl"
+          className="size-[76px] rounded-xl bg-contain"
         />
         <div className="flex flex-col gap-1">
           <h4 className="text-[28px] font-medium leading-9 text-primary-10">
@@ -46,23 +43,23 @@ const ScheduleBasicInfo = ({ huber, onOpenHuberConv }: { huber: z.infer<typeof P
             Huber
           </p>
           <div className="flex items-center gap-x-2">
-            <span className="text-xs font-medium text-neutral-20">
+            <span className="text-xs leading-[14px] text-neutral-20">
               {huber?.topics?.length ?? 0}
             </span>
-            <span className="text-[10px] font-medium text-neutral-40">
-              {t('topics')}
+            <span className="text-[10px] leading-3 text-neutral-40">
+              Stories
             </span>
-            {huber?.rating > 0 && (
-              <>
-                <Heart size={16} color="#F3C00C" weight="fill" />
-                <span className="text-xs font-medium text-neutral-20">
-                  {huber?.rating}
+            <div className="flex items-center gap-x-1">
+              <div className="flex items-center gap-x-1">
+                <Heart size={16} weight="fill" className="text-pink-50" />
+                <span className="text-xs leading-[14px] text-neutral-20">
+                  {huber?.rating ?? 0}
                 </span>
-                <span className="text-[10px] font-medium text-neutral-40">
-                  {t('rating')}
-                </span>
-              </>
-            )}
+              </div>
+              <span className="text-[10px] leading-3 text-neutral-40">
+                Hearts
+              </span>
+            </div>
           </div>
         </div>
       </div>

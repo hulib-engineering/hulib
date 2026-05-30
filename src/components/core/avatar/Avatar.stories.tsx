@@ -3,8 +3,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Avatar from './Avatar';
 import type { SizeProps } from './private/types';
 
-const SAMPLE_IMAGE = '/assets/images/news/news_0.jpg';
-
 const sizes: SizeProps[] = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
 
 const statusPositions = [
@@ -30,13 +28,12 @@ const meta = {
     },
     imageUrl: {
       control: 'text',
-      description: 'Background image URL; falls back to placeholder when empty.',
+      description: 'Background image URL; falls back to generated avatar when empty.',
     },
     className: { control: 'text' },
   },
   args: {
     size: 'md',
-    imageUrl: SAMPLE_IMAGE,
   },
 } satisfies Meta<typeof Avatar>;
 
@@ -45,61 +42,28 @@ type Story = StoryObj<typeof Avatar>;
 
 export const Playground: Story = {};
 
-export const Placeholder: Story = {
-  args: {
-    imageUrl: undefined,
-    size: 'md',
-  },
-};
-
-export const WithImage: Story = {
-  args: {
-    imageUrl: SAMPLE_IMAGE,
-    size: 'lg',
-  },
-};
-
-/** Every `size` token: xs → 2xl. */
-export const AllSizes: Story = {
-  name: 'All sizes',
-  render: () => (
-    <div className="flex flex-wrap items-end gap-6">
-      {sizes.map(s => (
-        <div key={s} className="flex flex-col items-center gap-2">
-          <Avatar size={s} imageUrl={SAMPLE_IMAGE} />
-          <span className="text-xs font-medium capitalize text-neutral-50">{s}</span>
-        </div>
-      ))}
-    </div>
-  ),
-};
-
 /** Default status badge position (bottom + right). The inner node must use the `status` class for size scaling. */
 export const WithStatusOnline: Story = {
-  name: 'With status (online)',
+  name: 'With status (online & offline)',
   render: () => (
-    <Avatar size="lg" imageUrl={SAMPLE_IMAGE}>
-      <Avatar.Status>
-        <span
-          className="status block rounded-full bg-green-60 shadow-[0_0_0_2px_white]"
-          aria-hidden
-        />
-      </Avatar.Status>
-    </Avatar>
-  ),
-};
-
-export const WithStatusOffline: Story = {
-  name: 'With status (offline)',
-  render: () => (
-    <Avatar size="lg" imageUrl={SAMPLE_IMAGE}>
-      <Avatar.Status>
-        <span
-          className="status block rounded-full bg-neutral-60 shadow-[0_0_0_2px_white]"
-          aria-hidden
-        />
-      </Avatar.Status>
-    </Avatar>
+    <div className="grid grid-cols-2 gap-10">
+      <Avatar size="lg">
+        <Avatar.Status>
+          <span
+            className="status block rounded-full bg-green-60 shadow-[0_0_0_2px_white]"
+            aria-hidden
+          />
+        </Avatar.Status>
+      </Avatar>
+      <Avatar size="lg">
+        <Avatar.Status>
+          <span
+            className="status block rounded-full bg-neutral-60 shadow-[0_0_0_2px_white]"
+            aria-hidden
+          />
+        </Avatar.Status>
+      </Avatar>
+    </div>
   ),
 };
 
@@ -110,7 +74,7 @@ export const StatusPositions: Story = {
     <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
       {statusPositions.map(({ vertical, horizontal, label }) => (
         <div key={label} className="flex flex-col items-center gap-3">
-          <Avatar size="xl" imageUrl={SAMPLE_IMAGE}>
+          <Avatar size="xl">
             <Avatar.Status position={{ vertical, horizontal }}>
               <span
                 className="status block rounded-full bg-green-60 shadow-[0_0_0_2px_white]"
@@ -127,12 +91,12 @@ export const StatusPositions: Story = {
 
 /** Status indicator at each size (spacing scales via `[&_.status]:…` on the root). */
 export const StatusAllSizes: Story = {
-  name: 'Status — all sizes',
+  name: 'All sizes',
   render: () => (
     <div className="flex flex-wrap items-end gap-6">
       {sizes.map(s => (
         <div key={s} className="flex flex-col items-center gap-2">
-          <Avatar size={s} imageUrl={SAMPLE_IMAGE}>
+          <Avatar size={s}>
             <Avatar.Status>
               <span
                 className="status block rounded-full bg-green-60 shadow-[0_0_0_2px_white]"

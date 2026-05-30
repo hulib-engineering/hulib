@@ -1,10 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CaretDown } from '@phosphor-icons/react';
 import { useState } from 'react';
+import { Provider } from 'react-redux';
 
 import Dropdown from './Dropdown';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
+import { makeStore } from '@/libs/store';
+
+const store = makeStore();
 
 const OPTIONS = [
   { label: 'Apple', value: 'apple' },
@@ -31,7 +35,9 @@ const meta = {
   decorators: [
     Story => (
       <div className="w-72">
-        <Story />
+        <Provider store={store}>
+          <Story />
+        </Provider>
       </div>
     ),
   ],
@@ -188,51 +194,6 @@ export const Error: Story = {
           </>
         )}
       </Dropdown>
-    );
-  },
-};
-
-/** `size` is passed to `Dropdown.Select` / `SelectButton`. */
-export const Sizes: Story = {
-  args: { value: 'apple' },
-  render: function SizesStory() {
-    const [sm, setSm] = useState<OptionValue>('apple');
-    const [md, setMd] = useState<OptionValue>('apple');
-    const [lg, setLg] = useState<OptionValue>('apple');
-
-    const renderDropdown = (
-      size: 'sm' | 'md' | 'lg',
-      value: OptionValue,
-      onChange: (v: OptionValue) => void,
-    ) => (
-      <Dropdown size={size} value={value} onChange={v => onChange(v as OptionValue)}>
-        {({ open }) => (
-          <>
-            <Dropdown.Select open={open} label={`Size ${size}`}>
-              {findLabel(value)}
-            </Dropdown.Select>
-            <Dropdown.Options>
-              {OPTIONS.slice(0, 3).map(option => (
-                <Dropdown.Option key={option.value} value={option.value}>
-                  {({ selected, active }) => (
-                    <MenuItem isActive={active} isSelected={selected}>
-                      <MenuItem.Title>{option.label}</MenuItem.Title>
-                    </MenuItem>
-                  )}
-                </Dropdown.Option>
-              ))}
-            </Dropdown.Options>
-          </>
-        )}
-      </Dropdown>
-    );
-
-    return (
-      <div className="flex w-80 flex-col gap-6">
-        {renderDropdown('sm', sm, setSm)}
-        {renderDropdown('md', md, setMd)}
-        {renderDropdown('lg', lg, setLg)}
-      </div>
     );
   },
 };

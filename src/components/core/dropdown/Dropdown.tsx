@@ -17,10 +17,7 @@ import SelectButton from '@/components/core/selectButton/selectButton';
 
 import { mergeClassnames } from '@/components/core/private/utils';
 import type { WithChildren } from '@/components/core/private/types';
-import {
-  useFormContext,
-  useFormField,
-} from '@/components/core/form/private/utils';
+import { useFormField } from '@/components/core/form/private/utils';
 
 const DropdownRoot = ({
   children,
@@ -28,7 +25,6 @@ const DropdownRoot = ({
   onChange,
   isError: dropdownError,
   disabled: dropdownDisabled,
-  size: dropdownSize = 'md',
   className,
   onClear,
   position = 'bottom-start',
@@ -37,9 +33,7 @@ const DropdownRoot = ({
   const [anchorEl, setAnchorEl] = useState<Element | null>();
   const [popperEl, setPopperEl] = useState<HTMLElement | null>();
 
-  const { size: formSize } = useFormContext('Input');
   const field = useFormField();
-  const size = dropdownSize || formSize;
   const disabled = dropdownDisabled;
   const isError = dropdownError || field.invalid;
 
@@ -51,7 +45,6 @@ const DropdownRoot = ({
     () => ({
       value,
       isError,
-      size,
       disabled,
       onClear,
       popper: {
@@ -61,7 +54,7 @@ const DropdownRoot = ({
         setPopper: setPopperEl,
       },
     }),
-    [attributes, disabled, isError, onClear, size, styles, value],
+    [attributes, disabled, isError, onClear, styles, value],
   );
 
   const childArray
@@ -137,7 +130,7 @@ const Select = ({
   className,
   ...rest
 }: WithChildren<SelectProps>) => {
-  const { size, popper, isError, disabled }
+  const { popper, isError, disabled }
     = useDropdownContext('Dropdown.Select');
 
   return (
@@ -147,7 +140,6 @@ const Select = ({
       )}
       <Listbox.Button as={Fragment}>
         <SelectButton
-          size={size}
           open={open}
           isError={isError}
           isDisabled={disabled}
@@ -194,7 +186,7 @@ const Hint = ({
 }: WithChildren<{ className?: string }>) => {
   const { isError, disabled } = useDropdownContext('Dropdown.Input');
   return (
-    <GenericHint error={isError} disabled={disabled} className={className}>
+    <GenericHint error={isError} disabled={disabled} className={mergeClassnames('pt-2', className && className)}>
       {children}
     </GenericHint>
   );

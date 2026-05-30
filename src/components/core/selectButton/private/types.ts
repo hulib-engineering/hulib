@@ -7,7 +7,6 @@ type InputProps = {
 };
 
 type LabelProps = {
-  labelSize?: 'sm' | 'md' | 'lg' | 'xl' | string; // deprecated
   isDisabled?: boolean;
   children?: ReactNode;
   htmlFor?: string;
@@ -23,7 +22,6 @@ type ChipProps = {
 };
 
 type SelectButtonProps = {
-  size?: 'sm' | 'md' | 'lg' | string;
   isError?: boolean;
   open?: boolean;
   isDisabled?: boolean;
@@ -35,7 +33,6 @@ type SelectButtonProps = {
 
 type SelectButtonState = {
   open?: boolean;
-  size?: 'sm' | 'md' | 'lg' | string;
   isError?: boolean;
   isDisabled?: boolean;
   isUppercase?: boolean;
