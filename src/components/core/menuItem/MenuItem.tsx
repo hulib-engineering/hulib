@@ -1,7 +1,7 @@
 import type { ElementType, ReactNode } from 'react';
 import React, { forwardRef, useEffect, useMemo } from 'react';
 
-import { CheckSquare, Square } from '@phosphor-icons/react';
+import { Check, CheckSquare, Square } from '@phosphor-icons/react';
 import type { CheckboxRadioProps, MenuItemPolymorphicProps } from './private/types';
 import { MenuItemContext, useMenuItemContext } from './private/utils';
 import type { PolymorphicRef } from '@/components/core/private/types';
@@ -27,11 +27,12 @@ const MenuItemRoot = forwardRef(
     const { items, register } = useRegisterChild();
 
     const contextValue = useMemo(
-      () => ({ states: {
+      () => ({
         selected: isSelected,
         active: isActive,
         disabled: isDisabled,
-      }, registerChild: register }),
+        registerChild: register,
+      }),
       [isSelected, isActive, isDisabled, register],
     );
 
@@ -73,22 +74,37 @@ const Title = ({
   children?: ReactNode;
   className?: string;
 }) => {
-  const { registerChild } = useMenuItemContext('ModalItem.Title');
+  const { selected, registerChild } = useMenuItemContext('ModalItem.Title');
 
   useEffect(() => {
     if (registerChild) {
       registerChild('Title');
     }
-  }, []);
+  }, [registerChild]);
 
   return (
     <span
       className={mergeClassnames(
-        'block grow overflow-hidden text-left text-neutral-20',
+        'block grow overflow-hidden text-left',
+        selected ? 'text-primary-60' : 'text-neutral-10',
         className && className,
       )}
     >
       {children}
+    </span>
+  );
+};
+
+const CheckIcon = ({ className }: { className?: string }) => {
+  const { selected } = useMenuItemContext('MenuItem.Check');
+
+  if (!selected) {
+    return null;
+  }
+
+  return (
+    <span className="flex size-5 shrink-0 items-center justify-center">
+      <Check weight="bold" className={mergeClassnames('text-primary-60', className)} />
     </span>
   );
 };
@@ -153,6 +169,7 @@ const Checkbox = ({
 const MenuItem = Object.assign(MenuItemRoot, {
   Title,
   Checkbox,
+  Check: CheckIcon,
 });
 
 export default MenuItem;
