@@ -30,7 +30,6 @@ type DropdownRootProps = {
   onClear?: () => void;
   isError?: boolean;
   disabled?: boolean;
-  size?: 'sm' | 'md' | 'lg' | 'xl' | string;
   className?: string;
   multiple?: boolean;
   position?: Placement;
@@ -52,7 +51,6 @@ type DropdownState = {
     setAnchor: Dispatch<SetStateAction<Element | null | undefined>>;
     setPopper: Dispatch<SetStateAction<HTMLElement | null | undefined>>;
   };
-  size?: 'sm' | 'md' | 'lg' | string;
 };
 
 type OptionProps = {
