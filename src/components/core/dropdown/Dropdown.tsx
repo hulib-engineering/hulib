@@ -1,7 +1,7 @@
 'use client';
 
 import { Listbox } from '@headlessui/react';
-import React, { Children, Fragment, useMemo, useState } from 'react';
+import React, { Fragment, useMemo, useState } from 'react';
 import { usePopper } from 'react-popper';
 
 import GenericHint from '../../Hint';
@@ -57,10 +57,6 @@ const DropdownRoot = ({
     [attributes, disabled, isError, onClear, styles, value],
   );
 
-  const childArray
-    = typeof children !== 'function' ? Children.toArray(children) : [];
-  const callableChildren = typeof children === 'function' && children;
-
   return (
     <DropdownContext.Provider value={states}>
       <div
@@ -75,8 +71,8 @@ const DropdownRoot = ({
           {({ open }) => (
             <div className="relative">
               {typeof children === 'function'
-                ? callableChildren && callableChildren({ open })
-                : childArray?.map(ch => ch)}
+                ? children({ open })
+                : children}
             </div>
           )}
         </Listbox>
