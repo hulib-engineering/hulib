@@ -73,11 +73,13 @@ export function groupMessagesByTime(
 export const MessageItem = React.memo(({
   type,
   participantAvatarUrl,
+  participantName,
   markedAsRead = false,
   children,
 }: WithChildren<{
   type: 'sent' | 'received';
   participantAvatarUrl?: string;
+  participantName?: string;
   markedAsRead?: boolean;
 }>) => (
   <div
@@ -104,17 +106,10 @@ export const MessageItem = React.memo(({
       </div>
     </div>
     {markedAsRead && (
-      <Image
-        className="size-5 rounded-full"
-        src={participantAvatarUrl ?? '/assets/images/avatars/ava-placeholder.png'}
-        alt="Read by"
-        width={20}
-        height={20}
-        objectFit="cover"
-        objectPosition="center"
-        quality={100}
-        placeholder="blur"
-        blurDataURL="/assets/images/avatars/ava-placeholder.png"
+      <Avatar
+        imageUrl={participantAvatarUrl}
+        name={participantName}
+        className="size-5"
       />
     )}
   </div>
@@ -312,7 +307,11 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
       </div>
       <div className="flex flex-1 flex-col bg-green-98">
         <div className="flex gap-4 border-neutral-90 bg-white px-[13px] py-[11px] shadow-sm md:border-t">
-          <Avatar size="lg" imageUrl={currentOpeningChat?.avatarUrl}>
+          <Avatar
+            size="lg"
+            imageUrl={currentOpeningChat?.avatarUrl}
+            name={currentOpeningChat?.name}
+          >
             <Avatar.Status>
               <StatusBadge onLine={isOnline} />
             </Avatar.Status>
@@ -362,6 +361,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
                 key={message.id}
                 type={message.direction}
                 participantAvatarUrl={currentOpeningChat?.avatarUrl}
+                participantName={currentOpeningChat?.name}
                 markedAsRead={
                   message.id === lastReadMessageId
                   && message.direction === 'sent'

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useCallback, useState } from 'react';
 
+import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import Combobox from '@/components/core/combobox/Combobox';
 import MenuItem from '@/components/core/menuItem/MenuItem';
@@ -56,6 +57,9 @@ export default function Index() {
 
   const user = useAppSelector(state => state.auth.userInfo);
   const isHuber = user?.role?.name === 'Huber';
+  const upcomingParticipant = hasUpcomingEvent
+    ? (isHuber ? upcomingEvents[0].reader : upcomingEvents[0].humanBook)
+    : undefined;
 
   const [showMobileTimeslotRegistration, setShowMobileTimeslotRegistration] = useState(false);
   const [selectedSlots, setSelectedSlots] = useState<{ dayOfWeek: number; startTime: string }[]>([]);
@@ -118,13 +122,10 @@ export default function Index() {
                       <span className={isHuber ? 'text-yellow-40' : 'text-primary-50'}>
                         {isHuber ? ROLE_NAME[Role.LIBER] : ROLE_NAME[Role.HUBER]}
                       </span>
-                      <Image
-                        alt="avatar"
-                        src="/assets/images/ava-placeholder.png"
-                        width={24}
-                        height={24}
-                        loading="lazy"
-                        className="rounded-full"
+                      <Avatar
+                        imageUrl={upcomingParticipant?.photo?.path}
+                        name={upcomingParticipant?.fullName}
+                        className="size-6"
                       />
                     </div>
                   </div>
