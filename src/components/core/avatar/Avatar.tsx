@@ -5,6 +5,7 @@ import { mergeClassnames } from '@/components/core/private/utils';
 
 const AvatarRoot = ({
   imageUrl,
+  name,
   children,
   size = 'md',
   className,
@@ -12,6 +13,7 @@ const AvatarRoot = ({
   <Wrapper
     size={size}
     imageUrl={imageUrl}
+    name={name}
     className={mergeClassnames(getStatusSize(size), className)}
   >
     {children && children}

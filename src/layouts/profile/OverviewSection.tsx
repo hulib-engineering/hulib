@@ -259,7 +259,11 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
                 )}
               >
                 <div className="flex items-center gap-2">
-                  <Avatar imageUrl={feedback.feedbackBy.photo} className="size-11" />
+                  <Avatar
+                    imageUrl={feedback.feedbackBy.photo}
+                    name={feedback.feedbackBy.fullName}
+                    className="size-11"
+                  />
                   <div className="flex flex-col">
                     <p className="text-sm font-medium text-black">{feedback.feedbackBy.fullName}</p>
                     <div className="flex items-center gap-3">

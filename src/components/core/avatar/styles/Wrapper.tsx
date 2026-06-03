@@ -9,25 +9,38 @@ const defaultConfig = genConfig('default-avatar');
 const Wrapper = ({
   size,
   imageUrl,
+  name,
   children,
   className,
-}: AvatarProps) => (
-  <div className="relative inline-flex items-center justify-center">
-    <div
-      className={mergeClassnames(
-        'rounded-full overflow-hidden flex items-center justify-center',
-        imageUrl && 'bg-cover bg-center bg-no-repeat',
-        getWrapperSize(size),
-        className,
-      )}
-      style={imageUrl ? { backgroundImage: `url('${imageUrl}')` } : undefined}
-    >
-      {!imageUrl && (
-        <NiceAvatar className="size-full" {...defaultConfig} />
-      )}
-      {children}
+}: AvatarProps) => {
+  const wrapperClassName = mergeClassnames(
+    'rounded-full overflow-hidden flex items-center justify-center bg-cover',
+    getWrapperSize(size),
+    className,
+  );
+
+  return (
+    <div className="relative inline-flex items-center justify-center">
+      {imageUrl
+        ? (
+            <div
+              className={wrapperClassName}
+              style={{ backgroundImage: `url('${imageUrl}')` }}
+            >
+              {children}
+            </div>
+          )
+        : (
+            <div className={wrapperClassName}>
+              <NiceAvatar
+                className="size-full"
+                {...genConfig(name || 'user')}
+              />
+              {children}
+            </div>
+          )}
     </div>
-  </div>
-);
+  );
+};
 
 export default Wrapper;

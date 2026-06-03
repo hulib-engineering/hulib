@@ -93,7 +93,12 @@ export default function StoryConfirmationModal({
                 ))}
               </div>
               <div className="flex items-center gap-1 text-xs font-medium">
-                <Avatar className="!size-[14px]" size="xs" imageUrl={story.humanBook.photo?.path} />
+                <Avatar
+                  className="!size-[14px]"
+                  size="xs"
+                  imageUrl={story.humanBook.photo?.path}
+                  name={story.humanBook.fullName}
+                />
                 <p className="line-clamp-1 text-neutral-50">{story.humanBook.fullName}</p>
               </div>
               <div className="flex items-center gap-2">

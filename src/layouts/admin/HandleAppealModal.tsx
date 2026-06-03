@@ -74,7 +74,11 @@ const HandleAppealModal = ({
                 Reported user
               </div>
               <div className="flex h-[72px] items-center gap-2 border-b border-neutral-80 px-6 text-sm font-medium leading-4">
-                <Avatar imageUrl={data?.reportee.photo.path} className="size-11" />
+                <Avatar
+                  imageUrl={data?.reportee.photo.path}
+                  name={data?.reportee.fullName}
+                  className="size-11"
+                />
                 <span className="rounded-full bg-primary-90 px-2.5 py-0.5 text-primary-50">
                   Huber
                 </span>

@@ -211,7 +211,11 @@ export const StoryCard = ({
                   </div>
                 )}
                 <div className="flex items-center gap-1">
-                  <Avatar imageUrl={data.humanBook.photo?.path} size="xs" />
+                  <Avatar
+                    imageUrl={data.humanBook.photo?.path}
+                    name={data.humanBook.fullName}
+                    size="xs"
+                  />
                   <span className="line-clamp-1 flex-1 text-xs font-medium leading-[14px] text-[#73787C]">
                     {data?.humanBook?.fullName}
                   </span>
@@ -296,7 +300,12 @@ export const StoryCard = ({
               </div>
             )}
             <div className="flex items-center gap-1">
-              <Avatar imageUrl={data.humanBook.photo?.path} className={!isMobile ? 'size-4' : 'size-3.5'} size="xs" />
+              <Avatar
+                imageUrl={data.humanBook.photo?.path}
+                name={data.humanBook.fullName}
+                className={!isMobile ? 'size-4' : 'size-3.5'}
+                size="xs"
+              />
               <span className="line-clamp-1 text-xs font-medium text-neutral-50">
                 {data?.humanBook?.fullName}
               </span>

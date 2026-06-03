@@ -1,10 +1,10 @@
-import Image from 'next/image';
 import type { RefObject } from 'react';
 import { Microphone, MicrophoneSlash } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import { mergeClassnames } from '@/components/core/private/utils';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { ReactionAnimation } from '@/components/meeting/ReactionAnimation';
+import Avatar from '@/components/core/avatar/Avatar';
 
 type IPlayableAgoraMeetViewProps = {
   agoraVideoPlayerRef: RefObject<HTMLDivElement>;
@@ -96,17 +96,13 @@ const PlayableAgoraMeetView = (props: IPlayableAgoraMeetViewProps) => {
 
       {!isCamOn && (
         <div className="absolute bottom-1/2 left-1/2 flex flex-col items-center -translate-x-1/2 translate-y-1/2">
-          <Image
-            alt="User avatar"
-            src={participantAvatarUrl ?? '/assets/images/avatars/ava-placeholder.png'}
-            width={isLocal ? 168 : 56}
-            height={isLocal ? 168 : 56}
+          <Avatar
+            imageUrl={participantAvatarUrl}
+            name={participantName}
             className={mergeClassnames(
-              'rounded-full object-cover object-center',
               isLocal ? 'size-40' : 'size-16',
             )}
           />
-
           {isShowWaitingText && (
             <h6 className="text-center text-xl font-medium text-white">{waitingText}</h6>
           )}
