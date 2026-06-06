@@ -5,8 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-import { HeaderIconButtonWithBadge } from '../webapp/Header';
-
+import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
 // import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import AdvancedSearch from '@/layouts/webapp/AdvancedSearch';

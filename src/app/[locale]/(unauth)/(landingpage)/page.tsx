@@ -2,22 +2,23 @@ import dynamic from 'next/dynamic';
 import { getServerSession } from 'next-auth';
 import { getTranslations } from 'next-intl/server';
 
-import Hero from '@/layouts/hero';
-import HumanBookBanner from '@/layouts/HumanBookBanner';
-import OurMascot from '@/layouts/OurMascot';
+import Hero from './_components/hero';
+import OurMascot from './_components/OurMascot';
+import HumanBookBanner from './_components/HumanBookBanner';
+
 import { authOptions } from '@/libs/NextAuthOption';
 
-const Features = dynamic(() => import('@/layouts/Features'), {
+const Features = dynamic(() => import('./_components/Features'), {
   loading: () => <div>Loading...</div>,
   ssr: false,
 });
 
-const About = dynamic(() => import('@/layouts/About'), {
+const About = dynamic(() => import('./_components/About'), {
   loading: () => <div>Loading...</div>,
   ssr: false,
 });
 
-const OutstandingFeatures = dynamic(() => import('@/layouts/OutstandingFeatures'), {
+const OutstandingFeatures = dynamic(() => import('./_components/OutstandingFeatures'), {
   loading: () => <div>Loading...</div>,
   ssr: false,
 });
@@ -27,27 +28,27 @@ const OutstandingFeatures = dynamic(() => import('@/layouts/OutstandingFeatures'
 //   ssr: false,
 // });
 
-const Testimonial = dynamic(() => import('@/layouts/Testimonial'), {
+const Testimonial = dynamic(() => import('./_components/Testimonial'), {
   loading: () => <div>Loading...</div>,
   ssr: false,
 });
 
-const Sponsors = dynamic(() => import('@/layouts/Sponsors'), {
+const Sponsors = dynamic(() => import('./_components/Sponsors'), {
   loading: () => <div>Loading...</div>,
   ssr: false,
 });
 
-const FAQs = dynamic(() => import('@/layouts/FAQs'), {
+const FAQs = dynamic(() => import('./_components/FAQs'), {
   loading: () => <div>Loading...</div>,
   ssr: false,
 });
 
-const News = dynamic(() => import('@/layouts/News'), {
+const News = dynamic(() => import('./_components/News'), {
   loading: () => <div>Loading...</div>,
   ssr: false,
 });
 
-const Newsletter = dynamic(() => import('@/layouts/Newsletter'), {
+const Newsletter = dynamic(() => import('./_components/Newsletter'), {
   loading: () => <div>Loading...</div>,
   ssr: false,
 });

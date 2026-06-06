@@ -1,8 +1,9 @@
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
-import { AuthLayout } from '@/layouts/AuthLayout';
-import { ResetPasswordForm } from '@/layouts/ResetPasswordForm';
+import { AuthLayout } from '../_components/AuthLayout';
+
+import { ResetPasswordForm } from './_components/ResetPasswordForm';
 
 export async function generateMetadata({
   params: { locale },

@@ -4,11 +4,11 @@ import { Bell } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 
+import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
 import Button from '@/components/core/button/Button';
 import { NotificationType } from '@/components/notification/private/types';
 import NotificationItemRenderer from '@/components/notification/NotificationItemRenderer';
 import Popover from '@/components/core/popover/Popover';
-import { HeaderIconButtonWithBadge } from '@/layouts/webapp/Header';
 import { useGetNotificationsQuery } from '@/libs/services/modules/notifications';
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
 import { StatusEnum } from '@/types/common';

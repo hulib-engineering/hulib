@@ -7,7 +7,7 @@ import IconButton from '@/components/core/iconButton/IconButton';
 import Modal from '@/components/Modal';
 import { Cover } from '@/features/stories/components/Cover';
 import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
-import { DetailedStoryWithCover } from '@/components/stories/DetailedStoryWithCover';
+import { DetailedStoryWithCover } from '@/features/stories/components/DetailedStoryWithCover';
 
 export default function TrySampleStory() {
   // const t = useTranslations('Index');

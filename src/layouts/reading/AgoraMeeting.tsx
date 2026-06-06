@@ -15,6 +15,7 @@ import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useRef, useState } from 'react';
 
+import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import Popover from '@/components/core/popover/Popover';
@@ -24,7 +25,6 @@ import Modal from '@/components/Modal';
 import { PlayableAgoraMeetView } from '@/components/meeting/PlayableAgoraMeetView';
 import ChatInCall from '@/layouts/reading/ChatInCall';
 import RecordingTimer from '@/layouts/reading/RecordingTimer';
-import { HeaderIconButtonWithBadge } from '@/layouts/webapp/Header';
 import { Env } from '@/libs/Env.mjs';
 import { useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';

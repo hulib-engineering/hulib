@@ -1,9 +1,12 @@
 import React from 'react';
 
+import { DEFAULT_STORY_COVER_ASSET } from '../constants';
+import { getPresetPlainBackgroundColor, isPresetCoverAsset } from '../utils/coverPreset';
+
 import { mergeClassnames } from '@/components/core/private/utils';
 
 type CoverProps = {
-  src: string;
+  src: string | null;
   className?: string;
   active?: boolean;
   onClick?: () => void;
@@ -11,7 +14,7 @@ type CoverProps = {
 };
 
 /** Face + 4px shadow gutter (see `COVER_OUTER_SHADOW_OFFSET_PX`). */
-const COVER_CHROME_SIZE_CLASS = 'size-[144px_202px] md:size-[184px_259px]';
+const COVER_CHROME_SIZE_CLASS = 'w-[144px] h-[202px] md:w-[184px] md:h-[259px]';
 
 /** Displays a story cover image (preset asset or uploaded PNG). No animation. */
 export function Cover({
@@ -22,6 +25,8 @@ export function Cover({
   id,
 }: CoverProps) {
   const fillParent = Boolean(className?.includes('size-full'));
+  const coverSrc = src || DEFAULT_STORY_COVER_ASSET;
+  const bgColor = isPresetCoverAsset(coverSrc) ? getPresetPlainBackgroundColor(coverSrc) : undefined;
 
   const interactiveProps = {
     role: onClick ? ('button' as const) : undefined,
@@ -48,7 +53,10 @@ export function Cover({
         onClick && 'cursor-pointer',
         className,
       )}
-      style={{ backgroundImage: `url(${src})` }}
+      style={{
+        backgroundColor: bgColor,
+        backgroundImage: `url(${coverSrc})`,
+      }}
     />
   );
 }
