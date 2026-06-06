@@ -26,7 +26,7 @@ export const Page = forwardRef<HTMLDivElement, PageProps>(
         'lg:before:from-white lg:before:from-20% lg:before:via-[#C7C9CB]/10 lg:before:via-40% lg:before:to-[#C7C9CB]/40 lg:before:to-100%',
         number % 2 === 0
           ? 'lg:pr-6 lg:shadow-book-right lg:before:left-0 lg:before:border-l-[0.5px] lg:before:bg-gradient-to-l'
-          : 'lg:pl-6 lg:shadow-book-left lg:before:right-0 lg:before:border-r-[0.5px] lg:before:bg-gradient-to-r',
+          : 'lg:pl-6 md:shadow-book-left lg:before:right-0 lg:before:border-r-[0.5px] lg:before:bg-gradient-to-r',
       )}
       ref={ref}
       data-density={density}
@@ -75,7 +75,6 @@ type IDetailedStoryProps = {
   cover?: string;
   authorName: string;
   abstract: string;
-  onDynamicHeightChange?: (height: number) => void;
 };
 
 export const DetailedStory = ({
@@ -83,7 +82,6 @@ export const DetailedStory = ({
   cover = '/assets/images/landing/half-title-illus.png',
   authorName,
   abstract,
-  onDynamicHeightChange,
 }: IDetailedStoryProps) => {
   const flipBookRef = useRef<{ pageFlip: () => FlipBookHandle } | null>(null);
   const flipSound = useRef<HTMLAudioElement | null>(null);
@@ -95,11 +93,11 @@ export const DetailedStory = ({
   const [flipBookWidth, setFlipBookWidth] = useState(0);
   const [flipBookHeight, setFlipBookHeight] = useState(0);
 
-  useEffect(() => {
-    if (onDynamicHeightChange) {
-      onDynamicHeightChange(flipBookHeight);
-    }
-  }, [flipBookHeight, onDynamicHeightChange]);
+  // useEffect(() => {
+  //   if (onDynamicHeightChange) {
+  //     onDynamicHeightChange(flipBookHeight);
+  //   }
+  // }, [flipBookHeight, onDynamicHeightChange]);
 
   // @ts-ignore
   const pagesRender: PageContentData[] = useMemo(() => {
@@ -117,11 +115,10 @@ export const DetailedStory = ({
         const containerRect = contentRef.current.getBoundingClientRect();
         const containerWidth = containerRect.width;
 
-        // If the container width is >= 768, we should render 2 pages
-        if (containerWidth >= 768) {
-          const aspectRatio = 656 / 458;
-          const dynamicWidth = containerWidth / 2;
-          const dynamicHeight = dynamicWidth * aspectRatio;
+        // If the container width is >= 916 (458*2), we should render 2 pages
+        if (containerWidth >= 916) {
+          const dynamicWidth = 458;
+          const dynamicHeight = 656;
 
           setFlipBookWidth(dynamicWidth);
           setFlipBookHeight(dynamicHeight);
@@ -252,7 +249,7 @@ export const DetailedStory = ({
                       </div>
                     )
                   : (
-                      <div ref={textContainerRef} className="hyphens-auto whitespace-pre-line break-all leading-6 text-neutral-30">
+                      <div ref={textContainerRef} className="hyphens-auto whitespace-pre-line break-words leading-6 text-neutral-30">
                         {page?.content ?? ''}
                       </div>
                     )}

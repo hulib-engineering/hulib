@@ -1,5 +1,4 @@
-import { Users } from '@phosphor-icons/react';
-import Image from 'next/image';
+import { User as UserIcon } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import React from 'react';
@@ -39,12 +38,11 @@ export const SessionAttendees = ({
   if (showParticipantOnly) {
     return (
       <div className={mergeClassnames('flex items-center gap-2 text-sm text-black', classname)}>
-        {icon ?? <Users size={16} className="text-[#343330]" />}
+        {icon ?? <UserIcon size={16} className="text-[#343330]" />}
         <div className="flex items-center gap-1">
           <Avatar
             size="sm"
-            imageUrl={isVibing ? huber?.photo?.path : liber?.photo?.path
-              ?? '/assets/images/avatars/ava-placeholder.png'}
+            imageUrl={isVibing ? huber?.photo?.path : liber?.photo?.path}
           />
           <Chip
             disabled
@@ -64,16 +62,10 @@ export const SessionAttendees = ({
   }
 
   return (
-    <ScheduleInfoItemLayout icon={icon ?? <Users size={16} />} title={t('attendees')} className={classname}>
+    <ScheduleInfoItemLayout icon={icon ?? <UserIcon size={16} />} title={t('attendees')} className={classname}>
       <div className={mergeClassnames('flex flex-col space-y-2', childClassname)}>
         <div className="flex items-center">
-          <Image
-            src={huber?.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
-            alt="Huber avatar"
-            className="size-8 rounded-full object-cover"
-            width={32}
-            height={32}
-          />
+          <Avatar imageUrl={huber?.photo?.path} size="sm" />
           <div className="ml-2">
             <span
               className="mr-1 rounded-[100px] px-2 py-0.5 text-xs"
@@ -92,13 +84,7 @@ export const SessionAttendees = ({
         </div>
 
         <div className="flex items-center">
-          <Image
-            src={liber?.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
-            alt="Huber avatar"
-            className="size-8 rounded-full object-cover"
-            width={32}
-            height={32}
-          />
+          <Avatar imageUrl={liber?.photo?.path} size="sm" />
           <div className="ml-2">
             <span
               className="mr-1 rounded-[100px] px-2 py-0.5 text-xs"

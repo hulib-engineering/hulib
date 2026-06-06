@@ -2,8 +2,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
-import StoryReviews from './StoryReviews';
 import RatingOverview from './RatingOverview';
+import StoryReviews from './StoryReviews';
 
 export default function StoryReviewsWithOverview() {
   const ratingOverviewRef = useRef<HTMLDivElement>(null);

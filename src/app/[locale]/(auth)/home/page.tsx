@@ -1,9 +1,9 @@
 import { getTranslations } from 'next-intl/server';
 
-import RecommendedHuberList from '@/layouts/hubers/RecommendedHuberList';
-import Banner from '@/layouts/index/Banner';
-import HuberCTA from '@/layouts/index/HuberCTA';
-import { MostPopularStoryList, NewestStoryList, StoryListByMostPopularTopics } from '@/layouts/stories/IndexStoryLists';
+import Banner from './_components/Banner';
+import { MostPopularStoryList, NewestStoryList, StoryListByMostPopularTopics } from './_components/IndexStoryLists';
+import RecommendedHuberList from './_components/RecommendedHuberList';
+import HuberCTA from './_components/HuberCTA';
 
 export async function generateMetadata({
   params: { locale },

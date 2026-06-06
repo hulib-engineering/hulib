@@ -5,10 +5,10 @@ import { useParams, useRouter } from 'next/navigation';
 import * as React from 'react';
 import { useState } from 'react';
 
+import StoryConfirmationModal from '@/app/[locale]/admin/(auth)/_components/StoryConfirmationModal';
 import Button from '@/components/core/button/Button';
 import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
-import { DetailedStory } from '@/components/stories/DetailedStory';
-import StoryConfirmationModal from '@/app/[locale]/admin/(auth)/_components/StoryConfirmationModal';
+import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import {
   useGetStoryDetailQuery,
 } from '@/libs/services/modules/stories';
