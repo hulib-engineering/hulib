@@ -109,7 +109,7 @@ export default function Index() {
   }
 
   return (
-    <div className="mx-auto w-full py-6 lg:w-5/6 lg:py-12">
+    <div className="mx-auto w-full py-6 xl:w-full xl:max-w-[1216px] xl:px-0">
       <div className="flex flex-col gap-4 bg-white p-4 shadow-sm lg:gap-6 lg:bg-transparent lg:py-5 lg:shadow-none">
         <div className="flex flex-col gap-1">
           <h3 className="text-2xl font-medium leading-8 text-primary-10 lg:text-[2.5rem] lg:font-bold lg:leading-tight">
