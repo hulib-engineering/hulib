@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { redirect, useRouter } from 'next/navigation';
@@ -28,6 +28,8 @@ export default function AccountUpgrade() {
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
+  const initialCheckDone = useRef(false);
+
   const {
     currentStep,
     goToNextStep,
@@ -37,10 +39,14 @@ export default function AccountUpgrade() {
   } = useAccountUpgradeStep();
 
   useEffect(() => {
-    if (userInfo && userInfo?.approval === StatusEnum.Pending) {
-      setShowSuccess(true);
+    if (!userInfo?.id || initialCheckDone.current) {
+      return;
     }
-    if (userInfo && userInfo?.role?.id === Role.HUBER) {
+    initialCheckDone.current = true;
+
+    if (userInfo.approval === StatusEnum.Pending) {
+      setShowSuccess(true);
+    } else if (userInfo.role?.id === Role.HUBER) {
       redirect(`/users/${userInfo.id}`);
     }
   }, [userInfo, setShowSuccess]);
