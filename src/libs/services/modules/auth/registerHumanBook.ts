@@ -7,7 +7,7 @@ const registerHuber = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       method: 'POST',
       body: form,
     }),
-    invalidatesTags: [{ type: 'Me' }],
+    invalidatesTags: [{ type: 'User', id: 'ME' }],
   });
 
 export default registerHuber;
