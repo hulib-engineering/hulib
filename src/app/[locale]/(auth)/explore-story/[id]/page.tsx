@@ -15,7 +15,6 @@ import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
 import { Cover } from '@/features/stories/components/Cover';
 import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import {
-  useGetReviewsOverviewQuery,
   useGetSimilarStoriesQuery,
   useGetStoryDetailQuery,
 } from '@/libs/services/modules/stories';
@@ -39,7 +38,6 @@ export default function Index() {
   }, {
     skip: !data || (!data?.humanBookId && !data?.topics.length),
   });
-  const { data: storyReviewOverview } = useGetReviewsOverviewQuery(id);
 
   if (isLoading) {
     return (

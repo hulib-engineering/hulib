@@ -4,8 +4,6 @@ import { getWrapperSize } from '../private/utils';
 import type { AvatarProps } from '@/components/core/avatar/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
 
-const defaultConfig = genConfig('default-avatar');
-
 const Wrapper = ({
   size,
   imageUrl,
