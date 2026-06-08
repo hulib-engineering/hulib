@@ -230,16 +230,14 @@ export const UserMenu: Story = {
       <Dropdown value={value} onChange={v => setValue(v as string)}>
         {({ open }) => (
           <>
-            <Dropdown.Trigger>
-              <button
-                type="button"
-                className={mergeClassnames(
-                  'flex size-10 items-center justify-center rounded-full transition-colors',
-                  open ? 'bg-primary-90' : 'bg-neutral-90',
-                )}
-              >
-                <UserCircle size={24} className="text-neutral-10" />
-              </button>
+            <Dropdown.Trigger
+              aria-label="Open user menu"
+              className={mergeClassnames(
+                'flex size-10 items-center justify-center rounded-full transition-colors',
+                open ? 'bg-primary-90' : 'bg-neutral-90',
+              )}
+            >
+              <UserCircle size={24} className="text-neutral-10" />
             </Dropdown.Trigger>
             <Dropdown.Options menuWidth="w-[236px]">
               {USER_MENU_ITEMS.map(item => (
