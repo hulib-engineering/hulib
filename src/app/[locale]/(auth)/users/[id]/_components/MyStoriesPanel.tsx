@@ -70,7 +70,7 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
     return (
       <div className="flex flex-col items-center gap-6 px-4 py-5 lg:px-0">
         <Image
-          src="/assets/images/no-results-found.png"
+          src="/assets/images/landing/no-results-found.png"
           className="h-[312px] w-[398px] object-contain lg:h-[378px] lg:w-[482px]"
           width={482}
           height={378}
@@ -129,7 +129,7 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
           >
             <div className="flex flex-col items-center gap-6">
               <IconButton
-                variant="secondary"
+                variant="soft"
                 size="lg"
                 className="!h-[68px] w-[68px]"
                 onClick={() => setIsCreateModalOpen(true)}

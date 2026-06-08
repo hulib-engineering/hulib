@@ -98,7 +98,7 @@ const PlayableAgoraMeetView = (props: IPlayableAgoraMeetViewProps) => {
         <div className="absolute bottom-1/2 left-1/2 flex flex-col items-center -translate-x-1/2 translate-y-1/2">
           <Image
             alt="User avatar"
-            src={participantAvatarUrl ?? '/assets/images/ava-placeholder.png'}
+            src={participantAvatarUrl ?? '/assets/images/avatars/ava-placeholder.png'}
             width={isLocal ? 168 : 56}
             height={isLocal ? 168 : 56}
             className={mergeClassnames(

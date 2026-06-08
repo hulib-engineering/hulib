@@ -16,7 +16,7 @@ import Label from '@/components/Label';
 import Modal from '@/components/Modal';
 import { Cover } from '@/features/stories/components/Cover';
 import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
-import { DetailedStory } from '@/components/stories/DetailedStory';
+import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import StoryForm from '@/features/stories/components/StoryForm';
 import { useAppSelector } from '@/libs/hooks';
@@ -93,7 +93,7 @@ export default function Index() {
             <div className="flex-1">
               <DetailedStory
                 title={data?.title || ''}
-                cover={data?.humanBook?.photo?.path ?? '/assets/images/half-title-illus.png'}
+                cover={data?.humanBook?.photo?.path ?? '/assets/images/landing/half-title-illus.png'}
                 authorName={data?.humanBook?.fullName || ''}
                 abstract={data?.abstract || ''}
               />

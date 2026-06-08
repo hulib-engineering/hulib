@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { redirect, useRouter } from 'next/navigation';
@@ -17,7 +17,7 @@ import { useAppSelector, useMobile } from '@/libs/hooks';
 import { Role, StatusEnum } from '@/types/common';
 import StoryForm from '@/features/stories/components/StoryForm';
 
-const STEPS = ['Fill Information', 'Select Available Slots', 'Creaete Story'];
+const STEPS = ['Fill Information', 'Select Available Slots', 'Create Story'];
 
 export default function AccountUpgrade() {
   const router = useRouter();
@@ -28,6 +28,8 @@ export default function AccountUpgrade() {
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
+  const initialCheckDone = useRef(false);
+
   const {
     currentStep,
     goToNextStep,
@@ -37,10 +39,14 @@ export default function AccountUpgrade() {
   } = useAccountUpgradeStep();
 
   useEffect(() => {
-    if (userInfo && userInfo?.approval === StatusEnum.Pending) {
-      setShowSuccess(true);
+    if (!userInfo?.id || initialCheckDone.current) {
+      return;
     }
-    if (userInfo && userInfo?.role?.id === Role.HUBER) {
+    initialCheckDone.current = true;
+
+    if (userInfo.approval === StatusEnum.Pending) {
+      setShowSuccess(true);
+    } else if (userInfo.role?.id === Role.HUBER) {
       redirect(`/users/${userInfo.id}`);
     }
   }, [userInfo, setShowSuccess]);
@@ -91,7 +97,7 @@ export default function AccountUpgrade() {
         {showSuccess ? (
           <div className="flex w-full flex-col items-center gap-4 rounded-[20px] bg-white p-4 shadow-sm">
             <Image
-              src="/assets/images/schedule-success.svg"
+              src="/assets/images/misc/schedule-success.svg"
               alt="success"
               width={434}
               height={374}

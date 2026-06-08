@@ -54,7 +54,7 @@ export default function MyFavoritesPanel() {
   const renderEmptyState = (type: ChipType) => (
     <div className="flex flex-col items-center justify-center gap-5">
       <Image
-        src="/assets/images/no-results-found.png"
+        src="/assets/images/landing/no-results-found.png"
         className="h-[378px] w-[482px] object-contain"
         width={482}
         height={378}

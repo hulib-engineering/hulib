@@ -1,31 +1,7 @@
-import type {
-  ButtonSettingsProps,
-  ButtonSizes,
-} from '@/components/core/button/private/types';
+import type { ButtonSettingsProps } from '@/components/core/button/private/types';
+import type { IconButtonSizes } from '@/components/core/iconButton/private/types';
 import type { LoaderSize } from '@/components/core/loader/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
-
-const getXsPadding = ({
-  icon,
-  iconLeft,
-  iconRight,
-  iconOnly,
-  fullWidth,
-}: ButtonSettingsProps): string => {
-  if (fullWidth) {
-    return 'px-2';
-  }
-  if (icon === 'left' || iconLeft) {
-    return 'ps-1 pe-2';
-  }
-  if (icon === 'right' || iconRight) {
-    return 'ps-2 pe-1';
-  }
-  if (icon === 'only' || iconOnly) {
-    return 'px-1';
-  }
-  return 'px-2';
-};
 
 const getSmPadding = ({
   icon,
@@ -47,28 +23,6 @@ const getSmPadding = ({
     return 'px-1';
   }
   return 'px-3';
-};
-
-const getMdPadding = ({
-  icon,
-  iconLeft,
-  iconRight,
-  iconOnly,
-  fullWidth,
-}: ButtonSettingsProps): string => {
-  if (fullWidth) {
-    return 'px-8';
-  }
-  if (icon === 'left' || iconLeft) {
-    return 'ps-2 pe-4';
-  }
-  if (icon === 'right' || iconRight) {
-    return 'ps-4 pe-2';
-  }
-  if (icon === 'only' || iconOnly) {
-    return 'px-2';
-  }
-  return 'px-8';
 };
 
 const getLgPadding = ({
@@ -93,28 +47,6 @@ const getLgPadding = ({
   return 'px-4';
 };
 
-const getXlPadding = ({
-  icon,
-  iconLeft,
-  iconRight,
-  iconOnly,
-  fullWidth,
-}: ButtonSettingsProps): string => {
-  if (fullWidth) {
-    return 'px-6';
-  }
-  if (icon === 'left' || iconLeft) {
-    return 'ps-4 pe-6';
-  }
-  if (icon === 'right' || iconRight) {
-    return 'ps-6 pe-4';
-  }
-  if (icon === 'only' || iconOnly) {
-    return 'px-4';
-  }
-  return 'px-6';
-};
-
 export const getButtonSizes = ({
   size,
   icon,
@@ -123,18 +55,6 @@ export const getButtonSizes = ({
   iconOnly,
   fullWidth,
 }: ButtonSettingsProps): string => {
-  if (size === 'xs') {
-    return mergeClassnames(
-      getXsPadding({
-        icon,
-        iconLeft,
-        iconRight,
-        iconOnly,
-        fullWidth,
-      }),
-      'h-6 py-1 gap-1 text-xs rounded',
-    );
-  }
   if (size === 'sm') {
     return mergeClassnames(
       getSmPadding({
@@ -144,47 +64,23 @@ export const getButtonSizes = ({
         iconOnly,
         fullWidth,
       }),
-      'h-8 py-1 gap-1 text-sm rounded-lg',
-    );
-  }
-  if (size === 'lg') {
-    return mergeClassnames(
-      getLgPadding({
-        icon,
-        iconLeft,
-        iconRight,
-        iconOnly,
-        fullWidth,
-      }),
-      'h-12 py-3 gap-2 rounded-lg',
-    );
-  }
-  if (size === 'xl') {
-    return mergeClassnames(
-      getXlPadding({
-        icon,
-        iconLeft,
-        iconRight,
-        iconOnly,
-        fullWidth,
-      }),
-      'h-14 py-4 gap-2 rounded-xl',
+      'h-8 py-2 gap-1.5 text-sm rounded-full',
     );
   }
   return mergeClassnames(
-    getMdPadding({ icon, iconLeft, iconRight, iconOnly, fullWidth }),
-    'py-3 px-4 gap-2 text-base leading-5 rounded-full',
+    getLgPadding({ icon, iconLeft, iconRight, iconOnly, fullWidth }),
+    'h-11 py-3 gap-2 rounded-full',
   );
 };
 
-export const getIconSize = (size?: ButtonSizes): string => {
+export const getIconSize = (size?: IconButtonSizes): string => {
   if (size === 'sm') {
     return 'text-base';
   }
   return 'text-xl';
 };
 
-export const getLoaderSize = (size?: ButtonSizes): LoaderSize => {
+export const getLoaderSize = (size?: IconButtonSizes): LoaderSize => {
   if (size === 'sm') {
     return '2xs';
   }

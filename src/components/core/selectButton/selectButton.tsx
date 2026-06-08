@@ -11,7 +11,6 @@ import type {
 } from './private/types';
 import {
   SelectButtonContext,
-  getSelectSize,
   useSelectButtonContext,
 } from './private/utils';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -20,7 +19,6 @@ import Tag from '@/components/core/tag/Tag';
 const SelectButtonRoot = forwardRef(
   (
     {
-      size = 'md',
       isError,
       isDisabled,
       open,
@@ -32,12 +30,11 @@ const SelectButtonRoot = forwardRef(
     const states = useMemo(
       () => ({
         open,
-        size,
         isError,
         isDisabled,
         ...rest,
       }),
-      [open, size, isError, isDisabled, rest],
+      [open, isError, isDisabled, rest],
     );
     return (
       <div className="relative" ref={ref}>
@@ -51,58 +48,66 @@ const SelectButtonRoot = forwardRef(
 SelectButtonRoot.displayName = 'SelectButtonRoot';
 
 const Control = () => {
-  const { open, size } = useSelectButtonContext('SelectButton.Control');
+  const { open } = useSelectButtonContext('SelectButton.Control');
+
   return (
     <CaretDown
-      size={size === 'sm' ? 16 : 24}
+      size={24}
       className={mergeClassnames(
-        'text-trunks flex-shrink-0 transition-transform',
+        'text-neutral-20 flex-shrink-0 transition-transform',
         open && 'rotate-[-180deg]',
       )}
     />
   );
 };
 
+const Value = ({ children }: { children?: ReactNode }) => {
+  const { isError, isDisabled } = useSelectButtonContext('SelectButton.Value');
+
+  return (
+    <span
+      className={mergeClassnames(
+        'w-full font-medium text-sm leading-4 truncate',
+        isDisabled && 'text-neutral-40',
+        isError && !isDisabled && 'text-red-50',
+        !isError && !isDisabled && 'text-primary-60',
+      )}
+    >
+      {children}
+    </span>
+  );
+};
+
 const Input = ({ children, className }: InputProps) => {
-  const { size, isError, isDisabled, ...rest }
+  const { isError, isDisabled, open, ...rest }
     = useSelectButtonContext('SelectButton.Input');
+
+  const hasValue = React.isValidElement(children) && children.type === Value;
 
   return (
     <button
       {...rest}
       className={mergeClassnames(
-        'flex items-center justify-between pl-3 pr-4 py-0.5',
-        'w-full bg-neutral-98 border border-neutral-90 rounded-2xl',
+        'h-11 flex items-center justify-between py-0.5 px-3 rounded-2xl',
+        'size-full bg-neutral-98 border',
         'shadow-input hover:shadow-input-hov transition-shadow duration-200',
         'focus:shadow-input-focus focus:outline-none',
-        getSelectSize(size),
+        open && !isError && 'border-primary-60',
+        !open && hasValue && !isError && 'border-neutral-80',
+        !open && !hasValue && !isError && 'border-neutral-90',
         isError
-        && 'shadow-input-err hover:shadow-input-err focus:shadow-input-err',
+        && 'border-2 border-red-50',
         isDisabled
-        && 'bg-neutral-90 text-neutral-40 cursor-not-allowed hover:shadow-input',
+        && 'border-neutral-90 bg-neutral-90 text-neutral-40 cursor-not-allowed hover:shadow-input',
         className && className,
       )}
       type="button"
     >
-      <span className="flex w-full flex-col items-start overflow-hidden py-3 text-start">
+      <span className="flex w-full flex-col justify-center overflow-hidden text-start text-sm font-normal leading-4 text-neutral-40">
         {children}
       </span>
       <Control />
     </button>
-  );
-};
-
-const Value = ({ children }: { children?: ReactNode }) => {
-  // const { size } = useSelectButtonContext('SelectButton.Value');
-
-  return (
-    <span
-      className={mergeClassnames(
-        'w-full font-medium text-sm leading-4 text-neutral-10 read-only:text-neutral-40 truncate',
-      )}
-    >
-      {children}
-    </span>
   );
 };
 
@@ -115,7 +120,7 @@ const Label = ({
     <Listbox.Label
       className={mergeClassnames(
         'block text-neutral-10 pb-2 text-sm leading-4',
-        isDisabled && 'opacity-60 cursor-not-allowed',
+        isDisabled && 'cursor-not-allowed',
       )}
       htmlFor={htmlFor}
     >
@@ -125,13 +130,13 @@ const Label = ({
 };
 
 const Placeholder = ({ children }: { children?: ReactNode }) => {
-  // const { size } = useSelectButtonContext('SelectButton.Placeholder');
+  const { isError } = useSelectButtonContext('SelectButton.Placeholder');
 
   return (
     <span
       className={mergeClassnames(
-        // size === 'sm' ? 'text-moon-14' : 'text-moon-16',
-        'w-full text-sm leading-4 text-neutral-40  text-start truncate',
+        'w-full text-sm leading-4 text-start truncate',
+        isError ? 'text-red-50' : 'text-neutral-40',
       )}
     >
       {children}
@@ -147,8 +152,6 @@ const Chip = ({
   onClick,
   ...rest
 }: ChipProps) => {
-  const { size } = useSelectButtonContext('SelectButton.Control');
-
   const onCloseHandler = useCallback(
     (e: any) => {
       e.preventDefault();
@@ -161,7 +164,7 @@ const Chip = ({
 
   return (
     <Tag
-      size={size === 'sm' ? '2xs' : 'xs'}
+      size="xs"
       onClick={onClick}
       iconRight={(
         <X onClick={onCloseHandler} className={mergeClassnames('text-neutral-98', iconClassName)} />

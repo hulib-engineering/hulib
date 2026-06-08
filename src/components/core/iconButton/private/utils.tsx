@@ -4,14 +4,13 @@ import React from 'react';
 import type {
   ButtonAnimations,
   ButtonSettingsProps,
-  ButtonSizes,
 } from '@/components/core/button/private/types';
 import {
   getIconSize,
   getLoaderSize,
 } from '@/components/core/button/private/utils/getButtonSizes';
 import { getLoaderColor } from '@/components/core/button/private/utils/getButtonStyles';
-import type { IconButtonSettingsProps } from '@/components/core/iconButton/private/types';
+import type { IconButtonSettingsProps, IconButtonSizes } from '@/components/core/iconButton/private/types';
 import Loader from '@/components/core/loader/Loader';
 import { mergeClassnames } from '@/components/core/private/utils';
 
@@ -38,14 +37,14 @@ const AnimationContent = ({
   </span>
 );
 
-export const getButtonSize = (size?: ButtonSizes): string => {
+export const getButtonSize = (size?: IconButtonSizes): string => {
   if (size === 'sm') {
-    return 'h-8 p-2 text-base';
+    return 'size-8 p-2 text-base';
   }
   if (size === 'lg') {
-    return 'h-11 p-3 text-xl';
+    return 'size-11 p-3 text-xl';
   }
-  return 'h-10 p-[10px] text-xl';
+  return 'size-10 p-2.5 text-xl';
 };
 
 export const getButtonVariants = ({
@@ -56,39 +55,43 @@ export const getButtonVariants = ({
   if (variant === 'outline') {
     return animation === 'error'
       ? mergeClassnames(
-          'text-chichi bg-transparent ring-inset ring-1 ring-chichi',
-          !disabled && 'hover:bg-chichi-10',
+          'text-red-50 bg-transparent ring-inset ring-1 ring-red-50',
+          !disabled && 'hover:bg-red-90',
         )
       : mergeClassnames(
-          'text-neutral-20 bg-transparent border border-[#C2C6CF]',
-          !disabled && 'hover:bg-neutral-90',
+          'text-neutral-20 bg-transparent border border-neutral-variant-80',
+          disabled && 'border-neutral-90 text-neutral-70',
+          !disabled && 'hover:bg-neutral-90 focus:bg-neutral-90 focus:ring-2 focus:ring-primary-60',
         );
   }
-  if (variant === 'secondary' || variant === 'tertiary') {
+  if (variant === 'soft') {
     return animation === 'error'
-      ? 'text-goten bg-chichi'
+      ? mergeClassnames('text-red-50 bg-primary-90')
       : mergeClassnames(
-          'border-primary-90 bg-primary-90 text-primary-40',
-          'focus:border-primary-50 focus:bg-primary-90 focus:drop-shadow-[0_0_0_2px] focus:drop-shadow-primary-60',
-          !disabled ? 'hover:border-primary-80 hover:bg-primary-80' : 'border-neutral-90 bg-neutral-90 text-neutral-70',
+          'bg-primary-90 text-primary-40 border border-primary-90',
+          disabled && 'text-neutral-70 border-neutral-90 bg-neutral-90',
+          !disabled && 'hover:bg-primary-80 hover:border-primary-80 focus:border-primary-50 focus:ring-2 focus:ring-primary-60',
         );
   }
   if (variant === 'ghost') {
     return animation === 'error'
       ? mergeClassnames(
-          'text-chichi bg-transparent',
-          !disabled && 'hover:bg-chichi-10',
+          'text-red-50 bg-transparent',
+          !disabled && 'hover:bg-red-90',
         )
       : mergeClassnames(
-          'text-neutral-20 bg-transparent',
-          'hover:bg-neutral-90 hover:border hover:border-solid hover:border-neutral-90',
-          'focus:bg-neutral-90 focus:shadow-[0 0 0 2px focus:shadow-primary-60',
+          'text-neutral-20 bg-transparent border border-transparent',
           disabled && 'text-neutral-70',
+          !disabled && 'hover:bg-neutral-90 hover:border-neutral-90 focus:bg-neutral-90 focus:border-neutral-90 focus:ring-2 focus:ring-primary-60',
         );
   }
   return animation === 'error'
-    ? 'text-white bg-chichi'
-    : 'text-white bg-primary-50 focus:shadow-[0 0 0 2px] focus:shadow-primary-80';
+    ? 'text-white bg-red-50'
+    : mergeClassnames(
+        'text-white bg-primary-50 border border-primary-60',
+        disabled && 'bg-neutral-90 border-neutral-90 text-neutral-70',
+        !disabled && 'hover:bg-primary-40 focus:border-primary-40 focus:border-primary-50',
+      );
 };
 
 type Props = {

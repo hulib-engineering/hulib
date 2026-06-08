@@ -1,25 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import {
-  ArrowLeft,
-  ArrowRight,
-  PencilSimple,
   Plus,
-  Trash,
 } from '@phosphor-icons/react';
 
 import IconButton from './IconButton';
-import type { ButtonAnimations, ButtonSizes, ButtonVariants } from '@/components/core/button/private/types';
+import type { IconButtonSizes } from './private/types';
+
+import type { ButtonAnimations, ButtonVariants } from '@/components/core/button/private/types';
 
 const variants: ButtonVariants[] = [
-  'fill',
-  'outline',
   'ghost',
-  'primary',
-  'secondary',
-  'tertiary',
+  'outline',
+  'fill',
+  'soft',
 ];
 
-const sizes: ButtonSizes[] = ['sm', 'md', 'lg'];
+const sizes: IconButtonSizes[] = ['sm', 'md', 'lg'];
 
 const animations: ButtonAnimations[] = ['progress', 'success', 'error', 'pulse'];
 
@@ -73,7 +69,6 @@ export const AllVariants: Story = {
           <IconButton
             icon={<Plus weight="bold" />}
             variant={variant}
-            size="md"
             aria-label={`${variant} icon button`}
           />
           <span className="text-xs font-medium capitalize text-neutral-50">
@@ -107,11 +102,21 @@ export const AllSizes: Story = {
   ),
 };
 
-export const Disabled: Story = {
-  args: {
-    'disabled': true,
-    'aria-label': 'Disabled icon button',
-  },
+export const AllDisabled: Story = {
+  name: 'All variants disabled',
+  render: () => (
+    <div className="flex flex-wrap items-center gap-4">
+      {variants.map(variant => (
+        <IconButton
+          key={variant}
+          icon={<Plus weight="bold" />}
+          variant={variant}
+          disabled
+          aria-label={`${variant} disabled`}
+        />
+      ))}
+    </div>
+  ),
 };
 
 /** Loading and feedback states (`progress`, `success`, `error`, `pulse`). */
@@ -123,7 +128,6 @@ export const Animations: Story = {
           <IconButton
             icon={<Plus weight="bold" />}
             variant="fill"
-            size="md"
             animation={animation}
             aria-label={String(animation)}
           />
@@ -132,54 +136,6 @@ export const Animations: Story = {
           </span>
         </div>
       ))}
-    </div>
-  ),
-};
-
-/** Circular table actions (admin tags). */
-export const TableActions: Story = {
-  name: 'Table actions',
-  render: () => (
-    <div className="flex items-center gap-4">
-      <IconButton
-        type="button"
-        icon={<PencilSimple className="text-neutral-10" />}
-        variant="outline"
-        size="lg"
-        aria-label="Edit topic"
-        className="size-11 shrink-0 rounded-full border-neutral-variant-80 bg-white hover:bg-neutral-98"
-      />
-      <IconButton
-        type="button"
-        icon={<Trash className="text-white" weight="fill" />}
-        variant="fill"
-        size="lg"
-        aria-label="Delete topic"
-        className="size-11 shrink-0 rounded-full border-red-60 bg-red-50 hover:bg-red-60"
-      />
-    </div>
-  ),
-};
-
-/** Pagination prev/next (ghost, compact). */
-export const PaginationControls: Story = {
-  name: 'Pagination controls',
-  render: () => (
-    <div className="flex items-center gap-2">
-      <IconButton
-        icon={<ArrowLeft className="text-neutral-40" />}
-        variant="ghost"
-        size="md"
-        className="size-8 rounded-2xl"
-        aria-label="Previous page"
-      />
-      <IconButton
-        icon={<ArrowRight className="text-neutral-40" />}
-        variant="ghost"
-        size="md"
-        className="size-8 rounded-2xl"
-        aria-label="Next page"
-      />
     </div>
   ),
 };

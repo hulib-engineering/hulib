@@ -183,7 +183,7 @@ const EducationItem = ({ data, editable = false }: IEducationItemProps) => {
         </p>
       </div>
       {editable && (
-        <IconButton variant="secondary" size="sm" className="p-2" onClick={() => setIsEditing(true)}>
+        <IconButton variant="soft" size="sm" className="p-2" onClick={() => setIsEditing(true)}>
           <PencilSimple weight="bold" />
         </IconButton>
       )}

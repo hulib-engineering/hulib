@@ -10,14 +10,14 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import * as React from 'react';
 
+import ScheduleBasicInfo from './_components/SessionAttendeesInfo';
+
 import Button from '@/components/core/button/Button';
 import { Spinner } from '@/components/loadingState/Spinner';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';
 import { TimezoneSelect } from '@/components/TimezoneSelect';
-
-import ScheduleBasicInfo from '@/layouts/ScheduleBasicInfo';
 import BookingTimetable from '@/layouts/booking/BookingTimetable';
 import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
@@ -124,6 +124,7 @@ export default function Index() {
               </p>
               <TimezoneSelect value={currentTz} onChange={setCurrentTz} />
             </div>
+            <h5 className="text-2xl font-medium text-neutral-10">{format(new Date(), 'MMMM - yyyy')}</h5>
             <BookingTimetable
               huberId={story?.humanBookId}
               tz={currentTz}
@@ -214,7 +215,7 @@ export default function Index() {
                         {t('back')}
                       </Button>
                       <Button
-                        variant="primary"
+                        variant="fill"
                         className="w-full"
                         disabled={isEmpty(note)}
                         onClick={handlePlaceRequest}
@@ -227,7 +228,7 @@ export default function Index() {
               : (
                   <>
                     <Image
-                      src="/assets/images/schedule-success.svg"
+                      src="/assets/images/misc/schedule-success.svg"
                       alt="Successful illustration"
                       width={480}
                       height={420}
