@@ -66,7 +66,7 @@ export default function AdminLoginForm() {
   return (
     <div className="flex h-screen w-full items-center justify-center bg-primary-90">
       <div className="mx-auto flex h-fit w-full max-w-md flex-col items-center gap-8 rounded-[20px] bg-blue-98 p-6">
-        <Image src="/assets/images/logo.svg" alt="logo" width={192} height={56} />
+        <Image src="/assets/images/logos/logo.svg" alt="logo" width={192} height={56} />
         <div className="flex flex-col text-center text-neutral-10">
           <h2 className="text-4xl font-medium leading-[44px]">Welcome back!</h2>
           <p>Log in to Admin account</p>

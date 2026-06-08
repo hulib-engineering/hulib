@@ -34,11 +34,12 @@ export const TimezoneSelect = ({ value, onChange }: ITimezoneSelectProps) => {
         </Button>
       </Dropdown.Trigger>
       <Dropdown.Options className="max-h-44 min-w-0 max-w-xs overflow-y-auto">
-        {POPULAR_TIMEZONES.map((option, index) => (
-          <Dropdown.Option key={index} value={option}>
+        {POPULAR_TIMEZONES.map(option => (
+          <Dropdown.Option key={option} value={option}>
             {({ selected, active }) => (
               <MenuItem isActive={active} isSelected={selected}>
-                {formatTimezone(option)}
+                <MenuItem.Title>{formatTimezone(option)}</MenuItem.Title>
+                {selected && <MenuItem.Check />}
               </MenuItem>
             )}
           </Dropdown.Option>

@@ -46,9 +46,11 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
           )}
         >
           <p ref={textContainerRef} className="font-['DVN-Poppins] break-all text-xs leading-5 tracking-[0.015em] text-neutral-30 lg:text-sm">
-            {props.highlightAbstract
-              ? renderHighlightedText(`${abstractPages[1]}...`)
-              : `${abstractPages[1]}...`}
+            {abstractPages[1] ? (
+              props.highlightAbstract
+                ? renderHighlightedText(`${abstractPages[1]}...`)
+                : `${abstractPages[1]}...`
+            ) : null}
           </p>
           <Button
             onClick={props.onClick}
@@ -78,9 +80,11 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
               {props.title}
             </h6>
             <p className="font-['DVN-Poppins] break-all text-xs leading-5 tracking-wider text-neutral-30 sm:text-sm">
-              {props.highlightAbstract
-                ? renderHighlightedText(`${abstractPages[0]}...`)
-                : `${abstractPages[0]}...`}
+              {abstractPages[0] ? (
+                props.highlightAbstract
+                  ? renderHighlightedText(`${abstractPages[0]}...`)
+                  : `${abstractPages[0]}...`
+              ) : null}
             </p>
           </figure>
         </div>

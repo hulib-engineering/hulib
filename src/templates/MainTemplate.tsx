@@ -5,11 +5,11 @@ import { redirect, usePathname } from 'next/navigation';
 import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
 
+import Header from '@/app/[locale]/(auth)/_components/Header';
+import FooterWebApp from '@/app/[locale]/(auth)/_components/FooterWebApp';
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
-import FooterWebApp from '@/layouts/FooterWebApp';
-import Header from '@/layouts/webapp/Header';
 import MessengerWidget from '@/layouts/webapp/MultipleChatWidget';
 import { useAppDispatch } from '@/libs/hooks';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
@@ -79,6 +79,7 @@ const poppins = localFont({
     },
   ],
 });
+
 const MainTemplate = (props: WithChildren) => {
   const pathname = usePathname();
 

@@ -7,7 +7,7 @@ import IconButton from '@/components/core/iconButton/IconButton';
 import Modal from '@/components/Modal';
 import { Cover } from '@/features/stories/components/Cover';
 import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
-import { DetailedStoryWithCover } from '@/components/stories/DetailedStoryWithCover';
+import { DetailedStoryWithCover } from '@/features/stories/components/DetailedStoryWithCover';
 
 export default function TrySampleStory() {
   // const t = useTranslations('Index');
@@ -22,7 +22,7 @@ export default function TrySampleStory() {
         </span>
         <IconButton
           size="lg"
-          variant="secondary"
+          variant="soft"
           className="animate-bounce-to-highlight bg-white text-lp-primary-blue hover:bg-[#D9E6FD]"
         >
           <ArrowDown />

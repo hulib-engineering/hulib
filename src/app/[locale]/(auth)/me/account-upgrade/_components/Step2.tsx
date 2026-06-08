@@ -75,14 +75,12 @@ const Step2 = () => {
       <div className="flex w-full items-center justify-center gap-3">
         <Button
           variant="outline"
-          size="md"
           fullWidth
           onClick={goToPreviousStep}
         >
           {tHr('back')}
         </Button>
         <Button
-          size="md"
           fullWidth
           animation={isRegisteringTimeslots && 'progress'}
           disabled={timeSlots.length === 0 || !!errors.timeSlots || isRegisteringTimeslots}

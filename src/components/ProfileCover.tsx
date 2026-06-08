@@ -19,7 +19,7 @@ const ProfileCover = ({
         'size-full relative flex items-center justify-center bg-cover',
         className,
       )}
-      style={{ backgroundImage: imageUrl ? `url('${imageUrl}')` : 'url(\'/assets/images/default-cover.png\')' }}
+      style={{ backgroundImage: imageUrl ? `url('${imageUrl}')` : 'url(\'/assets/images/landing/default-cover.png\')' }}
     >
       {children}
     </div>

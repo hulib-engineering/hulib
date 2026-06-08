@@ -13,7 +13,7 @@ export default function NoResultFound({ className = '' }: { className?: string }
       )}
     >
       <Image
-        src="/assets/images/no-results-found.png"
+        src="/assets/images/landing/no-results-found.png"
         alt="No results found illustration"
         width={482}
         height={378}

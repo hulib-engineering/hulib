@@ -118,7 +118,7 @@ export default function EditImageModal({ type, data, open, onClose }: IEditImage
             ) : (
               <div className="relative aspect-[4/1] w-5/6 lg:max-w-[800px]">
                 <Image
-                  src={currentImageData || '/assets/images/default-cover.png'}
+                  src={currentImageData || '/assets/images/landing/default-cover.png'}
                   alt="Cover Image"
                   fill
                   className="object-cover"

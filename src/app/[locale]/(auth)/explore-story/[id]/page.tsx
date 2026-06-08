@@ -4,25 +4,24 @@ import { ArrowLeft, BookmarkSimple, CalendarDots, Heart } from '@phosphor-icons/
 import { notFound, redirect, useParams, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
-import { useState } from 'react';
+
+import StoryReviewsWithOverview from './_components/StoryReviewsWithOverview';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
-import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { IndexStoryListSectionLayout } from '@/components/home/IndexStoryListCommonLayout';
 import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
 import { Cover } from '@/features/stories/components/Cover';
-import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
-import { DetailedStory } from '@/components/stories/DetailedStory';
-import StoryReviewsWithOverview from '@/layouts/stories/StoryReviewsWithOverview';
-import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
+import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import {
   useGetReviewsOverviewQuery,
   useGetSimilarStoriesQuery,
   useGetStoryDetailQuery,
 } from '@/libs/services/modules/stories';
 import { PublishStatusEnum } from '@/libs/services/modules/stories/storiesType';
+import { Chip } from '@/components/core/chip/Chip';
+import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 
 export default function Index() {
@@ -42,11 +41,9 @@ export default function Index() {
   });
   const { data: storyReviewOverview } = useGetReviewsOverviewQuery(id);
 
-  const [storyInfoContainerHeight, setStoryInfoContainerHeight] = useState(0);
-
   if (isLoading) {
     return (
-      <div className="mx-auto w-full max-w-screen-sm py-6 lg:max-w-screen-2xl lg:px-28 lg:py-8">
+      <div className="mx-auto w-full max-w-screen-sm py-6 xl:max-w-screen-2xl xl:px-28 xl:py-8">
         <StoryDetailSkeleton />
       </div>
     );
@@ -61,69 +58,75 @@ export default function Index() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-screen-sm py-6 lg:max-w-screen-2xl lg:px-28 lg:py-8">
-      <div className="flex flex-col gap-6 lg:gap-12">
+    <div className="mx-auto w-full py-6 xl:max-w-[1216px] xl:py-8">
+      <div className="flex flex-col gap-6 xl:gap-12">
         <div className="flex flex-col gap-2">
           <Button
             variant="ghost"
-            size="lg"
             iconLeft={<ArrowLeft />}
             className="w-fit text-black"
             onClick={() => router.back()}
           >
             Back
           </Button>
-          <div className="flex flex-col gap-4 px-4 lg:flex-row lg:items-stretch lg:gap-8 lg:px-0">
+          <div className="flex flex-col gap-4 px-4 xl:flex-row xl:items-stretch xl:gap-8 xl:px-0">
             <div className="flex-1">
               <DetailedStory
                 title={data?.title || ''}
-                cover={data?.humanBook?.photo?.path ?? '/assets/images/half-title-illus.png'}
+                cover={data?.humanBook?.photo?.path ?? '/assets/images/landing/half-title-illus.png'}
                 authorName={data?.humanBook?.fullName || ''}
                 abstract={data?.abstract || ''}
-                onDynamicHeightChange={height => setStoryInfoContainerHeight(height)}
+                // onDynamicHeightChange={height => setStoryInfoContainerHeight(height)}
               />
             </div>
             <div
-              className="flex w-full flex-1 flex-col-reverse items-center gap-6 overflow-hidden rounded-lg bg-white px-4 py-6 shadow-sm lg:max-w-[268px] lg:flex-col lg:justify-between lg:rounded-2xl lg:px-6"
-              style={{ height: storyInfoContainerHeight }}
+              className={mergeClassnames(
+                'flex h-[656px] w-full flex-1 flex-col-reverse items-center gap-6 overflow-hidden rounded-lg bg-white px-4 py-6 shadow-sm',
+                'xl:max-w-[268px] xl:flex-col xl:justify-between xl:rounded-2xl xl:px-6',
+              )}
             >
               <div className="flex w-full flex-col gap-3">
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col gap-1">
                     <h5 className="line-clamp-2 text-2xl font-medium leading-9 text-primary-10">{data?.title}</h5>
-                    <div className="flex items-center gap-1 lg:gap-3">
-                      <Avatar
-                        imageUrl={data?.humanBook.photo?.path ?? '/assets/images/ava-placeholder.png'}
-                        size="sm"
-                        className="size-9"
-                      />
-                      <div className="flex items-center gap-3 lg:flex-col lg:items-start lg:gap-1">
-                        <p className="text-sm font-medium leading-6 text-neutral-50">{data?.humanBook.fullName}</p>
+                    <div className="flex flex-col gap-1 rounded-2xl border border-neutral-90 p-2 xl:gap-3">
+                      <div className="flex items-center gap-2">
+                        <Avatar
+                          imageUrl={data?.humanBook.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
+                          size="sm"
+                          className="!size-7 shrink-0"
+                        />
+                        <p className="line-clamp-1 text-lg font-medium leading-7 text-neutral-50">{data?.humanBook.fullName}</p>
+                      </div>
+
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-1 text-xs leading-[14px] text-neutral-40">
+                          <div className="flex items-center gap-0.5">
+                            <Heart weight="fill" className="text-pink-40" />
+                            <p className="text-sm font-medium leading-4 text-neutral-20">{storyReviewOverview?.rating}</p>
+                          </div>
+                          <p className="text-xs leading-[14px] text-neutral-40">
+                            {`(${storyReviewOverview?.numberOfReviews} rating)`}
+                          </p>
+                        </div>
                         <div className="flex items-center gap-1 text-xs leading-[14px] text-neutral-40">
                           <span className="text-sm leading-4 text-neutral-20">20</span>
-                          <p>sessions</p>
+                          <p>Stories</p>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <div className="flex min-w-[43px] items-center">
-                      <Heart weight="fill" className="text-yellow-50" />
-                      <p className="text-sm font-medium leading-4 text-neutral-20">{storyReviewOverview?.rating}</p>
-                    </div>
-                    <p className="text-xs leading-[14px] text-neutral-40">
-                      {`(${storyReviewOverview?.numberOfReviews} rating)`}
-                    </p>
-                  </div>
                 </div>
-                <div className="scrollbar-none hidden w-auto gap-2 overflow-x-auto scroll-smooth py-1 lg:flex">
+              </div>
+              <div className="flex w-full flex-col gap-4">
+                <div className="scrollbar-none hidden w-auto gap-2 overflow-x-auto scroll-smooth py-1 xl:flex">
                   {data?.topics.map((topic: Topic) => (
                     <Chip
                       key={topic.id}
                       as="span"
                       className={mergeClassnames(
-                        'h-8 min-w-0 shrink-0 overflow-visible whitespace-nowrap rounded-2xl border py-1 px-2 lg:py-2',
-                        'text-xs font-medium leading-[14px] lg:text-sm lg:font-normal lg:leading-4',
+                        'h-8 min-w-0 shrink-0 overflow-visible whitespace-nowrap rounded-2xl border py-1 px-2 xl:py-2',
+                        'text-xs font-medium leading-[14px] xl:text-sm xl:font-normal xl:leading-4',
                         getTopicBadgeClasses(topic.color),
                       )}
                     >
@@ -131,28 +134,16 @@ export default function Index() {
                     </Chip>
                   ))}
                 </div>
+                <div className="flex w-full items-center justify-center">
+                  <Cover src={data?.cover?.path} />
+                </div>
               </div>
-              <Cover src={data?.cover?.path ?? DEFAULT_STORY_COVER_ASSET} />
-              <div className="flex w-full flex-col gap-2">
-                <Button
-                  size="lg"
-                  fullWidth
-                  onClick={() => router.push(`${data?.id}/booking`)}
-                >
-                  <div className="flex items-center gap-2">
-                    <CalendarDots className="text-xl" />
-                    <span>Book a Meeting</span>
-                  </div>
+              <div className="flex w-[184px] flex-col gap-2">
+                <Button onClick={() => router.push(`${data?.id}/booking`)} iconLeft={<CalendarDots />}>
+                  Book a Meeting
                 </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  fullWidth
-                >
-                  <div className="flex items-center gap-2">
-                    <BookmarkSimple className="text-xl" />
-                    <span>Save for later</span>
-                  </div>
+                <Button variant="outline" iconLeft={<BookmarkSimple />}>
+                  Save for later
                 </Button>
               </div>
             </div>
