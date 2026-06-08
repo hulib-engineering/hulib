@@ -9,12 +9,12 @@ import {
 } from '@/features/stories/utils/coverChrome';
 
 /** Book face (140×198 mobile, 180×255 desktop). */
-const COVER_FACE_SIZE_CLASS = 'size-[140px_198px] md:size-[180px_255px]';
-const COVER_FACE_DESKTOP_CLASS = 'size-[180px_255px]';
+const COVER_FACE_SIZE_CLASS = 'w-[140px] h-[198px] md:w-[180px] md:h-[255px]';
+const COVER_FACE_DESKTOP_CLASS = 'w-[180px] h-[255px]';
 
 /** Face + 4px outer shadow gutter. */
-const COVER_CHROME_SIZE_CLASS = 'size-[144px_202px] md:size-[184px_259px]';
-const COVER_CHROME_DESKTOP_CLASS = 'size-[184px_259px]';
+const COVER_CHROME_SIZE_CLASS = 'w-[144px] h-[202px] md:w-[184px] md:h-[259px]';
+const COVER_CHROME_DESKTOP_CLASS = 'w-[184px] h-[259px]';
 
 /** Shadow plates match the face footprint (not chrome wrapper). */
 const COVER_SHADOW_FACE_CLASS = COVER_FACE_SIZE_CLASS;
