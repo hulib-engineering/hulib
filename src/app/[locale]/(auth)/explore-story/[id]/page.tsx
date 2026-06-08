@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, BookmarkSimple, CalendarDots } from '@phosphor-icons/react';
+import { ArrowLeft, BookmarkSimple, CalendarDots, Heart } from '@phosphor-icons/react';
 import { notFound, redirect, useParams, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
@@ -15,6 +15,7 @@ import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
 import { Cover } from '@/features/stories/components/Cover';
 import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import {
+  useGetReviewsOverviewQuery,
   useGetSimilarStoriesQuery,
   useGetStoryDetailQuery,
 } from '@/libs/services/modules/stories';
@@ -38,6 +39,8 @@ export default function Index() {
   }, {
     skip: !data || (!data?.humanBookId && !data?.topics.length),
   });
+
+  const { data: storyReviewOverview } = useGetReviewsOverviewQuery(id);
 
   if (isLoading) {
     return (
@@ -87,15 +90,27 @@ export default function Index() {
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col gap-1">
                     <h5 className="line-clamp-2 text-2xl font-medium leading-9 text-primary-10">{data?.title}</h5>
-                    <div className="flex items-center gap-1 lg:gap-3">
-                      <Avatar
-                        imageUrl={data?.humanBook.photo?.path}
-                        name={data?.humanBook.fullName}
-                        size="sm"
-                        className="size-9"
-                      />
-                      <div className="flex items-center gap-3 lg:flex-col lg:items-start lg:gap-1">
-                        <p className="text-sm font-medium leading-6 text-neutral-50">{data?.humanBook.fullName}</p>
+                    <div className="flex flex-col gap-1 rounded-2xl border border-neutral-90 p-2 xl:gap-3">
+                      <div className="flex items-center gap-2">
+                        <Avatar
+                          imageUrl={data?.humanBook.photo?.path}
+                          name={data?.humanBook.fullName}
+                          size="sm"
+                          className="size-9"
+                        />
+                        <p className="line-clamp-1 text-lg font-medium leading-7 text-neutral-50">{data?.humanBook.fullName}</p>
+                      </div>
+
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-1 text-xs leading-[14px] text-neutral-40">
+                          <div className="flex items-center gap-0.5">
+                            <Heart weight="fill" className="text-pink-40" />
+                            <p className="text-sm font-medium leading-4 text-neutral-20">{storyReviewOverview?.rating}</p>
+                          </div>
+                          <p className="text-xs leading-[14px] text-neutral-40">
+                            {`(${storyReviewOverview?.numberOfReviews} rating)`}
+                          </p>
+                        </div>
                         <div className="flex items-center gap-1 text-xs leading-[14px] text-neutral-40">
                           <span className="text-sm leading-4 text-neutral-20">20</span>
                           <p>Stories</p>
