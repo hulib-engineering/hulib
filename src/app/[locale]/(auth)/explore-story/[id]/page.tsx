@@ -96,7 +96,7 @@ export default function Index() {
                           imageUrl={data?.humanBook.photo?.path}
                           name={data?.humanBook.fullName}
                           size="sm"
-                          className="size-9"
+                          className="!size-7 shrink-0"
                         />
                         <p className="line-clamp-1 text-lg font-medium leading-7 text-neutral-50">{data?.humanBook.fullName}</p>
                       </div>
