@@ -17,7 +17,7 @@ import { useAppSelector, useMobile } from '@/libs/hooks';
 import { Role, StatusEnum } from '@/types/common';
 import StoryForm from '@/features/stories/components/StoryForm';
 
-const STEPS = ['Fill Information', 'Select Available Slots', 'Creaete Story'];
+const STEPS = ['Fill Information', 'Select Available Slots', 'Create Story'];
 
 export default function AccountUpgrade() {
   const router = useRouter();
