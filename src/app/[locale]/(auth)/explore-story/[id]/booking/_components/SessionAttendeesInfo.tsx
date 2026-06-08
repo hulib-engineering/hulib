@@ -1,4 +1,5 @@
 import { ArrowLeft, Heart, Info, Timer } from '@phosphor-icons/react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
