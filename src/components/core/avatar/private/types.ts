@@ -9,6 +9,7 @@ type StatusOriginProps = {
 
 type AvatarProps = WithChildren<{
   imageUrl?: string;
+  name?: string;
   size?: SizeProps;
   className?: string;
 }>;

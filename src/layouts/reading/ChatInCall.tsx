@@ -19,11 +19,12 @@ type IChatInCallProps = {
   isShow: boolean;
   participantId: number;
   participantAvatarUrl?: string;
+  participantName?: string;
   onClose: () => void;
   onUnreadCountChange: (count: number) => void;
 };
 
-export default function ChatInCall({ isShow, participantId, participantAvatarUrl, onClose, onUnreadCountChange }: IChatInCallProps) {
+export default function ChatInCall({ isShow, participantId, participantAvatarUrl, participantName, onClose, onUnreadCountChange }: IChatInCallProps) {
   const t = useTranslations('Reading.AgoraMeeting');
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
@@ -124,6 +125,7 @@ export default function ChatInCall({ isShow, participantId, participantAvatarUrl
                 key={each.time}
                 type={each.direction}
                 participantAvatarUrl={participantAvatarUrl}
+                participantName={participantName}
                 markedAsRead={each.direction === 'sent' && each.isRead}
               >
                 {each.msg}

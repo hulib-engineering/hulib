@@ -246,7 +246,11 @@ export default function PostSurvey() {
               {t('feedback_for_huber')}
             </h4>
             <div className="flex items-center gap-1">
-              <Avatar size="sm" imageUrl={readingSession?.humanBook?.photo?.path} />
+              <Avatar
+                size="sm"
+                imageUrl={readingSession?.humanBook?.photo?.path}
+                name={readingSession?.humanBook?.fullName}
+              />
               <Chip disabled className="rounded-[100px] bg-primary-90 text-primary-50 opacity-100">
                 {ROLE_NAME[Role.HUBER]}
               </Chip>
