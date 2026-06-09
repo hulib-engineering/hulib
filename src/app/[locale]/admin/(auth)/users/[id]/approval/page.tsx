@@ -75,7 +75,8 @@ export default function Index() {
                 <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
                   <div className="relative h-[68px] w-[100px] lg:h-[120px] lg:w-48">
                     <Avatar
-                      imageUrl={data?.photo?.path ?? ''}
+                      imageUrl={data?.photo?.path}
+                      name={data?.fullName}
                       className="absolute -top-10 left-[18px] size-[100px] lg:size-40"
                     />
                     <div className="absolute bottom-0 left-0 flex w-full">

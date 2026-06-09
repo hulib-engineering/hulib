@@ -1,6 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import React from 'react';
+import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import { useSwiperSlide } from 'swiper/react';
 
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -39,14 +40,21 @@ const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
       <div className="w-full rounded-3xl bg-white p-12">
         <div className="mb-8 inline-flex w-full items-center justify-between">
           <div className="flex items-center justify-start gap-5">
-            <Image
-              alt="Member avatar"
-              src={props.avatarUrl}
-              width={56} // cus 3.5rem * 16 = 56 px
-              height={56}
-              className="size-14 rounded-full object-none object-center"
-              loading="lazy"
-            />
+            {props.avatarUrl ? (
+              <Image
+                alt="Member avatar"
+                src={props.avatarUrl}
+                width={56}
+                height={56}
+                className="size-14 rounded-full object-none object-center"
+                loading="lazy"
+              />
+            ) : (
+              <NiceAvatar
+                className="size-14 rounded-full"
+                {...genConfig(props.name || 'user')}
+              />
+            )}
             <div className="flex flex-col items-start text-xl">
               <p className="font-semibold">{props.name}</p>
               <p className="font-normal">{props.role}</p>

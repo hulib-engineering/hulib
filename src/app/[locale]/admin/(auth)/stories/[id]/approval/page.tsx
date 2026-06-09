@@ -68,7 +68,12 @@ export default function Index() {
             <div className="flex flex-col gap-1">
               <h5 className="text-2xl font-medium leading-8 text-primary-10">{data?.title}</h5>
               <div className="flex items-center gap-1">
-                <Avatar imageUrl={data?.humanBook?.photo?.path} size="sm" className="size-9" />
+                <Avatar
+                  imageUrl={data?.humanBook?.photo?.path}
+                  name={data?.humanBook?.fullName}
+                  size="sm"
+                  className="size-9"
+                />
                 <div className="flex flex-col gap-1 text-sm font-medium leading-4">
                   <p className=" text-neutral-50">
                     {data?.humanBook?.fullName}
