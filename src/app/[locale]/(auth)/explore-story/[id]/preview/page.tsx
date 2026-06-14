@@ -20,6 +20,7 @@ import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import StoryForm from '@/features/stories/components/StoryForm';
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserId } from '@/libs/store/authentication';
 import {
   useDeleteStoryMutation,
   useGetRelatedTopicsQuery,
@@ -38,7 +39,7 @@ export default function Index() {
   const { data: relatedTopics } = useGetRelatedTopicsQuery(Number(id));
   const [deleteStory, { isLoading: isDeletingStory }] = useDeleteStoryMutation();
 
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userId = useAppSelector(selectUserId);
 
   const [isDeleteSuccessModalOpen, setIsDeleteSuccessModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -64,8 +65,8 @@ export default function Index() {
     );
   }
 
-  if (data && userInfo && userInfo.id && userInfo.id !== data?.humanBookId) {
-    return redirect(`/users/${userInfo.id}?tab=stories`);
+  if (data && userId && userId !== data?.humanBookId) {
+    return redirect(`/users/${userId}?tab=stories`);
   }
 
   if (data && data?.publishStatus === PublishStatusEnum.PUBLISHED) {
@@ -137,7 +138,7 @@ export default function Index() {
                   <Button
                     size="lg"
                     fullWidth
-                    onClick={() => router.push(`/users/${userInfo.id}?tab=stories`)}
+                    onClick={() => router.push(`/users/${userId}?tab=stories`)}
                   >
                     {t('share_story')}
                   </Button>

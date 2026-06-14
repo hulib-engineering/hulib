@@ -11,6 +11,7 @@ import type { ReadingSession } from '@/libs/services/modules/reading-session/cre
 import { StatusEnum } from '@/types/common';
 import { getGMTOffset } from '@/utils/dateUtils';
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserId } from '@/libs/store/authentication';
 
 export type TFilter = {
   id: number;
@@ -38,7 +39,7 @@ const localizer = dateFnsLocalizer({
 });
 
 export default function BigCalendar({ dateInWeekView = new Date(), statusFilters }: { dateInWeekView?: Date; statusFilters?: TFilter[] }) {
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userId = useAppSelector(selectUserId);
 
   const getCurrentWeekRange = (date: Date) => {
     const weekStart = startOfWeek(date, { weekStartsOn: 0 });
@@ -68,8 +69,8 @@ export default function BigCalendar({ dateInWeekView = new Date(), statusFilters
 
     return events.filter(event =>
       selectedStatuses.includes(event.resource.sessionStatus)
-      || (selectedStatuses.includes('isHuber') && event.resource.humanBookId === userInfo?.id)
-      || (selectedStatuses.includes('isLiber') && event.resource.readerId === userInfo?.id),
+      || (selectedStatuses.includes('isHuber') && event.resource.humanBookId === userId)
+      || (selectedStatuses.includes('isLiber') && event.resource.readerId === userId),
     );
   };
   const events: IEvent[] = !isLoading && readingSessions && readingSessions.length > 0

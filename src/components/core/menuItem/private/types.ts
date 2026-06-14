@@ -7,6 +7,7 @@ type MenuItemState = {
   active?: boolean;
   disabled?: boolean;
   registerChild?: (child: string) => () => void;
+  items?: string[];
 };
 
 type MenuItemProps = {

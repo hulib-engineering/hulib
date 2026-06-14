@@ -20,6 +20,7 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import Label from '@/components/Label';
 import type { TFilter } from '@/layouts/scheduling/BigCalendar';
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserId, selectUserInfo } from '@/libs/store/authentication';
 import { useUploadMutation } from '@/libs/services/modules/files';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import {
@@ -82,10 +83,11 @@ export default function StoryForm(props: IStoryFormProps) {
     ? t('create_first_story')
     : props.type === 'create' ? tProfile('create_story') : tProfile('edit_story');
 
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userId = useAppSelector(selectUserId);
+  const userInfo = useAppSelector(selectUserInfo);
 
   const { data: me } = useGetPersonalInfoQuery(undefined, {
-    skip: !userInfo?.id,
+    skip: !userId,
   });
   const { data: relatedTopics } = useGetRelatedTopicsQuery(
     Number(props.type === 'edit' && props.story.id),

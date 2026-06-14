@@ -14,7 +14,7 @@ export type StoriesParams = {
   humanBookId?: number;
   page: number;
   limit: number;
-  topicIds?: string[];
+  topicIds?: (string | number)[];
   sort?: { orderBy: string; order: 'ASC' | 'DESC' }[];
   type?: 'most-popular' | string;
 };

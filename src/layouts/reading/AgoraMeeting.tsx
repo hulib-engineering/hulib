@@ -13,7 +13,7 @@ import {
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
 import Button from '@/components/core/button/Button';
@@ -27,6 +27,7 @@ import ChatInCall from '@/layouts/reading/ChatInCall';
 import RecordingTimer from '@/layouts/reading/RecordingTimer';
 import { Env } from '@/libs/Env.mjs';
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserId, selectUserInfo } from '@/libs/store/authentication';
 import { useSocket } from '@/libs/hooks/useSocket';
 import { useStartCloudRecordingMutation } from '@/libs/services/modules/agora';
 import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
@@ -44,7 +45,8 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
   });
   const [startRecording] = useStartCloudRecordingMutation();
 
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userId = useAppSelector(selectUserId);
+  const userInfo = useAppSelector(selectUserInfo);
 
   const localRef = useRef<HTMLDivElement>(null);
   const remoteRef = useRef<HTMLDivElement>(null);
@@ -68,19 +70,24 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
   const [miniHeartShown, setMiniHeartShown] = useState(false);
   const [unreadChatInCallMessageCount, setUnreadChatInCallMessageCount] = useState(0);
 
-  const { emit } = useSocket({
-    namespace: '',
-    listeners: {
+  const listeners = useMemo(
+    () => ({
       reaction: () => {
         setMiniHeartShown(true);
         setTimeout(() => {
           setMiniHeartShown(false);
         }, 5000);
       },
-    },
+    }),
+    [],
+  );
+
+  const { emit } = useSocket({
+    namespace: '',
+    listeners,
   });
 
-  const isVibing = Number(userInfo.id) === Number(readingSession?.reader?.id);
+  const isVibing = Number(userId) === Number(readingSession?.reader?.id);
   const remoteParticipant = isVibing ? readingSession?.humanBook : readingSession?.reader;
 
   useEffect(() => {

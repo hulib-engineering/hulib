@@ -12,7 +12,7 @@ import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import {
   useGetStoryDetailQuery,
 } from '@/libs/services/modules/stories';
-import type { Topic } from '@/libs/services/modules/user/userType';
+import type { Topic } from '@/libs/services/modules/topics/topicType';
 import Avatar from '@/components/core/avatar/Avatar';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';

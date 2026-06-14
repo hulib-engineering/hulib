@@ -52,7 +52,7 @@ const StoryListByMostPopularTopics = () => {
   const { data: stories, isLoading } = useGetStoriesQuery({
     page: 1,
     limit: 9,
-    topicsIds: [selectedTopicId],
+    topicIds: [selectedTopicId],
   }, { skip: !selectedTopicId });
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const StoryListByMostPopularTopics = () => {
       showFilter
       filters={topics?.data ?? []}
       selectedFilterId={selectedTopicId}
-      onFilterChange={topicId => setSelectedTopicId(topicId as unknown as number)}
+      onFilterChange={topicId => setSelectedTopicId(topicId as number)}
       onSeeAllClick={() => router.push('/explore-story')}
     />
 

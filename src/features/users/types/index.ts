@@ -1,6 +1,6 @@
 import type { z } from 'zod';
 
-import type { Topic } from '@/libs/services/modules/user/userType';
+import type { Topic } from '@/libs/services/modules/topics/topicType';
 import type { EducationValidation, WorkExperienceValidation } from '@/validations/ProfileValidation';
 
 export type User = {

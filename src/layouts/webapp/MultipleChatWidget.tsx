@@ -2,7 +2,7 @@
 
 import { Minus, X } from '@phosphor-icons/react';
 import Image from 'next/image';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { MessageItem, groupMessagesByTime } from './Messages/ChatDetail';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -11,6 +11,7 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import StatusBadge from '@/components/StatusBadge';
 import Tooltip from '@/components/core/tooltip/Tooltip';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import { selectUserId } from '@/libs/store/authentication';
 import { useSocket } from '@/libs/hooks/useSocket';
 import type { MessageResponse } from '@/libs/services/modules/chat';
 import {
@@ -179,13 +180,13 @@ const ChatWindow = (props: IChatWindowProps) => {
     dispatch(markAsRead(id));
   }, [data, id, onMarkAsRead, dispatch]);
 
-  const handleMarkParticipantMessageAsRead = () => {
+  const handleMarkParticipantMessageAsRead = useCallback(() => {
     dispatch(
       chatApi.util.invalidateTags([
         { type: 'Messages', id: `LIST-${Number(id)}` },
       ]),
     );
-  };
+  }, [dispatch, id]);
 
   const handleReceiveMessage = useCallback(
     (payload: { id: number; from: number; to: number; msg: string; time: number }) => {
@@ -222,12 +223,17 @@ const ChatWindow = (props: IChatWindowProps) => {
     [id, onMarkAsRead, dispatch],
   );
 
-  useSocket({
-    namespace: 'chat',
-    listeners: {
+  const socketListeners = useMemo(
+    () => ({
       read: handleMarkParticipantMessageAsRead,
       receive: handleReceiveMessage,
-    },
+    }),
+    [handleMarkParticipantMessageAsRead, handleReceiveMessage],
+  );
+
+  useSocket({
+    namespace: 'chat',
+    listeners: socketListeners,
   });
 
   return (
@@ -332,7 +338,7 @@ const ChatWindow = (props: IChatWindowProps) => {
 
 export default function MessengerWidget() {
   const chats = useAppSelector(state => state.messenger.chats);
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userId = useAppSelector(selectUserId);
 
   const dispatch = useAppDispatch();
 
@@ -349,7 +355,7 @@ export default function MessengerWidget() {
   };
   const handleSendMessage = useCallback(
     async (id: string, text: string, type?: 'txt' | 'img') => {
-      if (!text.trim() || !userInfo) {
+      if (!text.trim() || !userId) {
         return;
       }
 
@@ -365,7 +371,7 @@ export default function MessengerWidget() {
           (draft) => {
             draft.unshift({
               id: `-${Date.now()}`,
-              from: Number(userInfo.id),
+              from: Number(userId),
               to: Number(id),
               msg: text,
               chatType: type ?? 'txt',
@@ -385,7 +391,7 @@ export default function MessengerWidget() {
 
       playSentMessageSound();
     },
-    [isConnected, emit, dispatch, userInfo],
+    [isConnected, emit, dispatch, userId],
   );
   const openChats = chats.filter(chat => chat.isOpen && !chat.isMinimized);
   const closedChats = chats.filter(chat => !chat.isOpen || chat.isMinimized);

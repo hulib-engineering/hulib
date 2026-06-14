@@ -18,6 +18,7 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import { MessengerInput } from '@/components/messages/MessengerInput';
 import StatusBadge from '@/components/StatusBadge';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import { selectUserId } from '@/libs/store/authentication';
 import { useSocket } from '@/libs/hooks/useSocket';
 import {
   chatApi,
@@ -125,7 +126,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
   const currentOpeningChat = useAppSelector(
     state => state.messenger.currentChatDetail,
   );
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userId = useAppSelector(selectUserId);
 
   const dispatch = useAppDispatch();
 
@@ -257,7 +258,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
   };
   const handleSendMessage = useCallback(
     async (id: string, text: string, type?: 'txt' | 'img') => {
-      if (!text.trim() || !userInfo) {
+      if (!text.trim() || !userId) {
         return;
       }
 
@@ -273,7 +274,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
           (draft) => {
             draft.unshift({
               id: `-${Date.now()}`,
-              from: Number(userInfo.id),
+              from: Number(userId),
               to: Number(id),
               msg: text,
               chatType: type ?? 'txt',
@@ -293,7 +294,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
 
       playSentMessageSound();
     },
-    [isConnected, emit, dispatch, userInfo],
+    [isConnected, emit, dispatch, userId],
   );
 
   if (!currentOpeningChat) {

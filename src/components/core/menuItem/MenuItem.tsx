@@ -1,11 +1,11 @@
 import type { ElementType, ReactNode } from 'react';
-import React, { forwardRef, useEffect, useMemo } from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Check, CheckSquare, Square } from '@phosphor-icons/react';
 import type { CheckboxRadioProps, MenuItemPolymorphicProps } from './private/types';
 import { MenuItemContext, useMenuItemContext } from './private/utils';
 import type { PolymorphicRef } from '@/components/core/private/types';
-import { mergeClassnames, useRegisterChild } from '@/components/core/private/utils';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 const MenuItemRoot = forwardRef(
   // @ts-ignore
@@ -24,7 +24,19 @@ const MenuItemRoot = forwardRef(
   ) => {
     const Component = as || 'button';
 
-    const { items, register } = useRegisterChild();
+    const itemsRef = useRef<string[]>([]);
+    const [, forceUpdate] = useState(0);
+    const register = useCallback((child: string) => {
+      if (!itemsRef.current.includes(child)) {
+        itemsRef.current = [...itemsRef.current, child];
+        forceUpdate(n => n + 1);
+      }
+      return () => {
+        itemsRef.current = itemsRef.current.filter(c => c !== child);
+        forceUpdate(n => n + 1);
+      };
+    }, []);
+    const items = itemsRef.current;
 
     const contextValue = useMemo(
       () => ({
@@ -32,8 +44,9 @@ const MenuItemRoot = forwardRef(
         active: isActive,
         disabled: isDisabled,
         registerChild: register,
+        items,
       }),
-      [isSelected, isActive, isDisabled, register],
+      [isSelected, isActive, isDisabled, register, items],
     );
 
     const isNoBg = items?.find(
@@ -121,7 +134,7 @@ const Checkbox = ({
     if (registerChild) {
       registerChild('Checkbox');
     }
-  }, []);
+  }, [registerChild]);
 
   const ariaLabelValue = ariaLabel || 'Checkbox';
 

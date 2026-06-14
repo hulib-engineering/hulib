@@ -19,6 +19,7 @@ import {
   MORNING_TIME_START,
 } from '@/libs/constants/date';
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserId, selectUserRole } from '@/libs/store/authentication';
 import {
   useCreateTimeslotsMutation,
   useGetTimeslotsByHuberQuery,
@@ -32,12 +33,13 @@ type TPeriodLabel = 'morning' | 'afternoon' | 'evening';
 export default function TimeSlotList() {
   const t = useTranslations('Time_slots');
 
-  const userInfo = useAppSelector(state => state.auth.userInfo);
-  const isHuber = userInfo?.role?.name === ROLE_NAME[Role.HUBER];
+  const userId = useAppSelector(selectUserId);
+  const userRole = useAppSelector(selectUserRole);
+  const isHuber = userRole?.name === ROLE_NAME[Role.HUBER];
 
   const { data, isLoading: isGettingTimeslots } = useGetTimeslotsByHuberQuery(
-    { id: userInfo?.id },
-    { skip: !userInfo?.id || !isHuber },
+    { id: userId },
+    { skip: !userId || !isHuber },
   );
 
   const [registerTimeSlots, { isLoading: isRegisteringTimeslots }] = useCreateTimeslotsMutation();

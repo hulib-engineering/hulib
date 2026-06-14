@@ -54,4 +54,10 @@ const slice = createSlice({
 export const { logout, refreshAccessToken, setAvatarUrl, setUserInfo }
   = slice.actions;
 
+// Field-level selectors — subscribe to only what you need
+export const selectUserInfo = (state: { auth: SliceState }) => state.auth.userInfo;
+export const selectUserId = (state: { auth: SliceState }) => state.auth.userInfo?.id;
+export const selectUserRole = (state: { auth: SliceState }) => state.auth.userInfo?.role;
+export const selectUserApproval = (state: { auth: SliceState }) => state.auth.userInfo?.approval;
+
 export default slice.reducer;

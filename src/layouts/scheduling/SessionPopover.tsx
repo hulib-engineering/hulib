@@ -10,6 +10,7 @@ import Popover from '@/components/core/popover/Popover';
 import { mergeClassnames } from '@/components/core/private/utils';
 import SessionDetailCard from '@/layouts/scheduling/SessionDetailCard';
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserId } from '@/libs/store/authentication';
 import type { ReadingSession } from '@/libs/services/modules/reading-session/createNewReadingSession';
 import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
 
@@ -19,8 +20,8 @@ type ISessionPopoverProps = {
 };
 
 export default function SessionPopover({ isPending, extendedProps }: ISessionPopoverProps) {
-  const userInfo = useAppSelector(state => state.auth.userInfo);
-  const isSessionLiber = `${userInfo?.id}` === `${extendedProps?.readerId}`;
+  const userId = useAppSelector(selectUserId);
+  const isSessionLiber = `${userId}` === `${extendedProps?.readerId}`;
 
   const triggerRef = useRef<HTMLDivElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);

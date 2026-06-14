@@ -24,7 +24,7 @@ type IIndexStoryListSectionLayoutProps = | {
   containerClassName?: string;
   filters: TFilter[];
   selectedFilterId: string | number | null;
-  onFilterChange: (filter: unknown) => void;
+  onFilterChange: (filter: string | number) => void;
   onSeeAllClick?: () => void;
 } | {
   title: string;

@@ -7,6 +7,7 @@ import { Book } from '@phosphor-icons/react';
 
 import Button from '@/components/core/button/Button';
 import { useAppSelector, useMobile } from '@/libs/hooks';
+import { selectUserId, selectUserRole } from '@/libs/store/authentication';
 import { Role } from '@/types/common';
 
 export default function HuberCTA() {
@@ -16,7 +17,8 @@ export default function HuberCTA() {
 
   const isMobile = useMobile();
 
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userId = useAppSelector(selectUserId);
+  const userRole = useAppSelector(selectUserRole);
 
   return (
     <div className="relative inset-x-1/2 -mb-8 h-[403px] w-screen overflow-hidden bg-gradient-to-t from-[#fdf3ce] to-transparent -translate-x-1/2 md:h-[532px]">
@@ -75,9 +77,9 @@ export default function HuberCTA() {
             className="w-full rounded-full"
             onClick={() =>
               router.push(
-                userInfo.role.id === Role.LIBER
+                userRole?.id === Role.LIBER
                   ? '/me/account-upgrade'
-                  : `/users/${userInfo.id}`,
+                  : `/users/${userId}`,
               )}
           >
             {t('short_descriptions.btn')}

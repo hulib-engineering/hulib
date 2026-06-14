@@ -31,7 +31,7 @@ const updateStory = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
     invalidatesTags: (_result, _error, { id, topics }) => [
       { type: 'Story' as const, id: 'LIST' },
       { type: 'Story' as const, id },
-      topics ? { type: 'StoryTopic' as const, id: `LIST-${id}` } : 'Stories',
+      topics ? { type: 'StoryTopic' as const, id: `LIST-${id}` } : 'Story',
     ],
   });
 

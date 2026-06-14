@@ -22,6 +22,7 @@ import BookingTimetable from '@/layouts/booking/BookingTimetable';
 import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import { selectUserId, selectUserInfo } from '@/libs/store/authentication';
 import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
 import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
 import { openChat } from '@/libs/store/messenger';
@@ -38,7 +39,8 @@ export default function Index() {
   const { data: story } = useGetStoryDetailQuery(Number(storyId));
   const [placeRequest] = useCreateNewReadingSessionMutation();
 
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userId = useAppSelector(selectUserId);
+  const userInfo = useAppSelector(selectUserInfo);
 
   const dispatch = useAppDispatch();
 
@@ -61,7 +63,7 @@ export default function Index() {
       const endTime = format(displayedTime.getTime() + 30 * 60 * 1000, 'HH:mm');
       await placeRequest({
         humanBookId: Number(story?.humanBookId),
-        readerId: userInfo?.id,
+        readerId: userId,
         storyId: Number(storyId),
         startTime: format(displayedTime, 'HH:mm'),
         endTime,

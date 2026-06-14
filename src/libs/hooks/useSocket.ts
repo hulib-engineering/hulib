@@ -7,30 +7,29 @@ import { socket as createSocket } from '@/libs/services/socket';
 type UseSocketOptions<TEvents> = {
   namespace: 'notification' | 'chat' | string;
   listeners?: Partial<{ [K in keyof TEvents]: (payload: TEvents[K]) => void }>;
-  maxRetries?: number;
   cleanupOnUnmount?: boolean;
 };
 
 export const useSocket = <TEvents = Record<string, any>>({
   namespace,
   listeners = {},
-  maxRetries = 3,
   cleanupOnUnmount = true,
 }: UseSocketOptions<TEvents>) => {
   const socketRef = useRef<Socket | null>(null);
-  const retryCountRef = useRef(0);
+  const listenersRef = useRef(listeners);
+  listenersRef.current = listeners;
   const [isConnected, setIsConnected] = useState(false);
 
   const bindListeners = useCallback(
     (socket: Socket) => {
-      Object.entries(listeners).forEach(([event, handler]) => {
+      Object.entries(listenersRef.current).forEach(([event, handler]) => {
         if (typeof handler === 'function') {
-          socket.off(event); // remove any existing handlers for this event
+          socket.off(event);
           socket.on(event, handler as (...args: any[]) => void);
         }
       });
     },
-    [listeners],
+    [],
   );
 
   useEffect(() => {
@@ -60,22 +59,6 @@ export const useSocket = <TEvents = Record<string, any>>({
         console.error(`[${namespace}] Socket error:`, err);
       });
 
-      socketInstance.on('message', (msg) => {
-        console.info(`[${namespace}] Default message:`, msg);
-      });
-
-      socketInstance.onAny((event, ...args) => {
-        console.debug(`[${namespace}] [onAny] ${event}`, ...args);
-      });
-
-      socketInstance.io.on('reconnect_attempt', () => {
-        retryCountRef.current += 1;
-        if (retryCountRef.current > maxRetries) {
-          console.warn(`[${namespace}] Max retries exceeded. Disconnecting.`);
-          socketInstance.disconnect();
-        }
-      });
-
       socketInstance.connect();
     };
 
@@ -92,7 +75,7 @@ export const useSocket = <TEvents = Record<string, any>>({
         socketRef.current = null;
       }
     };
-  }, [namespace, bindListeners, maxRetries, cleanupOnUnmount]);
+  }, [namespace, bindListeners, cleanupOnUnmount]);
 
   useEffect(() => {
     if (isConnected && socketRef.current) {
@@ -113,7 +96,6 @@ export const useSocket = <TEvents = Record<string, any>>({
   );
 
   const reconnect = useCallback(() => {
-    retryCountRef.current = 0;
     socketRef.current?.connect();
   }, []);
 

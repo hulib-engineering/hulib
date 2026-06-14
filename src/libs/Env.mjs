@@ -20,6 +20,7 @@ export const Env = createEnv({
   },
   client: {
     NEXT_PUBLIC_REACT_APP_BACKEND_VERSION: z.string().trim().min(1),
+    NEXT_PUBLIC_HULIB_SERVICE_KEY: z.string().min(1).optional(),
     NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT: z.string().trim().min(1),
     NEXT_PUBLIC_REACT_APP_BACKEND_SOCKET_ENDPOINT: z.string().trim().min(1),
     NEXT_PUBLIC_EMAILJS_SERVICE_ID: z.string().trim().min(1),
@@ -69,5 +70,6 @@ export const Env = createEnv({
     LOGTAIL_SOURCE_TOKEN: process.env.LOGTAIL_SOURCE_TOKEN,
     NEXT_PUBLIC_AGORA_APP_ID: process.env.NEXT_PUBLIC_AGORA_APP_ID,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+    NEXT_PUBLIC_HULIB_SERVICE_KEY: process.env.NEXT_PUBLIC_HULIB_SERVICE_KEY,
   },
 });

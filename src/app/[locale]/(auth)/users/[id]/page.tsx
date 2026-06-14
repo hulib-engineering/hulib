@@ -21,6 +21,7 @@ import AboutPanel from '@/layouts/profile/AboutPanel';
 import EditImageModal from '@/layouts/profile/EditImageModal';
 import ReportModal from '@/layouts/profile/ReportModal';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import { selectUserId, selectUserInfo, selectUserRole } from '@/libs/store/authentication';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import { openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
@@ -42,11 +43,13 @@ export default function Index() {
   const searchParams = useSearchParams();
   const tab = searchParams.get('tab');
 
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const currentUserId = useAppSelector(selectUserId);
+  const userInfo = useAppSelector(selectUserInfo);
+  const currentUserRole = useAppSelector(selectUserRole);
   const userAvatarId = useAppSelector(state => state.auth.avatarId);
   const userAvatarUrl = useAppSelector(state => state.auth.avatarUrl);
-  const notMe = Number(userId) !== Number(userInfo?.id);
-  const isHuber = userInfo?.role?.id === Role.HUBER;
+  const notMe = Number(userId) !== Number(currentUserId);
+  const isHuber = currentUserRole?.id === Role.HUBER;
 
   const visibleTabs = useMemo(() => {
     if (!notMe) {

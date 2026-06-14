@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { differenceInMinutes } from 'date-fns';
 
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserId } from '@/libs/store/authentication';
 import {
   useGetReadingSessionByIdQuery,
   useUpdateReadingSessionMutation,
@@ -35,19 +36,19 @@ export default function ReadingPage() {
   const [stopRecording] = useStopCloudRecordingMutation();
   const [updateReadingSession] = useUpdateReadingSessionMutation();
 
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userId = useAppSelector(selectUserId);
 
   const [isDoneSurveyForReading, setIsDoneSurveyForReading] = useState(false);
   const [showPreSurvey, setShowPreSurvey] = useState(false);
 
   useEffect(() => {
-    if (!userInfo.id || !readingSession) {
+    if (!userId || !readingSession) {
       return;
     }
     const savedIsDoneSurveyForReading = localStorage.getItem(
       `is_done_survey_for_reading_${readingSession.id}`,
     );
-    const isHuber = userInfo?.id === readingSession.humanBook.id;
+    const isHuber = userId === readingSession.humanBook.id;
     if (isHuber || savedIsDoneSurveyForReading) {
       setIsDoneSurveyForReading(true);
     }
@@ -60,7 +61,7 @@ export default function ReadingPage() {
     if (diff <= 5) {
       setShowPreSurvey(true);
     }
-  }, [userInfo.id, readingSession]);
+  }, [userId, readingSession]);
 
   const handleEndCall = async (recordedInfo?: { resourceId: string; sid: string; uid: string }) => {
     const meetingEnd = new Date(readingSession.endedAt);

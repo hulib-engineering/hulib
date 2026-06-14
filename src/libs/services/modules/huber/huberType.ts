@@ -41,6 +41,6 @@ export type Huber = {
 export type HuberListParams = {
   page: number;
   limit: number;
-  topicIds: string[];
+  topicIds: (string | number)[];
   type?: 'recommended' | string;
 };
