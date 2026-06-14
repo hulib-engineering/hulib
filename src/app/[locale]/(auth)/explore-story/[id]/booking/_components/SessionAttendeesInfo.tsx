@@ -7,6 +7,7 @@ import type z from 'zod';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserInfo } from '@/libs/store/authentication';
 import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
 import type { HuberStep1Validation } from '@/validations/HuberValidation';
@@ -17,7 +18,7 @@ const ScheduleBasicInfo = ({ huber, onOpenHuberConv }: { huber: z.infer<typeof P
 
   const t = useTranslations('ScheduleBasicInfo');
 
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userInfo = useAppSelector(selectUserInfo);
 
   return (
     <div className="hidden w-full flex-col gap-4 rounded-3xl bg-white p-4 xl:flex xl:w-1/3 xl:p-8">

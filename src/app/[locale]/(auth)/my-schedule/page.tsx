@@ -20,6 +20,7 @@ import TimeSlotList from '@/layouts/timeslots/TimeSlotList';
 import TimeslotRegistrationSection from '@/layouts/timeslots/TimeslotRegistrationSection';
 import { convertTimeSlotToUtc } from '@/utils/convertTimeSlotToUtc';
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserRole } from '@/libs/store/authentication';
 import { useCreateTimeslotsMutation } from '@/libs/services/modules/time-slots';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
@@ -54,8 +55,8 @@ export default function Index() {
     = useGetReadingSessionsQuery({ upcoming: true });
   const hasUpcomingEvent = upcomingEvents?.length > 0;
 
-  const user = useAppSelector(state => state.auth.userInfo);
-  const isHuber = user?.role?.name === 'Huber';
+  const userRole = useAppSelector(selectUserRole);
+  const isHuber = userRole?.name === 'Huber';
 
   const [showMobileTimeslotRegistration, setShowMobileTimeslotRegistration] = useState(false);
   const [selectedSlots, setSelectedSlots] = useState<{ dayOfWeek: number; startTime: string }[]>([]);

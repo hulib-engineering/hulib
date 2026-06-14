@@ -12,6 +12,7 @@ import TextInput from '@/components/core/textInput-v1/TextInput';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
 import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserId } from '@/libs/store/authentication';
 import { useUpdateReadingSessionMutation } from '@/libs/services/modules/reading-session';
 import type {
   ReadingSession,
@@ -40,7 +41,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
 
   const [updateStatus, { isLoading }] = useUpdateReadingSessionMutation();
 
-  const userId = useAppSelector(state => state.auth.userInfo?.id);
+  const userId = useAppSelector(selectUserId);
   const isLiber = Number(userId) === Number(session?.reader?.id);
 
   const [isAddingReason, setIsAddingReason] = useState(sharingMissingReason);

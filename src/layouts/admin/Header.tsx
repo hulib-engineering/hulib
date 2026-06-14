@@ -13,6 +13,7 @@ import AvatarPopover from '@/layouts/webapp/AvatarPopover';
 import NotificationPopover from '@/layouts/webapp/NotificationPopover';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import { selectUserId } from '@/libs/store/authentication';
 import { useSocket } from '@/libs/hooks/useSocket';
 import {
   notificationApi,
@@ -24,7 +25,7 @@ const Header = () => {
 
   const { data, isLoading, error } = useGetNotificationsQuery({ page: 1, limit: 5 });
 
-  const user = useAppSelector(state => state.auth.userInfo);
+  const userId = useAppSelector(selectUserId);
 
   const dispatch = useAppDispatch();
 
@@ -56,10 +57,10 @@ const Header = () => {
       {/* Mobile version */}
       <header className="flex w-screen flex-col gap-5 bg-white px-4 pb-2 pt-4 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:hidden">
         <div className="flex items-center justify-between">
-          <Link href={user?.id ? '/home' : '/'}>
+          <Link href={userId ? '/home' : '/'}>
             <Logo size="small" />
           </Link>
-          {!user || !user?.id
+          {!userId
             ? (
                 <SkeletonHeader />
               )
@@ -84,14 +85,14 @@ const Header = () => {
       {/* PC version */}
       <header className="hidden w-screen items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
         <div className="flex items-center gap-6">
-          <Link href={user?.id ? '/home' : '/'}>
+          <Link href={userId ? '/home' : '/'}>
             <Logo size="small" />
           </Link>
         </div>
         <div className="w-[300px]">
           <AdvancedSearch />
         </div>
-        {!user || !user?.id
+        {!userId
           ? (
               <div className="flex gap-3 px-10 ">
                 <SkeletonHeader />

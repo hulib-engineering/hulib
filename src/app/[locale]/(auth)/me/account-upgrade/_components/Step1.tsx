@@ -15,6 +15,7 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import TermAndCondition from '@/layouts/profile/TermAndCondition';
 import type { TFilter } from '@/layouts/scheduling/BigCalendar';
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserId } from '@/libs/store/authentication';
 import { useRegisterHuberMutation } from '@/libs/services/modules/auth';
 import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import type { AccountUpgradeValidationType } from '@/validations/AccountUpgradeValidation';
@@ -33,7 +34,7 @@ const Step1 = ({ next }: { next: () => void }) => {
   const [registerHuber, { isLoading }] = useRegisterHuberMutation();
   const { data: topicsResponse, isLoading: isTopicsLoading } = useGetTopicsQuery();
 
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userId = useAppSelector(selectUserId);
 
   const {
     control,
@@ -94,7 +95,7 @@ const Step1 = ({ next }: { next: () => void }) => {
     const { timeSlots: _timeSlots, ...huberPayload } = formData;
     try {
       await registerHuber(huberPayload).unwrap();
-      const userKey = `${userInfo.id}_huber_registration_step`;
+      const userKey = `${userId}_huber_registration_step`;
       localStorage.setItem(userKey, '2');
       pushSuccess('Registration successful!');
       next();

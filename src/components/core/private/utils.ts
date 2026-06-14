@@ -5,9 +5,7 @@ import { extendTailwindMerge } from 'tailwind-merge';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { registerChild, unregisterChild } from '@/libs/store/menuItem';
 
-const mergeClassnames = extendTailwindMerge({
-  cacheSize: 0,
-});
+const mergeClassnames = extendTailwindMerge({});
 
 const useRegisterChild = () => {
   const items = useAppSelector(state => state.menuItem.items);
@@ -17,7 +15,7 @@ const useRegisterChild = () => {
   const register = useCallback((child: string) => {
     dispatch(registerChild({ child }));
     return () => dispatch(unregisterChild({ child }));
-  }, []);
+  }, [dispatch]);
 
   return { items, register };
 };

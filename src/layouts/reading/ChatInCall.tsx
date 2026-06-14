@@ -4,7 +4,7 @@ import * as React from 'react';
 import { X } from '@phosphor-icons/react';
 
 import { Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { MessengerInput } from '@/components/messages/MessengerInput';
@@ -14,6 +14,7 @@ import type { TransformedMessage } from '@/libs/services/modules/chat/getConvers
 import { mergeClassnames } from '@/components/core/private/utils';
 import { MessageItem } from '@/layouts/webapp/Messages/ChatDetail';
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserId } from '@/libs/store/authentication';
 
 type IChatInCallProps = {
   isShow: boolean;
@@ -26,13 +27,14 @@ type IChatInCallProps = {
 export default function ChatInCall({ isShow, participantId, participantAvatarUrl, onClose, onUnreadCountChange }: IChatInCallProps) {
   const t = useTranslations('Reading.AgoraMeeting');
 
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userId = useAppSelector(selectUserId);
 
   const [messages, setMessages] = useState<(Omit<TransformedMessage, 'id'>)[]>([]);
+  const isShowRef = useRef(isShow);
+  isShowRef.current = isShow;
 
   useEffect(() => {
     if (isShow) {
-      // Mark all received messages as read
       setMessages(prev =>
         prev.map(msg =>
           msg.direction === 'received' ? { ...msg, isRead: true } : msg,
@@ -40,33 +42,37 @@ export default function ChatInCall({ isShow, participantId, participantAvatarUrl
       );
       onUnreadCountChange(0);
     } else {
-      // Count only unread received messages
       const count = messages.filter(
         msg => msg.direction === 'received' && !msg.isRead,
       ).length;
       onUnreadCountChange(count);
     }
-  }, [messages.length, onUnreadCountChange]);
+  }, [isShow, messages, onUnreadCountChange]);
 
-  const { emit } = useSocket({
-    namespace: '',
-    listeners: {
+  const listeners = useMemo(
+    () => ({
       'chat-in-call:receive': (payload: Omit<TransformedMessage, 'id'> & { content: string; timestamp: string }) => {
         setMessages(prev => [...prev, {
           ...payload,
           msg: payload.content,
           direction: 'received',
           time: payload.timestamp,
-          isRead: isShow,
+          isRead: isShowRef.current,
         }]);
       },
-    },
+    }),
+    [],
+  );
+
+  const { emit } = useSocket({
+    namespace: '',
+    listeners,
   });
 
   const handleSendMessage = (message: string, messageType?: 'txt' | 'img') => {
     setMessages(prev => [...prev, {
       to: participantId,
-      from: Number(userInfo.id),
+      from: Number(userId),
       msg: message,
       chatType: messageType || 'txt',
       direction: 'sent',

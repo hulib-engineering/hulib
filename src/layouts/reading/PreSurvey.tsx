@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { z } from 'zod';
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import Image from 'next/image';
@@ -25,6 +25,8 @@ const SurveyQuestions = [
 ] as const;
 
 export default function PreSurvey({ sessionId, onFinish }: { sessionId: number; onFinish: () => void }) {
+  const onFinishRef = useRef(onFinish);
+  onFinishRef.current = onFinish;
   const router = useRouter();
 
   const t = useTranslations('Reading.PreSurvey');
@@ -59,11 +61,11 @@ export default function PreSurvey({ sessionId, onFinish }: { sessionId: number; 
       setIsSuccessfullySubmitted(true);
       setTimeout(() => {
         setIsSuccessfullySubmitted(false);
-        onFinish();
+        onFinishRef.current();
       }, 2000);
     } catch {
       setIsSuccessfullySubmitted(false);
-      onFinish();
+      onFinishRef.current();
     } finally {
       setIsSubmitting(false);
     }

@@ -1,9 +1,3 @@
-export type Topic = {
-  id: number;
-  name: string;
-  color?: string;
-};
-
 export type GetUsersParams = {
   page?: number;
   limit?: number;

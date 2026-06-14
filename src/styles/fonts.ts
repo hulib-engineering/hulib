@@ -42,16 +42,6 @@ export const bellotaText = bellotaTextGoogle({
 export const poppins = localFont({
   src: [
     {
-      path: './fonts/SVN-Poppins-ExtraLight.otf',
-      weight: '200',
-      style: 'normal',
-    },
-    {
-      path: './fonts/SVN-Poppins-ExtraLightItalic.otf',
-      weight: '200',
-      style: 'italic',
-    },
-    {
       path: './fonts/SVN-Poppins-Light.otf',
       weight: '300',
       style: 'normal',

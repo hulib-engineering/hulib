@@ -1,13 +1,16 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
-import type { PaginatedResponse } from '../../type';
+import type { Huber } from '../huber/huberType';
 
-import type { Story } from '../stories/storiesType';
+type FavoriteHuber = {
+  huberId: number;
+  huber: Huber;
+};
 
 const getMyFavoriteHubers = (
   build: EndpointBuilder<BaseQueryFn, string, string>,
 ) =>
-  build.query<PaginatedResponse<Story>, void>({
+  build.query<FavoriteHuber[], void>({
     query: () => ({
       url: 'auth/me/fav-hubers',
     }),

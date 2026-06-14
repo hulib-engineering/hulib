@@ -1,21 +1,27 @@
 import type { BaseQueryApi, FetchArgs } from '@reduxjs/toolkit/query/react';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Mutex } from 'async-mutex';
+import { Mutex, withTimeout } from 'async-mutex';
 import { getSession } from 'next-auth/react';
 
 import { logout, refreshAccessToken } from '../store/authentication';
+import { Env } from '@/libs/Env.mjs';
 import { AppConfig } from '@/utils/AppConfig';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${AppConfig.api.endpoint}/${AppConfig.api.version}/`,
   prepareHeaders: async (headers) => {
-    // By default, if we have a token in the resto, let's use that for authenticated requests
-    headers.set('hulib-service-key', 'hlb-93td6qrktpz6xrm4jj6dejgmffm4ya_pk');
+    headers.set('hulib-service-key', Env.NEXT_PUBLIC_HULIB_SERVICE_KEY!);
 
-    const session: any = await getSession();
+    const localToken = localStorage.getItem('access_token');
 
-    if (session) {
-      headers.set('Authorization', `Bearer ${session.accessToken}`);
+    if (localToken) {
+      headers.set('Authorization', `Bearer ${localToken}`);
+    } else {
+      const session: any = await getSession();
+
+      if (session) {
+        headers.set('Authorization', `Bearer ${session.accessToken}`);
+      }
     }
 
     return headers;
@@ -23,7 +29,7 @@ const baseQuery = fetchBaseQuery({
   credentials: 'include',
 });
 
-const mutex = new Mutex(); // create a new mutex
+const mutex = withTimeout(new Mutex(), 10000); // 10s timeout to prevent hung API calls
 
 // Using async-mutex to prevent multiple calls to '/refresh' when multiple calls fail with 401 Unauthorized errors
 const baseQueryWithInterceptor = async (
@@ -64,31 +70,28 @@ const baseQueryWithInterceptor = async (
     // checking whether the mutex is locked
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
-      const hasLoggedIn = localStorage.getItem('hasLoggedIn');
 
       try {
-        if (hasLoggedIn) {
-          const refreshRoute
-            = localStorage.getItem('role') === 'admin'
-              ? 'admin/profile/refresh'
-              : 'profile/refresh';
+        const refreshRoute
+          = localStorage.getItem('role') === 'admin'
+            ? 'admin/profile/refresh'
+            : 'profile/refresh';
 
-          const refreshResult = await baseQuery(
-            refreshRoute,
-            api,
-            extraOptions,
-          );
+        const refreshResult = await baseQuery(
+          refreshRoute,
+          api,
+          extraOptions,
+        );
 
-          if (refreshResult.data) {
-            // Store the new token
-            api.dispatch(refreshAccessToken(refreshResult.data));
-            // Retry the initial query
-            result = await baseQuery(args, api, extraOptions);
-          } else {
-            // If refresh token fails, logout
-            api.dispatch(logout());
-            return result;
-          }
+        if (refreshResult.data) {
+          // Store the new token
+          api.dispatch(refreshAccessToken(refreshResult.data));
+          // Retry the initial query
+          result = await baseQuery(args, api, extraOptions);
+        } else {
+          // If refresh token fails, logout
+          api.dispatch(logout());
+          return result;
         }
       } catch {
         // If any error occurs during refresh, logout

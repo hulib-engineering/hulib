@@ -17,16 +17,6 @@ import { useAppDispatch } from '@/libs/hooks';
 const poppins = localFont({
   src: [
     {
-      path: '../styles/fonts/SVN-Poppins-ExtraLight.otf',
-      weight: '200',
-      style: 'normal',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-ExtraLightItalic.otf',
-      weight: '200',
-      style: 'italic',
-    },
-    {
       path: '../styles/fonts/SVN-Poppins-Light.otf',
       weight: '300',
       style: 'normal',

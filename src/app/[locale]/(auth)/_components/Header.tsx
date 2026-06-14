@@ -21,6 +21,7 @@ import MessengerPopover from '@/layouts/webapp/MessengerPopover';
 import NotificationPopover from '@/layouts/webapp/NotificationPopover';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import { selectUserId, selectUserRole } from '@/libs/store/authentication';
 import { useSocket } from '@/libs/hooks/useSocket';
 import {
   type MessageResponse,
@@ -68,7 +69,8 @@ const Header = () => {
   const router = useRouter();
   const currentPathname = usePathname();
 
-  const user = useAppSelector(state => state.auth.userInfo);
+  const userId = useAppSelector(selectUserId);
+  const userRole = useAppSelector(selectUserRole);
   // const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
 
   const { data, isLoading, error } = useGetNotificationsQuery({ page: 1, limit: 5 });
@@ -109,7 +111,7 @@ const Header = () => {
   };
   const handleIncomingMessage = useCallback(
     async (msg: Message) => {
-      const participantId = `${user.id}` === `${msg.from}` ? msg.to : msg.from;
+      const participantId = `${userId}` === `${msg.from}` ? msg.to : msg.from;
       const participant = await fetchParticipantInfo(participantId);
 
       dispatch(
@@ -132,7 +134,7 @@ const Header = () => {
 
       playReceivedMessageSound(); // 🔊 Play sound on receiving
     },
-    [user.id, fetchParticipantInfo, dispatch],
+    [userId, fetchParticipantInfo, dispatch],
   );
 
   const chatListeners = useMemo(
@@ -158,10 +160,10 @@ const Header = () => {
       {/* Mobile version */}
       <header className="flex w-screen flex-col gap-5 bg-white px-4 pb-2 pt-4 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:hidden">
         <div className="flex items-center justify-between">
-          <Link href={user?.id ? '/home' : '/'}>
+          <Link href={userId ? '/home' : '/'}>
             <Logo size="small" />
           </Link>
-          {!user || !user?.id
+          {!userId
             ? (
                 <SkeletonHeader />
               )
@@ -187,7 +189,7 @@ const Header = () => {
         </div>
         <div className="flex flex-col gap-2">
           <AdvancedSearch />
-          {user && user?.role?.id !== Role.ADMIN && (
+          {userRole && userRole.id !== Role.ADMIN && (
             <div className="flex items-center justify-between gap-3">
               <Button
                 variant="ghost"
@@ -221,10 +223,10 @@ const Header = () => {
       {/* PC version */}
       <header className="hidden w-screen items-center justify-between bg-white px-4 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex xl:px-28">
         <div className="flex items-center gap-6">
-          <Link href={user?.id ? '/home' : '/'}>
+          <Link href={userId ? '/home' : '/'}>
             <Logo size="small" />
           </Link>
-          {user && user?.role?.id !== Role.ADMIN && (
+          {userRole && userRole.id !== Role.ADMIN && (
             <div className="flex items-center justify-between gap-3">
               <Link href="/my-schedule" className="px-4 py-3 font-medium leading-5 text-neutral-10">
                 {t('my_schedule')}
@@ -241,7 +243,7 @@ const Header = () => {
         <div className="w-[300px]">
           <AdvancedSearch />
         </div>
-        {!user || !user?.id
+        {!userId
           ? (
               <div className="flex gap-3 px-10 ">
                 <SkeletonHeader />

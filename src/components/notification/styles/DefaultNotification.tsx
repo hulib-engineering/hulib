@@ -16,6 +16,7 @@ import HandleAppealModal from '@/layouts/admin/HandleAppealModal';
 import HandleReportModal from '@/layouts/admin/HandleReportModal';
 import SessionDetailCard from '@/layouts/scheduling/SessionDetailCard';
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserRole } from '@/libs/store/authentication';
 import { Role, StatusEnum } from '@/types/common';
 import { toLocaleDateString } from '@/utils/dateUtils';
 
@@ -26,7 +27,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
 
   const locale = useLocale();
 
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const userRole = useAppSelector(selectUserRole);
 
   const [isSessionRequestModalOpen, setIsSessionRequestModalOpen] = useState(false);
   const [isHandleReportModalOpen, setIsHandleReportModalOpen] = useState(false);
@@ -84,8 +85,8 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
       return;
     }
     const relatedEntityId = notification.type.name === NotificationType.ACCOUNT_UPGRADE ? notification.sender.id : notification.relatedEntityId;
-    if (cfg.route && cfg.route(relatedEntityId, userInfo?.role?.id ?? Role.LIBER) !== '') {
-      router.push(cfg.route(relatedEntityId, userInfo?.role?.id ?? Role.LIBER));
+    if (cfg.route && cfg.route(relatedEntityId, userRole?.id ?? Role.LIBER) !== '') {
+      router.push(cfg.route(relatedEntityId, userRole?.id ?? Role.LIBER));
     }
   };
 
@@ -138,7 +139,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
                   notification.type.name !== NotificationType.APPEAL_RESPONSE && 'line-clamp-2',
                 )}
               >
-                {cfg.getMessage(notification, userInfo?.role?.id ?? Role.LIBER)}
+                {cfg.getMessage(notification, userRole?.id ?? Role.LIBER)}
               </p>
               {notification.type.name === NotificationType.SESSION_REQUEST && (
                 <Link href="#" className="text-sm font-medium text-primary-60 underline" onClick={() => setIsSessionRequestModalOpen(true)}>

@@ -10,7 +10,7 @@ import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { StoryCard } from '@/features/stories/components/StoryCard';
 import { useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
-import type { Topic } from '@/libs/services/modules/user/userType';
+import type { Topic } from '@/libs/services/modules/topics/topicType';
 import Modal from '@/components/Modal';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import StoryForm from '@/features/stories/components/StoryForm';

@@ -13,6 +13,7 @@ import React, { useMemo, useState } from 'react';
 import { mergeClassnames } from '@/components/core/private/utils';
 import SessionDetailCard from '@/layouts/scheduling/SessionDetailCard';
 import { useAppSelector } from '@/libs/hooks';
+import { selectUserId } from '@/libs/store/authentication';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 import type { ReadingSession } from '@/libs/services/modules/reading-session/createNewReadingSession';
 import { StatusEnum } from '@/types/common';
@@ -175,7 +176,7 @@ export default function MobileSessionList() {
   const t = useTranslations('Schedule');
 
   // User info
-  const userId = useAppSelector(state => state.auth.userInfo?.id);
+  const userId = useAppSelector(selectUserId);
 
   const { data: readingSessions, isLoading } = useGetReadingSessionsQuery({});
 
