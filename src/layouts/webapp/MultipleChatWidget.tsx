@@ -5,6 +5,7 @@ import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { MessageItem, groupMessagesByTime } from './Messages/ChatDetail';
+import Avatar from '@/components/core/avatar/Avatar';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { MessengerInput } from '@/components/messages/MessengerInput';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -53,15 +54,10 @@ const ChatBubble = (props: IChatBubbleProps) => {
           onMouseLeave={onMouseLeave}
           className="relative size-14 rounded-full bg-transparent p-0"
         >
-          <Image
-            src={
-              props.participant.avatarUrl
-              || '/assets/images/avatars/ava-placeholder.png'
-            }
-            alt={props.participant.name}
-            width={56}
-            height={56}
-            className="rounded-full object-cover object-center"
+          <Avatar
+            imageUrl={props.participant.avatarUrl}
+            name={props.participant.name}
+            className="size-14"
           />
           {props.unreadCount > 0 && (
             <span
@@ -236,20 +232,10 @@ const ChatWindow = (props: IChatWindowProps) => {
       <div className="flex items-center justify-between bg-primary-70 p-3 text-neutral-98">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <Image
-              className="size-[36px] rounded-full"
-              src={
-                props.participant.avatarUrl
-                ?? '/assets/images/avatars/ava-placeholder.png'
-              }
-              alt="Sender Avatar"
-              width={36}
-              height={36}
-              objectFit="cover"
-              objectPosition="center"
-              quality={100}
-              placeholder="blur"
-              blurDataURL="/assets/images/avatars/ava-placeholder.png"
+            <Avatar
+              imageUrl={props.participant.avatarUrl}
+              name={props.participant.name}
+              className="size-9"
             />
             <StatusBadge
               onLine={isOnline}
@@ -310,6 +296,7 @@ const ChatWindow = (props: IChatWindowProps) => {
               key={message.id}
               type={message.direction}
               participantAvatarUrl={props.participant.avatarUrl}
+              participantName={props.participant.name}
               markedAsRead={
                 message.id === lastReadMessageId
                 && message.direction === 'sent'

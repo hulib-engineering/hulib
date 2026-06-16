@@ -39,6 +39,7 @@ export default function Index() {
   }, {
     skip: !data || (!data?.humanBookId && !data?.topics.length),
   });
+
   const { data: storyReviewOverview } = useGetReviewsOverviewQuery(id);
 
   if (isLoading) {
@@ -92,7 +93,8 @@ export default function Index() {
                     <div className="flex flex-col gap-1 rounded-2xl border border-neutral-90 p-2 xl:gap-3">
                       <div className="flex items-center gap-2">
                         <Avatar
-                          imageUrl={data?.humanBook.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
+                          imageUrl={data?.humanBook.photo?.path}
+                          name={data?.humanBook.fullName}
                           size="sm"
                           className="!size-7 shrink-0"
                         />

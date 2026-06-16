@@ -1,11 +1,11 @@
 'use client';
 
 import { Check } from '@phosphor-icons/react';
-import Image from 'next/image';
 import type { MouseEventHandler } from 'react';
 import React, { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
+import Avatar from '@/components/core/avatar/Avatar';
 import Popover from '@/components/core/popover/Popover';
 import { mergeClassnames } from '@/components/core/private/utils';
 import SessionDetailCard from '@/layouts/scheduling/SessionDetailCard';
@@ -21,6 +21,9 @@ type ISessionPopoverProps = {
 export default function SessionPopover({ isPending, extendedProps }: ISessionPopoverProps) {
   const userInfo = useAppSelector(state => state.auth.userInfo);
   const isSessionLiber = `${userInfo?.id}` === `${extendedProps?.readerId}`;
+  const participant = isSessionLiber
+    ? extendedProps.humanBook
+    : extendedProps.reader;
 
   const triggerRef = useRef<HTMLDivElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -103,18 +106,13 @@ export default function SessionPopover({ isPending, extendedProps }: ISessionPop
                 </div>
               )}
               <div className="flex items-center gap-1">
-                <Image
-                  alt="avatar"
-                  src="/assets/images/avatars/ava-placeholder.png"
-                  width={14}
-                  height={14}
-                  loading="lazy"
-                  className="rounded-full"
+                <Avatar
+                  imageUrl={participant?.photo?.path}
+                  name={participant?.fullName}
+                  className="size-3.5"
                 />
                 <p className="line-clamp-1 text-neutral-10">
-                  {isSessionLiber
-                    ? extendedProps.humanBook?.fullName
-                    : extendedProps.reader?.fullName}
+                  {participant?.fullName}
                 </p>
               </div>
               <p

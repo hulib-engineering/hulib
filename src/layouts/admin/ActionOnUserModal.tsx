@@ -2,6 +2,7 @@ import { Hammer, Warning } from '@phosphor-icons/react';
 import Image from 'next/image';
 import type { FC } from 'react';
 import React, { useState } from 'react';
+import NiceAvatar, { genConfig } from 'react-nice-avatar';
 
 import TextArea from '@/components/core/textArea/TextArea';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -50,13 +51,20 @@ const ActionOnUserModal: FC<IActionOnUserModalProps> = ({
             : <Warning className="absolute inset-3 text-[2.5rem] text-orange-50" />}
           <div className="flex size-full flex-col items-center justify-center gap-2 py-6">
             <div className="size-[12.5rem]">
-              <Image
-                src={data.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
-                alt="User Avatar"
-                width={200}
-                height={200}
-                className="aspect-[1/1] size-full rounded-[32px] bg-neutral-90 object-cover"
-              />
+              {data.photo?.path ? (
+                <Image
+                  src={data.photo.path}
+                  alt="User Avatar"
+                  width={200}
+                  height={200}
+                  className="aspect-[1/1] size-full rounded-[32px] bg-neutral-90 object-cover"
+                />
+              ) : (
+                <NiceAvatar
+                  className="aspect-[1/1] size-full rounded-[32px] bg-neutral-90"
+                  {...genConfig(data?.fullName || 'user')}
+                />
+              )}
             </div>
             <p className="line-clamp-1 text-2xl font-medium leading-8 text-primary-10">
               {data.fullName}

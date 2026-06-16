@@ -112,8 +112,9 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
         <div className={mergeClassnames(notification.type.name === NotificationType.SESSION_REQUEST && 'relative')}>
           <Avatar
             imageUrl={notification.sender.id === 1
-              ? '/assets/images/avatars/admin-ava.png'
-              : (notification.sender.photo?.path ?? '/assets/images/avatars/ava-placeholder.png')}
+              ? '/assets/images/admin-ava.png'
+              : notification.sender.photo?.path}
+            name={notification.sender.fullName}
             size="xl"
             className={mergeClassnames(showExtras && 'xl:!size-[72px]')}
           />
