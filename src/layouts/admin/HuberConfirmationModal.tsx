@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import { mergeClassnames } from '@/components/core/private/utils';
 import Button from '@/components/core/button/Button';
 import TextArea from '@/components/core/textArea/TextArea';
@@ -60,13 +61,22 @@ const HuberConfirmationModal = ({
       >
         <div className="mx-auto flex w-full max-w-52 flex-col gap-2">
           <div className="relative w-full overflow-hidden rounded-[32px] bg-neutral-90">
-            <Image
-              src={user.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
-              alt="User Avatar"
-              width={270}
-              height={270}
-              className="aspect-[1/1] h-auto w-full rounded-[32px] object-cover"
-            />
+            {user.photo?.path
+              ? (
+                  <Image
+                    src={user.photo.path}
+                    alt="User Avatar"
+                    width={270}
+                    height={270}
+                    className="aspect-[1/1] h-auto w-full rounded-[32px] object-cover"
+                  />
+                )
+              : (
+                  <NiceAvatar
+                    className="aspect-[1/1] h-auto w-full rounded-[32px]"
+                    {...genConfig(user.fullName || 'user')}
+                  />
+                )}
             <div className="absolute bottom-4 left-0 flex w-full items-center justify-center">
               <span
                 className={mergeClassnames(

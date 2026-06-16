@@ -436,6 +436,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
                 <ChatInCall
                   participantId={remoteParticipant?.id}
                   participantAvatarUrl={remoteParticipant?.photo?.path}
+                  participantName={remoteParticipant?.fullName}
                   isShow
                   onClose={close}
                   onUnreadCountChange={count => setUnreadChatInCallMessageCount(count)}
@@ -609,6 +610,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
       <ChatInCall
         participantId={remoteParticipant?.id}
         participantAvatarUrl={remoteParticipant?.photo?.path}
+        participantName={remoteParticipant?.fullName}
         isShow={isChatOpening}
         onClose={() => setIsChatOpening(false)}
         onUnreadCountChange={count => setUnreadChatInCallMessageCount(count)}

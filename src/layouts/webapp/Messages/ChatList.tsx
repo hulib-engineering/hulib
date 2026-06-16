@@ -2,10 +2,10 @@
 
 import { MagnifyingGlass } from '@phosphor-icons/react';
 import Fuse from 'fuse.js';
-import Image from 'next/image';
 import React, { useEffect, useMemo, useState } from 'react';
 import type z from 'zod';
 
+import Avatar from '@/components/core/avatar/Avatar';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextInput from '@/components/core/textInput/TextInput';
 import StatusBadge from '@/components/StatusBadge';
@@ -43,17 +43,10 @@ export const ContactItem = ({
     onClick={onClick}
   >
     <div className="relative">
-      <Image
-        className="size-14 rounded-full"
-        src={participant.photo?.path ?? '/assets/images/avatars/ava-placeholder.png'}
-        alt="Sender Avatar"
-        width={56}
-        height={56}
-        objectFit="cover"
-        objectPosition="center"
-        quality={100}
-        placeholder="blur"
-        blurDataURL="/assets/images/avatars/ava-placeholder.png"
+      <Avatar
+        imageUrl={participant.photo?.path}
+        name={participant.fullName}
+        className="size-14"
       />
       <StatusBadge onLine={isOnline} className="absolute bottom-0 right-0" />
     </div>
