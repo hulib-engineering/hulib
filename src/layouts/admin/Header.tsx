@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
-// import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import AdvancedSearch from '@/layouts/webapp/AdvancedSearch';
 import AvatarPopover from '@/layouts/webapp/AvatarPopover';
@@ -56,7 +56,7 @@ const Header = () => {
       {/* Mobile version */}
       <header className="flex w-screen flex-col gap-5 bg-white px-4 pb-2 pt-4 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:hidden">
         <div className="flex items-center justify-between">
-          <Link href={user?.id ? '/home' : '/'}>
+          <Link href="/">
             <Logo size="small" />
           </Link>
           {!user || !user?.id
@@ -84,7 +84,7 @@ const Header = () => {
       {/* PC version */}
       <header className="hidden w-screen items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
         <div className="flex items-center gap-6">
-          <Link href={user?.id ? '/home' : '/'}>
+          <Link href="/">
             <Logo size="small" />
           </Link>
         </div>
@@ -103,7 +103,7 @@ const Header = () => {
                 <div className="ml-2">
                   <AvatarPopover />
                 </div>
-                {/* <LocaleSwitcher className="shrink" /> */}
+                <LocaleSwitcher />
               </div>
             )}
       </header>

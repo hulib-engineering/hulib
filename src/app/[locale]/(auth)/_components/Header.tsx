@@ -13,7 +13,7 @@ import React, { useCallback, useMemo } from 'react';
 import Button from '@/components/core/button/Button';
 import Popover from '@/components/core/popover/Popover';
 import { mergeClassnames } from '@/components/core/private/utils';
-// import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import AdvancedSearch from '@/layouts/webapp/AdvancedSearch';
 import AvatarPopover from '@/layouts/webapp/AvatarPopover';
@@ -158,32 +158,35 @@ const Header = () => {
       {/* Mobile version */}
       <header className="flex w-screen flex-col gap-5 bg-white px-4 pb-2 pt-4 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:hidden">
         <div className="flex items-center justify-between">
-          <Link href={user?.id ? '/home' : '/'}>
+          <Link href="/">
             <Logo size="small" />
           </Link>
-          {!user || !user?.id
-            ? (
-                <SkeletonHeader />
-              )
-            : (
-                <div className="flex items-center gap-2">
-                  <button type="button" className="xl:hidden" onClick={() => router.push('/messages')}>
-                    <HeaderIconButtonWithBadge badge={totalUnread} open={currentPathname === '/messages'}>
-                      <MessengerLogo className="text-[28px]" />
-                    </HeaderIconButtonWithBadge>
-                  </button>
-                  {(!isLoading && !error) && (
-                    <button type="button" className="xl:hidden" onClick={() => router.push('/notifications')}>
-                      <HeaderIconButtonWithBadge badge={data ? data.unseenCount : 0} open={currentPathname === '/notifications'}>
-                        <Bell className="text-[28px]" />
+          <div className="flex items-center gap-2">
+            <LocaleSwitcher />
+            {!user || !user?.id
+              ? (
+                  <SkeletonHeader />
+                )
+              : (
+                  <>
+                    <button type="button" className="xl:hidden" onClick={() => router.push('/messages')}>
+                      <HeaderIconButtonWithBadge badge={totalUnread} open={currentPathname === '/messages'}>
+                        <MessengerLogo className="text-[28px]" />
                       </HeaderIconButtonWithBadge>
                     </button>
-                  )}
-                  <div className="ml-2">
-                    <AvatarPopover />
-                  </div>
-                </div>
-              )}
+                    {(!isLoading && !error) && (
+                      <button type="button" className="xl:hidden" onClick={() => router.push('/notifications')}>
+                        <HeaderIconButtonWithBadge badge={data ? data.unseenCount : 0} open={currentPathname === '/notifications'}>
+                          <Bell className="text-[28px]" />
+                        </HeaderIconButtonWithBadge>
+                      </button>
+                    )}
+                    <div className="ml-2">
+                      <AvatarPopover />
+                    </div>
+                  </>
+                )}
+          </div>
         </div>
         <div className="flex flex-col gap-2">
           <AdvancedSearch />
@@ -221,7 +224,7 @@ const Header = () => {
       {/* PC version */}
       <header className="hidden w-screen items-center justify-between bg-white px-4 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex xl:px-28">
         <div className="flex items-center gap-6">
-          <Link href={user?.id ? '/home' : '/'}>
+          <Link href="/">
             <Logo size="small" />
           </Link>
           {user && user?.role?.id !== Role.ADMIN && (
@@ -271,7 +274,7 @@ const Header = () => {
                 <div className="ml-2">
                   <AvatarPopover />
                 </div>
-                {/* <LocaleSwitcher className="shrink" /> */}
+                <LocaleSwitcher />
               </div>
             )}
       </header>

@@ -9,7 +9,6 @@ import { useState } from 'react';
 import { Chip } from '@/components/core/chip/Chip';
 import Dropdown from '@/components/core/dropdown/Dropdown';
 import MenuItem from '@/components/core/menuItem/MenuItem';
-import { mergeClassnames } from '@/components/core/private/utils';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
 
 const Locales = [
@@ -80,7 +79,7 @@ const LocaleSwitcher = ({ className }: { className?: string }) => {
     <Dropdown
       value={option}
       onChange={v => handleChange(v as { locale: string; flag: JSX.Element })}
-      className={mergeClassnames(className && className)}
+      className={className}
     >
       {({ open }) => (
         <>

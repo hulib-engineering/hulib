@@ -77,6 +77,10 @@ export default {
       'green': colors.green,
     },
     extend: {
+      screens: {
+        'xxl': '1440px',
+        '3xl': '1920px',
+      },
       maxWidth: {
         'screen-xxl': '1440px',
       },

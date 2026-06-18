@@ -48,7 +48,7 @@ const HuberConfirmationModal = ({
     onClose();
     setIsSuccessful(false);
     setRejectionReason('');
-    router.push('/home');
+    router.push('/');
   };
 
   return (
