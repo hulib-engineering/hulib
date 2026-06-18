@@ -1,57 +1,9 @@
-import dynamic from 'next/dynamic';
-import { getServerSession } from 'next-auth';
 import { getTranslations } from 'next-intl/server';
 
-import Hero from './_components/hero';
-import OurMascot from './_components/OurMascot';
-import HumanBookBanner from './_components/HumanBookBanner';
-
-import { authOptions } from '@/libs/NextAuthOption';
-
-const Features = dynamic(() => import('./_components/Features'), {
-  loading: () => <div>Loading...</div>,
-  ssr: false,
-});
-
-const About = dynamic(() => import('./_components/About'), {
-  loading: () => <div>Loading...</div>,
-  ssr: false,
-});
-
-const OutstandingFeatures = dynamic(() => import('./_components/OutstandingFeatures'), {
-  loading: () => <div>Loading...</div>,
-  ssr: false,
-});
-
-// const TestAnimation = dynamic(() => import('@/layouts/TestAnimation'), {
-//   loading: () => <div>Loading...</div>,
-//   ssr: false,
-// });
-
-const Testimonial = dynamic(() => import('./_components/Testimonial'), {
-  loading: () => <div>Loading...</div>,
-  ssr: false,
-});
-
-const Sponsors = dynamic(() => import('./_components/Sponsors'), {
-  loading: () => <div>Loading...</div>,
-  ssr: false,
-});
-
-const FAQs = dynamic(() => import('./_components/FAQs'), {
-  loading: () => <div>Loading...</div>,
-  ssr: false,
-});
-
-const News = dynamic(() => import('./_components/News'), {
-  loading: () => <div>Loading...</div>,
-  ssr: false,
-});
-
-const Newsletter = dynamic(() => import('./_components/Newsletter'), {
-  loading: () => <div>Loading...</div>,
-  ssr: false,
-});
+import Banner from './_components/home/Banner';
+import { MostPopularStoryList, NewestStoryList, StoryListByMostPopularTopics } from './_components/home/LandingPageStoryLists';
+import RecommendedHuberList from './_components/home/RecommendedHuberList';
+import HuberCTA from './_components/home/HuberCTA';
 
 export async function generateMetadata({
   params: { locale },
@@ -59,29 +11,24 @@ export async function generateMetadata({
   params: { locale: string };
 }) {
   const t = await getTranslations({ locale, namespace: 'Index' });
+
   return {
     title: t('meta_title'),
     description: t('meta_description'),
   };
 }
 
-export default async function Index() {
-  const session = await getServerSession(authOptions);
-
+export default function Index() {
   return (
-    <>
-      {!session && <HumanBookBanner />}
-      <Hero />
-      <Features />
-      <About />
-      <OutstandingFeatures />
-      <OurMascot />
-      {/* <TestAnimation /> */}
-      <Testimonial />
-      <Sponsors />
-      <FAQs />
-      <News />
-      <Newsletter />
-    </>
+    <div className="mx-auto w-full bg-neutral-98 py-6 xl:w-[1216px] xl:py-8">
+      <div className="flex flex-col gap-6">
+        <Banner />
+        <NewestStoryList />
+        <MostPopularStoryList />
+        <RecommendedHuberList />
+        <StoryListByMostPopularTopics />
+        <HuberCTA />
+      </div>
+    </div>
   );
-}
+};

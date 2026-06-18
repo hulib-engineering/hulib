@@ -4,11 +4,12 @@ import { CaretCircleRight } from '@phosphor-icons/react';
 import React, { useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 
+import { LandingPageStoryCard } from './LandingPageStoryCard';
+
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
-import { StoryCard } from '@/features/stories/components/StoryCard';
 import type { Story as StoryType, Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import { useGetMyFavoritesQuery } from '@/libs/services/modules/user';
 
@@ -17,7 +18,7 @@ type TFilter = {
   name: string;
 };
 
-type IIndexStoryListSectionLayoutProps = | {
+type ILandingPageIndexStoryListSectionLayoutProps = | {
   title: string;
   stories?: { data: TStory[]; hasNextPage: boolean };
   isLoading?: boolean;
@@ -36,7 +37,7 @@ type IIndexStoryListSectionLayoutProps = | {
   onSeeAllClick?: () => void;
 };
 
-const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) => {
+const LandingPageIndexStoryListSectionLayout = (props: ILandingPageIndexStoryListSectionLayoutProps) => {
   const { data: session } = useSession();
   const { data: favoriteStories } = useGetMyFavoritesQuery(undefined, {
     skip: !session,
@@ -65,13 +66,27 @@ const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) =
 
   return (
     <div className={mergeClassnames(
-      'flex w-full flex-col gap-4 px-4 py-4 shadow-sm bg-white',
-      'lg:gap-8 lg:py-5 lg:shadow-none lg:bg-transparent xl:px-0',
+      'relative left-1/2 flex w-screen -translate-x-1/2 flex-col gap-4 bg-white px-4 py-4 shadow-sm',
+      'lg:gap-8 lg:py-5 lg:shadow-none lg:bg-transparent xl:px-0 xxl:px-24',
       props.showFilter && 'gap-4',
       props.containerClassName,
     )}
     >
-      <h2 className="text-2xl font-medium leading-8 text-primary-10 lg:text-4xl lg:leading-[44px]">{props.title}</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-medium leading-8 text-primary-10 lg:text-4xl lg:leading-[44px]">{props.title}</h2>
+
+        {(props.showFilter || props.stories?.hasNextPage) && (
+          <Button
+            iconLeft={<CaretCircleRight size={20} />}
+            variant="ghost"
+            size="sm"
+            className="text-base font-medium leading-5 text-primary-50"
+            onClick={props.onSeeAllClick}
+          >
+            Tất cả
+          </Button>
+        )}
+      </div>
       {props.showFilter && props.filters.length > 0 && (
         <div className="scrollbar-hide flex w-full items-center gap-2 overflow-x-auto py-2">
           {props.filters.map(topic => (
@@ -93,38 +108,17 @@ const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) =
       <div
         className={mergeClassnames(
           'grid grid-cols-1 gap-5 rounded-lg',
-          'md:grid-cols-[repeat(2,392px)] md:justify-center',
-          'xl:grid-cols-[repeat(3,392px)]',
+          'lg:grid-cols-2',
+          'xxl:grid-cols-3',
+          '3xl:grid-cols-4',
         )}
       >
         {storiesWithFav?.map(item => (
-          <StoryCard key={item.id} data={item} />
+          <LandingPageStoryCard key={item.id} data={item} />
         ))}
       </div>
-      {(props.showFilter || props.stories?.hasNextPage) && (
-        <div className="flex items-center justify-center">
-          <Button
-            iconLeft={<CaretCircleRight />}
-            variant="outline"
-            size="lg"
-            className="hidden lg:flex lg:w-[400px]"
-            onClick={props.onSeeAllClick}
-          >
-            See all
-          </Button>
-          <Button
-            iconLeft={<CaretCircleRight />}
-            variant="outline"
-            size="sm"
-            className="w-full lg:hidden"
-            onClick={props.onSeeAllClick}
-          >
-            See all
-          </Button>
-        </div>
-      )}
     </div>
   );
 };
 
-export { IndexStoryListSectionLayout };
+export { LandingPageIndexStoryListSectionLayout };

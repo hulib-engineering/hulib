@@ -60,7 +60,7 @@ const DropdownRoot = ({
   return (
     <DropdownContext.Provider value={states}>
       <div
-        className={mergeClassnames('w-full relative', className && className)}
+        className={className}
       >
         <Listbox
           value={value}
