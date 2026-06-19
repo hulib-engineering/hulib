@@ -729,5 +729,16 @@
       "not_record": "No, do not record",
       "start_recording": "Start recording"
     }
+  },
+  "LandingPage": {
+    "navigation": {
+      "bookshelf": "Kệ sách",
+      "pinboard": "Bảng ghim",
+      "about_us": "Về Hulib"
+    },
+    "button": {
+      "sign_in": "Đăng nhập",
+      "sign_up": "Đăng ký"
+    }
   }
 }
