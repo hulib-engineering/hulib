@@ -1,7 +1,11 @@
 import Banner from './Banner';
 import HuberCTA from './HuberCTA';
 import RecommendedHuberList from './RecommendedHuberList';
-import { MostPopularStoryList, NewestStoryList, StoryListByMostPopularTopics } from './StoryLists';
+import { NewestStoryList } from './NewestStoryList';
+import { MostPopularStoryList } from './MostPopularStoryList';
+import {
+  StoryListByMostPopularTopics,
+} from './StoryListByMostPopularTopics';
 
 export default function HomePageContent() {
   return (

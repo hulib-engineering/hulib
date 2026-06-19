@@ -911,5 +911,17 @@
       "not_record": "Không",
       "start_recording": "Bắt đầu"
     }
+  },
+  "LandingPage": {
+    "navigation": {
+      "bookshelf": "Kệ sách",
+      "pinboard": "Bảng ghim",
+      "about_us": "Về Hulib"
+    },
+    "button": {
+      "read_all": "Đọc hết",
+      "sign_in": "Đăng nhập",
+      "sign_up": "Đăng ký"
+    }
   }
 }

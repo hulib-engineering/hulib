@@ -2,9 +2,10 @@
 
 import { Eye, Heart, ShareFatIcon, ThumbsUp } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
 import React, { useState } from 'react';
+
+import { copyToClipboard, truncateMiddleText } from './utils';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import { Chip } from '@/components/core/chip/Chip';
@@ -12,59 +13,28 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import { Cover } from '@/features/stories/components/Cover';
-import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
+import {
+  COPY_STORY_LINK_ERROR_MESSAGE,
+  COPY_STORY_LINK_SUCCESS_MESSAGE,
+  DEFAULT_STORY_COVER_ASSET,
+  MAX_STORY_URL_LENGTH_FOR_TOAST,
+} from '@/features/stories/constants';
 import { useAddStoryToMyFavoritesMutation, useRemoveStoryFromMyFavoritesMutation } from '@/libs/services/modules/user';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { Env } from '@/libs/Env.mjs';
 import { AppConfig } from '@/utils/AppConfig';
+import { useRequireAuth } from '@/libs/hooks';
 
 type IStoryCardProps = {
   data: TStory;
   className?: string;
 };
 
-const LOGIN_REQUIRED_MESSAGE = 'Vui lòng đăng nhập để tiếp tục';
-const COPY_STORY_LINK_SUCCESS_MESSAGE = 'Đã sao chép liên kết câu chuyện';
-const COPY_STORY_LINK_ERROR_MESSAGE = 'Không thể sao chép liên kết câu chuyện';
-const MAX_STORY_URL_LENGTH_FOR_TOAST = 60;
-const SHARE_OPEN_DELAY_MS = 1500;
-
-const truncateMiddleText = (value: string, maxLength: number) => {
-  if (value.length <= maxLength || maxLength < 5) {
-    return value;
-  }
-
-  const visibleChars = maxLength - 3;
-  const startLength = Math.ceil(visibleChars / 2);
-  const endLength = Math.floor(visibleChars / 2);
-
-  return `${value.slice(0, startLength)}...${value.slice(-endLength)}`;
-};
-
-const fallbackCopyText = (value: string) => {
-  const textArea = document.createElement('textarea');
-  textArea.value = value;
-  textArea.setAttribute('readonly', '');
-  textArea.style.position = 'fixed';
-  textArea.style.left = '-9999px';
-
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
-
-  const isCopied = document.execCommand('copy');
-  document.body.removeChild(textArea);
-
-  return isCopied;
-};
-
-const wait = (ms: number) => new Promise(resolve => window.setTimeout(resolve, ms));
-
-const StoryCard = ({ data, className }: IStoryCardProps) => {
+export const StoryCard = ({ data, className }: IStoryCardProps) => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { requireAuth } = useRequireAuth();
   const locale = useLocale();
   const t = useTranslations('ExploreStory');
 
@@ -76,75 +46,62 @@ const StoryCard = ({ data, className }: IStoryCardProps) => {
   const visibleTopics = data.topics?.slice(0, 1) ?? [];
   const remainingTopicsCount = Math.max((data.topics?.length ?? 0) - visibleTopics.length, 0);
 
-  const handleManageFavoriteList = async () => {
-    if (!session) {
-      pushError(LOGIN_REQUIRED_MESSAGE);
-      return;
-    }
-
-    try {
-      if (isFavorite) {
-        const response = await removeFromFavorite(data.id).unwrap();
-        pushSuccess(response?.message || t('story_removed_from_favorites'));
-      } else {
-        const response = await addToMyFavorites(data.id).unwrap();
-        pushSuccess(response?.message || t('story_added_to_favorites'));
-      }
-      setIsFavorite(prev => !prev);
-    } catch (err: any) {
-      pushError(err?.data?.message || t('error_contact_admin'));
-    }
+  const handleClickRead = async () => {
+    await requireAuth(() => {
+      router.push(`/${locale}/explore-story/${data.id}`);
+    });
   };
 
-  const handleShareToFacebook = async () => {
-    if (!session) {
-      pushError(LOGIN_REQUIRED_MESSAGE);
-      return;
-    }
+  const handleClickFavorite = async () => {
+    await requireAuth(async () => {
+      try {
+        if (isFavorite) {
+          const response = await removeFromFavorite(data.id).unwrap();
+          pushSuccess(response?.message || t('story_removed_from_favorites'));
+        } else {
+          const response = await addToMyFavorites(data.id).unwrap();
+          pushSuccess(response?.message || t('story_added_to_favorites'));
+        }
+        setIsFavorite(prev => !prev);
+      } catch (err: any) {
+        pushError(err?.data?.message || t('error_contact_admin'));
+      }
+    });
+  };
 
+  const handleClickShare = async () => {
+    // Prevent duplicate share actions while one is in progress
     if (isSharePending) {
       return;
     }
 
-    setIsSharePending(true);
+    await requireAuth(async () => {
+      setIsSharePending(true);
 
-    try {
-      const localePrefix = locale === AppConfig.defaultLocale ? '' : `/${locale}`;
-      const storyPath = `${localePrefix}/explore-story/${data.id}`;
-      const storyUrl = new URL(storyPath, Env.NEXT_PUBLIC_APP_URL).toString();
-      const shortStoryUrl = truncateMiddleText(storyUrl, MAX_STORY_URL_LENGTH_FOR_TOAST);
-      const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(storyUrl)}`;
+      try {
+        // Build the full story URL with optional locale prefix
+        const localePrefix = locale === AppConfig.defaultLocale ? '' : `/${locale}`;
+        const storyUrl = new URL(
+          `${localePrefix}/explore-story/${data.id}`,
+          Env.NEXT_PUBLIC_APP_URL,
+        ).toString();
 
-      let isCopied = false;
+        // Copy URL to clipboard (native Clipboard API → execCommand fallback)
+        const isCopied = await copyToClipboard(storyUrl);
 
-      if (window.isSecureContext && navigator.clipboard?.writeText) {
-        try {
-          await navigator.clipboard.writeText(storyUrl);
-          isCopied = true;
-        } catch {
-          isCopied = false;
+        if (!isCopied) {
+          pushError(COPY_STORY_LINK_ERROR_MESSAGE);
+          return;
         }
-      }
 
-      if (!isCopied) {
-        try {
-          isCopied = fallbackCopyText(storyUrl);
-        } catch {
-          isCopied = false;
-        }
+        // Show truncated URL in success toast to keep it readable
+        pushSuccess(
+          `${COPY_STORY_LINK_SUCCESS_MESSAGE}: ${truncateMiddleText(storyUrl, MAX_STORY_URL_LENGTH_FOR_TOAST)}`,
+        );
+      } finally {
+        setIsSharePending(false);
       }
-
-      if (!isCopied) {
-        pushError(COPY_STORY_LINK_ERROR_MESSAGE);
-        return;
-      }
-
-      pushSuccess(`${COPY_STORY_LINK_SUCCESS_MESSAGE}: ${shortStoryUrl}`);
-      await wait(SHARE_OPEN_DELAY_MS);
-      window.open(shareUrl, '_blank', 'noopener,noreferrer');
-    } finally {
-      setIsSharePending(false);
-    }
+    });
   };
 
   return (
@@ -221,9 +178,9 @@ const StoryCard = ({ data, className }: IStoryCardProps) => {
         <Button
           size="lg"
           className="flex-1 rounded-full py-3 text-base font-medium leading-5"
-          onClick={() => router.push(`/explore-story/${data.id}`)}
+          onClick={handleClickRead}
         >
-          Đọc nhật ký
+          Đọc hết
         </Button>
         <IconButton
           variant="outline"
@@ -232,7 +189,7 @@ const StoryCard = ({ data, className }: IStoryCardProps) => {
             'rounded-full p-3',
             isFavorite ? 'border-orange-80' : 'border-primary-90',
           )}
-          onClick={handleManageFavoriteList}
+          onClick={handleClickFavorite}
           aria-label="Like story"
         >
           <ThumbsUp
@@ -246,7 +203,7 @@ const StoryCard = ({ data, className }: IStoryCardProps) => {
           size="md"
           animation={isSharePending ? 'progress' : undefined}
           className={mergeClassnames('rounded-full border-primary-90 p-3', isSharePending && 'opacity-50')}
-          onClick={handleShareToFacebook}
+          onClick={handleClickShare}
           disabled={isSharePending}
           aria-label="Share story"
         >
@@ -257,5 +214,3 @@ const StoryCard = ({ data, className }: IStoryCardProps) => {
 
   );
 };
-
-export { StoryCard };
