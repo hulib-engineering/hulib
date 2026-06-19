@@ -44,20 +44,6 @@ export default withSentryConfig(
 
         return config;
       },
-      async redirects() {
-        return [
-          {
-            source: '/home',
-            destination: '/',
-            permanent: false,
-          },
-          {
-            source: '/:locale/home',
-            destination: '/:locale',
-            permanent: false,
-          },
-        ];
-      },
       images: {
         domains: ['dev-hulib-staging.s3.ap-southeast-1.amazonaws.com'],
         remotePatterns: [

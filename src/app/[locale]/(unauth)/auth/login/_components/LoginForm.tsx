@@ -59,7 +59,7 @@ const LoginForm = () => {
           id: result.user.id,
           accessToken: result.token,
           role: result.user.role.name,
-          callbackUrl: `${window.location.origin}/home`,
+          callbackUrl: `${window.location.origin}/`,
         });
       }
     } catch {

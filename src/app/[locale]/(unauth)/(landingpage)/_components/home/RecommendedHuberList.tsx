@@ -8,7 +8,7 @@ import React, { useRef } from 'react';
 // Import Swiper styles
 import 'swiper/css';
 
-import { LandingPageRecommendedHuberCard } from './LandingPageRecommendedHuberCard';
+import { RecommendedHuberCard } from './RecommendedHuberCard';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { useGetHubersQuery } from '@/libs/services/modules/huber';
@@ -66,7 +66,7 @@ export default function RecommendedHuberList() {
           {data.data.map((huber: Huber) => (
             <SwiperSlide key={huber.id}>
               <div className="flex items-center justify-center">
-                <LandingPageRecommendedHuberCard {...huber} />
+                <RecommendedHuberCard {...huber} />
               </div>
             </SwiperSlide>
           ))}

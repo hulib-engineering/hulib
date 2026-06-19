@@ -4,7 +4,7 @@ import { CaretCircleRight } from '@phosphor-icons/react';
 import React, { useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 
-import { LandingPageStoryCard } from './LandingPageStoryCard';
+import { StoryCard } from './StoryCard';
 
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
@@ -18,7 +18,7 @@ type TFilter = {
   name: string;
 };
 
-type ILandingPageIndexStoryListSectionLayoutProps = | {
+type IIndexStoryListSectionLayoutProps = | {
   title: string;
   stories?: { data: TStory[]; hasNextPage: boolean };
   isLoading?: boolean;
@@ -37,7 +37,7 @@ type ILandingPageIndexStoryListSectionLayoutProps = | {
   onSeeAllClick?: () => void;
 };
 
-const LandingPageIndexStoryListSectionLayout = (props: ILandingPageIndexStoryListSectionLayoutProps) => {
+const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) => {
   const { data: session } = useSession();
   const { data: favoriteStories } = useGetMyFavoritesQuery(undefined, {
     skip: !session,
@@ -114,11 +114,11 @@ const LandingPageIndexStoryListSectionLayout = (props: ILandingPageIndexStoryLis
         )}
       >
         {storiesWithFav?.map(item => (
-          <LandingPageStoryCard key={item.id} data={item} />
+          <StoryCard key={item.id} data={item} />
         ))}
       </div>
     </div>
   );
 };
 
-export { LandingPageIndexStoryListSectionLayout };
+export { IndexStoryListSectionLayout };

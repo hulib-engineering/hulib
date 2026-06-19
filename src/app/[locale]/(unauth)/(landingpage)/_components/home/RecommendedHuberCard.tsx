@@ -9,7 +9,7 @@ import React from 'react';
 import type { Huber as THuber } from '@/libs/services/modules/huber/huberType';
 import Button from '@/components/core/button/Button';
 
-const LandingPageRecommendedHuberCard = (props: Partial<THuber>) => {
+const RecommendedHuberCard = (props: Partial<THuber>) => {
   const router = useRouter();
   const avatarConfig = genConfig(props.fullName ?? String(props.id ?? 'huber'));
 
@@ -78,4 +78,4 @@ const LandingPageRecommendedHuberCard = (props: Partial<THuber>) => {
   );
 };
 
-export { LandingPageRecommendedHuberCard };
+export { RecommendedHuberCard };
