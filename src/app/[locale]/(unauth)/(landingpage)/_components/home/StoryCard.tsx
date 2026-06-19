@@ -20,7 +20,7 @@ import IconButton from '@/components/core/iconButton/IconButton';
 import { Env } from '@/libs/Env.mjs';
 import { AppConfig } from '@/utils/AppConfig';
 
-type ILandingPageStoryCardProps = {
+type IStoryCardProps = {
   data: TStory;
   className?: string;
 };
@@ -62,7 +62,7 @@ const fallbackCopyText = (value: string) => {
 
 const wait = (ms: number) => new Promise(resolve => window.setTimeout(resolve, ms));
 
-const LandingPageStoryCard = ({ data, className }: ILandingPageStoryCardProps) => {
+const StoryCard = ({ data, className }: IStoryCardProps) => {
   const router = useRouter();
   const { data: session } = useSession();
   const locale = useLocale();
@@ -258,4 +258,4 @@ const LandingPageStoryCard = ({ data, className }: ILandingPageStoryCardProps) =
   );
 };
 
-export { LandingPageStoryCard };
+export { StoryCard };

@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { LandingPageIndexStoryListSectionLayout } from './LandingPageIndexStoryListSectionLayout';
+import { IndexStoryListSectionLayout } from './IndexStoryListSectionLayout';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 
@@ -16,7 +16,7 @@ const NewestStoryList = () => {
   });
 
   return (
-    <LandingPageIndexStoryListSectionLayout
+    <IndexStoryListSectionLayout
       title="Newest Stories"
       stories={{ ...stories, data: stories?.data?.slice(0, 5) || [] }}
       isLoading={isLoading}
@@ -35,7 +35,7 @@ const MostPopularStoryList = () => {
   });
 
   return (
-    <LandingPageIndexStoryListSectionLayout
+    <IndexStoryListSectionLayout
       title="Most popular Stories"
       stories={{ ...stories, data: stories?.data?.slice(0, 5) || [] }}
       isLoading={isLoading}
@@ -62,7 +62,7 @@ const StoryListByMostPopularTopics = () => {
   }, [topics]);
 
   return (
-    <LandingPageIndexStoryListSectionLayout
+    <IndexStoryListSectionLayout
       title="Most popular topics"
       stories={{ ...stories, data: stories?.data?.slice(0, 5) || [] }}
       isLoading={isLoading}
