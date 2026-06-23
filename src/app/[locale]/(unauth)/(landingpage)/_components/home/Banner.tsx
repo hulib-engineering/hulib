@@ -18,9 +18,9 @@ export default function Banner() {
       </div>
 
       {/* Desktop Banner */}
-      <div className="relative hidden aspect-[1440/94] w-full overflow-hidden md:block">
+      <div className="relative hidden aspect-[1440/176] h-fit w-full overflow-hidden md:block">
         <Image
-          src="/assets/images/banners/banner.jpg"
+          src="/assets/images/banners/Banner.svg"
           alt="Home Banner"
           fill
           className="object-cover object-center"
