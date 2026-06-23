@@ -52,6 +52,8 @@ export type Story = {
   storyId?: number;
   highlightTitle?: string;
   highlightAbstract?: string;
+  totalLikes?: number;
+  viewCount?: number;
 };
 
 type Histogram = {

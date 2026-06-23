@@ -224,3 +224,8 @@ export const COVER_PRESET_STYLES: Record<string, CoverPresetStyle> = {
     },
   },
 };
+
+export const LOGIN_REQUIRED_MESSAGE = 'Vui lòng đăng nhập để tiếp tục';
+export const COPY_STORY_LINK_SUCCESS_MESSAGE = 'Đã sao chép liên kết câu chuyện';
+export const COPY_STORY_LINK_ERROR_MESSAGE = 'Không thể sao chép liên kết câu chuyện';
+export const MAX_STORY_URL_LENGTH_FOR_TOAST = 60;

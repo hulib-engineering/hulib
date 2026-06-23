@@ -285,7 +285,7 @@ export default function PostSurvey() {
                 variant="outline"
                 fullWidth
                 size={isMobileView ? 'sm' : 'lg'}
-                onClick={() => router.push('/home')}
+                onClick={() => router.push('/')}
               >
                 {t('skip')}
               </Button>
@@ -326,7 +326,7 @@ export default function PostSurvey() {
               <Button
                 fullWidth
                 size={isMobileView ? 'sm' : 'lg'}
-                onClick={() => router.push('/home')}
+                onClick={() => router.push('/')}
               >
                 {t('back_to_home')}
               </Button>

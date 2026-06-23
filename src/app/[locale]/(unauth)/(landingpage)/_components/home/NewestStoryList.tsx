@@ -1,0 +1,20 @@
+'use client';
+
+import { IndexStoryListSectionLayout } from './IndexStoryListSectionLayout';
+import { useGetStoriesQuery } from '@/libs/services/modules/stories';
+
+export const NewestStoryList = () => {
+  const { data: stories, isLoading } = useGetStoriesQuery({
+    page: 1,
+    limit: 6,
+    sort: [{ orderBy: 'createdAt', order: 'DESC' }],
+  });
+
+  return (
+    <IndexStoryListSectionLayout
+      title="Newest Stories"
+      stories={{ ...stories, data: stories?.data?.slice(0, 5) || [] }}
+      isLoading={isLoading}
+    />
+  );
+};
