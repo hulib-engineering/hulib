@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import { BookOpenTextIcon } from '@phosphor-icons/react';
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { useMobile } from '@/libs/hooks';
@@ -48,15 +48,7 @@ export default function HuberCTACard({
       )}
 
       <Button
-        iconLeft={(
-          <Image
-            src="/assets/icons/huber-icon.svg"
-            width={20}
-            height={20}
-            alt="Meeting system ava"
-            className="rounded-lg object-cover object-center"
-          />
-        )}
+        iconLeft={<BookOpenTextIcon size={20} />}
         className="w-full rounded-full"
         onClick={onClick}
       >
