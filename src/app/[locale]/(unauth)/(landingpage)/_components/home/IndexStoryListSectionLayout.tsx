@@ -56,7 +56,7 @@ export const IndexStoryListSectionLayout = (props: Props) => {
     <div className={mergeClassnames(
       'relative left-1/2 w-screen -translate-x-1/2 bg-white shadow-sm',
       'flex flex-col gap-4 p-4',
-      'lg:gap-8 lg:py-5 lg:shadow-none lg:bg-transparent xl:px-0 xxl:px-24',
+      'lg:gap-8 lg:px-12 lg:shadow-none lg:bg-transparent xl:px-26 xxl:px-24',
       showFilter && 'gap-4',
       containerClassName,
     )}
@@ -79,10 +79,11 @@ export const IndexStoryListSectionLayout = (props: Props) => {
       {showFilter && filterComponent}
       <div
         className={mergeClassnames(
-          'grid grid-cols-1 gap-5 rounded-lg',
+          'grid grid-cols-1 gap-5 mx-auto',
           'lg:grid-cols-2',
           'xxl:grid-cols-3',
           '3xl:grid-cols-4',
+          'min-[2560px]:flex min-[2560px]:flex-wrap',
         )}
       >
         {storiesWithFav?.map(item => (
