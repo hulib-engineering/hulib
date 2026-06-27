@@ -28,6 +28,7 @@ import {
   useUpdateStoryMutation,
 } from '@/libs/services/modules/stories';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
+import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 import { StoriesValidation } from '@/validations/StoriesValidation';
 import { CustomCoverBuilder } from '@/features/stories/components/CustomCoverBuilder';
@@ -87,6 +88,7 @@ export default function StoryForm(props: IStoryFormProps) {
   const { data: me } = useGetPersonalInfoQuery(undefined, {
     skip: !userInfo?.id,
   });
+  const { data: topicsResponse } = useGetTopicsQuery();
   const { data: relatedTopics } = useGetRelatedTopicsQuery(
     Number(props.type === 'edit' && props.story.id),
     { skip: props.type !== 'edit' || props.story.topics?.length > 0 },
@@ -96,13 +98,18 @@ export default function StoryForm(props: IStoryFormProps) {
   const [editStory] = useUpdateStoryMutation();
 
   const topicOptions = useMemo(
-    () =>
-      (me?.sharingTopics ?? []).map((topic: Topic) => ({
+    () => {
+      const sourceTopics = me?.sharingTopics?.length
+        ? me.sharingTopics
+        : (topicsResponse?.data ?? []);
+
+      return sourceTopics.map((topic: Topic) => ({
         label: topic.name,
         value: topic.id.toString(),
         id: topic.id,
-      })),
-    [me],
+      }));
+    },
+    [me, topicsResponse],
   );
   const storyTopicsFromProps = props.type === 'edit' ? props.story.topics : undefined;
   const storyRelatedTopics = useMemo(() => {
@@ -207,6 +214,8 @@ export default function StoryForm(props: IStoryFormProps) {
 
   const onSubmit = async (formValues: z.infer<typeof StoriesValidation>) => {
     try {
+      const selectedTopicIds = formValues.topics.map(topic => Number(topic.id));
+
       if (props.type !== 'edit') {
         const uploadedCoverId = await resolveCoverIdForSubmit();
         if (!uploadedCoverId || uploadedCoverId === '') {
@@ -214,7 +223,9 @@ export default function StoryForm(props: IStoryFormProps) {
         }
 
         await createStory({
-          ...formValues,
+          title: formValues.title,
+          abstract: formValues.abstract,
+          topicIds: selectedTopicIds,
           humanBook: {
             id: userInfo?.id,
           },
@@ -229,7 +240,9 @@ export default function StoryForm(props: IStoryFormProps) {
           return;
         }
         await editStory({
-          ...formValues,
+          title: formValues.title,
+          abstract: formValues.abstract,
+          topics: selectedTopicIds,
           id: props.story.id,
           cover: { id: uploadedCoverId },
           publishStatus: 'draft',
