@@ -14,7 +14,7 @@ type CoverProps = {
 };
 
 /** Face + 4px shadow gutter (see `COVER_OUTER_SHADOW_OFFSET_PX`). */
-const COVER_CHROME_SIZE_CLASS = 'w-[144px] h-[202px] md:w-[184px] md:h-[259px]';
+const COVER_CHROME_SIZE_CLASS = 'w-[185px] h-[262px]';
 
 /** Displays a story cover image (preset asset or uploaded PNG). No animation. */
 export function Cover({
