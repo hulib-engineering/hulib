@@ -4,7 +4,7 @@ import { CaretCircleRight, CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import type { Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 // Import Swiper styles
 import 'swiper/css';
 
@@ -19,10 +19,14 @@ export default function RecommendedHuberList() {
 
   const { data } = useGetHubersQuery({ type: 'recommended' });
 
+  const listHuber: Huber[] = useMemo(() => {
+    return data?.data;
+  }, [data?.data]);
+
   const swiperRef = useRef<SwiperType>();
 
-  if (!data) {
-    return undefined;
+  if (!listHuber) {
+    return <></>;
   }
 
   return (
@@ -46,16 +50,12 @@ export default function RecommendedHuberList() {
           slidesPerView={2.5}
           spaceBetween={16}
           breakpoints={{
-            640: {
-              slidesPerView: 4,
-              spaceBetween: 40,
-            },
-            1280: {
-              slidesPerView: 6.5,
-              spaceBetween: 16,
-            },
             1440: {
               slidesPerView: 4.5,
+              spaceBetween: 16,
+            },
+            1920: {
+              slidesPerView: 5.5,
               spaceBetween: 16,
             },
           }}
@@ -63,9 +63,9 @@ export default function RecommendedHuberList() {
           className="w-full !pb-0"
           onSwiper={swiper => (swiperRef.current = swiper)}
         >
-          {data.data.map((huber: Huber) => (
+          {listHuber.map((huber: Huber) => (
             <SwiperSlide key={huber.id}>
-              <div className="flex items-center justify-center">
+              <div className="my-4 flex items-center justify-center rounded-3xl p-4 shadow-sm">
                 <RecommendedHuberCard {...huber} />
               </div>
             </SwiperSlide>
