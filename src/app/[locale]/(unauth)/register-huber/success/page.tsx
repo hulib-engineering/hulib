@@ -12,7 +12,7 @@ export default function RegisterHuberSuccess() {
         {/* Book icon */}
         <div className="mb-6">
           <Image
-            src="/assets/images/register-huber/book_blue.png"
+            src="/assets/images/register-huber/blue_book.png"
             alt="Book icon"
             width={100}
             height={100}
@@ -47,7 +47,7 @@ export default function RegisterHuberSuccess() {
           </button>
           <button className="flex h-[44px] w-[232px] items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#007CBE] to-[#8845C6] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#14144a]">
             <Image
-              src="/assets/images/register-huber/book_white.png"
+              src="/assets/images/register-huber/white_book.png"
               alt=""
               width={18}
               height={18}
