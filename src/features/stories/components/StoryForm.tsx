@@ -43,7 +43,6 @@ import {
   rasterizeCoverElement,
   uploadCoverBlob,
 } from '@/features/stories/utils';
-import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 
 // const filter = (
 //   query: string,
