@@ -28,6 +28,7 @@ import {
   useUpdateStoryMutation,
 } from '@/libs/services/modules/stories';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
+import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 import { StoriesValidation } from '@/validations/StoriesValidation';
 import { CustomCoverBuilder } from '@/features/stories/components/CustomCoverBuilder';
@@ -221,6 +222,8 @@ export default function StoryForm(props: IStoryFormProps) {
 
   const onSubmit = async (formValues: z.infer<typeof StoriesValidation>) => {
     try {
+      const selectedTopicIds = formValues.topics.map(topic => Number(topic.id));
+
       if (props.type !== 'edit') {
         const uploadedCoverId = await rasterizeAndUploadCover();
         if (!uploadedCoverId || uploadedCoverId === '') {
@@ -242,7 +245,9 @@ export default function StoryForm(props: IStoryFormProps) {
         }
 
         await editStory({
-          ...formValues,
+          title: formValues.title,
+          abstract: formValues.abstract,
+          topics: selectedTopicIds,
           id: props.story.id,
           cover: { id: uploadedCoverId },
           publishStatus: 'draft',

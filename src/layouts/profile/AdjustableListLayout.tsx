@@ -24,7 +24,7 @@ const AdjustableListLayout = ({ editable, type, children }: WithChildren<{ edita
             className="flex items-center gap-4 text-sm font-medium capitalize leading-4 text-[#4E74BF]"
             onClick={() => setIsAdding(true)}
           >
-            <IconButton variant="soft" size="sm">
+            <IconButton as="span" variant="soft" size="sm">
               <Plus />
             </IconButton>
             {`add ${type === 'work' ? 'experience' : 'education'}`}

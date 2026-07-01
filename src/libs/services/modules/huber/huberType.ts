@@ -36,6 +36,11 @@ export type Huber = {
     topicId: number;
   }>;
   sharingTopics?: Topic[];
+  huberSince?: string;
+  verificationStatus?: string;
+  challengeEndsAt?: string;
+  followerCount?: number;
+  bookCount?: number;
 };
 
 export type HuberListParams = {
