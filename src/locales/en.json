@@ -740,5 +740,11 @@
       "sign_in": "Đăng nhập",
       "sign_up": "Đăng ký"
     }
+  },
+  "RecommendedHuber": {
+    "button": {
+      "follow": "Theo dõi",
+      "un_follow": "Hủy theo dõi"
+    }
   }
 }

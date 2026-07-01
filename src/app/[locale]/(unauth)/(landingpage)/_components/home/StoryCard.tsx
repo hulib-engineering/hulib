@@ -1,11 +1,9 @@
 'use client';
 
-import { Eye, Heart, ShareFatIcon, ThumbsUp } from '@phosphor-icons/react';
+import { Eye, ThumbsUp } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import React, { useState } from 'react';
-
-import { copyToClipboard, truncateMiddleText } from './utils';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import { Chip } from '@/components/core/chip/Chip';
@@ -14,17 +12,12 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import { Cover } from '@/features/stories/components/Cover';
 import {
-  COPY_STORY_LINK_ERROR_MESSAGE,
-  COPY_STORY_LINK_SUCCESS_MESSAGE,
   DEFAULT_STORY_COVER_ASSET,
-  MAX_STORY_URL_LENGTH_FOR_TOAST,
 } from '@/features/stories/constants';
 import { useAddStoryToMyFavoritesMutation, useRemoveStoryFromMyFavoritesMutation } from '@/libs/services/modules/user';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
-import { Env } from '@/libs/Env.mjs';
-import { AppConfig } from '@/utils/AppConfig';
 import { useRequireAuth } from '@/libs/hooks';
 
 type IStoryCardProps = {
@@ -39,7 +32,6 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
   const t = useTranslations('ExploreStory');
 
   const [isFavorite, setIsFavorite] = useState(Boolean(data.isFavorite));
-  const [isSharePending, setIsSharePending] = useState(false);
 
   const [addToMyFavorites] = useAddStoryToMyFavoritesMutation();
   const [removeFromFavorite] = useRemoveStoryFromMyFavoritesMutation();
@@ -69,45 +61,10 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
     });
   };
 
-  const handleClickShare = async () => {
-    // Prevent duplicate share actions while one is in progress
-    if (isSharePending) {
-      return;
-    }
-
-    await requireAuth(async () => {
-      setIsSharePending(true);
-
-      try {
-        // Build the full story URL with optional locale prefix
-        const localePrefix = locale === AppConfig.defaultLocale ? '' : `/${locale}`;
-        const storyUrl = new URL(
-          `${localePrefix}/explore-story/${data.id}`,
-          Env.NEXT_PUBLIC_APP_URL,
-        ).toString();
-
-        // Copy URL to clipboard (native Clipboard API → execCommand fallback)
-        const isCopied = await copyToClipboard(storyUrl);
-
-        if (!isCopied) {
-          pushError(COPY_STORY_LINK_ERROR_MESSAGE);
-          return;
-        }
-
-        // Show truncated URL in success toast to keep it readable
-        pushSuccess(
-          `${COPY_STORY_LINK_SUCCESS_MESSAGE}: ${truncateMiddleText(storyUrl, MAX_STORY_URL_LENGTH_FOR_TOAST)}`,
-        );
-      } finally {
-        setIsSharePending(false);
-      }
-    });
-  };
-
   return (
-    <div className="rounded-2xl border border-neutral-90 bg-white p-3 shadow-sm lg:gap-5 lg:rounded-[24px] lg:p-4">
+    <div className="max-h-[365px] max-w-[402px] gap-3 rounded-2xl bg-white p-4 shadow-sm">
       <div className={mergeClassnames(
-        'flex w-full items-stretch gap-3',
+        'flex w-full items-stretch gap-2',
         className,
       )}
       >
@@ -153,7 +110,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
             </div>
             <div className="mt-auto flex flex-col gap-1 pt-2 lg:gap-2 lg:pt-3">
               <div className="flex items-center gap-1 lg:gap-2">
-                <Heart className="text-yellow-50" size={16} weight="fill" />
+                <ThumbsUp className="text-pink-40" size={16} weight="fill" />
                 <p className="text-[14px] font-medium leading-4 text-neutral-20">
                   {data?.storyReview?.rating || 0}
                 </p>
@@ -170,8 +127,8 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
           </div>
         </div>
 
-        <div className="relative h-[212px] w-[120px] shrink-0 overflow-hidden rounded-xl border border-neutral-90 lg:h-[422px] lg:w-[236px] lg:rounded-2xl">
-          <Cover src={data?.cover?.path || DEFAULT_STORY_COVER_ASSET} className="size-full" />
+        <div className="relative shrink-0 overflow-hidden">
+          <Cover src={data?.cover?.path || DEFAULT_STORY_COVER_ASSET} />
         </div>
       </div>
       <div className="mt-3 flex w-full items-center gap-2">
@@ -197,17 +154,6 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
             size={20}
             weight={isFavorite ? 'fill' : 'bold'}
           />
-        </IconButton>
-        <IconButton
-          variant="outline"
-          size="md"
-          animation={isSharePending ? 'progress' : undefined}
-          className={mergeClassnames('rounded-full border-primary-90 p-3', isSharePending && 'opacity-50')}
-          onClick={handleClickShare}
-          disabled={isSharePending}
-          aria-label="Share story"
-        >
-          <ShareFatIcon className="text-primary-50" size={20} weight="bold" />
         </IconButton>
       </div>
     </div>

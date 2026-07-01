@@ -38,7 +38,7 @@ export default function HuberCTA() {
         <HuberCTACard
           title="Trở thành thành viên mới trong đại gia đình Huber"
           subtitle="Short description"
-          buttonLabel="Đăng ký thành Huber"
+          buttonLabel="Tạo sách mới"
         />
       </div>
     </div>
