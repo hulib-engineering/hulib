@@ -171,7 +171,7 @@ export const DetailedStoryWithCover = ({
           <PageCoverFront />
           <PageCoverBack />
           {pagesRender.map((page, i) => (
-            <Page key={i} title={title} number={i + 1}>
+            <Page key={i} title={title} page={i + 1}>
               {page.first
                 ? (
                     <div className="relative w-full overflow-hidden rounded-lg">
