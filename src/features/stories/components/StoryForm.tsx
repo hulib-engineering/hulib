@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CaretDown } from '@phosphor-icons/react';
+import { CaretDown, PencilSimple } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -21,7 +21,7 @@ import Label from '@/components/Label';
 import type { TFilter } from '@/layouts/scheduling/BigCalendar';
 import { useAppSelector } from '@/libs/hooks';
 import { useUploadMutation } from '@/libs/services/modules/files';
-import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
+// import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import {
   useCreateStoryMutation,
   useGetRelatedTopicsQuery,
@@ -44,19 +44,19 @@ import {
   uploadCoverBlob,
 } from '@/features/stories/utils';
 
-const filter = (
-  query: string,
-  filters: { id: number; label: string; value: string }[],
-) => {
-  return query === ''
-    ? filters
-    : filters.filter(({ label }) =>
-        label
-          .toLowerCase()
-          .replace(/\s+/g, '')
-          .includes(query.toLowerCase().replace(/\s+/g, '')),
-      );
-};
+// const filter = (
+//   query: string,
+//   filters: { id: number; label: string; value: string }[],
+// ) => {
+//   return query === ''
+//     ? filters
+//     : filters.filter(({ label }) =>
+//       label
+//         .toLowerCase()
+//         .replace(/\s+/g, '')
+//         .includes(query.toLowerCase().replace(/\s+/g, '')),
+//     );
+// };
 
 type IStoryFormProps = | {
   type: 'create';
@@ -77,18 +77,13 @@ export default function StoryForm(props: IStoryFormProps) {
   let swiperRef: any = null;
 
   const t = useTranslations('Common');
-  const tProfile = useTranslations('MyProfile');
-
-  const formTitle = props.type === 'create-first'
-    ? t('create_first_story')
-    : props.type === 'create' ? tProfile('create_story') : tProfile('edit_story');
+  // const tProfile = useTranslations('MyProfile');
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
-  const { data: me } = useGetPersonalInfoQuery(undefined, {
-    skip: !userInfo?.id,
-  });
-  const { data: topicsResponse } = useGetTopicsQuery();
+  // const { data: me } = useGetPersonalInfoQuery(undefined, {
+  //   skip: !userInfo?.id,
+  // });
   const { data: relatedTopics } = useGetRelatedTopicsQuery(
     Number(props.type === 'edit' && props.story.id),
     { skip: props.type !== 'edit' || props.story.topics?.length > 0 },
@@ -97,20 +92,33 @@ export default function StoryForm(props: IStoryFormProps) {
   const [createStory] = useCreateStoryMutation();
   const [editStory] = useUpdateStoryMutation();
 
-  const topicOptions = useMemo(
-    () => {
-      const sourceTopics = me?.sharingTopics?.length
-        ? me.sharingTopics
-        : (topicsResponse?.data ?? []);
+  // const topicOptions = useMemo(
+  //   () =>
+  //     (me?.sharingTopics ?? []).map((topic: Topic) => ({
+  //       label: topic.name,
+  //       value: topic.id.toString(),
+  //       id: topic.id,
+  //     })),
+  //   [me],
+  // );
 
-      return sourceTopics.map((topic: Topic) => ({
+  const [topicQuery, setTopicQuery] = useState('');
+
+  const { data: topicsData } = useGetTopicsQuery({
+    name: topicQuery || undefined, // search theo query nếu có
+    limit: 50,
+  });
+
+  const topicOptions = useMemo(
+    () =>
+      (topicsData?.data ?? []).map((topic: Topic) => ({
         label: topic.name,
         value: topic.id.toString(),
         id: topic.id,
-      }));
-    },
-    [me, topicsResponse],
+      })),
+    [topicsData],
   );
+
   const storyTopicsFromProps = props.type === 'edit' ? props.story.topics : undefined;
   const storyRelatedTopics = useMemo(() => {
     if (props.type === 'edit') {
@@ -152,9 +160,9 @@ export default function StoryForm(props: IStoryFormProps) {
   );
   const [isCustomCoverModalOpen, setIsCustomCoverModalOpen] = useState(false);
   const [currentCoverIndex, setCurrentCoverIndex] = useState(0);
-  const [topicQuery, setTopicQuery] = useState('');
   const [selectedTopics, setSelectedTopics] = useState<TFilter[]>(storyRelatedTopics);
-  const queriedTopicOptions = filter(topicQuery, topicOptions || []);
+  // const queriedTopicOptions = filter(topicQuery, topicOptions || []);
+  const queriedTopicOptions = topicOptions;
 
   useEffect(() => {
     setValue('topics', selectedTopics.map(topic => ({ id: topic.id.toString() })));
@@ -190,12 +198,14 @@ export default function StoryForm(props: IStoryFormProps) {
     }
     return getDefaultCustomization(cover);
   }, [coverCustomization, selectedCoverSample]);
+
   const handleRemoveTopic = useCallback(
     (index: unknown) => {
       setSelectedTopics(selectedTopics.filter(({ id }) => id !== index));
     },
     [selectedTopics],
   );
+
   const rasterizeAndUploadCover = async (): Promise<string | undefined> => {
     try {
       const blob = await rasterizeCoverElement(COVER_EXPORT_ELEMENT_ID);
@@ -209,36 +219,30 @@ export default function StoryForm(props: IStoryFormProps) {
     }
   };
 
-  const resolveCoverIdForSubmit = async (): Promise<string | undefined> =>
-    rasterizeAndUploadCover();
-
   const onSubmit = async (formValues: z.infer<typeof StoriesValidation>) => {
     try {
       const selectedTopicIds = formValues.topics.map(topic => Number(topic.id));
 
       if (props.type !== 'edit') {
-        const uploadedCoverId = await resolveCoverIdForSubmit();
+        const uploadedCoverId = await rasterizeAndUploadCover();
         if (!uploadedCoverId || uploadedCoverId === '') {
           return;
         }
 
         await createStory({
-          title: formValues.title,
-          abstract: formValues.abstract,
-          topicIds: selectedTopicIds,
-          humanBook: {
-            id: userInfo?.id,
-          },
+          ...formValues,
+          humanBook: { id: userInfo?.id },
           cover: { id: uploadedCoverId },
           publishStatus: 'draft',
         }).unwrap();
         pushSuccess('Story created successfully');
         props.onSucceed();
       } else {
-        const uploadedCoverId = await resolveCoverIdForSubmit();
+        const uploadedCoverId = await rasterizeAndUploadCover();
         if (!uploadedCoverId || uploadedCoverId === '') {
           return;
         }
+
         await editStory({
           title: formValues.title,
           abstract: formValues.abstract,
@@ -257,221 +261,217 @@ export default function StoryForm(props: IStoryFormProps) {
 
   return (
     <div className="flex flex-col gap-6 rounded-[20px] bg-white p-5">
-      <h2 className="text-2xl font-medium tracking-[-0.02em] lg:text-4xl lg:leading-[44px]">
-        {formTitle}
-      </h2>
       <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-        <div className="flex flex-col gap-4 lg:flex-row lg:gap-6">
-          <div className="flex-1">
-            <div className="flex flex-col gap-6">
-              <Form.Item>
-                <Combobox
-                  // @ts-ignore
-                  by="id" // TO-DO: modify combobox wrapper props
-                  value={selectedTopics}
-                  onChange={value => setSelectedTopics(value as TFilter[])}
-                  onQueryChange={setTopicQuery}
-                  onClear={handleRemoveTopic}
-                  className="w-full"
-                  multiple
-                  size="lg"
-                >
-                  {({ open }) => (
-                    <>
-                      <Combobox.VisualMultiSelect
-                        open={open}
-                        label={(
-                          <p className="text-sm leading-4 text-neutral-10">
-                            {t('topics')}
-                            <span className="text-red-50">*</span>
-                          </p>
-                        )}
-                        placeholder="Select topics"
-                        className="border-neutral-90"
-                        inputClassname="px-0 font-normal leading-4"
-                        displayValue={({ label }) => label}
-                      >
-                        <CaretDown />
-                      </Combobox.VisualMultiSelect>
-                      <Combobox.Transition>
-                        <Combobox.Options className="flex flex-col gap-2">
-                          {queriedTopicOptions.length === 0 && topicQuery !== '' ? (
-                            <div className="relative cursor-default select-none text-neutral-40">
-                              Nothing found.
-                            </div>
-                          ) : (
-                            queriedTopicOptions.map(filter => (
-                              <Combobox.Option value={filter} key={filter.id}>
-                                {({ selected, active }) => (
-                                  <MenuItem isActive={active} isSelected={selected} className="gap-0.5">
-                                    {filter.label}
-                                  </MenuItem>
-                                )}
-                              </Combobox.Option>
-                            ))
-                          )}
-                        </Combobox.Options>
-                      </Combobox.Transition>
-                    </>
-                  )}
-                </Combobox>
-              </Form.Item>
-              <Form.Item>
-                <TextInput
-                  {...register('title')}
-                  type="text"
-                  placeholder={t('placeholder_title')}
-                  label={(
-                    <p className="text-sm leading-4 text-neutral-10">
-                      {t('title')}
-                      <span className="text-red-50">*</span>
-                    </p>
-                  )}
-                  isError={!!errors.title}
-                  maxLength={32}
-                  hintText={
-                    errors.title?.message
-                    || (errors.title && 'Required')
-                  }
-                />
-              </Form.Item>
-              <Form.Item>
-                <Label className="mb-2">
-                  {t('abstract')}
-                  <span className="text-red-50">*</span>
-                </Label>
-                <TextArea
-                  {...register('abstract')}
-                  rows={9}
-                  error={!!errors.abstract}
-                  placeholder={t('placeholder_abstract')}
-                  size="sm"
-                />
-                {errors.abstract && (
-                  <p className="mt-1 text-xs text-red-500">
-                    {errors.abstract.message || 'Required'}
-                  </p>
-                )}
-              </Form.Item>
-            </div>
-          </div>
-          <div className="flex-1">
-            <div className="flex flex-col gap-2">
-              <div className="text-sm font-medium text-black">
-                {t('cover_picture')}
-                {' '}
-                <span className="text-red-50">*</span>
-                <div className="mt-2 flex justify-between gap-2 rounded-2xl border border-neutral-90 bg-neutral-98 p-5">
-                  <div className="hidden cursor-pointer flex-col gap-4 xl:flex">
-                    <div className="flex gap-2">
-                      {COVER_PRESET_ASSETS.map((cover, index) => (
-                        <div key={cover} className="flex flex-col gap-2">
-                          <CustomCoverBuilder
-                            storyTitle={title.trim() || t('placeholder_title')}
-                            authorName={userInfo?.fullName}
-                            coverImgSrc={
-                              isCustomCoverActive && selectedCoverSample === cover
-                                ? ''
-                                : cover
-                            }
-                            customization={getThumbnailCustomization(cover)}
-                            active={selectedCoverSample === cover}
-                            onClick={() => handleSelectPreset(cover)}
-                          />
-                          {selectedCoverSample === cover ? (
-                            <Button
-                              onClick={() => setIsCustomCoverModalOpen(true)}
-                              className="bg-primary-90 text-primary-50 hover:text-white"
-                            >
-                              {t('custom')}
-                            </Button>
-                          ) : (
-                            <Button
-                              onClick={() => handleSelectPreset(cover)}
-                              className="border-neutral-80 bg-white text-primary-50 hover:text-white"
-                            >
-                              {`${t('style')} ${index + 1}`}
-                            </Button>
-                          )}
-                        </div>
-                      ))}
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-6">
+
+          {/* Cột trái */}
+          <div className="flex flex-1 flex-col">
+            <p className="mb-2 text-sm font-medium text-black">
+              {t('cover_picture')}
+              {' '}
+              <span className="text-red-50">*</span>
+            </p>
+
+            <div className="flex flex-1 rounded-2xl border border-neutral-90 bg-neutral-98 p-5">
+              {/* Desktop */}
+              <div className="hidden w-full cursor-pointer flex-col gap-4 xl:flex">
+                <div className="flex justify-between gap-2">
+                  {COVER_PRESET_ASSETS.map((cover, index) => (
+                    <div key={cover} className="flex flex-col gap-2">
+                      <CustomCoverBuilder
+                        storyTitle={title.trim() || t('placeholder_title')}
+                        authorName={userInfo?.fullName}
+                        coverImgSrc={
+                          isCustomCoverActive && selectedCoverSample === cover
+                            ? ''
+                            : cover
+                        }
+                        customization={getThumbnailCustomization(cover)}
+                        active={selectedCoverSample === cover}
+                        onClick={() => handleSelectPreset(cover)}
+                      />
+                      {selectedCoverSample === cover ? (
+                        <Button
+                          onClick={() => setIsCustomCoverModalOpen(true)}
+                          className="bg-primary-90 text-primary-50 hover:text-white"
+                          iconRight={<PencilSimple size={16} />}
+                        >
+                          {t('custom')}
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() => handleSelectPreset(cover)}
+                          className="border-neutral-80 bg-white text-primary-50 hover:text-white"
+                        >
+                          {`${t('style')} ${index + 1}`}
+                        </Button>
+                      )}
                     </div>
-                  </div>
-                  <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-5 xl:hidden">
-                    <Swiper
-                      slidesPerView={1}
-                      spaceBetween={16}
-                      loop={false}
-                      className="w-full"
-                      onSwiper={swiper => (swiperRef = swiper)}
-                      onSlideChange={handleSwipeAndSelectCover}
-                    >
-                      {COVER_PRESET_ASSETS.map(cover => (
-                        <SwiperSlide key={cover}>
-                          <div className="flex items-center justify-center">
-                            <CustomCoverBuilder
-                              storyTitle={title.trim() || t('placeholder_title')}
-                              authorName={userInfo?.fullName}
-                              coverImgSrc={
-                                isCustomCoverActive && selectedCoverSample === cover
-                                  ? ''
-                                  : cover
-                              }
-                              customization={getThumbnailCustomization(cover)}
-                              active={selectedCoverSample === cover}
-                            />
-                          </div>
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
-                    {/* Custom Pagination */}
-                    <div className="mt-3 flex justify-center space-x-2">
-                      {COVER_PRESET_ASSETS.map((cover, idx) => (
-                        <button
-                          key={cover}
-                          type="button"
-                          className={mergeClassnames(
-                            'size-2 rounded-full transition-all duration-300',
-                            currentCoverIndex === idx ? 'w-10 bg-neutral-80' : 'bg-neutral-90',
-                          )}
-                          onClick={() => swiperRef?.slideTo(idx)}
-                        />
-                      ))}
-                    </div>
-                    <Button
-                      variant="soft"
-                      size="sm"
-                      className="w-[180px]"
-                      onClick={() => setIsCustomCoverModalOpen(true)}
-                    >
-                      {t('custom')}
-                    </Button>
-                  </div>
+                  ))}
                 </div>
+              </div>
+
+              {/* Mobile */}
+              <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-5 xl:hidden">
+                <Swiper
+                  slidesPerView={1}
+                  spaceBetween={16}
+                  loop={false}
+                  className="w-full"
+                  onSwiper={swiper => (swiperRef = swiper)}
+                  onSlideChange={handleSwipeAndSelectCover}
+                >
+                  {COVER_PRESET_ASSETS.map(cover => (
+                    <SwiperSlide key={cover}>
+                      <div className="flex items-center justify-center">
+                        <CustomCoverBuilder
+                          storyTitle={title.trim() || t('placeholder_title')}
+                          authorName={userInfo?.fullName}
+                          coverImgSrc={
+                            isCustomCoverActive && selectedCoverSample === cover
+                              ? ''
+                              : cover
+                          }
+                          customization={getThumbnailCustomization(cover)}
+                          active={selectedCoverSample === cover}
+                        />
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+                <div className="mt-3 flex justify-center space-x-2">
+                  {COVER_PRESET_ASSETS.map((cover, idx) => (
+                    <button
+                      key={cover}
+                      type="button"
+                      className={mergeClassnames(
+                        'size-2 rounded-full transition-all duration-300',
+                        currentCoverIndex === idx ? 'w-10 bg-neutral-80' : 'bg-neutral-90',
+                      )}
+                      onClick={() => swiperRef?.slideTo(idx)}
+                    />
+                  ))}
+                </div>
+                <Button
+                  variant="soft"
+                  size="sm"
+                  className="w-[180px]"
+                  onClick={() => setIsCustomCoverModalOpen(true)}
+                >
+                  {t('custom')}
+                </Button>
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex w-full justify-between gap-4 text-left lg:w-1/2">
-          <Button
-            variant="outline"
-            size="lg"
-            fullWidth
-            onClick={props.type === 'create-first' ? props.onBack : props.onCancel}
-          >
-            {props.type === 'create-first' ? t('back') : t('cancel')}
-          </Button>
-          <Button
-            type="submit"
-            size="lg"
-            fullWidth
-            animation={isSubmitting && 'progress'}
-            disabled={isSubmitting}
-          >
-            {t('submit')}
-          </Button>
+
+          {/* Cột phải */}
+          <div className="flex flex-1 flex-col gap-6">
+            <Form.Item>
+              <TextInput
+                {...register('title')}
+                type="text"
+                placeholder={t('placeholder_title')}
+                label={(
+                  <p className="text-sm leading-4 text-neutral-10">
+                    {t('title')}
+                    <span className="text-red-50">*</span>
+                  </p>
+                )}
+                isError={!!errors.title}
+                maxLength={32}
+                hintText={errors.title?.message || (errors.title && 'Required')}
+              />
+            </Form.Item>
+
+            <Form.Item>
+              <Combobox
+                // @ts-ignore
+                by="id"
+                value={selectedTopics}
+                onChange={value => setSelectedTopics(value as TFilter[])}
+                onQueryChange={setTopicQuery}
+                onClear={handleRemoveTopic}
+                className="w-full"
+                multiple
+                size="lg"
+              >
+                {({ open }) => (
+                  <>
+                    <Combobox.VisualMultiSelect
+                      open={open}
+                      label={(
+                        <p className="text-sm leading-4 text-neutral-10">
+                          {t('topics')}
+                          <span className="text-red-50">*</span>
+                        </p>
+                      )}
+                      placeholder="Select topics"
+                      className="border-neutral-90"
+                      inputClassname="px-0 font-normal leading-4"
+                      displayValue={({ label }) => label}
+                    >
+                      <CaretDown />
+                    </Combobox.VisualMultiSelect>
+                    <Combobox.Transition>
+                      <Combobox.Options className="flex flex-col gap-2">
+                        {queriedTopicOptions.length === 0 && topicQuery !== '' ? (
+                          <div className="relative cursor-default select-none text-neutral-40">
+                            Nothing found.
+                          </div>
+                        ) : (
+                          queriedTopicOptions.map((filter: any) => (
+                            <Combobox.Option value={filter} key={filter.id}>
+                              {({ selected, active }) => (
+                                <MenuItem isActive={active} isSelected={selected} className="gap-0.5">
+                                  {filter.label}
+                                </MenuItem>
+                              )}
+                            </Combobox.Option>
+                          ))
+                        )}
+                      </Combobox.Options>
+                    </Combobox.Transition>
+                  </>
+                )}
+              </Combobox>
+            </Form.Item>
+
+            <Form.Item>
+              <Label className="mb-2">
+                {t('abstract')}
+                <span className="text-red-50">*</span>
+              </Label>
+              <TextArea
+                {...register('abstract')}
+                rows={9}
+                error={!!errors.abstract}
+                placeholder={t('placeholder_abstract')}
+                size="sm"
+              />
+              {errors.abstract && (
+                <p className="mt-1 text-xs text-red-500">
+                  {errors.abstract.message || 'Required'}
+                </p>
+              )}
+            </Form.Item>
+
+            {/* Submit - đẩy xuống đáy */}
+            <div className="mt-auto flex w-full justify-end">
+              <Button
+                type="submit"
+                size="lg"
+                className="w-[300px]"
+                animation={isSubmitting && 'progress'}
+                disabled={isSubmitting}
+              >
+                {t('submit')}
+              </Button>
+            </div>
+          </div>
+
         </div>
       </Form>
+
       <div
         className="pointer-events-none fixed left-[-10000px] top-0"
         aria-hidden
@@ -483,6 +483,7 @@ export default function StoryForm(props: IStoryFormProps) {
           customization={coverCustomization}
         />
       </div>
+
       <CustomCoverModal
         open={isCustomCoverModalOpen}
         onClose={() => setIsCustomCoverModalOpen(false)}
@@ -493,4 +494,4 @@ export default function StoryForm(props: IStoryFormProps) {
       />
     </div>
   );
-};
+}
