@@ -633,7 +633,20 @@
     "schedule_meeting": "Đặt lịch hẹn",
     "saved_for_later_success": "Đã lưu truyện thành công",
     "remove_from_saved_for_later": "Xoá khỏi danh sách đã lưu",
-    "share_story": "Chia sẽ thêm"
+    "share": "Chia sẻ",
+    "share_to": "Chia sẻ đến",
+    "share_copied": "Đã sao chép liên kết!",
+    "share_story": "Chia sẽ thêm",
+    "views": "lượt xem",
+    "likes": "lượt thích",
+    "like_button": "Thích",
+    "like_error": "Thất bại",
+    "booking_cta": "Nếu cảm thấy kết nối với tác giả, bạn hãy nhớ đặt cuộc hẹn với tác giả tại đây nhé",
+    "book_a_meeting": "Book a Meeting",
+    "booking_count": "Đã có 100 cuộc hẹn từ câu chuyện này",
+    "author": "Tác giả",
+    "stories": "câu chuyện",
+    "favorites": "yêu thích"
   },
   "Huber": {
     "title": "Xem danh sách Huber",
