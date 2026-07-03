@@ -81,30 +81,30 @@ const RecommendedHuberCard = ({
           {verificationStatus === HuberVerificationStatus.verified && <CheckCircleIcon size={16} className="rounded-full bg-green-60 p-px text-green-30" weight="bold" />}
           {verificationStatus === HuberVerificationStatus.challenge && <CircleIcon size={16} className="rounded-full bg-neutral-90 p-px text-neutral-60" weight="fill" />}
         </div>
-        {visibleTopics.length > 0 && (
-          <div className="flex max-h-[56px] w-full flex-wrap items-start gap-1 overflow-hidden lg:max-h-none lg:flex-nowrap lg:items-center lg:gap-2 lg:overflow-visible">
-            {visibleTopics.map(topic => (
-              <Chip
-                key={topic}
-                as="span"
-                className={mergeClassnames(
-                  'h-auto max-w-full rounded border px-2 py-1 text-left text-xs font-medium leading-[14px]',
-                  getClassTopic(topic),
-                )}
-              >
-                <span className="line-clamp-2 block overflow-hidden break-words">
-                  {topic}
-                </span>
-              </Chip>
-            ))}
-            {remainingTopicsCount > 0 && (
-              <span className="inline-flex shrink-0 items-center whitespace-nowrap rounded border border-primary-80 bg-primary-90 px-2 py-1 text-xs font-medium leading-[14px] text-primary-60">
-                +
-                {remainingTopicsCount}
+
+        <div className="flex max-h-[56px] w-full flex-wrap items-start gap-1 overflow-hidden lg:max-h-none lg:flex-nowrap lg:items-center lg:gap-2 lg:overflow-visible">
+          {visibleTopics.map(topic => (
+            <Chip
+              key={topic}
+              as="span"
+              className={mergeClassnames(
+                'h-auto max-w-full rounded border px-2 py-1 text-left text-xs font-medium leading-[14px]',
+                getClassTopic(topic),
+              )}
+            >
+              <span className="line-clamp-2 block overflow-hidden break-words">
+                {topic}
               </span>
-            )}
-          </div>
-        )}
+            </Chip>
+          ))}
+          {remainingTopicsCount > 0 && (
+            <span className="inline-flex shrink-0 items-center whitespace-nowrap rounded border border-primary-80 bg-primary-90 px-2 py-1 text-xs font-medium leading-[14px] text-primary-60">
+              +
+              {remainingTopicsCount}
+            </span>
+          )}
+        </div>
+
         <div className="mt-2.5 flex flex-wrap items-center">
           <div className="flex w-full flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-1">
