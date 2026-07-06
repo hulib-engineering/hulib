@@ -8,11 +8,12 @@ import { useForm } from 'react-hook-form';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { z } from 'zod';
 
+import { useRouter } from 'next/navigation';
 import { CustomCoverModal } from './CustomCoverModal';
 import Button from '@/components/core/button/Button';
-import Combobox from '@/components/core/combobox/Combobox';
+import Combobox, { getChipColor } from '@/components/core/combobox/Combobox';
 import Form from '@/components/core/form/Form';
-import MenuItem from '@/components/core/menuItem/MenuItem';
+// import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';
 import TextInput from '@/components/core/textInput-v1/TextInput';
@@ -75,7 +76,7 @@ type IStoryFormProps = | {
 
 export default function StoryForm(props: IStoryFormProps) {
   let swiperRef: any = null;
-
+  const router = useRouter();
   const t = useTranslations('Common');
   // const tProfile = useTranslations('MyProfile');
 
@@ -229,13 +230,15 @@ export default function StoryForm(props: IStoryFormProps) {
           return;
         }
 
-        await createStory({
+        const result = await createStory({
           ...formValues,
           humanBook: { id: userInfo?.id },
           cover: { id: uploadedCoverId },
           publishStatus: 'draft',
         }).unwrap();
+
         pushSuccess('Story created successfully');
+        router.push(`/register-huber/success?storyId=${result.id}`);
         props.onSucceed();
       } else {
         const uploadedCoverId = await rasterizeAndUploadCover();
@@ -301,7 +304,7 @@ export default function StoryForm(props: IStoryFormProps) {
                       ) : (
                         <Button
                           onClick={() => handleSelectPreset(cover)}
-                          className="border-neutral-80 bg-white text-primary-50 hover:text-white"
+                          className="border-neutral-80 bg-white text-primary-50 hover:border-primary-50 hover:bg-primary-50 hover:text-white"
                         >
                           {`${t('style')} ${index + 1}`}
                         </Button>
@@ -405,7 +408,7 @@ export default function StoryForm(props: IStoryFormProps) {
                           <span className="text-red-50">*</span>
                         </p>
                       )}
-                      placeholder="Select topics"
+                      placeholder={selectedTopics.length > 0 ? undefined : 'Select topics'}
                       className="border-neutral-90"
                       inputClassname="px-0 font-normal leading-4"
                       displayValue={({ label }) => label}
@@ -413,21 +416,35 @@ export default function StoryForm(props: IStoryFormProps) {
                       <CaretDown />
                     </Combobox.VisualMultiSelect>
                     <Combobox.Transition>
-                      <Combobox.Options className="flex flex-col gap-2">
+                      <Combobox.Options className="flex flex-wrap gap-2 p-1">
                         {queriedTopicOptions.length === 0 && topicQuery !== '' ? (
                           <div className="relative cursor-default select-none text-neutral-40">
                             Nothing found.
                           </div>
                         ) : (
-                          queriedTopicOptions.map((filter: any) => (
-                            <Combobox.Option value={filter} key={filter.id}>
-                              {({ selected, active }) => (
-                                <MenuItem isActive={active} isSelected={selected} className="gap-0.5">
-                                  {filter.label}
-                                </MenuItem>
-                              )}
-                            </Combobox.Option>
-                          ))
+                          queriedTopicOptions.map((filter: any) => {
+                            const color = getChipColor(filter.id);
+                            return (
+                              <Combobox.Option value={filter} key={filter.id}>
+                                {({ selected, active }) => (
+                                  <span
+                                    className={mergeClassnames(
+                                      'inline-flex cursor-pointer select-none items-center rounded-full border px-4 py-2 text-sm font-semibold transition-opacity',
+                                      selected && 'opacity-100',
+                                      active && 'opacity-90',
+                                    )}
+                                    style={{
+                                      backgroundColor: color.bg,
+                                      color: color.text,
+                                      borderColor: color.border,
+                                    }}
+                                  >
+                                    {filter.label}
+                                  </span>
+                                )}
+                              </Combobox.Option>
+                            );
+                          })
                         )}
                       </Combobox.Options>
                     </Combobox.Transition>
@@ -455,7 +472,6 @@ export default function StoryForm(props: IStoryFormProps) {
               )}
             </Form.Item>
 
-            {/* Submit - đẩy xuống đáy */}
             <div className="mt-auto flex w-full justify-end">
               <Button
                 type="submit"

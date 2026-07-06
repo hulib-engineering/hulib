@@ -16,7 +16,6 @@ import { Chip } from '@/components/core/chip/Chip';
 import { Spinner } from '@/components/loadingState/Spinner';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { ProfileCover } from '@/components/ProfileCover';
 import AboutPanel from '@/layouts/profile/AboutPanel';
 import EditImageModal from '@/layouts/profile/EditImageModal';
 import ReportModal from '@/layouts/profile/ReportModal';
@@ -89,10 +88,10 @@ export default function Index() {
     router.push(`${currentPathname}?${params.toString()}`, { scroll: false });
   }, [currentPathname, currentTab, router, searchParams]);
 
-  const handleEditCoverClick = () => {
-    setCurrentEditableImageData({ type: 'cover', data: userDetail.cover?.path ?? '' });
-    setEditImageModalOpen(true);
-  };
+  // const handleEditCoverClick = () => {
+  //   setCurrentEditableImageData({ type: 'cover', data: userDetail.cover?.path ?? '' });
+  //   setEditImageModalOpen(true);
+  // };
   const handleEditAvatarClick = () => {
     setCurrentEditableImageData({ type: 'avatar', data: userDetail.photo?.path ?? '' });
     setEditImageModalOpen(true);
@@ -125,10 +124,12 @@ export default function Index() {
     );
   }
 
+  console.log('userDetai', userDetail);
+
   return (
     <div className="mx-auto flex w-full flex-1 flex-col pt-3 lg:gap-5 lg:pb-12 xl:max-w-[1216px]">
       <div className="flex flex-col overflow-hidden shadow-sm lg:rounded-b-xl">
-        <ProfileCover imageUrl={userDetail?.cover?.path} className="h-[100px] lg:h-[283px]">
+        {/* <ProfileCover imageUrl={userDetail?.cover?.path} className="h-[100px] lg:h-[283px]">
           {!notMe && (
             <IconButton
               variant="soft"
@@ -139,51 +140,53 @@ export default function Index() {
               <PencilSimple weight="bold" />
             </IconButton>
           )}
-        </ProfileCover>
+        </ProfileCover> */}
         <div className="border-b border-neutral-90 bg-white px-4 pb-6 lg:px-10">
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
-              <div className="group relative h-[68px] w-[100px] lg:h-[120px] lg:w-40">
-                {userDetail.photo?.path
-                  ? (
-                      <Avatar imageUrl={userDetail.photo.path} className="absolute -top-8 left-0 size-[100px] lg:size-40" />
-                    )
-                  : (
-                      <NiceAvatar
-                        className="absolute -top-8 left-0 size-[100px] rounded-full lg:size-40"
-                        {...genConfig(userDetail?.fullName ?? String(userDetail?.id ?? 'huber'))}
-                      />
-                    )}
-                {!notMe && (
-                  <IconButton
-                    variant="soft"
-                    size="sm"
-                    className="absolute bottom-0 right-0 opacity-100 transition-opacity lg:opacity-0 lg:group-hover:opacity-100"
-                    onClick={handleEditAvatarClick}
-                  >
-                    <PencilSimple weight="bold" />
-                  </IconButton>
-                )}
-              </div>
-              <div className="flex flex-col gap-1 lg:gap-4 lg:py-6">
-                <div className="flex flex-col gap-1 lg:flex-row lg:items-center lg:gap-4">
-                  <h4 className="text-[28px] font-medium leading-9 text-black">{userDetail?.fullName}</h4>
-                  <Chip
-                    disabled
-                    className="h-full w-fit rounded-full border border-primary-80 bg-primary-90 px-2 py-1 text-xs font-medium uppercase leading-[14px] text-primary-60 opacity-100 lg:px-3 lg:text-xl"
-                  >
-                    {userDetail?.role?.name}
-                  </Chip>
+              <div className="flex flex-row items-center">
+                <div className="group relative h-[68px] w-[100px] lg:min-h-[200px] lg:w-40">
+                  {userDetail.photo?.path
+                    ? (
+                        <Avatar imageUrl={userDetail.photo.path} className="absolute left-0 top-8 size-[100px] lg:size-40" />
+                      )
+                    : (
+                        <NiceAvatar
+                          className="absolute left-0 top-8 size-[100px] rounded-full lg:size-40"
+                          {...genConfig(userDetail?.fullName ?? String(userDetail?.id ?? 'huber'))}
+                        />
+                      )}
+                  {!notMe && (
+                    <IconButton
+                      variant="soft"
+                      size="sm"
+                      className="absolute bottom-0 right-0 opacity-100 transition-opacity lg:opacity-0 lg:group-hover:opacity-100"
+                      onClick={handleEditAvatarClick}
+                    >
+                      <PencilSimple weight="bold" />
+                    </IconButton>
+                  )}
                 </div>
-                {userDetail?.role?.id === Role.HUBER && (
-                  <div className="flex items-center gap-2">
-                    <Heart className="text-pink-50" weight="fill" />
-                    <p className="text-sm text-black opacity-80">
-                      {userDetail?.rating ?? 0}
-                      /5 (hearts)
-                    </p>
+                <div className="ml-[40px] flex flex-col gap-1 lg:gap-4 lg:py-6">
+                  <div className="flex flex-col gap-1 lg:flex-row lg:items-center lg:gap-4">
+                    <Chip
+                      disabled
+                      className="h-full w-fit rounded-[8px] border border-[#F9DA6C] bg-[#FDF3CE] px-2 py-1 text-xs font-medium uppercase leading-[14px] text-[#FF7301] opacity-100 lg:px-3 lg:text-xl"
+                    >
+                      {userDetail?.role?.name}
+                    </Chip>
+                    <h4 className="text-[28px] font-medium leading-9 text-black">{userDetail?.fullName}</h4>
                   </div>
-                )}
+                  {userDetail?.role?.id === Role.HUBER && (
+                    <div className="flex items-center gap-2">
+                      <Heart className="text-pink-50" weight="fill" />
+                      <p className="text-sm text-black opacity-80">
+                        {userDetail?.rating ?? 0}
+                        /5 (hearts)
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
               {notMe && userDetail?.role?.id === Role.HUBER && (
                 <div className="flex gap-2 lg:hidden">
