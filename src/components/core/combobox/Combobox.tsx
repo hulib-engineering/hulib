@@ -24,6 +24,29 @@ import SelectButton from '@/components/core/selectButton/selectButton';
 
 import useClickOutside from '@/libs/hooks/useClickOutside';
 
+const CHIP_COLOR_PALETTE = [
+  { border: '#FBE79D', bg: '#FDF3CE', text: '#FF7301' },
+  { border: '#FFC9E3', bg: '#FFE4F1', text: '#FF2C94' },
+  { border: '#FFC799', bg: '#FFE3CC', text: '#FF7301' },
+  { border: '#B2F39F', bg: '#D9F9CF', text: '#38AA16' },
+];
+
+const getChipColor = (id: number | string) => {
+  const numId = typeof id === 'string' ? Number(id) : id;
+  const safeIndex = Number.isNaN(numId) ? 0 : Math.abs(numId) % CHIP_COLOR_PALETTE.length;
+  return CHIP_COLOR_PALETTE[safeIndex] ?? CHIP_COLOR_PALETTE[0]!;
+};
+
+const getChipColorClass = (id: number | string) => {
+  const { bg, text } = getChipColor(id);
+  return `bg-[${bg}] text-[${text}]`;
+};
+
+// const getChipIconColorClass = (id: number | string) => {
+//   const { text } = getChipColor(id);
+//   return `[&_svg]:text-[${text}]`;
+// };
+
 const ComboboxRoot = ({
   value,
   children,
@@ -247,7 +270,10 @@ const SelectedItem = forwardRef<
         >
           <SelectButton.Value>
             <SelectButton.Chip
-              className={iconClassname}
+              className={mergeClassnames(
+                iconClassname,
+                '[&_svg]:text-blue-600',
+              )}
               onClear={() => onClear && onClear(index)}
             >
               {label}
@@ -259,7 +285,7 @@ const SelectedItem = forwardRef<
   },
 );
 
-const VisualSelectInput = forwardRef<HTMLElement, InputProps>(
+const VisualSelectInput = forwardRef<HTMLElement, InputProps & { coloredChips?: boolean }>(
   (
     {
       displayValue,
@@ -268,13 +294,13 @@ const VisualSelectInput = forwardRef<HTMLElement, InputProps>(
       className,
       label,
       preventButtonForceClick,
+      coloredChips,
       ...rest
-    }: InputProps,
+    }: InputProps & { coloredChips?: boolean },
     ref,
   ) => {
     const {
       value,
-      // size,
       popper,
       disabled,
       onQueryChange,
@@ -293,7 +319,14 @@ const VisualSelectInput = forwardRef<HTMLElement, InputProps>(
       >
         <div className="flex flex-wrap items-center gap-2">
           {selected.map(({ id, label }) => {
-            return <SelectedItem key={id} index={id} label={label} />;
+            return (
+              <SelectedItem
+                key={id}
+                index={id}
+                label={label}
+                iconClassname={coloredChips ? getChipColorClass(id) : undefined}
+              />
+            );
           })}
         </div>
         <HeadlessCombobox.Input
@@ -304,7 +337,11 @@ const VisualSelectInput = forwardRef<HTMLElement, InputProps>(
           }}
           as={NativeInput}
           displayValue={displayValue}
-          placeholder={placeholder === undefined ? '' : `${placeholder}`}
+          placeholder={
+            placeholder === undefined || selected.length > 0
+              ? ''
+              : `${placeholder}`
+          }
           type={type || 'text'}
           disabled={disabled}
           error={false}
@@ -316,7 +353,6 @@ const VisualSelectInput = forwardRef<HTMLElement, InputProps>(
             && (placeholder === undefined || placeholder.length === 0)
             && 'input-xl',
             label !== undefined && 'pt-3 input-xl-dt-label',
-            // getTextSizes(size),
             className,
           )}
           aria-label={rest['aria-label']}
@@ -329,7 +365,6 @@ const VisualSelectInput = forwardRef<HTMLElement, InputProps>(
             if (!handleOnFocus) {
               return;
             }
-
             handleOnFocus(e, preventButtonForceClick);
           }}
           onBlur={handleOnBlur}
@@ -440,7 +475,7 @@ const Transition = ({ children, ...rest }: WithChildren) => {
       leave="transition ease-in duration-100"
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
-      afterLeave={onQueryChange ? () => onQueryChange('') : () => {}}
+      afterLeave={onQueryChange ? () => onQueryChange('') : () => { }}
       {...rest}
     >
       {children}
@@ -528,3 +563,4 @@ const Combobox = Object.assign(ComboboxRoot, {
 });
 
 export default Combobox;
+export { getChipColor };
