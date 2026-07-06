@@ -553,7 +553,20 @@
     "story_removed_from_favorites": "Favorite removed successfully",
     "huber_removed_from_favorites": "Successfully removed huber from favorite list",
     "error_contact_admin": "An error occurred, please contact admin for support!",
-    "share_story": "Share another story"
+    "share": "Share",
+    "share_to": "Share to",
+    "share_copied": "Link copied to clipboard!",
+    "share_story": "Share another story",
+    "views": "views",
+    "likes": "likes",
+    "like_button": "Like",
+    "like_error": "Failed to update like",
+    "booking_cta": "If you feel connected to the author, remember to book a meeting with them here",
+    "book_a_meeting": "Book a Meeting",
+    "booking_count": "100 meetings have been booked from this story",
+    "author": "Author",
+    "stories": "stories",
+    "favorites": "favorites"
   },
   "Huber": {
     "title": "Explore our Hubers",

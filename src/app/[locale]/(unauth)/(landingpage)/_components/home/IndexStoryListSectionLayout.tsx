@@ -83,7 +83,6 @@ export const IndexStoryListSectionLayout = (props: Props) => {
           'lg:grid-cols-2',
           'xxl:grid-cols-3',
           '3xl:grid-cols-4',
-          'min-[2560px]:flex min-[2560px]:flex-wrap',
         )}
       >
         {storiesWithFav?.map(item => (

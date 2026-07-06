@@ -35,8 +35,29 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
 
   const [addToMyFavorites] = useAddStoryToMyFavoritesMutation();
   const [removeFromFavorite] = useRemoveStoryFromMyFavoritesMutation();
-  const visibleTopics = data.topics?.slice(0, 1) ?? [];
-  const remainingTopicsCount = Math.max((data.topics?.length ?? 0) - visibleTopics.length, 0);
+  const mockTopicHuber = [
+    {
+      id: '1',
+      name: 'Khoảnh khắc gia đình',
+      color: 'blue',
+    },
+    {
+      id: '2',
+      name: 'Overthinking',
+      color: 'blue',
+    },
+    {
+      id: '3',
+      name: 'Gia đình',
+      color: 'orange',
+    },
+  ];
+  const visibleTopics = data.topics?.length > 0 ? data.topics.slice(0, 1) : mockTopicHuber.slice(0, 1);
+  const remainingTopicsCount = Math.max((data.topics?.length > 0 ? data.topics?.length : mockTopicHuber.length) - visibleTopics.length, 0);
+
+  const isDisplayNewEventTag = visibleTopics.some(topic =>
+    topic.name.toLowerCase().includes('khoảnh khắc'),
+  ) ?? false;
 
   const handleClickRead = async () => {
     await requireAuth(() => {
@@ -62,13 +83,13 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
   };
 
   return (
-    <div className="max-h-[365px] max-w-[402px] gap-3 rounded-2xl bg-white p-4 shadow-sm">
+    <div className="relative max-h-[365px] max-w-[402px] gap-3 rounded-2xl bg-white p-4 shadow-sm">
       <div className={mergeClassnames(
         'flex w-full items-stretch gap-2',
         className,
       )}
       >
-        <div className="relative flex min-w-0 flex-1 flex-col justify-between gap-3 lg:gap-4">
+        <div className="flex min-w-0 flex-1 flex-col justify-between gap-3 lg:gap-4">
           <div className="flex flex-1 flex-col gap-2 lg:gap-3">
             <h6 className="line-clamp-2 min-h-14 text-xl font-medium capitalize leading-7 text-primary-10">
               {data?.title}
@@ -127,8 +148,16 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
           </div>
         </div>
 
-        <div className="relative shrink-0 overflow-hidden">
+        <div className="shrink-0 overflow-hidden">
           <Cover src={data?.cover?.path || DEFAULT_STORY_COVER_ASSET} />
+          {isDisplayNewEventTag && (
+            <span
+              className="absolute right-0 top-0 bg-primary-60 py-1 pl-4 pr-2 text-sm font-medium leading-4 text-white"
+              style={{ clipPath: 'polygon(12px 0, 100% 0, 100% 100%, 12px 100%, 0 50%)' }}
+            >
+              Khoảnh khắc Muse
+            </span>
+          )}
         </div>
       </div>
       <div className="mt-3 flex w-full items-center gap-2">
