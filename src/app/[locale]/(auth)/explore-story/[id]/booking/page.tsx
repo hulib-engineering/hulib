@@ -246,7 +246,7 @@ export default function Index() {
                       </Button>
                       <Button
                         className="w-full"
-                        onClick={() => router.push('/home')}
+                        onClick={() => router.push('/')}
                       >
                         {t('back_to_home')}
                       </Button>

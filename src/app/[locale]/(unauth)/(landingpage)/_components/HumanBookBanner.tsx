@@ -57,7 +57,7 @@ const HumanBookBanner = () => {
           <Link
             href={
               isUserLoggedIn && !isUserLoggedInButTokenHasExpired
-                ? '/home'
+                ? '/'
                 : publicRoutes.LOGIN
             }
           >

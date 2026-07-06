@@ -7,21 +7,9 @@ export async function uploadCoverBlob(
   fileName: string,
   uploadCover: UploadCoverMutation,
 ): Promise<string | undefined> {
-  const uploadResult = await uploadCover({
-    fileName,
-    fileSize: blob.size,
-  });
+  const file = new File([blob], fileName, { type: blob.type || 'image/png' });
 
-  const signedUrl = uploadResult.data?.uploadSignedUrl;
-  if (!signedUrl) {
-    return undefined;
-  }
+  const uploadResult = await uploadCover(file);
 
-  await fetch(signedUrl, {
-    method: 'PUT',
-    headers: { 'Content-Type': blob.type || 'image/png' },
-    body: blob,
-  });
-
-  return uploadResult.data?.file.id;
+  return uploadResult.data?.file?.id; // khớp đúng shape { file: { id, path } }
 }

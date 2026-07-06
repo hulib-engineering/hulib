@@ -478,6 +478,7 @@
       "title": "About",
       "liber_overview": "Liber Overview",
       "huber_overview": "Huber Overview",
+      "my_book": "My book",
       "work_and_education": "Work and Education",
       "contact_information": "Contact Information",
       "moderations": "Warnning/Banned history"
@@ -553,7 +554,20 @@
     "story_removed_from_favorites": "Favorite removed successfully",
     "huber_removed_from_favorites": "Successfully removed huber from favorite list",
     "error_contact_admin": "An error occurred, please contact admin for support!",
-    "share_story": "Share another story"
+    "share": "Share",
+    "share_to": "Share to",
+    "share_copied": "Link copied to clipboard!",
+    "share_story": "Share another story",
+    "views": "views",
+    "likes": "likes",
+    "like_button": "Like",
+    "like_error": "Failed to update like",
+    "booking_cta": "If you feel connected to the author, remember to book a meeting with them here",
+    "book_a_meeting": "Book a Meeting",
+    "booking_count": "100 meetings have been booked from this story",
+    "author": "Author",
+    "stories": "stories",
+    "favorites": "favorites"
   },
   "Huber": {
     "title": "Explore our Hubers",
@@ -638,7 +652,7 @@
     "topics": "Topics",
     "title": "Title",
     "abstract": "Abstract",
-    "cover_picture": "Cover picture",
+    "cover_picture": "Cover for story",
     "edit_cover": "Customize cover",
     "cover_font": "Font",
     "cover_font_size": "Font size",
@@ -728,6 +742,23 @@
       "recording_detail": "Do you want to record this meeting? Recording will be visible to all attendees.",
       "not_record": "No, do not record",
       "start_recording": "Start recording"
+    }
+  },
+  "LandingPage": {
+    "navigation": {
+      "bookshelf": "Kệ sách",
+      "pinboard": "Bảng ghim",
+      "about_us": "Về Hulib"
+    },
+    "button": {
+      "sign_in": "Đăng nhập",
+      "sign_up": "Đăng ký"
+    }
+  },
+  "RecommendedHuber": {
+    "button": {
+      "follow": "Theo dõi",
+      "un_follow": "Hủy theo dõi"
     }
   }
 }

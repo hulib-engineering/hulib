@@ -40,6 +40,7 @@ export default async function middleware(request: NextRequest) {
   // Public routes
   const publicRoutes = [
     '/',
+    '/about',
     '/auth/login',
     '/auth/register',
     '/auth/forgot-password',

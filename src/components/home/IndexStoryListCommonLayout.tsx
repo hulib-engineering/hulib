@@ -2,6 +2,7 @@
 
 import { CaretCircleRight } from '@phosphor-icons/react';
 import React, { useMemo } from 'react';
+import { useSession } from 'next-auth/react';
 
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
@@ -36,7 +37,10 @@ type IIndexStoryListSectionLayoutProps = | {
 };
 
 const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) => {
-  const { data: favoriteStories } = useGetMyFavoritesQuery();
+  const { data: session } = useSession();
+  const { data: favoriteStories } = useGetMyFavoritesQuery(undefined, {
+    skip: !session,
+  });
 
   const storiesWithFav = useMemo(() => {
     return props.stories && props.stories?.data && props.stories?.data.map((story: StoryType) => {
