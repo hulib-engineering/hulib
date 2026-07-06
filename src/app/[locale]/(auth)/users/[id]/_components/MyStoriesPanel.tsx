@@ -147,7 +147,9 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
                   <Plus className="text-xl text-white" />
                 </div>
               </IconButton>
-              <Button size="lg" onClick={() => setIsFirstBookModalOpen(true)}>
+              {/* DEBUGGING NOTE for 'Feat/UI notice approved story book':
+              - Temporarily change the below function ("setIsCreateModalOpen") to "setIsFirstBookModalOpen" to test out the feature screen quickly. */}
+              <Button size="lg" onClick={() => setIsCreateModalOpen(true)}>
                 Create New Story
               </Button>
             </div>
