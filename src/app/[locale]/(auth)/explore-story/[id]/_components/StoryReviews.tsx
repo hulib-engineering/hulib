@@ -1,10 +1,11 @@
 'use client';
 
-import { CaretDown, DotsThreeVertical, Heart } from '@phosphor-icons/react';
+import { CaretDown, DotsThreeVertical } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { isEmpty } from 'lodash';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -24,22 +25,16 @@ export const ReviewItem = (params: TStoryReview) => (
           <p className="text-sm font-medium leading-5">
             {params.user?.fullName}
           </p>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-0.5">
-              {[...Array(5)].map((_, index) => (
-                <Heart
-                  key={index}
-                  weight="fill"
-                  className={mergeClassnames(index < params.rating ? 'text-yellow-50' : 'text-neutral-90')}
-                />
-              ))}
-            </div>
-            <p className="text-xs leading-[14px] text-opacity-50">
-              {params?.createdAt
-                ? new Date(params.createdAt).toLocaleDateString()
-                : ''}
+          {params?.createdAt && (
+            <p className="text-xs leading-[14px] text-[#00000080]">
+              {new Date(params.createdAt).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })}
             </p>
-          </div>
+          )}
+
         </div>
       </div>
       <IconButton variant="ghost" size="sm">
@@ -47,8 +42,7 @@ export const ReviewItem = (params: TStoryReview) => (
       </IconButton>
     </div>
     <div className="flex flex-col gap-1 text-opacity-80">
-      <p className="font-medium">{params.title}</p>
-      <p className="text-sm leading-5">{params.comment}</p>
+      <p className="text-sm leading-[22px]">{isEmpty(params.comment.trim()) ? 'No comment' : params.comment.trim()}</p>
     </div>
   </div>
 );
@@ -64,6 +58,7 @@ export default function StoryReviews({ maxHeight }: { maxHeight?: number }) {
     page: currentPage,
     limit: SHOW_LIMIT_REVIEWS,
   });
+  console.log('storyReviews', storyReviews);
   const hasNextPage
     = storyReviews?.meta?.currentPage && storyReviews?.meta?.totalPages
       ? storyReviews.meta.currentPage < storyReviews.meta.totalPages
@@ -100,8 +95,7 @@ export default function StoryReviews({ maxHeight }: { maxHeight?: number }) {
   return (
     <div
       className={mergeClassnames(
-        'flex w-full flex-col gap-2 rounded-none bg-white p-5 shadow-sm',
-        'lg:gap-4 lg:rounded-2xl lg:p-6',
+        'flex w-full flex-col gap-4 rounded-2xl bg-white p-5 shadow-sm',
       )}
       style={{ height: maxHeight && maxHeight > 0 ? maxHeight : 'auto' }}
     >
