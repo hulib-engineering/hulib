@@ -68,7 +68,7 @@ export default function FirstBookCreatedModal(props: FBModal) {
               >
                 Cập nhật lịch của bạn
               </div>
-              <div className="h-full text-[14px] text-sm font-[375] not-italic leading-[22px]
+              <div className="h-full text-sm font-[375] not-italic leading-[22px]
                                 tracking-[0.015em] text-black sm:max-h-[44px]"
               >
                 Cập nhật lịch của bạn để mọi người có thể trò chuyện trực tiếp với bạn

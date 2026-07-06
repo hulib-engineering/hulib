@@ -52,12 +52,14 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
                 : `${abstractPages[1]}...`
             ) : null}
           </p>
-          <Button
-            onClick={props.onClick}
-            className="w-11/12 text-sm sm:text-base"
-          >
-            {props.isPublished ? 'Read all' : 'Preview'}
-          </Button>
+          {!props.isPublished && (
+            <Button
+              onClick={props.onClick}
+              className="w-11/12 text-sm sm:text-base"
+            >
+              {props.isPublished ? 'Read all' : 'Preview'}
+            </Button>
+          )}
         </div>
         <div
           className={mergeClassnames(
@@ -76,9 +78,11 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
             />
           </div>
           <figure className="absolute m-0 flex size-full flex-col justify-between gap-[10px] rounded bg-left-page p-2 backface-hidden rotate-y-180">
-            <h6 className="line-clamp-2 text-lg font-medium leading-6 text-primary-10 sm:text-xl sm:leading-7">
-              {props.title}
-            </h6>
+            {!props.isPublished && (
+              <h6 className="line-clamp-2 text-lg font-medium leading-6 text-primary-10 sm:text-xl sm:leading-7">
+                {props.title}
+              </h6>
+            )}
             <p className="font-['DVN-Poppins] break-all text-xs leading-5 tracking-wider text-neutral-30 sm:text-sm">
               {abstractPages[0] ? (
                 props.highlightAbstract
