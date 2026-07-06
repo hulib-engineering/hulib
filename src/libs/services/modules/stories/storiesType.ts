@@ -17,6 +17,7 @@ export type StoriesParams = {
   topicIds?: string[];
   sort?: { orderBy: string; order: 'ASC' | 'DESC' }[];
   type?: 'most-popular' | string;
+  publishStatus?: number;
 };
 
 export type SearchParams = {
