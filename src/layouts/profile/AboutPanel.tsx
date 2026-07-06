@@ -53,6 +53,18 @@ const AboutPanel = ({
       ),
     },
     {
+      type: 'myBook',
+      label: data.role.id === Role.HUBER ? t('my_book') : t('my_book'),
+      icon: (
+        <Books
+          className={mergeClassnames(
+            'text-neutral-20 text-xl hulib-open:text-primary-20 lg:hover:text-primary-60',
+            currentSection === 'overview' && 'lg:text-primary-60',
+          )}
+        />
+      ),
+    },
+    {
       type: 'work',
       label: t('work_and_education'),
       icon: (
@@ -117,6 +129,7 @@ const AboutPanel = ({
                 <div className={mergeClassnames(
                   'flex w-full flex-col',
                   section.type === 'overview' && 'gap-2 p-3',
+                  section.type === 'myBook' && 'gap-2 p-3',
                   section.type === 'work' && 'gap-1 p-0 lg:gap-2',
                   section.type === 'contact' && 'p-3',
                 )}
