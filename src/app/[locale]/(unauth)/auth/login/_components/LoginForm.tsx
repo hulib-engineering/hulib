@@ -59,7 +59,7 @@ const LoginForm = () => {
           id: result.user.id,
           accessToken: result.token,
           role: result.user.role.name,
-          callbackUrl: `${window.location.origin}/home`,
+          callbackUrl: `${window.location.origin}/`,
         });
       }
     } catch {
@@ -145,12 +145,12 @@ const LoginForm = () => {
         <SocialButton
           variant="google"
           className="w-full"
-          onClick={() => signIn('google', { callbackUrl: '/home' })}
+          onClick={() => signIn('google', { callbackUrl: '/' })}
         />
         {/* <SocialButton
           iconUrl={FacebookIcon}
           className="w-full"
-          onClick={() => signIn('facebook', { callbackUrl: '/home' })}
+          onClick={() => signIn('facebook', { callbackUrl: '/' })}
         >
           Log in with Facebook
         </SocialButton> */}
