@@ -49,7 +49,7 @@
     }
   },
   "Footer": {
-    "footer_description": "Ẩn sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
+    "footer_description": "Ta sinh ra để là một ai đó. Mỗi chúng ta đều mang trong mình một câu chuyện và những trải nghiệm rất riêng.",
     "copyright": "© 2026 HuLib. Đã đăng ký bản quyền.",
     "privacy_policy": "chính sách bảo mật",
     "term_of_service": "điều khoản dịch vụ",
@@ -57,7 +57,7 @@
     "community_guidelines": "hướng dẫn cộng đồng"
   },
   "FooterWebApp": {
-    "footer_description": "Ẩn sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
+    "footer_description": "Ta sinh ra để là một ai đó. Mỗi chúng ta đều mang trong mình một câu chuyện và những trải nghiệm rất riêng.",
     "copyright": "© 2026 HuLib. Đã đăng ký bản quyền.",
     "privacy_policy": "Chính sách bảo mật",
     "term_of_service": "Điều khoản dịch vụ",
@@ -608,8 +608,8 @@
     "general": "General"
   },
   "ExploreStory": {
-    "title": "Khám phá",
-    "description": "Khám phá và tìm câu chuyện hoàn hảo của bạn",
+    "title": "Khám phá kho truyện",
+    "description": "Tìm thấy câu chuyện dành riêng cho bạn\n",
     "view_more": "Xem thêm",
     "topics": "Chủ đề",
     "ratings": "Đánh giá",
@@ -641,7 +641,7 @@
     "likes": "lượt thích",
     "like_button": "Thích",
     "like_error": "Thất bại",
-    "booking_cta": "Nếu cảm thấy kết nối với tác giả, bạn hãy nhớ đặt cuộc hẹn với tác giả tại đây nhé",
+    "booking_cta": "Nếu câu chuyện này chạm đến bạn, hãy kết nối cùng tác giả qua một buổi trò chuyện tại đây nhé",
     "book_a_meeting": "Book a Meeting",
     "booking_count": "Đã có 100 cuộc hẹn từ câu chuyện này",
     "author": "Tác giả",
