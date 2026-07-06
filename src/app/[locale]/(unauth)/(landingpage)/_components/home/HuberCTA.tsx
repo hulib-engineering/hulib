@@ -1,9 +1,11 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { HuberCTACard } from '@/components/home';
 
 export default function HuberCTA() {
+  const router = useRouter();
   return (
     <div className="relative inset-x-1/2 -mb-8 h-[403px] w-screen overflow-hidden bg-gradient-to-t from-[#fdf3ce] to-transparent -translate-x-1/2 md:h-[532px]">
       {/* Top fade into page background */}
@@ -39,6 +41,7 @@ export default function HuberCTA() {
           title="Trở thành thành viên mới trong đại gia đình Huber"
           subtitle="Short description"
           buttonLabel="Tạo sách mới"
+          onClick={() => router.push('/register-huber/policy')}
         />
       </div>
     </div>
