@@ -46,7 +46,8 @@ export default function Index() {
   const userAvatarId = useAppSelector(state => state.auth.avatarId);
   const userAvatarUrl = useAppSelector(state => state.auth.avatarUrl);
   const notMe = Number(userId) !== Number(userInfo?.id);
-  const isHuber = userInfo?.role?.id === Role.HUBER;
+  // const isHuber = userInfo?.role?.id === Role.HUBER;
+  const isHuber = true; // debugging
 
   const visibleTabs = useMemo(() => {
     if (!notMe) {
