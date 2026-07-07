@@ -18,7 +18,8 @@ import { useAddStoryToMyFavoritesMutation, useRemoveStoryFromMyFavoritesMutation
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
-import { useRequireAuth } from '@/libs/hooks';
+import { useMobile, useRequireAuth } from '@/libs/hooks';
+import AnimatedCover from '@/features/stories/components/AnimatedCover';
 
 type IStoryCardProps = {
   data: TStory;
@@ -30,6 +31,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
   const { requireAuth } = useRequireAuth();
   const locale = useLocale();
   const t = useTranslations('ExploreStory');
+  const isMobile = useMobile();
 
   const [isFavorite, setIsFavorite] = useState(Boolean(data.isFavorite));
 
@@ -39,11 +41,11 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
     {
       id: '1',
       name: 'Khoảnh khắc gia đình',
-      color: 'blue',
+      color: 'primary',
     },
     {
       id: '2',
-      name: 'Overthinking',
+      name: 'Cảm xúc',
       color: 'blue',
     },
     {
@@ -59,14 +61,20 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
     topic.name.toLowerCase().includes('khoảnh khắc'),
   ) ?? false;
 
+  const newEventTagText = visibleTopics.find(topic => topic.name.toLowerCase().includes('khoảnh khắc'))?.name ?? '';
+
   const handleClickRead = async () => {
-    await requireAuth(() => {
+    const isAuth = await requireAuth(() => {
       router.push(`/${locale}/explore-story/${data.id}`);
     });
+    console.log('isAuth', isAuth);
+    if (!isAuth) {
+      router.push('/auth/login');
+    }
   };
 
   const handleClickFavorite = async () => {
-    await requireAuth(async () => {
+    const isAuth = await requireAuth(async () => {
       try {
         if (isFavorite) {
           const response = await removeFromFavorite(data.id).unwrap();
@@ -80,6 +88,9 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
         pushError(err?.data?.message || t('error_contact_admin'));
       }
     });
+    if (!isAuth) {
+      router.push('/auth/login');
+    }
   };
 
   return (
@@ -105,13 +116,13 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
                       getTopicBadgeClasses(topic.color),
                     )}
                   >
-                    <span className="line-clamp-2 block overflow-hidden break-words">
+                    <span className="line-clamp-1">
                       {topic.name}
                     </span>
                   </Chip>
                 ))}
                 {remainingTopicsCount > 0 && (
-                  <span className="inline-flex shrink-0 items-center whitespace-nowrap rounded border border-[#FCB165] bg-[#FFEFD6] px-2 py-1 text-xs font-medium leading-[14px] text-[#FC8513]">
+                  <span className="inline-flex shrink-0 items-center whitespace-nowrap rounded border border-primary-80 bg-primary-60 px-2 py-1 text-xs font-medium leading-[14px] text-white">
                     +
                     {remainingTopicsCount}
                   </span>
@@ -148,16 +159,30 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
           </div>
         </div>
 
-        <div className="shrink-0 overflow-hidden">
-          <Cover src={data?.cover?.path || DEFAULT_STORY_COVER_ASSET} />
+        <div className="shrink-0">
           {isDisplayNewEventTag && (
             <span
-              className="absolute right-0 top-0 bg-primary-60 py-1 pl-4 pr-2 text-sm font-medium leading-4 text-white"
+              className="absolute right-0 top-0 z-10 bg-primary-60 py-1 pl-4 pr-2 text-sm font-medium leading-4 text-white"
               style={{ clipPath: 'polygon(12px 0, 100% 0, 100% 100%, 12px 100%, 0 50%)' }}
             >
-              Khoảnh khắc Muse
+              {newEventTagText}
             </span>
           )}
+          {isMobile ? (<Cover src={data?.cover?.path || DEFAULT_STORY_COVER_ASSET} />) : (
+            <div className="h-[262px] w-[185px] overflow-visible rounded-2xl">
+              <AnimatedCover
+                abstract={data?.abstract ?? ''}
+                title={data?.title ?? ''}
+                authorName={data?.humanBook?.fullName ?? ''}
+                coverUrl={data?.cover?.path || ''}
+                highlightTitle={data?.highlightTitle}
+                highlightAbstract={data?.highlightAbstract}
+                isPublished
+                onClick={() => router.push(`/explore-story/${data?.id}`)}
+              />
+            </div>
+          )}
+
         </div>
       </div>
       <div className="mt-3 flex w-full items-center gap-2">
@@ -186,6 +211,5 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
         </IconButton>
       </div>
     </div>
-
   );
 };
