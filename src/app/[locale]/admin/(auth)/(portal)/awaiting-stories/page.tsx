@@ -9,12 +9,14 @@ import Pagination from '@/components/core/pagination/Pagination';
 import { StoryCard } from '@/features/stories/components/StoryCard';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
+import { PublishStatusEnum } from '@/libs/services/modules/stories/storiesType';
 
 export default function AwaitingStoriesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const { data: awaitingStories, isLoading } = useGetStoriesQuery({
     page: currentPage,
     limit: 6,
+    publishStatus: PublishStatusEnum.DRAFT, // Awaiting approval
   });
 
   const list = awaitingStories?.data ?? [];

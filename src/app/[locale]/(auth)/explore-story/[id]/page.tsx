@@ -27,9 +27,10 @@ import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import {
   useGetSimilarStoriesQuery,
   useGetStoryDetailQuery,
+  useShareStoryMutation,
   useUpdateStoryMutation,
 } from '@/libs/services/modules/stories';
-import { PublishStatusEnum } from '@/libs/services/modules/stories/storiesType';
+import { PublishStatusEnum, StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
 import { Chip } from '@/components/core/chip/Chip';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
@@ -63,6 +64,7 @@ export default function Index() {
     skip: !data || (!data?.humanBookId && !data?.topics.length),
   });
   const [updateStory] = useUpdateStoryMutation();
+  const [shareStory] = useShareStoryMutation();
 
   const [bookWidth, setBookWidth] = React.useState<number>();
   const [isShareModalOpen, setIsShareModalOpen] = React.useState(false);
@@ -174,6 +176,7 @@ export default function Index() {
       await updateStory({
         id: Number(id),
         ...data,
+        publishStatus: StoryPublishStatus.PUBLISHED,
         totalLikes: newCount,
       }).unwrap();
     } catch {
@@ -189,6 +192,7 @@ export default function Index() {
     }
 
     const isCopied = await copyToClipboard(storyUrl);
+    shareStory(Number(id)).unwrap();
 
     if (!isCopied) {
       pushError(COPY_STORY_LINK_ERROR_MESSAGE);
