@@ -13,7 +13,6 @@ import type { Topic } from '@/libs/services/modules/user/userType';
 import Modal from '@/components/Modal';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import StoryForm from '@/features/stories/components/StoryForm';
-import FirstBookCreatedModal from '@/features/stories/components/FirstBookCreatedModal';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
 
 type TTopic = {
@@ -42,7 +41,6 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
   );
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isFirstBookModalOpen, setIsFirstBookModalOpen] = useState(false);
   const [selectedTopicIds, setSelectedTopicIds] = useState<number[]>(topics.map(topic => topic.topicId));
 
   const handleTopicChipClick = (topicId: number) => {
@@ -61,10 +59,6 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
 
   const handleBookSubmitSuccess = () => {
     setIsCreateModalOpen(false);
-
-    /* MISSING: Conditions that determine if the user hasn't submitted a book before */
-
-    setIsFirstBookModalOpen(true);
   };
 
   if (isLoading) {
@@ -147,8 +141,6 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
                   <Plus className="text-xl text-white" />
                 </div>
               </IconButton>
-              {/* DEBUGGING NOTE for 'Feat/UI notice approved story book':
-              - Temporarily change the below function ("setIsCreateModalOpen") to "setIsFirstBookModalOpen" to test out the feature screen quickly. */}
               <Button size="lg" onClick={() => setIsCreateModalOpen(true)}>
                 Create New Story
               </Button>
@@ -176,20 +168,6 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
             onCancel={() => setIsCreateModalOpen(false)}
           />
         </Modal.Panel>
-      </Modal>
-
-      {/* FirstBookCreatedModal */}
-      <Modal
-        open={isFirstBookModalOpen}
-        onClose={() => setIsFirstBookModalOpen(false)}
-      >
-        <Modal.Backdrop />
-        <Modal.Panel className="w-full shadow-none lg:w-5/6 lg:max-w-6xl">
-          <FirstBookCreatedModal
-            onClose={() => setIsFirstBookModalOpen(false)}
-          />
-        </Modal.Panel>
-
       </Modal>
     </div>
   );

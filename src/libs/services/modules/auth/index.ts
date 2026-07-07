@@ -20,6 +20,7 @@ import addEducation from './addEducation';
 import editEducation from './editEducation';
 
 import type { Topic } from '@/libs/services/modules/topics/topicType';
+import markHuberOnboardingSeen from '@/libs/services/modules/auth/markHuberOnboardingSeen';
 
 type Enum = {
   id: number;
@@ -42,6 +43,7 @@ export type User = {
   parentFullname?: string;
   photo?: { id: string; path: string };
   sharingTopics?: Topic[];
+  hasSeenHuberOnboarding: boolean;
   // createdAt: Date;
   // updatedAt: Date;
   // deletedAt?: Date;
@@ -78,6 +80,7 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
     editWorkExperience: editWorkExperience(build),
     addEducation: addEducation(build),
     editEducation: editEducation(build),
+    markHuberOnboardingSeen: markHuberOnboardingSeen(build),
   }),
   overrideExisting: false,
 });
@@ -99,4 +102,5 @@ export const {
   useEditWorkExperienceMutation,
   useAddEducationMutation,
   useEditEducationMutation,
+  useMarkHuberOnboardingSeenMutation,
 }: any = authApi;
