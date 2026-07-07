@@ -39,11 +39,11 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
     {
       id: '1',
       name: 'Khoảnh khắc gia đình',
-      color: 'blue',
+      color: 'primary',
     },
     {
       id: '2',
-      name: 'Overthinking',
+      name: 'Cảm xúc',
       color: 'blue',
     },
     {
@@ -58,6 +58,8 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
   const isDisplayNewEventTag = visibleTopics.some(topic =>
     topic.name.toLowerCase().includes('khoảnh khắc'),
   ) ?? false;
+
+  const newEventTagText = visibleTopics.find(topic => topic.name.toLowerCase().includes('khoảnh khắc'))?.name ?? '';
 
   const handleClickRead = async () => {
     await requireAuth(() => {
@@ -105,13 +107,13 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
                       getTopicBadgeClasses(topic.color),
                     )}
                   >
-                    <span className="line-clamp-2 block overflow-hidden break-words">
+                    <span className="line-clamp-1">
                       {topic.name}
                     </span>
                   </Chip>
                 ))}
                 {remainingTopicsCount > 0 && (
-                  <span className="inline-flex shrink-0 items-center whitespace-nowrap rounded border border-[#FCB165] bg-[#FFEFD6] px-2 py-1 text-xs font-medium leading-[14px] text-[#FC8513]">
+                  <span className="inline-flex shrink-0 items-center whitespace-nowrap rounded border border-primary-80 bg-primary-60 px-2 py-1 text-xs font-medium leading-[14px] text-white">
                     +
                     {remainingTopicsCount}
                   </span>
@@ -155,7 +157,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
               className="absolute right-0 top-0 bg-primary-60 py-1 pl-4 pr-2 text-sm font-medium leading-4 text-white"
               style={{ clipPath: 'polygon(12px 0, 100% 0, 100% 100%, 12px 100%, 0 50%)' }}
             >
-              Khoảnh khắc Muse
+              {newEventTagText}
             </span>
           )}
         </div>
