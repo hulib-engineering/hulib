@@ -43,13 +43,14 @@
     }
   },
   "Footer": {
+    "footer_description": "We are all born to be somebody. Each of us carries a story and experiences that are uniquely our own.",
     "copyright": "© 2026 HuLib. All rights reserved.",
     "privacy_policy": "privacy policy",
     "term_of_service": "term of service",
     "community_guidelines": "community guidelines"
   },
   "FooterWebApp": {
-    "footer_description": "Promote happiness values by connecting very personal stories with human books.",
+    "footer_description": "We are all born to be somebody. Each of us carries a story and experiences that are uniquely our own.",
     "privacy_policy": "Privacy policy",
     "term_of_service": "Term of service",
     "community_guidelines": "Community guidelines",
@@ -546,7 +547,8 @@
     "general": "General"
   },
   "ExploreStory": {
-    "description": "Discover and find your perfect story",
+    "title": "Explore all stories",
+    "description": "Discover a story made just for you",
     "ratings": "ratings",
     "read_story": "Read all",
     "similar_stories": "Similar Stories",
@@ -562,7 +564,7 @@
     "likes": "likes",
     "like_button": "Like",
     "like_error": "Failed to update like",
-    "booking_cta": "If you feel connected to the author, remember to book a meeting with them here",
+    "booking_cta": "If this story speaks to you, connect with the author through a conversation here",
     "book_a_meeting": "Book a Meeting",
     "booking_count": "100 meetings have been booked from this story",
     "author": "Author",
