@@ -48,6 +48,13 @@
       "description": "Chúng tôi không tìm thấy kết quả nào phù hợp với tìm kiếm của bạn. Vui lòng thử tìm kiếm lại."
     }
   },
+  "FirstBookCreated": {
+    "welcome_title": "Chào mừng bạn đến với cộng đồng",
+    "welcome_description": "Cuốn sách đầu tiên của bạn đã được duyệt, bây giờ mọi người có thể xem câu chuyện của bạn",
+    "update_schedule_title": "Bạn đã sẵn sàng để kết nối cùng Liber chưa?",
+    "update_schedule_description": "Hãy cập nhật thời gian rảnh để Liber có thể liên hệ với bạn nhé",
+    "update_schedule_button": "Cập nhật lịch cá nhân"
+  },
   "Footer": {
     "footer_description": "Ẩn sâu bên trong chúng ta đều có một câu chuyện và trải nghiệm, vì vậy chúng ta được sinh ra để là một ai đó.",
     "copyright": "© 2026 HuLib. Đã đăng ký bản quyền.",
