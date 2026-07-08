@@ -13,7 +13,7 @@ import MyStoriesPanel from './_components/MyStoriesPanel';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
-import Loading from '@/components/loadingState/_loadingAnimationPicker';
+import Loading from '@/app/[locale]/loading';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import AboutPanel from '@/layouts/profile/AboutPanel';

@@ -13,11 +13,11 @@ import * as React from 'react';
 import ScheduleBasicInfo from './_components/SessionAttendeesInfo';
 
 import Button from '@/components/core/button/Button';
-import Loading from '@/components/loadingState/_loadingAnimationPicker';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';
 import { TimezoneSelect } from '@/components/TimezoneSelect';
+import Loading from '@/app/[locale]/loading';
 import BookingTimetable from '@/layouts/booking/BookingTimetable';
 import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';

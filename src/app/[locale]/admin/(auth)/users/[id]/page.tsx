@@ -14,7 +14,7 @@ import MenuItem from '@/components/core/menuItem/MenuItem';
 import Popover from '@/components/core/popover/Popover';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { pushSuccess } from '@/components/CustomToastifyContainer';
-import Loading from '@/components/loadingState/_loadingAnimationPicker';
+import Loading from '@/app/[locale]/loading';
 // import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { ProfileCover } from '@/components/ProfileCover';
 import { ActionOnUserModal } from '@/layouts/admin/ActionOnUserModal';

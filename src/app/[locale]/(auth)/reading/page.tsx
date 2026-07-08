@@ -11,7 +11,7 @@ import {
   useUpdateReadingSessionMutation,
 } from '@/libs/services/modules/reading-session';
 import PreSurvey from '@/layouts/reading/PreSurvey';
-import Loading from '@/components/loadingState/_loadingAnimationPicker';
+import Loading from '@/app/[locale]/loading';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { StatusEnum } from '@/types/common';
 import { useStopCloudRecordingMutation } from '@/libs/services/modules/agora';
