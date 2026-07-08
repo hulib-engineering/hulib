@@ -13,7 +13,7 @@ import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import Loading from '@/components/loadingState/_loadingAnimationPicker';
+import Loading from '@/app/[locale]/loading';
 import { EmojiRateScale } from '@/components/EmojiRateScale';
 import IconButton from '@/components/core/iconButton/IconButton';
 import Label from '@/components/Label';

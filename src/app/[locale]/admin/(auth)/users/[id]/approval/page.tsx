@@ -9,7 +9,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
-import Loading from '@/components/loadingState/_loadingAnimationPicker';
+import Loading from '@/app/[locale]/loading';
 import { ProfileCover } from '@/components/ProfileCover';
 import AboutPanel from '@/layouts/profile/AboutPanel';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
