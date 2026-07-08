@@ -14,7 +14,7 @@ import MenuItem from '@/components/core/menuItem/MenuItem';
 import Popover from '@/components/core/popover/Popover';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { pushSuccess } from '@/components/CustomToastifyContainer';
-import { Spinner } from '@/components/loadingState/Spinner';
+import Loading from '@/components/loadingState/_loadingAnimationPicker';
 // import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { ProfileCover } from '@/components/ProfileCover';
 import { ActionOnUserModal } from '@/layouts/admin/ActionOnUserModal';
@@ -116,7 +116,7 @@ export default function Index() {
   if (isLoading) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
-        <Spinner />
+        <Loading />
       </div>
     );
   }

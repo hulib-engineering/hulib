@@ -13,7 +13,7 @@ import * as React from 'react';
 import ScheduleBasicInfo from './_components/SessionAttendeesInfo';
 
 import Button from '@/components/core/button/Button';
-import { Spinner } from '@/components/loadingState/Spinner';
+import Loading from '@/components/loadingState/_loadingAnimationPicker';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';
@@ -92,7 +92,7 @@ export default function Index() {
   if (!story) {
     return (
       <div className="flex h-screen w-full flex-1 items-center justify-center">
-        <Spinner />
+        <Loading />
       </div>
     );
   }
