@@ -1,16 +1,11 @@
 'use client';
 
-import { AnimationLoading } from '@/components/AnimationLoading';
+import Loading from '@/components/loadingState/_loadingAnimationPicker';
 
-export default function Loading() {
-  // You can add any UI inside Loading, including a Skeleton.
+export default function _Loading() {
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center">
-      <AnimationLoading
-        animationData="/assets/animations/book.json"
-        width="300px"
-        height="300px"
-      />
+      <Loading />
     </div>
   );
 }
