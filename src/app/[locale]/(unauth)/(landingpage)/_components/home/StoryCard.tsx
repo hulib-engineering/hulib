@@ -146,14 +146,14 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
                 <p className="text-[14px] font-medium leading-4 text-neutral-20">
                   {data?.storyReview?.rating || 0}
                 </p>
-                <p className="text-[14px] font-normal leading-4 text-neutral-10">đồng cảm</p>
+                <p className="text-[14px] font-normal leading-4 text-neutral-10">{t('empathy')}</p>
               </div>
               <div className="flex items-center gap-1 lg:gap-2">
                 <Eye className="text-primary-50" size={16} />
                 <p className="text-[14px] font-medium leading-4 text-neutral-20">
                   {data.viewCount ?? 0}
                 </p>
-                <p className="text-[14px] font-normal leading-4 text-neutral-10">lượt xem</p>
+                <p className="text-[14px] font-normal leading-4 text-neutral-10">{t('views')}</p>
               </div>
             </div>
           </div>
@@ -191,7 +191,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
           className="flex-1 rounded-full py-3 text-base font-medium leading-5"
           onClick={handleClickRead}
         >
-          Đọc hết
+          {t('read_all')}
         </Button>
         <IconButton
           variant="outline"

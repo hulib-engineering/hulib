@@ -5,6 +5,7 @@ import React, { useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { StoryCard } from './StoryCard';
 
 import Button from '@/components/core/button/Button';
@@ -27,6 +28,7 @@ export const IndexStoryListSectionLayout = (props: Props) => {
 
   const router = useRouter();
   const { data: session } = useSession();
+  const t = useTranslations('Common');
   const { data: favoriteStories } = useGetMyFavoritesQuery(undefined, {
     skip: !session,
   });
@@ -72,7 +74,7 @@ export const IndexStoryListSectionLayout = (props: Props) => {
             className="text-base font-medium leading-5 text-primary-50"
             onClick={() => router.push('/explore-story')}
           >
-            Tất cả
+            {t('all')}
           </Button>
         )}
       </div>

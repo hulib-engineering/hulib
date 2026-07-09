@@ -17,12 +17,16 @@ import { useAppSelector, useMobile } from '@/libs/hooks';
 import { Role, StatusEnum } from '@/types/common';
 import StoryForm from '@/features/stories/components/StoryForm';
 
-const STEPS = ['Fill Information', 'Select Available Slots', 'Create Story'];
-
 export default function AccountUpgrade() {
   const router = useRouter();
 
   const t = useTranslations('Common');
+
+  const STEPS = [
+    t('account_upgrade.steps.fill_information'),
+    t('account_upgrade.steps.select_available_slots'),
+    t('account_upgrade.steps.create_story'),
+  ];
 
   const isMobile = useMobile();
 
@@ -98,7 +102,7 @@ export default function AccountUpgrade() {
           <div className="flex w-full flex-col items-center gap-4 rounded-[20px] bg-white p-4 shadow-sm">
             <Image
               src="/assets/images/misc/schedule-success.svg"
-              alt="success"
+              alt={t('account_upgrade.success_image_alt')}
               width={434}
               height={374}
               className="h-[374px] w-full md:h-[320px] md:w-[372px]"

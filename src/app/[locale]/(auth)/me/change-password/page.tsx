@@ -65,7 +65,7 @@ export default function Index() {
     <div className="mx-auto my-12 max-w-[592px] rounded-[20px] bg-white px-4 py-8 lg:p-5">
       <div className="flex flex-col gap-5 lg:gap-[60px]">
         <h2 className="text-2xl font-medium leading-8 tracking-[-2%] text-black lg:text-4xl lg:leading-[44px]">
-          Change Your Password
+          {t('change_password_title')}
         </h2>
         <Form
           form={form}
@@ -80,7 +80,7 @@ export default function Index() {
                 <TextInput
                   id="oldPassword"
                   type="password"
-                  label="Old Password"
+                  label={t('old_password_label')}
                   isError={!!error}
                   hintText={error?.message}
                   {...field}
@@ -94,7 +94,7 @@ export default function Index() {
                 <TextInput
                   id="newPassword"
                   type="password"
-                  label="New Password"
+                  label={t('new_password_label')}
                   isError={!!error}
                   hintText={error?.message}
                   {...field}
@@ -108,7 +108,7 @@ export default function Index() {
                 <TextInput
                   id="confirmPassword"
                   type="password"
-                  label="Re-enter New Password"
+                  label={t('confirm_new_password_label')}
                   isError={!!error}
                   hintText={error?.message}
                   {...field}
@@ -151,7 +151,7 @@ export default function Index() {
               fullWidth
               onClick={() => router.push('/auth/forgot-password')}
             >
-              Forgot Passwords?
+              {t('forgot_password_link')}
             </Button>
           </div>
         </Form>
@@ -163,10 +163,10 @@ export default function Index() {
         <Modal.Panel className="w-full max-w-xl rounded-[20px] bg-[#F2F5F8] p-4 lg:p-12">
           <div className="flex flex-col items-center justify-center gap-5 lg:gap-8">
             <h4 className="text-center text-2xl font-medium leading-8 lg:text-[28px] lg:leading-9">
-              Change Your Password
+              {t('change_password_title')}
             </h4>
             <p className="text-center">
-              Are you sure you want to change your password?
+              {t('change_password_confirm_message')}
             </p>
             <div className="flex w-full flex-col items-center gap-3 lg:flex-row">
               <Button
@@ -174,13 +174,13 @@ export default function Index() {
                 fullWidth
                 onClick={() => setIsConfirmModalOpen(false)}
               >
-                Cancel
+                {t('cancel')}
               </Button>
               <Button
                 fullWidth
                 onClick={handleSubmitChangingPassword}
               >
-                Change
+                {t('change_password_button')}
               </Button>
             </div>
           </div>

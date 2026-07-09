@@ -420,9 +420,61 @@
       }
     }
   },
+  "Admin": {
+    "welcome_back": "Chào mừng trở lại!",
+    "users_page": {
+      "title": "Quản lý người dùng",
+      "subtitle": "Danh sách người dùng",
+      "empty_state": "Bạn có một trái tim ấm áp"
+    },
+    "awaiting_stories_page": {
+      "title": "Chờ phê duyệt - Câu chuyện",
+      "subtitle": "Danh sách câu chuyện đang chờ phê duyệt",
+      "empty_state": "Bạn có một trái tim ấm áp"
+    },
+    "tags_page": {
+      "title": "Danh sách chủ đề",
+      "new_topic": "Chủ đề mới"
+    },
+    "login_to_admin": "Đăng nhập vào tài khoản Admin",
+    "email_label": "Địa chỉ email",
+    "email_placeholder": "hulib@gmail.com",
+    "password_label": "Mật khẩu",
+    "login_button": "Đăng nhập",
+    "login_error": "Mật khẩu không đúng, vui lòng thử lại.",
+    "topic_modal": {
+      "edit_title": "Chỉnh sửa chủ đề",
+      "create_title": "Tạo chủ đề mới",
+      "name_label": "Tên chủ đề",
+      "name_placeholder": "Nhập tại đây",
+      "color_label": "Màu chủ đề",
+      "preview_label": "Xem trước",
+      "confirm_button": "Xác nhận",
+      "updated_successfully": "Cập nhật chủ đề thành công",
+      "created_successfully": "Tạo chủ đề thành công",
+      "update_failed": "Cập nhật chủ đề thất bại",
+      "create_failed": "Tạo chủ đề thất bại"
+    },
+    "story_modal": {
+      "approved_successfully": "Duyệt câu chuyện thành công",
+      "rejected_successfully": "Từ chối câu chuyện thành công",
+      "update_failed": "Cập nhật câu chuyện thất bại",
+      "rejection_placeholder": "Lý do từ chối",
+      "approve_success_message": "Bạn đã xác nhận yêu cầu xuất bản câu chuyện này.",
+      "approve_prompt_message": "Bạn đang chấp nhận yêu cầu xuất bản câu chuyện này.",
+      "reject_success_message": "Bạn đã từ chối yêu cầu xuất bản câu chuyện này.",
+      "reject_prompt_message": "Bạn đang từ chối yêu cầu xuất bản câu chuyện này.",
+      "homepage_button": "Trang chủ",
+      "back_button": "Quay lại",
+      "confirm_button": "Xác nhận"
+    }
+  },
   "MiniGame": {
     "meta_title": "HuLib | Trò Chơi",
-    "meta_description": "Trò chơi nhỏ chúc mừng năm Rồng"
+    "meta_description": "Trò chơi nhỏ chúc mừng năm Rồng",
+    "happy_year_of_dragon": "Chúc mừng năm Rồng",
+    "you_win": "Bạn thắng sau ${numberOfAvailableMovements} nước đi!",
+    "visit_website": "Truy cập Website"
   },
   "SignIn": {
     "meta_title": "Đăng nhập",
@@ -471,7 +523,21 @@
     "welcome": "Chào mừng đến với",
     "account_created": "Xin chúc mừng, tài khoản của bạn đã được tạo",
     "get_started": "Bắt đầu",
-    "huber_register": "Đăng ký thờ thành Huber"
+    "huber_register": "Đăng ký thờ thành Huber",
+    "all_done": "Hoàn tất",
+    "password_reset": "Mật khẩu của bạn đã được đặt lại",
+    "login_now": "Đăng nhập ngay",
+    "reset_password": "Đặt lại mật khẩu",
+    "re_enter_password": "Nhập lại mật khẩu",
+    "at_least_8_characters": "Ít nhất 8 ký tự",
+    "contains_special_character": "Chứa một ký tự đặc biệt",
+    "contains_number": "Chứa một số",
+    "contains_uppercase_letter": "Chứa một chữ cái viết hoa",
+    "passwords_match": "Mật khẩu trùng khớp",
+    "resetting": "Đang đặt lại...",
+    "reset_password_button": "Đặt lại mật khẩu",
+    "back_to_login": "Quay lại Đăng nhập",
+    "submit": "Gửi"
   },
   "ForgotPassword": {
     "meta_title": "Quên mật khẩu",
@@ -502,7 +568,10 @@
       "my_book": "Sách của tôi",
       "work_and_education": "Công việc và Học vấn",
       "contact_information": "Thông tin liên hệ",
-      "moderations": "Lịch sử cấm/cảnh báo"
+      "moderations": "Lịch sử cấm/cảnh báo",
+      "information": "Thông tin",
+      "introduction": "Giới thiệu",
+      "story": "Câu chuyện"
     },
     "report_modal": {
       "header_title": "Bạn sắp báo cáo về người dùng này.",
@@ -519,7 +588,15 @@
       "success_report_detail": "Cảm ơn bạn đã báo cáo. Chúng tôi trân trọng sự đóng góp của bạn trong việc giữ gìn một cộng đồng an toàn. Đội ngũ Hulib sẽ xem xét cẩn thận thông tin bạn cung cấp."
     },
     "create_story": "Viết nên câu chuyện",
-    "edit_story": "Trau chuốt câu chuyện"
+    "edit_story": "Trau chuốt câu chuyện",
+    "report": "Báo cáo",
+    "chat": "Chat",
+    "hearts": "trái tim",
+    "no_stories_found": "Không tìm thấy câu chuyện nào",
+    "huber_has_not_finished_stories": "Có vẻ như Huber chưa hoàn thành bất kỳ câu chuyện nào.",
+    "library": "Thư viện",
+    "all": "Tất cả",
+    "create_new_story": "Tạo câu chuyện mới"
   },
   "MyFavorites": {
     "choose_all": "Chọn tất cả",
@@ -590,7 +667,8 @@
       "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại",
       "bio_required": "Vui lòng nhập tiểu sử của bạn",
       "terms_required": "Vui lòng chấp thuận các điều khoản và điều kiện",
-      "topics_required": "Vui lòng chọn ít nhất một thể loại"
+      "topics_required": "Vui lòng chọn ít nhất một thể loại",
+      "time_slots_required": "Vui lòng chọn ít nhất một khung giờ"
     },
     "bio": {
       "text": "Tiểu sử",
@@ -647,7 +725,21 @@
     "booking_count": "Đã có 100 cuộc hẹn từ câu chuyện này",
     "author": "Tác giả",
     "stories": "câu chuyện",
-    "favorites": "yêu thích"
+    "favorites": "yêu thích",
+    "my_favorite": "Yêu thích",
+    "newest_stories": "Câu chuyện mới nhất",
+    "oldest_stories": "Câu chuyện cũ nhất",
+    "explore_all_stories": "Khám phá tất cả câu chuyện",
+    "no_data_available": "Không có dữ liệu nào available.",
+    "rating_overview": "Tổng quan đánh giá",
+    "outstanding_review": "Đánh giá nổi bật",
+    "rejected": "Bị từ chối",
+    "draft": "Bản nháp",
+    "reason": "Lý do",
+    "story": "Câu chuyện",
+    "is_deleted_successfully": "đã được xóa thành công",
+    "empathy": "Đồng cảm",
+    "read_all": "Đọc tất cả"
   },
   "Huber": {
     "title": "Xem danh sách Huber",
@@ -660,7 +752,9 @@
       "topics": "Chủ đề",
       "ratings": "Yêu thích",
       "visit_profile": "Xem hồ sơ"
-    }
+    },
+    "agreement": "Mình đã đọc và đồng ý với các nguyên tắc cộng đồng của Hulib",
+    "huber_responsibility": "Huber tự chịu trách nhiệm về tính trung thực của các thông tin cung cấp cho Hulib."
   },
   "Time_slots": {
     "title": "Khung giờ",
@@ -733,7 +827,14 @@
       "notice_text": "Vui lòng đảm bảo bạn chọn đúng khung giờ cho lịch hẹn của mình. Thời gian hiển thị là theo múi giờ địa phương của bạn.",
       "support_text": "Nếu chưa thấy khung giờ phù hợp, cứ thoải mái nhắn cho Huber để trao đổi",
       "click_here": "tại đây"
-    }
+    },
+    "meeting_with": "Cuộc hẹn với",
+    "meeting_schedule": "Lịch hẹn",
+    "view": "Xem",
+    "type_of_meeting": "Loại cuộc hẹn",
+    "done": "Đã hoàn thành",
+    "Huber": "Huber",
+    "Liber": "Liber"
   },
   "notifications": {
     "title": "Thông báo",
@@ -775,7 +876,8 @@
       "startingNow": "đang bắt đầu.",
       "encouragement": "Nhanh chóng tham gia để tạo nên một buổi họp tuyệt vời.",
       "callToAction": "Nhấn vào bên dưới để tham gia."
-    }
+    },
+    "meeting_request": "Yêu cầu cuộc họp"
   },
   "Home": {
     "newest_stories": {
@@ -796,11 +898,12 @@
       }
     },
     "short_descriptions": {
-      "title": "Trở thành Huber của chúng tôi",
-      "btn": "Tham gia với tư cách Huber",
-      "subtitle": "Mỗi câu chuyện là 1 mảnh ghép 🧩"
+      "subtitle": "Mỗi câu chuyện là 1 mảnh ghép 🧩",
+      "become_member": "Trở thành thành viên mới trong đại gia đình Huber",
+      "create_new_book": "Tạo sách mới"
     },
     "no_data": "Không có dữ liệu"
+
   },
   "Common": {
     "no_data": "Không có dữ liệu",
@@ -836,7 +939,79 @@
     "mobile_btn_name_notification": "Khám phá",
     "back_to_home": "Trở lại trang chủ",
     "placeholder": "Bạn đang nghĩ gì...",
-    "location": "Địa điểm"
+    "location": "Địa điểm",
+    "all": "Tất cả",
+    "change_password_title": "Đổi mật khẩu của bạn",
+    "old_password_label": "Mật khẩu cũ",
+    "new_password_label": "Mật khẩu mới",
+    "confirm_new_password_label": "Nhập lại mật khẩu mới",
+    "change_password_button": "Đổi mật khẩu",
+    "forgot_password_link": "Quên mật khẩu?",
+    "change_password_confirm_message": "Bạn có chắc chắn muốn đổi mật khẩu không?",
+    "account_upgrade": {
+      "steps": {
+        "fill_information": "Điền thông tin",
+        "select_available_slots": "Chọn khung giờ có sẵn",
+        "create_story": "Tạo câu chuyện"
+      },
+      "success_image_alt": "thành công",
+      "registration_successful": "Đăng ký thành công!"
+    },
+    "education": {
+      "add_title": "Thêm học vấn",
+      "edit_title": "Chỉnh sửa",
+      "major_label": "Chuyên ngành",
+      "major_placeholder": "Ví dụ: Kỹ thuật phần mềm",
+      "institution_label": "Trường/Đại học",
+      "institution_placeholder": "Ví dụ: Đại học Khoa học Tự nhiên TP.HCM",
+      "from": "Từ",
+      "to": "đến",
+      "add_success": "Thông tin học vấn đã được thêm thành công",
+      "edit_success": "Thông tin học vấn đã được chỉnh sửa thành công",
+      "at": "tại",
+      "present": "Hiện tại"
+    },
+    "work_experience": {
+      "add_title": "Thêm kinh nghiệm làm việc",
+      "edit_title": "Chỉnh sửa",
+      "position_label": "Vị trí",
+      "position_placeholder": "Ví dụ: Thiết kế đồ họa",
+      "company_label": "Công ty",
+      "company_placeholder": "Ví dụ: Amazon",
+      "from": "Từ",
+      "to": "đến",
+      "add_success": "Thông tin kinh nghiệm làm việc đã được thêm thành công",
+      "edit_success": "Thông tin kinh nghiệm làm việc đã được chỉnh sửa thành công",
+      "at": "tại",
+      "present": "Hiện tại"
+    },
+    "full_name": "Họ và tên",
+    "gender": "Giới tính",
+    "date_of_birth": "Ngày sinh",
+    "address": "Địa chỉ",
+    "address_placeholder": "Nhập địa chỉ của bạn",
+    "email": "Email",
+    "phone_number": "Số điện thoại",
+    "guardian_name": "Tên người giám hộ",
+    "guardian_phone_number": "Số điện thoại người giám hộ",
+    "not_provided": "Chưa cung cấp",
+    "contact_information": "Thông tin liên hệ",
+    "topic": "Chủ đề",
+    "bio": "Tiểu sử",
+    "video_introduction": "Video giới thiệu",
+    "add_video_source": "Thêm nguồn video",
+    "what_libers_say": "Những gì Liber nói",
+    "saving": "Đang lưu...",
+    "add_experience": "Thêm kinh nghiệm",
+    "add_education": "Thêm học vấn",
+    "save": "Lưu",
+    "not_found": "Không tìm thấy",
+    "could_not_find_resource": "Không thể tìm thấy tài nguyên được yêu cầu",
+    "return_home": "Quay lại trang chủ",
+    "view_more": "Xem thêm",
+    "see_more": "Xem thêm",
+    "edit": "Chỉnh sửa",
+    "delete": "Xóa"
   },
   "feedback_form": {
     "session_feedback": "Phản hồi cho buổi học",
@@ -893,7 +1068,10 @@
     "click_here": "nhấn vào đây",
     "back": "Quay lại",
     "attendees": "Người tham gia",
-    "you": "Bạn"
+    "you": "Bạn",
+    "huber": "Huber",
+    "stories": "Câu chuyện",
+    "hearts": "Tình yêu"
   },
   "Reading": {
     "PreSurvey": {
@@ -942,6 +1120,8 @@
     "button": {
       "follow": "Theo dõi",
       "un_follow": "Hủy theo dõi"
-    }
+    },
+    "stories": "câu chuyện",
+    "follow": "theo dõi"
   }
 }
