@@ -1,11 +1,13 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { IndexStoryListSectionLayout } from './IndexStoryListSectionLayout';
 import { FilterChip } from './FilterChip';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 
 export const StoryListByMostPopularTopics = () => {
+  const t = useTranslations('HomeStories');
   const [selectedTopicId, setSelectedTopicId] = useState<number | null>(null);
   const { data: stories, isLoading } = useGetStoriesQuery({
     page: 1,
@@ -19,7 +21,7 @@ export const StoryListByMostPopularTopics = () => {
 
   return (
     <IndexStoryListSectionLayout
-      title="Most popular topics"
+      title={t('most_popular_topics')}
       stories={{ ...stories, data: stories?.data?.slice(0, 5) || [] }}
       isLoading={isLoading}
       showFilter
