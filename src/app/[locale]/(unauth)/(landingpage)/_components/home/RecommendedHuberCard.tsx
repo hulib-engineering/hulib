@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import React from 'react';
 
-import { useTranslations } from 'node_modules/next-intl/dist/types/src/react-client';
+import { useTranslations } from 'next-intl';
 import type { Huber as THuber } from '@/libs/services/modules/huber/huberType';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';

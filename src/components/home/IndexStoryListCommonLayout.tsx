@@ -4,7 +4,7 @@ import { CaretCircleRight } from '@phosphor-icons/react';
 import React, { useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 
-import { useTranslations } from 'node_modules/next-intl/dist/types/src/react-client';
+import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
