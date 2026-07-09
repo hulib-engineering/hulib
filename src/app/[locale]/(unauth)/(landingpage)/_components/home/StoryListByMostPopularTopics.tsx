@@ -7,7 +7,7 @@ import { FilterChip } from './FilterChip';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 
 export const StoryListByMostPopularTopics = () => {
-  const t = useTranslations('Home');
+  const t = useTranslations('HomeStories');
   const [selectedTopicId, setSelectedTopicId] = useState<number | null>(null);
   const { data: stories, isLoading } = useGetStoriesQuery({
     page: 1,
@@ -21,7 +21,7 @@ export const StoryListByMostPopularTopics = () => {
 
   return (
     <IndexStoryListSectionLayout
-      title={t('explore_stories.card.text1')}
+      title={t('most_popular_topics')}
       stories={{ ...stories, data: stories?.data?.slice(0, 5) || [] }}
       isLoading={isLoading}
       showFilter

@@ -14,7 +14,7 @@ import MyStoriesPanel from './_components/MyStoriesPanel';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
-import { Spinner } from '@/components/loadingState/Spinner';
+import Loading from '@/app/[locale]/loading';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import AboutPanel from '@/layouts/profile/AboutPanel';
@@ -122,7 +122,7 @@ export default function Index() {
   if ((notMe && isLoading) || !userDetail) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
-        <Spinner />
+        <Loading />
       </div>
     );
   }

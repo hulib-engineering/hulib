@@ -2,13 +2,13 @@
 
 import { CaretCircleRight, CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import type { Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import React, { useMemo, useRef } from 'react';
 // Import Swiper styles
 import 'swiper/css';
 
-import { useTranslations } from 'next-intl';
 import { RecommendedHuberCard } from './RecommendedHuberCard';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -17,7 +17,7 @@ import type { Huber } from '@/libs/services/modules/huber/huberType';
 
 export default function RecommendedHuberList() {
   const router = useRouter();
-  const t = useTranslations('Home');
+  const t = useTranslations('HomeHubers');
 
   const { data } = useGetHubersQuery({ type: 'recommended' });
 
@@ -28,14 +28,14 @@ export default function RecommendedHuberList() {
   const swiperRef = useRef<SwiperType>();
 
   if (!listHuber) {
-    return null;
+    return <></>;
   }
 
   return (
     <div className="relative left-1/2 flex w-screen flex-col gap-4 bg-white p-4 -translate-x-1/2 lg:gap-8 lg:bg-transparent lg:p-5 xxl:px-24">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-medium leading-8 text-primary-10 lg:text-4xl lg:leading-[44px]">
-          {t('recommended_hubers.title')}
+          {t('recommended_hubers')}
         </h2>
         <Button
           iconLeft={<CaretCircleRight size={20} />}
@@ -44,7 +44,7 @@ export default function RecommendedHuberList() {
           className="text-base font-medium leading-5 text-primary-50"
           onClick={() => router.push('/explore-hubers')}
         >
-          {t('explore_stories.btn1')}
+          {t('see_all')}
         </Button>
       </div>
       <div className="group relative w-full">

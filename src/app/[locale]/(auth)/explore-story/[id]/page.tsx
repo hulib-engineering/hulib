@@ -27,10 +27,10 @@ import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import {
   useGetSimilarStoriesQuery,
   useGetStoryDetailQuery,
+  useLikeStoryMutation,
   useShareStoryMutation,
-  useUpdateStoryMutation,
 } from '@/libs/services/modules/stories';
-import { PublishStatusEnum, StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
+import { PublishStatusEnum } from '@/libs/services/modules/stories/storiesType';
 import { Chip } from '@/components/core/chip/Chip';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
@@ -39,11 +39,11 @@ import Avatar from '@/components/core/avatar/Avatar';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { AppConfig } from '@/utils/AppConfig';
 import { copyToClipboard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/utils';
-import { Env } from '@/libs/Env.mjs';
 import {
   COPY_STORY_LINK_ERROR_MESSAGE,
 } from '@/features/stories/constants';
 import Modal from '@/components/Modal';
+import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
 
 export default function Index() {
   const router = useRouter();
@@ -63,13 +63,14 @@ export default function Index() {
   }, {
     skip: !data || (!data?.humanBookId && !data?.topics.length),
   });
-  const [updateStory] = useUpdateStoryMutation();
+
   const [shareStory] = useShareStoryMutation();
+  const [handleUpdateLikeCount] = useLikeStoryMutation();
 
   const [bookWidth, setBookWidth] = React.useState<number>();
   const [isShareModalOpen, setIsShareModalOpen] = React.useState(false);
-  const [isLiked, setIsLiked] = React.useState(data?.isFavorite ?? false);
-  const [likeCount, setLikeCount] = React.useState(data?.totalLikes ?? 0);
+  const [isFavorite, setIsFavorite] = React.useState(false);
+  const [likeCount, setlikeCount] = React.useState(data?.totalLikes ?? 0);
 
   const storyUrl = React.useMemo(() => {
     if (!data?.id) {
@@ -78,7 +79,7 @@ export default function Index() {
     const localePrefix = locale === AppConfig.defaultLocale ? '' : `/${locale}`;
     return new URL(
       `${localePrefix}/explore-story/${data.id}`,
-      Env.NEXT_PUBLIC_APP_URL,
+      'https://hulib.org',
     ).toString();
   }, [data?.id, locale]);
 
@@ -169,24 +170,31 @@ export default function Index() {
 
   const clickLikeStory = async () => {
     try {
-      const newLiked = !isLiked;
-      const newCount = newLiked ? likeCount + 1 : likeCount - 1;
-      setIsLiked(newLiked);
-      setLikeCount(newCount);
-      await updateStory({
-        id: Number(id),
-        ...data,
-        publishStatus: StoryPublishStatus.PUBLISHED,
-        totalLikes: newCount,
-      }).unwrap();
+      const newCount = isFavorite ? likeCount - 1 : likeCount + 1;
+      if (isFavorite) {
+        const rs = await handleUpdateLikeCount({
+          id: data.id,
+          type: ChangeCountEnum.DOWN,
+        });
+        console.log('rs', rs);
+        pushSuccess(t('story_removed_from_favorites'));
+      } else {
+        const rs = await handleUpdateLikeCount({
+          id: data.id,
+          type: ChangeCountEnum.UP,
+        });
+        console.log('rs', rs);
+        pushSuccess(t('story_added_to_favorites'));
+      }
+      setIsFavorite(prev => !prev);
+      setlikeCount(newCount);
     } catch {
       pushError(t('like_error'));
-      setIsLiked(isLiked);
-      setLikeCount(likeCount);
     }
   };
 
   const handleClickShare = async () => {
+    console.log('storyUrl', storyUrl);
     if (!storyUrl) {
       return;
     }
@@ -299,20 +307,24 @@ export default function Index() {
                         </Chip>
                       ))}
                     </div>
-                    <div className="mt-4 flex flex-wrap justify-between gap-1">
+                    <div className="mt-4 flex flex-wrap items-center gap-2 xxl:gap-x-8">
                       <div className="flex items-center gap-x-1">
                         <Eye className="text-primary-50" size={16} />
                         <p className="text-[14px] font-medium leading-4 text-neutral-10">
                           {data.viewCount ?? 0}
                         </p>
-                        <p className="text-[14px] font-normal leading-4 text-neutral-20">{t('views')}</p>
                       </div>
                       <div className="flex items-center gap-x-1">
                         <ThumbsUp className="text-pink-40" size={16} weight="fill" />
                         <p className="text-[14px] font-medium leading-4 text-neutral-10">
                           {likeCount}
                         </p>
-                        <p className="text-[14px] font-normal leading-4 text-neutral-20">{t('likes')}</p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <ShareFat className="text-primary-50" size={16} />
+                        <p className="text-[14px] font-medium leading-4 text-neutral-20">
+                          {data?.shareCount ?? 0}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -324,7 +336,7 @@ export default function Index() {
                       {t('share')}
                     </Button>
 
-                    <Button variant="outline" iconLeft={<ThumbsUp className={isLiked ? 'text-pink-40' : 'text-primary-50'} size={20} weight={isLiked ? 'fill' : 'bold'} />} onClick={clickLikeStory}>
+                    <Button variant="outline" iconLeft={<ThumbsUp className={isFavorite ? 'text-pink-40' : 'text-primary-50'} size={20} weight={isFavorite ? 'fill' : 'bold'} />} onClick={clickLikeStory}>
                       {t('like_button')}
                     </Button>
                   </div>

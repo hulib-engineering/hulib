@@ -10,7 +10,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
-import { Spinner } from '@/components/loadingState/Spinner';
+import Loading from '@/app/[locale]/loading';
 import { ProfileCover } from '@/components/ProfileCover';
 import AboutPanel from '@/layouts/profile/AboutPanel';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
@@ -41,7 +41,7 @@ export default function Index() {
   if (isLoading) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
-        <Spinner />
+        <Loading />
       </div>
     );
   }

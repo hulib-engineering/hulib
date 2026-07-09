@@ -13,11 +13,11 @@ import * as React from 'react';
 import ScheduleBasicInfo from './_components/SessionAttendeesInfo';
 
 import Button from '@/components/core/button/Button';
-import { Spinner } from '@/components/loadingState/Spinner';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';
 import { TimezoneSelect } from '@/components/TimezoneSelect';
+import Loading from '@/app/[locale]/loading';
 import BookingTimetable from '@/layouts/booking/BookingTimetable';
 import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
@@ -92,7 +92,7 @@ export default function Index() {
   if (!story) {
     return (
       <div className="flex h-screen w-full flex-1 items-center justify-center">
-        <Spinner />
+        <Loading />
       </div>
     );
   }
