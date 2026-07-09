@@ -18,14 +18,6 @@ import { useBanUserMutation, useWarnUserMutation } from '@/libs/services/modules
 import { useUpdateReportByIdMutation } from '@/libs/services/modules/report';
 import { ReportValidation } from '@/validations/ReportValidation';
 
-const RejectedReasons = [
-  'Insufficient evidence',
-  'No violation of community guidelines',
-  'Duplicate report',
-  'Misuse of the report feature',
-  'Incorrect or irrelevant report',
-];
-
 type IHandleReportModalProps = {
   open?: boolean;
   onClose?: () => void;
@@ -53,6 +45,14 @@ const HandleReportModal = ({
   data,
 }: IHandleReportModalProps) => {
   const t = useTranslations('MyProfile');
+  const tReport = useTranslations('HandleReport');
+  const rejectedReasons = [
+    tReport('reason_0'),
+    tReport('reason_1'),
+    tReport('reason_2'),
+    tReport('reason_3'),
+    tReport('reason_4'),
+  ];
 
   const [rejectSingleReport, { isLoading }] = useUpdateReportByIdMutation();
   const [banUser, { isLoading: isBanningUser }] = useBanUserMutation();
@@ -95,10 +95,10 @@ const HandleReportModal = ({
     try {
       if (action === 'ban') {
         await banUser({ userId: data?.reportee?.id, reportId: data?.id }).unwrap();
-        pushSuccess('User has been banned successfully.');
+        pushSuccess(tReport('user_banned'));
       } else {
         await warnUser({ userId: data?.reportee?.id, reportId: data?.id }).unwrap();
-        pushSuccess('User has been warned successfully.');
+        pushSuccess(tReport('user_warned'));
       }
       handleClose();
     } catch (error: any) {
@@ -126,7 +126,7 @@ const HandleReportModal = ({
               onClick={handleClickBack}
             />
             <h5 className="text-2xl font-medium leading-8">
-              {`${!isRejected && !isApproved ? 'Report' : isApproved ? 'Approve' : 'Reject'} detail #${data?.id}`}
+              {`${!isRejected && !isApproved ? tReport('report_tab') : isApproved ? tReport('approve_tab') : tReport('reject_tab')} ${tReport('detail')} #${data?.id}`}
             </h5>
             <X
               className={mergeClassnames(
@@ -143,7 +143,7 @@ const HandleReportModal = ({
                 <div className="py-2 text-center text-black">{data?.createdAt}</div>
                 <div className="flex items-center outline outline-1 -outline-offset-1 outline-neutral-90">
                   <div className="flex flex-1 flex-col border-r border-neutral-90">
-                    <div className="bg-primary-60 p-2 text-center text-lg font-medium text-white">Reporter</div>
+                    <div className="bg-primary-60 p-2 text-center text-lg font-medium text-white">{tReport('reporter')}</div>
                     <div className="flex h-20 items-center justify-center gap-2 py-2 text-sm font-medium leading-4">
                       <Avatar
                         imageUrl={data?.reporter?.photo?.path}
@@ -157,7 +157,7 @@ const HandleReportModal = ({
                     </div>
                   </div>
                   <div className="flex flex-1 flex-col">
-                    <div className="bg-red-60 p-2 text-center text-lg font-medium text-white">Reported user</div>
+                    <div className="bg-red-60 p-2 text-center text-lg font-medium text-white">{tReport('reported_user')}</div>
                     <div className="flex h-20 items-center justify-center gap-2 py-2 text-sm font-medium leading-4">
                       <Avatar
                         imageUrl={data?.reportee?.photo?.path}
@@ -175,7 +175,7 @@ const HandleReportModal = ({
             )}
             {isApproved && (
               <div className="flex flex-col">
-                <div className="bg-red-60 p-2 text-center text-lg font-medium text-white">Reported user</div>
+                <div className="bg-red-60 p-2 text-center text-lg font-medium text-white">{tReport('reported_user')}</div>
                 <div className="flex h-20 items-center justify-center gap-2 py-2 text-sm font-medium leading-4">
                   <Avatar
                     imageUrl={data?.reportee?.photo?.path}
@@ -191,7 +191,7 @@ const HandleReportModal = ({
             )}
             {!isApproved && (
               <div className="flex flex-col gap-4 p-6">
-                <p className="text-lg font-medium">Reasons:</p>
+                <p className="text-lg font-medium">{tReport('reasons')}</p>
                 {!isRejected ? (
                   <>
                     <ul className="list-disc space-y-2 pl-6">
@@ -210,7 +210,7 @@ const HandleReportModal = ({
                 )
                   : (
                       <div className="flex flex-col gap-4">
-                        {RejectedReasons.map((reason, index) => (
+                        {rejectedReasons.map((reason, index) => (
                           <div key={index} className="flex items-center gap-3">
                             <Checkbox
                               id={`reason-${index}`}
@@ -253,7 +253,7 @@ const HandleReportModal = ({
                   fullWidth
                   onClick={() => setIsRejected(true)}
                 >
-                  Reject
+                  {tReport('reject_button')}
                 </Button>
                 <Button
                   size="lg"
@@ -261,7 +261,7 @@ const HandleReportModal = ({
                   fullWidth
                   onClick={() => setIsApproved(true)}
                 >
-                  Approve
+                  {tReport('approve_button')}
                 </Button>
               </>
             ) : isRejected ? (
@@ -272,7 +272,7 @@ const HandleReportModal = ({
                 animation={isLoading && 'progress'}
                 onClick={handleSubmitRejectingReport}
               >
-                Done
+                {tReport('done')}
               </Button>
             ) : (
               <>
@@ -285,7 +285,7 @@ const HandleReportModal = ({
                   className="border-orange-70"
                   onClick={() => handleModerate('warn')}
                 >
-                  Warn user
+                  {tReport('warn_user')}
                 </Button>
                 <Button
                   size="lg"
@@ -296,7 +296,7 @@ const HandleReportModal = ({
                   className="border-red-60"
                   onClick={() => handleModerate('ban')}
                 >
-                  Ban user
+                  {tReport('ban_user')}
                 </Button>
               </>
             )}

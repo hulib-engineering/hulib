@@ -6,15 +6,18 @@ import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 
-const SocialIcon = ({ iconUrl }: { iconUrl: string }) => (
-  <Image
-    src={iconUrl}
-    alt="Social icon"
-    width={24}
-    height={24}
-    className="size-6 object-contain"
-  />
-);
+const SocialIcon = ({ iconUrl }: { iconUrl: string }) => {
+  const t = useTranslations('Accessibility');
+  return (
+    <Image
+      src={iconUrl}
+      alt={t('social_icon')}
+      width={24}
+      height={24}
+      className="size-6 object-contain"
+    />
+  );
+};
 
 type ISocialButtonProps = {
   className?: string;

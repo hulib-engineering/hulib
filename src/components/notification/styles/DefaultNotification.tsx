@@ -2,11 +2,11 @@ import { PenNib, SealWarning, Warning } from '@phosphor-icons/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
-import { notificationConfig } from '../private/config';
+import { getNotificationConfig } from '../private/config';
 import { NotificationType } from '../private/types';
 
 import Avatar from '@/components/core/avatar/Avatar';
@@ -20,6 +20,11 @@ import { Role, StatusEnum } from '@/types/common';
 import { toLocaleDateString } from '@/utils/dateUtils';
 
 export default function DefaultNotificationCard({ notification, showExtras, onClick }: INotificationItemRendererProps) {
+  const t = useTranslations('Notification');
+  const tAlt = useTranslations('AltText');
+  const tFn = (key: string) => t(key as any);
+  const tAltFn = (key: string) => tAlt(key as any);
+  const notificationConfig = getNotificationConfig(tFn, tAltFn);
   const cfg = notificationConfig[notification.type.name as NotificationType];
 
   const router = useRouter();
@@ -37,7 +42,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
       return (
         <Image
           src="/assets/icons/leaf.svg"
-          alt="Seen icon"
+          alt={tAlt('seen_icon')}
           width={20}
           height={20}
           className="hidden size-5 object-cover object-center xl:block"
@@ -56,7 +61,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
           return (
             <Image
               src="/assets/icons/leaf.svg"
-              alt="Seen icon"
+              alt={tAlt('seen_icon')}
               width={20}
               height={20}
               className="hidden size-5 object-cover object-center xl:block"
@@ -124,7 +129,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
                 src="/assets/icons/meeting-icon.svg"
                 width={24}
                 height={24}
-                alt="Meeting icon"
+                alt={tAlt('meeting_icon')}
                 className="size-6 object-cover object-center"
               />
             </div>
@@ -143,7 +148,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
               </p>
               {notification.type.name === NotificationType.SESSION_REQUEST && (
                 <Link href="#" className="text-sm font-medium text-primary-60 underline" onClick={() => setIsSessionRequestModalOpen(true)}>
-                  Detail
+                  {t('detail')}
                 </Link>
               )}
             </div>
@@ -154,8 +159,8 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
                 </p>
                 {showExtras && notification.type.name === NotificationType.STORY_REVIEW && (
                   <div className="flex items-center gap-5 text-sm font-medium text-primary-50">
-                    <p>{`${notification.relatedEntity?.numOfRatings ?? 0} rating`}</p>
-                    <p>{`${notification.relatedEntity?.numOfComments ?? 0} comment`}</p>
+                    <p>{`${notification.relatedEntity?.numOfRatings ?? 0} ${t('rating')}`}</p>
+                    <p>{`${notification.relatedEntity?.numOfComments ?? 0} ${t('comment')}`}</p>
                   </div>
                 )}
               </div>
@@ -167,7 +172,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
                 onClick={() => notification.type.name === NotificationType.HUBER_REPORT
                   ? setIsHandleReportModalOpen(true) : setIsHandleAppealModalOpen(true)}
               >
-                See detail
+                {t('see_detail')}
               </Link>
             )}
           </div>

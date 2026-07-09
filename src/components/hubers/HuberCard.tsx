@@ -28,6 +28,8 @@ const HuberCard = (
 
   const tCommon = useTranslations('Common');
   const t = useTranslations('Huber.card');
+  const tHuberCard = useTranslations('HuberCard');
+  const tAlt = useTranslations('AltText');
 
   const [addToMyFavorites, { isLoading: isAddingToMyFavorites }] = useAddHuberToMyFavoritesMutation();
   const [removeFromMyFavorites, { isLoading: isRemovingFromMyFavorites }] = useRemoveHuberFromMyFavoritesMutation();
@@ -40,11 +42,11 @@ const HuberCard = (
       if (!isFavorite) {
         await addToMyFavorites(props.id);
         setIsFavorite(true);
-        pushSuccess('Successfully added to favorite list');
+        pushSuccess(tHuberCard('add_to_favorites'));
       } else {
         await removeFromMyFavorites(props.id);
         setIsFavorite(false);
-        pushSuccess('Successfully removed from favorite list');
+        pushSuccess(tHuberCard('remove_from_favorites'));
       }
     } catch (err: any) {
       pushError(err?.data?.message || tCommon('error_contact_admin'));
@@ -59,7 +61,7 @@ const HuberCard = (
             ? (
                 <Image
                   src={props.photo.path}
-                  alt="User Avatar"
+                  alt={tAlt('user_avatar')}
                   width={270}
                   height={270}
                   className="aspect-[1/1] h-auto w-full rounded-[32px] object-cover"
@@ -75,7 +77,7 @@ const HuberCard = (
           {props.awaiting && (
             <div className="absolute bottom-2 left-0 flex w-full items-center justify-center">
               <span className="rounded-full bg-primary-60 px-4 py-2 text-xs leading-[14px] text-white">
-                Waiting for approval
+                {tHuberCard('waiting_approval')}
               </span>
             </div>
           )}
@@ -86,7 +88,7 @@ const HuberCard = (
             ? (
                 <Image
                   src={props.photo.path}
-                  alt="Huber Avatar"
+                  alt={tAlt('huber_avatar')}
                   width={270}
                   height={270}
                   className="aspect-[1/1] h-auto w-full rounded-[32px] object-cover"
@@ -151,7 +153,7 @@ const HuberCard = (
                 {props.rating ?? 0}
               </span>
               <span className="text-[0.625rem] leading-3 text-neutral-40">
-                Hearts
+                {tHuberCard('hearts')}
               </span>
             </div>
           </div>
@@ -169,7 +171,7 @@ const HuberCard = (
               >
                 <span className="flex items-center gap-2">
                   <CaretCircleRight className="text-xl" />
-                  Visit Profile
+                  {tHuberCard('visit_profile')}
                 </span>
               </Button>
               <Button
@@ -180,7 +182,7 @@ const HuberCard = (
               >
                 <span className="flex items-center gap-2">
                   <CaretCircleRight className="text-xl" />
-                  Visit Profile
+                  {tHuberCard('visit_profile')}
                 </span>
               </Button>
             </>
@@ -191,7 +193,7 @@ const HuberCard = (
             >
               <span className="flex items-center gap-2">
                 <CaretCircleRight className="text-xl" />
-                View Detail
+                {tHuberCard('view_detail')}
               </span>
             </Button>
           )}

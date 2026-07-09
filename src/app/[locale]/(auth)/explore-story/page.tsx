@@ -32,6 +32,7 @@ export default function Index() {
   const topicIds = searchParams.getAll('topicIds'); // Get topicIds from the URL query string
 
   const t = useTranslations('ExploreStory');
+  const tp = useTranslations('ExploreStoryPage');
 
   const [page, setPage] = useState(1);
   const [filterBy, setFilterBy] = useState<number[]>(topicIds?.map(id => Number(id)) ?? []);
@@ -79,17 +80,17 @@ export default function Index() {
   const SortPopoverMenuItems = [
     {
       value: 'favorites',
-      label: 'My favorite',
+      label: tp('my_favorite'),
       icon: <BookmarkSimple className="text-2xl text-primary-60" />,
     },
     {
       value: 'newest',
-      label: 'Newest Stories',
+      label: tp('newest_stories'),
       icon: <ArrowSquareUp className="text-2xl text-primary-60" />,
     },
     {
       value: 'oldest',
-      label: 'Oldest Stories',
+      label: tp('oldest_stories'),
       icon: <ArrowSquareDown className="text-2xl text-primary-60" />,
     },
   ];
@@ -113,7 +114,7 @@ export default function Index() {
       <div className="flex flex-col gap-4 bg-white p-4 shadow-sm lg:gap-6 lg:bg-transparent lg:py-5 lg:shadow-none">
         <div className="flex flex-col gap-1">
           <h3 className="text-2xl font-medium leading-8 text-primary-10 lg:text-[2.5rem] lg:font-bold lg:leading-tight">
-            Explore our all stories
+            {tp('explore_all')}
           </h3>
           <p className="hidden text-lg leading-snug text-neutral-20 lg:block">{t('description')}</p>
         </div>
@@ -183,9 +184,9 @@ export default function Index() {
                   width={300}
                   height={300}
                   quality={100}
-                  alt="No results found"
+                  alt={tp('no_results_alt')}
                 />
-                <h5 className="text-2xl font-bold leading-snug text-primary-10">No data available.</h5>
+                <h5 className="text-2xl font-bold leading-snug text-primary-10">{tp('no_data')}</h5>
               </div>
             )}
 
@@ -200,7 +201,7 @@ export default function Index() {
                   className="lg:hidden"
                   onClick={handleLoadMore}
                 >
-                  View more
+                  {tp('view_more')}
                 </Button>
                 <Button
                   variant="outline"
@@ -209,7 +210,7 @@ export default function Index() {
                   className="hidden lg:flex"
                   onClick={handleLoadMore}
                 >
-                  View more
+                  {tp('view_more')}
                 </Button>
               </>
             )}

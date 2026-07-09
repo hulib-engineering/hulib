@@ -33,6 +33,7 @@ export default function Index() {
   const router = useRouter();
 
   const t = useTranslations('ExploreStory');
+  const tp = useTranslations('StoryPreview');
 
   const { data, isLoading } = useGetStoryDetailQuery(Number(id));
   const { data: relatedTopics } = useGetRelatedTopicsQuery(Number(id));
@@ -48,7 +49,7 @@ export default function Index() {
       await deleteStory(data.id).unwrap();
       setIsDeleteSuccessModalOpen(true);
     } catch {
-      pushError('Error deleting story');
+      pushError(tp('delete_error'));
     }
   };
   const handleCloseDeleteSuccessModal = () => {
@@ -86,7 +87,7 @@ export default function Index() {
           className="w-fit text-black"
           onClick={() => router.back()}
         >
-          Back
+          {tp('back')}
         </Button>
         {!isEditing ? (
           <div className="flex flex-col gap-8 lg:flex-row">
@@ -104,10 +105,10 @@ export default function Index() {
                   <div className="flex flex-col">
                     <h5 className="text-2xl font-medium leading-9 text-primary-10">{data?.title}</h5>
                     {data?.publishStatus === PublishStatusEnum.REJECTED && (
-                      <p className="text-lg font-medium text-red-50">(Rejected)</p>
+                      <p className="text-lg font-medium text-red-50">{tp('rejected')}</p>
                     )}
                     {data?.publishStatus === PublishStatusEnum.DRAFT && (
-                      <p className="font-medium text-primary-60">(Draft)</p>
+                      <p className="font-medium text-primary-60">{tp('draft')}</p>
                     )}
                   </div>
                   <div className="flex w-full snap-x snap-mandatory gap-2 overflow-x-auto scroll-smooth">
@@ -126,7 +127,7 @@ export default function Index() {
                 </div>
                 {data?.publishStatus === PublishStatusEnum.REJECTED && (
                   <div className="flex flex-col gap-2">
-                    <Label>Reason</Label>
+                    <Label>{tp('reason')}</Label>
                     <div className="rounded-2xl border border-red-60 bg-neutral-98 p-3 text-sm leading-4 text-neutral-40">
                       {data?.rejectionReason}
                     </div>
@@ -148,7 +149,7 @@ export default function Index() {
                       fullWidth
                       onClick={() => setIsEditing(true)}
                     >
-                      Edit
+                      {tp('edit')}
                     </Button>
                     <Button
                       variant="outline"
@@ -158,7 +159,7 @@ export default function Index() {
                       animation={isDeletingStory && 'progress'}
                       onClick={handleDelete}
                     >
-                      Delete
+                      {tp('delete')}
                     </Button>
                   </div>
                 )}
@@ -193,7 +194,7 @@ export default function Index() {
             <div className="flex flex-col items-center justify-center gap-5 px-6 pb-6">
               <div className="rounded-full bg-[#D9FDEE] p-1 text-[#32D583]">
                 <Image
-                  alt="Check icon"
+                  alt={tp('check_icon_alt')}
                   src="/assets/icons/check-fill-circle.svg"
                   width={48}
                   height={48}
@@ -201,9 +202,7 @@ export default function Index() {
                 />
               </div>
               <h6 className="text-center text-xl font-bold text-neutral-10">
-                Story “
-                <span className="text-primary-60">{data?.title}</span>
-                ” is deleted successfully
+                {tp('delete_success', { title: data?.title })}
               </h6>
             </div>
           </div>

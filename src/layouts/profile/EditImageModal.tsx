@@ -1,5 +1,6 @@
 import { Trash, UploadSimple } from '@phosphor-icons/react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import type { ChangeEvent } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -23,6 +24,7 @@ type IEditImageModalProps = {
 };
 
 export default function EditImageModal({ type, data, open, onClose }: IEditImageModalProps) {
+  const t = useTranslations('EditImage');
   const [getNewlyUpdatedAvatar, { data: avatar }] = useLazyGetPersonalAvatarQuery();
   const [updateImageUrl, { isLoading }] = useUpdateProfileMutation();
   const [upload] = useUploadMutation();
@@ -95,7 +97,7 @@ export default function EditImageModal({ type, data, open, onClose }: IEditImage
         }
         onClose();
       } catch {
-        pushError(`Error editing ${type}`);
+        pushError(t('error_editing', { type }));
       }
     }
   };
@@ -108,7 +110,7 @@ export default function EditImageModal({ type, data, open, onClose }: IEditImage
           {/* Modal Header */}
           <div className="inline-flex h-[85px] w-full items-center justify-center border-b border-neutral-90 bg-white">
             <h6 className="text-[28px] font-medium capitalize leading-9 text-black">
-              {`edit ${type}`}
+              {t('edit_type', { type })}
             </h6>
           </div>
           {/* Modal Body */}
@@ -119,7 +121,7 @@ export default function EditImageModal({ type, data, open, onClose }: IEditImage
               <div className="relative aspect-[4/1] w-5/6 lg:max-w-[800px]">
                 <Image
                   src={currentImageData || '/assets/images/landing/default-cover.png'}
-                  alt="Cover Image"
+                  alt={t('cover_image_alt')}
                   fill
                   className="object-cover"
                 />
@@ -143,7 +145,7 @@ export default function EditImageModal({ type, data, open, onClose }: IEditImage
                 iconLeft={<UploadSimple weight="bold" />}
                 onClick={() => imageInputRef.current?.click()}
               >
-                Upload Photo
+                {t('upload_photo')}
               </Button>
               <Button
                 variant="ghost"
@@ -152,14 +154,13 @@ export default function EditImageModal({ type, data, open, onClose }: IEditImage
                 className="text-neutral-40"
                 onClick={handleDelete}
               >
-                Delete
-                {type === 'avatar' ? ' Avatar' : ' Cover'}
+                {type === 'avatar' ? t('delete_avatar') : t('delete_cover')}
               </Button>
             </div>
           </div>
           {/* Modal Footer */}
           <div className="flex h-[85px] w-full items-center justify-end gap-3 border-t border-neutral-90 bg-white px-5">
-            <Button variant="outline" size="lg" onClick={onClose}>Back</Button>
+            <Button variant="outline" size="lg" onClick={onClose}>{t('back')}</Button>
             <Button
               size="lg"
               disabled={isLoading}
@@ -167,7 +168,7 @@ export default function EditImageModal({ type, data, open, onClose }: IEditImage
               className="flex-1 lg:max-w-[360px]"
               onClick={handleSave}
             >
-              Save
+              {t('save')}
             </Button>
           </div>
         </div>

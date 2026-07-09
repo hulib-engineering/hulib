@@ -69,10 +69,10 @@ export default function Index() {
         endedAt,
         note,
       }).unwrap();
-      pushSuccess('Request sent successfully');
+      pushSuccess(t('request_sent'));
       setCurrentStep('success');
     } catch {
-      pushError('Failed to book meeting');
+      pushError(t('booking_failed'));
     }
   };
 
@@ -229,7 +229,7 @@ export default function Index() {
                   <>
                     <Image
                       src="/assets/images/misc/schedule-success.svg"
-                      alt="Successful illustration"
+                      alt={t('success_illustration_alt')}
                       width={480}
                       height={420}
                       className="w-[398px] object-cover xl:w-[480px]"

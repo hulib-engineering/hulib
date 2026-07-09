@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { X } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 import React, { type ReactNode } from 'react';
 import type { UseControllerProps } from 'react-hook-form';
 import { useController, useForm } from 'react-hook-form';
@@ -131,6 +132,8 @@ export type IEventFormModalProps = {
 };
 
 const EventFormModal = (props: IEventFormModalProps) => {
+  const t = useTranslations('EventForm');
+
   const form = useForm<IEventRegistration>({
     resolver: zodResolver(EmailRegistrationValidation),
     defaultValues: {
@@ -229,7 +232,7 @@ const EventFormModal = (props: IEventFormModalProps) => {
                     id="fullname"
                     type="text"
                     label="Bạn cho HuLib xin họ và tên của bạn nhé!"
-                    placeholder="Nhập tên của bạn"
+                    placeholder={t('name_placeholder')}
                     {...form.register('fullname')}
                     isError={!!form.formState.errors.fullname}
                     hintText={form.formState.errors.fullname?.message}
@@ -312,7 +315,7 @@ const EventFormModal = (props: IEventFormModalProps) => {
                   id="question"
                   type="text"
                   label="Bạn có câu hỏi nào muốn gửi đến Khách Mời (Human book) của HuLib không nhỉ?"
-                  placeholder="Nhập câu hỏi của bạn"
+                  placeholder={t('question_placeholder')}
                   {...form.register('question')}
                   isError={!!form.formState.errors.question}
                   hintText={form.formState.errors.question?.message}

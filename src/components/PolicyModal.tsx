@@ -16,6 +16,7 @@ export type IPolicyModalProps = {
 
 const PolicyModal = (props: WithChildren<IPolicyModalProps>) => {
   const t = useTranslations('Index');
+  const tAlt = useTranslations('AltText');
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
@@ -24,7 +25,7 @@ const PolicyModal = (props: WithChildren<IPolicyModalProps>) => {
         <div className="flex w-full flex-col items-center justify-center gap-12 rounded-3xl bg-white p-6 md:p-12">
           <div className="inline-flex w-full items-center justify-between">
             <Image
-              alt="HULIB minified logo"
+              alt={tAlt('hulib_logo')}
               src="/assets/images/logos/minified-HULIB-logo.png"
               width={36}
               height={42}

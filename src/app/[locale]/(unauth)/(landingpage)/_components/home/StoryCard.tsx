@@ -32,6 +32,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
   const { requireAuth } = useRequireAuth();
   const locale = useLocale();
   const t = useTranslations('ExploreStory');
+  const tA11y = useTranslations('Accessibility');
   const isMobile = useMobile();
   const [handleUpdateLikeCount] = useLikeStoryMutation();
 
@@ -204,7 +205,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
           className="flex-1 rounded-full py-3 text-base font-medium leading-5"
           onClick={handleClickRead}
         >
-          Đọc hết
+          {t('read_story')}
         </Button>
         <IconButton
           variant="outline"
@@ -214,7 +215,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
             isFavorite ? 'border-orange-80' : 'border-primary-90',
           )}
           onClick={handleClickFavorite}
-          aria-label="Like story"
+          aria-label={tA11y('like_story')}
         >
           <ThumbsUp
             className={isFavorite ? 'text-orange-50' : 'text-primary-50'}

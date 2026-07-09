@@ -28,6 +28,7 @@ export default function PreSurvey({ sessionId, onFinish }: { sessionId: number; 
   const router = useRouter();
 
   const t = useTranslations('Reading.PreSurvey');
+  const tAlt = useTranslations('AltText');
 
   const [updateReadingSession]
     = useUpdateReadingSessionMutation();
@@ -90,7 +91,7 @@ export default function PreSurvey({ sessionId, onFinish }: { sessionId: number; 
             <div className="flex items-center gap-7">
               <Image
                 src="/assets/icons/lucky-leaf.svg"
-                alt="Leaf icon"
+                alt={tAlt('leaf_icon')}
                 width={22}
                 height={28}
                 className="h-7 w-[22px] object-cover"

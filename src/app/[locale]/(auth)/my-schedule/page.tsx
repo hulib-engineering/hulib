@@ -26,13 +26,6 @@ import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-sess
 import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
 import { toLocaleDateString, toLocaleTimeString } from '@/utils/dateUtils';
 
-const filters: TFilter[] = [
-  { id: 1, label: 'Done', value: StatusEnum.Finished },
-  { id: 2, label: 'Waiting', value: StatusEnum.Pending },
-  { id: 3, label: 'Huber', value: 'isHuber' },
-  { id: 4, label: 'Liber', value: 'isLiber' },
-];
-
 const filter = (
   query: string,
   filters: { label: string; value: string }[],
@@ -48,8 +41,16 @@ const filter = (
 };
 
 export default function Index() {
-  const t = useTranslations('Schedule');
+  const tSchedule = useTranslations('Schedule');
+  const tMySchedule = useTranslations('MySchedule');
   const locale = useLocale();
+
+  const filters: TFilter[] = [
+    { id: 1, label: tMySchedule('done'), value: StatusEnum.Finished },
+    { id: 2, label: tMySchedule('waiting'), value: StatusEnum.Pending },
+    { id: 3, label: tMySchedule('huber'), value: 'isHuber' },
+    { id: 4, label: tMySchedule('liber'), value: 'isLiber' },
+  ];
 
   const { data: upcomingEvents, isLoading }
     = useGetReadingSessionsQuery({ upcoming: true });
@@ -76,11 +77,11 @@ export default function Index() {
         timeSlots: selectedSlots.map(slot => convertTimeSlotToUtc(slot)),
       }).unwrap();
       if (result !== null) {
-        pushSuccess('Time slots saved successfully!');
+        pushSuccess(tMySchedule('slots_saved'));
       }
       setShowMobileTimeslotRegistration(false);
     } catch (error: any) {
-      pushError(error?.message || 'Failed to save time slots');
+      pushError(error?.message || tMySchedule('slots_save_failed'));
     }
   };
 
@@ -101,7 +102,7 @@ export default function Index() {
             && hasUpcomingEvent && (
               <div className="hidden flex-col gap-1 rounded-xl bg-white px-4 py-3 shadow-sm lg:flex">
                 <p className="text-xl font-medium text-primary-10">
-                  {t('upcoming.upcoming_event')}
+                  {tSchedule('upcoming.upcoming_event')}
                 </p>
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-1">
@@ -114,7 +115,7 @@ export default function Index() {
                         loading="lazy"
                         className="rounded"
                       />
-                      <span>Meeting with</span>
+                      <span>{tMySchedule('meeting_with')}</span>
                     </div>
                     <div
                       className="flex items-center gap-[6px] text-yellow-40"
@@ -153,7 +154,7 @@ export default function Index() {
                       >
                         {upcomingEvents[0].sessionUrl || '-'}
                       </Link>
-                    ) : <span className="text-sm leading-4 text-neutral-variant-10">TBU</span>}
+                    ) : <span className="text-sm leading-4 text-neutral-variant-10">{tMySchedule('tbu')}</span>}
                   </div>
                 </div>
               </div>
@@ -172,11 +173,11 @@ export default function Index() {
             <div className="flex items-center justify-between px-4">
               <div className="flex-1">
                 <h4 className="text-[28px] font-medium leading-9 text-primary-10">
-                  Meeting schedule
+                  {tMySchedule('meeting_schedule')}
                 </h4>
               </div>
               <div className="flex items-center gap-2">
-                <span>View:</span>
+                <span>{tMySchedule('view')}</span>
                 <Combobox
                   value={statusFilters}
                   onChange={value => setStatusFilters(value as TFilter[])}
@@ -191,7 +192,7 @@ export default function Index() {
                       <Combobox.VisualMultiSelect
                         open={open}
                         label=""
-                        placeholder="Type of meeting"
+                        placeholder={tMySchedule('meeting_type_placeholder')}
                         className={mergeClassnames(
                           'rounded-lg border-[0.5px] border-neutral-70',
                           filters.length > 0 ? 'p-1' : 'py-1 pl-4 pr-2',
@@ -205,7 +206,7 @@ export default function Index() {
                         <Combobox.Options className="my-2 grid grid-cols-2 gap-y-4 rounded-lg bg-neutral-98 shadow-sm">
                           {queriedFilters.length === 0 && filterQuery !== '' ? (
                             <div className="relative cursor-default select-none text-neutral-40">
-                              Nothing found.
+                              {tMySchedule('nothing_found')}
                             </div>
                           ) : (
                             queriedFilters.map((filter, index) => (
@@ -239,7 +240,7 @@ export default function Index() {
             className="w-fit font-medium text-black"
             onClick={() => setShowMobileTimeslotRegistration(false)}
           >
-            Back
+            {tMySchedule('back')}
           </Button>
           <TimeslotRegistrationSection
             selectedSlots={selectedSlots}
@@ -251,7 +252,7 @@ export default function Index() {
             disabled={selectedSlots.length === 0 || isRegisteringTimeslots}
             onClick={handleSaveMobileTimeSlots}
           >
-            Save
+            {tMySchedule('save')}
           </Button>
         </div>
       )}

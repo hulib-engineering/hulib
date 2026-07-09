@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowLeft, Check, X } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 import { redirect, useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import * as React from 'react';
@@ -18,6 +19,7 @@ import { Chip } from '@/components/core/chip/Chip';
 
 export default function Index() {
   const { status } = useSession();
+  const t = useTranslations('AdminApproval');
 
   const router = useRouter();
   const { id: userId } = useParams();
@@ -65,7 +67,7 @@ export default function Index() {
           className="w-fit text-black"
           onClick={() => router.push('/admin/users')}
         >
-          Back
+          {t('back')}
         </Button>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col overflow-hidden shadow-sm lg:rounded-xl">
@@ -80,7 +82,7 @@ export default function Index() {
                       className="absolute -top-10 left-[18px] size-[100px] lg:size-40"
                     />
                     <div className="absolute bottom-0 left-0 flex w-full">
-                      <span className="flex w-full items-center justify-center rounded-full bg-primary-60 px-4 py-2 text-xs leading-[14px] text-white">Waiting for approval</span>
+                      <span className="flex w-full items-center justify-center rounded-full bg-primary-60 px-4 py-2 text-xs leading-[14px] text-white">{t('waiting_for_approval')}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -90,14 +92,14 @@ export default function Index() {
                         disabled
                         className="w-fit rounded-full border border-yellow-70 bg-yellow-98 px-4 py-1 text-xl font-medium uppercase leading-tight text-yellow-40 opacity-100"
                       >
-                        Liber
+                        {t('liber')}
                       </Chip>
-                      <Image src="/assets/icons/gradient-arrow-right.svg" alt="Arrow right" width={32} height={32} />
+                      <Image src="/assets/icons/gradient-arrow-right.svg" alt={t('arrow_right_alt')} width={32} height={32} />
                       <Chip
                         disabled
                         className="w-fit rounded-full border border-primary-80 bg-primary-90 px-4 py-1 text-xl font-medium uppercase leading-tight text-primary-60 opacity-100"
                       >
-                        Huber
+                        {t('huber')}
                       </Chip>
                     </div>
                   </div>
@@ -113,7 +115,7 @@ export default function Index() {
             className="w-60"
             onClick={() => setIsApproveHuberModalOpen(true)}
           >
-            Approve
+            {t('approve')}
           </Button>
           <Button
             variant="soft"
@@ -122,7 +124,7 @@ export default function Index() {
             className="w-60 bg-red-90 text-red-50"
             onClick={() => setIsRejectHuberModalOpen(true)}
           >
-            Decline
+            {t('decline')}
           </Button>
         </div>
       </div>

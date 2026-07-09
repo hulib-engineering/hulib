@@ -164,11 +164,14 @@ const SessionSection: FC<SessionSectionProps> = ({
   </div>
 );
 
-const LoadingState = () => (
-  <div className="flex h-full items-center justify-center">
-    <div className="text-gray-500">Loading...</div>
-  </div>
-);
+const LoadingState = () => {
+  const t = useTranslations('Schedule');
+  return (
+    <div className="flex h-full items-center justify-center">
+      <div className="text-gray-500">{t('loading')}</div>
+    </div>
+  );
+};
 
 // Main component
 export default function MobileSessionList() {
@@ -190,8 +193,8 @@ export default function MobileSessionList() {
   }, [categorizedSessions.nextMeetings, activeTab, userId]);
   const tabs: TabConfig[] = useMemo(() => [
     { key: 'all', label: t('tabs_all'), count: getTabCount(readingSessions || [], 'all', userId) },
-    { key: 'liber', label: 'Liber', count: getTabCount(readingSessions || [], 'liber', userId) },
-    { key: 'huber', label: 'Huber', count: getTabCount(readingSessions || [], 'huber', userId) },
+    { key: 'liber', label: t('liber'), count: getTabCount(readingSessions || [], 'liber', userId) },
+    { key: 'huber', label: t('huber'), count: getTabCount(readingSessions || [], 'huber', userId) },
     { key: 'waiting', label: t('waiting'), count: getTabCount(readingSessions || [], 'waiting', userId) },
   ], [readingSessions, userId, t]);
 

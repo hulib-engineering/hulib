@@ -27,6 +27,7 @@ const NewsletterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const t = useTranslations('Index');
+  const tAccessibility = useTranslations('Accessibility');
 
   const handleSubscribe = handleSubmit(async (data) => {
     setIsLoading(true);
@@ -79,7 +80,7 @@ const NewsletterForm = () => {
             <Image
               width={40}
               height={40}
-              alt="Subscribe"
+              alt={tAccessibility('subscribe')}
               src="/assets/icons/arrow-right-2.svg"
             />
           )}

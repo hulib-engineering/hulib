@@ -31,7 +31,8 @@ type IWorkExperienceFormProps = | {
 };
 
 const WorkExperienceForm = ({ onCancel, ...rest }: IWorkExperienceFormProps) => {
-  const t = useTranslations('Common');
+  const tCommon = useTranslations('Common');
+  const t = useTranslations('WorkExperience');
 
   const [addWork, { isLoading: isAddingWork }] = useAddWorkExperienceMutation();
   const [editWork, { isLoading: isEditingWork }] = useEditWorkExperienceMutation();
@@ -63,35 +64,35 @@ const WorkExperienceForm = ({ onCancel, ...rest }: IWorkExperienceFormProps) => 
     try {
       if (!rest.editable) {
         await addWork(data).unwrap();
-        pushSuccess('Work experience information added successfully');
+        pushSuccess(t('added_successfully'));
       } else {
         await editWork({ ...data, id: rest.id }).unwrap();
-        pushSuccess('Work experience information edited successfully');
+        pushSuccess(t('edited_successfully'));
       }
       onCancel();
     } catch (error: any) {
-      pushError(t(error.message));
+      pushError(tCommon(error.message));
     }
   });
 
   return (
     <div ref={ref} className="flex flex-col gap-4 rounded-[20px] bg-primary-98 p-4">
-      <p className="font-medium">{!rest.editable ? 'Add work experience' : 'Edit'}</p>
+      <p className="font-medium">{!rest.editable ? t('add_work_experience') : t('edit')}</p>
       <Form className="flex w-full flex-col gap-4" onSubmit={handleSubmitWorkExpForm}>
         <fieldset className="flex items-center gap-3">
           <Form.Item>
-            <InsetInput id="position" placeholder="Ex: Graphic Designer" {...register('position')}>
-              <InsetInput.Label>Position</InsetInput.Label>
+            <InsetInput id="position" placeholder={t('position_placeholder')} {...register('position')}>
+              <InsetInput.Label>{t('position')}</InsetInput.Label>
             </InsetInput>
           </Form.Item>
           <Form.Item>
-            <InsetInput id="company" placeholder="Ex: Amazon" {...register('company')}>
-              <InsetInput.Label>Company</InsetInput.Label>
+            <InsetInput id="company" placeholder={t('company_placeholder')} {...register('company')}>
+              <InsetInput.Label>{t('company')}</InsetInput.Label>
             </InsetInput>
           </Form.Item>
         </fieldset>
         <fieldset className="flex items-center gap-3">
-          <span>From</span>
+          <span>{t('from')}</span>
           <Form.Item className="relative min-h-10 w-fit overflow-visible">
             <Controller
               name="startedAt"
@@ -106,7 +107,7 @@ const WorkExperienceForm = ({ onCancel, ...rest }: IWorkExperienceFormProps) => 
               )}
             />
           </Form.Item>
-          <span>to</span>
+          <span>{t('to')}</span>
           <Form.Item className="relative min-h-10 w-fit overflow-visible">
             <Controller
               name="endedAt"
@@ -123,7 +124,7 @@ const WorkExperienceForm = ({ onCancel, ...rest }: IWorkExperienceFormProps) => 
           </Form.Item>
         </fieldset>
         <div className="flex items-center justify-end gap-3">
-          <Button variant="outline" size="lg" className="w-[114px]">Cancel</Button>
+          <Button variant="outline" size="lg" className="w-[114px]">{t('cancel')}</Button>
           <Button
             type="submit"
             size="lg"
@@ -131,7 +132,7 @@ const WorkExperienceForm = ({ onCancel, ...rest }: IWorkExperienceFormProps) => 
             animation={isSubmitting || isAddingWork || isEditingWork}
             className="w-[114px]"
           >
-            Save
+            {t('save')}
           </Button>
         </div>
       </Form>
@@ -148,6 +149,7 @@ type IWorkExperienceItemProps = {
 
 const WorkExperienceItem = ({ data, editable = false }: IWorkExperienceItemProps) => {
   const locale = useLocale();
+  const t = useTranslations('WorkExperience');
 
   const { id, ...rest } = data;
   const startedAtDateString = new Date(rest.startedAt).toLocaleDateString(locale, {
@@ -172,11 +174,11 @@ const WorkExperienceItem = ({ data, editable = false }: IWorkExperienceItemProps
       <div className="flex flex-1 flex-col gap-1 text-neutral-20">
         <p className="text-sm font-medium leading-5">
           {data.position}
-          <span className="font-light"> at </span>
+          <span className="font-light">{t('at')}</span>
           {data.company}
         </p>
         <p className="text-xs capitalize leading-[14px]">
-          {`${startedAtDateString} - ${!data.endedAt ? 'Present' : endedAtDateString}`}
+          {`${startedAtDateString} - ${!data.endedAt ? t('present') : endedAtDateString}`}
         </p>
       </div>
       {editable && (

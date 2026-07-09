@@ -4,6 +4,7 @@ import { mergeClassnames } from '@/components/core/private/utils';
 
 export default function NoResultFound({ className = '' }: { className?: string }) {
   const t = useTranslations('Research');
+  const tAccessibility = useTranslations('Accessibility');
 
   return (
     <div
@@ -14,7 +15,7 @@ export default function NoResultFound({ className = '' }: { className?: string }
     >
       <Image
         src="/assets/images/landing/no-results-found.png"
-        alt="No results found illustration"
+        alt={tAccessibility('no_results_found')}
         width={482}
         height={378}
         className="h-auto w-full max-w-xs"

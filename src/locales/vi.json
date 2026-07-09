@@ -1,4 +1,8 @@
 {
+  "Banner": {
+    "mobile_alt": "Biểu ngữ trang chủ trên điện thoại",
+    "desktop_alt": "Biểu ngữ trang chủ"
+  },
   "Header": {
     "contact_us": "liên hệ"
   },
@@ -16,7 +20,9 @@
     "my_profile": "Hồ sơ của tôi",
     "change_password": "Đổi mật khẩu",
     "register_huber": "Đăng kí trở thành Huber",
-    "sign_out": "Đăng xuất"
+    "sign_out": "Đăng xuất",
+    "my_favorite": "Yêu thích của tôi",
+    "stories_management": "Quản lý câu chuyện"
   },
   "HumanBookBanner": {
     "explore_now": "Khám phá tủ sách Human Book ngay",
@@ -54,7 +60,10 @@
     "privacy_policy": "chính sách bảo mật",
     "term_of_service": "điều khoản dịch vụ",
     "cookie_settings": "cài đặt cookie",
-    "community_guidelines": "hướng dẫn cộng đồng"
+    "community_guidelines": "hướng dẫn cộng đồng",
+    "help": "Trợ giúp",
+    "contact": "Liên hệ",
+    "follow_us": "Theo dõi chúng tôi"
   },
   "FooterWebApp": {
     "footer_description": "Ta sinh ra để là một ai đó. Mỗi chúng ta đều mang trong mình một câu chuyện và những trải nghiệm rất riêng.",
@@ -471,7 +480,9 @@
     "welcome": "Chào mừng đến với",
     "account_created": "Xin chúc mừng, tài khoản của bạn đã được tạo",
     "get_started": "Bắt đầu",
-    "huber_register": "Đăng ký thờ thành Huber"
+    "huber_register": "Đăng ký thờ thành Huber",
+    "name_placeholder": "John Doe",
+    "success_illustration_alt": "Minh họa thành công"
   },
   "ForgotPassword": {
     "meta_title": "Quên mật khẩu",
@@ -590,7 +601,8 @@
       "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại",
       "bio_required": "Vui lòng nhập tiểu sử của bạn",
       "terms_required": "Vui lòng chấp thuận các điều khoản và điều kiện",
-      "topics_required": "Vui lòng chọn ít nhất một thể loại"
+      "topics_required": "Vui lòng chọn ít nhất một thể loại",
+      "time_slots_required": "Vui lòng chọn ít nhất một khung giờ"
     },
     "bio": {
       "text": "Tiểu sử",
@@ -654,6 +666,7 @@
     "description": "Tìm hiểu và chọn Huber phù hợp với bạn",
     "huber_btn_all": "Xem tất cả",
     "huber_view_more": "Xem thêm",
+    "view_more": "Xem thêm",
     "explore_all_huber": "Khám phá tất cả Hubers",
     "card": {
       "introduce": "Tên tôi là {fullName}, tôi là một người yêu sách và thích chia sẻ kiến thức. Tôi đã đọc rất nhiều sách và muốn chia sẻ những gì tôi đã học được với mọi người.",
@@ -685,6 +698,9 @@
     "appointment_schedule": "Lịch trò chuyện tháng",
     "type_meeting": "Loại cuộc hẹn",
     "waiting": "Đang chờ",
+    "loading": "Đang tải...",
+    "liber": "Liber",
+    "huber": "Huber",
     "upcoming": {
       "upcoming_event": "Sự kiện sắp tới",
       "meeting_with": "Cuộc hẹn với"
@@ -732,7 +748,10 @@
       "notice": "Lưu ý",
       "notice_text": "Vui lòng đảm bảo bạn chọn đúng khung giờ cho lịch hẹn của mình. Thời gian hiển thị là theo múi giờ địa phương của bạn.",
       "support_text": "Nếu chưa thấy khung giờ phù hợp, cứ thoải mái nhắn cho Huber để trao đổi",
-      "click_here": "tại đây"
+      "click_here": "tại đây",
+      "request_sent": "Gửi yêu cầu thành công",
+      "booking_failed": "Đặt cuộc hẹn thất bại",
+      "success_illustration_alt": "Hình minh họa thành công"
     }
   },
   "notifications": {
@@ -745,6 +764,7 @@
     "loadingFailed": "Tải thông báo thất bại",
     "loading": "Đang tải...",
     "seePreviousNotifications": "Xem thông báo trước đó",
+    "meeting_request": "Yêu cầu buổi họp",
     "sessionRequest": {
       "message": "muốn có một cuộc họp với bạn."
     },
@@ -820,6 +840,7 @@
     "followers": "theo dõi"
   },
   "Common": {
+    "loading": "Đang tải...",
     "no_data": "Không có dữ liệu",
     "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
     "validation_error": "Dữ liệu không hợp lệ",
@@ -855,6 +876,116 @@
     "placeholder": "Bạn đang nghĩ gì...",
     "location": "Địa điểm"
   },
+  "Notification": {
+    "account_upgrade_huber": "Đăng ký trở thành Huber của bạn",
+    "account_upgrade_huber_accepted": "đã được chấp nhận. Chào mừng bạn!",
+    "account_upgrade_admin": "đã gửi yêu cầu trở thành Huber.",
+    "session_request": "muốn có một buổi họp với bạn.",
+    "story_review": "đã xem xét câu chuyện của bạn",
+    "story_publish_huber": "Câu chuyện của bạn,",
+    "story_publish_huber_published": "đã được xuất bản thành công.",
+    "story_publish_admin": "đã gửi yêu cầu tạo câu chuyện mới",
+    "story_rejection": "Câu chuyện của bạn,",
+    "story_rejection_reason": "chưa được xuất bản thành công. Lý do:",
+    "huber_report_prefix": "Huber \"",
+    "huber_report_suffix": "\" đã bị báo cáo.",
+    "huber_warning": "Tài khoản của bạn đã nhận cảnh báo do một báo cáo. Tài khoản sẽ bị cấm nếu nhận 3 báo cáo.",
+    "huber_warning_title": "Bạn đã bị cảnh báo",
+    "huber_rejection": "Chúng tôi rất tiếc, nhưng đăng ký trở thành Huber của bạn không thành công. Lý do:",
+    "huber_rejection_title": "Đăng ký Huber không thành công.",
+    "session_rejection": "Thật không may,",
+    "session_rejection_not_available": "không khả dụng cho buổi họp này",
+    "session_rejection_title": "Yêu cầu họp của bạn bị từ chối",
+    "session_approval": "Chúng tôi vui mừng thông báo rằng",
+    "session_approval_accepted": "đã chấp nhận yêu cầu họp của bạn. Đừng quên tham gia họp đúng giờ.",
+    "session_approval_title": "Yêu cầu họp của bạn đã được chấp nhận",
+    "session_starting": "Buổi họp với",
+    "session_starting_now": "sắp bắt đầu. Hãy nhanh chóng tham gia để có trải nghiệm tuyệt vời. Nhấn bên dưới để tham gia.",
+    "session_starting_title": "Đã đến giờ cho buổi họp của bạn",
+    "session_completion": "Chúc bạn có thời gian đáng nhớ. Bây giờ hãy dành chút thời gian chia sẻ suy nghĩ về",
+    "session_completion_and": "và buổi họp từ",
+    "session_completion_feedback": ". Phản hồi của bạn rất có giá trị cho HuLib.",
+    "session_completion_title": "Buổi họp đã kết thúc",
+    "session_cancellation": "Chúng tôi muốn thông báo rằng",
+    "session_cancellation_canceled": "đã hủy buổi họp",
+    "session_cancellation_title": "Buổi họp đã bị hủy",
+    "session_miss": "Bạn đã không tham gia buổi họp hôm nay",
+    "session_miss_improve": "Chúng tôi muốn biết điều gì đã xảy ra, để cải thiện trải nghiệm cho mọi người.",
+    "session_miss_title": "Buổi họp không được tham dự!",
+    "user_appeal": "Khiếu nại báo cáo người dùng #",
+    "appeal_accepted": "Yêu cầu khiếu nại của bạn đã được chấp nhận, tài khoản không nhận cảnh báo. Cảm ơn bạn đã làm rõ tình huống.",
+    "appeal_rejected": "Sau khi xem xét khiếu nại, chúng tôi quyết định giữ cảnh báo. Vui lòng cẩn thận vì tài khoản sẽ bị cấm nếu nhận 3 báo cáo.",
+    "no_reason": "Không có lý do",
+    "from": "Từ:",
+    "time": "Thời gian:",
+    "huber": "Huber:",
+    "see_rejected_stories": "Xem các câu chuyện bị từ chối",
+    "explore_other_stories": "Khám phá câu chuyện khác",
+    "share_reason": "Chia sẻ lý do",
+    "appeal": "Khiếu nại",
+    "detail": "Chi tiết",
+    "rating": "đánh giá",
+    "comment": "bình luận",
+    "see_detail": "Xem chi tiết",
+    "now": "Bây giờ",
+    "join_now": "Tham gia ngay",
+    "feedback": "Phản hồi"
+  },
+  "VerifiedPhone": {
+    "invalid": "Không hợp lệ",
+    "no_confirmation": "Không có phản hồi xác nhận.",
+    "invalid_otp": "OTP không hợp lệ. Vui lòng thử lại.",
+    "phone_required": "Số điện thoại là bắt buộc",
+    "parent_phone": "Số điện thoại phụ huynh",
+    "verify": "Xác minh",
+    "verification_code": "Mã xác minh",
+    "verified": "Đã xác minh"
+  },
+  "HuberCard": {
+    "add_to_favorites": "Đã thêm vào danh sách yêu thích thành công",
+    "remove_from_favorites": "Đã xóa khỏi danh sách yêu thích thành công",
+    "waiting_approval": "Đang chờ phê duyệt",
+    "hearts": "Tim",
+    "visit_profile": "Xem hồ sơ",
+    "view_detail": "Xem chi tiết"
+  },
+  "Toast": {
+    "saved_successfully": "đã lưu thành công",
+    "error_occurred": "đã xảy ra lỗi",
+    "information": "thông tin",
+    "action_required": "cần hành động",
+    "new_message": "tin nhắn mới"
+  },
+  "EmojiRate": {
+    "not_good": "Không tốt",
+    "very_good": "Rất tốt"
+  },
+  "Minigame": {
+    "movements": "lượt di chuyển"
+  },
+  "Search": {
+    "search_for": "Tìm kiếm"
+  },
+  "Testimonial": {
+    "member_avatar": "Ảnh đại diện thành viên"
+  },
+  "Accessibility": {
+    "success": "Thành công",
+    "error": "Lỗi",
+    "icon_button": "Nút biểu tượng",
+    "close_overlay": "Đóng lớp phủ",
+    "pagination": "phân trang",
+    "dropdown_trigger": "Kích hoạt thả xuống",
+    "social_icon": "Biểu tượng mạng xã hội",
+    "no_results_found": "Hình minh họa không tìm thấy kết quả",
+    "subscribe": "Đăng ký",
+    "thought": "Suy nghĩ",
+    "like_story": "Thích câu chuyện",
+    "go_to_homepage": "Về trang chủ",
+    "open_menu": "Mở menu",
+    "mobile_menu": "Menu di động",
+    "close_menu": "Đóng menu"
+  },
   "feedback_form": {
     "session_feedback": "Phản hồi cho buổi học",
     "feedback_for_huber": "Phản hồi cho Huber",
@@ -887,7 +1018,10 @@
     "thank_you": "Cảm ơn bạn đã phản hồi",
     "feedback_value": "Phản hồi của bạn rất có giá trị đối với sự hoàn thiện và phát triển của Hulib",
     "go_to_schedule": "Lịch trò chuyện",
-    "back_to_home": "Về Trang chủ"
+    "back_to_home": "Về Trang chủ",
+    "feedback_sent_success": "Gửi phản hồi thành công",
+    "feedback_sent_failed": "Gửi phản hồi thất bại",
+    "successful_feedback_alt": "Phản hồi thành công"
   },
   "thanks_page": {
     "thank_you": "Cảm ơn bạn đã phản hồi",
@@ -960,5 +1094,331 @@
       "follow": "Theo dõi",
       "un_follow": "Hủy theo dõi"
     }
+  },
+  "AdminLogin": {
+    "incorrect_password": "Mật khẩu không đúng, vui lòng thử lại.",
+    "welcome_back": "Chào mừng trở lại!",
+    "login_description": "Đăng nhập vào tài khoản Quản trị viên",
+    "email_label": "Địa chỉ email",
+    "email_placeholder": "hulib@gmail.com",
+    "password_label": "Mật khẩu",
+    "login_button": "Đăng nhập"
+  },
+  "ChangePassword": {
+    "title": "Đổi mật khẩu của bạn",
+    "old_password": "Mật khẩu cũ",
+    "new_password": "Mật khẩu mới",
+    "re_enter_password": "Nhập lại mật khẩu mới",
+    "change_button": "Đổi",
+    "forgot_password": "Quên mật khẩu?",
+    "confirm_title": "Đổi mật khẩu của bạn",
+    "confirm_text": "Bạn có chắc chắn muốn đổi mật khẩu không?",
+    "cancel": "Hủy",
+    "confirm": "Đổi"
+  },
+  "AdminApproval": {
+    "back": "Quay lại",
+    "waiting_for_approval": "Đang chờ phê duyệt",
+    "liber": "Liber",
+    "huber": "Huber",
+    "approve": "Chấp nhận",
+    "decline": "Từ chối",
+    "arrow_right_alt": "Mũi tên phải"
+  },
+  "AwaitingStories": {
+    "warm_heart": "Bạn có trái tim ấm áp",
+    "title": "Chờ phê duyệt - Câu chuyện",
+    "description": "Danh sách câu chuyện đang chờ phê duyệt",
+    "prev_alt": "Trước đó",
+    "next_alt": "Tiếp theo"
+  },
+  "HuberConfirmation": {
+    "approve_failed": "Phê duyệt Huber thất bại. Vui lòng thử lại.",
+    "user_avatar_alt": "Ảnh đại diện người dùng",
+    "waiting_approval": "Đang chờ phê duyệt",
+    "approved": "Đã chấp nhận",
+    "declined": "Đã từ chối",
+    "rejection_placeholder": "Lý do từ chối",
+    "confirm_approve_text": "Bạn đã xác nhận yêu cầu trở thành Huber.",
+    "confirm_approve_action": "Bạn đang chấp nhận yêu cầu trở thành Huber.",
+    "confirm_decline_text": "Bạn đã từ chối yêu cầu trở thành Huber.",
+    "confirm_decline_action": "Bạn đang từ chối yêu cầu trở thành Huber.",
+    "homepage": "Trang chủ",
+    "back": "Quay lại",
+    "confirm": "Xác nhận"
+  },
+  "HandleReport": {
+    "approve_failed": "Phê duyệt Huber thất bại. Vui lòng thử lại.",
+    "user_banned": "Đã cấm người dùng thành công.",
+    "user_warned": "Đã cảnh báo người dùng thành công.",
+    "report_tab": "Báo cáo",
+    "approve_tab": "Chấp nhận",
+    "reject_tab": "Từ chối",
+    "detail": "Chi tiết",
+    "reporter": "Người báo cáo",
+    "reported_user": "Người bị báo cáo",
+    "reasons": "Lý do:",
+    "reject_button": "Từ chối",
+    "approve_button": "Chấp nhận",
+    "done": "Xong",
+    "warn_user": "Cảnh báo người dùng",
+    "ban_user": "Cấm người dùng",
+    "reason_0": "Bằng chứng không đủ",
+    "reason_1": "Không vi phạm hướng dẫn cộng đồng",
+    "reason_2": "Báo cáo trùng lặp",
+    "reason_3": "Lạm dụng tính năng báo cáo",
+    "reason_4": "Báo cáo không chính xác hoặc không liên quan"
+  },
+  "HandleAppeal": {
+    "appeal_processed": "Yêu cầu khiếu nại đã được chấp nhận/từ chối thành công.",
+    "appeal_request": "Yêu cầu khiếu nại",
+    "report_number": "Báo cáo #",
+    "reported_user": "Người bị báo cáo",
+    "huber": "Huber",
+    "appeal_form": "Biểu mẫu khiếu nại",
+    "reject": "Từ chối",
+    "approve": "Chấp nhận"
+  },
+  "ActionOnUser": {
+    "user_avatar_alt": "Ảnh đại diện người dùng",
+    "warning_placeholder": "Lý do cảnh báo",
+    "ban_confirm": "Bạn có chắc chắn muốn cấm tài khoản này không?",
+    "warn_confirm": "Bạn có chắc chắn muốn gửi cảnh báo cho tài khoản này không?",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận"
+  },
+  "OverviewSection": {
+    "update_failed": "Cập nhật hồ sơ thất bại. Vui lòng thử lại.",
+    "topic": "Chủ đề",
+    "bio": "Tiểu sử",
+    "cancel": "Hủy",
+    "saving": "Đang lưu...",
+    "save": "Lưu",
+    "video_introduction": "Video giới thiệu",
+    "youtube_placeholder": "https://www.youtube.com/embed/video",
+    "youtube_title": "Trình phát video YouTube",
+    "invalid_video": "Nguồn video không hợp lệ",
+    "browser_not_support": "Trình duyệt của bạn không hỗ trợ video HTML.",
+    "add_video": "Thêm nguồn video",
+    "what_liber_say": "Liber nói gì"
+  },
+  "ContactSection": {
+    "full_name": "Họ và tên",
+    "gender": "Giới tính",
+    "date_of_birth": "Ngày sinh",
+    "address": "Địa chỉ",
+    "email": "Email",
+    "phone_number": "Số điện thoại",
+    "guardian_name": "Tên phụ huynh",
+    "guardian_phone": "Số điện thoại phụ huynh",
+    "not_provided": "Chưa cung cấp",
+    "contact_information": "Thông tin liên hệ"
+  },
+  "EditImage": {
+    "error_editing": "Lỗi chỉnh sửa {type}",
+    "edit_type": "Chỉnh sửa {type}",
+    "cover_image_alt": "Ảnh bìa",
+    "upload_photo": "Tải ảnh lên",
+    "delete_avatar": "Xóa ảnh đại diện",
+    "delete_cover": "Xóa ảnh bìa",
+    "back": "Quay lại",
+    "save": "Lưu"
+  },
+  "Education": {
+    "added_successfully": "Thêm thông tin học vấn thành công",
+    "edited_successfully": "Chỉnh sửa thông tin học vấn thành công",
+    "add_education": "Thêm học vấn",
+    "edit": "Chỉnh sửa",
+    "major_placeholder": "VD: Kỹ thuật phần mềm",
+    "major": "Chuyên ngành",
+    "school_placeholder": "VD: Đại học Khoa học TP.HCM",
+    "school": "Trường/Đại học",
+    "from": "Từ",
+    "to": "đến",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "at": " tại ",
+    "present": "Hiện tại"
+  },
+  "WorkExperience": {
+    "added_successfully": "Thêm kinh nghiệm làm việc thành công",
+    "edited_successfully": "Chỉnh sửa kinh nghiệm làm việc thành công",
+    "add_work_experience": "Thêm kinh nghiệm làm việc",
+    "edit": "Chỉnh sửa",
+    "position_placeholder": "VD: Nhà thiết kế đồ họa",
+    "position": "Vị trí",
+    "company_placeholder": "VD: Amazon",
+    "company": "Công ty",
+    "from": "Từ",
+    "to": "đến",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "at": " tại ",
+    "present": "Hiện tại"
+  },
+  "ProfileForm": {
+    "full_name": "Họ và tên",
+    "gender": "Giới tính",
+    "date_of_birth": "Ngày sinh",
+    "address": "Địa chỉ",
+    "address_placeholder": "Nhập địa chỉ của bạn",
+    "email": "Email",
+    "phone_number": "Số điện thoại",
+    "guardian_name": "Tên phụ huynh",
+    "guardian_phone": "Số điện thoại phụ huynh",
+    "cancel": "Hủy",
+    "save": "Lưu"
+  },
+  "FirstBookCreated": {
+    "welcome_title": "Chào mừng bạn đến với cộng đồng",
+    "huber_label": "Huber",
+    "welcome_description": "Cuốn sách đầu tiên của bạn đã được duyệt, bây giờ mọi người có thể xem câu chuyện của bạn",
+    "update_schedule_title": "Cập nhật lịch của bạn",
+    "update_schedule_description": "Cập nhật lịch để mọi người có thể trò chuyện trực tiếp với bạn",
+    "update_schedule_button": "Cập nhật lịch"
+  },
+  "EventSuccess": {
+    "greeting": "Xin chào",
+    "confirmation": "Chúng tôi xác nhận bạn đã đăng ký thành công.",
+    "stay_tuned": "Đón chờ thêm sự kiện từ HuLib nhé.",
+    "see_you": "Hẹn gặp bạn!",
+    "got_it": "Đã hiểu",
+    "illustration_alt": "Hình minh họa"
+  },
+  "RegisterHuber": {
+    "guide_title": "Hướng dẫn tạo sách",
+    "guide_description": "HuLib rất mong chờ được đọc câu chuyện của bạn và lan tỏa đến cộng đồng. Trước khi tạo sách, dưới đây là một số lưu ý giúp xây dựng không gian chia sẻ tích cực, an toàn và ý nghĩa.",
+    "mascot_alt": "Mascot",
+    "emergency_alt": "Khẩn cấp",
+    "disclaimer": "HuLib có quyền từ chối hoặc yêu cầu chỉnh sửa nếu câu chuyện không đáp ứng các tiêu chí cộng đồng ở trên.",
+    "continue": "Tiếp tục",
+    "back_label": "Quay lại",
+    "success_back": "Tạo sách",
+    "success_title": "Viết câu chuyện thành công",
+    "success_description": "Cảm ơn bạn đã chia sẻ câu chuyện! Đội ngũ sẽ xem xét trong thời gian sớm nhất.",
+    "in_review": "Đang xem xét",
+    "back_to_profile": "Quay về trang cá nhân",
+    "create_new_story": "Tạo sách mới",
+    "book_icon_alt": "Biểu tượng sách"
+  },
+  "AltText": {
+    "user_avatar": "Ảnh đại diện người dùng",
+    "huber_avatar": "Ảnh đại diện Huber",
+    "meeting_system_ava": "Ảnh hệ thống buổi họp",
+    "seen_icon": "Biểu tượng đã xem",
+    "meeting_icon": "Biểu tượng buổi họp",
+    "kissing_icon": "Biểu tượng hôn",
+    "cover_image": "Ảnh bìa",
+    "hero_artwork": "Hình ảnh hero",
+    "mentor_avatars": "Ảnh đại diện mentor",
+    "play_icon": "Biểu tượng phát",
+    "our_mascot": "Hình minh họa mascot",
+    "event_banner": "Biểu ngữ sự kiện",
+    "leaf_icon": "Biểu tượng lá",
+    "hulib_logo": "Logo HuLib",
+    "illustration": "Hình minh họa",
+    "book_icon": "Biểu tượng sách",
+    "arrow_right": "Mũi tên phải"
+  },
+  "SessionDetail": {
+    "status_updated": "Cập nhật trạng thái thành công!",
+    "status_update_failed": "Cập nhật trạng thái thất bại. Vui lòng thử lại.",
+    "missed": "bỏ lỡ",
+    "vibing_with_huber": "Trò chuyện với Huber",
+    "session_with_liber": "Buổi gặp với Liber",
+    "meeting_not_attended": "Cuộc họp không được tham dự",
+    "waiting": "Đang chờ...",
+    "done": "Xong",
+    "waiting_for_approving": "Đang chờ phê duyệt",
+    "from": "Từ:",
+    "view_on_schedule": "Xem trên lịch",
+    "tbu": "Sắp có",
+    "cancel": "Hủy",
+    "reject": "Từ chối",
+    "accept": "Chấp nhận",
+    "feedback": "Phản hồi",
+    "reason_label": "Lý do:",
+    "reason_placeholder": "Chia sẻ lý do tại đây",
+    "confirm": "Xác nhận"
+  },
+  "MySchedule": {
+    "done": "Xong",
+    "waiting": "Đang chờ",
+    "huber": "Huber",
+    "liber": "Liber",
+    "slots_saved": "Lưu khung giờ thành công!",
+    "slots_save_failed": "Lưu khung giờ thất bại",
+    "meeting_with": "Cuộc hẹn với",
+    "tbu": "Sắp có",
+    "meeting_schedule": "Lịch hẹn",
+    "view": "Xem:",
+    "meeting_type_placeholder": "Loại cuộc hẹn",
+    "nothing_found": "Không tìm thấy.",
+    "back": "Quay lại",
+    "save": "Lưu"
+  },
+  "StoryReviews": {
+    "no_comment": "Chưa có bình luận",
+    "reader_reviews": "Đánh giá từ người đọc ({count})",
+    "no_results_alt": "Không tìm thấy kết quả",
+    "see_more": "Xem thêm"
+  },
+  "RatingOverview": {
+    "title": "Tổng quan đánh giá",
+    "reviews": "đánh giá",
+    "outstanding_review": "Đánh giá nổi bật"
+  },
+  "StoryCard": {
+    "deleted_successfully": "Xóa câu chuyện thành công",
+    "delete_error": "Lỗi xóa câu chuyện",
+    "edit": "Chỉnh sửa",
+    "view_detail": "Xem chi tiết",
+    "preview": "Xem trước",
+    "read_all": "Đọc tất cả",
+    "favorite": "Yêu thích",
+    "rejected": "(Bị từ chối)",
+    "delete_confirm_title": "Bạn có chắc chắn muốn xóa câu chuyện không?",
+    "delete_fav_confirm_title": "Bạn có chắc chắn muốn xóa câu chuyện này khỏi danh sách yêu thích không?",
+    "delete_description": "Câu chuyện sẽ bị xóa ngay lập tức.",
+    "delete_undo": "Bạn không thể hoàn tác hành động này.",
+    "cancel": "Hủy",
+    "delete": "Xóa",
+    "confirm": "Xác nhận"
+  },
+  "ExploreStoryPage": {
+    "my_favorite": "Yêu thích của tôi",
+    "newest_stories": "Câu chuyện mới nhất",
+    "oldest_stories": "Câu chuyện cũ nhất",
+    "explore_all": "Khám phá tất cả câu chuyện",
+    "no_data": "Không có dữ liệu.",
+    "view_more": "Xem thêm",
+    "no_results_alt": "Không tìm thấy kết quả"
+  },
+  "StoryPreview": {
+    "delete_error": "Lỗi xóa câu chuyện",
+    "back": "Quay lại",
+    "rejected": "(Bị từ chối)",
+    "draft": "(Nháp)",
+    "reason": "Lý do",
+    "edit": "Chỉnh sửa",
+    "delete": "Xóa",
+    "delete_success": "Câu chuyện \"{title}\" đã được xóa thành công",
+    "check_icon_alt": "Biểu tượng kiểm tra"
+  },
+  "ChatDetail": {
+    "today": "Hôm nay",
+    "yesterday": "Hôm qua",
+    "back": "Quay lại",
+    "sticker_alt": "Nhãn dán {name}"
+  },
+  "ChatList": {
+    "search_placeholder": "Tìm kiếm theo tên"
+  },
+  "AdvancedSearch": {
+    "search_placeholder": "Tìm kiếm theo từ khóa"
+  },
+  "EventForm": {
+    "name_placeholder": "Nhập tên của bạn",
+    "question_placeholder": "Nhập câu hỏi của bạn"
   }
 }

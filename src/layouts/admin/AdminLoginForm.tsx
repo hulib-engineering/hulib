@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import { signIn, useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
@@ -17,6 +18,7 @@ import { LoginValidation } from '@/validations/LoginValidation';
 
 export default function AdminLoginForm() {
   const { update } = useSession();
+  const t = useTranslations('AdminLogin');
 
   const [login] = useLoginAsManagerMutation();
 
@@ -58,7 +60,7 @@ export default function AdminLoginForm() {
     } catch {
       setError('password', {
         type: 'custom',
-        message: 'Incorrect password, please try again.',
+        message: t('incorrect_password'),
       });
     }
   };
@@ -68,8 +70,8 @@ export default function AdminLoginForm() {
       <div className="mx-auto flex h-fit w-full max-w-md flex-col items-center gap-8 rounded-[20px] bg-blue-98 p-6">
         <Image src="/assets/images/logos/logo.svg" alt="logo" width={192} height={56} />
         <div className="flex flex-col text-center text-neutral-10">
-          <h2 className="text-4xl font-medium leading-[44px]">Welcome back!</h2>
-          <p>Log in to Admin account</p>
+          <h2 className="text-4xl font-medium leading-[44px]">{t('welcome_back')}</h2>
+          <p>{t('login_description')}</p>
         </div>
         <Form
           className="flex w-full flex-col gap-4"
@@ -79,8 +81,8 @@ export default function AdminLoginForm() {
             <TextInput
               id="email"
               type="email"
-              label="Email address"
-              placeholder="hulib@gmail.com"
+              label={t('email_label')}
+              placeholder={t('email_placeholder')}
               {...register('email')}
               isError={!!errors.email}
               hintText={errors.email?.message}
@@ -90,7 +92,7 @@ export default function AdminLoginForm() {
             <TextInput
               id="password"
               type="password"
-              label="Password"
+              label={t('password_label')}
               {...register('password')}
               isError={!!errors.password}
               hintText={errors.password?.message}
@@ -121,7 +123,7 @@ export default function AdminLoginForm() {
               disabled={isSubmitting}
               animation={isSubmitting && 'progress'}
             >
-              Login
+              {t('login_button')}
             </Button>
           </Form.Item>
         </Form>

@@ -2,6 +2,7 @@
 
 import { Bell } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import React, { useMemo } from 'react';
 
 import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
@@ -21,6 +22,7 @@ export default function NotificationPopover({
   unreadNotifCount = 0,
 }: NotificationButtonProps) {
   const router = useRouter();
+  const t = useTranslations('notifications');
 
   const { data, error, isLoading } = useGetNotificationsQuery({
     page: 1,
@@ -61,7 +63,7 @@ export default function NotificationPopover({
                 <>
                   <div className="flex flex-col">
                     <div className="px-3">
-                      <h6 className="text-xl font-bold leading-9 text-primary-60">Meeting request</h6>
+                      <h6 className="text-xl font-bold leading-9 text-primary-60">{t('meeting_request')}</h6>
                     </div>
                     {sessionRequestNotifications.map(notification => (
                       <NotificationItemRenderer

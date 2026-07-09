@@ -11,6 +11,7 @@ import type { Huber as THuber } from '@/libs/services/modules/huber/huberType';
 
 const RecommendedHuberCard = (props: Partial<THuber>) => {
   const t = useTranslations('Huber.card');
+  const tHuberCard = useTranslations('HuberCard');
   const router = useRouter();
   const avatarConfig = genConfig(props.fullName ?? String(props.id ?? 'huber'));
 
@@ -40,10 +41,6 @@ const RecommendedHuberCard = (props: Partial<THuber>) => {
         <p className="line-clamp-1 text-xs font-medium leading-[14px] text-primary-10 lg:text-base lg:leading-6">
           {props.fullName}
         </p>
-        {/* <p className="my-1 text-base font-normal text-neutral-30 md:text-lg"> */}
-        {/*  /!* {huber.role} *!/ */}
-        {/*  /!* {huber.humanBookTopic.length} *!/ */}
-        {/* </p> */}
         <div className="flex items-center justify-between text-sm text-gray-500">
           <div className="flex items-center gap-0.5">
             <span className="text-xs leading-[14px] text-neutral-20">
@@ -59,7 +56,7 @@ const RecommendedHuberCard = (props: Partial<THuber>) => {
               {props.rating ?? 0}
             </span>
             <span className="text-[0.625rem] leading-3 text-neutral-40">
-              Hearts
+              {tHuberCard('hearts')}
             </span>
           </div>
         </div>

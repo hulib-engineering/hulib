@@ -205,7 +205,7 @@ const Step2Form = ({
             id="fullname"
             type="text"
             label={t('fullname')}
-            placeholder="John Doe"
+            placeholder={t('name_placeholder')}
             {...register('fullname')}
             isError={!!errors.fullname}
             hintText={errors.fullname?.message}
@@ -472,7 +472,7 @@ const Step4Form = () => {
           <p className="text-center text-neutral-20 xl:hidden">{t('account_created')}</p>
         </div>
         <Image
-          alt="Success illustration"
+          alt={t('success_illustration_alt')}
           src="/assets/images/misc/success-illus.svg"
           priority
           width={250}

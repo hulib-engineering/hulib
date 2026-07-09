@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
-import { notificationConfig } from '../private/config';
+import { getNotificationConfig } from '../private/config';
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
 
 import Button from '@/components/core/button/Button';
@@ -9,6 +10,11 @@ import { NotificationType } from '@/components/notification/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
 
 export default function SystemNotificationCard({ notification, onClick }: INotificationItemRendererProps) {
+  const t = useTranslations('Notification');
+  const tAlt = useTranslations('AltText');
+  const tFn = (key: string) => t(key as any);
+  const tAltFn = (key: string) => tAlt(key as any);
+  const notificationConfig = getNotificationConfig(tFn, tAltFn);
   const cfg = notificationConfig[notification.type.name as NotificationType];
   const isUpcomingSession = notification.type.name === NotificationType.OTHER;
 
@@ -37,7 +43,7 @@ export default function SystemNotificationCard({ notification, onClick }: INotif
         src="/assets/icons/meeting-alert-icon.svg"
         width={36}
         height={36}
-        alt="Meeting system ava"
+        alt={tAlt('meeting_system_ava')}
         className="size-[36px] rounded-lg object-cover object-center"
       />
       <div className="flex items-center gap-3">
@@ -45,13 +51,13 @@ export default function SystemNotificationCard({ notification, onClick }: INotif
           <div className="flex items-center justify-between">
             <p className="line-clamp-2 font-bold">{cfg.title}</p>
             {notification.type.name === NotificationType.OTHER && (
-              <p className="text-sm font-extrabold text-orange-50">Now</p>
+              <p className="text-sm font-extrabold text-orange-50">{t('now')}</p>
             )}
           </div>
           <p className="font-medium">{cfg.getMessage(notification)}</p>
           {isUpcomingSession
-            ? <Button size="sm" fullWidth onClick={handleClick}>Join now</Button>
-            : <Button size="sm" onClick={handleClick}>Feedback</Button>}
+            ? <Button size="sm" fullWidth onClick={handleClick}>{t('join_now')}</Button>
+            : <Button size="sm" onClick={handleClick}>{t('feedback')}</Button>}
         </div>
       </div>
     </button>

@@ -2,6 +2,7 @@
 
 import { MagnifyingGlass } from '@phosphor-icons/react';
 import Fuse from 'fuse.js';
+import { useTranslations } from 'next-intl';
 import React, { useEffect, useMemo, useState } from 'react';
 import type z from 'zod';
 
@@ -79,6 +80,8 @@ export const ContactItem = ({
 );
 
 export default function ChatList({ onConvoSelect }: { onConvoSelect?: () => void }) {
+  const t = useTranslations('ChatList');
+
   const { data: conversations = [] } = useGetConversationContactsQuery();
 
   const currentChat = useAppSelector(state => state.messenger.currentChatDetail);
@@ -147,7 +150,7 @@ export default function ChatList({ onConvoSelect }: { onConvoSelect?: () => void
         <TextInput
           name="search"
           type="text"
-          placeholder="Search for name"
+          placeholder={t('search_placeholder')}
           icon={<MagnifyingGlass size={24} />}
           onChange={event => setQString(event.target.value)}
         />

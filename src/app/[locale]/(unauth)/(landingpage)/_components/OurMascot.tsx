@@ -10,6 +10,7 @@ import {
 
 export default function OurMascot() {
   const t = useTranslations('Index');
+  const tAlt = useTranslations('AltText');
 
   return (
     <section className="relative mx-auto flex w-full flex-col items-center justify-center gap-6 px-4 py-3 text-slate-1000 lg:max-w-7xl lg:gap-[90px] lg:px-0 lg:py-[100px]">
@@ -23,7 +24,7 @@ export default function OurMascot() {
         <div className="relative hidden h-[478px] w-[470px] px-2 py-1 lg:block">
           <Image
             src="/assets/images/landing/our-mascots.png"
-            alt="Our Mascot Illustration"
+            alt={tAlt('our_mascot')}
             width={462}
             height={462}
             className="absolute inset-0 aspect-square h-auto w-[462px] object-cover"
@@ -63,7 +64,7 @@ export default function OurMascot() {
           <div className="flex w-full items-center justify-center py-1.5">
             <Image
               src="/assets/images/landing/our-mascots.png"
-              alt="Our Mascot Illustration"
+              alt={tAlt('our_mascot')}
               width={462}
               height={462}
               className="aspect-square h-auto w-3/4 object-cover object-center"

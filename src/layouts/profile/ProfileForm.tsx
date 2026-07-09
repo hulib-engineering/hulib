@@ -29,7 +29,8 @@ type IProfileFormProps = {
 };
 
 export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormProps) {
-  const t = useTranslations('Common');
+  const tCommon = useTranslations('Common');
+  const t = useTranslations('ProfileForm');
 
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
 
@@ -73,7 +74,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
       dispatch(setUserInfo(response));
       onSucceed();
     } catch (error: any) {
-      pushError(t(error.message));
+      pushError(tCommon(error.message));
     }
   });
 
@@ -83,7 +84,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
         <TextInput
           id="fullName"
           type="text"
-          label="Full Name"
+          label={t('full_name')}
           {...register('fullName')}
           isError={!!errors.fullName}
           hintText={errors.fullName?.message}
@@ -103,7 +104,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
               >
                 {({ open }) => (
                   <>
-                    <Dropdown.Select open={open} label="Gender">
+                    <Dropdown.Select open={open} label={t('gender')}>
                       {value?.name}
                     </Dropdown.Select>
                     <Dropdown.Options>
@@ -137,7 +138,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
               <CustomDatePicker
                 label={(
                   <p>
-                    Date of birth
+                    {t('date_of_birth')}
                     <span className="text-red-50">*</span>
                   </p>
                 )}
@@ -152,8 +153,8 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
       <Form.Item>
         <TextInput
           type="text"
-          label="Address"
-          placeholder="Enter your address"
+          label={t('address')}
+          placeholder={t('address_placeholder')}
           {...register('address')}
           required
           isError={!!errors.address}
@@ -164,7 +165,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
         <TextInput
           id="email"
           type="email"
-          label="Email"
+          label={t('email')}
           disabled
           {...register('email')}
           isError={!!errors.email}
@@ -176,7 +177,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
         <TextInput
           type="tel"
           pattern="^\+?[1-9]\d{1,3}[ -]?\d{6,14}$"
-          label="Phone Number"
+          label={t('phone_number')}
           {...register('phoneNumber')}
         />
       </Form.Item>
@@ -185,14 +186,14 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
           <TextInput
             id="parentFullname"
             type="text"
-            label="Your Guardian Name"
+            label={t('guardian_name')}
             {...register('parentFullname')}
           />
           <TextInput
             id="parentPhoneNumber"
             type="tel"
             pattern="^\+?[1-9]\d{1,3}[ -]?\d{6,14}$"
-            label="Your Guardian Phone Number"
+            label={t('guardian_phone')}
             {...register('parentPhoneNumber')}
             required
             isError={!!errors.parentPhoneNumber}
@@ -208,7 +209,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
           className="w-[114px]"
           onClick={onCancel}
         >
-          Cancel
+          {t('cancel')}
         </Button>
         <Button
           type="submit"
@@ -217,7 +218,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
           animation={(isSubmitting || isLoading) && 'progress'}
           className="w-[114px]"
         >
-          Save
+          {t('save')}
         </Button>
       </div>
     </Form>

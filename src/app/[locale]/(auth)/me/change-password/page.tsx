@@ -22,6 +22,7 @@ export default function Index() {
   const router = useRouter();
 
   const t = useTranslations('Common');
+  const tPw = useTranslations('ChangePassword');
 
   const [changePassword] = useChangePasswordMutation();
 
@@ -65,7 +66,7 @@ export default function Index() {
     <div className="mx-auto my-12 max-w-[592px] rounded-[20px] bg-white px-4 py-8 lg:p-5">
       <div className="flex flex-col gap-5 lg:gap-[60px]">
         <h2 className="text-2xl font-medium leading-8 tracking-[-2%] text-black lg:text-4xl lg:leading-[44px]">
-          Change Your Password
+          {tPw('title')}
         </h2>
         <Form
           form={form}
@@ -80,7 +81,7 @@ export default function Index() {
                 <TextInput
                   id="oldPassword"
                   type="password"
-                  label="Old Password"
+                  label={tPw('old_password')}
                   isError={!!error}
                   hintText={error?.message}
                   {...field}
@@ -94,7 +95,7 @@ export default function Index() {
                 <TextInput
                   id="newPassword"
                   type="password"
-                  label="New Password"
+                  label={tPw('new_password')}
                   isError={!!error}
                   hintText={error?.message}
                   {...field}
@@ -108,7 +109,7 @@ export default function Index() {
                 <TextInput
                   id="confirmPassword"
                   type="password"
-                  label="Re-enter New Password"
+                  label={tPw('re_enter_password')}
                   isError={!!error}
                   hintText={error?.message}
                   {...field}
@@ -142,7 +143,7 @@ export default function Index() {
           </div>
           <div className="flex w-full flex-col items-center gap-3">
             <Button size="lg" type="submit" value="Submit" fullWidth>
-              Change
+              {tPw('change_button')}
             </Button>
             <Button
               variant="ghost"
@@ -151,7 +152,7 @@ export default function Index() {
               fullWidth
               onClick={() => router.push('/auth/forgot-password')}
             >
-              Forgot Passwords?
+              {tPw('forgot_password')}
             </Button>
           </div>
         </Form>
@@ -163,10 +164,10 @@ export default function Index() {
         <Modal.Panel className="w-full max-w-xl rounded-[20px] bg-[#F2F5F8] p-4 lg:p-12">
           <div className="flex flex-col items-center justify-center gap-5 lg:gap-8">
             <h4 className="text-center text-2xl font-medium leading-8 lg:text-[28px] lg:leading-9">
-              Change Your Password
+              {tPw('confirm_title')}
             </h4>
             <p className="text-center">
-              Are you sure you want to change your password?
+              {tPw('confirm_text')}
             </p>
             <div className="flex w-full flex-col items-center gap-3 lg:flex-row">
               <Button
@@ -174,13 +175,13 @@ export default function Index() {
                 fullWidth
                 onClick={() => setIsConfirmModalOpen(false)}
               >
-                Cancel
+                {tPw('cancel')}
               </Button>
               <Button
                 fullWidth
                 onClick={handleSubmitChangingPassword}
               >
-                Change
+                {tPw('confirm')}
               </Button>
             </div>
           </div>

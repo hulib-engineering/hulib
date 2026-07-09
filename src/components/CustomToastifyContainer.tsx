@@ -1,5 +1,8 @@
+'use client';
+
 import type { ToastProps } from 'node_modules/react-toastify/dist/types';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { useTranslations } from 'next-intl';
 
 import { mergeClassnames } from '@/components/core/private/utils';
 
@@ -117,27 +120,33 @@ const WarningIcon = () => (
   </svg>
 );
 
-const mappedType = {
-  success: 'saved successfully',
-  error: 'error occurred',
-  info: 'information',
-  warning: 'action required',
-  default: 'new message',
-};
-
 type ICustomMessageProps = {
   message: string;
   toastProps?: ToastProps;
 };
 
-const CustomMessage = ({ message, toastProps }: ICustomMessageProps) => (
-  <div>
-    <div className="text-base font-bold capitalize text-blue-darker">
-      {mappedType[toastProps?.type || 'default']}
+const CustomMessage = ({ message, toastProps }: ICustomMessageProps) => {
+  const t = useTranslations('Toast');
+
+  const getToastTitle = (type: string | undefined) => {
+    switch (type) {
+      case 'success': return t('saved_successfully');
+      case 'error': return t('error_occurred');
+      case 'info': return t('information');
+      case 'warning': return t('action_required');
+      default: return t('new_message');
+    }
+  };
+
+  return (
+    <div>
+      <div className="text-base font-bold capitalize text-blue-darker">
+        {getToastTitle(toastProps?.type)}
+      </div>
+      <div className="text-xs font-normal text-gray-500">{message}</div>
     </div>
-    <div className="text-xs font-normal text-gray-500">{message}</div>
-  </div>
-);
+  );
+};
 
 export const pushInfo = (message: string) =>
   toast.info(<CustomMessage message={message} />, {

@@ -67,7 +67,7 @@ const Footer = () => {
           )}
         >
           <div className="flex w-full flex-col items-center gap-8 sm:items-start">
-            <h4 className="text-2xl font-semibold ">Help</h4>
+            <h4 className="text-2xl font-semibold ">{t('help')}</h4>
             <div className="flex flex-col items-center gap-4 sm:items-start">
               {Links.map((link, index) => (
                 <button
@@ -85,7 +85,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="flex w-full flex-col items-center gap-8 sm:items-start">
-            <h4 className="text-center text-2xl font-semibold">Contact</h4>
+            <h4 className="text-center text-2xl font-semibold">{t('contact')}</h4>
             <div className="flex flex-col items-center gap-4 text-sm sm:items-start">
               <Link
                 href={`tel:${Env.NEXT_PUBLIC_CONTACT_PHONE_NUMBER}`}
@@ -110,7 +110,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="flex w-full flex-col items-center gap-8">
-            <h4 className="text-left text-2xl font-semibold">Follow us</h4>
+            <h4 className="text-left text-2xl font-semibold">{t('follow_us')}</h4>
             <div className="flex w-full items-center justify-center gap-8">
               {SocialLinks.map((link, index) => (
                 <Link

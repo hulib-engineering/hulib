@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 // import { useState } from 'react';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -25,57 +26,8 @@ type IMinigameCardProps = IGameCardProps & {
 };
 
 const MinigameCard = (props: IMinigameCardProps) => {
+  const t = useTranslations('Accessibility');
   const guessedIds = useAppSelector(state => state.minigame.guessedIds);
-
-  // const dispatch = useAppDispatch();
-
-  // const [isPicked, setIsPicked] = useState(pickedId === props.id);
-  // const [isGuessed, setIsGuessed] = useState(guessedIds.includes(props.id));
-
-  // const [isGuessed, setIsGuessed] = useState(false);
-
-  // const handleClick = () => {
-  //   if (pickedId !== '') {
-  //     if (pickedId === props.id) {
-  //       // setIsPicked(false);
-  //       dispatch(handleUnpick);
-  //       // target.classList.remove('card--picked');
-  //       // picked.classList.remove('card--picked');
-  //       // setIsGuessed(true);
-  //       dispatch(handleGuess(props.id));
-  //       // target.classList.add('card--guessed');
-  //       // picked.classList.add('card--guessed');
-  //       // isPaused = false;
-  //     } else {
-  //       dispatch(handlePick(props.id));
-  //       // setIsPicked(true);
-  //       // target.classList.add('card--picked');
-  //       setTimeout(() => {
-  //         dispatch(handleUnpick);
-  //         // setIsPicked(false);
-  //         // picked.classList.remove('card--picked');
-  //         // isPaused = false;
-  //       }, 1500);
-  //     }
-  //     dispatch(handleMovement);
-  //     // counter -= 1;
-  //     // available.innerHTML = counter;
-  //     // if (counter === 0) {
-  //     //   lose();
-  //     // }
-  //   } else {
-  //     dispatch(handlePick(props.id));
-  //     // setIsPicked(true);
-  //     // isPaused = false;
-  //   }
-  //   // Validate is already win
-  //   // const isWin =
-  //   //   cardContainer.querySelectorAll('card--guessed').length ===
-  //   //   currentCards.length;
-  //   // if (isWin) {
-  //   //   win();
-  //   // }
-  // };
 
   return (
     <button
@@ -115,7 +67,7 @@ const MinigameCard = (props: IMinigameCardProps) => {
         <Image
           className="w-24 object-center"
           src="/assets/images/minigame/back-side.jpeg"
-          alt="Thought"
+          alt={t('thought')}
           fill
           priority
         />

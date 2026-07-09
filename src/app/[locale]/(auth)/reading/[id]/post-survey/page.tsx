@@ -85,9 +85,9 @@ export default function PostSurvey() {
         },
         storyReview: storyFeedback,
       }).unwrap();
-      pushSuccess('Sent feedback successfully');
+      pushSuccess(t('feedback_sent_success'));
     } catch {
-      pushError('Sent feedback failed');
+      pushError(t('feedback_sent_failed'));
     } finally {
       setStep('feedback-huber');
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -103,9 +103,9 @@ export default function PostSurvey() {
         id,
         huberFeedback,
       }).unwrap();
-      pushSuccess('Sent feedback successfully');
+      pushSuccess(t('feedback_sent_success'));
     } catch {
-      pushError('Sent feedback failed');
+      pushError(t('feedback_sent_failed'));
     } finally {
       setStep('feedback-success');
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -305,7 +305,7 @@ export default function PostSurvey() {
           <>
             <Image
               src="/assets/images/heroes/Hulib Webapp.png"
-              alt="Successful Feedback"
+              alt={t('successful_feedback_alt')}
               width={isMobileView ? 256 : 366}
               height={isMobileView ? 331 : 445}
               className="h-[445px] w-[366pc] object-cover"

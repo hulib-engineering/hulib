@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 type FooterBarProps = {
   canContinue: boolean;
@@ -7,13 +8,14 @@ type FooterBarProps = {
 };
 
 export default function FooterBar({ canContinue, onContinue }: FooterBarProps) {
+  const t = useTranslations('RegisterHuber');
   return (
     <div className="flex items-center justify-between gap-4">
       {/* Emergency notice */}
       <div className="flex items-start gap-2 rounded-xl border border-[#FFAB67] bg-[#FFF9F5] px-[20px] py-[12px]">
-        <Image src="/assets/images/register-huber/shield_check.png" alt="Emergency" width={20} height={20} />
+        <Image src="/assets/images/register-huber/shield_check.png" alt={t('emergency_alt')} width={20} height={20} />
         <p className="text-[14px] font-[500] leading-[20px] text-[#45484A]">
-          HuLib có quyền từ chối hoặc yêu cầu chỉnh sửa nội dung nếu câu chuyện chưa đáp ứng các tiêu chí cộng đồng nêu trên.
+          {t('disclaimer')}
         </p>
       </div>
 
@@ -27,7 +29,7 @@ export default function FooterBar({ canContinue, onContinue }: FooterBarProps) {
       : 'bg-[#E3E4E5] text-[#ABAEB1]'
     } h-[44px] w-[250px]`}
       >
-        Tiếp tục
+        {t('continue')}
       </button>
     </div>
   );

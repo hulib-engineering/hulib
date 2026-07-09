@@ -1,7 +1,7 @@
 import { CalendarDot, CaretDown, Check, FilmReel, MapPinArea, Note } from '@phosphor-icons/react';
 import type { FC } from 'react';
 import React, { useState } from 'react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 import Accordion from '@/components/core/accordion/Accordion';
@@ -37,6 +37,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
   const isDone = session.sessionStatus === StatusEnum.Finished;
 
   const locale = useLocale();
+  const t = useTranslations('SessionDetail');
 
   const [updateStatus, { isLoading }] = useUpdateReadingSessionMutation();
 
@@ -75,9 +76,9 @@ const SessionDetailCard: FC<SessionCardProps> = ({
 
       await updateStatus(payload).unwrap();
 
-      pushSuccess('Status updated successfully!');
+      pushSuccess(t('status_updated'));
     } catch {
-      pushError('Failed to update status. Please try again.');
+      pushError(t('status_update_failed'));
     }
   };
   const handleConfirmReason = async () => {
@@ -90,8 +91,8 @@ const SessionDetailCard: FC<SessionCardProps> = ({
       <div className="w-full overflow-hidden rounded-2xl bg-red-98 px-5 py-4 font-medium shadow-sm sm:w-[25rem]">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
-            <div className="rounded-full bg-red-60 px-4 py-2 text-sm font-medium uppercase leading-4 text-white">missed</div>
-            <h5 className="text-2xl font-medium text-neutral-10">{isLiber ? 'Vibing with Huber' : 'Session with Liber'}</h5>
+            <div className="rounded-full bg-red-60 px-4 py-2 text-sm font-medium uppercase leading-4 text-white">{t('missed')}</div>
+            <h5 className="text-2xl font-medium text-neutral-10">{isLiber ? t('vibing_with_huber') : t('session_with_liber')}</h5>
           </div>
           <div className="flex items-center gap-1.5">
             <CalendarDot className="text-[#343330]" />
@@ -138,13 +139,13 @@ const SessionDetailCard: FC<SessionCardProps> = ({
               <div className="flex items-center gap-2.5">
                 <h5 className="text-2xl font-medium text-neutral-10">
                   {isMissed && sharingMissingReason
-                    ? 'Meeting not attended' : isLiber ? 'Vibing with Huber' : 'Session with Liber'}
+                    ? t('meeting_not_attended') : isLiber ? t('vibing_with_huber') : t('session_with_liber')}
                 </h5>
                 {session.sessionStatus === StatusEnum.Pending && (
                   <span
                     className="rounded-[100px] bg-orange-90 p-[7px] text-sm font-medium leading-4 text-orange-50 hulib-open:hidden"
                   >
-                    Waiting...
+                    {t('waiting')}
                   </span>
                 )}
                 {session.sessionStatus === StatusEnum.Finished && (
@@ -152,7 +153,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                     className="flex gap-0.5 rounded-full bg-green-90 px-4 py-2 text-sm font-medium leading-4 text-green-40 hulib-open:hidden"
                   >
                     <Check />
-                    <span>Done</span>
+                    <span>{t('done')}</span>
                   </div>
                 )}
               </div>
@@ -162,7 +163,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
               <span
                 className="hidden w-fit rounded-[100px] bg-orange-90 p-[7px] text-sm font-medium leading-4 text-orange-50 hulib-open:block"
               >
-                Waiting for approving
+                {t('waiting_for_approving')}
               </span>
             )}
             {session.sessionStatus === StatusEnum.Finished && (
@@ -170,11 +171,11 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                 className="hidden w-fit gap-0.5 rounded-full bg-green-90 px-4 py-2 text-sm font-medium leading-4 text-green-40 hulib-open:flex"
               >
                 <Check />
-                <span>Done</span>
+                <span>{t('done')}</span>
               </div>
             )}
             <div className="mt-2 hidden items-center gap-1 text-sm font-medium leading-4 text-neutral-10 hulib-open:flex">
-              <span>From:</span>
+              <span>{t('from')}</span>
               <span className="text-primary-60">{session.story.title}</span>
             </div>
             <div className="flex items-center justify-between">
@@ -186,7 +187,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                 />
               )}
               {expandByDefault && !isMissed && (
-                <Link href="#" className="text-sm font-medium leading-4 text-primary-60">View on schedule</Link>
+                <Link href="#" className="text-sm font-medium leading-4 text-primary-60">{t('view_on_schedule')}</Link>
               )}
             </div>
             {session.sessionStatus === StatusEnum.Approved && (
@@ -200,7 +201,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                       >
                         {session.sessionUrl}
                       </Link>
-                    ) : <span className="font-medium">TBU</span>}
+                    ) : <span className="font-medium">{t('tbu')}</span>}
               </div>
             )}
             {session.sessionStatus === StatusEnum.Finished && (
@@ -214,7 +215,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                       >
                         {session.recordingUrl}
                       </Link>
-                    ) : <span className="font-medium">TBU</span>}
+                    ) : <span className="font-medium">{t('tbu')}</span>}
               </div>
             )}
             <SessionAttendees
@@ -250,7 +251,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                         className="border border-red-90 bg-red-90 text-red-50 hover:border-red-50 hover:bg-red-50 hover:text-white"
                         onClick={() => setIsAddingReason(true)}
                       >
-                        Cancel
+                        {t('cancel')}
                       </Button>
                     )}
                     {session.sessionStatus === StatusEnum.Pending && !isLiber && (
@@ -261,7 +262,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                           fullWidth
                           onClick={handleReject}
                         >
-                          Reject
+                          {t('reject')}
                         </Button>
                         <Button
                           size="lg"
@@ -269,12 +270,12 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                           animation={isLoading && 'progress'}
                           onClick={() => handleUpdateStatus('approved')}
                         >
-                          Accept
+                          {t('accept')}
                         </Button>
                       </>
                     )}
                     {session.sessionStatus === StatusEnum.Finished && isLiber && (
-                      <Button size="lg" fullWidth>Feedback</Button>
+                      <Button size="lg" fullWidth>{t('feedback')}</Button>
                     )}
                   </div>
                 </>
@@ -283,14 +284,14 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                   <TextInput
                     id="reason"
                     type="text"
-                    label="Reason:"
-                    placeholder={sharingMissingReason ? 'Share the reason here' : ''}
+                    label={t('reason_label')}
+                    placeholder={sharingMissingReason ? t('reason_placeholder') : ''}
                     isError={isAddingReason && reason === ''}
                     onChange={e => setReason(e.target.value)}
                   />
                   <div className="flex items-center gap-2.5">
                     <Button variant="outline" size="lg" fullWidth onClick={handleCancelAddingReason}>
-                      Cancel
+                      {t('cancel')}
                     </Button>
                     <Button
                       size="lg"
@@ -299,7 +300,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                       disabled={isAddingReason && reason === ''}
                       onClick={handleConfirmReason}
                     >
-                      Confirm
+                      {t('confirm')}
                     </Button>
                   </div>
                 </>

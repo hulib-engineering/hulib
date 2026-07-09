@@ -9,6 +9,7 @@ import {
   isYesterday,
 } from 'date-fns';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useRef } from 'react';
 
 import Avatar from '@/components/core/avatar/Avatar';
@@ -33,6 +34,7 @@ type ChatItem =
 export function groupMessagesByTime(
   messages: TransformedMessage[],
   gapMinutes = 5,
+  t?: (key: string) => string,
 ): ChatItem[] {
   const result: ChatItem[] = [];
   let lastTimestamp: Date | null = null;
@@ -46,9 +48,9 @@ export function groupMessagesByTime(
 
     if (shouldInsertSeparator) {
       const datePart = isToday(timestamp)
-        ? 'Today'
+        ? (t ? t('today') : 'Today')
         : isYesterday(timestamp)
-          ? 'Yesterday'
+          ? (t ? t('yesterday') : 'Yesterday')
           : isThisWeek(timestamp)
             ? format(timestamp, 'EEEE')
             : format(timestamp, 'MMM dd, yyyy');
@@ -117,6 +119,8 @@ export const MessageItem = React.memo(({
 MessageItem.displayName = 'MessageItem';
 
 export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixed?: boolean; onBack?: () => void }) {
+  const t = useTranslations('ChatDetail');
+
   const currentOpeningChat = useAppSelector(
     state => state.messenger.currentChatDetail,
   );
@@ -135,7 +139,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
     skip: !currentOpeningChat,
   });
   const reversedData = data ? data.toReversed() : [];
-  const groupedMessages = groupMessagesByTime(reversedData);
+  const groupedMessages = groupMessagesByTime(reversedData, 5, t as (key: string) => string);
   const lastReadMessageId
     = (data
       && data?.filter(
@@ -301,7 +305,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
         <Button variant="ghost" size="sm" onClick={onBack}>
           <div className="flex items-center gap-1.5 text-black">
             <ArrowLeft />
-            <span>Back</span>
+            <span>{t('back')}</span>
           </div>
         </Button>
       </div>
@@ -347,7 +351,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
                   )}
                 >
                   <Image
-                    alt={`Sticker ${message.msg}`}
+                    alt={t('sticker_alt', { name: message.msg })}
                     width={120}
                     height={120}
                     className="size-[120px] object-contain"

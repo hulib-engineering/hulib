@@ -1,6 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import { useSwiperSlide } from 'swiper/react';
 
@@ -27,6 +28,7 @@ type ITestimonialItemCardProps =
   };
 
 const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
+  const t = useTranslations('Testimonial');
   const currentSlide = useSwiperSlide();
 
   const handleSlideClick = () => {
@@ -42,7 +44,7 @@ const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
           <div className="flex items-center justify-start gap-5">
             {props.avatarUrl ? (
               <Image
-                alt="Member avatar"
+                alt={t('member_avatar')}
                 src={props.avatarUrl}
                 width={56}
                 height={56}
@@ -93,7 +95,7 @@ const TestimonialItemCard = (props: ITestimonialItemCardProps) => {
         </p>
         <div className="flex items-center gap-5">
           <Image
-            alt="Member avatar"
+            alt={t('member_avatar')}
             src={props.avatarUrl}
             width={56} // cus 3.5rem * 16 = 56 px
             height={56}

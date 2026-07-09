@@ -3,6 +3,7 @@
 import { CaretCircleRight } from '@phosphor-icons/react';
 import React, { useMemo } from 'react';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
@@ -37,6 +38,7 @@ type IIndexStoryListSectionLayoutProps = | {
 };
 
 const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) => {
+  const t = useTranslations('HomeStories');
   const { data: session } = useSession();
   const { data: favoriteStories } = useGetMyFavoritesQuery(undefined, {
     skip: !session,
@@ -110,7 +112,7 @@ const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) =
             className="hidden lg:flex lg:w-[400px]"
             onClick={props.onSeeAllClick}
           >
-            See all
+            {t('see_all')}
           </Button>
           <Button
             iconLeft={<CaretCircleRight />}
@@ -119,7 +121,7 @@ const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) =
             className="w-full lg:hidden"
             onClick={props.onSeeAllClick}
           >
-            See all
+            {t('see_all')}
           </Button>
         </div>
       )}

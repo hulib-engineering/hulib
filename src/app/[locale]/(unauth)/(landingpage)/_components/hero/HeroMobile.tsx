@@ -22,6 +22,7 @@ const HeroMobile = (props: HeroProps) => {
   } = props;
   const locale = useLocale();
   const t = useTranslations('Index');
+  const tAlt = useTranslations('AltText');
 
   return (
     <section
@@ -72,7 +73,7 @@ const HeroMobile = (props: HeroProps) => {
           </div>
           <div className="relative flex w-full flex-col items-center justify-center">
             <Image
-              alt="Hero artwork"
+              alt={tAlt('hero_artwork')}
               src="/assets/images/heroes/hero-artwork.png"
               priority
               width={276}
@@ -116,7 +117,7 @@ const HeroMobile = (props: HeroProps) => {
                 width={64}
                 height={16}
                 src="/assets/images/heroes/mentors.svg"
-                alt="Mentor avatars"
+                alt={tAlt('mentor_avatars')}
                 className="h-4 w-16 object-fill object-center"
               />
               <p className="text-xs font-black text-[#24272C]">
@@ -132,7 +133,7 @@ const HeroMobile = (props: HeroProps) => {
                 onClick={onPlayPause}
                 width={32}
                 height={32}
-                alt="Play icon"
+                alt={tAlt('play_icon')}
                 src={`/icons/${
                   isPlaying ? 'pause' : 'play'
                 }-circle.svg`}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import { mergeClassnames } from '@/components/core/private/utils';
 import Button from '@/components/core/button/Button';
@@ -25,6 +26,7 @@ const HuberConfirmationModal = ({
   onClose,
 }: IApprovalConfirmationModalProps) => {
   const router = useRouter();
+  const t = useTranslations('HuberConfirmation');
 
   const [rejectionReason, setRejectionReason] = useState('');
   const [isSuccessful, setIsSuccessful] = useState(false);
@@ -41,7 +43,7 @@ const HuberConfirmationModal = ({
       }).unwrap();
       setIsSuccessful(true);
     } catch {
-      pushError('Failed to approve Huber. Please try again.');
+      pushError(t('approve_failed'));
     }
   };
   const handleDoneConfirmation = () => {
@@ -65,7 +67,7 @@ const HuberConfirmationModal = ({
               ? (
                   <Image
                     src={user.photo.path}
-                    alt="User Avatar"
+                    alt={t('user_avatar_alt')}
                     width={270}
                     height={270}
                     className="aspect-[1/1] h-auto w-full rounded-[32px] object-cover"
@@ -85,7 +87,7 @@ const HuberConfirmationModal = ({
                   type === 'reject' && isSuccessful && 'bg-red-98 text-red-50',
                 )}
               >
-                {!isSuccessful ? 'Waiting for approval' : type === 'approve' ? 'Approved' : 'Declined'}
+                {!isSuccessful ? t('waiting_approval') : type === 'approve' ? t('approved') : t('declined')}
               </span>
             </div>
           </div>
@@ -98,7 +100,7 @@ const HuberConfirmationModal = ({
       {type === 'reject' && !isSuccessful && (
         <TextArea
           rows={7}
-          placeholder="Reason for rejection"
+          placeholder={t('rejection_placeholder')}
           value={rejectionReason}
           onChange={e => setRejectionReason(e.target.value)}
         />
@@ -106,8 +108,8 @@ const HuberConfirmationModal = ({
       <div className="flex w-full flex-col gap-3">
         <p className={mergeClassnames('text-center text-sm', (type === 'approve' || isSuccessful) ? 'text-neutral-30' : 'text-red-70')}>
           {type === 'approve'
-            ? isSuccessful ? 'You have confirmed the request to become a Huber.' : 'You are accepting the request to become a Huber.'
-            : isSuccessful ? 'You declined the request to become a Huber.' : 'You are declining the request to become a Huber.'}
+            ? isSuccessful ? t('confirm_approve_text') : t('confirm_approve_action')
+            : isSuccessful ? t('confirm_decline_text') : t('confirm_decline_action')}
         </p>
         {isSuccessful ? (
           <Button
@@ -115,11 +117,11 @@ const HuberConfirmationModal = ({
             fullWidth
             onClick={handleDoneConfirmation}
           >
-            Homepage
+            {t('homepage')}
           </Button>
         ) : (
           <div className="flex w-full items-center gap-2">
-            <Button variant="outline" size="lg" fullWidth onClick={onClose}>Back</Button>
+            <Button variant="outline" size="lg" fullWidth onClick={onClose}>{t('back')}</Button>
             <Button
               size="lg"
               fullWidth
@@ -127,7 +129,7 @@ const HuberConfirmationModal = ({
               animation={isLoading && 'progress'}
               onClick={handleUpdateHuberRegistrarStatus}
             >
-              Confirm
+              {t('confirm')}
             </Button>
           </div>
         )}

@@ -1,7 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 import { Logo } from '@/components/Logo';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -13,6 +16,8 @@ type IAuthLayoutProps = {
 };
 
 const AuthLayout = (props: IAuthLayoutProps) => {
+  const tAlt = useTranslations('AltText');
+
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gradient-to-bl from-[#C1D5FF] to-[#7986E7] bg-blend-multiply xl:bg-none">
       <div
@@ -26,7 +31,7 @@ const AuthLayout = (props: IAuthLayoutProps) => {
         )}
       >
         <Image
-          alt="Illustration"
+          alt={tAlt('illustration')}
           className="h-auto w-5/6 object-contain"
           src={props.illustrationImage}
           width={600}

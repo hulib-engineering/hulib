@@ -1,5 +1,6 @@
 import { Hammer, Warning } from '@phosphor-icons/react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import type { FC } from 'react';
 import React, { useState } from 'react';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
@@ -24,6 +25,7 @@ const ActionOnUserModal: FC<IActionOnUserModalProps> = ({
   type,
 }) => {
   const [reasonForAction, setReasonForAction] = useState('');
+  const t = useTranslations('ActionOnUser');
 
   const handleClose = () => {
     if (onClose) {
@@ -54,7 +56,7 @@ const ActionOnUserModal: FC<IActionOnUserModalProps> = ({
               {data.photo?.path ? (
                 <Image
                   src={data.photo.path}
-                  alt="User Avatar"
+                  alt={t('user_avatar_alt')}
                   width={200}
                   height={200}
                   className="aspect-[1/1] size-full rounded-[32px] bg-neutral-90 object-cover"
@@ -73,17 +75,17 @@ const ActionOnUserModal: FC<IActionOnUserModalProps> = ({
         </div>
         <TextArea
           rows={5}
-          placeholder="Reason for warning"
+          placeholder={t('warning_placeholder')}
           value={reasonForAction}
           onChange={e => setReasonForAction(e.target.value)}
         />
         <div className="flex w-full flex-col gap-3">
           <p className={mergeClassnames('text-center text-sm', type === 'ban' ? 'text-red-70' : 'text-orange-70')}>
             {type === 'ban'
-              ? 'Are you sure you want to ban this account?' : 'Are you sure you want to send a warning to this account?'}
+              ? t('ban_confirm') : t('warn_confirm')}
           </p>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="lg" fullWidth onClick={handleClose}>Cancel</Button>
+            <Button variant="outline" size="lg" fullWidth onClick={handleClose}>{t('cancel')}</Button>
             <Button
               size="lg"
               fullWidth
@@ -91,7 +93,7 @@ const ActionOnUserModal: FC<IActionOnUserModalProps> = ({
               // animation={isLoading && 'progress'}
               // onClick={handleUpdateHuberRegistrarStatus}
             >
-              Confirm
+              {t('confirm')}
             </Button>
           </div>
         </div>

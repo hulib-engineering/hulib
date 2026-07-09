@@ -5,6 +5,7 @@ import type { ConfirmationResult } from 'firebase/auth';
 import { PhoneAuthProvider, RecaptchaVerifier, signInWithCredential, signInWithPhoneNumber } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
@@ -31,6 +32,7 @@ const VerifiedPhoneNumberInput = ({
   value: string;
   onChange: (value: string) => void;
 }) => {
+  const t = useTranslations('VerifiedPhone');
   const {
     register,
     watch,
@@ -56,16 +58,16 @@ const VerifiedPhoneNumberInput = ({
     if (isError) {
       setError('parentPhoneNumber', {
         type: 'unverified',
-        message: hintText || 'Invalid',
+        message: hintText || t('invalid'),
       });
     }
-  }, [isError, hintText, setError]);
+  }, [isError, hintText, setError, t]);
 
   useEffect(() => {
     const handleOtp = async (otp: string) => {
       try {
         if (!confirmationResponse) {
-          throw new Error('No confirmation response available.');
+          throw new Error(t('no_confirmation'));
         }
         const credential = PhoneAuthProvider.credential(
           confirmationResponse.verificationId,
@@ -78,7 +80,7 @@ const VerifiedPhoneNumberInput = ({
         console.error('OTP Verification Error:', error);
         setError('verificationCode', {
           type: 'unverified',
-          message: 'Invalid OTP. Please try again.',
+          message: t('invalid_otp'),
         });
       }
     };
@@ -86,7 +88,7 @@ const VerifiedPhoneNumberInput = ({
     if (watch('verificationCode').length === 6) {
       handleOtp(watch('verificationCode'));
     }
-  }, [watch('verificationCode'), confirmationResponse, setError, setValue]);
+  }, [watch('verificationCode'), confirmationResponse, setError, setValue, t]);
 
   useEffect(() => {
     if (verifiedNumber !== '') {
@@ -107,25 +109,13 @@ const VerifiedPhoneNumberInput = ({
 
     window.recaptchaVerifier.render();
   };
-  // const setupRecaptcha = () => {
-  //   // @ts-ignore
-  //   if (!window.recaptchaVerifier) {
-  //     // @ts-ignore
-  //
-  //     window.recaptchaVerifier = new RecaptchaVerifier(auth, 'verify-button', {
-  //       size: 'invisible',
-  //     });
-  //     // @ts-ignore
-  //
-  //     window.recaptchaVerifier.render();
-  //   }
-  // };
+
   const handleSendCode = async () => {
     try {
       setupRecaptcha(); // Setup Recaptcha
       const phoneNumber = watch('parentPhoneNumber').trim();
       if (!phoneNumber) {
-        throw new Error('Phone number is required');
+        throw new Error(t('phone_required'));
       }
 
       const confirmationResult = await signInWithPhoneNumber(
@@ -155,7 +145,7 @@ const VerifiedPhoneNumberInput = ({
       <fieldset className="w-2/3">
         <TextInput
           type="tel"
-          label="Parent's phone number"
+          label={t('parent_phone')}
           placeholder="+84xxxxxxxxxx"
           {...register('parentPhoneNumber')}
           isError={!!errors.parentPhoneNumber}
@@ -177,14 +167,14 @@ const VerifiedPhoneNumberInput = ({
                 }
                 onClick={handleSendCode}
               >
-                Verify
+                {t('verify')}
               </Button>
             )
           : !watch('isVerified')
               ? (
                   <TextInput
                     type="number"
-                    label="Verification code"
+                    label={t('verification_code')}
                     {...register('verificationCode')}
                     isError={!!errors.verificationCode}
                     hintText={errors.verificationCode?.message}
@@ -197,7 +187,7 @@ const VerifiedPhoneNumberInput = ({
                       'hover:bg-green-98 hover:text-green-50',
                     )}
                   >
-                    Verified
+                    {t('verified')}
                   </Chip>
                 )}
       </fieldset>

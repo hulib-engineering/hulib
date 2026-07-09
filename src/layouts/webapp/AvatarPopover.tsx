@@ -62,13 +62,13 @@ export default function AvatarPopover() {
         roles: [Role.LIBER],
       },
       {
-        label: 'My Favorite',
+        label: t('my_favorite'),
         icon: <Bookmarks className="text-xl text-primary-60" />,
         href: `/users/${id}?tab=favorite-list`,
         roles: [Role.LIBER],
       },
       {
-        label: 'Stories Management',
+        label: t('stories_management'),
         icon: <Books className="text-xl text-primary-60" />,
         href: `/users/${id}?tab=stories`,
         roles: [Role.HUBER],

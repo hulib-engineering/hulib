@@ -11,6 +11,7 @@ import Button from '@/components/core/button/Button';
 
 export default function PublicHeader() {
   const t = useTranslations('LandingPage');
+  const a11y = useTranslations('Accessibility');
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function PublicHeader() {
       <header className="fixed top-0 z-[999] flex h-14 w-screen items-center bg-white shadow-sm lg:h-16">
         <div className="mx-auto flex w-full items-center justify-between px-4">
           <div className="flex items-center gap-x-6">
-            <Link href="/" aria-label="Go to homepage">
+            <Link href="/" aria-label={a11y('go_to_homepage')}>
               <span className="hidden lg:block">
                 <Logo />
               </span>
@@ -69,7 +70,7 @@ export default function PublicHeader() {
             <button
               type="button"
               className="inline-flex items-center justify-center rounded-full p-2 text-neutral-20"
-              aria-label="Open menu"
+              aria-label={a11y('open_menu')}
               aria-expanded={isMenuOpen}
               onClick={() => setIsMenuOpen(true)}
             >
@@ -91,7 +92,7 @@ export default function PublicHeader() {
           'fixed right-0 top-0 z-[1001] h-screen w-[82%] max-w-[320px] bg-white shadow-xl transition-transform duration-300 lg:hidden',
           isMenuOpen ? 'translate-x-0' : 'translate-x-full',
         )}
-        aria-label="Mobile menu"
+        aria-label={a11y('mobile_menu')}
       >
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-neutral-90 p-4">
@@ -99,7 +100,7 @@ export default function PublicHeader() {
             <button
               type="button"
               className="rounded-full p-2 text-neutral-20"
-              aria-label="Close menu"
+              aria-label={a11y('close_menu')}
               onClick={() => setIsMenuOpen(false)}
             >
               <X size={20} weight="bold" />

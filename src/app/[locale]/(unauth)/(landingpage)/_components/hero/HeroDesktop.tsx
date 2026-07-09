@@ -23,6 +23,7 @@ const HeroDesktop = (props: HeroProps) => {
     setIsPlaying,
   } = props;
   const t = useTranslations('Index');
+  const tAlt = useTranslations('AltText');
   const locale = useLocale();
   return (
     <section
@@ -90,7 +91,7 @@ const HeroDesktop = (props: HeroProps) => {
                         width={72}
                         height={24}
                         src="/assets/images/heroes/mentors.svg"
-                        alt="Mentor avatars"
+                        alt={tAlt('mentor_avatars')}
                         className="h-6 w-[4.5rem] object-fill object-center"
                       />
                     </div>
@@ -99,7 +100,7 @@ const HeroDesktop = (props: HeroProps) => {
                         width={64}
                         height={16}
                         src="/assets/images/heroes/mentors.svg"
-                        alt="Mentor avatars"
+                        alt={tAlt('mentor_avatars')}
                         className="h-4 w-16 object-fill object-center"
                       />
                     </div>
@@ -121,7 +122,7 @@ const HeroDesktop = (props: HeroProps) => {
                       onClick={onPlayPause}
                       width={56}
                       height={56}
-                      alt="Play icon"
+                      alt={tAlt('play_icon')}
                       src={`/assets/icons/${
                         isPlaying ? 'pause' : 'play'
                       }-circle.svg`}
@@ -143,7 +144,7 @@ const HeroDesktop = (props: HeroProps) => {
                       onClick={onPlayPause}
                       width={32}
                       height={32}
-                      alt="Play icon"
+                      alt={tAlt('play_icon')}
                       src={`/assets/icons/${
                         isPlaying ? 'pause' : 'play'
                       }-circle.png`}
@@ -162,7 +163,7 @@ const HeroDesktop = (props: HeroProps) => {
                   </div>
                 </div>
                 <Image
-                  alt="Hero artwork"
+                  alt={tAlt('hero_artwork')}
                   src="/assets/images/heroes/hero-artwork.png"
                   priority
                   width={748}

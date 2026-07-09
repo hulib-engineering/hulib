@@ -119,7 +119,7 @@ export default function Index() {
                   className="lg:hidden"
                   onClick={handleLoadMore}
                 >
-                  View more
+                  {t('view_more')}
                 </Button>
                 <Button
                   variant="outline"
@@ -128,7 +128,7 @@ export default function Index() {
                   className="hidden lg:flex"
                   onClick={handleLoadMore}
                 >
-                  View more
+                  {t('view_more')}
                 </Button>
               </>
             )}

@@ -32,6 +32,7 @@ const EventFeatureList = [
 
 const PromotedEvent = () => {
   const t = useTranslations('Index');
+  const tAlt = useTranslations('AltText');
 
   const [isRegisteringEventFormModalOpen, setIsRegisteringEventFormModalOpen]
     = useState(false);
@@ -65,7 +66,7 @@ const PromotedEvent = () => {
       <div className="flex w-full items-center justify-center px-4 sm:px-0">
         <div className="w-full md:w-5/6">
           <Image
-            alt="Event banner"
+            alt={tAlt('event_banner')}
             src="/assets/images/banners/event-banner.png"
             priority
             width={1920}
@@ -77,7 +78,7 @@ const PromotedEvent = () => {
               )}
           />
           <Image
-            alt="Event banner"
+            alt={tAlt('event_banner')}
             src="/assets/images/banners/event-banner-sp.png"
             priority
             width={375}
