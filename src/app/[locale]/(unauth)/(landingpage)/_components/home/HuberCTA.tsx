@@ -7,7 +7,8 @@ import { HuberCTACard } from '@/components/home';
 
 export default function HuberCTA() {
   const router = useRouter();
-  const t = useTranslations('Home');
+  const t = useTranslations('HuberCTA');
+
   return (
     <div className="relative inset-x-1/2 -mb-8 h-[403px] w-screen overflow-hidden bg-gradient-to-t from-[#fdf3ce] to-transparent -translate-x-1/2 md:h-[532px]">
       {/* Top fade into page background */}
@@ -40,9 +41,9 @@ export default function HuberCTA() {
       {/* CTA Card */}
       <div className="absolute left-1/2 top-12 z-20 justify-center -translate-x-1/2">
         <HuberCTACard
-          title={t('short_descriptions.become_member')}
-          subtitle={t('short_descriptions.subtitle')}
-          buttonLabel={t('short_descriptions.create_new_book')}
+          title={t('title')}
+          subtitle={t('subtitle')}
+          buttonLabel={t('button_label')}
           onClick={() => router.push('/register-huber/policy')}
         />
       </div>

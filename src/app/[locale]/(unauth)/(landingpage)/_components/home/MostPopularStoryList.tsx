@@ -5,7 +5,7 @@ import { IndexStoryListSectionLayout } from './IndexStoryListSectionLayout';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 
 export const MostPopularStoryList = () => {
-  const t = useTranslations('Home');
+  const t = useTranslations('HomeStories');
   const { data: stories, isLoading } = useGetStoriesQuery({
     page: 1,
     limit: 6,
@@ -14,7 +14,7 @@ export const MostPopularStoryList = () => {
 
   return (
     <IndexStoryListSectionLayout
-      title={t('explore_stories.title')}
+      title={t('most_popular_stories')}
       stories={{ ...stories, data: stories?.data?.slice(0, 5) || [] }}
       isLoading={isLoading}
     />

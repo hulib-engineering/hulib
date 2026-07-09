@@ -1022,6 +1022,23 @@
     "no_data": "Không có dữ liệu"
 
   },
+  "HuberCTA": {
+    "title": "Chia sẻ câu chuyện của bạn",
+    "subtitle": "Hãy chia sẽ trải nghiệm, bài học, hoặc điều bạn muốn lan tỏa. Biết đâu câu chuyện của bạn sẽ giúp ai đó bớt cô đơn. Đọc story guidelines trước khi bắt đầu nhé.",
+    "button_label": "Tạo sách mới"
+  },
+  "HomeStories": {
+    "newest_stories": "Câu chuyện mới nhất",
+    "most_popular_stories": "Câu chuyện phổ biến nhất",
+    "most_popular_topics": "Chủ đề phổ biến nhất",
+    "see_all": "Xem tất cả"
+  },
+  "HomeHubers": {
+    "recommended_hubers": "Hubers được đề xuất",
+    "see_all": "Xem tất cả",
+    "stories": "câu chuyện",
+    "followers": "theo dõi"
+  },
   "Common": {
     "no_data": "Không có dữ liệu",
     "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",

@@ -1,6 +1,6 @@
 'use client';
 
-import { Eye, ThumbsUp } from '@phosphor-icons/react';
+import { Eye, ShareFat, ThumbsUp } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import React, { useState } from 'react';
@@ -14,12 +14,13 @@ import { Cover } from '@/features/stories/components/Cover';
 import {
   DEFAULT_STORY_COVER_ASSET,
 } from '@/features/stories/constants';
-import { useAddStoryToMyFavoritesMutation, useRemoveStoryFromMyFavoritesMutation } from '@/libs/services/modules/user';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { useMobile, useRequireAuth } from '@/libs/hooks';
 import AnimatedCover from '@/features/stories/components/AnimatedCover';
+import { useLikeStoryMutation } from '@/libs/services/modules/stories';
+import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
 
 type IStoryCardProps = {
   data: TStory;
@@ -32,11 +33,11 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
   const locale = useLocale();
   const t = useTranslations('ExploreStory');
   const isMobile = useMobile();
+  const [handleUpdateLikeCount] = useLikeStoryMutation();
 
-  const [isFavorite, setIsFavorite] = useState(Boolean(data.isFavorite));
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [likeCount, setLikeCount] = React.useState(data?.totalLikes ?? 0);
 
-  const [addToMyFavorites] = useAddStoryToMyFavoritesMutation();
-  const [removeFromFavorite] = useRemoveStoryFromMyFavoritesMutation();
   const mockTopicHuber = [
     {
       id: '1',
@@ -76,14 +77,22 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
   const handleClickFavorite = async () => {
     const isAuth = await requireAuth(async () => {
       try {
+        const newCount = isFavorite ? likeCount - 1 : likeCount + 1;
         if (isFavorite) {
-          const response = await removeFromFavorite(data.id).unwrap();
-          pushSuccess(response?.message || t('story_removed_from_favorites'));
+          await handleUpdateLikeCount({
+            id: data.id,
+            type: ChangeCountEnum.DOWN,
+          });
+          pushSuccess(t('story_removed_from_favorites'));
         } else {
-          const response = await addToMyFavorites(data.id).unwrap();
-          pushSuccess(response?.message || t('story_added_to_favorites'));
+          await handleUpdateLikeCount({
+            id: data.id,
+            type: ChangeCountEnum.UP,
+          });
+          pushSuccess(t('story_added_to_favorites'));
         }
         setIsFavorite(prev => !prev);
+        setLikeCount(newCount);
       } catch (err: any) {
         pushError(err?.data?.message || t('error_contact_admin'));
       }
@@ -140,20 +149,24 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
                 {data?.humanBook?.fullName}
               </span>
             </div>
-            <div className="mt-auto flex flex-col gap-1 pt-2 lg:gap-2 lg:pt-3">
-              <div className="flex items-center gap-1 lg:gap-2">
+            <div className="mt-auto flex items-center justify-between gap-1 pt-2 lg:gap-5 lg:pt-3">
+              <div className="flex items-center gap-1">
                 <ThumbsUp className="text-pink-40" size={16} weight="fill" />
                 <p className="text-[14px] font-medium leading-4 text-neutral-20">
-                  {data?.storyReview?.rating || 0}
+                  {data?.totalLikes ?? 0}
                 </p>
-                <p className="text-[14px] font-normal leading-4 text-neutral-10">{t('empathy')}</p>
               </div>
-              <div className="flex items-center gap-1 lg:gap-2">
+              <div className="flex items-center gap-1">
                 <Eye className="text-primary-50" size={16} />
                 <p className="text-[14px] font-medium leading-4 text-neutral-20">
-                  {data.viewCount ?? 0}
+                  {data?.viewCount ?? 0}
                 </p>
-                <p className="text-[14px] font-normal leading-4 text-neutral-10">{t('views')}</p>
+              </div>
+              <div className="flex items-center gap-1">
+                <ShareFat className="text-primary-50" size={16} />
+                <p className="text-[14px] font-medium leading-4 text-neutral-20">
+                  {data?.shareCount ?? 0}
+                </p>
               </div>
             </div>
           </div>
@@ -191,7 +204,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
           className="flex-1 rounded-full py-3 text-base font-medium leading-5"
           onClick={handleClickRead}
         >
-          {t('read_all')}
+          Đọc hết
         </Button>
         <IconButton
           variant="outline"
