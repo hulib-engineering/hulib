@@ -467,14 +467,48 @@
       "homepage_button": "Trang chủ",
       "back_button": "Quay lại",
       "confirm_button": "Xác nhận"
-    }
+    },
+    "table": {
+      "topic_deleted_success": "Đã xóa chủ đề thành công",
+      "topic_delete_failed": "Xóa chủ đề thất bại",
+      "topic_status_updated": "Đã chuyển trạng thái chủ đề thành ${status}",
+      "topic_status_update_failed": "Cập nhật trạng thái chủ đề thất bại",
+      "topic_name": "Tên chủ đề",
+      "action": "Thao tác",
+      "set_topic_inactive": "Đặt ${topic} thành không hoạt động",
+      "set_topic_active": "Đặt ${topic} thành hoạt động",
+      "set_inactive": "Ngừng hoạt động",
+      "set_active": "Kích hoạt",
+      "edit_topic": "Chỉnh sửa ${topic}",
+      "delete_topic": "Xóa ${topic}",
+      "loading_topics": "Đang tải chủ đề…",
+      "no_data_yet": "Chưa có dữ liệu",
+      "pagination": {
+        "next_page": "Trang tiếp theo"
+      }
+    },
+    "stories": {
+      "back_to_awaiting_approval": "Quay lại Chờ duyệt - Câu chuyện",
+      "regenerate_cover": "Tạo lại ảnh bìa",
+      "approve": "Duyệt",
+      "decline": "Từ chối",
+      "back_to_story_approval": "Quay lại Duyệt câu chuyện",
+      "cover_generation_description": "Chọn một mẫu phong cách và xác nhận tiêu đề hiển thị trên bìa. Tên tác giả sẽ được lấy từ hồ sơ Huber. Khi lưu, hệ thống sẽ tải lên một ảnh PNG mới và thay thế ảnh bìa của câu chuyện trong cơ sở dữ liệu."
+    },
+    "appeal_form": "Đơn khiếu nại",
+    "reported_user": "Người dùng bị báo cáo",
+    "back": "Quay lại",
+    "hearts": "Trái tim",
+    "approve": "Duyệt",
+    "decline": "Từ chối"
   },
   "MiniGame": {
     "meta_title": "HuLib | Trò Chơi",
     "meta_description": "Trò chơi nhỏ chúc mừng năm Rồng",
     "happy_year_of_dragon": "Chúc mừng năm Rồng",
     "you_win": "Bạn thắng sau ${numberOfAvailableMovements} nước đi!",
-    "visit_website": "Truy cập Website"
+    "visit_website": "Truy cập Website",
+    "movements": "Biến động"
   },
   "SignIn": {
     "meta_title": "Đăng nhập",
@@ -596,7 +630,23 @@
     "huber_has_not_finished_stories": "Có vẻ như Huber chưa hoàn thành bất kỳ câu chuyện nào.",
     "library": "Thư viện",
     "all": "Tất cả",
-    "create_new_story": "Tạo câu chuyện mới"
+    "create_new_story": "Tạo câu chuyện mới",
+    "user_banned_success": "Đã cấm người dùng thành công.",
+    "user_warned_success": "Đã cảnh báo người dùng thành công.",
+    "reporter": "Người báo cáo",
+    "reported_user": "Người dùng bị báo cáo",
+    "reasons": "Lý do",
+    "warn_user": "Cảnh báo người dùng",
+    "ban_user": "Cấm người dùng",
+    "appeal_report": "Khiếu nại báo cáo",
+    "appeal_description": "Vui lòng giải thích lý do bạn cho rằng hành động này được thực hiện nhầm. Chúng tôi sẽ xem xét phản hồi của bạn một cách cẩn thận và phản hồi trong thời gian sớm nhất.",
+    "reported_by_someone": "Một người dùng khác đã báo cáo bạn. Người báo cáo đưa ra lý do sau:",
+    "appeal_submitted": "Khiếu nại của bạn đã được gửi.",
+    "appeal_review_notice": "Chúng tôi sẽ xem xét và thông báo kết quả cho bạn trong vòng 3 ngày làm việc.",
+    "cancel": "Hủy",
+    "appeal": "Khiếu nại",
+    "confirm_information_accuracy": "Tôi xác nhận rằng thông tin tôi cung cấp là chính xác theo hiểu biết của tôi.",
+    "submit_appeal": "Gửi khiếu nại"
   },
   "MyFavorites": {
     "choose_all": "Chọn tất cả",
@@ -739,7 +789,15 @@
     "story": "Câu chuyện",
     "is_deleted_successfully": "đã được xóa thành công",
     "empathy": "Đồng cảm",
-    "read_all": "Đọc tất cả"
+    "read_all": "Đọc tất cả",
+    "story_deleted_success": "Đã xóa câu chuyện thành công",
+    "story_delete_failed": "Xóa câu chuyện thất bại",
+    "edit": "Chỉnh sửa",
+    "favorite": "Yêu thích",
+    "confirm_delete_story": "Bạn có chắc chắn muốn xóa câu chuyện này không?",
+    "confirm_remove_favorite": "Bạn có chắc chắn muốn xóa câu chuyện này khỏi danh sách yêu thích không?",
+    "story_delete_warning": "Câu chuyện sẽ bị xóa ngay lập tức.",
+    "cannot_undo_action": "Bạn không thể hoàn tác hành động này."
   },
   "Huber": {
     "title": "Xem danh sách Huber",
@@ -751,10 +809,69 @@
       "introduce": "Tên tôi là {fullName}, tôi là một người yêu sách và thích chia sẻ kiến thức. Tôi đã đọc rất nhiều sách và muốn chia sẻ những gì tôi đã học được với mọi người.",
       "topics": "Chủ đề",
       "ratings": "Yêu thích",
-      "visit_profile": "Xem hồ sơ"
+      "visit_profile": "Xem hồ sơ",
+      "added_to_favorites_success": "Đã thêm vào danh sách yêu thích",
+      "removed_from_favorites_success": "Đã xóa khỏi danh sách yêu thích",
+      "waiting_for_approval": "Đang chờ duyệt",
+      "view_detail": "Xem chi tiết"
     },
     "agreement": "Mình đã đọc và đồng ý với các nguyên tắc cộng đồng của Hulib",
-    "huber_responsibility": "Huber tự chịu trách nhiệm về tính trung thực của các thông tin cung cấp cho Hulib."
+    "huber_responsibility": "Huber tự chịu trách nhiệm về tính trung thực của các thông tin cung cấp cho Hulib.",
+    "emergency_notice": "HuLib có quyền từ chối hoặc yêu cầu chỉnh sửa nội dung nếu câu chuyện chưa đáp ứng các tiêu chí cộng đồng nêu trên.",
+    "continue": "Tiếp tục",
+    "hero_title": "Hướng dẫn tạo sách",
+    "hero_description": "HuLib rất mong chờ được đọc và lan tỏa câu chuyện của bạn đến cộng đồng. Trước khi bắt đầu tạo sách, tụi mình có một vài lưu ý nhỏ để cùng xây dựng một không gian chia sẻ tích cực, an toàn và ý nghĩa nhé.",
+    "restricted_content": {
+      "items": {
+        "item_1": "Cổ súy hành vi gây hại bản thân hoặc người khác.",
+        "item_2": "Tiết lộ thông tin riêng tư của người khác khi chưa được sự đồng ý.",
+        "item_3": "Lan truyền thông tin sai lệch hoặc chưa được kiểm chứng.",
+        "item_4": "Công kích cá nhân hoặc kích động thù ghét.",
+        "item_5": "Mô tả quá chi tiết các nội dung nhạy cảm.",
+        "item_6": "Đề cập đến các chủ đề chính trị, tôn giáo hoặc các vấn đề dễ gây tranh cãi theo hướng đối đầu."
+      }
+    },
+    "rule_cards": {
+      "card_1": {
+        "title": "Chọn chủ đề phù hợp",
+        "rules": "Bạn có thể tạo sách về hành trình, kỷ niệm, bài học, những điều đã vượt qua, chăm sóc sức khỏe tinh thần, yêu thương và phát triển bản thân, trải nghiệm học tập công việc, định kiến xã hội, hoặc bất kỳ chủ đề nào mang dấu ấn cá nhân. HuLib gọi những bạn chia sẻ câu chuyện là Huber."
+      },
+      "card_2": {
+        "title": "Chia sẻ bằng sự chân thành",
+        "rules": "Hãy kể câu chuyện của mình dựa trên trải nghiệm và góc nhìn cá nhân. Tụi mình khuyến khích nội dung lan tỏa sự đồng cảm, thấu hiểu và truyền cảm hứng tích cực, đặc biệt dành cho các bạn trẻ tìm kiếm sự kết nối."
+      },
+      "card_3": {
+        "title": "Đảm bảo tính nguyên bản",
+        "rules": "Vui lòng không sử dụng nội dung do AI tạo ra hoặc sao chép từ các nguồn khác. Hãy để mỗi cuốn sách mang tiếng nói và dấu ấn riêng của chính bạn."
+      },
+      "card_4": {
+        "title": "Xác minh và an toàn cộng đồng",
+        "rules": "HuLib không chịu trách nhiệm xác thực toàn bộ thông tin được chia sẻ trong sách. Tuy nhiên, admin có thể yêu cầu bạn cập nhật profile hoặc thêm thông tin trước khi bài viết được duyệt nhằm đảm bảo cộng đồng phát triển bền vững và an toàn."
+      },
+      "card_5": {
+        "title": "Đồng hành một cách lành mạnh",
+        "rules": "Sau khi được duyệt, Huber sẽ có thử thách tự nguyện để cập nhật thời gian rảnh của mình trên nền tảng (tối thiểu 30 phút mỗi tuần). Thông qua đó, câu chuyện của bạn có thể tiếp cận nhiều Liber hơn — các bạn trẻ trải qua hoàn cảnh tương tự hoặc đang mắc kẹt trong một vấn đề nào đó và tìm thấy sự liên kết từ cuốn sách của bạn."
+      }
+    },
+    "create_book_title": "Tạo sách",
+    "success_create_book": "Viết câu chuyện thành công",
+    "thanks_for_story": "Cảm ơn bạn đã chia sẻ câu chuyện! HuLib sẽ giữ bạn được thông báo khi quá trình của chúng tôi hoàn thành.",
+    "in_review": "Đang xem xét",
+    "back_to_profile": "Quay về trang cá nhân",
+    "create_new_book": "Tạo sách mới",
+    "hearts": "Trái tim",
+    "approve_huber_failed": "Không thể duyệt Huber. Vui lòng thử lại.",
+    "waiting_for_approval": "Đang chờ duyệt",
+    "huber_request_confirmed": "Bạn đã xác nhận yêu cầu trở thành Huber.",
+    "accept_huber_request": "Bạn đang chấp nhận yêu cầu trở thành Huber.",
+    "decline_huber_request": "Bạn đã từ chối yêu cầu trở thành Huber.",
+    "declining_huber_request": "Bạn đang từ chối yêu cầu trở thành Huber.",
+    "homepage": "Trang chủ",
+    "approved": "Đã duyệt",
+    "declined": "Đã từ chối",
+    "back": "Trở lại",
+    "reason_for_rejection": "Lý do từ chối",
+    "new_book_icon_alt": "Biểu tượng sách mới"
   },
   "Time_slots": {
     "title": "Khung giờ",
@@ -931,6 +1048,9 @@
     "back": "Quay lại",
     "cancel": "Huỷ bỏ",
     "submit": "Hoàn thành",
+    "rejected": "Từ chối",
+    "approve": "Chấp nhận",
+    "report": "Báo cáo",
     "placeholder_title": "Nhập tiêu đề câu chuyện của bạn",
     "placeholder_abstract": "Nhập tóm tắt câu chuyện của bạn",
     "title_notification": "Hoàn tất đăng kí",
@@ -1002,6 +1122,10 @@
     "add_video_source": "Thêm nguồn video",
     "what_libers_say": "Những gì Liber nói",
     "saving": "Đang lưu...",
+    "failed_update_profile": "Cập nhật hồ sơ thất bại. Vui lòng thử lại.",
+    "invalid_video_source": "Nguồn video không hợp lệ",
+    "video_browser_unsupported": "Trình duyệt của bạn không hỗ trợ video HTML.",
+    "video_url_placeholder": "https://www.youtube.com/embed/video",
     "add_experience": "Thêm kinh nghiệm",
     "add_education": "Thêm học vấn",
     "save": "Lưu",
@@ -1011,7 +1135,14 @@
     "view_more": "Xem thêm",
     "see_more": "Xem thêm",
     "edit": "Chỉnh sửa",
-    "delete": "Xóa"
+    "delete": "Xóa",
+    "see_all": "Xem tất cả",
+    "confirm": "Xác nhận",
+    "welcome_to_community": "Chào mừng bạn đến với cộng đồng",
+    "first_book_approved": "Cuốn sách đầu tiên của bạn đã được duyệt, bây giờ mọi người có thể xem câu chuyện của bạn",
+    "update_your_schedule": " Cập nhật lịch của bạn",
+    "update_schedule_description": "Cập nhật lịch của bạn để mọi người có thể trò chuyện trực tiếp với bạn",
+    "update_personal_schedule": " Cập nhật lịch cá nhân"
   },
   "feedback_form": {
     "session_feedback": "Phản hồi cho buổi học",
@@ -1055,7 +1186,9 @@
   },
   "Messages": {
     "meta_title": "Messenger | HuLib",
-    "meta_description": ""
+    "meta_description": "Mô tả meta",
+    "your_messages": "Tin nhắn của bạn",
+    "messages": "Tin nhắn"
   },
   "ScheduleBasicInfo": {
     "topics": "Chủ đề",
@@ -1123,5 +1256,60 @@
     },
     "stories": "câu chuyện",
     "follow": "theo dõi"
+  },
+  "event": {
+    "event_registration_title": "Đăng ký tham dự sự kiện HuLib",
+    "fullname_label": "Bạn cho HuLib xin họ và tên của bạn nhé!",
+    "fullname_placeholder": "Nhập tên của bạn",
+    "birthday_label": "Ngày/tháng/năm sinh của bạn nha!",
+    "email_label": "Email của bạn là gì nhỉ?",
+    "email_placeholder": "Hulibvietnamabc@gmail.com",
+    "social_media_label": "Bạn biết đến sự kiện của HuLib qua đâu vậy?",
+    "career_label": "Bạn là",
+    "hometown_label": "Bạn đến từ",
+    "first_choice_label": "Trong sự kiện lần này, HuLib đã chuẩn bị sẵn bốn căn phòng với những chủ đề khác nhau cho các bạn có thể lựa chọn. Để giúp buổi trò chuyện của chúng mình hiệu quả hơn, tập trung hơn và tụi mình có thể trao đổi sâu hơn về nội dung mà các bạn quan tâm, bạn hãy giúp HuLib chọn ra căn phòng có chủ đề mà bạn có hứng thú nhất nhé",
+    "second_choice_label": "Trong trường hợp căn phòng bạn yêu thích nhất của bạn bị đầy hoặc bị quá tải, vậy thì đâu sẽ là sự lựa chọn thứ hai của bạn?",
+    "question_label": "Bạn có câu hỏi nào muốn gửi đến Khách Mời (Human book) của HuLib không nhỉ?",
+    "question_placeholder": "Nhập câu hỏi của bạn",
+    "ambassador_label": "HuLib đang tìm kiếm các đại sứ truyền thông nhiệt huyết để cùng lan tỏa giá trị tích cực về sức khỏe tinh thần đến cộng đồng. Bạn có hứng thú muốn thử sức với vai trò này không? Nếu chọn có, tụi mình sẽ gửi thêm thông tin chi tiết nhé qua email nhé!",
+    "submit_button": "Gửi",
+    "social_media": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "tiktok": "Tiktok",
+      "threads": "Threads",
+      "other": "Khác"
+    },
+    "career": {
+      "high_school_student": "Học sinh THPT",
+      "student": "Sinh viên",
+      "gap_year": "Đang gap year",
+      "working": "Đang đi làm",
+      "other": "Khác"
+    },
+    "hometown": {
+      "hue": "Huế mộng mơ",
+      "danang": "Đà Nẵng thân iu",
+      "hochiminh": "Hồ Chí Minh iu dấu",
+      "hanoi": "Hà Nội thân thương",
+      "other": "Khác"
+    },
+    "choice": {
+      "family": "Family (Gia đình)",
+      "coworker": "Coworker (Đồng nghiệp)",
+      "friendship": "Friendship (Bạn bè)",
+      "love": "Love (Tình yêu)"
+    },
+    "ambassador": {
+      "no": "Không",
+      "yes": "Có"
+    },
+    "success_modal": {
+      "greeting": "Chào",
+      "confirmation": "Chúng tôi xác nhận bạn đã đăng ký thành công.",
+      "thank_you": " Cảm ơn bạn đã đăng ký tham gia chương trình &rsquo;Boong, tiếng chuông tỉnh thức!&rsquo; vào ngày 14/12/2024.",
+      "reminder": "Chúng tôi rất vui khi được đồng hành cùng bạn trong sự kiện sắp tới! Vào trước ngày diễn ra sự kiện BTC sẽ gửi một email nhắc nhở bạn về chương trình, mong bạn sẽ để ý check mail nhé!",
+      "close_button": "Gotchaaaa"
+    }
   }
 }

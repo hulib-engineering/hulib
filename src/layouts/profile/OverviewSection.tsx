@@ -53,7 +53,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
       setIsEditingVideoSrc(false);
       setOpenEditPopup(false);
     } catch {
-      setErrorMessage('Failed to update profile. Please try again.');
+      setErrorMessage(t('failed_update_profile'));
     }
   };
   const togglePlay = () => {
@@ -212,10 +212,10 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
                       controls={isVideoPlaying}
                       onPause={() => setIsVideoPlaying(false)}
                       onPlay={() => setIsVideoPlaying(true)}
-                      onError={() => setInvalidVideoMsg('Invalid video source')}
+                      onError={() => setInvalidVideoMsg(t('invalid_video_source'))}
                       onLoadedData={() => setInvalidVideoMsg(null)}
                     >
-                      Your browser does not support HTML video.
+                      {t('video_browser_unsupported')}
                     </video>
 
                     {!isVideoPlaying && !invalidVideoMsg && (

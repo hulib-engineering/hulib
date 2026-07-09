@@ -53,6 +53,7 @@ const HandleReportModal = ({
   data,
 }: IHandleReportModalProps) => {
   const t = useTranslations('MyProfile');
+  const tCommon = useTranslations('Common');
 
   const [rejectSingleReport, { isLoading }] = useUpdateReportByIdMutation();
   const [banUser, { isLoading: isBanningUser }] = useBanUserMutation();
@@ -95,10 +96,10 @@ const HandleReportModal = ({
     try {
       if (action === 'ban') {
         await banUser({ userId: data?.reportee?.id, reportId: data?.id }).unwrap();
-        pushSuccess('User has been banned successfully.');
+        pushSuccess(t('user_banned_success'));
       } else {
         await warnUser({ userId: data?.reportee?.id, reportId: data?.id }).unwrap();
-        pushSuccess('User has been warned successfully.');
+        pushSuccess(t('user_warned_success'));
       }
       handleClose();
     } catch (error: any) {
@@ -126,7 +127,7 @@ const HandleReportModal = ({
               onClick={handleClickBack}
             />
             <h5 className="text-2xl font-medium leading-8">
-              {`${!isRejected && !isApproved ? 'Report' : isApproved ? 'Approve' : 'Reject'} detail #${data?.id}`}
+              {`${!isRejected && !isApproved ? tCommon('report') : isApproved ? tCommon('approve') : tCommon('rejected')} detail #${data?.id}`}
             </h5>
             <X
               className={mergeClassnames(
@@ -143,7 +144,7 @@ const HandleReportModal = ({
                 <div className="py-2 text-center text-black">{data?.createdAt}</div>
                 <div className="flex items-center outline outline-1 -outline-offset-1 outline-neutral-90">
                   <div className="flex flex-1 flex-col border-r border-neutral-90">
-                    <div className="bg-primary-60 p-2 text-center text-lg font-medium text-white">Reporter</div>
+                    <div className="bg-primary-60 p-2 text-center text-lg font-medium text-white">{t('reporter')}</div>
                     <div className="flex h-20 items-center justify-center gap-2 py-2 text-sm font-medium leading-4">
                       <Avatar
                         imageUrl={data?.reporter?.photo?.path}
@@ -157,7 +158,7 @@ const HandleReportModal = ({
                     </div>
                   </div>
                   <div className="flex flex-1 flex-col">
-                    <div className="bg-red-60 p-2 text-center text-lg font-medium text-white">Reported user</div>
+                    <div className="bg-red-60 p-2 text-center text-lg font-medium text-white">{t('reported_user')}</div>
                     <div className="flex h-20 items-center justify-center gap-2 py-2 text-sm font-medium leading-4">
                       <Avatar
                         imageUrl={data?.reportee?.photo?.path}
@@ -191,7 +192,10 @@ const HandleReportModal = ({
             )}
             {!isApproved && (
               <div className="flex flex-col gap-4 p-6">
-                <p className="text-lg font-medium">Reasons:</p>
+                <p className="text-lg font-medium">
+                  {t('reasons')}
+                  :
+                </p>
                 {!isRejected ? (
                   <>
                     <ul className="list-disc space-y-2 pl-6">
@@ -253,7 +257,7 @@ const HandleReportModal = ({
                   fullWidth
                   onClick={() => setIsRejected(true)}
                 >
-                  Reject
+                  {tCommon('rejected')}
                 </Button>
                 <Button
                   size="lg"
@@ -261,7 +265,7 @@ const HandleReportModal = ({
                   fullWidth
                   onClick={() => setIsApproved(true)}
                 >
-                  Approve
+                  {tCommon('approve')}
                 </Button>
               </>
             ) : isRejected ? (
@@ -272,7 +276,7 @@ const HandleReportModal = ({
                 animation={isLoading && 'progress'}
                 onClick={handleSubmitRejectingReport}
               >
-                Done
+                {tCommon('done')}
               </Button>
             ) : (
               <>
@@ -285,7 +289,7 @@ const HandleReportModal = ({
                   className="border-orange-70"
                   onClick={() => handleModerate('warn')}
                 >
-                  Warn user
+                  {t('warn_user')}
                 </Button>
                 <Button
                   size="lg"
@@ -296,7 +300,7 @@ const HandleReportModal = ({
                   className="border-red-60"
                   onClick={() => handleModerate('ban')}
                 >
-                  Ban user
+                  {t('ban_user')}
                 </Button>
               </>
             )}
