@@ -3,6 +3,7 @@
 import { CaretCircleRight } from '@phosphor-icons/react';
 import React, { useMemo } from 'react';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 
 import { useRouter } from 'next/navigation';
 import { StoryCard } from './StoryCard';
@@ -24,6 +25,7 @@ type Props = {
 
 export const IndexStoryListSectionLayout = (props: Props) => {
   const { title, stories, isLoading, containerClassName, showFilter, filterComponent } = props;
+  const t = useTranslations('HomeStories');
 
   const router = useRouter();
   const { data: session } = useSession();
@@ -72,7 +74,7 @@ export const IndexStoryListSectionLayout = (props: Props) => {
             className="text-base font-medium leading-5 text-primary-50"
             onClick={() => router.push('/explore-story')}
           >
-            Tất cả
+            {t('see_all')}
           </Button>
         )}
       </div>
