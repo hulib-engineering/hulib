@@ -3,6 +3,7 @@
 import { BookOpenText, CheckCircleIcon, CircleIcon, User } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import React from 'react';
 
@@ -20,6 +21,7 @@ const RecommendedHuberCard = ({
   bookCount,
 }: Partial<THuber>) => {
   const router = useRouter();
+  const t = useTranslations('HomeHubers');
   const profilePath = `/users/${id}`;
   const avatarConfig = genConfig(fullName ?? String(id ?? 'huber'));
   // will remove when integrate API
@@ -112,7 +114,7 @@ const RecommendedHuberCard = ({
               <span className="text-sm leading-4 text-neutral-40">
                 {bookCount}
                 {' '}
-                câu chuyện
+                {t('stories')}
               </span>
             </div>
             <div className="flex items-center gap-1">
@@ -120,7 +122,7 @@ const RecommendedHuberCard = ({
               <span className="text-sm leading-4 text-neutral-40">
                 {followerCount ?? 0}
                 {' '}
-                theo dõi
+                {t('followers')}
               </span>
             </div>
           </div>
