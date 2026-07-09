@@ -275,7 +275,9 @@ export default function StoryForm(props: IStoryFormProps) {
               <span className="text-red-50">*</span>
             </p>
 
-            <div className="flex flex-1 rounded-2xl border border-neutral-90 bg-neutral-98 p-5">
+            <div className="flex flex-1 rounded-2xl
+            border border-neutral-90 bg-neutral-98 p-5"
+            >
               {/* Desktop */}
               <div className="hidden w-full cursor-pointer flex-col gap-4 xl:flex">
                 <div className="flex justify-between gap-2">

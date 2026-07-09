@@ -1,16 +1,19 @@
 'use client';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
-const avoidItems = [
-  'Cổ súy hành vi gây hại bản thân hoặc người khác.',
-  'Tiết lộ thông tin riêng tư của người khác khi chưa được sự đồng ý.',
-  'Lan truyền thông tin sai lệch hoặc chưa được kiểm chứng.',
-  'Công kích cá nhân hoặc kích động thù ghét.',
-  'Mô tả quá chi tiết các nội dung nhạy cảm.',
-  'Đề cập đến các chủ đề chính trị, tôn giáo hoặc các vấn đề dễ gây tranh cãi theo hướng đối đầu.',
+const contentKeys = [
+  'restricted_content.items.item_1',
+  'restricted_content.items.item_2',
+  'restricted_content.items.item_3',
+  'restricted_content.items.item_4',
+  'restricted_content.items.item_5',
+  'restricted_content.items.item_6',
 ];
 
 export default function RestrictedContent() {
+  const t = useTranslations('Huber');
+
   return (
     <div className="mb-[20px] w-full rounded-2xl border border-[#FFE3CC] bg-[#FFF9F5] px-9 py-7">
       {/* Header */}
@@ -28,18 +31,18 @@ export default function RestrictedContent() {
 
       {/* Grid 2 columns */}
       <div className="grid grid-cols-2 gap-x-12 gap-y-3">
-        {avoidItems.map((item, idx) => {
-          return (
-            <div key={idx} className="flex items-start gap-2.5">
-              <img
-                src="/assets/images/register-huber/x_circle.png"
-                alt="x"
-                className="mt-0.5 size-5 flex-shrink-0"
-              />
-              <span className="text-[14px] leading-[22px] text-[#171819]">{item}</span>
-            </div>
-          );
-        })}
+        {contentKeys.map((key, idx) => (
+          <div key={idx} className="flex items-start gap-2.5">
+            <Image
+              src="/assets/images/register-huber/x_circle.png"
+              alt="x-circle"
+              width={20}
+              height={20}
+              className="mt-0.5"
+            />
+            <span className="text-[14px] leading-[22px] text-[#171819]">{t(key as any)}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

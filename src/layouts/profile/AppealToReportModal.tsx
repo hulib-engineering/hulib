@@ -75,7 +75,7 @@ const AppealToReportModal = ({
                 onClick={() => isAppealing && setIsAppealing(false)}
               />
             )}
-            {!isSuccessful && <h5 className="text-2xl font-medium leading-8">Appeal report</h5>}
+            {!isSuccessful && <h5 className="text-2xl font-medium leading-8">{t('appeal_report')}</h5>}
             {(isAppealing || isSuccessful) && (
               <X
                 className={mergeClassnames('size-6 cursor-pointer text-[#343330]', !isSuccessful && 'invisible')}
@@ -89,8 +89,8 @@ const AppealToReportModal = ({
               <>
                 <p className="text-lg font-medium">
                   {isAppealing
-                    ? 'Please explain why you believe this action was taken by mistake. We’ll carefully review your response and follow up shortly.'
-                    : 'Someone else has reported you. The reporter give the reason below:'}
+                    ? t('appeal_description')
+                    : t('reported_by_someone')}
                 </p>
                 {!isAppealing ? (
                   <>
@@ -122,8 +122,8 @@ const AppealToReportModal = ({
                 <div className="rounded-[43px] bg-[#D9FDEE] p-1">
                   <CheckCircle weight="fill" className="text-[48px] text-[#32D583]" />
                 </div>
-                <h6 className="text-center text-xl font-bold">Your appeal has been submitted.</h6>
-                <p className="text-center">We’ll review it and notify you within 3 working days.</p>
+                <h6 className="text-center text-xl font-bold">{t('appeal_submitted')}</h6>
+                <p className="text-center">{t('appeal_review_notice')}</p>
               </div>
             )}
           </div>
@@ -140,14 +140,14 @@ const AppealToReportModal = ({
                     fullWidth
                     onClick={onClose}
                   >
-                    Cancel
+                    {t('cancel')}
                   </Button>
                   <Button
                     size="lg"
                     fullWidth
                     onClick={() => setIsAppealing(true)}
                   >
-                    Appeal
+                    {t('appeal')}
                   </Button>
                 </>
               ) : (
@@ -159,7 +159,7 @@ const AppealToReportModal = ({
                       onChange={event => setIsCommitChecked(event.target.checked)}
                     />
                     <p className="shrink">
-                      I confirm that the information I provided is accurate to the best of my knowledge.
+                      {t('confirm_information_accuracy')}
                     </p>
                   </div>
                   <Button
@@ -169,7 +169,7 @@ const AppealToReportModal = ({
                     animation={isLoading && 'progress'}
                     onClick={handleSubmitAppeal}
                   >
-                    Submit an Appeal
+                    {t('submit_appeal')}
                   </Button>
                 </div>
               )}
