@@ -1,5 +1,4 @@
 'use client';
-
 import { Plus } from '@phosphor-icons/react';
 import React, { useState } from 'react';
 
@@ -56,6 +55,10 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
         setSelectedTopicIds([...selectedTopicIds, topicId]);
       }
     }
+  };
+
+  const handleBookSubmitSuccess = () => {
+    setIsCreateModalOpen(false);
   };
 
   if (isLoading) {
@@ -161,7 +164,7 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
         <Modal.Panel className="w-full shadow-none lg:w-5/6 lg:max-w-6xl">
           <StoryForm
             type="create"
-            onSucceed={() => setIsCreateModalOpen(false)}
+            onSucceed={handleBookSubmitSuccess}
             onCancel={() => setIsCreateModalOpen(false)}
           />
         </Modal.Panel>

@@ -30,6 +30,10 @@ const getStories = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
         searchParams.append('type', params.type);
       }
 
+      if (params?.publishStatus) {
+        searchParams.append('publishStatus', String(params.publishStatus));
+      }
+
       return {
         url: `stories?${searchParams.toString()}`,
       };

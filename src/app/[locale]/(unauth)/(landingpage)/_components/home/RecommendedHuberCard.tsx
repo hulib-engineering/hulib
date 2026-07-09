@@ -1,19 +1,29 @@
 'use client';
 
-import { BookOpenText, User, UserMinus, UserPlus } from '@phosphor-icons/react';
+import { BookOpenText, CheckCircleIcon, CircleIcon, User } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import React from 'react';
 
 import type { Huber as THuber } from '@/libs/services/modules/huber/huberType';
-import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
+import { HuberVerificationStatus } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/constants';
 
-const RecommendedHuberCard = (props: Partial<THuber>) => {
+const RecommendedHuberCard = ({
+  id,
+  fullName,
+  photo,
+  verificationStatus,
+  followerCount,
+  bookCount,
+}: Partial<THuber>) => {
   const router = useRouter();
-  const avatarConfig = genConfig(props.fullName ?? String(props.id ?? 'huber'));
+  const t = useTranslations('HomeHubers');
+  const profilePath = `/users/${id}`;
+  const avatarConfig = genConfig(fullName ?? String(id ?? 'huber'));
   // will remove when integrate API
   const mockTopicHuber = ['Overthinking', 'Gia đình', 'Công việc'];
   const visibleTopics = mockTopicHuber.slice(0, 2) ?? [];
@@ -33,87 +43,89 @@ const RecommendedHuberCard = (props: Partial<THuber>) => {
 
   return (
     <div
-      className="flex w-full cursor-pointer flex-col gap-1.5 pb-2 text-left lg:max-w-40 xxl:max-w-[263px]"
+      className="flex w-[247px] cursor-pointer flex-col gap-1.5 pb-2 text-left"
     >
       <button
         type="button"
-        onClick={() => router.push(`/users/${props.id}`)}
+        className="h-[247px] w-[247px]"
+        onClick={() => router.push(profilePath)}
       >
-        {props.photo?.path ? (
+        {photo?.path ? (
           <Image
-            src={props.photo.path}
-            alt={props.fullName ?? 'Huber Avatar'}
-            width={140}
-            height={140}
-            className="aspect-square w-full rounded-[28px] object-cover"
+            src={photo.path}
+            alt={fullName ?? 'Huber Avatar'}
+            width={247}
+            height={247}
+            className="aspect-square h-[247px] w-[247px] rounded-[28px] object-fill"
             unoptimized
-            onClick={() => router.push(`/users/${props.id}`)}
+            onClick={() => router.push(profilePath)}
           />
         ) : (
           <NiceAvatar
-            className="aspect-square w-full rounded-[28px]"
+            className="aspect-square h-[247px] w-[247px] rounded-[28px]"
             {...avatarConfig}
           />
         )}
       </button>
 
       <div className="flex w-full flex-col gap-y-2.5">
-        <button
-          type="button"
-          onClick={() => router.push(`/users/${props.id}`)}
-        >
-          <h5
-            className="line-clamp-1 w-full text-xl font-medium leading-7 text-primary-10"
+        <div className="grid grid-cols-[auto,1fr] items-center gap-x-1.5">
+          <button
+            type="button"
+            onClick={() => router.push(profilePath)}
           >
-            {props.fullName}
-          </h5>
-        </button>
-        {visibleTopics.length > 0 && (
-          <div className="flex max-h-[56px] w-full flex-wrap items-start gap-1 overflow-hidden lg:max-h-none lg:flex-nowrap lg:items-center lg:gap-2 lg:overflow-visible">
-            {visibleTopics.map(topic => (
-              <Chip
-                key={topic}
-                as="span"
-                className={mergeClassnames(
-                  'h-auto max-w-full rounded-2xl border px-2 py-1 text-left text-xs font-medium leading-[14px]',
-                  getClassTopic(topic),
-                )}
-              >
-                <span className="line-clamp-2 block overflow-hidden break-words">
-                  {topic}
-                </span>
-              </Chip>
-            ))}
-            {remainingTopicsCount > 0 && (
-              <span className="inline-flex shrink-0 items-center whitespace-nowrap rounded border border-primary-80 bg-primary-90 px-2 py-1 text-xs font-medium leading-[14px] text-primary-60">
-                +
-                {remainingTopicsCount}
+            <h5
+              className="line-clamp-1 w-full text-left text-xl font-medium leading-7 text-primary-10"
+            >
+              {fullName}
+            </h5>
+          </button>
+          {verificationStatus === HuberVerificationStatus.verified && <CheckCircleIcon size={16} className="rounded-full bg-green-60 p-px text-green-30" weight="bold" />}
+          {verificationStatus === HuberVerificationStatus.challenge && <CircleIcon size={16} className="rounded-full bg-neutral-90 p-px text-neutral-60" weight="fill" />}
+        </div>
+
+        <div className="flex max-h-[56px] w-full flex-wrap items-start gap-1 overflow-hidden lg:max-h-none lg:flex-nowrap lg:items-center lg:gap-2 lg:overflow-visible">
+          {visibleTopics.map(topic => (
+            <Chip
+              key={topic}
+              as="span"
+              className={mergeClassnames(
+                'h-auto max-w-full rounded border px-2 py-1 text-left text-xs font-medium leading-[14px]',
+                getClassTopic(topic),
+              )}
+            >
+              <span className="line-clamp-2 block overflow-hidden break-words">
+                {topic}
               </span>
-            )}
-          </div>
-        )}
-        <div className="mt-2.5 flex flex-wrap items-center gap-2 xxl:gap-x-4">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-0.5">
+            </Chip>
+          ))}
+          {remainingTopicsCount > 0 && (
+            <span className="inline-flex shrink-0 items-center whitespace-nowrap rounded border border-primary-80 bg-primary-90 px-2 py-1 text-xs font-medium leading-[14px] text-primary-60">
+              +
+              {remainingTopicsCount}
+            </span>
+          )}
+        </div>
+
+        <div className="mt-2.5 flex flex-wrap items-center">
+          <div className="flex w-full flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center gap-1">
               <BookOpenText className="text-neutral-50" size={16} weight="bold" />
-              <span className="text-xs leading-4 text-neutral-20">
-                {props.humanBookTopic?.length ?? 0}
+              <span className="text-sm leading-4 text-neutral-40">
+                {bookCount}
+                {' '}
+                {t('stories')}
               </span>
             </div>
             <div className="flex items-center gap-1">
               <User className="text-neutral-50" size={16} weight="bold" />
-              <span className="text-xs leading-4 text-neutral-20">
-                {props.rating ?? 0}
+              <span className="text-sm leading-4 text-neutral-40">
+                {followerCount ?? 0}
+                {' '}
+                {t('followers')}
               </span>
             </div>
           </div>
-          <Button
-            variant={(props?.humanBookTopic?.length ?? 0) >= 5 ? 'fill' : 'outline'}
-            iconLeft={(props?.humanBookTopic?.length ?? 0) >= 5 ? <UserMinus size={20} weight="bold" /> : <UserPlus size={20} weight="bold" />}
-            className="flex-1 basis-full rounded-full py-3 text-base font-medium leading-5 xxl:basis-auto xxl:whitespace-nowrap"
-          >
-            {(props?.humanBookTopic?.length ?? 0) >= 5 ? 'Hủy theo dõi' : 'Theo dõi'}
-          </Button>
         </div>
       </div>
     </div>

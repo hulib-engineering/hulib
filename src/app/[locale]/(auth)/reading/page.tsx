@@ -11,7 +11,7 @@ import {
   useUpdateReadingSessionMutation,
 } from '@/libs/services/modules/reading-session';
 import PreSurvey from '@/layouts/reading/PreSurvey';
-import { Spinner } from '@/components/loadingState/Spinner';
+import Loading from '@/app/[locale]/loading';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { StatusEnum } from '@/types/common';
 import { useStopCloudRecordingMutation } from '@/libs/services/modules/agora';
@@ -100,7 +100,7 @@ export default function ReadingPage() {
   if (!readingSession) {
     return (
       <div className="flex h-screen w-full flex-1 items-center justify-center">
-        <Spinner />
+        <Loading />
       </div>
     );
   }

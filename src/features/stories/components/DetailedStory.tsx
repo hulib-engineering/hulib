@@ -1,7 +1,6 @@
 'use client';
 
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
-import Image from 'next/image';
 import type { ReactNode } from 'react';
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import HTMLFlipBook from 'react-pageflip';
@@ -11,42 +10,45 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import { paginateText } from '@/utils/paginateTextUtil';
 
 type PageProps = {
-  number: number;
-  title: string;
+  page: number;
+  totalPages?: number;
+  title?: string;
   children: ReactNode;
   density?: 'soft' | 'hard';
+  showPageNumber?: boolean;
+  mobileFooter?: ReactNode;
 };
 
 export const Page = forwardRef<HTMLDivElement, PageProps>(
-  ({ number, title, children, density = 'soft' }, ref) => (
+  ({
+    page,
+    totalPages,
+    children,
+    density = 'soft',
+    showPageNumber = true,
+    mobileFooter,
+  }, ref) => (
     <div
       className={mergeClassnames(
-        'rounded-xl shadow-sm bg-white px-8 pb-0 pt-8 overflow-visible lg:rounded-xl',
+        'relative isolate size-full overflow-hidden rounded-xl bg-white px-8 pb-0 pt-8 shadow-sm lg:rounded-xl',
         'lg:before:content-[""] lg:before:absolute lg:before:inset-y-0 lg:before:h-full lg:before:w-8 lg:before:border-neutral-80',
         'lg:before:from-white lg:before:from-20% lg:before:via-[#C7C9CB]/10 lg:before:via-40% lg:before:to-[#C7C9CB]/40 lg:before:to-100%',
-        number % 2 === 0
+        page % 2 === 0
           ? 'lg:pr-6 lg:shadow-book-right lg:before:left-0 lg:before:border-l-[0.5px] lg:before:bg-gradient-to-l'
-          : 'lg:pl-6 md:shadow-book-left lg:before:right-0 lg:before:border-r-[0.5px] lg:before:bg-gradient-to-r',
+          : 'lg:pl-6 lg:shadow-book-left lg:before:right-0 lg:before:border-r-[0.5px] lg:before:bg-gradient-to-r',
       )}
       ref={ref}
       data-density={density}
     >
-      <div className={mergeClassnames('flex size-full flex-col justify-between gap-4', number === 1 && 'justify-center')}>
-        {/*  {number === 2 && ( */}
-        {/*    <h6 className="text-xl font-bold leading-7 text-neutral-20"> */}
-        {/*      Abstract */}
-        {/*    </h6> */}
-        {/*  )} */}
+      <div className={mergeClassnames('flex size-full flex-col justify-between gap-4')}>
         {children}
-        {number !== 1 && (
-          <div className="flex w-full gap-6 py-5">
-            <p className="text-[10px] font-medium leading-3 text-[#73787C]">
-              {`Page ${number}`}
-            </p>
-            <div className="flex-1 border-b-[0.5px] border-[#73787C]" />
-            <div className="text-[10px] leading-3 text-neutral-20">{title}</div>
-          </div>
+        {showPageNumber && (
+          <p className="py-3 pr-3 text-center text-xs font-medium leading-[14px] text-neutral-50">
+            <span className="text-neutral-10">{page}</span>
+            {`/${totalPages}`}
+          </p>
         )}
+        {!showPageNumber && mobileFooter}
       </div>
     </div>
   ),
@@ -60,29 +62,18 @@ type FlipBookHandle = {
   getCurrentPage: () => number;
   getPageCount: () => number;
 };
-type PageContentData =
-  | {
-    first?: false;
-    content: string;
-  }
-  | {
-    first: true;
-    title: string;
-    cover: string;
-  };
+type PageContentData = {
+  content: string;
+};
 type IDetailedStoryProps = {
-  title: string;
+  title?: string;
   cover?: string;
-  authorName: string;
+  authorName?: string;
   abstract: string;
+  bookWidth?: number;
 };
 
-export const DetailedStory = ({
-  title,
-  cover = '/assets/images/landing/half-title-illus.png',
-  authorName,
-  abstract,
-}: IDetailedStoryProps) => {
+export const DetailedStory = (props: IDetailedStoryProps) => {
   const flipBookRef = useRef<{ pageFlip: () => FlipBookHandle } | null>(null);
   const flipSound = useRef<HTMLAudioElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -92,44 +83,29 @@ export const DetailedStory = ({
   const [pages, setPages] = useState<{ content: string }[]>([]);
   const [flipBookWidth, setFlipBookWidth] = useState(0);
   const [flipBookHeight, setFlipBookHeight] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
 
-  // useEffect(() => {
-  //   if (onDynamicHeightChange) {
-  //     onDynamicHeightChange(flipBookHeight);
-  //   }
-  // }, [flipBookHeight, onDynamicHeightChange]);
-
-  // @ts-ignore
   const pagesRender: PageContentData[] = useMemo(() => {
-    const newPages = [{ title, cover, first: true }, ...pages];
+    const newPages = [...pages];
 
-    if (newPages.length % 2 !== 0) {
+    if (isDesktop && newPages.length % 2 !== 0) {
       return [...newPages, { content: '' }];
     }
     return newPages;
-  }, [title, cover, pages]);
+  }, [isDesktop, pages]);
 
   useEffect(() => {
     const updateDimensions = () => {
       if (contentRef.current) {
         const containerRect = contentRef.current.getBoundingClientRect();
-        const containerWidth = containerRect.width;
+        const isDesktopViewport = window.matchMedia('(min-width: 1280px)').matches;
+        const resolvedBookWidth = Math.max(props.bookWidth ?? containerRect.width, 0);
+        const pageWidth = isDesktopViewport ? resolvedBookWidth / 2 : resolvedBookWidth;
+        const dynamicHeight = isDesktopViewport ? 600 : 440;
 
-        // If the container width is >= 916 (458*2), we should render 2 pages
-        if (containerWidth >= 916) {
-          const dynamicWidth = 458;
-          const dynamicHeight = 656;
-
-          setFlipBookWidth(dynamicWidth);
-          setFlipBookHeight(dynamicHeight);
-        } else {
-          const aspectRatio = 440 / 398;
-          const dynamicWidth = containerWidth;
-          const dynamicHeight = dynamicWidth * aspectRatio;
-
-          setFlipBookWidth(dynamicWidth);
-          setFlipBookHeight(dynamicHeight);
-        }
+        setIsDesktop(isDesktopViewport);
+        setFlipBookWidth(pageWidth);
+        setFlipBookHeight(dynamicHeight);
       }
     };
 
@@ -142,18 +118,19 @@ export const DetailedStory = ({
     return () => {
       window.removeEventListener('resize', updateDimensions);
     };
-  }, []);
+  }, [props.bookWidth]);
+
   useEffect(() => {
-    if (flipBookHeight && flipBookWidth && textContainerRef && abstract) {
+    if (flipBookHeight && flipBookWidth && textContainerRef.current && props.abstract) {
       const pages = paginateText(
-        abstract,
+        props.abstract,
         flipBookWidth,
         flipBookHeight,
         textContainerRef,
       );
       setPages(pages);
     }
-  }, [abstract, flipBookHeight, flipBookWidth, textContainerRef]);
+  }, [props.abstract, flipBookHeight, flipBookWidth, textContainerRef]);
 
   const goToNextPage = () => {
     flipBookRef.current?.pageFlip().flipNext();
@@ -175,108 +152,126 @@ export const DetailedStory = ({
 
     setIndex(e.data);
   };
+  const pageStep = isDesktop ? 2 : 1;
+  const flippingTime = isDesktop ? 2400 : 1;
+  const totalPages = pagesRender.length;
+  const currentPage = totalPages === 0 ? 0 : Math.min(index + 1, totalPages);
+  const hasEnoughPagesForDesktopNav = totalPages >= 3;
+  const showDesktopPrevButton = hasEnoughPagesForDesktopNav && currentPage >= 3;
+  const showDesktopNextButton = hasEnoughPagesForDesktopNav && index + pageStep < totalPages;
+  const hasEnoughPagesForMobileNav = totalPages >= 2;
+  const showMobilePrevButton = hasEnoughPagesForMobileNav && currentPage >= 2;
+  const showMobileNextButton = hasEnoughPagesForMobileNav && currentPage < totalPages;
+  const mobileFooter = (
+    <div className="flex w-full items-center justify-between pb-3 pr-3 xl:hidden">
+      <div className="flex size-8 items-center justify-center">
+        {showMobilePrevButton && (
+          <IconButton
+            variant="soft"
+            size="lg"
+            onClick={goToPrevPage}
+            disabled={index === 0}
+            className="!h-8 w-8"
+          >
+            <CaretLeft size={8} weight="bold" className="text-primary-40" />
+          </IconButton>
+        )}
+      </div>
+      <p className="text-xs font-medium leading-[14px] text-neutral-50">
+        <span className="text-neutral-10">{currentPage}</span>
+        {`/${totalPages}`}
+      </p>
+      <div className="flex size-8 items-center justify-center">
+        {showMobileNextButton && (
+          <IconButton
+            variant="soft"
+            size="lg"
+            onClick={goToNextPage}
+            disabled={index + pageStep >= pagesRender.length}
+            className="!h-8 w-8"
+          >
+            <CaretRight size={8} weight="bold" className="text-primary-40" />
+          </IconButton>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <div className="flex flex-col items-center gap-4 lg:gap-5">
       <div className="w-full" id="demoBlock">
         <div
-          className="book-page-padding relative z-50 m-auto flex size-full justify-center overflow-visible"
+          className="book-page-padding relative z-50 flex size-full overflow-visible"
           ref={contentRef}
         >
-          {/* @ts-ignore */}
-          <HTMLFlipBook
-            width={flipBookWidth}
-            height={flipBookHeight}
-            minWidth={flipBookWidth}
-            maxWidth={flipBookWidth}
-            minHeight={flipBookHeight}
-            maxHeight={flipBookHeight}
-            maxShadowOpacity={0.5}
-            drawShadow={false}
-            showCover={false}
-            className="z-[100] m-auto h-full overflow-visible bg-cover perspective-[1500px]"
-            flippingTime={2400}
-            ref={(el) => {
-              if (el) {
-                flipBookRef.current = el;
-              }
-            }}
-            style={{ transition: 'all 0s ease' }}
-            onFlip={handleFlip}
-          >
-            {pagesRender.map((page, i) => (
-              <Page key={i} title={title} number={i + 1}>
-                {page.first
-                  ? (
-                      <div className="relative w-full overflow-hidden rounded-lg">
-                        {/* Top area (keeps space for the circular portrait) */}
-                        <div className="h-40 bg-transparent sm:h-48 md:h-64"></div>
-
-                        <div className="relative mt-10 p-6 sm:p-8 md:p-10">
-                          {/* Large decorative double-quote (positioned) */}
-                          <div
-                            className={mergeClassnames(
-                              'absolute -top-8 left-6 select-none text-[72px] font-extrabold leading-none text-yellow-40 z-[9999]',
-                              'sm:text-[96px] md:text-[6rem]',
-                            )}
-                          >
-                            &ldquo;
-                          </div>
-
-                          {/* Quote text */}
-                          <h2 className="line-clamp-2 text-2xl font-extrabold leading-none text-primary-60 sm:text-3xl sm:leading-snug md:text-4xl md:leading-snug">
-                            {title}
-                          </h2>
-
-                          {/* Author */}
-                          <p className="mt-6 line-clamp-1 text-sm font-semibold text-yellow-50 sm:text-base md:text-lg">
-                            {`– ${authorName}`}
-                          </p>
-                        </div>
-
-                        {/* Circular author portrait (overlaps both top area and blue block) */}
-                        <div
-                          className="absolute -left-24 -top-20 size-56 overflow-hidden rounded-full border-4 border-white shadow-xl md:size-96"
-                        >
-                          <Image
-                            src={cover ?? '/assets/images/landing/half-title-illus.png'}
-                            alt="Author avatar"
-                            width={500}
-                            height={500}
-                            className="size-full object-cover lg:object-none lg:object-center"
-                          />
-                        </div>
-                      </div>
-                    )
-                  : (
-                      <div ref={textContainerRef} className="hyphens-auto whitespace-pre-line break-words leading-6 text-neutral-30">
-                        {page?.content ?? ''}
-                      </div>
-                    )}
-              </Page>
-            ))}
-          </HTMLFlipBook>
+          <div
+            ref={textContainerRef}
+            aria-hidden
+            className="pointer-events-none absolute -z-10 hyphens-auto whitespace-pre-line break-words leading-6 text-neutral-30 opacity-0"
+          />
+          <div className="relative">
+            {/* @ts-ignore */}
+            <HTMLFlipBook
+              width={flipBookWidth}
+              height={flipBookHeight}
+              minWidth={flipBookWidth}
+              maxWidth={flipBookWidth}
+              minHeight={flipBookHeight}
+              maxHeight={flipBookHeight}
+              maxShadowOpacity={0.5}
+              drawShadow={false}
+              showCover={false}
+              usePortrait={!isDesktop}
+              className="z-[100] m-auto h-full overflow-visible bg-cover"
+              flippingTime={flippingTime}
+              ref={(el) => {
+                if (el) {
+                  flipBookRef.current = el;
+                }
+              }}
+              style={{ transition: 'all 0s ease' }}
+              onFlip={handleFlip}
+            >
+              {pagesRender.map((page, i) => (
+                <Page
+                  key={i}
+                  page={i + 1}
+                  totalPages={pagesRender.length}
+                  showPageNumber={isDesktop}
+                  mobileFooter={mobileFooter}
+                >
+                  <div className="hyphens-auto whitespace-pre-line break-words leading-6 text-neutral-30">
+                    {page?.content ?? ''}
+                  </div>
+                </Page>
+              ))}
+            </HTMLFlipBook>
+            <div className="pointer-events-none absolute inset-0 z-[120] hidden xl:block">
+              {showDesktopPrevButton && (
+                <IconButton
+                  variant="soft"
+                  size="lg"
+                  onClick={goToPrevPage}
+                  disabled={index === 0}
+                  className="pointer-events-auto absolute left-0 top-1/2 size-11 rounded-full bg-primary-90 -translate-x-1/2 -translate-y-1/2"
+                >
+                  <CaretLeft size={14} weight="bold" className="text-primary-40" />
+                </IconButton>
+              )}
+              {showDesktopNextButton && (
+                <IconButton
+                  variant="soft"
+                  size="lg"
+                  onClick={goToNextPage}
+                  disabled={index + pageStep >= pagesRender.length}
+                  className="pointer-events-auto absolute right-0 top-1/2 size-11 rounded-full bg-primary-90 -translate-y-1/2 translate-x-1/2"
+                >
+                  <CaretRight size={14} weight="bold" className="text-primary-40" />
+                </IconButton>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="flex w-full items-center justify-between">
-        <IconButton
-          variant="soft"
-          size="lg"
-          onClick={goToPrevPage}
-          disabled={index === 0}
-          className="!h-8 w-8"
-        >
-          <CaretLeft size={8} weight="bold" className="text-primary-40" />
-        </IconButton>
-        <IconButton
-          variant="soft"
-          size="lg"
-          onClick={goToNextPage}
-          disabled={index + 2 === pagesRender.length}
-          className="!h-8 w-8"
-        >
-          <CaretRight size={8} weight="bold" className="text-primary-40" />
-        </IconButton>
       </div>
     </div>
   );
