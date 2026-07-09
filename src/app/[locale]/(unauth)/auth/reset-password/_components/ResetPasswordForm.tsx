@@ -9,6 +9,7 @@ import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import PasswordChecklist from 'react-password-checklist';
 
+import { useTranslations } from 'node_modules/next-intl/dist/types/src/react-client';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import TextInput from '@/components/core/textInput/TextInput';
@@ -59,6 +60,7 @@ const ResetPasswordSuccess = () => {
 const ResetPasswordForm = () => {
   const router = useRouter();
   const [resetPassword] = useResetPasswordMutation();
+  const t = useTranslations('SignUp');
 
   const pageURL = useMemo(() => {
     return new URL(window.location.href);
@@ -107,7 +109,7 @@ const ResetPasswordForm = () => {
     <>
       <div className="text-center text-neutral-10">
         <h2 className="text-[2rem] font-medium leading-[40px] tracking-[-2%]">
-          Reset the password
+          {t('reset_password')}
         </h2>
       </div>
 
@@ -117,7 +119,7 @@ const ResetPasswordForm = () => {
             {...register('password')}
             id="password"
             type="password"
-            label="Password"
+            label={t('password')}
             showPasswordText={<Eye />}
             isError={!!errors.password}
             hintText={errors.password?.message}
@@ -129,7 +131,7 @@ const ResetPasswordForm = () => {
             {...register('confirmPassword')}
             id="confirmPassword"
             type="password"
-            label="Re-enter password"
+            label={t('confirm_password')}
             showPasswordText={<Eye />}
             isError={!!errors.confirmPassword}
             hintText={errors.confirmPassword?.message}
@@ -145,11 +147,11 @@ const ResetPasswordForm = () => {
               value={watch('password')}
               valueAgain={watch('confirmPassword')}
               messages={{
-                minLength: 'At least 8 characters long',
-                specialChar: 'Contains a special character',
-                number: 'Contains a number',
-                capital: 'Contains an uppercase letter',
-                match: 'Passwords match',
+                minLength: t('at_least_8_characters'),
+                specialChar: t('contains_special_character'),
+                number: t('contains_number'),
+                capital: t('contains_uppercase_letter'),
+                match: t('passwords_match'),
               }}
               iconComponents={{
                 ValidIcon: (
@@ -181,12 +183,12 @@ const ResetPasswordForm = () => {
         <Form.Item className="py-4">
           <Button
             type="submit"
-            value="Submit"
+            value={t('submit')}
             className="w-full"
             disabled={isSubmitting}
             animation={isSubmitting ? 'progress' : undefined}
           >
-            {isSubmitting ? 'Resetting...' : 'Reset password'}
+            {isSubmitting ? t('resetting') : t('reset_password')}
           </Button>
         </Form.Item>
       </Form>
@@ -205,7 +207,7 @@ const ResetPasswordForm = () => {
           loading="lazy"
         />
         <span className="text-base font-medium leading-5 text-primary-50 underline">
-          Back to login
+          {t('back_to_login')}
         </span>
       </button>
     </>

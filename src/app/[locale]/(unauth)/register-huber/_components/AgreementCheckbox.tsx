@@ -1,11 +1,14 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 type AgreementCheckboxProps = {
   checked: boolean;
   onChange: (checked: boolean) => void;
 };
 
 export default function AgreementCheckbox({ checked, onChange }: AgreementCheckboxProps) {
+  const t = useTranslations('Huber');
   return (
     <div className="mb-8 rounded-[8px] border border-gray-200 bg-[#F0F5FF] px-5 py-4">
       <div
@@ -19,7 +22,7 @@ export default function AgreementCheckbox({ checked, onChange }: AgreementCheckb
             type="checkbox"
             checked={checked}
             onChange={e => onChange(e.target.checked)}
-            aria-label="Mình đã đọc và đồng ý với các nguyên tắc cộng đồng của Hulib"
+            aria-label={t('agreement')}
             className="sr-only"
           />
           <div
@@ -35,10 +38,10 @@ export default function AgreementCheckbox({ checked, onChange }: AgreementCheckb
         </div>
         <div className="py-[8px]">
           <p className="text-[16px] font-[500] leading-[12px] text-[#171819]">
-            Mình đã đọc và đồng ý với các nguyên tắc cộng đồng của Hulib
+            {t('agreement')}
           </p>
           <p className="mt-[10px] text-[14px] font-[300] leading-[20px] text-[#171819]">
-            Huber tự chịu trách nhiệm về tính trung thực của các thông tin cung cấp cho Hulib.
+            {t('huber_responsibility')}
           </p>
         </div>
       </div>

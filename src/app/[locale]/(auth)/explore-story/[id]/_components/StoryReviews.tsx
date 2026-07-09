@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { isEmpty } from 'lodash';
+import { useTranslations } from 'next-intl';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -49,6 +50,7 @@ export const ReviewItem = (params: TStoryReview) => (
 
 export default function StoryReviews({ maxHeight }: { maxHeight?: number }) {
   const { id } = useParams();
+  const t = useTranslations('Common');
 
   const [currentPage, setCurrentPage] = useState(1);
   const [items, setItems] = useState<TStoryReview[]>([]);
@@ -100,8 +102,7 @@ export default function StoryReviews({ maxHeight }: { maxHeight?: number }) {
       style={{ height: maxHeight && maxHeight > 0 ? maxHeight : 'auto' }}
     >
       <h6 className="shrink-0 text-xl font-medium text-neutral-20 lg:font-bold">
-        {`Reader reviews (${
-          storyReviews?.meta.totalItems ?? 0
+        {`Reader reviews (${storyReviews?.meta.totalItems ?? 0
         })`}
       </h6>
       {items?.length === 0
@@ -133,7 +134,7 @@ export default function StoryReviews({ maxHeight }: { maxHeight?: number }) {
             <Button variant="ghost" size="sm" className="lg:hidden" onClick={handleLoadMore}>
               <div className="flex items-center gap-1.5">
                 <CaretDown />
-                <span>See more</span>
+                <span>{t('see_more')}</span>
               </div>
             </Button>
           ) : <Loader />)}

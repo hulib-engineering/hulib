@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import React from 'react';
 
+import { useTranslations } from 'node_modules/next-intl/dist/types/src/react-client';
 import type { Huber as THuber } from '@/libs/services/modules/huber/huberType';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -20,6 +21,8 @@ const RecommendedHuberCard = ({
   bookCount,
 }: Partial<THuber>) => {
   const router = useRouter();
+
+  const t = useTranslations('RecommendedHuber');
   const profilePath = `/users/${id}`;
   const avatarConfig = genConfig(fullName ?? String(id ?? 'huber'));
   // will remove when integrate API
@@ -112,7 +115,7 @@ const RecommendedHuberCard = ({
               <span className="text-sm leading-4 text-neutral-40">
                 {bookCount}
                 {' '}
-                câu chuyện
+                {t('stories')}
               </span>
             </div>
             <div className="flex items-center gap-1">
@@ -120,7 +123,7 @@ const RecommendedHuberCard = ({
               <span className="text-sm leading-4 text-neutral-40">
                 {followerCount ?? 0}
                 {' '}
-                theo dõi
+                {t('follow')}
               </span>
             </div>
           </div>

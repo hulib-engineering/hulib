@@ -4,6 +4,7 @@ import { Heart } from '@phosphor-icons/react';
 import { useParams } from 'next/navigation';
 import * as React from 'react';
 
+import { useTranslations } from 'node_modules/next-intl/dist/types/src/react-client';
 import { ReviewItem } from './StoryReviews';
 
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -11,12 +12,13 @@ import { useGetReviewsOverviewQuery } from '@/libs/services/modules/stories';
 
 export default function RatingOverview() {
   const { id } = useParams();
+  const t = useTranslations('ExploreStory');
 
   const { data } = useGetReviewsOverviewQuery(id);
 
   return (
     <div className="flex w-full flex-col gap-2 rounded-none bg-white p-5 shadow-sm lg:gap-4 lg:rounded-2xl lg:p-6">
-      <h6 className="text-xl font-medium leading-7 text-neutral-20 lg:font-bold">Rating overview</h6>
+      <h6 className="text-xl font-medium leading-7 text-neutral-20 lg:font-bold">{t('rating_overview')}</h6>
       <div className="flex items-center gap-3 py-4">
         <h2 className="text-lg font-medium text-neutral-20 lg:text-4xl lg:leading-[44px]">{data?.rating}</h2>
         <div className="ml-1 flex justify-center">
@@ -79,7 +81,7 @@ export default function RatingOverview() {
       </div> */}
       {data?.outStanding && (
         <div className="flex flex-col gap-1">
-          <p className="text-sm font-medium leading-5">Outstanding review</p>
+          <p className="text-sm font-medium leading-5">{t('outstanding_review')}</p>
           <ReviewItem {...data?.outStanding} />
         </div>
       )}
