@@ -14,7 +14,6 @@ import { Cover } from '@/features/stories/components/Cover';
 import {
   DEFAULT_STORY_COVER_ASSET,
 } from '@/features/stories/constants';
-import { useAddStoryToMyFavoritesMutation, useRemoveStoryFromMyFavoritesMutation } from '@/libs/services/modules/user';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -34,13 +33,10 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
   const locale = useLocale();
   const t = useTranslations('ExploreStory');
   const isMobile = useMobile();
+  const [handleUpdateLikeCount] = useLikeStoryMutation();
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [likeCount, setLikeCount] = React.useState(data?.totalLikes ?? 0);
-
-  const [addToMyFavorites] = useAddStoryToMyFavoritesMutation();
-  const [removeFromFavorite] = useRemoveStoryFromMyFavoritesMutation();
-  const [handleUpdateLikeCount] = useLikeStoryMutation();
 
   const mockTopicHuber = [
     {
@@ -83,21 +79,17 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
       try {
         const newCount = isFavorite ? likeCount - 1 : likeCount + 1;
         if (isFavorite) {
-          const rs = await handleUpdateLikeCount({
+          await handleUpdateLikeCount({
             id: data.id,
             type: ChangeCountEnum.DOWN,
           });
-          console.log('rs', rs);
-          const response = await removeFromFavorite(data.id).unwrap();
-          pushSuccess(response?.message || t('story_removed_from_favorites'));
+          pushSuccess(t('story_removed_from_favorites'));
         } else {
-          const rs = await handleUpdateLikeCount({
+          await handleUpdateLikeCount({
             id: data.id,
             type: ChangeCountEnum.UP,
           });
-          console.log('rs', rs);
-          const response = await addToMyFavorites(data.id).unwrap();
-          pushSuccess(response?.message || t('story_added_to_favorites'));
+          pushSuccess(t('story_added_to_favorites'));
         }
         setIsFavorite(prev => !prev);
         setLikeCount(newCount);
