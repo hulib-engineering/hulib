@@ -10,6 +10,7 @@ import getStoryDetails from './getStoryDetails';
 import updateStory from './updateStory';
 import getRelatedTopics from './getRelatedTopics';
 import shareStory from '@/libs/services/modules/stories/shareStory';
+import updateLikeCountStory from '@/libs/services/modules/stories/updateLikeCountStory';
 
 const apiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['Story', 'FavoriteStory', 'StoryTopic', 'StoryReviewOverview'],
@@ -27,6 +28,7 @@ export const storyApi = apiWithTag.injectEndpoints({
     deleteStory: deleteStory(build),
     getRelatedTopics: getRelatedTopics(build),
     shareStory: shareStory(build),
+    likeStory: updateLikeCountStory(build),
   }),
   overrideExisting: false,
 });
@@ -42,4 +44,5 @@ export const {
   useDeleteStoryMutation,
   useGetRelatedTopicsQuery,
   useShareStoryMutation,
+  useLikeStoryMutation,
 }: any = storyApi;
