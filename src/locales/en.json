@@ -647,6 +647,23 @@
     },
     "no_data": "No Data"
   },
+  "HuberCTA": {
+    "title": "Share Your Story",
+    "subtitle": "Share your experiences, the lessons you've learned, or something meaningful you'd like to pass on. Your story could be the light that helps someone through a difficult day. Before you begin, please read our Story Guidelines.",
+    "button_label": "Create new story"
+  },
+  "HomeStories": {
+    "newest_stories": "Newest Stories",
+    "most_popular_stories": "Most popular Stories",
+    "most_popular_topics": "Most popular topics",
+    "see_all": "See all"
+  },
+  "HomeHubers": {
+    "recommended_hubers": "Recommended Hubers",
+    "see_all": "See all",
+    "stories": "stories",
+    "followers": "followers"
+  },
   "Common": {
     "error_contact_admin": "An error occurred, please contact admin for support!",
     "update_successfully": "Update successfully",
