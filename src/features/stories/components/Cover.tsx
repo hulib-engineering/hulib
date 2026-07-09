@@ -8,18 +8,20 @@ import { mergeClassnames } from '@/components/core/private/utils';
 type CoverProps = {
   src: string | null;
   className?: string;
+  size?: string;
   active?: boolean;
   onClick?: () => void;
   id?: string;
 };
 
 /** Face + 4px shadow gutter (see `COVER_OUTER_SHADOW_OFFSET_PX`). */
-const COVER_CHROME_SIZE_CLASS = 'w-[144px] h-[202px] md:w-[184px] md:h-[259px]';
+// const COVER_CHROME_SIZE_CLASS = 'w-[226px] h-[340px]';
 
 /** Displays a story cover image (preset asset or uploaded PNG). No animation. */
 export function Cover({
   src,
   className,
+  size = 'w-[185px] h-[262px]',
   active = true,
   onClick,
   id,
@@ -48,7 +50,7 @@ export function Cover({
       {...interactiveProps}
       className={mergeClassnames(
         'bg-left-top bg-no-repeat bg-[length:100%_100%]',
-        fillParent ? 'size-full' : COVER_CHROME_SIZE_CLASS,
+        fillParent ? 'size-full' : size,
         !active && 'grayscale',
         onClick && 'cursor-pointer',
         className,

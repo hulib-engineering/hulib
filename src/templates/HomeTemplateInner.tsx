@@ -3,7 +3,7 @@
 import localFont from 'next/font/local';
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { type ReactNode, useEffect } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 
 import PublicHeader from './PublicHeader';
 import Header from '@/app/[locale]/(auth)/_components/Header';
@@ -12,8 +12,13 @@ import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import MessengerWidget from '@/layouts/webapp/MultipleChatWidget';
 import { useAppDispatch } from '@/libs/hooks';
-import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
+import FirstBookCreatedModal from '@/features/stories/components/FirstBookCreatedModal';
+import {
+  useGetPersonalInfoQuery,
+  useMarkHuberOnboardingSeenMutation,
+} from '@/libs/services/modules/auth';
 import { setAvatarUrl, setUserInfo } from '@/libs/store/authentication';
+import Modal from '@/components/Modal';
 
 const poppins = localFont({
   src: [
@@ -42,13 +47,24 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
   const { data: personalInfo } = useGetPersonalInfoQuery(undefined, {
     skip: !isAuthenticated,
   });
+  const [markSeen] = useMarkHuberOnboardingSeenMutation();
+
+  const [isFirstBookModalOpen, setIsFirstBookModalOpen] = useState(false);
 
   useEffect(() => {
     if (personalInfo) {
       dispatch(setUserInfo(personalInfo));
       dispatch(setAvatarUrl(personalInfo.photo));
+      if (personalInfo?.role?.name === 'Huber' && !personalInfo?.hasSeenHuberOnboarding) {
+        setIsFirstBookModalOpen(true);
+      }
     }
   }, [personalInfo, dispatch]);
+
+  const handleCloseModal = () => {
+    setIsFirstBookModalOpen(false);
+    markSeen(personalInfo?.id);
+  };
 
   if (isAuthenticated) {
     return (
@@ -64,6 +80,20 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
           {!pathname.includes('messages') && <MessengerWidget />}
         </div>
         <CustomToastifyContainer />
+        {/* FirstBookCreatedModal */}
+        <Modal
+          open={isFirstBookModalOpen}
+          onClose={handleCloseModal}
+        >
+          <Modal.Backdrop />
+          <Modal.Panel className="w-full shadow-none lg:w-5/6 lg:max-w-6xl">
+            <FirstBookCreatedModal
+              onClose={handleCloseModal}
+            />
+          </Modal.Panel>
+
+        </Modal>
+
       </div>
     );
   }

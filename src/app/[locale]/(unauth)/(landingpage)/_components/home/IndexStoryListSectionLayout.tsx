@@ -3,6 +3,7 @@
 import { CaretCircleRight } from '@phosphor-icons/react';
 import React, { useMemo } from 'react';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 
 import { useRouter } from 'next/navigation';
 import { StoryCard } from './StoryCard';
@@ -24,6 +25,7 @@ type Props = {
 
 export const IndexStoryListSectionLayout = (props: Props) => {
   const { title, stories, isLoading, containerClassName, showFilter, filterComponent } = props;
+  const t = useTranslations('HomeStories');
 
   const router = useRouter();
   const { data: session } = useSession();
@@ -56,7 +58,7 @@ export const IndexStoryListSectionLayout = (props: Props) => {
     <div className={mergeClassnames(
       'relative left-1/2 w-screen -translate-x-1/2 bg-white shadow-sm',
       'flex flex-col gap-4 p-4',
-      'lg:gap-8 lg:py-5 lg:shadow-none lg:bg-transparent xl:px-0 xxl:px-24',
+      'lg:gap-8 lg:px-12 lg:shadow-none lg:bg-transparent xl:px-26 xxl:px-24',
       showFilter && 'gap-4',
       containerClassName,
     )}
@@ -72,14 +74,14 @@ export const IndexStoryListSectionLayout = (props: Props) => {
             className="text-base font-medium leading-5 text-primary-50"
             onClick={() => router.push('/explore-story')}
           >
-            Tất cả
+            {t('see_all')}
           </Button>
         )}
       </div>
       {showFilter && filterComponent}
       <div
         className={mergeClassnames(
-          'grid grid-cols-1 gap-5 rounded-lg',
+          'grid grid-cols-1 gap-5 mx-auto',
           'lg:grid-cols-2',
           'xxl:grid-cols-3',
           '3xl:grid-cols-4',

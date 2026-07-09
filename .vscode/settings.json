@@ -29,5 +29,8 @@
   // "[typescriptreact]": {
   //   "editor.defaultFormatter": "vscode.typescript-language-features"
   // },
-  "files.refactoring.autoSave": false
+  "files.refactoring.autoSave": false,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }

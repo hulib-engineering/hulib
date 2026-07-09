@@ -34,23 +34,18 @@ export function FilterChip({ onChange }: FilterChipProps) {
       {topics?.data?.map((topic: Topic) => {
         const selectedClass = selectedTopicId === topic.id ? 'border border-primary-80 bg-primary-90 text-primary-60' : 'bg-neutral-90 text-neutral-20';
         return (
-          <button
-            type="button"
+          <Chip
             key={topic.id}
             onClick={() => handleClick(topic.id)}
+            className={mergeClassnames(
+              'h-full min-w-0 shrink-0 overflow-visible whitespace-nowrap rounded-2xl py-1 px-2 lg:py-2',
+              'text-xs font-medium leading-[14px] lg:text-sm lg:font-normal lg:leading-4',
+              'hover:border hover:border-primary-80 hover:bg-primary-90 hover:text-primary-60',
+              selectedClass,
+            )}
           >
-            <Chip
-              key={topic.id}
-              className={mergeClassnames(
-                'h-full min-w-0 shrink-0 overflow-visible whitespace-nowrap rounded-2xl py-1 px-2 lg:py-2',
-                'text-xs font-medium leading-[14px] lg:text-sm lg:font-normal lg:leading-4',
-                'hover:border hover:border-primary-80 hover:bg-primary-90 hover:text-primary-60',
-                selectedClass,
-              )}
-            >
-              {topic.name}
-            </Chip>
-          </button>
+            {topic.name}
+          </Chip>
         );
       })}
     </div>
