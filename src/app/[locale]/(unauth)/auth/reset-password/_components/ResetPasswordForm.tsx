@@ -9,7 +9,7 @@ import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import PasswordChecklist from 'react-password-checklist';
 
-import { useTranslations } from 'node_modules/next-intl/dist/types/src/react-client';
+import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import TextInput from '@/components/core/textInput/TextInput';

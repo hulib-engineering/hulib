@@ -785,7 +785,8 @@
     "available_time_slots": "My available slots",
     "available_time_slots_description": "Wow below are slots you chose",
     "update_time_slots": "Update My Slots",
-    "success_time_slots_description": "You have successfully created your time slots"
+    "success_time_slots_description": "You have successfully created your time slots",
+    "error_contact_admin": "An error occurred, please contact admin for support!"
   },
   "Meeting": {
     "survey_submitted_successfully": "Survey is submitted successfully. Hope you to have a good time with Huber",

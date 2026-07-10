@@ -4,7 +4,7 @@ import { Heart } from '@phosphor-icons/react';
 import { useParams } from 'next/navigation';
 import * as React from 'react';
 
-import { useTranslations } from 'node_modules/next-intl/dist/types/src/react-client';
+import { useTranslations } from 'next-intl';
 import { ReviewItem } from './StoryReviews';
 
 import { mergeClassnames } from '@/components/core/private/utils';

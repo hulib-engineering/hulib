@@ -1,5 +1,5 @@
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { useTranslations } from 'node_modules/next-intl/dist/types/src/react-client';
 
 export default function NotFound() {
   const t = useTranslations('Common');
