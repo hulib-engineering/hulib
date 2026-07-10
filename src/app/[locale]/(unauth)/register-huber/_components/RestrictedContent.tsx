@@ -9,7 +9,7 @@ const contentKeys = [
   'restricted_content.items.item_4',
   'restricted_content.items.item_5',
   'restricted_content.items.item_6',
-];
+] as const;
 
 export default function RestrictedContent() {
   const t = useTranslations('Huber');
@@ -40,7 +40,7 @@ export default function RestrictedContent() {
               height={20}
               className="mt-0.5"
             />
-            <span className="text-[14px] leading-[22px] text-[#171819]">{t(key as any)}</span>
+            <span className="text-[14px] leading-[22px] text-[#171819]">{t(key)}</span>
           </div>
         ))}
       </div>
