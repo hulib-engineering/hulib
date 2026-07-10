@@ -3,7 +3,7 @@ import { Plus } from '@phosphor-icons/react';
 import React, { useState } from 'react';
 
 import Image from 'next/image';
-import { useTranslations } from 'node_modules/next-intl/dist/types/src/react-client';
+import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import IconButton from '@/components/core/iconButton/IconButton';
