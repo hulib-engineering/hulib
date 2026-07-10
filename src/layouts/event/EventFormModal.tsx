@@ -24,6 +24,8 @@ type IEventRegistration = Omit<
   transferBill?: File;
 };
 
+type AmbassadorKey = 'no' | 'yes';
+
 type RadioGroupProps = {
   id?: string;
   label?: ReactNode;
@@ -124,7 +126,10 @@ const Choices = [
   { value: 'Love', labelKey: 'love' },
 ];
 
-const BecomingAmbassador = [
+const BecomingAmbassador: {
+  value: string;
+  labelKey: AmbassadorKey;
+}[] = [
   { value: 'No', labelKey: 'no' },
   { value: 'Yes', labelKey: 'yes' },
 ];
@@ -428,7 +433,7 @@ const EventFormModal = (props: IEventFormModalProps) => {
                   label={t('ambassador_label')}
                   options={BecomingAmbassador.map(item => ({
                     value: item.value,
-                    label: t(`ambassador.${item.labelKey}` as any),
+                    label: t(`ambassador.${item.labelKey}`),
                   }))}
                   control={form.control}
                 />

@@ -559,17 +559,13 @@
     "get_started": "Bắt đầu",
     "huber_register": "Đăng ký thờ thành Huber",
     "all_done": "Hoàn tất",
-    "password_reset": "Mật khẩu của bạn đã được đặt lại",
-    "login_now": "Đăng nhập ngay",
     "reset_password": "Đặt lại mật khẩu",
-    "re_enter_password": "Nhập lại mật khẩu",
     "at_least_8_characters": "Ít nhất 8 ký tự",
     "contains_special_character": "Chứa một ký tự đặc biệt",
     "contains_number": "Chứa một số",
     "contains_uppercase_letter": "Chứa một chữ cái viết hoa",
     "passwords_match": "Mật khẩu trùng khớp",
     "resetting": "Đang đặt lại...",
-    "reset_password_button": "Đặt lại mật khẩu",
     "back_to_login": "Quay lại Đăng nhập",
     "submit": "Gửi"
   },
@@ -766,8 +762,6 @@
     "share_to": "Chia sẻ đến",
     "share_copied": "Đã sao chép liên kết!",
     "share_story": "Chia sẽ thêm",
-    "views": "lượt xem",
-    "likes": "lượt thích",
     "like_button": "Thích",
     "like_error": "Thất bại",
     "booking_cta": "Nếu câu chuyện này chạm đến bạn, hãy kết nối cùng tác giả qua một buổi trò chuyện tại đây nhé",
@@ -788,10 +782,7 @@
     "reason": "Lý do",
     "story": "Câu chuyện",
     "is_deleted_successfully": "đã được xóa thành công",
-    "empathy": "Đồng cảm",
     "read_all": "Đọc tất cả",
-    "story_deleted_success": "Đã xóa câu chuyện thành công",
-    "story_delete_failed": "Xóa câu chuyện thất bại",
     "edit": "Chỉnh sửa",
     "favorite": "Yêu thích",
     "confirm_delete_story": "Bạn có chắc chắn muốn xóa câu chuyện này không?",
@@ -883,8 +874,7 @@
     "update_time_slots": "Cập nhật khung giờ",
     "select_time_slots_description": "Chọn khung giờ bạn có sẵn cho phiên làm việc",
     "error_time_slots": "Đã xảy ra lỗi. Vui lòng kiểm tra khung giờ của bạn và thử lại.",
-    "success_time_slots_description": "Bạn đã tạo khung giờ thành công",
-    "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!"
+    "success_time_slots_description": "Bạn đã tạo khung giờ thành công"
   },
   "Meeting": {
     "cancel_meeting": "Tôi không muốn gặp nữa",
@@ -948,10 +938,7 @@
     "meeting_with": "Cuộc hẹn với",
     "meeting_schedule": "Lịch hẹn",
     "view": "Xem",
-    "type_of_meeting": "Loại cuộc hẹn",
-    "done": "Đã hoàn thành",
-    "Huber": "Huber",
-    "Liber": "Liber"
+    "type_of_meeting": "Loại cuộc hẹn"
   },
   "notifications": {
     "title": "Thông báo",
@@ -997,30 +984,11 @@
     "meeting_request": "Yêu cầu cuộc họp"
   },
   "Home": {
-    "newest_stories": {
-      "title": "Câu chuyện mới nhất",
-      "btn1": "Xem tất cả"
-    },
-    "recommended_hubers": {
-      "title": "Những Hubers được đề xuất"
-    },
     "explore_stories": {
-      "title": "Khám phá",
-      "btn1": "Xem tất cả",
       "btn2": "Xem thêm",
-      "btn3": "Khám phá tất cả sách về con người",
-      "card": {
-        "text1": "Chủ đề",
-        "text2": "Đánh giá"
-      }
-    },
-    "short_descriptions": {
-      "subtitle": "Mỗi câu chuyện là 1 mảnh ghép 🧩",
-      "become_member": "Trở thành thành viên mới trong đại gia đình Huber",
-      "create_new_book": "Tạo sách mới"
+      "btn3": "Khám phá tất cả sách về con người"
     },
     "no_data": "Không có dữ liệu"
-
   },
   "HuberCTA": {
     "title": "Chia sẻ câu chuyện của bạn",
@@ -1077,7 +1045,6 @@
     "back_to_home": "Trở lại trang chủ",
     "placeholder": "Bạn đang nghĩ gì...",
     "location": "Địa điểm",
-    "all": "Tất cả",
     "change_password_title": "Đổi mật khẩu của bạn",
     "old_password_label": "Mật khẩu cũ",
     "new_password_label": "Mật khẩu mới",
@@ -1142,7 +1109,6 @@
     "failed_update_profile": "Cập nhật hồ sơ thất bại. Vui lòng thử lại.",
     "invalid_video_source": "Nguồn video không hợp lệ",
     "video_browser_unsupported": "Trình duyệt của bạn không hỗ trợ video HTML.",
-    "video_url_placeholder": "https://www.youtube.com/embed/video",
     "add_experience": "Thêm kinh nghiệm",
     "add_education": "Thêm học vấn",
     "save": "Lưu",
@@ -1202,8 +1168,6 @@
     "back_to_home": "Về Trang chủ"
   },
   "Messages": {
-    "meta_title": "Messenger | HuLib",
-    "meta_description": "Mô tả meta",
     "your_messages": "Tin nhắn của bạn",
     "messages": "Tin nhắn"
   },
@@ -1265,14 +1229,6 @@
       "sign_in": "Đăng nhập",
       "sign_up": "Đăng ký"
     }
-  },
-  "RecommendedHuber": {
-    "button": {
-      "follow": "Theo dõi",
-      "un_follow": "Hủy theo dõi"
-    },
-    "stories": "câu chuyện",
-    "follow": "theo dõi"
   },
   "event": {
     "event_registration_title": "Đăng ký tham dự sự kiện HuLib",

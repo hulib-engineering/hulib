@@ -535,17 +535,13 @@
     "welcome": "Welcome to",
     "account_created": "Your account has been created",
     "get_started": "Get started",
-    "password_reset": "Your password has been reset",
-    "login_now": "Login now",
     "reset_password": "Reset the password",
-    "re_enter_password": "Re-enter password",
     "at_least_8_characters": "At least 8 characters long",
     "contains_special_character": "Contains a special character",
     "contains_number": "Contains a number",
     "contains_uppercase_letter": "Contains an uppercase letter",
     "passwords_match": "Passwords match",
     "resetting": "Resetting...",
-    "reset_password_button": "Reset password",
     "back_to_login": "Back to login",
     "submit": "Submit"
   },
@@ -678,8 +674,6 @@
     "share_to": "Share to",
     "share_copied": "Link copied to clipboard!",
     "share_story": "Share another story",
-    "views": "views",
-    "likes": "likes",
     "like_button": "Like",
     "like_error": "Failed to update like",
     "booking_cta": "If this story speaks to you, connect with the author through a conversation here",
@@ -700,10 +694,7 @@
     "reason": "Reason",
     "story": "Story",
     "is_deleted_successfully": "is deleted successfully",
-    "empathy": "Empathy",
     "read_all": "Read all",
-    "story_deleted_success": "Story deleted successfully",
-    "story_delete_failed": "Error deleting story",
     "edit": "Edit",
     "favorite": "Favorite",
     "confirm_delete_story": "Are you sure you want to delete story?",
@@ -785,8 +776,7 @@
     "available_time_slots": "My available slots",
     "available_time_slots_description": "Wow below are slots you chose",
     "update_time_slots": "Update My Slots",
-    "success_time_slots_description": "You have successfully created your time slots",
-    "error_contact_admin": "An error occurred, please contact admin for support!"
+    "success_time_slots_description": "You have successfully created your time slots"
   },
   "Meeting": {
     "survey_submitted_successfully": "Survey is submitted successfully. Hope you to have a good time with Huber",
@@ -838,10 +828,7 @@
     "meeting_with": "Meeting with",
     "meeting_schedule": "Meeting schedule",
     "view": "View",
-    "type_of_meeting": "Type of meeting",
-    "done": "Done",
-    "Huber": "Huber",
-    "Liber": "Liber"
+    "type_of_meeting": "Type of meeting"
   },
   "notifications": {
     "title": "Notifications",
@@ -849,27 +836,6 @@
     "loadingFailed": "Failed to load notifications",
     "seePreviousNotifications": "See previous notifications",
     "meeting_request": "Meeting request"
-  },
-  "Home": {
-    "newest_stories": {
-      "title": "Newest stories"
-    },
-    "recommended_hubers": {
-      "title": "Recommended Hubers"
-    },
-    "explore_stories": {
-      "title": "Explore stories",
-      "btn1": "View all",
-      "card": {
-        "text1": "Topics"
-      }
-    },
-    "short_descriptions": {
-      "subtitle": "Short description",
-      "become_member": "Become a new Huber member",
-      "create_new_book": "Create a new book"
-    }
-
   },
   "HuberCTA": {
     "title": "Share Your Story",
@@ -917,7 +883,6 @@
     "back_to_home": "Back to Homepage",
     "placeholder": "Placeholder",
     "location": "Location",
-    "all": "All",
     "change_password_title": "Change Your Password",
     "old_password_label": "Old Password",
     "new_password_label": "New Password",
@@ -982,7 +947,6 @@
     "failed_update_profile": "Failed to update profile. Please try again.",
     "invalid_video_source": "Invalid video source",
     "video_browser_unsupported": "Your browser does not support HTML video.",
-    "video_url_placeholder": "https://www.youtube.com/embed/video",
     "add_experience": "Add experience",
     "add_education": "Add education",
     "save": "Save",
@@ -1082,14 +1046,8 @@
     }
   },
   "Messages": {
-    "meta_title": "Messenger | HuLib",
-    "meta_description": "",
     "your_messages": "Your messages",
     "messages": "Messages"
-  },
-  "RecommendedHuber": {
-    "stories": "Stories",
-    "follow": "Follow"
   },
   "event": {
     "event_registration_title": "Register for HuLib Event",
