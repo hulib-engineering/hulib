@@ -456,16 +456,16 @@
     "table": {
       "topic_deleted_success": "Topic deleted successfully",
       "topic_delete_failed": "Failed to delete topic",
-      "topic_status_updated": "Topic set to ${status}",
+      "topic_status_updated": "Topic set to {status}",
       "topic_status_update_failed": "Failed to update topic status",
       "topic_name": "Topic name",
       "action": "Action",
-      "set_topic_inactive": "Set ${topic} inactive",
-      "set_topic_active": "Set ${topic} active",
+      "set_topic_inactive": "Set {topic} inactive",
+      "set_topic_active": "Set {topic} active",
       "set_inactive": "Set inactive",
       "set_active": "Set active",
-      "edit_topic": "Edit ${topic}",
-      "delete_topic": "Delete ${topic}",
+      "edit_topic": "Edit {topic}",
+      "delete_topic": "Delete {topic}",
       "loading_topics": "Loading topics…",
       "no_data_yet": " No data yet",
       "pagination": {
@@ -490,7 +490,7 @@
     "meta_title": "HuLib | Mini Game",
     "meta_description": "Mini game for year of Dragon",
     "happy_year_of_dragon": "Happy Year of Dragon",
-    "you_win": "You win in ${numberOfAvailableMovements} moves!",
+    "you_win": "You win in {numberOfAvailableMovements} moves!",
     "visit_website": "Visit Website",
     "movements": "movements"
   },
@@ -618,8 +618,10 @@
     "cancel": "Cancel",
     "appeal": "Appeal",
     "confirm_information_accuracy": "I confirm that the information I provided is accurate to the best of my knowledge.",
-    "submit_appeal": " Submit an Appeal"
-
+    "submit_appeal": " Submit an Appeal",
+    "about": "About",
+    "my_stories": "My Stories",
+    "my_favorite": "My Favorite"
   },
   "MyFavorites": {
     "choose_all": "Choose all",
@@ -631,7 +633,11 @@
     "no_favorite_story": "No favorite story",
     "no_favorite_huber": "No favorite hubers",
     "explore_stories": "Your favorite list is empty! Browse stories and mark your favorites to keep them handy.",
-    "explore_hubers": "Your favorite list is empty! Browse hubers and mark your favorites to keep them handy."
+    "explore_hubers": "Your favorite list is empty! Browse hubers and mark your favorites to keep them handy.",
+    "explore_more_stories": "Explore more stories",
+    "explore_more_hubers": "Explore more hubers",
+    "story": "Story",
+    "huber": "Huber"
   },
   "HumanBookRegister": {
     "select_topics": "What do you want to tag Huber as?",
@@ -701,7 +707,6 @@
     "confirm_remove_favorite": "Are you sure you want to remove this story from your favorite list?",
     "story_delete_warning": "This story will be deleted immediately.",
     "cannot_undo_action": "You can&apos;t undo this action."
-
   },
   "Huber": {
     "title": "Explore our Hubers",
@@ -776,7 +781,8 @@
     "available_time_slots": "My available slots",
     "available_time_slots_description": "Wow below are slots you chose",
     "update_time_slots": "Update My Slots",
-    "success_time_slots_description": "You have successfully created your time slots"
+    "success_time_slots_description": "You have successfully created your time slots",
+    "error_contact_admin": "An error occurred, please contact admin for support!"
   },
   "Meeting": {
     "survey_submitted_successfully": "Survey is submitted successfully. Hope you to have a good time with Huber",
@@ -959,12 +965,15 @@
     "edit": "Edit",
     "delete": "Delete",
     "see_all": "See all",
+    "all": "All",
     "confirm": "Confirm",
     "welcome_to_community": "Welcome to the Community",
     "first_book_approved": "Your first book has been approved. Your story is now available for everyone to read.",
     "update_your_schedule": "Update Your Schedule",
     "update_schedule_description": "Update your schedule so others can chat with you directly.",
-    "update_personal_schedule": "Update Personal Schedule"
+    "update_personal_schedule": "Update Personal Schedule",
+    "reader_views": "Reader reviews: {view}",
+    "search_by_keyword": "Search by keyword"
   },
   "feedback_form": {
     "session_feedback": "Feedback for the session",
@@ -1036,13 +1045,13 @@
   },
   "LandingPage": {
     "navigation": {
-      "bookshelf": "Kệ sách",
-      "pinboard": "Bảng ghim",
-      "about_us": "Về Hulib"
+      "bookshelf": "Bookshelf",
+      "pinboard": "Pinboard",
+      "about_us": "About us"
     },
     "button": {
-      "sign_in": "Đăng nhập",
-      "sign_up": "Đăng ký"
+      "sign_in": "Sign in",
+      "sign_up": "Sign up"
     }
   },
   "Messages": {

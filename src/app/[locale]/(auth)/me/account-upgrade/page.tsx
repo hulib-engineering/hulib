@@ -23,10 +23,10 @@ export default function AccountUpgrade() {
   const t = useTranslations('Common');
 
   const STEPS = [
-    t('account_upgrade.steps.fill_information'),
-    t('account_upgrade.steps.select_available_slots'),
-    t('account_upgrade.steps.create_story'),
-  ];
+    { key: 'step_1', value: t('account_upgrade.steps.fill_information') },
+    { key: 'step_2', value: t('account_upgrade.steps.select_available_slots') },
+    { key: 'step_3', value: t('account_upgrade.steps.create_story') },
+  ] as const;
 
   const isMobile = useMobile();
 
@@ -82,9 +82,9 @@ export default function AccountUpgrade() {
           showSuccess && 'max-md:hidden',
         )}
       >
-        {STEPS.map((label, index) => (
-          <Step key={label} index={index}>
-            <StepLabel>{label}</StepLabel>
+        {STEPS.map((step, index) => (
+          <Step key={step.key} index={index}>
+            <StepLabel>{step.value}</StepLabel>
           </Step>
         ))}
       </Stepper>

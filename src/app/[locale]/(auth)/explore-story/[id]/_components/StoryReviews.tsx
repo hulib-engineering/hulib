@@ -102,8 +102,7 @@ export default function StoryReviews({ maxHeight }: { maxHeight?: number }) {
       style={{ height: maxHeight && maxHeight > 0 ? maxHeight : 'auto' }}
     >
       <h6 className="shrink-0 text-xl font-medium text-neutral-20 lg:font-bold">
-        {`Reader reviews (${storyReviews?.meta.totalItems ?? 0
-        })`}
+        {t('reader_views', { view: storyReviews?.meta.totalItems ?? 0 })}
       </h6>
       {items?.length === 0
         ? (
