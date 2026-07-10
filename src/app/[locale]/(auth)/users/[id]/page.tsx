@@ -26,10 +26,10 @@ import { openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
 
 const ProfileTabs = [
-  { value: 'about', label: 'About' },
-  { value: 'stories', label: 'My Stories' },
-  { value: 'favorite-list', label: 'My Favorite' },
-];
+  { value: 'about', label: 'about' },
+  { value: 'stories', label: 'my_stories' },
+  { value: 'favorite-list', label: 'my_favorite' },
+] as const;
 
 type TProfileTab = 'about' | 'stories' | 'favorite-list' | string;
 
@@ -249,7 +249,7 @@ export default function Index() {
                   }
                 }}
               >
-                {label}
+                {t(label)}
               </div>
             ))}
           </div>

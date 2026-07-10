@@ -99,7 +99,7 @@ const Step1 = ({ next }: { next: () => void }) => {
       pushSuccess(tCommon('account_upgrade.registration_successful'));
       next();
     } catch (error: any) {
-      pushError(error?.message || tCommon('error_contact_admin'));
+      pushError(tCommon(error?.message || 'error_contact_admin'));
     }
   };
   const getInputClassName = (

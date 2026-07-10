@@ -620,7 +620,7 @@
     "create_story": "Viết nên câu chuyện",
     "edit_story": "Trau chuốt câu chuyện",
     "report": "Báo cáo",
-    "chat": "Chat",
+    "chat": "Trò chuyện",
     "hearts": "trái tim",
     "no_stories_found": "Không tìm thấy câu chuyện nào",
     "huber_has_not_finished_stories": "Có vẻ như Huber chưa hoàn thành bất kỳ câu chuyện nào.",
@@ -642,7 +642,10 @@
     "cancel": "Hủy",
     "appeal": "Khiếu nại",
     "confirm_information_accuracy": "Tôi xác nhận rằng thông tin tôi cung cấp là chính xác theo hiểu biết của tôi.",
-    "submit_appeal": "Gửi khiếu nại"
+    "submit_appeal": "Gửi khiếu nại",
+    "about": "Giới thiệu",
+    "my_stories": "Truyện của tôi",
+    "my_favorite": "Yêu thích của tôi"
   },
   "MyFavorites": {
     "choose_all": "Chọn tất cả",
@@ -655,7 +658,11 @@
     "no_favorite_story": "Không có câu chuyện yêu thích nào",
     "no_favorite_huber": "Không có huber yêu thích nào",
     "explore_stories": "Khám phá các câu chuyện",
-    "explore_hubers": "Khám phá hubers"
+    "explore_hubers": "Khám phá hubers",
+    "explore_more_stories": "Khám phá thêm nhiều truyện",
+    "explore_more_hubers": "Khám phá thêm nhiều tác giả",
+    "story": "Truyện",
+    "huber": "Huber"
   },
   "HumanBookRegister": {
     "register_as_a_human_book": "Đăng ký làm Người Sách",
@@ -874,7 +881,8 @@
     "update_time_slots": "Cập nhật khung giờ",
     "select_time_slots_description": "Chọn khung giờ bạn có sẵn cho phiên làm việc",
     "error_time_slots": "Đã xảy ra lỗi. Vui lòng kiểm tra khung giờ của bạn và thử lại.",
-    "success_time_slots_description": "Bạn đã tạo khung giờ thành công"
+    "success_time_slots_description": "Bạn đã tạo khung giờ thành công",
+    "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!"
   },
   "Meeting": {
     "cancel_meeting": "Tôi không muốn gặp nữa",
@@ -1043,7 +1051,7 @@
     "btn_name_notification": "Khám phá thêm",
     "mobile_btn_name_notification": "Khám phá",
     "back_to_home": "Trở lại trang chủ",
-    "placeholder": "Bạn đang nghĩ gì...",
+    "placeholder": "What's on your mind?",
     "location": "Địa điểm",
     "change_password_title": "Đổi mật khẩu của bạn",
     "old_password_label": "Mật khẩu cũ",
@@ -1125,7 +1133,13 @@
     "first_book_approved": "Cuốn sách đầu tiên của bạn đã được duyệt, bây giờ mọi người có thể xem câu chuyện của bạn",
     "update_your_schedule": " Cập nhật lịch của bạn",
     "update_schedule_description": "Cập nhật lịch của bạn để mọi người có thể trò chuyện trực tiếp với bạn",
-    "update_personal_schedule": " Cập nhật lịch cá nhân"
+    "update_personal_schedule": " Cập nhật lịch cá nhân",
+    "reader_views": "Đánh giá của độc giả: {view}",
+    "all": "Tất cả",
+    "search_by_keyword": "Tìm kiếm theo từ khóa",
+    "about": "Giới thiệu",
+    "my_stories": "Truyện của tôi",
+    "my_favorite": "Yêu thích của tôi"
   },
   "feedback_form": {
     "session_feedback": "Phản hồi cho buổi học",
