@@ -109,7 +109,7 @@ export default function RegisterHuberSuccess() {
           <button onClick={() => router.push(`/users/${story.humanBookId}?tab=about`)} className="hover:bg-gray-50 h-[44px] w-[232px] rounded-full border border-[#C2C6CF] px-6 py-3 text-sm font-medium text-[#0442BF] transition-colors">
             Quay về trang cá nhân
           </button>
-          <button onClick={() => router.push(`/home`)} className="flex h-[44px] w-[232px] items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#007CBE] to-[#8845C6] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#14144a]">
+          <button onClick={() => router.push(`/`)} className="flex h-[44px] w-[232px] items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#007CBE] to-[#8845C6] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#14144a]">
             <Image
               src="/assets/images/register-huber/white_book.png"
               alt=""
