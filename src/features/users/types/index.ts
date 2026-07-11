@@ -55,5 +55,4 @@ export type User = {
   }[];
   works: (z.infer<typeof WorkExperienceValidation> & { id: number })[];
   educations: (z.infer<typeof EducationValidation> & { id: number })[];
-  hasSeenHuberOnboarding: boolean;
 };

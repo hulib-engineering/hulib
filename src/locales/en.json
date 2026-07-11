@@ -42,13 +42,6 @@
       "description": "We cannot find any result that matches your search. Please try search again."
     }
   },
-  "FirstBookCreated": {
-    "welcome_title": "Welcome to the community",
-    "welcome_description": "Your first book has been approved. Everyone can now see your story",
-    "update_schedule_title": "Ready to connect?",
-    "update_schedule_description": "Set your availability so Liber can reach out to you",
-    "update_schedule_button": "Update personal schedule"
-  },
   "Footer": {
     "copyright": "© 2026 HuLib. All rights reserved.",
     "privacy_policy": "privacy policy",
