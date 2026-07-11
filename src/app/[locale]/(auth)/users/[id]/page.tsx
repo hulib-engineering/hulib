@@ -260,7 +260,7 @@ export default function Index() {
         <MyStoriesPanel
           topics={userDetail?.humanBookTopic}
           storyOwnerId={userDetail.id}
-          showOthers={notMe}
+          showOthers={Number(userId) !== Number(userDetail?.id)}
         />
       )}
       {currentTab === 'favorite-list' && (<MyFavoritesPanel />)}
