@@ -204,7 +204,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
           className="flex-1 rounded-full py-3 text-base font-medium leading-5"
           onClick={handleClickRead}
         >
-          Đọc hết
+          {t('read_all')}
         </Button>
         <IconButton
           variant="outline"
