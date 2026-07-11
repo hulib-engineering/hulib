@@ -107,7 +107,7 @@ const AboutPanel = ({
       {/* Mobile View - Accordion Style */}
       <div className="flex w-full flex-col rounded-xl border-neutral-90 px-5 py-4 lg:hidden">
         <div className="px-3 py-1 font-medium leading-5 text-neutral-10">
-          {awaiting ? 'Information' : 'Giới thiệu'}
+          {awaiting ? t('information') : t('introduction')}
         </div>
         <Accordion defaultValue="about-section-overview" singleOpen>
           {sectionMenu.map(section => (
@@ -147,7 +147,7 @@ const AboutPanel = ({
         <div className="flex w-1/4 flex-col gap-3 rounded-l-xl border-r border-neutral-80 bg-white px-4 py-5">
           <div className="flex flex-col gap-1">
             <div className="rounded-lg bg-white px-3 py-1 font-medium text-neutral-10">
-              {awaiting ? 'Information' : 'Giới thiệu'}
+              {awaiting ? t('information') : t('introduction')}
             </div>
             {sectionMenu.map(section => (
               <MenuItem
@@ -182,7 +182,7 @@ const AboutPanel = ({
           {awaiting && (
             <div className="flex flex-col gap-1">
               <div className="rounded-lg bg-white px-3 py-1 font-medium text-neutral-10">
-                Story
+                {t('story')}
               </div>
               <MenuItem
                 as="button"

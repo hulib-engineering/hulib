@@ -50,7 +50,6 @@
     "update_schedule_button": "Update personal schedule"
   },
   "Footer": {
-    "footer_description": "We are all born to be somebody. Each of us carries a story and experiences that are uniquely our own.",
     "copyright": "© 2026 HuLib. All rights reserved.",
     "privacy_policy": "privacy policy",
     "term_of_service": "term of service",
@@ -413,9 +412,94 @@
       }
     }
   },
+  "Admin": {
+    "welcome_back": "Welcome back!",
+    "users_page": {
+      "title": "User management",
+      "subtitle": "List of users",
+      "empty_state": "You have a warm heart"
+    },
+    "awaiting_stories_page": {
+      "title": "Awaiting approval - Stories",
+      "subtitle": "List of stories awaiting approval",
+      "empty_state": "You have a warm heart"
+    },
+    "tags_page": {
+      "title": "Topic list",
+      "new_topic": "New topic"
+    },
+    "login_to_admin": "Log in to Admin account",
+    "email_label": "Email address",
+    "email_placeholder": "hulib@gmail.com",
+    "password_label": "Password",
+    "login_button": "Login",
+    "login_error": "Incorrect password, please try again.",
+    "topic_modal": {
+      "edit_title": "Edit Topic",
+      "create_title": "Create new Topic",
+      "name_label": "Topic name",
+      "name_placeholder": "Type here",
+      "color_label": "Topic color",
+      "preview_label": "Preview",
+      "confirm_button": "Confirm",
+      "updated_successfully": "Topic updated successfully",
+      "created_successfully": "Topic created successfully",
+      "update_failed": "Failed to update topic",
+      "create_failed": "Failed to create topic"
+    },
+    "story_modal": {
+      "approved_successfully": "Story approved successfully",
+      "rejected_successfully": "Story rejected successfully",
+      "update_failed": "Failed to update story",
+      "rejection_placeholder": "Reason for rejection",
+      "approve_success_message": "You have confirmed the request to publish this story.",
+      "approve_prompt_message": "You are accepting the request to publish this story.",
+      "reject_success_message": "You declined the request to publish this story.",
+      "reject_prompt_message": "You are declining the request to publish this story.",
+      "homepage_button": "Homepage",
+      "back_button": "Back",
+      "confirm_button": "Confirm"
+    },
+    "table": {
+      "topic_deleted_success": "Topic deleted successfully",
+      "topic_delete_failed": "Failed to delete topic",
+      "topic_status_updated": "Topic set to {status}",
+      "topic_status_update_failed": "Failed to update topic status",
+      "topic_name": "Topic name",
+      "action": "Action",
+      "set_topic_inactive": "Set {topic} inactive",
+      "set_topic_active": "Set {topic} active",
+      "set_inactive": "Set inactive",
+      "set_active": "Set active",
+      "edit_topic": "Edit {topic}",
+      "delete_topic": "Delete {topic}",
+      "loading_topics": "Loading topics…",
+      "no_data_yet": " No data yet",
+      "pagination": {
+        "next_page": "Next page"
+      }
+    },
+    "stories": {
+      "back_to_awaiting_approval": "Back to Awaiting approval - Stories",
+      "regenerate_cover": "Regenerate cover",
+      "approve": "Approve",
+      "decline": "Decline",
+      "back_to_story_approval": "Back to story approval",
+      "cover_generation_description": "Pick a preset style and confirm the title shown on the cover. Author name comes from the huber profile. Saving uploads a new PNG and replaces the story cover in the database."
+    },
+    "back": "Back",
+    "hearts": "Hearts",
+    "decline": "Decline",
+    "appeal_form": "Appeal form",
+    "reported_user": "Reported user"
+  },
   "MiniGame": {
     "meta_title": "HuLib | Mini Game",
-    "meta_description": "Mini game for year of Dragon"
+    "meta_description": "Mini game for year of Dragon",
+    "happy_year_of_dragon": "Happy Year of Dragon",
+    "you_win": "You win in {numberOfAvailableMovements} moves!",
+    "visit_website": "Visit Website",
+    "movements": "movements"
   },
   "SignIn": {
     "welcome_back": "Welcome back!",
@@ -442,7 +526,6 @@
     "or_social_login": "Or sign up with",
     "registered": "Already have an account?",
     "log_in": "Log in",
-    "with_gg": "with Google",
     "fullname": "Full name",
     "gender": "Gender",
     "birthday": "Date of birth",
@@ -458,7 +541,16 @@
     "contact_us": "If you need help, contact us via email",
     "welcome": "Welcome to",
     "account_created": "Your account has been created",
-    "get_started": "Get started"
+    "get_started": "Get started",
+    "reset_password": "Reset the password",
+    "at_least_8_characters": "At least 8 characters long",
+    "contains_special_character": "Contains a special character",
+    "contains_number": "Contains a number",
+    "contains_uppercase_letter": "Contains an uppercase letter",
+    "passwords_match": "Passwords match",
+    "resetting": "Resetting...",
+    "back_to_login": "Back to login",
+    "submit": "Submit"
   },
   "ForgotPassword": {
     "meta_title": "Forgot password",
@@ -489,7 +581,10 @@
       "my_book": "My book",
       "work_and_education": "Work and Education",
       "contact_information": "Contact Information",
-      "moderations": "Warnning/Banned history"
+      "moderations": "Warnning/Banned history",
+      "information": "Information",
+      "introduction": "Introduction",
+      "story": "Story"
     },
     "report_modal": {
       "header_title": "You’re about to report this person.",
@@ -506,7 +601,34 @@
       "success_report_detail": "Thank you for your report. We truly appreciate your help in keeping this community safe and respectful. Our team will carefully review the information you’ve provided."
     },
     "create_story": "Create Your Story",
-    "edit_story": "Edit Your Story"
+    "edit_story": "Edit Your Story",
+    "report": "Report",
+    "chat": "Chat",
+    "hearts": "Hearts",
+    "no_stories_found": "No stories found",
+    "huber_has_not_finished_stories": "It seems like Huber has not finished any stories yet.",
+    "library": "Library",
+    "all": "All",
+    "create_new_story": "Create New Story",
+    "user_banned_success": "User has been banned successfully.",
+    "user_warned_success": "User has been warned successfully.",
+    "reporter": "Reporter",
+    "reported_user": "Reported user",
+    "reasons": "Reasons",
+    "warn_user": "Warn user",
+    "ban_user": " Ban user",
+    "appeal_report": "Appeal report",
+    "appeal_description": "Please explain why you believe this action was taken by mistake. We’ll carefully review your response and follow up shortly.",
+    "reported_by_someone": "Someone else has reported you. The reporter give the reason below:",
+    "appeal_submitted": "Your appeal has been submitted.",
+    "appeal_review_notice": "We’ll review it and notify you within 3 working days.",
+    "cancel": "Cancel",
+    "appeal": "Appeal",
+    "confirm_information_accuracy": "I confirm that the information I provided is accurate to the best of my knowledge.",
+    "submit_appeal": " Submit an Appeal",
+    "about": "About",
+    "my_stories": "My Stories",
+    "my_favorite": "My Favorite"
   },
   "MyFavorites": {
     "choose_all": "Choose all",
@@ -518,23 +640,22 @@
     "no_favorite_story": "No favorite story",
     "no_favorite_huber": "No favorite hubers",
     "explore_stories": "Your favorite list is empty! Browse stories and mark your favorites to keep them handy.",
-    "explore_hubers": "Your favorite list is empty! Browse hubers and mark your favorites to keep them handy."
+    "explore_hubers": "Your favorite list is empty! Browse hubers and mark your favorites to keep them handy.",
+    "explore_more_stories": "Explore more stories",
+    "explore_more_hubers": "Explore more hubers",
+    "story": "Story",
+    "huber": "Huber"
   },
   "HumanBookRegister": {
     "select_topics": "What do you want to tag Huber as?",
     "placeholder_topics": "Search topics...",
     "add_more_topics": "Add more topics...",
-    "creating": "Creating...",
-    "add_new": "Add new",
     "all_topics_selected": "No results found.",
     "Step2": {
       "title": "Register as a Huber"
     },
     "validation": {
       "invalid_url": "Invalid URL link. Check link and try again",
-      "bio_required": "Bio is required",
-      "terms_required": "Please accept the terms and conditions",
-      "topics_required": "Please select at least one topic",
       "time_slots_required": "Please select at least one time slot"
     },
     "bio": {
@@ -554,7 +675,6 @@
     "general": "General"
   },
   "ExploreStory": {
-    "title": "Explore all stories",
     "description": "Discover a story made just for you",
     "ratings": "ratings",
     "read_story": "Read all",
@@ -567,8 +687,6 @@
     "share_to": "Share to",
     "share_copied": "Link copied to clipboard!",
     "share_story": "Share another story",
-    "views": "views",
-    "likes": "likes",
     "like_button": "Like",
     "like_error": "Failed to update like",
     "booking_cta": "If this story speaks to you, connect with the author through a conversation here",
@@ -576,14 +694,95 @@
     "booking_count": "100 meetings have been booked from this story",
     "author": "Author",
     "stories": "stories",
-    "favorites": "favorites"
+    "favorites": "favorites",
+    "my_favorite": "My favorite",
+    "newest_stories": "Newest Stories",
+    "oldest_stories": "Oldest Stories",
+    "explore_all_stories": "Explore our all stories",
+    "no_data_available": "No data available.",
+    "rating_overview": "Rating overview",
+    "outstanding_review": "Outstanding review",
+    "rejected": "Rejected",
+    "draft": "Draft",
+    "reason": "Reason",
+    "story": "Story",
+    "is_deleted_successfully": "is deleted successfully",
+    "read_all": "Read all",
+    "edit": "Edit",
+    "favorite": "Favorite",
+    "confirm_delete_story": "Are you sure you want to delete story?",
+    "confirm_remove_favorite": "Are you sure you want to remove this story from your favorite list?",
+    "story_delete_warning": "This story will be deleted immediately.",
+    "cannot_undo_action": "You can&apos;t undo this action."
   },
   "Huber": {
     "title": "Explore our Hubers",
     "description": "Discover and find your suitable huber",
     "card": {
-      "topics": "Topics"
-    }
+      "topics": "Topics",
+      "added_to_favorites_success": "Successfully added to favorite list",
+      "removed_from_favorites_success": "Successfully removed from favorite list",
+      "waiting_for_approval": "Waiting for approval",
+      "visit_profile": "Visit Profile",
+      "view_detail": "View Detail"
+    },
+    "agreement": "I have read and agree to the community guidelines of Hulib",
+    "huber_responsibility": "Huber is solely responsible for the accuracy and truthfulness of the information provided to Hulib.",
+    "emergency_notice": "HuLib has the right to reject or request edits to content if the story does not meet the community criteria outlined above.",
+    "continue": "Continue",
+    "hero_title": "Share your story with the community",
+    "hero_description": "HuLib very much looks forward to reading and spreading your story to the community. Before you start creating a book, we have a few small notes to help build a positive, safe, and meaningful sharing space.",
+    "restricted_content": {
+      "items": {
+        "item_1": "Sharing content that is sexually explicit.",
+        "item_2": "Sharing personal information of others without consent.",
+        "item_3": "Spreading false or unverified information.",
+        "item_4": "Personal attacks or inciting hatred.",
+        "item_5": "Describing sensitive content in excessive detail.",
+        "item_6": "Referencing politically charged, religious, or controversial topics in a confrontational manner."
+      }
+    },
+    "rule_cards": {
+      "card_1": {
+        "title": "Choose a Meaningful Topic",
+        "rules": "You can write about your journey, memories, life lessons, challenges you've overcome, mental well-being, self-love and personal growth, study or work experiences, social stereotypes, or any topic that reflects your personal story. On HuLib, people who share their stories are called Hubers."
+      },
+      "card_2": {
+        "title": "Share with Authenticity",
+        "rules": "Tell your story from your own experiences and perspective. We encourage content that fosters empathy, understanding, and positive inspiration—especially for young people seeking connection and support."
+      },
+      "card_3": {
+        "title": "Keep It Original",
+        "rules": "Please do not submit AI-generated or copied content. Every book should reflect your own voice, thoughts, and unique experiences."
+      },
+      "card_4": {
+        "title": "Verification & Community Safety",
+        "rules": "HuLib does not verify every detail shared in each book. However, our admins may ask you to update your profile or provide additional information before approval to help maintain a safe and trustworthy community."
+      },
+      "card_5": {
+        "title": "Support the Community",
+        "rules": "Once your book is approved, you'll be invited to join a voluntary challenge by sharing your available time on the platform (at least 30 minutes per week). This helps your story reach more Libers—young people facing similar situations or feeling stuck, who may find connection and encouragement through your book."
+      }
+    },
+    "create_book_title": "Create your book",
+    "success_create_book": "Write your success story",
+    "thanks_for_story": "Thanks for your story! HuLib will keep you informed when our process completes.",
+    "in_review": "In review",
+    "back_to_profile": "Back to Profile",
+    "create_new_book": "Create New Book",
+    "hearts": "Hearts",
+    "approve_huber_failed": "Failed to approve Huber. Please try again.",
+    "waiting_for_approval": "Waiting for approval",
+    "huber_request_confirmed": "You have confirmed the request to become a Huber.",
+    "accept_huber_request": "You are accepting the request to become a Huber.",
+    "decline_huber_request": "You declined the request to become a Huber.",
+    "declining_huber_request": "You are declining the request to become a Huber.",
+    "homepage": "Homepage",
+    "approved": "Approved",
+    "declined": "Declined",
+    "reason_for_rejection": "Reason for rejection",
+    "back": "Back",
+    "new_book_icon_alt": "New book icon"
   },
   "Time_slots": {
     "available_time_slots": "My available slots",
@@ -638,21 +837,18 @@
       "notice_text": "Please make sure you select the correct time slot for your schedule. The time shown is in your local timezone.",
       "support_text": "In case you do not find an open time slot. Feel free to check with the Huber over chat",
       "click_here": "click here"
-    }
+    },
+    "meeting_with": "Meeting with",
+    "meeting_schedule": "Meeting schedule",
+    "view": "View",
+    "type_of_meeting": "Type of meeting"
   },
   "notifications": {
     "title": "Notifications",
     "noNotifications": "No notifications",
     "loadingFailed": "Failed to load notifications",
-    "seePreviousNotifications": "See previous notifications"
-  },
-  "Home": {
-    "short_descriptions": {
-      "title": "Become our Huber",
-      "btn": "Join as Huber",
-      "subtitle": "Every story is a puzzle"
-    },
-    "no_data": "No Data"
+    "seePreviousNotifications": "See previous notifications",
+    "meeting_request": "Meeting request"
   },
   "HuberCTA": {
     "title": "Share Your Story",
@@ -674,25 +870,23 @@
   "Common": {
     "error_contact_admin": "An error occurred, please contact admin for support!",
     "update_successfully": "Update successfully",
-    "create_first_story": "Create First Story",
     "topics": "Topics",
     "title": "Title",
     "abstract": "Abstract",
     "cover_picture": "Cover for story",
-    "edit_cover": "Customize cover",
     "cover_font": "Font",
-    "cover_font_size": "Font size",
     "cover_text_color": "Text color",
     "cover_background_color": "Background color",
-    "cover_preview": "Preview",
     "increase_font_size": "Increase font size",
     "decrease_font_size": "Decrease font size",
     "done": "Done",
     "custom": "Custom",
     "style": "Style",
-    "back": "Back",
     "cancel": "Cancel",
     "submit": "Submit",
+    "rejected": "Rejected",
+    "approve": "Approve",
+    "report": "Report",
     "placeholder_title": "Please enter the title of your story",
     "placeholder_abstract": "Please enter the abstract of your story",
     "title_notification": "Submitted",
@@ -701,7 +895,92 @@
     "mobile_btn_name_notification": "Explore",
     "back_to_home": "Back to Homepage",
     "placeholder": "Placeholder",
-    "location": "Location"
+    "location": "Location",
+    "change_password_title": "Change Your Password",
+    "old_password_label": "Old Password",
+    "new_password_label": "New Password",
+    "confirm_new_password_label": "Re-enter New Password",
+    "change_password_button": "Change",
+    "forgot_password_link": "Forgot Password?",
+    "change_password_confirm_message": "Are you sure you want to change your password?",
+    "account_upgrade": {
+      "steps": {
+        "fill_information": "Fill Information",
+        "select_available_slots": "Select Available Slots",
+        "create_story": "Create Story"
+      },
+      "success_image_alt": "success",
+      "registration_successful": "Registration successful!"
+    },
+    "education": {
+      "add_title": "Add education",
+      "edit_title": "Edit",
+      "major_label": "Major",
+      "major_placeholder": "Ex: Software Engineering",
+      "institution_label": "School/University",
+      "institution_placeholder": "Ex: Ho Chi Minh University of Science",
+      "from": "From",
+      "to": "to",
+      "add_success": "Education information added successfully",
+      "edit_success": "Education information edited successfully",
+      "at": "at",
+      "present": "Present"
+    },
+    "work_experience": {
+      "add_title": "Add work experience",
+      "edit_title": "Edit",
+      "position_label": "Position",
+      "position_placeholder": "Ex: Graphic Designer",
+      "company_label": "Company",
+      "company_placeholder": "Ex: Amazon",
+      "from": "From",
+      "to": "to",
+      "add_success": "Work experience information added successfully",
+      "edit_success": "Work experience information edited successfully",
+      "at": "at",
+      "present": "Present"
+    },
+    "full_name": "Full Name",
+    "gender": "Gender",
+    "date_of_birth": "Date of birth",
+    "address": "Address",
+    "address_placeholder": "Enter your address",
+    "email": "Email",
+    "phone_number": "Phone Number",
+    "guardian_name": "Your Guardian Name",
+    "guardian_phone_number": "Your Guardian Phone Number",
+    "not_provided": "Not provided",
+    "contact_information": "Contact Information",
+    "topic": "Topic",
+    "bio": "Bio",
+    "video_introduction": "Video Introduction",
+    "add_video_source": "Add video source",
+    "what_libers_say": "What libers say",
+    "saving": "Saving...",
+    "failed_update_profile": "Failed to update profile. Please try again.",
+    "invalid_video_source": "Invalid video source",
+    "video_browser_unsupported": "Your browser does not support HTML video.",
+    "add_experience": "Add experience",
+    "add_education": "Add education",
+    "save": "Save",
+    "not_found": "Not Found",
+    "could_not_find_resource": "Could not find requested resource",
+    "return_home": "Return Home",
+    "view_more": "View more",
+    "see_more": "See more",
+    "back": "Back",
+    "edit": "Edit",
+    "delete": "Delete",
+    "see_all": "See all",
+    "all": "All",
+    "confirm": "Confirm",
+    "welcome_to_community": "Welcome to the Community",
+    "first_book_approved": "Your first book has been approved. Your story is now available for everyone to read.",
+    "update_your_schedule": "Update Your Schedule",
+    "update_schedule_description": "Update your schedule so others can chat with you directly.",
+    "update_personal_schedule": "Update Personal Schedule",
+    "reader_views": "Reader reviews: {view}",
+    "search_by_keyword": "Search by keyword"
   },
   "feedback_form": {
     "session_feedback": "Feedback for the session",
@@ -727,8 +1006,6 @@
     "back_to_home": "Back to Home"
   },
   "ScheduleBasicInfo": {
-    "topics": "Topics",
-    "rating": "rating",
     "duration": "Duration",
     "duration_time": "30 mins",
     "notice": "Notice",
@@ -737,7 +1014,10 @@
     "click_here": "click here",
     "back": "Back",
     "attendees": "Attendees",
-    "you": "You"
+    "you": "You",
+    "huber": "Huber",
+    "stories": "Stories",
+    "hearts": "Hearts"
   },
   "Reading": {
     "PreSurvey": {
@@ -772,19 +1052,72 @@
   },
   "LandingPage": {
     "navigation": {
-      "bookshelf": "Kệ sách",
-      "pinboard": "Bảng ghim",
-      "about_us": "Về Hulib"
+      "bookshelf": "Bookshelf",
+      "pinboard": "Pinboard",
+      "about_us": "About us"
     },
     "button": {
-      "sign_in": "Đăng nhập",
-      "sign_up": "Đăng ký"
+      "sign_in": "Sign in",
+      "sign_up": "Sign up"
     }
   },
-  "RecommendedHuber": {
-    "button": {
-      "follow": "Theo dõi",
-      "un_follow": "Hủy theo dõi"
+  "Messages": {
+    "your_messages": "Your messages",
+    "messages": "Messages"
+  },
+  "event": {
+    "event_registration_title": "Register for HuLib Event",
+    "fullname_label": "Please share your full name with HuLib",
+    "fullname_placeholder": "Enter your name",
+    "birthday_label": "Your date of birth",
+    "email_label": "What is your email?",
+    "email_placeholder": "Hulibvietnamabc@gmail.com",
+    "social_media_label": "How did you hear about HuLib's event?",
+    "career_label": "You are",
+    "hometown_label": "Where are you from?",
+    "first_choice_label": "For this event, HuLib has prepared four rooms with different topics for you to choose from. To make our conversations more effective, focused, and allow us to discuss topics you are interested in more deeply, please choose the room topic you are most interested in.",
+    "second_choice_label": "If your favorite room is full or overloaded, what would be your second choice?",
+    "question_label": "Do you have any questions for HuLib's Guest (Human Book)?",
+    "question_placeholder": "Enter your question",
+    "ambassador_label": "HuLib is looking for passionate ambassadors to spread positive mental health values to the community. Would you be interested in taking on this role? If you choose yes, we will send you more details via email.",
+    "submit_button": "Submit",
+    "social_media": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "tiktok": "TikTok",
+      "threads": "Threads",
+      "other": "Other"
+    },
+    "career": {
+      "high_school_student": "High school student",
+      "student": "Student",
+      "gap_year": "On a gap year",
+      "working": "Working",
+      "other": "Other"
+    },
+    "hometown": {
+      "hue": "Dreamy Hue",
+      "danang": "Lovely Da Nang",
+      "hochiminh": "Beloved Ho Chi Minh City",
+      "hanoi": "Dear Hanoi",
+      "other": "Other"
+    },
+    "choice": {
+      "family": "Family",
+      "coworker": "Coworker",
+      "friendship": "Friendship",
+      "love": "Love"
+    },
+    "ambassador": {
+      "no": "No",
+      "yes": "Yes"
+    },
+    "success_modal": {
+      "greeting": "Hi",
+      "confirmation": "We confirm that your registration has been completed successfully.",
+      "thank_you": "Thank you for registering to join the program &rsquo;Boong, the Awakening Bell!&rsquo; on December 14, 2024.",
+      "reminder": "We are delighted to accompany you in the upcoming event! Before the event takes place, the organizers will send you a reminder email about the program. Please remember to check your inbox!",
+      "close_button": "Gotchaaaa"
     }
   }
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { Plus } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import Button from '@/components/core/button/Button';
@@ -15,6 +16,7 @@ type TopicsListMeta = {
 };
 
 export default function AdminTagsPage() {
+  const t = useTranslations('Admin');
   const [currentPage, setCurrentPage] = useState(1);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
@@ -32,7 +34,7 @@ export default function AdminTagsPage() {
       <div className="flex flex-col gap-6 p-8 pt-5">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-medium leading-8 tracking-tight text-neutral-10">
-            Topic list
+            {t('tags_page.title')}
           </h1>
           <Button
             type="button"
@@ -40,7 +42,7 @@ export default function AdminTagsPage() {
             iconRight={<Plus weight="bold" className="text-xl" />}
             onClick={() => setIsCreateModalOpen(true)}
           >
-            New topic
+            {t('tags_page.new_topic')}
           </Button>
         </div>
 

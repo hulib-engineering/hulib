@@ -1,6 +1,7 @@
 'use client';
 
 import { GlobeHemisphereWest, PencilSimple } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 import React, { useMemo, useState } from 'react';
 
 import { format } from 'date-fns';
@@ -12,33 +13,34 @@ import { GenderName } from '@/types/common';
 import { calculateAge } from '@/utils/dateUtils';
 
 export default function ContactSection({ data, editable }: { data: User; editable?: boolean }) {
+  const t = useTranslations('Common');
   const [editMode, setEditMode] = useState(false);
 
   const contactInfo = useMemo(() => {
     return [
       {
-        title: 'Full Name',
-        value: data?.fullName || 'Not provided',
+        title: t('full_name'),
+        value: data?.fullName || t('not_provided'),
       },
       {
-        title: 'Gender',
+        title: t('gender'),
         value:
-          GenderName[data?.gender?.id as Gender] || 'Not provided',
+          GenderName[data?.gender?.id as Gender] || t('not_provided'),
       },
-      { title: 'Date of birth', value: format(new Date(data?.birthday), 'dd/MM/yyy') || 'Not provided' },
-      { title: 'Address', value: data?.address || 'Not provided' },
-      { title: 'Email', value: data?.email || 'Not provided' },
+      { title: t('date_of_birth'), value: format(new Date(data?.birthday), 'dd/MM/yyy') || t('not_provided') },
+      { title: t('address'), value: data?.address || t('not_provided') },
+      { title: t('email'), value: data?.email || t('not_provided') },
       {
-        title: 'Phone number',
-        value: data?.phoneNumber || 'Not provided',
-      },
-      {
-        title: 'Your guardian name',
-        value: data?.parentFullname || 'Not provided',
+        title: t('phone_number'),
+        value: data?.phoneNumber || t('not_provided'),
       },
       {
-        title: 'Your guardian phone number',
-        value: data?.parentPhoneNumber || 'Not provided',
+        title: t('guardian_name'),
+        value: data?.parentFullname || t('not_provided'),
+      },
+      {
+        title: t('guardian_phone_number'),
+        value: data?.parentPhoneNumber || t('not_provided'),
       },
     ];
   }, [data]);
@@ -46,7 +48,7 @@ export default function ContactSection({ data, editable }: { data: User; editabl
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
-        <p className="font-medium text-black">Contact Information</p>
+        <p className="font-medium text-black">{t('contact_information')}</p>
         {editable && !editMode && (
           <IconButton variant="soft" size="sm" className="p-2" onClick={() => setEditMode(true)}>
             <PencilSimple weight="bold" />

@@ -48,7 +48,7 @@ export default function Notifications() {
       {sessionRequestNotifications.length > 0 && (
         <>
           <div className="flex w-full flex-col">
-            <h6 className="text-xl font-bold text-primary-60">Meeting request</h6>
+            <h6 className="text-xl font-bold text-primary-60">{t('meeting_request')}</h6>
             {sessionRequestNotifications.map(notification => (
               <NotificationItemRenderer
                 key={notification.id}

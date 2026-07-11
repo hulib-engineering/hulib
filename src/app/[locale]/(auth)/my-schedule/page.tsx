@@ -27,10 +27,10 @@ import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
 import { toLocaleDateString, toLocaleTimeString } from '@/utils/dateUtils';
 
 const filters: TFilter[] = [
-  { id: 1, label: 'Done', value: StatusEnum.Finished },
-  { id: 2, label: 'Waiting', value: StatusEnum.Pending },
-  { id: 3, label: 'Huber', value: 'isHuber' },
-  { id: 4, label: 'Liber', value: 'isLiber' },
+  { id: 1, label: 'done', value: StatusEnum.Finished },
+  { id: 2, label: 'waiting', value: StatusEnum.Pending },
+  { id: 3, label: 'huber', value: 'isHuber' },
+  { id: 4, label: 'liber', value: 'isLiber' },
 ];
 
 const filter = (
@@ -49,6 +49,7 @@ const filter = (
 
 export default function Index() {
   const t = useTranslations('Schedule');
+  const tCommon = useTranslations('Common');
   const locale = useLocale();
 
   const { data: upcomingEvents, isLoading }
@@ -114,7 +115,7 @@ export default function Index() {
                         loading="lazy"
                         className="rounded"
                       />
-                      <span>Meeting with</span>
+                      <span>{t('meeting_with')}</span>
                     </div>
                     <div
                       className="flex items-center gap-[6px] text-yellow-40"
@@ -172,11 +173,14 @@ export default function Index() {
             <div className="flex items-center justify-between px-4">
               <div className="flex-1">
                 <h4 className="text-[28px] font-medium leading-9 text-primary-10">
-                  Meeting schedule
+                  {t('meeting_schedule')}
                 </h4>
               </div>
               <div className="flex items-center gap-2">
-                <span>View:</span>
+                <span>
+                  {t('view')}
+                  :
+                </span>
                 <Combobox
                   value={statusFilters}
                   onChange={value => setStatusFilters(value as TFilter[])}
@@ -191,7 +195,7 @@ export default function Index() {
                       <Combobox.VisualMultiSelect
                         open={open}
                         label=""
-                        placeholder="Type of meeting"
+                        placeholder={t('type_of_meeting')}
                         className={mergeClassnames(
                           'rounded-lg border-[0.5px] border-neutral-70',
                           filters.length > 0 ? 'p-1' : 'py-1 pl-4 pr-2',
@@ -213,7 +217,7 @@ export default function Index() {
                                 {({ selected, active }) => (
                                   <MenuItem isActive={active} isSelected={selected} className="gap-0.5">
                                     <MenuItem.Checkbox isSelected={selected} />
-                                    <MenuItem.Title>{filter.label}</MenuItem.Title>
+                                    <MenuItem.Title>{t(filter.label as any)}</MenuItem.Title>
                                   </MenuItem>
                                 )}
                               </Combobox.Option>
@@ -239,7 +243,7 @@ export default function Index() {
             className="w-fit font-medium text-black"
             onClick={() => setShowMobileTimeslotRegistration(false)}
           >
-            Back
+            {tCommon('back')}
           </Button>
           <TimeslotRegistrationSection
             selectedSlots={selectedSlots}
@@ -251,7 +255,7 @@ export default function Index() {
             disabled={selectedSlots.length === 0 || isRegisteringTimeslots}
             onClick={handleSaveMobileTimeSlots}
           >
-            Save
+            {tCommon('save')}
           </Button>
         </div>
       )}

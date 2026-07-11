@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { HuberCardListSkeleton } from '@/components/loadingState/Skeletons';
@@ -13,6 +14,7 @@ import { useGetUsersQuery } from '@/libs/services/modules/user';
 import { ROLE_NAME, Role } from '@/types/common';
 
 export default function AdminUsersPage() {
+  const t = useTranslations('Admin');
   const [currentPage, setCurrentPage] = useState(1);
   const [byRole, setByRole] = useState<Role>(Role.HUBER);
   const role = ROLE_NAME[byRole].toLowerCase();
@@ -42,7 +44,7 @@ export default function AdminUsersPage() {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-5 p-8">
         <h1 className="text-[2.5rem] font-medium leading-tight">💕</h1>
-        <p className="text-sm leading-5 text-neutral-20">You have a warm heart</p>
+        <p className="text-sm leading-5 text-neutral-20">{t('users_page.empty_state')}</p>
       </div>
     );
   }
@@ -51,9 +53,9 @@ export default function AdminUsersPage() {
     <div className="flex flex-col gap-6 p-8 pt-0">
       <div className="flex flex-col gap-2 pt-5">
         <h5 className="text-2xl font-medium leading-8 text-neutral-10">
-          User management
+          {t('users_page.title')}
         </h5>
-        <p className="text-sm leading-5 text-neutral-20">List of Users</p>
+        <p className="text-sm leading-5 text-neutral-20">{t('users_page.subtitle')}</p>
       </div>
       <div className="scrollbar-hide flex w-full flex-nowrap items-center gap-2 overflow-x-auto py-2">
         {([Role.HUBER, Role.LIBER] as const).map(chip => (

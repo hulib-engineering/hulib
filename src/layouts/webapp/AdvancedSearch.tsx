@@ -4,6 +4,7 @@ import { ClockCounterClockwise, X } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 import React, { type ReactNode, useEffect, useMemo, useState } from 'react';
 
+import { useTranslations } from 'next-intl';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import Search, { searchFilterItems, searchGetItemIndex } from '@/components/core/search/Search';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -20,6 +21,7 @@ type Items = {
 
 export default function AdvancedSearch() {
   const router = useRouter();
+  const t = useTranslations('Common');
 
   const [open, setOpen] = useState(false);
   const [qString, setQString] = useState('');
@@ -107,7 +109,7 @@ export default function AdvancedSearch() {
         )}
       >
         <Search.Input.Input
-          placeholder="Search by keyword"
+          placeholder={t('search_by_keyword')}
           onKeyDown={e => e.key === 'Enter' && handleSearch(qString)}
         />
         {!open && <Search.Input.Icon />}

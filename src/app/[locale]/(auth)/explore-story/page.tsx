@@ -32,6 +32,7 @@ export default function Index() {
   const topicIds = searchParams.getAll('topicIds'); // Get topicIds from the URL query string
 
   const t = useTranslations('ExploreStory');
+  const tCommon = useTranslations('Common');
 
   const [page, setPage] = useState(1);
   const [filterBy, setFilterBy] = useState<number[]>(topicIds?.map(id => Number(id)) ?? []);
@@ -79,17 +80,17 @@ export default function Index() {
   const SortPopoverMenuItems = [
     {
       value: 'favorites',
-      label: 'My favorite',
+      label: t('my_favorite'),
       icon: <BookmarkSimple className="text-2xl text-primary-60" />,
     },
     {
       value: 'newest',
-      label: 'Newest Stories',
+      label: t('newest_stories'),
       icon: <ArrowSquareUp className="text-2xl text-primary-60" />,
     },
     {
       value: 'oldest',
-      label: 'Oldest Stories',
+      label: t('oldest_stories'),
       icon: <ArrowSquareDown className="text-2xl text-primary-60" />,
     },
   ];
@@ -113,7 +114,7 @@ export default function Index() {
       <div className="flex flex-col gap-4 bg-white p-4 shadow-sm lg:gap-6 lg:bg-transparent lg:py-5 lg:shadow-none">
         <div className="flex flex-col gap-1">
           <h3 className="text-2xl font-medium leading-8 text-primary-10 lg:text-[2.5rem] lg:font-bold lg:leading-tight">
-            Explore our all stories
+            {t('explore_all_stories')}
           </h3>
           <p className="hidden text-lg leading-snug text-neutral-20 lg:block">{t('description')}</p>
         </div>
@@ -185,7 +186,7 @@ export default function Index() {
                   quality={100}
                   alt="No results found"
                 />
-                <h5 className="text-2xl font-bold leading-snug text-primary-10">No data available.</h5>
+                <h5 className="text-2xl font-bold leading-snug text-primary-10">{t('no_data_available')}</h5>
               </div>
             )}
 
@@ -200,7 +201,7 @@ export default function Index() {
                   className="lg:hidden"
                   onClick={handleLoadMore}
                 >
-                  View more
+                  {tCommon('view_more')}
                 </Button>
                 <Button
                   variant="outline"
@@ -209,7 +210,7 @@ export default function Index() {
                   className="hidden lg:flex"
                   onClick={handleLoadMore}
                 >
-                  View more
+                  {tCommon('view_more')}
                 </Button>
               </>
             )}

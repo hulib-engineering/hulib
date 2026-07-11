@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
+import { useTranslations } from 'next-intl';
 import { mergeClassnames } from '@/components/core/private/utils';
 import Button from '@/components/core/button/Button';
 import TextArea from '@/components/core/textArea/TextArea';
@@ -29,6 +30,9 @@ const HuberConfirmationModal = ({
   const [rejectionReason, setRejectionReason] = useState('');
   const [isSuccessful, setIsSuccessful] = useState(false);
 
+  const t = useTranslations('Huber');
+  const tCommon = useTranslations('Common');
+
   const [upgradeUser, { isLoading }] = useUpgradeUserMutation();
 
   const handleUpdateHuberRegistrarStatus = async () => {
@@ -41,7 +45,7 @@ const HuberConfirmationModal = ({
       }).unwrap();
       setIsSuccessful(true);
     } catch {
-      pushError('Failed to approve Huber. Please try again.');
+      pushError(t('approve_huber_failed'));
     }
   };
   const handleDoneConfirmation = () => {
@@ -85,7 +89,7 @@ const HuberConfirmationModal = ({
                   type === 'reject' && isSuccessful && 'bg-red-98 text-red-50',
                 )}
               >
-                {!isSuccessful ? 'Waiting for approval' : type === 'approve' ? 'Approved' : 'Declined'}
+                {!isSuccessful ? t('waiting_for_approval') : type === 'approve' ? t('approved') : t('declined')}
               </span>
             </div>
           </div>
@@ -98,7 +102,7 @@ const HuberConfirmationModal = ({
       {type === 'reject' && !isSuccessful && (
         <TextArea
           rows={7}
-          placeholder="Reason for rejection"
+          placeholder={t('reason_for_rejection')}
           value={rejectionReason}
           onChange={e => setRejectionReason(e.target.value)}
         />
@@ -106,8 +110,8 @@ const HuberConfirmationModal = ({
       <div className="flex w-full flex-col gap-3">
         <p className={mergeClassnames('text-center text-sm', (type === 'approve' || isSuccessful) ? 'text-neutral-30' : 'text-red-70')}>
           {type === 'approve'
-            ? isSuccessful ? 'You have confirmed the request to become a Huber.' : 'You are accepting the request to become a Huber.'
-            : isSuccessful ? 'You declined the request to become a Huber.' : 'You are declining the request to become a Huber.'}
+            ? isSuccessful ? t('huber_request_confirmed') : t('accept_huber_request')
+            : isSuccessful ? t('decline_huber_request') : t('declining_huber_request')}
         </p>
         {isSuccessful ? (
           <Button
@@ -115,7 +119,7 @@ const HuberConfirmationModal = ({
             fullWidth
             onClick={handleDoneConfirmation}
           >
-            Homepage
+            {t('homepage')}
           </Button>
         ) : (
           <div className="flex w-full items-center gap-2">
@@ -127,7 +131,7 @@ const HuberConfirmationModal = ({
               animation={isLoading && 'progress'}
               onClick={handleUpdateHuberRegistrarStatus}
             >
-              Confirm
+              {tCommon('confirm')}
             </Button>
           </div>
         )}

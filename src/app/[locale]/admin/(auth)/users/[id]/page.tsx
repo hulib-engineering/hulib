@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import * as React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
+import { useTranslations } from 'next-intl';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
@@ -64,6 +65,8 @@ export default function Index() {
   const { id: userId } = useParams();
   const searchParams = useSearchParams();
   const tab = searchParams.get('tab');
+
+  const t = useTranslations('Admin');
 
   const {
     data,
@@ -147,7 +150,7 @@ export default function Index() {
               className="absolute inset-0 w-fit text-black"
               onClick={() => router.push('/admin/users')}
             >
-              Back
+              {t('back')}
             </Button>
           </div>
         </ProfileCover>
@@ -177,7 +180,9 @@ export default function Index() {
                     <Heart className="text-pink-50" weight="fill" />
                     <p className="text-sm text-black opacity-80">
                       {data?.rating ?? 0}
-                      /5 (hearts)
+                      /5 (
+                      {t('hearts')}
+                      )
                     </p>
                   </div>
                 )}

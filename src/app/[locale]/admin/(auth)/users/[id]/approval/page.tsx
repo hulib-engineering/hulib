@@ -7,6 +7,7 @@ import * as React from 'react';
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import Loading from '@/app/[locale]/loading';
@@ -21,6 +22,7 @@ export default function Index() {
 
   const router = useRouter();
   const { id: userId } = useParams();
+  const t = useTranslations('Admin');
 
   const {
     data,
@@ -65,7 +67,7 @@ export default function Index() {
           className="w-fit text-black"
           onClick={() => router.push('/admin/users')}
         >
-          Back
+          {t('back')}
         </Button>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col overflow-hidden shadow-sm lg:rounded-xl">
@@ -113,7 +115,7 @@ export default function Index() {
             className="w-60"
             onClick={() => setIsApproveHuberModalOpen(true)}
           >
-            Approve
+            {t('back')}
           </Button>
           <Button
             variant="soft"
@@ -122,7 +124,7 @@ export default function Index() {
             className="w-60 bg-red-90 text-red-50"
             onClick={() => setIsRejectHuberModalOpen(true)}
           >
-            Decline
+            {t('decline')}
           </Button>
         </div>
       </div>

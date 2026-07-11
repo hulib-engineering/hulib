@@ -61,7 +61,10 @@ const Step2 = () => {
       }
       goToNextStep();
     } catch (error: any) {
-      pushError(tTimeSlots(error?.message || 'error_contact_admin'));
+      const apiMessage = error?.message ? tTimeSlots(error.message) : null;
+      const fallbackMessage = tTimeSlots('error_contact_admin');
+
+      pushError(apiMessage || fallbackMessage);
     }
   };
 
