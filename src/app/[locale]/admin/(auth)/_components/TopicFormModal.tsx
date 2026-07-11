@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -43,6 +44,7 @@ type TopicFormModalProps = {
 };
 
 const TopicFormModal = ({ open, onClose, topic }: TopicFormModalProps) => {
+  const t = useTranslations('Admin');
   const isEdit = Boolean(topic?.id);
   const [createTopic, { isLoading: isCreating }] = usePostTopicsMutation();
   const [updateTopic, { isLoading: isUpdating }] = useUpdateTopicMutation();
@@ -81,17 +83,17 @@ const TopicFormModal = ({ open, onClose, topic }: TopicFormModalProps) => {
           name: values.name,
           color: values.color,
         }).unwrap();
-        pushSuccess('Topic updated successfully');
+        pushSuccess(t('topic_modal.updated_successfully'));
       } else {
         await createTopic({
           name: values.name,
           color: values.color,
         }).unwrap();
-        pushSuccess('Topic created successfully');
+        pushSuccess(t('topic_modal.created_successfully'));
       }
       onClose();
     } catch {
-      pushError(isEdit ? 'Failed to update topic' : 'Failed to create topic');
+      pushError(isEdit ? t('topic_modal.update_failed') : t('topic_modal.create_failed'));
     }
   };
 
@@ -102,9 +104,7 @@ const TopicFormModal = ({ open, onClose, topic }: TopicFormModalProps) => {
       <Modal.Backdrop />
       <Modal.Panel className="flex w-[472px] flex-col gap-6 rounded-2xl bg-white px-6 py-5 shadow-sm">
         <h2 className="text-xl font-medium leading-8 text-neutral-10">
-          {isEdit ? 'Edit' : 'Create new'}
-          {' '}
-          Topic
+          {isEdit ? t('topic_modal.edit_title') : t('topic_modal.create_title')}
         </h2>
 
         <Form
@@ -118,9 +118,9 @@ const TopicFormModal = ({ open, onClose, topic }: TopicFormModalProps) => {
             render={({ field, fieldState }) => (
               <TextInput
                 type="text"
-                label="Topic name"
+                label={t('topic_modal.name_label')}
                 required
-                placeholder="Type here"
+                placeholder={t('topic_modal.name_placeholder')}
                 isError={fieldState.invalid}
                 {...field}
               />
@@ -133,7 +133,7 @@ const TopicFormModal = ({ open, onClose, topic }: TopicFormModalProps) => {
             name="color"
             render={({ field }) => (
               <Form.Item className="flex flex-col gap-2">
-                <Form.Label required>Topic color</Form.Label>
+                <Form.Label required>{t('topic_modal.color_label')}</Form.Label>
                 <Radio
                   value={field.value}
                   onChange={field.onChange}
@@ -164,11 +164,11 @@ const TopicFormModal = ({ open, onClose, topic }: TopicFormModalProps) => {
           />
 
           <Form.Item className="flex flex-col gap-2">
-            <Form.Label>Preview</Form.Label>
+            <Form.Label>{t('topic_modal.preview_label')}</Form.Label>
             {selectedColorToken ? (
               <TopicBadge
                 topic={{
-                  name: topicName.trim() || 'Type here',
+                  name: topicName.trim() || t('topic_modal.name_placeholder'),
                   color: selectedColorToken,
                   status: 'active',
                 }}
@@ -182,7 +182,7 @@ const TopicFormModal = ({ open, onClose, topic }: TopicFormModalProps) => {
                   'text-base font-medium leading-5',
                 )}
               >
-                {topicName.trim() || 'Type here'}
+                {topicName.trim() || t('topic_modal.name_placeholder')}
               </span>
             )}
           </Form.Item>
@@ -198,7 +198,7 @@ const TopicFormModal = ({ open, onClose, topic }: TopicFormModalProps) => {
                 (!isValid || isSubmitting) && 'opacity-60',
               )}
             >
-              Confirm
+              {t('topic_modal.confirm_button')}
             </Button>
           </Form.Item>
         </Form>

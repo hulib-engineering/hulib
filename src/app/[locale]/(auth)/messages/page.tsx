@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 
+import { useTranslations } from 'next-intl';
 import ChatList from '@/layouts/webapp/Messages/ChatList';
 import ChatDetail from '@/layouts/webapp/Messages/ChatDetail';
 
 export default function MessagesPage() {
+  const t = useTranslations('Messages');
   const [showDetailOnMobile, setShowDetailOnMobile] = useState(false);
 
   return (
@@ -14,7 +16,7 @@ export default function MessagesPage() {
       <div className="flex size-full flex-col overflow-hidden bg-neutral-98 lg:hidden">
         {!showDetailOnMobile && (
           <div className="shrink-0 px-5 py-2 text-xl font-bold leading-7">
-            <h6>Your messages</h6>
+            <h6>{t('your_messages')}</h6>
           </div>
         )}
         {!showDetailOnMobile ? (
@@ -31,7 +33,7 @@ export default function MessagesPage() {
       <div className="hidden size-full flex-1 overflow-hidden bg-neutral-98 lg:flex">
         <div className="flex h-full w-[25rem] shrink-0 flex-col border-r border-t border-neutral-90 bg-white">
           <div className="shrink-0 bg-white px-4 py-5 text-[28px] font-bold leading-9">
-            <h4>Messages</h4>
+            <h4>{t('messages')}</h4>
           </div>
           <ChatList />
         </div>

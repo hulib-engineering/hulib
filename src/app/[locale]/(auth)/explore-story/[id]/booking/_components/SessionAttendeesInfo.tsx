@@ -50,14 +50,14 @@ const ScheduleBasicInfo = ({ huber, onOpenHuberConv }: { huber: z.infer<typeof P
             {huber?.fullName || ''}
           </h4>
           <p className="text-sm font-normal leading-4 text-neutral-30">
-            Huber
+            {t('huber')}
           </p>
           <div className="flex items-center gap-x-2">
             <span className="text-xs leading-[14px] text-neutral-20">
               {huber?.topics?.length ?? 0}
             </span>
             <span className="text-[10px] leading-3 text-neutral-40">
-              Stories
+              {t('stories')}
             </span>
             <div className="flex items-center gap-x-1">
               <div className="flex items-center gap-x-1">
@@ -67,7 +67,7 @@ const ScheduleBasicInfo = ({ huber, onOpenHuberConv }: { huber: z.infer<typeof P
                 </span>
               </div>
               <span className="text-[10px] leading-3 text-neutral-40">
-                Hearts
+                {t('hearts')}
               </span>
             </div>
           </div>
@@ -89,7 +89,7 @@ const ScheduleBasicInfo = ({ huber, onOpenHuberConv }: { huber: z.infer<typeof P
         </p>
         <p className="text-sm font-normal text-neutral-40">
           {t('support_text')}
-            &nbsp;
+          &nbsp;
           <Link className="text-primary-60 underline" onClick={onOpenHuberConv} href="">
             {t('click_here')}
           </Link>

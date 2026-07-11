@@ -66,10 +66,10 @@ const EducationForm = ({ onCancel, ...rest }: IEducationFormProps) => {
     try {
       if (!rest.editable) {
         await addEducation(data).unwrap();
-        pushSuccess('Education information added successfully');
+        pushSuccess(t('education.add_success'));
       } else {
         await editEducation({ ...data, id: rest.id }).unwrap();
-        pushSuccess('Education information edited successfully');
+        pushSuccess(t('education.edit_success'));
       }
       onCancel();
     } catch (error: any) {
@@ -79,22 +79,22 @@ const EducationForm = ({ onCancel, ...rest }: IEducationFormProps) => {
 
   return (
     <div ref={ref} className="flex flex-col gap-4 rounded-[20px] bg-primary-98 p-4">
-      <p className="font-medium">{!rest.editable ? 'Add education' : 'Edit'}</p>
+      <p className="font-medium">{!rest.editable ? t('education.add_title') : t('education.edit_title')}</p>
       <Form className="flex w-full flex-col gap-4" onSubmit={handleSubmitEducationForm}>
         <fieldset className="flex items-center gap-3">
           <Form.Item>
-            <InsetInput id="major" placeholder="Ex: Software Engineering" {...register('major')}>
-              <InsetInput.Label>Major</InsetInput.Label>
+            <InsetInput id="major" placeholder={t('education.major_placeholder')} {...register('major')}>
+              <InsetInput.Label>{t('education.major_label')}</InsetInput.Label>
             </InsetInput>
           </Form.Item>
           <Form.Item>
-            <InsetInput id="institution" placeholder="Ex: Ho Chi Minh University of Science" {...register('institution')}>
-              <InsetInput.Label>School/University</InsetInput.Label>
+            <InsetInput id="institution" placeholder={t('education.institution_placeholder')} {...register('institution')}>
+              <InsetInput.Label>{t('education.institution_label')}</InsetInput.Label>
             </InsetInput>
           </Form.Item>
         </fieldset>
         <fieldset className="flex items-center gap-3">
-          <span>From</span>
+          <span>{t('education.from')}</span>
           <Form.Item className="relative min-h-10 w-fit overflow-visible">
             <Controller
               name="startedAt"
@@ -109,7 +109,7 @@ const EducationForm = ({ onCancel, ...rest }: IEducationFormProps) => {
               )}
             />
           </Form.Item>
-          <span>to</span>
+          <span>{t('education.to')}</span>
           <Form.Item className="relative min-h-10 w-fit overflow-visible">
             <Controller
               name="endedAt"
@@ -126,7 +126,7 @@ const EducationForm = ({ onCancel, ...rest }: IEducationFormProps) => {
           </Form.Item>
         </fieldset>
         <div className="flex items-center justify-end gap-3">
-          <Button variant="outline" size="lg" className="w-[114px]">Cancel</Button>
+          <Button variant="outline" size="lg" className="w-[114px]">{t('cancel')}</Button>
           <Button
             type="submit"
             size="lg"
@@ -134,7 +134,7 @@ const EducationForm = ({ onCancel, ...rest }: IEducationFormProps) => {
             animation={isSubmitting || isAddingEducation || isEditingEducation}
             className="w-[114px]"
           >
-            Save
+            {t('save')}
           </Button>
         </div>
       </Form>
@@ -151,6 +151,7 @@ type IEducationItemProps = {
 
 const EducationItem = ({ data, editable = false }: IEducationItemProps) => {
   const locale = useLocale();
+  const t = useTranslations('Common');
 
   const { id, ...rest } = data;
   const startedAtDateString = new Date(rest.startedAt).toLocaleDateString(locale, {
@@ -175,11 +176,13 @@ const EducationItem = ({ data, editable = false }: IEducationItemProps) => {
       <div className="flex flex-1 flex-col gap-1 text-neutral-20">
         <p className="text-sm font-medium leading-5">
           {data.major}
-          <span className="font-light"> at </span>
+          <span className="font-light">
+            {t('education.at')}
+          </span>
           {data.institution}
         </p>
         <p className="text-xs capitalize leading-[14px]">
-          {`${startedAtDateString} - ${!data.endedAt ? 'Present' : endedAtDateString}`}
+          {`${startedAtDateString} - ${!data.endedAt ? t('education.present') : endedAtDateString}`}
         </p>
       </div>
       {editable && (

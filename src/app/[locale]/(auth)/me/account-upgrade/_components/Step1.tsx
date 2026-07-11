@@ -96,7 +96,7 @@ const Step1 = ({ next }: { next: () => void }) => {
       await registerHuber(huberPayload).unwrap();
       const userKey = `${userInfo.id}_huber_registration_step`;
       localStorage.setItem(userKey, '2');
-      pushSuccess('Registration successful!');
+      pushSuccess(tCommon('account_upgrade.registration_successful'));
       next();
     } catch (error: any) {
       pushError(tCommon(error?.message || 'error_contact_admin'));

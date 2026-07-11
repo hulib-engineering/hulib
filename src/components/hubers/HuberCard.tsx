@@ -27,7 +27,7 @@ const HuberCard = (
   const router = useRouter();
 
   const tCommon = useTranslations('Common');
-  const t = useTranslations('Huber.card');
+  const t = useTranslations('Huber');
 
   const [addToMyFavorites, { isLoading: isAddingToMyFavorites }] = useAddHuberToMyFavoritesMutation();
   const [removeFromMyFavorites, { isLoading: isRemovingFromMyFavorites }] = useRemoveHuberFromMyFavoritesMutation();
@@ -40,11 +40,11 @@ const HuberCard = (
       if (!isFavorite) {
         await addToMyFavorites(props.id);
         setIsFavorite(true);
-        pushSuccess('Successfully added to favorite list');
+        pushSuccess(t('card.added_to_favorites_success'));
       } else {
         await removeFromMyFavorites(props.id);
         setIsFavorite(false);
-        pushSuccess('Successfully removed from favorite list');
+        pushSuccess(t('card.removed_from_favorites_success'));
       }
     } catch (err: any) {
       pushError(err?.data?.message || tCommon('error_contact_admin'));
@@ -75,7 +75,7 @@ const HuberCard = (
           {props.awaiting && (
             <div className="absolute bottom-2 left-0 flex w-full items-center justify-center">
               <span className="rounded-full bg-primary-60 px-4 py-2 text-xs leading-[14px] text-white">
-                Waiting for approval
+                {t('card.waiting_for_approval')}
               </span>
             </div>
           )}
@@ -142,7 +142,7 @@ const HuberCard = (
                 {props.humanBookTopic?.length ?? 0}
               </span>
               <span className="text-[0.625rem] leading-tight text-neutral-40">
-                {t('topics')}
+                {t('card.topics')}
               </span>
             </div>
             <div className="flex items-center gap-1">
@@ -151,7 +151,7 @@ const HuberCard = (
                 {props.rating ?? 0}
               </span>
               <span className="text-[0.625rem] leading-3 text-neutral-40">
-                Hearts
+                {t('hearts')}
               </span>
             </div>
           </div>
@@ -169,7 +169,7 @@ const HuberCard = (
               >
                 <span className="flex items-center gap-2">
                   <CaretCircleRight className="text-xl" />
-                  Visit Profile
+                  {t('card.visit_profile')}
                 </span>
               </Button>
               <Button
@@ -180,7 +180,7 @@ const HuberCard = (
               >
                 <span className="flex items-center gap-2">
                   <CaretCircleRight className="text-xl" />
-                  Visit Profile
+                  {t('card.visit_profile')}
                 </span>
               </Button>
             </>
@@ -191,7 +191,7 @@ const HuberCard = (
             >
               <span className="flex items-center gap-2">
                 <CaretCircleRight className="text-xl" />
-                View Detail
+                {t('card.view_detail')}
               </span>
             </Button>
           )}

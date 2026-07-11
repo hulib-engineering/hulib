@@ -33,6 +33,7 @@ export default function Index() {
   const router = useRouter();
 
   const t = useTranslations('ExploreStory');
+  const tCommon = useTranslations('Common');
 
   const { data, isLoading } = useGetStoryDetailQuery(Number(id));
   const { data: relatedTopics } = useGetRelatedTopicsQuery(Number(id));
@@ -86,7 +87,7 @@ export default function Index() {
           className="w-fit text-black"
           onClick={() => router.back()}
         >
-          Back
+          {tCommon('back')}
         </Button>
         {!isEditing ? (
           <div className="flex flex-col gap-8 lg:flex-row">
@@ -104,10 +105,18 @@ export default function Index() {
                   <div className="flex flex-col">
                     <h5 className="text-2xl font-medium leading-9 text-primary-10">{data?.title}</h5>
                     {data?.publishStatus === PublishStatusEnum.REJECTED && (
-                      <p className="text-lg font-medium text-red-50">(Rejected)</p>
+                      <p className="text-lg font-medium text-red-50">
+                        (
+                        {t('rejected')}
+                        )
+                      </p>
                     )}
                     {data?.publishStatus === PublishStatusEnum.DRAFT && (
-                      <p className="font-medium text-primary-60">(Draft)</p>
+                      <p className="font-medium text-primary-60">
+                        (
+                        {t('draft')}
+                        )
+                      </p>
                     )}
                   </div>
                   <div className="flex w-full snap-x snap-mandatory gap-2 overflow-x-auto scroll-smooth">
@@ -126,7 +135,7 @@ export default function Index() {
                 </div>
                 {data?.publishStatus === PublishStatusEnum.REJECTED && (
                   <div className="flex flex-col gap-2">
-                    <Label>Reason</Label>
+                    <Label>{t('reason')}</Label>
                     <div className="rounded-2xl border border-red-60 bg-neutral-98 p-3 text-sm leading-4 text-neutral-40">
                       {data?.rejectionReason}
                     </div>
@@ -148,7 +157,7 @@ export default function Index() {
                       fullWidth
                       onClick={() => setIsEditing(true)}
                     >
-                      Edit
+                      {tCommon('edit')}
                     </Button>
                     <Button
                       variant="outline"
@@ -158,7 +167,7 @@ export default function Index() {
                       animation={isDeletingStory && 'progress'}
                       onClick={handleDelete}
                     >
-                      Delete
+                      {tCommon('delete')}
                     </Button>
                   </div>
                 )}
@@ -201,9 +210,13 @@ export default function Index() {
                 />
               </div>
               <h6 className="text-center text-xl font-bold text-neutral-10">
-                Story “
+                {t('story')}
+                {' '}
+                “
                 <span className="text-primary-60">{data?.title}</span>
-                ” is deleted successfully
+                ”
+                {' '}
+                {t('is_deleted_successfully')}
               </h6>
             </div>
           </div>

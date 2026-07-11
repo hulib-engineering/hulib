@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { CaretDown, CaretUp } from '@phosphor-icons/react';
 
+import { useTranslations } from 'next-intl';
 import { Chip } from '@/components/core/chip/Chip';
 import IconButton from '@/components/core/iconButton/IconButton';
 import type { WithChildren } from '@/components/core/private/types';
@@ -50,6 +51,7 @@ export default function ChipFilter({
   values = [],
   onChange,
 }: IChipFilterProps) {
+  const t = useTranslations('Common');
   const { data: topics, isLoading } = useGetTopicsQuery({ limit: 1000 });
   const allTopicIds = topics?.data.map((t: Topic) => t.id) ?? [];
 
@@ -69,7 +71,7 @@ export default function ChipFilter({
   };
   const handleAllClick = () => {
     if (onChange) {
-    // If already "all selected" → clear, otherwise select all
+      // If already "all selected" → clear, otherwise select all
       if (values.length === allTopicIds.length) {
         onChange([]);
       } else {
@@ -95,7 +97,7 @@ export default function ChipFilter({
       >
         {/* All tag chip */}
         <TopicChip isActive={isAllActive} className="min-w-[46px]" onClick={handleAllClick}>
-          All
+          {t('all')}
         </TopicChip>
         {topics?.data.map((topic: Topic) => (
           <TopicChip key={topic.id} isActive={values.includes(topic.id)} onClick={() => handleItemClick(topic.id)}>

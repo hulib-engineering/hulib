@@ -9,6 +9,7 @@ import {
   Trash,
 } from '@phosphor-icons/react';
 import { useCallback, useMemo, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -32,6 +33,7 @@ type TagsTableProps = {
 };
 
 const TagsTable = ({ topics, isLoading, pagination }: TagsTableProps) => {
+  const t = useTranslations('Admin');
   const [deleteTopic, { isLoading: isDeleting }] = useDeleteTopicMutation();
   const [updateTopic] = useUpdateTopicMutation();
 
@@ -40,22 +42,23 @@ const TagsTable = ({ topics, isLoading, pagination }: TagsTableProps) => {
   const handleDelete = useCallback(async (topic: Topic) => {
     try {
       await deleteTopic(topic.id).unwrap();
-      pushSuccess('Topic deleted successfully');
+      pushSuccess(t('table.topic_deleted_success'));
     } catch {
-      pushError('Failed to delete topic');
+      pushError(t('table.topic_delete_failed'));
     }
-  }, [deleteTopic]);
+  }, [deleteTopic, t]);
+
   const handleStatusChange = useCallback(
     async (topic: Topic, nextChecked: boolean) => {
       const nextStatus = nextChecked ? 'active' : 'inactive';
       try {
         await updateTopic({ id: topic.id, status: nextStatus }).unwrap();
-        pushSuccess(`Topic set to ${nextStatus}`);
+        pushSuccess(t('table.topic_status_updated', { status: nextStatus }));
       } catch {
-        pushError('Failed to update topic status');
+        pushError(t('table.topic_status_update_failed'));
       }
     },
-    [updateTopic],
+    [updateTopic, t],
   );
 
   const columns = useMemo(
@@ -77,12 +80,12 @@ const TagsTable = ({ topics, isLoading, pagination }: TagsTableProps) => {
         },
         {
           accessorKey: 'name',
-          header: 'Topic name',
+          header: t('table.topic_name'),
           cell: ({ row }) => <TopicBadge topic={row.original} />,
         },
         {
           id: 'actions',
-          header: 'Action',
+          header: t('table.action'),
           meta: {
             headerClassName: 'w-0 whitespace-nowrap border-l border-neutral-80',
             cellClassName: 'w-0 whitespace-nowrap border-l border-neutral-80',
@@ -96,14 +99,18 @@ const TagsTable = ({ topics, isLoading, pagination }: TagsTableProps) => {
                 <Switch
                   checked={checked}
                   onChange={next => handleStatusChange(topic, next)}
-                  aria-label={checked ? `Set ${topic.name} inactive` : `Set ${topic.name} active`}
-                  srLabel={checked ? 'Set inactive' : 'Set active'}
+                  aria-label={
+                    checked
+                      ? t('table.set_topic_inactive', { topic: topic.name })
+                      : t('table.set_topic_active', { topic: topic.name })
+                  }
+                  srLabel={checked ? t('table.set_inactive') : t('table.set_active')}
                 />
                 <IconButton
                   type="button"
                   icon={<PencilSimple />}
                   variant="outline"
-                  aria-label={`Edit ${topic.name}`}
+                  aria-label={t('table.edit_topic', { topic: topic.name })}
                   onClick={() => setEditingTopic(topic)}
                   disabled={isDeleting}
                   className="shrink-0"
@@ -111,7 +118,7 @@ const TagsTable = ({ topics, isLoading, pagination }: TagsTableProps) => {
                 <IconButton
                   type="button"
                   icon={<Trash />}
-                  aria-label={`Delete ${topic.name}`}
+                  aria-label={t('table.delete_topic', { topic: topic.name })}
                   onClick={() => handleDelete(topic)}
                   disabled={isDeleting}
                   className="shrink-0 border-red-60 bg-red-50 hover:border-red-40 hover:bg-red-40"
@@ -121,8 +128,9 @@ const TagsTable = ({ topics, isLoading, pagination }: TagsTableProps) => {
           },
         },
       ] as ColumnDef<Topic>[],
-    [handleDelete, handleStatusChange, isDeleting],
+    [handleDelete, handleStatusChange, isDeleting, t],
   );
+
   const tablePaginationFooter = useMemo(() => {
     if (!pagination || pagination.totalPages <= 0) {
       return undefined;
@@ -160,7 +168,7 @@ const TagsTable = ({ topics, isLoading, pagination }: TagsTableProps) => {
               size="lg"
               disabled={disabled}
               className="!h-8 p-1.5"
-              aria-label="Next page"
+              aria-label={t('table.pagination.next_page')}
             />
           )}
         </Pagination.NextButton>
@@ -171,7 +179,7 @@ const TagsTable = ({ topics, isLoading, pagination }: TagsTableProps) => {
   if (isLoading) {
     return (
       <div className="flex flex-1 items-center justify-center rounded border border-neutral-80 p-8">
-        <p className="text-sm text-neutral-40">Loading topics…</p>
+        <p className="text-sm text-neutral-40">{t('table.loading_topics')}</p>
       </div>
     );
   }
@@ -182,7 +190,7 @@ const TagsTable = ({ topics, isLoading, pagination }: TagsTableProps) => {
         <div className="flex flex-1 flex-col items-center justify-center gap-3 rounded border border-neutral-80 p-8">
           <FolderOpen className="text-6xl text-primary-90" weight="duotone" />
           <p className="text-base font-extrabold leading-6 text-neutral-40">
-            No data yet
+            {t('table.no_data_yet')}
           </p>
         </div>
         <TopicFormModal

@@ -23,11 +23,6 @@ import {
 
 type ChipType = 'story' | 'huber';
 
-const FavoriteType = [
-  { key: 'story' as ChipType, label: 'Story' },
-  { key: 'huber' as ChipType, label: 'Huber' },
-];
-
 export default function MyFavoritesPanel() {
   const router = useRouter();
 
@@ -46,6 +41,11 @@ export default function MyFavoritesPanel() {
   const [activeChip, setActiveChip] = useState<ChipType>('story');
   const [isShowModalRemoveAll, setIsShowModalRemoveAll] = useState(false);
   const [isSelectAll, setIsSelectAll] = useState(false);
+
+  const FavoriteType = [
+    { key: 'story' as ChipType, label: tMyFavorites('story') },
+    { key: 'huber' as ChipType, label: tMyFavorites('huber') },
+  ] as const;
 
   useEffect(() => {
     setIsSelectAll(false);
@@ -78,10 +78,11 @@ export default function MyFavoritesPanel() {
         onClick={() =>
           router.push(type === 'story' ? '/explore-story' : '/explore-hubers')}
       >
-        {type === 'story' ? 'Explore more stories' : 'Explore more hubers'}
+        {type === 'story' ? tMyFavorites('explore_more_stories') : tMyFavorites('explore_more_hubers')}
       </Button>
     </div>
   );
+
   const renderContent = (type: ChipType) => {
     if (isLoading) {
       return type === 'story' ? <StoriesSkeleton /> : <HuberCardListSkeleton />;

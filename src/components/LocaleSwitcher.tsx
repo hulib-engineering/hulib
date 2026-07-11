@@ -1,11 +1,9 @@
 'use client';
 
-import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import { useLocale } from 'next-intl';
 import type { JSX } from 'react';
-import { useState } from 'react';
 
-import { Chip } from '@/components/core/chip/Chip';
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import Dropdown from '@/components/core/dropdown/Dropdown';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
@@ -42,62 +40,28 @@ const LocaleSwitcher = ({ className }: { className?: string }) => {
 
   const locale = useLocale();
 
-  const [option, setOption] = useState<{ locale: string }>(
-    locale === 'en'
-      ? {
-          locale: 'en',
-          // flag: (
-          //   <Image
-          //     width={24}
-          //     height={24}
-          //     src="/assets/images/flags/us.png"
-          //     alt="American flag"
-          //   />
-          // ),
-        }
-      : {
-          locale: 'vi',
-          // flag: (
-          //   <Image
-          //     width={24}
-          //     height={24}
-          //     src="/assets/images/flags/vn.png"
-          //     alt="Vietnamese flag"
-          //   />
-          // ),
-        },
-  );
-
   const handleChange = (value: { locale: string; flag: JSX.Element }) => {
-    setOption(value);
     router.push(pathname, { locale: value.locale });
     router.refresh();
   };
 
   return (
     <Dropdown
-      value={option}
+      value={locale}
       onChange={v => handleChange(v as { locale: string; flag: JSX.Element })}
       className={className}
     >
       {({ open }) => (
         <>
           <Dropdown.Trigger className="rounded-full bg-white p-2 lg:px-4 lg:py-3">
-            <Chip
-              // iconLeft={option.flag}
-              iconRight={(
-                <ChevronDownIcon
-                  className={`text-base text-slate-1000 ${
-                    open && 'rotate-180'
-                  }`}
-                  width={24}
-                  height={24}
-                />
-              )}
-              className="!h-auto !p-0 uppercase leading-tight"
-            >
-              {option.locale}
-            </Chip>
+            <span className="inline-flex !h-auto items-center !p-0 uppercase leading-tight">
+              {locale}
+              <ChevronDownIcon
+                className={`ml-1 text-base text-slate-1000 ${open && 'rotate-180'}`}
+                width={24}
+                height={24}
+              />
+            </span>
           </Dropdown.Trigger>
           <Dropdown.Options>
             {Locales.map(each => (
