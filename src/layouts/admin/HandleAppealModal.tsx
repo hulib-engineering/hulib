@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight, X } from '@phosphor-icons/react';
 import React from 'react';
 
+import { useTranslations } from 'next-intl';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
@@ -26,10 +27,12 @@ type IHandleReportModalProps = {
 
 const HandleAppealModal = ({
   open = true,
-  onClose = () => {},
+  onClose = () => { },
   data,
 }: IHandleReportModalProps) => {
   const [respond, { isLoading }] = useRespondAppealMutation();
+  const tCommon = useTranslations('Common');
+  const t = useTranslations('Admin');
 
   const handleClose = () => {
     if (onClose) {
@@ -54,7 +57,9 @@ const HandleAppealModal = ({
           {/* Modal Header */}
           <div className="inline-flex w-full items-center justify-between p-4 outline outline-1 -outline-offset-1 outline-neutral-90">
             <ArrowLeft className="invisible size-6" />
-            <h5 className="text-2xl font-medium leading-8">Appeal request</h5>
+            <h5 className="text-2xl font-medium leading-8">
+              {t('appeal_form')}
+            </h5>
             <X
               className="size-6 cursor-pointer text-[#343330]"
               onClick={handleClose}
@@ -66,12 +71,12 @@ const HandleAppealModal = ({
               <p className="text-lg font-medium">{`Report #${pad(data?.reportId ?? 0)}`}</p>
               <ArrowRight
                 className="size-6 cursor-pointer text-primary-60"
-                // onClick={handleClose}
+              // onClick={handleClose}
               />
             </div>
             <div className="flex flex-col">
               <div className="bg-red-60 px-6 py-2 text-lg font-medium text-white outline outline-1 -outline-offset-1">
-                Reported user
+                {t('reported_user')}
               </div>
               <div className="flex h-[72px] items-center gap-2 border-b border-neutral-80 px-6 text-sm font-medium leading-4">
                 <Avatar
@@ -103,7 +108,7 @@ const HandleAppealModal = ({
               disabled={isLoading}
               onClick={() => handleRespondAppeal('rejected')}
             >
-              Reject
+              {tCommon('rejected')}
             </Button>
             <Button
               size="lg"
@@ -112,7 +117,7 @@ const HandleAppealModal = ({
               disabled={isLoading}
               onClick={() => handleRespondAppeal('accepted')}
             >
-              Approve
+              {tCommon('approve')}
             </Button>
           </div>
         </div>

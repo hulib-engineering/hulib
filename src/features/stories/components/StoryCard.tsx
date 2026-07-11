@@ -48,6 +48,7 @@ export const StoryCard = ({
   const isMobile = useMobile();
 
   const t = useTranslations('ExploreStory');
+  const tCommon = useTranslations('Common');
 
   const [addToMyFavorites] = useAddStoryToMyFavoritesMutation();
   const [removeFromFavorite, { isLoading: isRemovingFromFavorites }] = useRemoveStoryFromMyFavoritesMutation();
@@ -111,7 +112,7 @@ export const StoryCard = ({
             className="grow"
             onClick={() => setIsEditModalOpen(true)}
           >
-            Edit
+            {t('edit')}
           </Button>
           <Button
             variant="outline"
@@ -244,7 +245,7 @@ export const StoryCard = ({
                 iconLeft={<BookOpen />}
                 onClick={() => router.push(`/explore-story/${data.id}`)}
               >
-                Read all
+                {t('read_all')}
               </Button>
             )}
           </div>
@@ -257,7 +258,7 @@ export const StoryCard = ({
             </div>
             {!withoutActions && (
               <Button size="lg" variant="outline" iconLeft={<Bookmarks />} onClick={handleManageFavoriteList}>
-                Favorite
+                {t('favorite')}
               </Button>
             )}
           </div>
@@ -279,7 +280,11 @@ export const StoryCard = ({
                 {data?.title.toLowerCase()}
               </h6>
               {data.publishStatus === 'rejected' && (
-                <p className="font-medium text-red-50">(Rejected)</p>
+                <p className="font-medium text-red-50">
+                  (
+                  {tCommon('rejected')}
+                  )
+                </p>
               )}
             </div>
             {data.topics && data.topics?.length > 0 && (
@@ -350,23 +355,23 @@ export const StoryCard = ({
             {/* Title */}
             <h4 className="px-4 text-center text-[28px] font-medium leading-9 text-black lg:px-0">
               {isDeleteModalOpen
-                ? 'Are you sure you want to delete story?'
-                : 'Are you sure you want to remove this story from your favorite list?'}
+                ? t('confirm_delete_story')
+                : t('confirm_remove_favorite')}
             </h4>
 
             {/* Story Card */}
             <StoryCard
               data={data}
               withoutActions={isRemovalFromFavoritesConfirmationModalOpen}
-              // editable={isDeleteModalOpen}
+            // editable={isDeleteModalOpen}
             />
 
             {/* Extra description only for delete */}
             {isDeleteModalOpen && (
               <p className="px-4 text-center text-red-50 lg:px-0">
-                This story will be deleted immediately.
+                {t('story_delete_warning')}
                 <br />
-                <span className="text-black">You can&apos;t undo this action.</span>
+                <span className="text-black">{t('cannot_undo_action')}</span>
               </p>
             )}
 
@@ -378,13 +383,14 @@ export const StoryCard = ({
                 fullWidth
                 onClick={handleCloseModal}
               >
-                Cancel
+                {tCommon('cancel')}
               </Button>
               <Button
                 size="lg"
                 fullWidth
                 disabled={isDeleteModalOpen ? isDeletingStory : isRemovingFromFavorites}
                 animation={
+
                   ((isDeleteModalOpen && isDeletingStory)
                     || (isRemovalFromFavoritesConfirmationModalOpen
                       && isRemovingFromFavorites))
@@ -394,7 +400,7 @@ export const StoryCard = ({
                   isDeleteModalOpen ? handleDelete : handleManageFavoriteList
                 }
               >
-                {isDeleteModalOpen ? 'Delete' : 'Confirm'}
+                {isDeleteModalOpen ? tCommon('delete') : tCommon('confirm')}
               </Button>
             </div>
           </div>

@@ -10,7 +10,7 @@ import React from 'react';
 import type { Huber as THuber } from '@/libs/services/modules/huber/huberType';
 
 const RecommendedHuberCard = (props: Partial<THuber>) => {
-  const t = useTranslations('Huber.card');
+  const t = useTranslations('Huber');
   const router = useRouter();
   const avatarConfig = genConfig(props.fullName ?? String(props.id ?? 'huber'));
 
@@ -50,7 +50,7 @@ const RecommendedHuberCard = (props: Partial<THuber>) => {
               {props.humanBookTopic?.length ?? 0}
             </span>
             <span className="text-[0.625rem] leading-3 text-neutral-40">
-              {t('topics')}
+              {t('card.topics')}
             </span>
           </div>
           <div className="flex items-center gap-1">
@@ -59,7 +59,7 @@ const RecommendedHuberCard = (props: Partial<THuber>) => {
               {props.rating ?? 0}
             </span>
             <span className="text-[0.625rem] leading-3 text-neutral-40">
-              Hearts
+              {t('hearts')}
             </span>
           </div>
         </div>

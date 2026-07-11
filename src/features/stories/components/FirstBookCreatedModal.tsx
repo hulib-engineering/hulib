@@ -1,6 +1,7 @@
 'use client';
 import { CalendarDot, X } from '@phosphor-icons/react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 
 type FBModal = | {
@@ -8,6 +9,7 @@ type FBModal = | {
 };
 
 export default function FirstBookCreatedModal(props: FBModal) {
+  const tCommon = useTranslations('Common');
   return (
     <div className="flex size-full max-h-[900px]
             max-w-[400px] flex-col items-center gap-20 rounded-2xl
@@ -36,7 +38,9 @@ export default function FirstBookCreatedModal(props: FBModal) {
             <div className="size-full max-h-[72px] max-w-[241px] text-center text-[20px]
                             font-medium tracking-[-0.02em] text-[#0442BF] sm:max-w-[331px] sm:text-[28px] sm:leading-9"
             >
-              <span className="max-sm:text-black">Chào mừng bạn đến với cộng đồng</span>
+              <span className="max-sm:text-black">
+                {tCommon('welcome_to_community')}
+              </span>
               {' '}
               <b>Huber</b>
               {' '}
@@ -45,7 +49,7 @@ export default function FirstBookCreatedModal(props: FBModal) {
             <div className="w-full max-w-[335px] text-center
                             text-[14px] font-[375] sm:max-w-[480px] sm:text-[16px]"
             >
-              Cuốn sách đầu tiên của bạn đã được duyệt, bây giờ mọi người có thể xem câu chuyện của bạn
+              {tCommon('first_book_approved')}
             </div>
           </div>
         </div>
@@ -66,23 +70,23 @@ export default function FirstBookCreatedModal(props: FBModal) {
               <div className="size-full max-w-[225px] text-[16px] font-medium leading-7 tracking-[-0.01em]
                                 text-black sm:max-h-[38px] sm:text-[20px]"
               >
-                Cập nhật lịch của bạn
+                {tCommon('update_your_schedule')}
               </div>
               <div className="h-full text-sm font-[375] not-italic leading-[22px]
                                 tracking-[0.015em] text-black sm:max-h-[44px]"
               >
-                Cập nhật lịch của bạn để mọi người có thể trò chuyện trực tiếp với bạn
+                {tCommon('update_schedule_description')}
               </div>
             </div>
           </div>
           {/* 2. Button */}
           <Button
-            onClick={() => {}}
+            onClick={() => { }}
             className="flex size-full max-w-[342px] items-center justify-center gap-2 rounded-full border border-solid border-[#0442BF]
                       px-4 font-[375] sm:max-w-[448px]"
             iconLeft={<CalendarDot size={20} />}
           >
-            Cập nhật lịch cá nhân
+            {tCommon('update_personal_schedule')}
           </Button>
         </div>
       </div>

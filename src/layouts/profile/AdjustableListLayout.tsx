@@ -3,6 +3,7 @@
 'use client';
 
 import { Plus } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -11,6 +12,7 @@ import EducationForm from '@/layouts/profile/EducationForm';
 import WorkExperienceForm from '@/layouts/profile/WorkExperienceForm';
 
 const AdjustableListLayout = ({ editable, type, children }: WithChildren<{ editable?: boolean; type: string }>) => {
+  const t = useTranslations('Common');
   const [isAdding, setIsAdding] = useState(false);
 
   return (
@@ -27,7 +29,7 @@ const AdjustableListLayout = ({ editable, type, children }: WithChildren<{ edita
             <IconButton as="span" variant="soft" size="sm">
               <Plus />
             </IconButton>
-            {`add ${type === 'work' ? 'experience' : 'education'}`}
+            {type === 'work' ? t('add_experience') : t('add_education')}
           </button>
         )}
       </div>

@@ -19,6 +19,7 @@ export default function Index() {
   // const topicIds = searchParams.get('topicIds')?.split(',') || []; // Convert topicIds to an array
 
   const t = useTranslations('Huber');
+  const tCommon = useTranslations('Common');
 
   const [page, setPage] = useState(1);
   const [filterBy, setFilterBy] = useState<number[]>([]);
@@ -119,7 +120,7 @@ export default function Index() {
                   className="lg:hidden"
                   onClick={handleLoadMore}
                 >
-                  View more
+                  {tCommon('view_more')}
                 </Button>
                 <Button
                   variant="outline"
@@ -128,7 +129,7 @@ export default function Index() {
                   className="hidden lg:flex"
                   onClick={handleLoadMore}
                 >
-                  View more
+                  {tCommon('view_more')}
                 </Button>
               </>
             )}
