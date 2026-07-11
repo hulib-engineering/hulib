@@ -11,6 +11,7 @@ import type { Huber as THuber } from '@/libs/services/modules/huber/huberType';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { HuberVerificationStatus } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/constants';
+import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 
 const RecommendedHuberCard = ({
   id,
@@ -19,27 +20,15 @@ const RecommendedHuberCard = ({
   verificationStatus,
   followerCount,
   bookCount,
+  sharingTopics,
 }: Partial<THuber>) => {
   const router = useRouter();
   const t = useTranslations('HomeHubers');
   const profilePath = `/users/${id}`;
   const avatarConfig = genConfig(fullName ?? String(id ?? 'huber'));
   // will remove when integrate API
-  const mockTopicHuber = ['Overthinking', 'Gia đình', 'Công việc'];
-  const visibleTopics = mockTopicHuber.slice(0, 2) ?? [];
-  const remainingTopicsCount = Math.max(mockTopicHuber.length - visibleTopics.length, 0);
-
-  // will remove when integrate API
-  const getClassTopic = (topic: string) => {
-    switch (topic) {
-      case 'Overthinking':
-        return 'text-primary-50 bg-blue-90';
-      case 'Gia đình':
-        return 'text-red-50 bg-red-90';
-      default:
-        return 'text-neutral-50 bg-neutral-90';
-    }
-  };
+  const visibleTopics = sharingTopics?.slice(0, 1) ?? [];
+  const remainingTopicsCount = Math.max((sharingTopics?.length ?? 0) - visibleTopics.length, 0);
 
   return (
     <div
@@ -84,23 +73,23 @@ const RecommendedHuberCard = ({
           {verificationStatus === HuberVerificationStatus.challenge && <CircleIcon size={16} className="rounded-full bg-neutral-90 p-px text-neutral-60" weight="fill" />}
         </div>
 
-        <div className="flex max-h-[56px] w-full flex-wrap items-start gap-1 overflow-hidden lg:max-h-none lg:flex-nowrap lg:items-center lg:gap-2 lg:overflow-visible">
+        <div className="flex w-full flex-nowrap items-start gap-1 overflow-hidden lg:items-center lg:gap-2">
           {visibleTopics.map(topic => (
             <Chip
-              key={topic}
+              key={topic.id}
               as="span"
               className={mergeClassnames(
                 'h-auto max-w-full rounded border px-2 py-1 text-left text-xs font-medium leading-[14px]',
-                getClassTopic(topic),
+                getTopicBadgeClasses(topic.color),
               )}
             >
-              <span className="line-clamp-2 block overflow-hidden break-words">
-                {topic}
+              <span className="line-clamp-1 text-xs font-medium leading-[14px]">
+                {topic.name}
               </span>
             </Chip>
           ))}
           {remainingTopicsCount > 0 && (
-            <span className="inline-flex shrink-0 items-center whitespace-nowrap rounded border border-primary-80 bg-primary-90 px-2 py-1 text-xs font-medium leading-[14px] text-primary-60">
+            <span className="inline-flex shrink-0 items-center whitespace-nowrap rounded border border-primary-80 bg-primary-60 px-2 py-1 text-xs font-medium leading-[14px] text-white">
               +
               {remainingTopicsCount}
             </span>

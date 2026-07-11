@@ -38,25 +38,8 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [likeCount, setLikeCount] = React.useState(data?.totalLikes ?? 0);
 
-  const mockTopicHuber = [
-    {
-      id: '1',
-      name: 'Khoảnh khắc gia đình',
-      color: 'primary',
-    },
-    {
-      id: '2',
-      name: 'Cảm xúc',
-      color: 'blue',
-    },
-    {
-      id: '3',
-      name: 'Gia đình',
-      color: 'orange',
-    },
-  ];
-  const visibleTopics = data.topics?.length > 0 ? data.topics.slice(0, 1) : mockTopicHuber.slice(0, 1);
-  const remainingTopicsCount = Math.max((data.topics?.length > 0 ? data.topics?.length : mockTopicHuber.length) - visibleTopics.length, 0);
+  const visibleTopics = data?.topics?.slice(0, 1) ?? [];
+  const remainingTopicsCount = Math.max((data.topics?.length ?? 0) - visibleTopics.length, 0);
 
   const isDisplayNewEventTag = visibleTopics.some(topic =>
     topic.name.toLowerCase().includes('khoảnh khắc'),
