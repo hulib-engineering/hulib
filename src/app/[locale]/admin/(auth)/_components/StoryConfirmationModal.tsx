@@ -1,5 +1,6 @@
 import { Heart } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import type { z } from 'zod';
 
@@ -43,6 +44,7 @@ export default function StoryConfirmationModal({
   onClose,
 }: IApprovalConfirmationModalProps) {
   const router = useRouter();
+  const t = useTranslations('Admin');
 
   const [updateStory, { isLoading }] = useUpdateStoryMutation();
 
@@ -59,12 +61,12 @@ export default function StoryConfirmationModal({
       }).unwrap();
       pushSuccess(
         type === 'approve'
-          ? 'Story approved successfully'
-          : 'Story rejected successfully',
+          ? t('story_modal.approved_successfully')
+          : t('story_modal.rejected_successfully'),
       );
       setIsSuccessful(true);
     } catch {
-      pushError('Failed to approve story');
+      pushError(t('story_modal.update_failed'));
     }
   };
   const handleDoneConfirmation = () => {
@@ -120,7 +122,7 @@ export default function StoryConfirmationModal({
       {type === 'reject' && !isSuccessful && (
         <TextArea
           rows={7}
-          placeholder="Reason for rejection"
+          placeholder={t('story_modal.rejection_placeholder')}
           value={rejectionReason}
           onChange={e => setRejectionReason(e.target.value)}
         />
@@ -128,8 +130,8 @@ export default function StoryConfirmationModal({
       <div className="flex w-full flex-col gap-3">
         <p className={mergeClassnames('text-center text-sm', (type === 'approve' || isSuccessful) ? 'text-neutral-30' : 'text-red-70')}>
           {type === 'approve'
-            ? isSuccessful ? 'You have confirmed the request to publish this story.' : 'You are accepting the request to publish this story.'
-            : isSuccessful ? 'You declined the request to publish this story.' : 'You are declining the request to publish this story.'}
+            ? isSuccessful ? t('story_modal.approve_success_message') : t('story_modal.approve_prompt_message')
+            : isSuccessful ? t('story_modal.reject_success_message') : t('story_modal.reject_prompt_message')}
         </p>
         {isSuccessful ? (
           <Button
@@ -137,11 +139,11 @@ export default function StoryConfirmationModal({
             fullWidth
             onClick={handleDoneConfirmation}
           >
-            Homepage
+            {t('story_modal.homepage_button')}
           </Button>
         ) : (
           <div className="flex w-full items-center gap-2">
-            <Button variant="outline" size="lg" fullWidth onClick={onClose}>Back</Button>
+            <Button variant="outline" size="lg" fullWidth onClick={onClose}>{t('story_modal.back_button')}</Button>
             <Button
               size="lg"
               fullWidth
@@ -149,7 +151,7 @@ export default function StoryConfirmationModal({
               animation={isLoading && 'progress'}
               onClick={handleUpdateStoryStatus}
             >
-              Confirm
+              {t('story_modal.confirm_button')}
             </Button>
           </div>
         )}

@@ -2,16 +2,18 @@
 
 import React from 'react';
 
+import { useTranslations } from 'next-intl';
 import { useAppSelector } from '@/libs/hooks';
 
 const NumberOfMovements = () => {
   const numberOfAvailableMovements = useAppSelector(
     state => state.minigame.numOfAvailableMovements,
   );
+  const t = useTranslations('MiniGame');
 
   return (
     <div className="flex flex-col items-center text-white">
-      <h6 className="mb-1 text-base font-light capitalize">movements</h6>
+      <h6 className="mb-1 text-base font-light capitalize">{t('movements')}</h6>
       <div className="rounded px-2 py-4 text-[2rem] font-semibold shadow-inner">
         {numberOfAvailableMovements}
       </div>

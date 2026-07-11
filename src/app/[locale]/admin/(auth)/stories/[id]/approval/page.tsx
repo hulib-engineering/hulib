@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import * as React from 'react';
 import { useState } from 'react';
 
+import { useTranslations } from 'next-intl';
 import StoryConfirmationModal from '@/app/[locale]/admin/(auth)/_components/StoryConfirmationModal';
 import Button from '@/components/core/button/Button';
 import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
@@ -23,6 +24,7 @@ import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
 export default function Index() {
   const { id } = useParams();
   const router = useRouter();
+  const t = useTranslations('Admin');
 
   const { data, isLoading } = useGetStoryDetailQuery(Number(id));
 
@@ -55,7 +57,7 @@ export default function Index() {
         className="w-fit text-black"
         onClick={() => router.push('/admin/awaiting-stories')}
       >
-        Back to Awaiting approval - Stories
+        {t('stories.back_to_awaiting_approval')}
       </Button>
 
       {/* Story information */}
@@ -118,7 +120,7 @@ export default function Index() {
           className="w-60"
           onClick={() => router.push(`/admin/stories/${id}/cover`)}
         >
-          Regenerate cover
+          {t('stories.regenerate_cover')}
         </Button>
       </div>
 
@@ -129,7 +131,7 @@ export default function Index() {
           className="w-60"
           onClick={() => setIsApprovalConfirmationModalOpen(true)}
         >
-          Approve
+          {t('stories.approve')}
         </Button>
         <Button
           variant="soft"
@@ -137,7 +139,7 @@ export default function Index() {
           className="w-60 bg-red-90 text-red-50 hover:bg-white hover:text-red-90"
           onClick={() => setIsRejectionConfirmationModalOpen(true)}
         >
-          Decline
+          {t('stories.decline')}
         </Button>
       </div>
     </div>

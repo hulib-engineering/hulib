@@ -1,16 +1,15 @@
 'use client';
 import { CalendarDot, X } from '@phosphor-icons/react';
-import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 
 type FBModal = | {
   onClose: () => void;
 };
 
-export default function FirstBookCreatedModal({ onClose }: FBModal) {
-  const t = useTranslations('FirstBookCreated');
-
+export default function FirstBookCreatedModal(props: FBModal) {
+  const tCommon = useTranslations('Common');
   return (
     <div className="flex size-full max-h-[900px]
             max-w-[400px] flex-col items-center gap-20 rounded-2xl
@@ -20,7 +19,7 @@ export default function FirstBookCreatedModal({ onClose }: FBModal) {
       <button
         type="button"
         className="absolute right-5 top-5 p-3"
-        onClick={onClose}
+        onClick={props.onClose}
         aria-label="Close"
       >
         <X size={20} />
@@ -39,7 +38,9 @@ export default function FirstBookCreatedModal({ onClose }: FBModal) {
             <div className="size-full max-h-[72px] max-w-[241px] text-center text-[20px]
                             font-medium tracking-[-0.02em] text-[#0442BF] sm:max-w-[331px] sm:text-[28px] sm:leading-9"
             >
-              <span className="max-sm:text-black">{t('welcome_title')}</span>
+              <span className="max-sm:text-black">
+                {tCommon('welcome_to_community')}
+              </span>
               {' '}
               <b>Huber</b>
               {' '}
@@ -48,7 +49,7 @@ export default function FirstBookCreatedModal({ onClose }: FBModal) {
             <div className="w-full max-w-[335px] text-center
                             text-[14px] font-[375] sm:max-w-[480px] sm:text-[16px]"
             >
-              {t('welcome_description')}
+              {tCommon('first_book_approved')}
             </div>
           </div>
         </div>
@@ -69,24 +70,23 @@ export default function FirstBookCreatedModal({ onClose }: FBModal) {
               <div className="size-full max-w-[225px] text-[16px] font-medium leading-7 tracking-[-0.01em]
                                 text-black sm:max-h-[38px] sm:text-[20px]"
               >
-                {t('update_schedule_title')}
+                {tCommon('update_your_schedule')}
               </div>
               <div className="h-full text-sm font-[375] not-italic leading-[22px]
                                 tracking-[0.015em] text-black sm:max-h-[44px]"
               >
-                {t('update_schedule_description')}
+                {tCommon('update_schedule_description')}
               </div>
             </div>
           </div>
           {/* 2. Button */}
-          {/* TODO: need add action */}
           <Button
-            onClick={onClose}
+            onClick={() => { }}
             className="flex size-full max-w-[342px] items-center justify-center gap-2 rounded-full border border-solid border-[#0442BF]
                       px-4 font-[375] sm:max-w-[448px]"
             iconLeft={<CalendarDot size={20} />}
           >
-            {t('update_schedule_button')}
+            {tCommon('update_personal_schedule')}
           </Button>
         </div>
       </div>

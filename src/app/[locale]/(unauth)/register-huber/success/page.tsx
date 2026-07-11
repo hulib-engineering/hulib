@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import BackButton from '../_components/BackButton';
 import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
 
@@ -9,6 +10,7 @@ export default function RegisterHuberSuccess() {
   const searchParams = useSearchParams();
   const storyId = searchParams.get('storyId');
   const router = useRouter();
+  const t = useTranslations('Huber');
   const { data: story, isLoading } = useGetStoryDetailQuery(Number(storyId), {
     skip: !storyId,
   });
@@ -16,7 +18,7 @@ export default function RegisterHuberSuccess() {
   console.log('Data', story);
   return (
     <div className="min-h-screen bg-white">
-      <BackButton text="Tạo sách" />
+      <BackButton />
 
       <div className="flex flex-col items-center px-[96px] pb-16 pt-10">
         <div className="mb-6">
@@ -30,11 +32,11 @@ export default function RegisterHuberSuccess() {
         </div>
 
         <h1 className="mb-3 text-center text-[28px] font-[500] leading-[36px] text-[#0442BF]">
-          Viết câu chuyện thành công
+          {t('success_create_book')}
         </h1>
 
         <p className="mb-10 max-w-md text-center text-[16px] font-[400] leading-[24px] tracking-[0.5%] text-gray-500">
-          Thanks for your story! HuLib will keep you informed when our process completes.
+          {t('thanks_for_story')}
         </p>
 
         {/* Story Card */}
@@ -42,7 +44,7 @@ export default function RegisterHuberSuccess() {
           {/* Left: text content */}
           <div className="flex flex-1 flex-col gap-3">
             <span className="self-start rounded-full bg-[#7C5CBF] px-4 py-1.5 text-xs font-semibold text-white">
-              In review
+              {t('in_review')}
             </span>
 
             {story?.title && (
@@ -107,17 +109,17 @@ export default function RegisterHuberSuccess() {
         {/* Action buttons */}
         <div className="flex gap-4">
           <button onClick={() => router.push(`/users/${story.humanBookId}?tab=about`)} className="hover:bg-gray-50 h-[44px] w-[232px] rounded-full border border-[#C2C6CF] px-6 py-3 text-sm font-medium text-[#0442BF] transition-colors">
-            Quay về trang cá nhân
+            {t('back_to_profile')}
           </button>
-          <button onClick={() => router.push(`/home`)} className="flex h-[44px] w-[232px] items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#007CBE] to-[#8845C6] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#14144a]">
+          <button onClick={() => router.push(`/`)} className="flex h-[44px] w-[232px] items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#007CBE] to-[#8845C6] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#14144a]">
             <Image
               src="/assets/images/register-huber/white_book.png"
-              alt=""
+              alt={t('new_book_icon_alt')}
               width={18}
               height={18}
               className="object-contain brightness-[10]"
             />
-            Tạo sách mới
+            {t('create_new_book')}
           </button>
         </div>
       </div>

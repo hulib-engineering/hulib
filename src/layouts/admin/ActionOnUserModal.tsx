@@ -4,6 +4,7 @@ import type { FC } from 'react';
 import React, { useState } from 'react';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 
+import { useTranslations } from 'next-intl';
 import TextArea from '@/components/core/textArea/TextArea';
 import { mergeClassnames } from '@/components/core/private/utils';
 import Button from '@/components/core/button/Button';
@@ -23,6 +24,7 @@ const ActionOnUserModal: FC<IActionOnUserModalProps> = ({
   onClose,
   type,
 }) => {
+  const tCommon = useTranslations('Common');
   const [reasonForAction, setReasonForAction] = useState('');
 
   const handleClose = () => {
@@ -88,10 +90,10 @@ const ActionOnUserModal: FC<IActionOnUserModalProps> = ({
               size="lg"
               fullWidth
               disabled={reasonForAction.trim().length === 0}
-              // animation={isLoading && 'progress'}
-              // onClick={handleUpdateHuberRegistrarStatus}
+            // animation={isLoading && 'progress'}
+            // onClick={handleUpdateHuberRegistrarStatus}
             >
-              Confirm
+              {tCommon('confirm')}
             </Button>
           </div>
         </div>

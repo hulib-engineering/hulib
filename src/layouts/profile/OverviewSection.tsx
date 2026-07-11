@@ -1,7 +1,7 @@
 'use client';
 
 import { Heart, PencilSimple, PlayCircle, Warning } from '@phosphor-icons/react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -24,6 +24,8 @@ type IOverviewSectionProps = {
 };
 
 const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
+  const t = useTranslations('Common');
+
   const isHuber = data.role?.id === Role.HUBER;
   const toBeHuber = data.role?.id === Role.LIBER && data.approval === 'Pending';
 
@@ -51,7 +53,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
       setIsEditingVideoSrc(false);
       setOpenEditPopup(false);
     } catch {
-      setErrorMessage('Failed to update profile. Please try again.');
+      setErrorMessage(t('failed_update_profile'));
     }
   };
   const togglePlay = () => {
@@ -71,7 +73,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
     <>
       {(isHuber || toBeHuber) && data?.humanBookTopic && data?.humanBookTopic?.length > 0 && (
         <div className="flex flex-col gap-2 border-b-[0.5px] border-neutral-90 py-3 lg:gap-4 lg:border-none lg:py-0">
-          <p className="font-medium text-black">Topic</p>
+          <p className="font-medium text-black">{t('topic')}</p>
           <div className="flex flex-row gap-x-2">
             {data?.humanBookTopic?.map(topic => (
               <Chip
@@ -90,7 +92,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
       )}
       <div className="flex flex-col gap-2 border-b-[0.5px] border-neutral-90 py-3 lg:gap-4 lg:border-none lg:py-0">
         <div className="flex items-center justify-between">
-          <p className="font-medium text-black">Bio</p>
+          <p className="font-medium text-black">{t('bio')}</p>
           {editable && !openEditPopup && !isEditingVideoSrc && (
             <IconButton variant="soft" size="sm" className="p-2" onClick={() => setOpenEditPopup(true)}>
               <PencilSimple weight="bold" />
@@ -114,7 +116,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
                       setOpenEditPopup(false);
                     }}
                   >
-                    Cancel
+                    {t('cancel')}
                   </Button>
                   <Button
                     type="submit"
@@ -122,7 +124,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
                     disabled={isSubmitting}
                     animation={isSubmitting && 'progress'}
                   >
-                    {isSubmitting ? 'Saving...' : 'Save'}
+                    {isSubmitting ? t('saving') : t('save')}
                   </Button>
                 </div>
               </form>
@@ -134,7 +136,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
       {(isHuber || toBeHuber) && (
         <div className="flex flex-col gap-5 border-b-[0.5px] border-neutral-90 py-3 lg:gap-4 lg:border-none lg:py-0">
           <div className="flex items-center justify-between">
-            <p className="font-medium text-black">Video Introduction</p>
+            <p className="font-medium text-black">{t('video_introduction')}</p>
             {editable && !isEditingVideoSrc && !openEditPopup && (
               <IconButton
                 variant="soft"
@@ -167,7 +169,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
                     setIsEditingVideoSrc(false);
                   }}
                 >
-                  Cancel
+                  {t('cancel')}
                 </Button>
                 <Button
                   size="lg"
@@ -175,7 +177,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
                   animation={isSubmitting && 'progress'}
                   onClick={handleSubmit(onSubmit)}
                 >
-                  Save
+                  {t('save')}
                 </Button>
               </div>
             </div>
@@ -210,10 +212,10 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
                       controls={isVideoPlaying}
                       onPause={() => setIsVideoPlaying(false)}
                       onPlay={() => setIsVideoPlaying(true)}
-                      onError={() => setInvalidVideoMsg('Invalid video source')}
+                      onError={() => setInvalidVideoMsg(t('invalid_video_source'))}
                       onLoadedData={() => setInvalidVideoMsg(null)}
                     >
-                      Your browser does not support HTML video.
+                      {t('video_browser_unsupported')}
                     </video>
 
                     {!isVideoPlaying && !invalidVideoMsg && (
@@ -233,7 +235,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
                           <p className="font-medium text-neutral-98">{invalidVideoMsg}</p>
                         </div>
                         <Button size="sm" onClick={() => setIsEditingVideoSrc(true)}>
-                          Add video source
+                          {t('add_video_source')}
                         </Button>
                       </div>
                     )}
@@ -247,7 +249,7 @@ const OverviewSection = ({ data, editable }: IOverviewSectionProps) => {
       {data?.feedbackBys?.length > 0 && (
         <div className="flex flex-col gap-3 py-3 lg:gap-4 lg:py-0">
           <div className="py-2 font-medium text-black">
-            What libers say
+            {t('what_libers_say')}
           </div>
           <div className="flex max-h-[684px] flex-col gap-6 overflow-y-auto px-5">
             {data?.feedbackBys?.map((feedback, index) => (

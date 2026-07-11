@@ -7,6 +7,7 @@ import * as React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 
+import { useTranslations } from 'next-intl';
 import MyFavoritesPanel from './_components/MyFavoritesPanel';
 import MyStoriesPanel from './_components/MyStoriesPanel';
 
@@ -25,10 +26,10 @@ import { openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
 
 const ProfileTabs = [
-  { value: 'about', label: 'About' },
-  { value: 'stories', label: 'My Stories' },
-  { value: 'favorite-list', label: 'My Favorite' },
-];
+  { value: 'about', label: 'about' },
+  { value: 'stories', label: 'my_stories' },
+  { value: 'favorite-list', label: 'my_favorite' },
+] as const;
 
 type TProfileTab = 'about' | 'stories' | 'favorite-list' | string;
 
@@ -40,6 +41,7 @@ export default function Index() {
   const { id: userId } = useParams();
   const searchParams = useSearchParams();
   const tab = searchParams.get('tab');
+  const t = useTranslations('MyProfile');
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
   const userAvatarId = useAppSelector(state => state.auth.avatarId);
@@ -183,7 +185,9 @@ export default function Index() {
                       <Heart className="text-pink-50" weight="fill" />
                       <p className="text-sm text-black opacity-80">
                         {userDetail?.rating ?? 0}
-                        /5 (hearts)
+                        /5 (
+                        {t('hearts')}
+                        )
                       </p>
                     </div>
                   )}
@@ -197,7 +201,7 @@ export default function Index() {
                     className="w-[114px]"
                     onClick={() => setReportModalOpen(true)}
                   >
-                    Report
+                    {t('report')}
                   </Button>
                   <Button
                     size="sm"
@@ -205,7 +209,7 @@ export default function Index() {
                     className="w-[114px]"
                     onClick={handleOpenChatWindow}
                   >
-                    Chat
+                    {t('chat')}
                   </Button>
                 </div>
               )}
@@ -213,14 +217,14 @@ export default function Index() {
             {notMe && userDetail?.role?.id === Role.HUBER && (
               <div className="hidden gap-2 lg:flex">
                 <Button variant="outline" size="lg" onClick={() => setReportModalOpen(true)}>
-                  Report
+                  {t('report')}
                 </Button>
                 <Button
                   size="lg"
                   iconRight={<TelegramLogo />}
                   onClick={handleOpenChatWindow}
                 >
-                  Chat
+                  {t('chat')}
                 </Button>
               </div>
             )}
@@ -245,7 +249,7 @@ export default function Index() {
                   }
                 }}
               >
-                {label}
+                {t(label)}
               </div>
             ))}
           </div>
