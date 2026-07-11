@@ -39,9 +39,6 @@ export default function PublicHeader() {
               <Link href="/explore-story" className="p-3">
                 {t('navigation.bookshelf')}
               </Link>
-              <Link href="/explore-story" className="p-3">
-                {t('navigation.pinboard')}
-              </Link>
               <Link href="/about" className="p-3">
                 {t('navigation.about_us')}
               </Link>
@@ -112,13 +109,6 @@ export default function PublicHeader() {
               onClick={() => setIsMenuOpen(false)}
             >
               {t('navigation.bookshelf')}
-            </Link>
-            <Link
-              href="/explore-story"
-              className="rounded-lg px-2 py-3 text-base font-medium leading-5 text-neutral-20"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {t('navigation.pinboard')}
             </Link>
             <Link
               href="/about"

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { BaseTemplate } from '@/templates/BaseTemplate';
+import HomeTemplate from '@/templates/HomeTemplate';
 
 export default function Layout({
   children,
@@ -8,8 +8,8 @@ export default function Layout({
   children: ReactNode;
 }) {
   return (
-    <BaseTemplate>
-      <div className="w-screen pb-8 pt-24 text-xl [&_ul]:my-6">{children}</div>
-    </BaseTemplate>
+    <HomeTemplate>
+      <div className="pb-8 text-xl [&_ul]:my-6">{children}</div>
+    </HomeTemplate>
   );
 }
