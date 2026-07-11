@@ -10,7 +10,6 @@ import Pagination from '@/components/core/pagination/Pagination';
 import { StoryCard } from '@/features/stories/components/StoryCard';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
-import { PublishStatusEnum } from '@/libs/services/modules/stories/storiesType';
 
 export default function AwaitingStoriesPage() {
   const t = useTranslations('Admin');
@@ -18,7 +17,7 @@ export default function AwaitingStoriesPage() {
   const { data: awaitingStories, isLoading } = useGetStoriesQuery({
     page: currentPage,
     limit: 6,
-    publishStatus: PublishStatusEnum.DRAFT, // Awaiting approval
+    // publishStatus: PublishStatusEnum.DRAFT, // Awaiting approval
   });
 
   const list = awaitingStories?.data ?? [];
