@@ -23,10 +23,7 @@ export default function RegisterAsHuberPage() {
   };
 
   return (
-    <div
-      className="flex flex-col gap-6
-      sm:mb-8"
-    >
+    <div className="flex flex-col sm:mb-8 sm:gap-6">
       {/* PAGE HEADER */}
       <BackButton />
 
