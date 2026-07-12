@@ -7,7 +7,7 @@ export default function CreateBook() {
   return (
     <div className="">
       <BackButton text="Tạo sách" />
-      <div className="px-[96px]">
+      <div className="py-1 xl:px-24">
         <StoryForm type="create" onCancel={() => { }} onSucceed={() => { }} />
       </div>
     </div>
