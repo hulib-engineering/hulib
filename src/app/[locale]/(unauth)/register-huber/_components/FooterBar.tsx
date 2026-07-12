@@ -1,3 +1,5 @@
+// File no longer in use by (unauth)\register-huber\policy\page.tsx
+
 'use client';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
