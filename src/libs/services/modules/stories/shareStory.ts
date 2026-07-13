@@ -10,9 +10,6 @@ const shareStory = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
         type: ChangeCountEnum.UP,
       },
     }),
-    invalidatesTags: (_result, _error, id) => [
-      { type: 'Story' as const, id }, // ensures individual cache is cleared
-    ],
   });
 
 export default shareStory;
