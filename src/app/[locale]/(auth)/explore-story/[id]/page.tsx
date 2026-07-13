@@ -14,9 +14,10 @@ import {
   ThumbsUp,
   X,
 } from '@phosphor-icons/react';
-import { notFound, redirect, useParams, useRouter } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import * as React from 'react';
+import { redirect, useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';

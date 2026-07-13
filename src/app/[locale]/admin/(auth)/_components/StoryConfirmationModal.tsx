@@ -1,8 +1,8 @@
 import { Heart } from '@phosphor-icons/react';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import type { z } from 'zod';
+import { useRouter } from '@/libs/i18nNavigation';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';

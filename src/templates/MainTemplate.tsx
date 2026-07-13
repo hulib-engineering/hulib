@@ -1,7 +1,6 @@
 'use client';
 
 import localFont from 'next/font/local';
-import { redirect, usePathname } from 'next/navigation';
 import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
 
@@ -12,6 +11,7 @@ import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
 import MessengerWidget from '@/layouts/webapp/MultipleChatWidget';
 import { useAppDispatch } from '@/libs/hooks';
+import { redirect, usePathname } from '@/libs/i18nNavigation';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import { setAvatarUrl, setUserInfo } from '@/libs/store/authentication';
 

@@ -8,11 +8,12 @@ import {
   FadersHorizontal,
 } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import Button from '@/components/core/button/Button';
+import { usePathname, useRouter } from '@/libs/i18nNavigation';
 import Dropdown from '@/components/core/dropdown/Dropdown';
 import Loader from '@/components/core/loader/Loader';
 import MenuItem from '@/components/core/menuItem/MenuItem';

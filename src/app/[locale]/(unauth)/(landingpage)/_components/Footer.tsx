@@ -2,12 +2,12 @@
 
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 import CommunityGuidelinesModal from '@/components/CommunityGuidelinesModal';
 import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
+import { Link } from '@/libs/i18nNavigation';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TermOfUseModal from '@/components/TermOfUseModal';
 import { Env } from '@/libs/Env.mjs';

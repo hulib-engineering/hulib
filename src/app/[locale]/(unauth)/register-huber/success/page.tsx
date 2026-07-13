@@ -1,9 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import BackButton from '../_components/BackButton';
+import { useRouter } from '@/libs/i18nNavigation';
 import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
 
 export default function RegisterHuberSuccess() {

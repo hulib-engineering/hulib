@@ -1,13 +1,12 @@
 import { ArrowLeft, Heart, Info, Timer } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import type z from 'zod';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 
 import Button from '@/components/core/button/Button';
 import { useAppSelector } from '@/libs/hooks';
+import { Link, useRouter } from '@/libs/i18nNavigation';
 import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
 import type { HuberStep1Validation } from '@/validations/HuberValidation';

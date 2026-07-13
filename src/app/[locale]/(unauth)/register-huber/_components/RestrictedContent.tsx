@@ -16,7 +16,6 @@ export default function RestrictedContent() {
 
   return (
     <div className="mb-[20px] w-full rounded-2xl border border-[#FFE3CC] bg-[#FFF9F5] px-9 py-7">
-      {/* Header */}
       <div className="mb-5 flex items-center gap-3">
         <div className="flex items-center justify-center rounded-full bg-[#FFE3CC] p-[8px]">
           <Image
@@ -26,10 +25,9 @@ export default function RestrictedContent() {
             height={30}
           />
         </div>
-        <h3 className="text-[16px] font-[500] leading-[24px] tracking-[0.5%] text-black">Nội dung cần tránh</h3>
+        <h3 className="text-[16px] font-[500] leading-[24px] tracking-[0.5%] text-black">{t('content_to_avoid')}</h3>
       </div>
 
-      {/* Grid 2 columns */}
       <div className="grid grid-cols-2 gap-x-12 gap-y-3">
         {contentKeys.map((key, idx) => (
           <div key={idx} className="flex items-start gap-2.5">
