@@ -25,6 +25,7 @@ type TableProps<TData extends RowData> = {
 type TablePagination = {
   totalPages: number;
   currentPage: number;
+  hasNextPage?: boolean;
   onPageChange: (page: number) => void;
   footerClassName?: string;
 };
