@@ -42,7 +42,7 @@ export default function Rulesgrid() {
   ];
 
   return (
-    <div className="mb-8 grid grid-cols-1 gap-[40px] sm:grid-cols-2 lg:grid-cols-5">
+    <div className="grid grid-cols-1 gap-4 max-sm:px-4 min-[405px]:grid-cols-2 lg:grid-cols-5">
       {CARDS.map((card, idx) => (
         <RuleCard key={idx} card={card} />
       ))}

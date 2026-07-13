@@ -261,14 +261,17 @@ export default function StoryForm(props: IStoryFormProps) {
       pushError(t(error?.message || 'error_contact_admin'));
     }
   };
-
+  // CHANGE: Changed 'xl' and 'lg' breakpoints to 'sm' or 'md'.
   return (
-    <div className="flex flex-col gap-6 rounded-[20px] bg-white p-5">
+    <div className="flex flex-col gap-6 rounded-[20px] bg-white
+      max-[955px]:mt-2 min-[955px]:p-5"
+    >
       <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-6">
-
+        <div className="flex flex-col gap-4 min-[955px]:flex-row
+          min-[955px]:items-stretch min-[955px]:gap-6"
+        >
           {/* Cột trái */}
-          <div className="flex flex-1 flex-col">
+          <div className="flex flex-1 flex-col max-[955px]:hidden">
             <p className="mb-2 text-sm font-medium text-black">
               {t('cover_picture')}
               {' '}
@@ -279,7 +282,7 @@ export default function StoryForm(props: IStoryFormProps) {
             border border-neutral-90 bg-neutral-98 p-5"
             >
               {/* Desktop */}
-              <div className="hidden w-full cursor-pointer flex-col gap-4 xl:flex">
+              <div className="hidden w-full cursor-pointer flex-col gap-4 min-[955px]:flex">
                 <div className="flex justify-between gap-2">
                   {COVER_PRESET_ASSETS.map((cover, index) => (
                     <div key={cover} className="flex flex-col gap-2">
@@ -315,63 +318,12 @@ export default function StoryForm(props: IStoryFormProps) {
                   ))}
                 </div>
               </div>
-
-              {/* Mobile */}
-              <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-5 xl:hidden">
-                <Swiper
-                  slidesPerView={1}
-                  spaceBetween={16}
-                  loop={false}
-                  className="w-full"
-                  onSwiper={swiper => (swiperRef = swiper)}
-                  onSlideChange={handleSwipeAndSelectCover}
-                >
-                  {COVER_PRESET_ASSETS.map(cover => (
-                    <SwiperSlide key={cover}>
-                      <div className="flex items-center justify-center">
-                        <CustomCoverBuilder
-                          storyTitle={title.trim() || t('placeholder_title')}
-                          authorName={userInfo?.fullName}
-                          coverImgSrc={
-                            isCustomCoverActive && selectedCoverSample === cover
-                              ? ''
-                              : cover
-                          }
-                          customization={getThumbnailCustomization(cover)}
-                          active={selectedCoverSample === cover}
-                        />
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-                <div className="mt-3 flex justify-center space-x-2">
-                  {COVER_PRESET_ASSETS.map((cover, idx) => (
-                    <button
-                      key={cover}
-                      type="button"
-                      className={mergeClassnames(
-                        'size-2 rounded-full transition-all duration-300',
-                        currentCoverIndex === idx ? 'w-10 bg-neutral-80' : 'bg-neutral-90',
-                      )}
-                      onClick={() => swiperRef?.slideTo(idx)}
-                    />
-                  ))}
-                </div>
-                <Button
-                  variant="soft"
-                  size="sm"
-                  className="w-[180px]"
-                  onClick={() => setIsCustomCoverModalOpen(true)}
-                >
-                  {t('custom')}
-                </Button>
-              </div>
             </div>
           </div>
 
           {/* Cột phải */}
           <div className="flex flex-1 flex-col gap-6">
-            <Form.Item>
+            <Form.Item className="max-[955px]:px-4">
               <TextInput
                 {...register('title')}
                 type="text"
@@ -388,7 +340,7 @@ export default function StoryForm(props: IStoryFormProps) {
               />
             </Form.Item>
 
-            <Form.Item>
+            <Form.Item className="max-[955px]:px-4">
               <Combobox
                 // @ts-ignore
                 by="id"
@@ -455,7 +407,7 @@ export default function StoryForm(props: IStoryFormProps) {
               </Combobox>
             </Form.Item>
 
-            <Form.Item>
+            <Form.Item className="max-[955px]:px-4">
               <Label className="mb-2">
                 {t('abstract')}
                 <span className="text-red-50">*</span>
@@ -473,12 +425,82 @@ export default function StoryForm(props: IStoryFormProps) {
                 </p>
               )}
             </Form.Item>
+            {/* Gần dưới cùng */}
+            <div className="flex flex-1 flex-col px-4 pb-24 min-[955px]:hidden">
+              <p className="mb-2 text-sm font-medium text-black">
+                {t('cover_picture')}
+                {' '}
+                <span className="text-red-50">*</span>
+              </p>
 
-            <div className="mt-auto flex w-full justify-end">
+              <div className="flex flex-1 rounded-2xl
+            border border-neutral-90 bg-neutral-98 p-5"
+              >
+                {/* Mobile */}
+                <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-5">
+                  <Swiper
+                    slidesPerView={1}
+                    spaceBetween={16}
+                    loop={false}
+                    className="w-full"
+                    onSwiper={swiper => (swiperRef = swiper)}
+                    onSlideChange={handleSwipeAndSelectCover}
+                  >
+                    {COVER_PRESET_ASSETS.map(cover => (
+                      <SwiperSlide key={cover}>
+                        <div className="flex items-center justify-center">
+                          <CustomCoverBuilder
+                            storyTitle={title.trim() || t('placeholder_title')}
+                            authorName={userInfo?.fullName}
+                            coverImgSrc={
+                              isCustomCoverActive && selectedCoverSample === cover
+                                ? ''
+                                : cover
+                            }
+                            customization={getThumbnailCustomization(cover)}
+                            active={selectedCoverSample === cover}
+                          />
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                  <div className="mt-3 flex justify-center space-x-2">
+                    {COVER_PRESET_ASSETS.map((cover, idx) => (
+                      <button
+                        key={cover}
+                        type="button"
+                        className={mergeClassnames(
+                          'size-2 rounded-full transition-all duration-300',
+                          currentCoverIndex === idx ? 'w-10 bg-neutral-80' : 'bg-neutral-90',
+                        )}
+                        onClick={() => swiperRef?.slideTo(idx)}
+                      />
+                    ))}
+                  </div>
+                  <Button
+                    variant="soft"
+                    size="sm"
+                    className="w-[180px]"
+                    iconRight={<PencilSimple size={16} />}
+                    onClick={() => setIsCustomCoverModalOpen(true)}
+                  >
+                    {t('custom')}
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <div className="z-40 flex
+            w-full
+            bg-white
+            max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
+            max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
+            min-[955px]:mt-auto
+            min-[955px]:justify-end"
+            >
               <Button
                 type="submit"
                 size="lg"
-                className="w-[300px]"
+                className="w-full min-[955px]:w-[300px]"
                 animation={isSubmitting && 'progress'}
                 disabled={isSubmitting}
               >
