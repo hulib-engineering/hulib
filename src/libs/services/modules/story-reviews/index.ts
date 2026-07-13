@@ -1,4 +1,6 @@
 import { api } from '../../api';
+import createStoryReview from './createStoryReview';
+import deleteStoryReview from './deleteStoryReview';
 import getStoryReviewsByStoryId from './getStoryReviewsByStoryId';
 
 const apiWithTag = api.enhanceEndpoints?.({
@@ -8,8 +10,10 @@ const apiWithTag = api.enhanceEndpoints?.({
 export const storyReviewsApi = apiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
     getStoryReviewsByStoryId: getStoryReviewsByStoryId(build),
+    createStoryReview: createStoryReview(build),
+    deleteStoryReview: deleteStoryReview(build),
   }),
   overrideExisting: false,
 });
 
-export const { useGetStoryReviewsByStoryIdQuery }: any = storyReviewsApi;
+export const { useGetStoryReviewsByStoryIdQuery, useCreateStoryReviewMutation, useDeleteStoryReviewMutation }: any = storyReviewsApi;

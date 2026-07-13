@@ -26,7 +26,7 @@ export default function RestrictedContent() {
             height={30}
           />
         </div>
-        <h3 className="text-[16px] font-[500] leading-[24px] tracking-[0.5%] text-black">Nội dung cần tránh</h3>
+        <h3 className="text-[16px] font-[500] leading-[24px] tracking-[0.5%] text-black">{t('restricted_content.title')}</h3>
       </div>
 
       {/* Grid 2 columns */}
