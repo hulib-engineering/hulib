@@ -1,12 +1,12 @@
 'use client';
 import { useTranslations } from 'next-intl';
 
-type FooterBarProps = {
+type ContinueButtonProps = {
   canContinue: boolean;
   onContinue: () => void;
 };
 
-export default function ContinueButton({ canContinue, onContinue }: FooterBarProps) {
+export default function ContinueButton({ canContinue, onContinue }: ContinueButtonProps) {
   const t = useTranslations('Huber');
 
   return (

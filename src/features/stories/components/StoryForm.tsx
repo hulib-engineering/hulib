@@ -282,7 +282,7 @@ export default function StoryForm(props: IStoryFormProps) {
             border border-neutral-90 bg-neutral-98 p-5"
             >
               {/* Desktop */}
-              <div className="hidden w-full cursor-pointer flex-col gap-4 sm:flex">
+              <div className="hidden w-full cursor-pointer flex-col gap-4 min-[955px]:flex">
                 <div className="flex justify-between gap-2">
                   {COVER_PRESET_ASSETS.map((cover, index) => (
                     <div key={cover} className="flex flex-col gap-2">

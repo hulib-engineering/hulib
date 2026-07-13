@@ -109,12 +109,12 @@ export default function RegisterHuberSuccess() {
 
                 {/* Tên tác giả, gạch chân, giữa và sát đáy bìa */}
                 {/* {story?.humanBook?.fullName && (
-                  <div className="absolute inset-x-0 bottom-3 flex justify-center px-2">
-                    <span className="truncate pb-0.5 text-[11px] font-medium text-[#F472B6]">
-                      _{story.humanBook.fullName}_
-                    </span>
-                  </div>
-                )} */}
+                <div className="absolute inset-x-0 bottom-3 flex justify-center px-2">
+                  <span className="truncate pb-0.5 text-[11px] font-medium text-[#F472B6]">
+                    _{story.humanBook.fullName}_
+                  </span>
+                </div>
+              )} */}
               </div>
             )}
           </div>
