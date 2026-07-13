@@ -1,7 +1,24 @@
+// MyBook.tsx
 'use client';
 
-export default function MyBook() {
+import MyStoriesPanel from '@/app/[locale]/(auth)/users/[id]/_components/MyStoriesPanel';
+
+type Props = {
+  topics: any;
+  storyOwnerId: number;
+  showOthers: boolean;
+};
+
+export default function MyBook({
+  topics,
+  storyOwnerId,
+  showOthers,
+}: Props) {
   return (
-    <div>My book</div>
+    <MyStoriesPanel
+      topics={topics}
+      storyOwnerId={storyOwnerId}
+      showOthers={showOthers}
+    />
   );
 }
