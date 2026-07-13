@@ -9,7 +9,12 @@ const intlMiddleware = createMiddleware({
   locales: AppConfig.locales,
   defaultLocale: AppConfig.defaultLocale,
   localePrefix: AppConfig.localePrefix,
-  localeDetection: false, // Disable browser-based locale detection
+  // Disable browser-based locale detection. Since this is off, prefix-less
+  // navigation always resolves to defaultLocale (no NEXT_LOCALE cookie
+  // fallback) — every internal Link/router call must carry the current
+  // locale, which is why app code uses the wrappers from `i18nNavigation`
+  // instead of `next/link` / `next/navigation` directly.
+  localeDetection: false,
 });
 
 export default async function middleware(request: NextRequest) {

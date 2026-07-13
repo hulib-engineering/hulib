@@ -16,7 +16,9 @@
     "my_profile": "Hồ sơ của tôi",
     "change_password": "Đổi mật khẩu",
     "register_huber": "Đăng kí trở thành Huber",
-    "sign_out": "Đăng xuất"
+    "sign_out": "Đăng xuất",
+    "my_favorite": "Yêu thích của tôi",
+    "stories_management": "Quản lý truyện"
   },
   "HumanBookBanner": {
     "explore_now": "Khám phá tủ sách Human Book ngay",
@@ -876,7 +878,8 @@
     "declined": "Đã từ chối",
     "back": "Trở lại",
     "reason_for_rejection": "Lý do từ chối",
-    "new_book_icon_alt": "Biểu tượng sách mới"
+    "new_book_icon_alt": "Biểu tượng sách mới",
+    "content_to_avoid": "Nội dung cần tránh"
   },
   "Time_slots": {
     "title": "Khung giờ",
@@ -1146,7 +1149,16 @@
     "search_by_keyword": "Tìm kiếm theo từ khóa",
     "about": "Giới thiệu",
     "my_stories": "Truyện của tôi",
-    "my_favorite": "Yêu thích của tôi"
+    "my_favorite": "Yêu thích của tôi",
+    "change": "Đổi",
+    "password_length": "Mật khẩu phải có ít nhất 8 ký tự.",
+    "password_special_char": "Mật khẩu phải chứa ký tự đặc biệt.",
+    "password_number": "Mật khẩu phải chứa chữ số.",
+    "password_capital": "Mật khẩu phải chứa chữ cái viết hoa.",
+    "password_match": "Mật khẩu nhập lại phải trùng khớp.",
+    "search_for_name": "Tìm theo tên",
+    "notification_title": "Thông báo",
+    "no_messages": "Bạn chưa có cuộc trò chuyện nào."
   },
   "feedback_form": {
     "session_feedback": "Phản hồi cho buổi học",
@@ -1190,7 +1202,8 @@
   },
   "Messages": {
     "your_messages": "Tin nhắn của bạn",
-    "messages": "Tin nhắn"
+    "messages": "Tin nhắn",
+    "no_messages": "Bạn chưa có cuộc trò chuyện nào."
   },
   "ScheduleBasicInfo": {
     "topics": "Chủ đề",

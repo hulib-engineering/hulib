@@ -1,12 +1,12 @@
 import { Warning, XCircle } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import React, { useState } from 'react';
 
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
 import { notificationConfig } from '../private/config';
 import { NotificationType } from '../private/types';
+import { useRouter } from '@/libs/i18nNavigation';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';

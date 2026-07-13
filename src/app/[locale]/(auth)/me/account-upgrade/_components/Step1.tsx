@@ -2,10 +2,10 @@
 'use client';
 
 import { CaretDown } from '@phosphor-icons/react';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
 import Combobox from '@/components/core/combobox/Combobox';
@@ -281,9 +281,9 @@ const Step1 = ({ next }: { next: () => void }) => {
         </span>
         <div className="h-40 rounded-xl bg-neutral-90 p-4">
           <div className="account-upgrade-guidelines-scrollbar max-h-full overflow-auto pr-3">
-            <span className="text-sm uppercase leading-5 text-primary-40">
+            {/* <span className="text-sm uppercase leading-5 text-primary-40">
               {t('general')}
-            </span>
+            </span> */}
             <TermAndCondition />
           </div>
         </div>

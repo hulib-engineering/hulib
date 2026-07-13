@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
 import Checkbox from '@/components/core/checkbox/Checkbox';

@@ -3,11 +3,11 @@
 import { ArrowLeft, CalendarDot, CaretDown, MapPinArea } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
-import Link from 'next/link';
 import * as React from 'react';
 import { useCallback, useState } from 'react';
 
 import Avatar from '@/components/core/avatar/Avatar';
+import { Link } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
 import Combobox from '@/components/core/combobox/Combobox';
 import MenuItem from '@/components/core/menuItem/MenuItem';

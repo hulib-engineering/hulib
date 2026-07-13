@@ -10,7 +10,9 @@
     "my_profile": "My profile",
     "change_password": "Change password",
     "register_huber": "Register to become human book",
-    "sign_out": "Sign out"
+    "sign_out": "Sign out",
+    "my_favorite": "My Favorite",
+    "stories_management": "Stories Management"
   },
   "HumanBookBanner": {
     "explore_now": "Explore the Human Book bookshelf now",
@@ -782,7 +784,8 @@
     "declined": "Declined",
     "reason_for_rejection": "Reason for rejection",
     "back": "Back",
-    "new_book_icon_alt": "New book icon"
+    "new_book_icon_alt": "New book icon",
+    "content_to_avoid": "Content to avoid"
   },
   "Time_slots": {
     "available_time_slots": "My available slots",
@@ -980,7 +983,17 @@
     "update_schedule_description": "Update your schedule so others can chat with you directly.",
     "update_personal_schedule": "Update Personal Schedule",
     "reader_views": "Reader reviews: {view}",
-    "search_by_keyword": "Search by keyword"
+    "search_by_keyword": "Search by keyword",
+    "change": "Change",
+    "password_length": "Password has at least 8 characters.",
+    "password_special_char": "Password has special characters.",
+    "password_number": "Password has a number.",
+    "password_capital": "Password has a capital letter.",
+    "password_match": "Passwords match.",
+    "search_for_name": "Search for name",
+    "notification_title": "Notification",
+    "no_messages": "You have no conversations yet!",
+    "select_topics": "Select topics"
   },
   "feedback_form": {
     "session_feedback": "Feedback for the session",
@@ -1063,7 +1076,8 @@
   },
   "Messages": {
     "your_messages": "Your messages",
-    "messages": "Messages"
+    "messages": "Messages",
+    "no_messages": "You have no conversations yet!"
   },
   "event": {
     "event_registration_title": "Register for HuLib Event",

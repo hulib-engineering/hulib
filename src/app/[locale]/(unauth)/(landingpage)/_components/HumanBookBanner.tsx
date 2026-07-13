@@ -2,12 +2,13 @@
 
 import { ArrowRight } from '@phosphor-icons/react';
 import Image from 'next/image';
-import Link from 'next/link';
 import type { Session } from 'next-auth';
 import { getSession, signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { useJwt } from 'react-jwt';
+
+import { Link } from '@/libs/i18nNavigation';
 
 import { mergeClassnames } from '@/components/core/private/utils';
 import { publicRoutes } from '@/libs/constants';

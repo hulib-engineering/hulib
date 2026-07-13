@@ -1,13 +1,14 @@
 'use client';
 
 import { ArrowLeft, Check, X } from '@phosphor-icons/react';
-import { redirect, useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import * as React from 'react';
 
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { redirect, useRouter } from '@/libs/i18nNavigation';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import Loading from '@/app/[locale]/loading';
