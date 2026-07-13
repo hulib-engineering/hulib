@@ -22,7 +22,7 @@ export default function RegisterHuberSuccess() {
 
       <div
         className="flex flex-col items-center
-        sm:px-[96px] sm:pb-2"
+        sm:px-[96px] sm:pb-16 sm:pt-10"
       >
         <div className="overflow-y-auto px-4 max-sm:max-h-[calc(100vh-88px)] max-sm:pb-24">
           {/* Top icon */}
