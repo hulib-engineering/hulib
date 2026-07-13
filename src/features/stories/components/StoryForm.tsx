@@ -457,14 +457,14 @@ export default function StoryForm(props: IStoryFormProps) {
 
             <Form.Item>
               <Label className="mb-2">
-                {t('abstract')}
+                {t('content')}
                 <span className="text-red-50">*</span>
               </Label>
               <TextArea
                 {...register('abstract')}
                 rows={9}
                 error={!!errors.abstract}
-                placeholder={t('placeholder_abstract')}
+                placeholder={t('placeholder_content')}
                 size="sm"
               />
               {errors.abstract && (
