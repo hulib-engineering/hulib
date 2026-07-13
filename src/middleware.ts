@@ -51,9 +51,9 @@ export default async function middleware(request: NextRequest) {
     '/auth/forgot-password',
     '/auth/reset-password',
     '/admin/auth/login',
-    '/register-huber/policy',
-    '/register-huber/create-book',
-    '/register-huber/success',
+    // '/register-huber/policy',
+    // '/register-huber/create-book',
+    // '/register-huber/success',
   ];
   const isPublic = publicRoutes.some(
     route => normalizedPath === route || normalizedPath.startsWith(`${route}/`),

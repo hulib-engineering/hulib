@@ -1,12 +1,10 @@
 'use client';
-import { Plus } from '@phosphor-icons/react';
 import React, { useState } from 'react';
 
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
-import Button from '@/components/core/button/Button';
+// import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
-import IconButton from '@/components/core/iconButton/IconButton';
+// import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { StoryCard } from '@/features/stories/components/StoryCard';
 import { useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
@@ -14,6 +12,7 @@ import type { Topic } from '@/libs/services/modules/user/userType';
 import Modal from '@/components/Modal';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import StoryForm from '@/features/stories/components/StoryForm';
+import FirstBookCreatedModal from '@/features/stories/components/FirstBookCreatedModal';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
 
 type TTopic = {
@@ -40,9 +39,9 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
       skip: !storyOwnerId,
     },
   );
-  const t = useTranslations('MyProfile');
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isFirstBookModalOpen, setIsFirstBookModalOpen] = useState(false);
   const [selectedTopicIds, setSelectedTopicIds] = useState<number[]>(topics.map(topic => topic.topicId));
 
   const handleTopicChipClick = (topicId: number) => {
@@ -61,6 +60,10 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
 
   const handleBookSubmitSuccess = () => {
     setIsCreateModalOpen(false);
+
+    /* MISSING: Conditions that determine if the user hasn't submitted a book before */
+
+    setIsFirstBookModalOpen(true);
   };
 
   if (isLoading) {
@@ -84,11 +87,9 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
         />
         <div className="flex flex-col gap-2 text-center text-primary-10">
           <h5 className="text-2xl font-bold capitalize leading-8">
-            {t('no_stories_found')}
+            No stories found
           </h5>
-          <p>
-            {t('huber_has_not_finished_stories')}
-          </p>
+          <p>It seems like Huber has not finished any stories yet. </p>
         </div>
       </div>
     );
@@ -96,7 +97,7 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
 
   return (
     <div className="flex flex-col gap-6 px-4 py-5 lg:px-0">
-      <h2 className="text-2xl font-medium text-primary-10 lg:px-0 lg:text-4xl lg:leading-[44px]">{t('library')}</h2>
+      <h2 className="text-2xl font-medium text-primary-10 lg:px-0 lg:text-4xl lg:leading-[44px]">Library</h2>
       <div className="flex items-center gap-2 py-1 lg:px-0">
         <Chip
           className={mergeClassnames(
@@ -107,7 +108,7 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
           onClick={() => selectedTopicIds.length === topics.length
             ? setSelectedTopicIds([]) : setSelectedTopicIds(topics.map(topic => topic.topicId))}
         >
-          {t('all')}
+          All
         </Chip>
         {topics?.map(topic => (
           <Chip
@@ -127,7 +128,7 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
         className={mergeClassnames(
           'grid grid-cols-1 gap-8',
           'md:grid-cols-2 gap-4',
-          'xl:grid-cols-3',
+          // 'xl:grid-cols-3',
         )}
       >
         {!showOthers && (
@@ -135,7 +136,7 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
             className="flex size-full min-h-[287px] max-w-[392px] items-center justify-center rounded-[20px] border border-neutral-80 bg-white"
           >
             <div className="flex flex-col items-center gap-6">
-              <IconButton
+              {/* <IconButton
                 variant="soft"
                 size="lg"
                 className="!h-[68px] w-[68px]"
@@ -144,10 +145,30 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
                 <div className="flex size-5 items-center justify-center rounded-full bg-primary-60">
                   <Plus className="text-xl text-white" />
                 </div>
-              </IconButton>
-              <Button size="lg" onClick={() => setIsCreateModalOpen(true)}>
-                {t('create_new_story')}
-              </Button>
+              </IconButton> */}
+              <Image
+                className="cursor-pointer"
+                src="/assets/images/create-book/add_book.png"
+                alt="add_new_book"
+                width={120}
+                height={116}
+                onClick={() => setIsCreateModalOpen(true)}
+              />
+              {/* DEBUGGING NOTE for 'Feat/UI notice approved story book':
+              - Temporarily change the below function ("setIsCreateModalOpen") to "setIsFirstBookModalOpen" to test out the feature screen quickly. */}
+              {/* <Button size="lg" onClick={() => setIsCreateModalOpen(true)}>
+                Create New Story
+              </Button> */}
+              <button onClick={() => setIsCreateModalOpen(true)} className="flex h-[44px] w-[232px] items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#007CBE] to-[#8845C6] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#14144a]">
+                <Image
+                  src="/assets/images/register-huber/white_book.png"
+                  alt=""
+                  width={18}
+                  height={18}
+                  className="object-contain brightness-[10]"
+                />
+                Tạo sách mới
+              </button>
             </div>
           </div>
         )}
@@ -172,6 +193,20 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
             onCancel={() => setIsCreateModalOpen(false)}
           />
         </Modal.Panel>
+      </Modal>
+
+      {/* FirstBookCreatedModal */}
+      <Modal
+        open={isFirstBookModalOpen}
+        onClose={() => setIsFirstBookModalOpen(false)}
+      >
+        <Modal.Backdrop />
+        <Modal.Panel className="w-full shadow-none lg:w-5/6 lg:max-w-6xl">
+          <FirstBookCreatedModal
+            onClose={() => setIsFirstBookModalOpen(false)}
+          />
+        </Modal.Panel>
+
       </Modal>
     </div>
   );
