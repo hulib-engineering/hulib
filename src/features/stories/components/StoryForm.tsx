@@ -426,7 +426,7 @@ export default function StoryForm(props: IStoryFormProps) {
               )}
             </Form.Item>
             {/* Gần dưới cùng */}
-            <div className="flex flex-1 flex-col max-[955px]:px-4 min-[955px]:hidden">
+            <div className="flex flex-1 flex-col px-4 pb-24 min-[955px]:hidden">
               <p className="mb-2 text-sm font-medium text-black">
                 {t('cover_picture')}
                 {' '}
