@@ -36,7 +36,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
   const [handleUpdateLikeCount] = useLikeStoryMutation();
 
   const [isFavorite, setIsFavorite] = useState(false);
-  const [likeCount, setLikeCount] = React.useState(data?.totalLikes ?? 0);
+  const [likeCount, setLikeCount] = React.useState(data?.likeCount ?? 0);
 
   const visibleTopics = data?.topics?.slice(0, 1) ?? [];
   const remainingTopicsCount = Math.max((data.topics?.length ?? 0) - visibleTopics.length, 0);
@@ -136,7 +136,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
               <div className="flex items-center gap-1">
                 <ThumbsUp className="text-pink-40" size={16} weight="fill" />
                 <p className="text-[14px] font-medium leading-4 text-neutral-20">
-                  {data?.totalLikes ?? 0}
+                  {likeCount}
                 </p>
               </div>
               <div className="flex items-center gap-1">

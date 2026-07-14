@@ -5,13 +5,13 @@ import type { Story } from './storiesType';
 const getStoryDetails = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query<Story, number>({
     query: id => ({
-      url: `stories/${id || 0}`,
+      url: `stories/${id}`,
     }),
     serializeQueryArgs: ({ endpointName, queryArgs }) => {
-      return `${endpointName}-${queryArgs || 0}`;
+      return `${endpointName}-${queryArgs}`;
     },
     providesTags: (_result, _error, id) => [
-      { type: 'Story' as const, id: id || 0 },
+      { type: 'Story' as const, id },
     ],
   });
 
