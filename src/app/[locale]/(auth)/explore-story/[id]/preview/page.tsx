@@ -54,7 +54,7 @@ export default function Index() {
   };
   const handleCloseDeleteSuccessModal = () => {
     setIsDeleteSuccessModalOpen(false);
-    router.back();
+    router.push('/');
   };
 
   if (isLoading) {
@@ -85,7 +85,7 @@ export default function Index() {
           size="lg"
           iconLeft={<ArrowLeft />}
           className="w-fit text-black"
-          onClick={() => router.back()}
+          onClick={() => router.push('/')}
         >
           {tCommon('back')}
         </Button>

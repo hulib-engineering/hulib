@@ -15,19 +15,29 @@ type TopicsListMeta = {
   currentPage?: number;
 };
 
+type TopicsListResponse = {
+  data?: Topic[];
+  hasNextPage?: boolean;
+  meta?: TopicsListMeta;
+};
+
+const ADMIN_TAGS_PAGE_SIZE = 10;
+
 export default function AdminTagsPage() {
   const t = useTranslations('Admin');
   const [currentPage, setCurrentPage] = useState(1);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
-  const { data, isLoading } = useGetTopicsQuery({
+  const { data, isLoading, refetch } = useGetTopicsQuery({
     page: currentPage,
-    limit: 10,
+    limit: ADMIN_TAGS_PAGE_SIZE,
   });
 
-  const topics = data?.data ?? [];
-  const meta = (data as { meta?: TopicsListMeta } | undefined)?.meta;
-  const totalPages = meta?.totalPages ?? 1;
+  const topicsResponse = data as TopicsListResponse | undefined;
+  const topics = topicsResponse?.data ?? [];
+  const resolvedCurrentPage = topicsResponse?.meta?.currentPage ?? currentPage;
+  const totalPages = topicsResponse?.meta?.totalPages
+    ?? (topicsResponse?.hasNextPage ? resolvedCurrentPage + 1 : resolvedCurrentPage);
 
   return (
     <>
@@ -52,7 +62,10 @@ export default function AdminTagsPage() {
             isLoading={isLoading}
             pagination={{
               totalPages,
-              currentPage: (meta?.currentPage ?? currentPage) - 1,
+              currentPage: resolvedCurrentPage - 1,
+              hasNextPage: topicsResponse?.meta?.totalPages
+                ? undefined
+                : Boolean(topicsResponse?.hasNextPage),
               onPageChange: page => setCurrentPage(page + 1),
             }}
           />
@@ -62,6 +75,10 @@ export default function AdminTagsPage() {
       <TopicFormModal
         open={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
+        onSuccess={() => {
+          setCurrentPage(1);
+          refetch();
+        }}
       />
     </>
   );

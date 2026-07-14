@@ -56,6 +56,7 @@ export type Story = {
   totalLikes?: number;
   viewCount?: number;
   shareCount?: number;
+  likeCount?: number;
 };
 
 type Histogram = {

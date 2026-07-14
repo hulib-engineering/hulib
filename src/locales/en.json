@@ -713,7 +713,12 @@
     "confirm_delete_story": "Are you sure you want to delete story?",
     "confirm_remove_favorite": "Are you sure you want to remove this story from your favorite list?",
     "story_delete_warning": "This story will be deleted immediately.",
-    "cannot_undo_action": "You can&apos;t undo this action."
+    "cannot_undo_action": "You can't undo this action.",
+    "comment_title": "Share your thoughts about this story",
+    "comment_placeholder": "Share here",
+    "comment_submitted": "Comment submitted successfully",
+    "comment_error": "Failed to submit comment",
+    "cancel": "Cancel"
   },
   "Huber": {
     "title": "Explore our Hubers",
@@ -733,6 +738,7 @@
     "hero_title": "Share your story with the community",
     "hero_description": "HuLib very much looks forward to reading and spreading your story to the community. Before you start creating a book, we have a few small notes to help build a positive, safe, and meaningful sharing space.",
     "restricted_content": {
+      "title": "Content to avoid",
       "items": {
         "item_1": "Sharing content that is sexually explicit.",
         "item_2": "Sharing personal information of others without consent.",
@@ -973,6 +979,8 @@
     "back": "Back",
     "edit": "Edit",
     "delete": "Delete",
+    "delete_success": "Deleted successfully",
+    "delete_error": "Failed to delete. Please try again.",
     "see_all": "See all",
     "all": "All",
     "confirm": "Confirm",
