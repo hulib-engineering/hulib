@@ -22,9 +22,6 @@ const updateLikeCountStory = (build: EndpointBuilder<BaseQueryFn, string, string
       method: 'POST',
       body,
     }),
-    invalidatesTags: (_result, _error, { id }) => [
-      { type: 'Story' as const, id },
-    ],
   });
 
 export default updateLikeCountStory;
