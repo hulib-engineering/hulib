@@ -15,34 +15,36 @@ export default function RestrictedContent() {
   const t = useTranslations('Huber');
 
   return (
-    <div className="mb-[20px] w-full rounded-2xl border border-[#FFE3CC] bg-[#FFF9F5] px-9 py-7">
-      {/* Header */}
-      <div className="mb-5 flex items-center gap-3">
-        <div className="flex items-center justify-center rounded-full bg-[#FFE3CC] p-[8px]">
-          <Image
-            src="/assets/images/register-huber/warning.png"
-            alt="warning"
-            width={30}
-            height={30}
-          />
-        </div>
-        <h3 className="text-[16px] font-[500] leading-[24px] tracking-[0.5%] text-black">{t('restricted_content.title')}</h3>
-      </div>
-
-      {/* Grid 2 columns */}
-      <div className="grid grid-cols-2 gap-x-12 gap-y-3">
-        {contentKeys.map((key, idx) => (
-          <div key={idx} className="flex items-start gap-2.5">
+    <div className="max-sm:px-4">
+      <div className="w-full rounded-2xl border border-[#FFE3CC] bg-[#FFF9F5] px-3 py-6">
+        {/* Header */}
+        <div className="mb-5 flex items-center gap-3">
+          <div className="flex items-center justify-center rounded-full bg-[#FFE3CC] p-2">
             <Image
-              src="/assets/images/register-huber/x_circle.png"
-              alt="x-circle"
-              width={20}
-              height={20}
-              className="mt-0.5"
+              src="/assets/images/register-huber/warning.png"
+              alt="warning"
+              width={30}
+              height={30}
             />
-            <span className="text-[14px] leading-[22px] text-[#171819]">{t(key)}</span>
           </div>
-        ))}
+          <h3 className="text-[16px] font-[500] leading-6 tracking-[0.5%] text-black">Nội dung cần tránh</h3>
+        </div>
+
+        {/* Grid 2 columns */}
+        <div className="grid grid-cols-2 gap-2">
+          {contentKeys.map((key, idx) => (
+            <div key={idx} className="flex items-start gap-2.5 sm:items-center">
+              <Image
+                src="/assets/images/register-huber/x_circle.png"
+                alt="x-circle"
+                width={20}
+                height={20}
+                className="mt-0.5"
+              />
+              <span className="text-[14px] leading-[18px] text-[#171819]">{t(key)}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
