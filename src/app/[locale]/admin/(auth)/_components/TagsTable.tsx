@@ -136,6 +136,45 @@ const TagsTable = ({ topics, isLoading, pagination }: TagsTableProps) => {
       return undefined;
     }
 
+    if (typeof pagination.hasNextPage === 'boolean') {
+      const previousDisabled = pagination.currentPage <= 0;
+      const nextDisabled = !pagination.hasNextPage;
+
+      return (
+        <div className="flex w-full items-center justify-end gap-2 px-4 py-2">
+          <IconButton
+            icon={<ArrowLeft />}
+            variant="ghost"
+            size="lg"
+            disabled={previousDisabled}
+            className="!h-8 p-1.5"
+            aria-label="Previous page"
+            onClick={() => {
+              if (!previousDisabled) {
+                pagination.onPageChange(pagination.currentPage - 1);
+              }
+            }}
+          />
+          <span className="flex size-8 items-center justify-center rounded-lg bg-primary-60 text-sm leading-4 text-white">
+            {pagination.currentPage + 1}
+          </span>
+          <IconButton
+            icon={<ArrowRight />}
+            variant="ghost"
+            size="lg"
+            disabled={nextDisabled}
+            className="!h-8 p-1.5"
+            aria-label={t('table.pagination.next_page')}
+            onClick={() => {
+              if (!nextDisabled) {
+                pagination.onPageChange(pagination.currentPage + 1);
+              }
+            }}
+          />
+        </div>
+      );
+    }
+
     return (
       <Pagination
         totalPages={pagination.totalPages}
@@ -174,7 +213,7 @@ const TagsTable = ({ topics, isLoading, pagination }: TagsTableProps) => {
         </Pagination.NextButton>
       </Pagination>
     );
-  }, [pagination]);
+  }, [pagination, t]);
 
   if (isLoading) {
     return (
