@@ -40,10 +40,11 @@ type TopicFormValues = z.infer<typeof topicSchema>;
 type TopicFormModalProps = {
   open: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
   topic?: Topic | null;
 };
 
-const TopicFormModal = ({ open, onClose, topic }: TopicFormModalProps) => {
+const TopicFormModal = ({ open, onClose, onSuccess, topic }: TopicFormModalProps) => {
   const t = useTranslations('Admin');
   const isEdit = Boolean(topic?.id);
   const [createTopic, { isLoading: isCreating }] = usePostTopicsMutation();
@@ -88,9 +89,11 @@ const TopicFormModal = ({ open, onClose, topic }: TopicFormModalProps) => {
         await createTopic({
           name: values.name,
           color: values.color,
+          status: 'active',
         }).unwrap();
         pushSuccess(t('topic_modal.created_successfully'));
       }
+      onSuccess?.();
       onClose();
     } catch {
       pushError(isEdit ? t('topic_modal.update_failed') : t('topic_modal.create_failed'));

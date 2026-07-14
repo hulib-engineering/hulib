@@ -802,7 +802,12 @@
     "confirm_delete_story": "Bạn có chắc chắn muốn xóa câu chuyện này không?",
     "confirm_remove_favorite": "Bạn có chắc chắn muốn xóa câu chuyện này khỏi danh sách yêu thích không?",
     "story_delete_warning": "Câu chuyện sẽ bị xóa ngay lập tức.",
-    "cannot_undo_action": "Bạn không thể hoàn tác hành động này."
+    "cannot_undo_action": "Bạn không thể hoàn tác hành động này.",
+    "comment_title": "Chia sẻ cảm nghĩ của bạn về câu chuyện",
+    "comment_placeholder": "Chia sẻ tại đây",
+    "comment_submitted": "Bình luận đã được gửi thành công",
+    "comment_error": "Gửi bình luận thất bại",
+    "cancel": "Huỷ"
   },
   "Huber": {
     "title": "Xem danh sách Huber",
@@ -827,6 +832,7 @@
     "hero_title": "Hướng dẫn tạo sách",
     "hero_description": "HuLib rất mong chờ được đọc và lan tỏa câu chuyện của bạn đến cộng đồng. Trước khi bắt đầu tạo sách, tụi mình có một vài lưu ý nhỏ để cùng xây dựng một không gian chia sẻ tích cực, an toàn và ý nghĩa nhé.",
     "restricted_content": {
+      "title": "Nội dung cần tránh",
       "items": {
         "item_1": "Cổ súy hành vi gây hại bản thân hoặc người khác.",
         "item_2": "Tiết lộ thông tin riêng tư của người khác khi chưa được sự đồng ý.",
@@ -1136,6 +1142,8 @@
     "see_more": "Xem thêm",
     "edit": "Chỉnh sửa",
     "delete": "Xóa",
+    "delete_success": "Xóa thành công",
+    "delete_error": "Xóa thất bại. Vui lòng thử lại.",
     "see_all": "Xem tất cả",
     "confirm": "Xác nhận",
     "welcome_to_community": "Chào mừng bạn đến với cộng đồng",
