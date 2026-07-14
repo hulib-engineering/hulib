@@ -32,6 +32,10 @@ const getSimilarStories = (
         url: `stories?${searchParams.toString()}`,
       };
     },
+    serializeQueryArgs: ({ endpointName, queryArgs }) => {
+      const { page, limit, humanBookId, topicIds } = queryArgs;
+      return `${endpointName}-${page}-${limit}-${humanBookId}-${topicIds?.sort()?.join(',')}`;
+    },
     providesTags: result =>
       result
         ? [

@@ -1,7 +1,6 @@
 'use client';
 
-import { CaretDown, DotsThreeVertical } from '@phosphor-icons/react';
-import Image from 'next/image';
+import { CaretDown, DotsThreeVertical, Trash } from '@phosphor-icons/react';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -13,42 +12,71 @@ import IconButton from '@/components/core/iconButton/IconButton';
 import Loader from '@/components/core/loader/Loader';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { useInfiniteScroll } from '@/libs/hooks/useInfiniteScroll';
-import { useGetStoryReviewsByStoryIdQuery } from '@/libs/services/modules/story-reviews';
+import { useDeleteStoryReviewMutation, useGetStoryReviewsByStoryIdQuery } from '@/libs/services/modules/story-reviews';
 import { SHOW_LIMIT_REVIEWS } from '@/libs/services/modules/story-reviews/getStoryReviewsByStoryId';
 import type { StoryReview as TStoryReview } from '@/libs/services/modules/story-reviews/storyReviewsType';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 
-export const ReviewItem = (params: TStoryReview) => (
-  <div className="flex flex-col gap-4 rounded-[20px] p-4 shadow-[inset_0_-0.5px_0_0_#E3E5EB]">
-    <div className="flex w-full items-center justify-between">
-      <div className="flex items-center gap-2">
-        <Avatar imageUrl={params.user?.photo?.path} name={params.user?.fullName} />
-        <div className="flex flex-col">
-          <p className="text-sm font-medium leading-5">
-            {params.user?.fullName}
-          </p>
-          {params?.createdAt && (
-            <p className="text-xs leading-[14px] text-[#00000080]">
-              {new Date(params.createdAt).toLocaleDateString('en-US', {
-                month: 'long',
-                day: 'numeric',
-                year: 'numeric',
-              })}
+type ReviewItemProps = TStoryReview & {
+  onDelete?: (id: number) => void;
+  isDeleting?: boolean;
+};
+
+export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemProps) => {
+  const t = useTranslations('Common');
+  const [showMenu, setShowMenu] = useState(false);
+
+  return (
+    <div className="flex flex-col gap-4 rounded-[20px] p-4 shadow-[inset_0_-0.5px_0_0_#E3E5EB]">
+      <div className="flex w-full items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Avatar imageUrl={storyReview.user?.photo?.path} name={storyReview.user?.fullName} />
+          <div className="flex flex-col">
+            <p className="text-sm font-medium leading-5">
+              {storyReview.user?.fullName}
             </p>
-          )}
+            {storyReview?.createdAt && (
+              <p className="text-xs leading-[14px] text-[#00000080]">
+                {new Date(storyReview.createdAt).toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric',
+                })}
+              </p>
+            )}
 
+          </div>
+        </div>
+        <div className="relative">
+          <IconButton variant="ghost" size="sm" onClick={() => setShowMenu(!showMenu)}>
+            <DotsThreeVertical />
+          </IconButton>
+          {showMenu && (
+            <div className="absolute right-0 top-8 z-10 w-32 rounded-lg border border-neutral-90 bg-white py-1 shadow-md">
+              <button
+                type="button"
+                className="hover:bg-neutral-95 flex w-full items-center gap-2 px-3 py-2 text-sm text-red-50"
+                onClick={() => {
+                  onDelete?.(storyReview.id);
+                  setShowMenu(false);
+                }}
+                disabled={isDeleting}
+              >
+                <Trash size={14} />
+                {t('delete')}
+              </button>
+            </div>
+          )}
         </div>
       </div>
-      <IconButton variant="ghost" size="sm">
-        <DotsThreeVertical />
-      </IconButton>
+      <div className="flex flex-col gap-1 text-opacity-80">
+        <p className="text-sm leading-[22px]">{isEmpty(storyReview.comment.trim()) ? 'No comment' : storyReview.comment.trim()}</p>
+      </div>
     </div>
-    <div className="flex flex-col gap-1 text-opacity-80">
-      <p className="text-sm leading-[22px]">{isEmpty(params.comment.trim()) ? 'No comment' : params.comment.trim()}</p>
-    </div>
-  </div>
-);
+  );
+};
 
-export default function StoryReviews({ maxHeight }: { maxHeight?: number }) {
+export default function StoryReviews() {
   const { id } = useParams();
   const t = useTranslations('Common');
 
@@ -60,7 +88,9 @@ export default function StoryReviews({ maxHeight }: { maxHeight?: number }) {
     page: currentPage,
     limit: SHOW_LIMIT_REVIEWS,
   });
-  console.log('storyReviews', storyReviews);
+
+  const [deleteStoryReview, { isLoading: isDeleting }] = useDeleteStoryReviewMutation();
+
   const hasNextPage
     = storyReviews?.meta?.currentPage && storyReviews?.meta?.totalPages
       ? storyReviews.meta.currentPage < storyReviews.meta.totalPages
@@ -90,42 +120,38 @@ export default function StoryReviews({ maxHeight }: { maxHeight?: number }) {
     }
   };
 
+  const handleDelete = async (reviewId: number) => {
+    try {
+      await deleteStoryReview(reviewId).unwrap();
+      setItems(prev => prev.filter(item => item.id !== reviewId));
+      pushSuccess(t('delete_success'));
+    } catch {
+      pushError(t('delete_error'));
+    }
+  };
+
   if (isLoading) {
     return null;
   }
 
   return (
-    <div
-      className={mergeClassnames(
-        'flex w-full flex-col gap-4 rounded-2xl bg-white p-5 shadow-sm',
-      )}
-      style={{ height: maxHeight && maxHeight > 0 ? maxHeight : 'auto' }}
-    >
-      <h6 className="shrink-0 text-xl font-medium text-neutral-20 lg:font-bold">
-        {t('reader_views', { view: storyReviews?.meta.totalItems ?? 0 })}
-      </h6>
-      {items?.length === 0
-        ? (
-            <Image
-              src="/assets/images/landing/no-results-found.png"
-              className="h-full w-auto object-contain"
-              style={{ maxHeight: maxHeight && maxHeight > 0 ? maxHeight - 92 : 'auto' }}
-              width={300}
-              height={300}
-              quality={100}
-              alt="No results found"
+    <>
+      <div
+        className={mergeClassnames('flex flex-1 flex-col gap-4')}
+      >
+        {items.map((review, index) => (
+          <div key={review.id}>
+            <ReviewItem
+              {...review}
+              onDelete={handleDelete}
+              isDeleting={isDeleting}
             />
-          )
-        : (
-            <div
-              className={mergeClassnames('flex flex-1 flex-col gap-4', maxHeight && maxHeight > 0 && 'overflow-y-auto')}
-            >
-              {items.map(review => <ReviewItem key={review.id} {...review} />)}
-            </div>
-          )}
-
-      {/* Infinite scroll anchor */}
-      <div ref={loadMoreRef} className="hidden h-px lg:block" />
+            {index < items.length - 1 && (
+              <div ref={loadMoreRef} className="hidden h-px lg:block" />
+            )}
+          </div>
+        ))}
+      </div>
 
       {hasNextPage && (
         <div className="flex items-center justify-center">
@@ -139,6 +165,6 @@ export default function StoryReviews({ maxHeight }: { maxHeight?: number }) {
           ) : <Loader />)}
         </div>
       )}
-    </div>
+    </>
   );
 };

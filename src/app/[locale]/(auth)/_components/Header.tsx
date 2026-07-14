@@ -154,7 +154,7 @@ const Header = () => {
     <>
       {/* Mobile version */}
       <header className="flex w-screen flex-col gap-5 bg-white px-4 pb-2 pt-4 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:hidden">
-        <div className="flex items-center justify-between">
+        <div className="relative z-[1000] flex items-center justify-between">
           <Link href="/">
             <Logo size="small" />
           </Link>
