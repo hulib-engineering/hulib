@@ -44,13 +44,6 @@
       "description": "We cannot find any result that matches your search. Please try search again."
     }
   },
-  "FirstBookCreated": {
-    "welcome_title": "Welcome to the community",
-    "welcome_description": "Your first book has been approved. Everyone can now see your story",
-    "update_schedule_title": "Ready to connect?",
-    "update_schedule_description": "Set your availability so Liber can reach out to you",
-    "update_schedule_button": "Update personal schedule"
-  },
   "Footer": {
     "copyright": "© 2026 HuLib. All rights reserved.",
     "privacy_policy": "privacy policy",
@@ -58,7 +51,7 @@
     "community_guidelines": "community guidelines"
   },
   "FooterWebApp": {
-    "footer_description": "We are all born to be somebody. Each of us carries a story and experiences that are uniquely our own.",
+    "footer_description": "We are all born to be Someone. Each of us carries a unique story and a lifetime of experiences",
     "privacy_policy": "Privacy policy",
     "term_of_service": "Term of service",
     "community_guidelines": "Community guidelines",
@@ -73,24 +66,24 @@
   },
   "Index": {
     "meta_title": "HuLib | Landing Page",
-    "meta_description": "There is a story and experience within each of us, so we are born to be somebody.",
-    "hero_title": "a social project",
-    "hero_motto": "Stories shared, hearts heard, and connections made.",
-    "hero_description": "There is a story and experience within each of us, so we are born to be somebody.",
-    "hero_call_to_action": "Learn more",
+    "meta_description": "Everyone has a story. At HuLib, we foster a caring community where no one has to walk their journey alone.",
+    "hero_title": "A Youth Social Initiative",
+    "hero_motto": "Stories Shared. Connections Made.",
+    "hero_description": "Everyone has a story. At HuLib, we foster a caring community where no one has to walk their journey alone.",
+    "hero_call_to_action": "Create your own story",
     "hero_message_1": "'There is <important>a crack</important> in everything, that's how <important>the light</important> gets in.'",
-    "hero_message_2": "'You are <important>not alone</important> in your <important>struggles</important>.'",
+    "hero_message_2": "'You are were lost, but now you are found.'",
     "hero_mentor_quantity": "200+ <normal>Shared Stories</normal>",
     "event_title": "upcoming event on December 14, 2024",
     "event_description": "Join us for 'Work or Study' Event, focused on different stories and backgrounds to pursue our dreams.",
     "event_call_to_action": "register",
     "feature_peers": {
-      "title": "People with the same stories",
-      "description": "100+ human books and volunteers having personal experience with the same problem you're into."
+      "title": "Youth with the similar stories",
+      "description": "100+ e-stories with personal experiences similar to challenges you are into."
     },
     "feature_online_meetings": {
       "title": "Online Meeting",
-      "description": "Book a meeting with any human book you want to share and let them know about your struggles."
+      "description": "Book a FREE 30-minute video/ audio chat with Hubers you want to connect with. Hear their story, share yours, and feel supported along the way."
     },
     "feature_safely_sharing": {
       "title": "Safely Sharing",
@@ -109,25 +102,25 @@
       "description": "Feel free to share your stories without being judged."
     },
     "about_title": "what is hulib",
-    "about_description": "a community project promotes well-being through shared stories with human books.",
+    "about_description": "A Youth-led Peer-support Community Empowering Wellbeing Through Storytelling",
     "about_stories": {
       "title": "our <highlight>stories</highlight>",
       "description": "Do you ever feel like you're <important>constantly falling short</important>? While others reach the finish line, do you find yourself <important>unsure of where to go</important>? Have you ever wished for a steadying hand during moments of <important>uncertainty</important>?<br></br> <br></br> Have you grappled with <important>stress</important>, trying to navigate through it all <important>alone</important>? Do you <important>struggle</important> with forging meaningful <important>connections</important> and yearn for someone to lead the way?<br></br> <br></br> <important>HuLib</important> emerged from the depths of these very questions, as we've intimately <important>experienced these emotions</important>. <important>Join us</important> on this dream journey to uncover more <important>happiness together</important>."
     },
     "about_mission": {
       "title": "our <br></br><highlight>mission</highlight>",
-      "description": "We endeavor to be a beacon of empathy, understanding, and connection, shaping a future where every individual's story is both valued and celebrated."
+      "description": "To foster youth wellbeing through storytelling, peer support, and accessible mental health resources."
     },
     "about_vision": {
       "title": "our <br></br><highlight>vision</highlight>",
-      "description": "Our vision is to create a safe and proactive community, offering support from human books, to promote well-being and shared experiences."
+      "description": "To create a safe space where youth share stories, listen, understand, connect, and support one another."
     },
     "outstanding_features_title": "Our Hub",
     "outstanding_features_description": "HULIB - Youth Wellbeing Platform",
     "outstanding_features": {
       "index_0": {
         "heading": "Human Book Collection",
-        "content": "Explore 100+ “online human books,” where Hubers share real stories about career, self-discovery, relationships, family, and more."
+        "content": "Explore 100+ e-stories, where Hubers share stories about self-discovery, mental health, relationships, career and more."
       },
       "index_1": {
         "heading": "Every stories is a puzzle",
@@ -162,11 +155,8 @@
     "faqs_question_0": {
       "question": "1. What is HuLib, and how does it work?",
       "answer": {
-        "heading": "HuLib is a community dedicated to fostering well-being through shared stories and reading sessions in three main fields, including education, career, and relationship.",
         "body_paras": {
-          "p1": "High school students take advice on university choices from human books with diverse expertise for a fulfilling college experience.",
-          "p2": "New graduates receive career guidance through one-on-one sessions, workshops, and industry expert discussions.",
-          "p3": "Young adults dealing with pressures benefit from personalized mentoring focusing on well-being."
+          "p1": "<highlight>HuLib</highlight> is a youth social initiative dedicated to promoting wellbeing through shared stories, peer support, and meaningful connections. Young people can explore stories shared by <highlight>Hubers</highlight> (Storytellers), share their own experiences, and connect with others who have faced similar challenges, journeys, or life experiences."
         }
       }
     },
@@ -174,17 +164,35 @@
       "question": "2. Who can benefit from HuLib?",
       "answer": {
         "body_paras": {
-          "p1": "HuLib is designed for high school students, university students, and new graduates (ages 16-25), with a focus on those in Coastal Central Vietnam. Whether you're seeking mentorship, looking to share your story, or participating in virtual discussions and workshops, HuLib provides a space for personal and professional growth."
+          "p1": "<highlight>HuLib</highlight> is a community-driven for young people aged <highlight>16–26</highlight>, from students to young professionals, who want to nurture their wellbeing, feel understood, find a sense of belonging, build meaningful connections, and grow together."
         }
       }
     },
     "faqs_question_2": {
       "question": "3. How can I get involved with HuLib?",
       "answer": {
-        "heading": "Joining HuLib is easy!",
+        "heading": "You can join HuLib your way:",
         "body_paras": {
-          "p1": "As a participant, you can sign up to share your story, connect with human books, or engage in virtual discussions.",
-          "p2": "If you're an expert or volunteer interested in mentoring, we welcome your contribution. Stay tuned for updates on workshops and community projects. Explore the possibilities of involvement and make a positive impact with HuLib."
+          "p1": "As a Liber: Explore stories from Youth, and connect with the community.",
+          "p2": "As a Huber: Create e-stories to tell your journey and support others.",
+          "p3": "As a community member/volunteer: Join workshops, competitions, and other activities."
+        }
+      }
+    },
+    "faqs_question_3": {
+      "question": "4. Is HuLib a mental health counseling service?",
+      "answer": {
+        "body_paras": {
+          "p1": "No. HuLib does not provide professional therapy, crisis intervention, or counseling services. Instead, we offer peer support, shared experiences, and well-being resources within a safe and supportive community.",
+          "p2": "If someone needs professional mental health care or crisis support, HuLib may help connect them with qualified professionals or appropriate support services in accordance with our community guidelines."
+        }
+      }
+    },
+    "faqs_question_4": {
+      "question": "5. How can HuLib help Libers find relevant stories and peer support? (Upcoming Feature)",
+      "answer": {
+        "body_paras": {
+          "p1": "<highlight>Coming soon:</highlight> Libers will be able to write notes about the challenges they are facing. HuLib will connect you with Hubers whose stories and lived experiences may resonate with your own, helping you feel understood, supported, and less alone."
         }
       }
     },
@@ -673,8 +681,7 @@
     "cancel": "Cancel",
     "back": "Back",
     "next": "Next",
-    "step_1_title": "Register as a Huber",
-    "general": "General"
+    "step_1_title": "Register as a Huber"
   },
   "ExploreStory": {
     "description": "Discover a story made just for you",
@@ -691,7 +698,7 @@
     "share_story": "Share another story",
     "like_button": "Like",
     "like_error": "Failed to update like",
-    "booking_cta": "If this story speaks to you, connect with the author through a conversation here",
+    "booking_cta": "Your story might help another young person diícover that they never have to walk through life challenges alone. Before you begin, please review our e-stories guidelines.",
     "book_a_meeting": "Book a Meeting",
     "booking_count": "100 meetings have been booked from this story",
     "author": "Author",
@@ -700,7 +707,7 @@
     "my_favorite": "My favorite",
     "newest_stories": "Newest Stories",
     "oldest_stories": "Oldest Stories",
-    "explore_all_stories": "Explore our all stories",
+    "explore_all_stories": "Explore all stories",
     "no_data_available": "No data available.",
     "rating_overview": "Rating overview",
     "outstanding_review": "Outstanding review",
@@ -719,7 +726,7 @@
   },
   "Huber": {
     "title": "Explore our Hubers",
-    "description": "Discover and find your suitable huber",
+    "description": "Discover a story made just for you",
     "card": {
       "topics": "Topics",
       "added_to_favorites_success": "Successfully added to favorite list",
@@ -766,7 +773,7 @@
         "rules": "Once your book is approved, you'll be invited to join a voluntary challenge by sharing your available time on the platform (at least 30 minutes per week). This helps your story reach more Libers—young people facing similar situations or feeling stuck, who may find connection and encouragement through your book."
       }
     },
-    "create_book_title": "Create your book",
+    "create_book_title": "Create your story",
     "success_create_book": "Write your success story",
     "thanks_for_story": "Thanks for your story! HuLib will keep you informed when our process completes.",
     "in_review": "In review",
@@ -875,7 +882,7 @@
     "update_successfully": "Update successfully",
     "topics": "Topics",
     "title": "Title",
-    "abstract": "Abstract",
+    "abstract": "Story Content",
     "cover_picture": "Cover for story",
     "cover_font": "Font",
     "cover_text_color": "Text color",
@@ -891,7 +898,7 @@
     "approve": "Approve",
     "report": "Report",
     "placeholder_title": "Please enter the title of your story",
-    "placeholder_abstract": "Please enter the abstract of your story",
+    "placeholder_abstract": "Please enter the content of your story",
     "title_notification": "Submitted",
     "notification": "\"Thanks for your story! HuLib will keep you informed when our process completes. We look forward to your participation as a Huber!\"",
     "btn_name_notification": "Explore Other Stories",
@@ -1066,7 +1073,6 @@
   "LandingPage": {
     "navigation": {
       "bookshelf": "Bookshelf",
-      "pinboard": "Pinboard",
       "about_us": "About us"
     },
     "button": {

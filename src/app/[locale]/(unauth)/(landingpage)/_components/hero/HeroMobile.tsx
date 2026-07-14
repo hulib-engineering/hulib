@@ -3,7 +3,7 @@
 import { ArrowRight } from '@phosphor-icons/react';
 import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 import type { HeroProps } from '.';
 import Button from '@/components/core/button/Button';
@@ -20,7 +20,6 @@ const HeroMobile = (props: HeroProps) => {
     onPlayPause,
     setIsPlaying,
   } = props;
-  const locale = useLocale();
   const t = useTranslations('Index');
 
   return (
@@ -42,12 +41,7 @@ const HeroMobile = (props: HeroProps) => {
           <Button
             as="a"
             rel="noopener noreferrer"
-            target="_blank"
-            href={
-              locale === 'en'
-                ? '/assets/docs/project-proposal-eng.pdf'
-                : '/assets/docs/project-proposal-vi.pdf'
-            }
+            href="/auth/login"
             size="lg"
             iconRight={<ArrowRight />}
             className="bg-lp-primary-blue hover:bg-primary-hover"
@@ -133,8 +127,7 @@ const HeroMobile = (props: HeroProps) => {
                 width={32}
                 height={32}
                 alt="Play icon"
-                src={`/icons/${
-                  isPlaying ? 'pause' : 'play'
+                src={`/icons/${isPlaying ? 'pause' : 'play'
                 }-circle.svg`}
                 className="size-8 cursor-pointer object-cover object-center"
               />
