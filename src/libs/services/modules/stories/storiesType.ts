@@ -29,6 +29,7 @@ export enum PublishStatusEnum {
   PUBLISHED = 2,
   DELETED = 3,
   REJECTED = 4,
+  PENDING = 5,
 }
 
 export enum StoryPublishStatus {
