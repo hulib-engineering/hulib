@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import type { IPolicyModalProps } from '@/components/PolicyModal';
 import PolicyModal from '@/components/PolicyModal';
+import { Link } from '@/libs/i18nNavigation';
 import {
   customInternalLink,
   listMessageItem,

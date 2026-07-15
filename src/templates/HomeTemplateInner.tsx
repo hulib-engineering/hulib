@@ -1,11 +1,11 @@
 'use client';
 
 import localFont from 'next/font/local';
-import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { type ReactNode, useEffect, useState } from 'react';
 
 import PublicHeader from './PublicHeader';
+import { usePathname } from '@/libs/i18nNavigation';
 import Header from '@/app/[locale]/(auth)/_components/Header';
 import FooterWebApp from '@/app/[locale]/(auth)/_components/FooterWebApp';
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';

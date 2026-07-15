@@ -3,7 +3,7 @@
 import { ArrowRight } from '@phosphor-icons/react';
 import Image from 'next/image';
 import WavesurferPlayer from '@wavesurfer/react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 import React from 'react';
 import type { HeroProps } from '.';
@@ -23,7 +23,6 @@ const HeroDesktop = (props: HeroProps) => {
     setIsPlaying,
   } = props;
   const t = useTranslations('Index');
-  const locale = useLocale();
   return (
     <section
       className="relative mx-auto w-full max-w-screen-xl pb-[5.625rem] pt-20"
@@ -122,8 +121,7 @@ const HeroDesktop = (props: HeroProps) => {
                       width={56}
                       height={56}
                       alt="Play icon"
-                      src={`/assets/icons/${
-                        isPlaying ? 'pause' : 'play'
+                      src={`/assets/icons/${isPlaying ? 'pause' : 'play'
                       }-circle.svg`}
                       className="cursor-pointer"
                     />
@@ -144,8 +142,7 @@ const HeroDesktop = (props: HeroProps) => {
                       width={32}
                       height={32}
                       alt="Play icon"
-                      src={`/assets/icons/${
-                        isPlaying ? 'pause' : 'play'
+                      src={`/assets/icons/${isPlaying ? 'pause' : 'play'
                       }-circle.png`}
                       className="size-8 cursor-pointer object-cover object-center"
                     />
@@ -176,14 +173,9 @@ const HeroDesktop = (props: HeroProps) => {
         <Button
           as="a"
           rel="noopener noreferrer"
-          target="_blank"
-          href={
-            locale === 'en'
-              ? '/assets/docs/project-proposal-eng.pdf'
-              : '/assets/docs/project-proposal-vi.pdf'
-          }
+          href="/auth/login"
           size="lg"
-          className="!size-fit rounded-full bg-lp-primary-blue px-6 py-4 text-xl uppercase leading-7 hover:bg-primary-hover"
+          className="!size-fit rounded-full bg-lp-primary-blue px-6 py-4 text-xl leading-7 hover:bg-primary-hover"
           iconRight={<ArrowRight weight="bold" className="text-2xl" />}
         >
           {t('hero_call_to_action')}

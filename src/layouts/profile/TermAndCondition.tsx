@@ -37,7 +37,7 @@ const TermAndCondition = () => {
 
   return (
     <div className="flex flex-col text-sm leading-5 text-neutral-40">
-      <Section>
+      <Section title={t('community_guidelines_sections.index_0.heading')}>
         {t.rich('community_guidelines_sections.index_0.content', {
           br: newLineMessage(),
           ul: unorderedMessageList('list-disc space-y-3 pl-6'),

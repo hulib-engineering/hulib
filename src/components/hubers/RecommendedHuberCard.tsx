@@ -3,9 +3,9 @@
 import { Heart } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import React from 'react';
+import { useRouter } from '@/libs/i18nNavigation';
 
 import type { Huber as THuber } from '@/libs/services/modules/huber/huberType';
 

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import Image from 'next/image';
 // import Button from '@/components/core/button/Button';
+import { useTranslations } from 'next-intl';
 import { Chip } from '@/components/core/chip/Chip';
 // import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -39,6 +40,8 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
       skip: !storyOwnerId,
     },
   );
+
+  const t = useTranslations('MyProfile');
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isFirstBookModalOpen, setIsFirstBookModalOpen] = useState(false);
@@ -87,9 +90,11 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
         />
         <div className="flex flex-col gap-2 text-center text-primary-10">
           <h5 className="text-2xl font-bold capitalize leading-8">
-            No stories found
+            {t('no_stories_found')}
           </h5>
-          <p>It seems like Huber has not finished any stories yet. </p>
+          <p>
+            {t('huber_has_not_finished_stories')}
+          </p>
         </div>
       </div>
     );
@@ -97,7 +102,7 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
 
   return (
     <div className="flex flex-col gap-6 px-4 py-5 lg:px-0">
-      <h2 className="text-2xl font-medium text-primary-10 lg:px-0 lg:text-4xl lg:leading-[44px]">Library</h2>
+      <h2 className="text-2xl font-medium text-primary-10 lg:px-0 lg:text-4xl lg:leading-[44px]">{t('library')}</h2>
       <div className="flex items-center gap-2 py-1 lg:px-0">
         <Chip
           className={mergeClassnames(
@@ -108,7 +113,7 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
           onClick={() => selectedTopicIds.length === topics.length
             ? setSelectedTopicIds([]) : setSelectedTopicIds(topics.map(topic => topic.topicId))}
         >
-          All
+          {t('all')}
         </Chip>
         {topics?.map(topic => (
           <Chip
@@ -167,7 +172,7 @@ export default function MyStoriesPanel({ topics, storyOwnerId, showOthers = fals
                   height={18}
                   className="object-contain brightness-[10]"
                 />
-                Tạo sách mới
+                {t('create_new_story')}
               </button>
             </div>
           </div>

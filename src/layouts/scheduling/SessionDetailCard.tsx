@@ -2,12 +2,12 @@ import { CalendarDot, CaretDown, Check, FilmReel, MapPinArea, Note } from '@phos
 import type { FC } from 'react';
 import React, { useState } from 'react';
 import { useLocale } from 'next-intl';
-import Link from 'next/link';
 
 import Accordion from '@/components/core/accordion/Accordion';
 import Button from '@/components/core/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
+import { Link } from '@/libs/i18nNavigation';
 import TextInput from '@/components/core/textInput-v1/TextInput';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
 import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';

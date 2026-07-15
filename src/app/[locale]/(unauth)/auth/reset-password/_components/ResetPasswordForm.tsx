@@ -3,13 +3,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckFat, Eye, X } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import PasswordChecklist from 'react-password-checklist';
 
 import { useTranslations } from 'next-intl';
+import { useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import TextInput from '@/components/core/textInput/TextInput';

@@ -1,12 +1,13 @@
 'use client';
 
 import { ArrowLeft } from '@phosphor-icons/react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
 import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
 import { AdminStoryCoverForm } from '@/features/stories/components/AdminStoryCoverForm';
+import { useRouter } from '@/libs/i18nNavigation';
 import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
 
 export default function AdminStoryCoverPage() {

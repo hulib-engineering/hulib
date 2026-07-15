@@ -2,10 +2,10 @@
 
 import { CaretCircleRight, Heart, UserCheck, UserPlus } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
+import { useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';

@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckFat, X } from '@phosphor-icons/react';
 import { omit } from 'lodash';
 import Image from 'next/image';
-import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
@@ -27,7 +26,7 @@ import TermOfUseModal from '@/components/TermOfUseModal';
 import TextInput from '@/components/core/textInput-v1/TextInput';
 import { VerifiedPhoneNumberInput } from '@/components/VerifiedPhoneNumberInput';
 import { genders } from '@/libs/constants';
-import { useRouter } from '@/libs/i18nNavigation';
+import { Link, useRouter } from '@/libs/i18nNavigation';
 import {
   useCheckEmailMutation,
   useConfirmEmailMutation,

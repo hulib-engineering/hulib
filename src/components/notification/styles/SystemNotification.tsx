@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 import { notificationConfig } from '../private/config';
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
+import { useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
 import { NotificationType } from '@/components/notification/private/types';
