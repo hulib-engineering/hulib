@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/libs/i18nNavigation';
 
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { useUpdateNotificationMutation } from '@/libs/services/modules/notifications';

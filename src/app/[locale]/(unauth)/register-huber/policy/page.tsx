@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import AgreementCheckbox from '../_components/AgreementCheckbox';
 // import FooterBar from '../_components/FooterBar';
 import EmergencyNotice from '../_components/EmergencyNotice';
@@ -11,6 +10,7 @@ import RulesGrid from '../_components/Rulesgrid';
 import BackButton from '../_components/BackButton';
 import RestrictedContent from '../_components/RestrictedContent';
 import MobileSafetyWarning from '../_components/MobileSafetyWarning';
+import { useRouter } from '@/libs/i18nNavigation';
 
 export default function RegisterAsHuberPage() {
   const [agreed, setAgreed] = useState(false);

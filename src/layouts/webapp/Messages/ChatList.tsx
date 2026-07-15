@@ -5,6 +5,7 @@ import Fuse from 'fuse.js';
 import React, { useEffect, useMemo, useState } from 'react';
 import type z from 'zod';
 
+import { useTranslations } from 'next-intl';
 import Avatar from '@/components/core/avatar/Avatar';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextInput from '@/components/core/textInput/TextInput';
@@ -70,8 +71,7 @@ export const ContactItem = ({
           lastMessage.isRead ? 'text-neutral-50' : 'font-medium text-black',
         )}
       >
-        {`${lastMessage.recipientId === participant.id ? 'You: ' : ''}${
-          lastMessage.message
+        {`${lastMessage.recipientId === participant.id ? 'You: ' : ''}${lastMessage.message
         }`}
       </p>
     </div>
@@ -84,6 +84,8 @@ export default function ChatList({ onConvoSelect }: { onConvoSelect?: () => void
   const currentChat = useAppSelector(state => state.messenger.currentChatDetail);
 
   const dispatch = useAppDispatch();
+
+  const t = useTranslations('Common');
 
   const [qString, setQString] = useState('');
 
@@ -147,7 +149,7 @@ export default function ChatList({ onConvoSelect }: { onConvoSelect?: () => void
         <TextInput
           name="search"
           type="text"
-          placeholder="Search for name"
+          placeholder={t('search_for_name')}
           icon={<MagnifyingGlass size={24} />}
           onChange={event => setQString(event.target.value)}
         />

@@ -1,9 +1,9 @@
 'use client';
 
 import { Eye, ShareFat, ThumbsUp } from '@phosphor-icons/react';
-import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import React, { useState } from 'react';
+import { useRouter } from '@/libs/i18nNavigation';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import { Chip } from '@/components/core/chip/Chip';

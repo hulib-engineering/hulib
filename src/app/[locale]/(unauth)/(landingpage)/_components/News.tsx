@@ -2,11 +2,12 @@
 
 import { ArrowLeft, ArrowRight, CalendarCheck, MapPinLine } from '@phosphor-icons/react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import type { Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import React, { useRef } from 'react';
+
+import { Link } from '@/libs/i18nNavigation';
 
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';

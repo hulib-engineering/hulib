@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { useLocale } from 'next-intl';
+import Image from 'next/image';
 
 export default function Banner() {
   const locale = useLocale();
@@ -19,7 +19,6 @@ export default function Banner() {
         />
       </div>
 
-      {/* Desktop Banner */}
       <div className="relative hidden aspect-[1440/176] h-fit w-full overflow-hidden md:block">
         <Image
           src={`/assets/images/banners/Banner-${locale}.svg`}

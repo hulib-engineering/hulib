@@ -9,7 +9,6 @@ import {
   SignOut,
   UserCircle,
 } from '@phosphor-icons/react';
-import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
 import React, { useMemo } from 'react';
@@ -22,6 +21,7 @@ import Popover from '@/components/core/popover/Popover';
 import { useAppSelector } from '@/libs/hooks';
 import { Role } from '@/types/common';
 import { Env } from '@/libs/Env.mjs';
+import { Link } from '@/libs/i18nNavigation';
 
 export default function AvatarPopover() {
   const currentLocale = useLocale();
@@ -62,19 +62,19 @@ export default function AvatarPopover() {
         roles: [Role.LIBER],
       },
       {
-        label: 'My Favorite',
+        label: t('my_favorite'),
         icon: <Bookmarks className="text-xl text-primary-60" />,
         href: `/users/${id}?tab=favorite-list`,
         roles: [Role.LIBER],
       },
       {
-        label: 'Stories Management',
+        label: t('stories_management'),
         icon: <Books className="text-xl text-primary-60" />,
         href: `/users/${id}?tab=stories`,
         roles: [Role.HUBER],
       },
       {
-        label: 'My Schedule',
+        label: t('my_schedule'),
         icon: <CalendarDots className="text-xl text-primary-60" />,
         href: '/my-schedule',
         roles: [Role.HUBER],

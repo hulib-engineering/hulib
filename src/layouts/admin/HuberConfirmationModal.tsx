@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import { useTranslations } from 'next-intl';
+import { useRouter } from '@/libs/i18nNavigation';
 import { mergeClassnames } from '@/components/core/private/utils';
 import Button from '@/components/core/button/Button';
 import TextArea from '@/components/core/textArea/TextArea';

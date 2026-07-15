@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import type { ReactNode } from 'react';
 import React from 'react';
 
 import { Logo } from '@/components/Logo';
 import { mergeClassnames } from '@/components/core/private/utils';
+import { Link } from '@/libs/i18nNavigation';
 
 type IAuthLayoutProps = {
   illustrationImage: string;

@@ -1,11 +1,11 @@
 'use client';
 
 import { Pacifico } from 'next/font/google';
-import { useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 import React from 'react';
 
 import { useTranslations } from 'next-intl';
+import { useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
 import Modal from '@/components/Modal';
 import { mergeClassnames } from '@/components/core/private/utils';

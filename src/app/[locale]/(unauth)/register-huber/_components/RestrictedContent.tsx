@@ -27,7 +27,7 @@ export default function RestrictedContent() {
               height={30}
             />
           </div>
-          <h3 className="text-[16px] font-[500] leading-6 tracking-[0.5%] text-black">Nội dung cần tránh</h3>
+          <h3 className="text-[16px] font-[500] leading-6 tracking-[0.5%] text-black">{t('content_to_avoid')}</h3>
         </div>
 
         {/* Grid 2 columns */}

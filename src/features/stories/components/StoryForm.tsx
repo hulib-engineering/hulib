@@ -8,8 +8,8 @@ import { useForm } from 'react-hook-form';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { z } from 'zod';
 
-import { useRouter } from 'next/navigation';
 import { CustomCoverModal } from './CustomCoverModal';
+import { useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
 import Combobox, { getChipColor } from '@/components/core/combobox/Combobox';
 import Form from '@/components/core/form/Form';
@@ -362,7 +362,7 @@ export default function StoryForm(props: IStoryFormProps) {
                           <span className="text-red-50">*</span>
                         </p>
                       )}
-                      placeholder={selectedTopics.length > 0 ? undefined : 'Select topics'}
+                      placeholder={selectedTopics.length > 0 ? undefined : t('select_topics')}
                       className="border-neutral-90"
                       inputClassname="px-0 font-normal leading-4"
                       displayValue={({ label }) => label}

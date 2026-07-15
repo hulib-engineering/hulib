@@ -1,7 +1,7 @@
 'use client';
 
 import { Heart, PencilSimple, TelegramLogo } from '@phosphor-icons/react';
-import { redirect, useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import * as React from 'react';
 import { useEffect, useMemo, useState } from 'react';
@@ -10,6 +10,7 @@ import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import { useTranslations } from 'next-intl';
 import MyFavoritesPanel from './_components/MyFavoritesPanel';
 import MyStoriesPanel from './_components/MyStoriesPanel';
+import { redirect, usePathname, useRouter } from '@/libs/i18nNavigation';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';

@@ -8,5 +8,5 @@ export const routing = {
   defaultLocale: AppConfig.defaultLocale,
 };
 
-export const { usePathname, useRouter }
+export const { Link, redirect, usePathname, useRouter }
   = createSharedPathnamesNavigation(routing);

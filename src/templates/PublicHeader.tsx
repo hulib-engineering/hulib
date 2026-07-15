@@ -1,9 +1,8 @@
 'use client';
 import { List, X } from '@phosphor-icons/react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { Link, usePathname, useRouter } from '@/libs/i18nNavigation';
 import { Logo } from '@/components/Logo';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -11,6 +10,7 @@ import Button from '@/components/core/button/Button';
 
 export default function PublicHeader() {
   const t = useTranslations('LandingPage');
+  const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   useEffect(() => {
@@ -48,14 +48,14 @@ export default function PublicHeader() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => window.location.href = '/auth/login'}
+              onClick={() => router.push('/auth/login')}
             >
               {t('button.sign_in')}
             </Button>
             <Button
               variant="fill"
               size="sm"
-              onClick={() => window.location.href = '/auth/register'}
+              onClick={() => router.push('/auth/register')}
             >
               {t('button.sign_up')}
             </Button>
@@ -122,7 +122,7 @@ export default function PublicHeader() {
                 variant="outline"
                 size="sm"
                 className="w-full"
-                onClick={() => window.location.href = '/auth/login'}
+                onClick={() => router.push('/auth/login')}
               >
                 {t('button.sign_in')}
               </Button>
@@ -130,7 +130,7 @@ export default function PublicHeader() {
                 variant="fill"
                 size="sm"
                 className="w-full"
-                onClick={() => window.location.href = '/auth/register'}
+                onClick={() => router.push('/auth/register')}
               >
                 {t('button.sign_up')}
               </Button>

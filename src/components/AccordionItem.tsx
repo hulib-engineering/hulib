@@ -7,7 +7,7 @@ const AccordionItem = ({
   content,
 }: {
   trigger: string;
-  content: { heading: string; bodyParams: string[] };
+  content: { heading: string; bodyParams: string[] | React.ReactNode[] };
 }) => {
   const [isExpanding, setIsExpanding] = useState(false);
 
@@ -33,8 +33,7 @@ const AccordionItem = ({
               width="24"
               height="2"
               rx="1"
-              className={`origin-center transition duration-300 ease-in-out ${
-                isExpanding && '!rotate-180'
+              className={`origin-center transition duration-300 ease-in-out ${isExpanding && '!rotate-180'
               }`}
             />
             <rect
@@ -42,18 +41,16 @@ const AccordionItem = ({
               width="24"
               height="2"
               rx="1"
-              className={`origin-center transition duration-300 ease-in-out rotate-90 ${
-                isExpanding && '!rotate-180'
+              className={`origin-center transition duration-300 ease-in-out rotate-90 ${isExpanding && '!rotate-180'
               }`}
             />
           </svg>
         </div>
       </button>
       <div
-        className={`grid transition-all duration-500 ease-in-out ${
-          isExpanding
-            ? 'mt-4 grid-rows-[1fr] opacity-100'
-            : 'grid-rows-[0fr] opacity-0'
+        className={`grid transition-all duration-500 ease-in-out ${isExpanding
+          ? 'mt-4 grid-rows-[1fr] opacity-100'
+          : 'grid-rows-[0fr] opacity-0'
         }`}
       >
         <div className="overflow-hidden px-6 pt-0 text-sm font-light lg:text-base">

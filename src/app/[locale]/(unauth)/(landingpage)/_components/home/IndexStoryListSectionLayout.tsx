@@ -5,8 +5,8 @@ import React, { useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
-import { useRouter } from 'next/navigation';
 import { StoryCard } from './StoryCard';
+import { useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
