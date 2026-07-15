@@ -6,13 +6,14 @@ import { format } from 'date-fns';
 import { isEmpty } from 'lodash';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import * as React from 'react';
 
 import ScheduleBasicInfo from './_components/SessionAttendeesInfo';
 
 import Button from '@/components/core/button/Button';
+import { useRouter } from '@/libs/i18nNavigation';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';

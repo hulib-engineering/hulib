@@ -2,13 +2,14 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Cookies from 'js-cookie';
-import Link from 'next/link';
 import { SessionProvider, signIn, useSession } from 'next-auth/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 import { useTranslations } from 'next-intl';
+import { Link } from '@/libs/i18nNavigation';
+
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import Checkbox from '@/components/core/checkbox/Checkbox';

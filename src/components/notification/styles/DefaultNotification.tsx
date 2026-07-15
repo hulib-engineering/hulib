@@ -1,13 +1,12 @@
 import { PenNib, SealWarning, Warning } from '@phosphor-icons/react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import React, { useState } from 'react';
 
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
 import { notificationConfig } from '../private/config';
 import { NotificationType } from '../private/types';
+import { Link, useRouter } from '@/libs/i18nNavigation';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import { mergeClassnames } from '@/components/core/private/utils';

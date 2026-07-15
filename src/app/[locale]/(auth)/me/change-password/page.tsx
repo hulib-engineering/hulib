@@ -2,7 +2,6 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckFat, X } from '@phosphor-icons/react';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
@@ -17,6 +16,7 @@ import Modal from '@/components/Modal';
 import TextInput from '@/components/core/textInput-v1/TextInput';
 import { useChangePasswordMutation } from '@/libs/services/modules/auth';
 import { ChangePasswordValidation } from '@/validations/ChangePasswordValidation';
+import { useRouter } from '@/libs/i18nNavigation';
 
 export default function Index() {
   const router = useRouter();
@@ -123,6 +123,13 @@ export default function Index() {
                   minLength={8}
                   value={watch('newPassword')}
                   valueAgain={watch('confirmPassword')}
+                  messages={{
+                    minLength: t('password_length'),
+                    specialChar: t('password_special_char'),
+                    number: t('password_number'),
+                    capital: t('password_capital'),
+                    match: t('password_match'),
+                  }}
                   iconComponents={{
                     ValidIcon: (
                       <CheckFat
@@ -142,7 +149,7 @@ export default function Index() {
           </div>
           <div className="flex w-full flex-col items-center gap-3">
             <Button size="lg" type="submit" value="Submit" fullWidth>
-              Change
+              {t('change')}
             </Button>
             <Button
               variant="ghost"

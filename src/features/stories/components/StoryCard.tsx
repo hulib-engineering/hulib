@@ -1,7 +1,6 @@
 // TO DO: optimise rendering action buttons logic
 
 import { BookOpen, BookmarkSimple, Bookmarks, CaretCircleRight, Heart, Trash } from '@phosphor-icons/react';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useRef, useState } from 'react';
 
@@ -9,6 +8,7 @@ import { DEFAULT_STORY_COVER_ASSET } from '../constants';
 
 import AnimatedCover from './AnimatedCover';
 import { Cover } from './Cover';
+import { useRouter } from '@/libs/i18nNavigation';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';

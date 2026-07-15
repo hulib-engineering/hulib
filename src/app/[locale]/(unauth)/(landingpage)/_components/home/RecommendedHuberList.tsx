@@ -1,7 +1,6 @@
 'use client';
 
 import { CaretCircleRight, CaretLeft, CaretRight } from '@phosphor-icons/react';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import type { Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -12,6 +11,7 @@ import 'swiper/css';
 import { RecommendedHuberCard } from './RecommendedHuberCard';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
+import { useRouter } from '@/libs/i18nNavigation';
 import { useGetHubersQuery } from '@/libs/services/modules/huber';
 import type { Huber } from '@/libs/services/modules/huber/huberType';
 

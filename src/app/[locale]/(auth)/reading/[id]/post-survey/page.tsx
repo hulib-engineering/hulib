@@ -1,13 +1,14 @@
 'use client';
 
 import { ArrowLeft, CalendarDot, User } from '@phosphor-icons/react';
-import { redirect, useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { redirect, useRouter } from '@/libs/i18nNavigation';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';

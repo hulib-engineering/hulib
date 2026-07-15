@@ -2,12 +2,11 @@
 
 import type { IconProps } from '@phosphor-icons/react';
 import { BookmarksSimple, Books, UserList } from '@phosphor-icons/react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import type { ComponentType, ReactNode } from 'react';
 
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
+import { Link, usePathname } from '@/libs/i18nNavigation';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 
 type AdminNavSection = 'storiesToPublish' | 'users' | 'nameTags';

@@ -3,11 +3,11 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { redirect, useRouter } from 'next/navigation';
 
 import { Spinner } from '@phosphor-icons/react';
 import Step1 from './_components/Step1';
 import Step2 from './_components/Step2';
+import { redirect, useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
 import { Step, StepLabel, Stepper } from '@/components/core/stepper/Stepper';
