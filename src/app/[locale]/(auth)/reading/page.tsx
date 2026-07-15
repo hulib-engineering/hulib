@@ -1,11 +1,12 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { differenceInMinutes } from 'date-fns';
 
 import { useAppSelector } from '@/libs/hooks';
+import { useRouter } from '@/libs/i18nNavigation';
 import {
   useGetReadingSessionByIdQuery,
   useUpdateReadingSessionMutation,

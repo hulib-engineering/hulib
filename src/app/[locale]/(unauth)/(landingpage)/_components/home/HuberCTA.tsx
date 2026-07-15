@@ -1,8 +1,8 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { useRouter } from '@/libs/i18nNavigation';
 import { HuberCTACard } from '@/components/home';
 
 export default function HuberCTA() {

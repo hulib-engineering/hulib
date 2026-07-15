@@ -4,8 +4,6 @@ import {
   Bell,
   MessengerLogo,
 } from '@phosphor-icons/react';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import React, { useCallback, useMemo } from 'react';
@@ -35,8 +33,7 @@ import { useLazyGetUsersByIdQuery } from '@/libs/services/modules/user';
 import type { Message } from '@/libs/store/messenger';
 import { openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
-
-;
+import { Link, usePathname, useRouter } from '@/libs/i18nNavigation';
 
 export const HeaderIconButtonWithBadge = ({
   children,

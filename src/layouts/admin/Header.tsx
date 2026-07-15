@@ -1,9 +1,8 @@
 'use client';
 
 import { Bell } from '@phosphor-icons/react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import React from 'react';
+import { Link, useRouter } from '@/libs/i18nNavigation';
 
 import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';

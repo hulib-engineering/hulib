@@ -1,13 +1,14 @@
 'use client';
 
 import { ArrowLeft, Check, X } from '@phosphor-icons/react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import * as React from 'react';
 import { useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 import StoryConfirmationModal from '@/app/[locale]/admin/(auth)/_components/StoryConfirmationModal';
 import Button from '@/components/core/button/Button';
+import { useRouter } from '@/libs/i18nNavigation';
 import { StoryDetailSkeleton } from '@/components/loadingState/Skeletons';
 import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import {

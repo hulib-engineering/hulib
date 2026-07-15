@@ -1,13 +1,14 @@
 'use client';
 
 import { ArrowLeft, DotsThreeOutline, Hammer, Heart, UserCheck, Warning } from '@phosphor-icons/react';
-import { redirect, useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import * as React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 import Avatar from '@/components/core/avatar/Avatar';
+import { redirect, usePathname, useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import IconButton from '@/components/core/iconButton/IconButton';

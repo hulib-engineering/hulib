@@ -1,8 +1,8 @@
-import Link from 'next/link';
 import type { ReactNode } from 'react';
 import React from 'react';
 
 import { mergeClassnames } from '@/components/core/private/utils';
+import { Link } from '@/libs/i18nNavigation';
 
 export const customMessage = (font: string): (() => ReactNode) => {
   return (...chunks: ReactNode[]): ReactNode => {

@@ -2,12 +2,13 @@
 
 import { ArrowLeft, X } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { notFound, redirect, useParams, useRouter } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
 
 import Button from '@/components/core/button/Button';
+import { redirect, useRouter } from '@/libs/i18nNavigation';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { pushError } from '@/components/CustomToastifyContainer';

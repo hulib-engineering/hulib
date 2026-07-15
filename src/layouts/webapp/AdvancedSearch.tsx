@@ -1,10 +1,10 @@
 'use client';
 
 import { ClockCounterClockwise, X } from '@phosphor-icons/react';
-import { useRouter } from 'next/navigation';
 import React, { type ReactNode, useEffect, useMemo, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
+import { useRouter } from '@/libs/i18nNavigation';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import Search, { searchFilterItems, searchGetItemIndex } from '@/components/core/search/Search';
 import { mergeClassnames } from '@/components/core/private/utils';

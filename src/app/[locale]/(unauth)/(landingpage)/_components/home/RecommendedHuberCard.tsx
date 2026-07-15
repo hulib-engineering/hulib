@@ -2,10 +2,10 @@
 
 import { BookOpenText, CheckCircleIcon, CircleIcon, User } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import React from 'react';
+import { useRouter } from '@/libs/i18nNavigation';
 
 import type { Huber as THuber } from '@/libs/services/modules/huber/huberType';
 import { Chip } from '@/components/core/chip/Chip';

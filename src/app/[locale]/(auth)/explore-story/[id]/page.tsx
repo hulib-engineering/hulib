@@ -1,9 +1,10 @@
 'use client';
 
-import { ArrowLeft } from '@phosphor-icons/react';
-import { notFound, redirect, useParams, useRouter } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
+import { ArrowLeft } from '@phosphor-icons/react';
+import { redirect, useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
 import { IndexStoryListSectionLayout } from '@/components/home/IndexStoryListCommonLayout';

@@ -3,10 +3,14 @@ import React from 'react';
 
 import AccordionItem from '@/components/AccordionItem';
 
+import {
+  highlightMessage,
+} from '@/utils/i18NRichTextUtils';
+
 const FAQItemList = [
   {
     key: 'faqs_question_0' as const,
-    bodyParas: ['p1', 'p2', 'p3'] as const,
+    bodyParas: ['p1'] as const,
   },
   {
     key: 'faqs_question_1' as const,
@@ -14,7 +18,15 @@ const FAQItemList = [
   },
   {
     key: 'faqs_question_2' as const,
+    bodyParas: ['p1', 'p2', 'p3'] as const,
+  },
+  {
+    key: 'faqs_question_3' as const,
     bodyParas: ['p1', 'p2'] as const,
+  },
+  {
+    key: 'faqs_question_4' as const,
+    bodyParas: ['p1'] as const,
   },
 ];
 
@@ -41,7 +53,7 @@ const FAQs = () => {
                   t.has(`${item.key}.answer.heading`) ? t(`${item.key}.answer.heading`) : '',
                 bodyParams: item.bodyParas.map(paraIndex =>
                   // @ts-ignore
-                  t(`${item.key}.answer.body_paras.${paraIndex}`),
+                  t.rich(`${item.key}.answer.body_paras.${paraIndex}`, { highlight: highlightMessage(false, 'primary') }),
                 ),
               }}
             />
