@@ -13,13 +13,14 @@ afterAll(() => {
   jest.restoreAllMocks();
 });
 
-// Mock useRouter, usePathname, and Link of next-intl:
+// Mock next-intl/navigation and the i18nNavigation module that wraps it:
 jest.mock('next-intl/navigation', () => ({
   createSharedPathnamesNavigation() {
     return {
-      Link({ children, href, ...props }: { children: React.ReactNode; href: string }) {
-        return <a href={href} {...props}>{children}</a>;
-      },
+      Link: ({ children, href, ...rest }: any) => (
+        <a href={href} {...rest}>{children}</a>
+      ),
+      redirect: () => jest.fn() as any,
       useRouter() {
         return {
           push: () => jest.fn(),
