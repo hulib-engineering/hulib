@@ -67,7 +67,7 @@ export default function LiberMyFavorite() {
   }
 
   return (
-    <div className="flex w-full flex-col gap-0 px-4 py-5 lg:mt-1 lg:gap-4 lg:p-0">
+    <div className="flex w-full flex-col gap-4 lg:mt-1">
       <div
         className={mergeClassnames(
           'grid grid-cols-1 gap-3 rounded-xl',

@@ -21,7 +21,7 @@ export const LiberMyFavoriteEmpty = ({ className, title, description }: LiberMyF
 
   return (
     <div className={className}>
-      <div className="flex w-full flex-col items-center justify-center gap-5">
+      <div className="flex w-full flex-col items-center justify-center gap-4">
         <Image
           src="/assets/images/landing/favorite_book.png"
           className="object-contain"
@@ -30,11 +30,11 @@ export const LiberMyFavoriteEmpty = ({ className, title, description }: LiberMyF
           quality={100}
           alt="no-results"
         />
-        <div className="flex flex-col gap-2 text-center">
-          <h5 className="text-2xl font-medium text-primary-50">
+        <div className="flex flex-col gap-2 px-2 text-center">
+          <h5 className="text-lg font-medium text-primary-50 md:text-xl lg:text-2xl">
             {title}
           </h5>
-          <p className="mt-4 font-normal text-neutral-10">
+          <p className="text-sm font-normal text-neutral-10 md:text-base">
             {description}
           </p>
         </div>
@@ -43,15 +43,13 @@ export const LiberMyFavoriteEmpty = ({ className, title, description }: LiberMyF
       <div className="mt-6">
         {isLoading && <StoriesSkeleton />}
         {!isLoading && stories?.data?.length > 0 && (
-          <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {stories?.data?.map((story: TStory) => (
               <StoryCard key={story.id} data={story} />
             ))}
           </div>
         )}
-
       </div>
-
     </div>
   );
 };

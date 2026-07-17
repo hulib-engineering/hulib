@@ -68,7 +68,7 @@ export default function MyStoriesPanel({ storyOwnerId, showOthers = false }: MyS
   };
 
   return (
-    <div className="px-4 py-5 lg:px-0">
+    <div className="lg:px-0">
       {renderContent()}
       {!showOthers && (
         <>
