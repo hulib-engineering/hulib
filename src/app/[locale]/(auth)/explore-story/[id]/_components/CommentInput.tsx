@@ -1,8 +1,10 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
+import { usePathname, useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
 import Avatar from '@/components/core/avatar/Avatar';
@@ -16,8 +18,21 @@ type CommentInputProps = {
 
 export default function CommentInput({ storyId }: CommentInputProps) {
   const t = useTranslations('ExploreStory');
+  const tButton = useTranslations('LandingPage');
+
   const [comment, setComment] = useState('');
+  const router = useRouter();
+  const { data: session } = useSession();
+  const pathname = usePathname();
   const [createStoryReview, { isLoading }] = useCreateStoryReviewMutation();
+
+  const requireAuth = useCallback(() => {
+    if (!session) {
+      router.push(`/auth/login?callbackUrl=${encodeURIComponent(pathname)}`);
+      return false;
+    }
+    return true;
+  }, [session, router, pathname]);
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
   const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
@@ -25,6 +40,9 @@ export default function CommentInput({ storyId }: CommentInputProps) {
   const id = userInfo?.id;
 
   const handleSubmit = async () => {
+    if (!requireAuth()) {
+      return;
+    }
     if (!comment.trim()) {
       return;
     }
@@ -44,6 +62,33 @@ export default function CommentInput({ storyId }: CommentInputProps) {
       pushError(t('comment_error'));
     }
   };
+
+  if (!session) {
+    return (
+      <div className="flex flex-col items-center justify-between gap-y-3 rounded-xl bg-primary-98 p-4 py-6 xxl:flex-row">
+        <span className="text-center">{t('comment_login_prompt')}</span>
+
+        <div className="flex items-center gap-2 xxl:gap-3">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-[144px]"
+            onClick={() => router.push('/auth/login')}
+          >
+            {tButton('button.sign_in')}
+          </Button>
+          <Button
+            variant="fill"
+            size="lg"
+            className="w-[144px]"
+            onClick={() => router.push('/auth/register')}
+          >
+            {tButton('button.sign_up')}
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4 rounded-xl bg-primary-98 p-4">

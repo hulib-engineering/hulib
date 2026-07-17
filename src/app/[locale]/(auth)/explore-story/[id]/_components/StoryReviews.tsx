@@ -2,10 +2,14 @@
 
 import { CaretDown, DotsThreeVertical, Trash } from '@phosphor-icons/react';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 import { isEmpty } from 'lodash';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import * as React from 'react';
+import { usePathname, useRouter } from '@/libs/i18nNavigation';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -25,7 +29,9 @@ type ReviewItemProps = TStoryReview & {
 export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemProps) => {
   const t = useTranslations('Common');
   const [showMenu, setShowMenu] = useState(false);
-
+  if (isEmpty(storyReview.comment.trim())) {
+    return;
+  }
   return (
     <div className="flex flex-col gap-4 rounded-[20px] p-4 shadow-[inset_0_-0.5px_0_0_#E3E5EB]">
       <div className="flex w-full items-center justify-between">
@@ -55,7 +61,7 @@ export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemP
             <div className="absolute right-0 top-8 z-10 w-32 rounded-lg border border-neutral-90 bg-white py-1 shadow-md">
               <button
                 type="button"
-                className="hover:bg-neutral-95 flex w-full items-center gap-2 px-3 py-2 text-sm text-red-50"
+                className="flex w-full items-center gap-2 px-3 py-2 text-sm text-red-50"
                 onClick={() => {
                   onDelete?.(storyReview.id);
                   setShowMenu(false);
@@ -70,7 +76,7 @@ export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemP
         </div>
       </div>
       <div className="flex flex-col gap-1 text-opacity-80">
-        <p className="text-sm leading-[22px]">{isEmpty(storyReview.comment.trim()) ? 'No comment' : storyReview.comment.trim()}</p>
+        <p className="text-sm leading-[22px]">{storyReview.comment.trim()}</p>
       </div>
     </div>
   );
@@ -79,6 +85,11 @@ export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemP
 export default function StoryReviews() {
   const { id } = useParams();
   const t = useTranslations('Common');
+  const tExploreStory = useTranslations('ExploreStory');
+
+  const { data: session } = useSession();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [items, setItems] = useState<TStoryReview[]>([]);
@@ -90,6 +101,14 @@ export default function StoryReviews() {
   });
 
   const [deleteStoryReview, { isLoading: isDeleting }] = useDeleteStoryReviewMutation();
+
+  const requireAuth = useCallback(() => {
+    if (!session) {
+      router.push(`/auth/login?callbackUrl=${encodeURIComponent(pathname)}`);
+      return false;
+    }
+    return true;
+  }, [session, router, pathname]);
 
   const hasNextPage
     = storyReviews?.meta?.currentPage && storyReviews?.meta?.totalPages
@@ -121,6 +140,9 @@ export default function StoryReviews() {
   };
 
   const handleDelete = async (reviewId: number) => {
+    if (!requireAuth()) {
+      return;
+    }
     try {
       await deleteStoryReview(reviewId).unwrap();
       setItems(prev => prev.filter(item => item.id !== reviewId));
@@ -132,6 +154,20 @@ export default function StoryReviews() {
 
   if (isLoading) {
     return null;
+  }
+
+  if (!items.length) {
+    return (
+      <div className="flex flex-col items-center gap-4">
+        <Image
+          src="/assets/icons/review-card.svg"
+          alt="No reviews illustration"
+          width={66}
+          height={64}
+        />
+        {tExploreStory('no_reviews')}
+      </div>
+    );
   }
 
   return (
