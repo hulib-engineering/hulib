@@ -638,7 +638,9 @@
     "submit_appeal": " Submit an Appeal",
     "about": "About",
     "my_stories": "My Stories",
-    "my_favorite": "My Favorite"
+    "my_favorite": "My Favorite",
+    "no_own_stories_title": "You don't have any stories yet",
+    "no_own_stories_body": "Share your stories, they might help more people than you think"
   },
   "MyFavorites": {
     "choose_all": "Choose all",
@@ -654,7 +656,8 @@
     "explore_more_stories": "Explore more stories",
     "explore_more_hubers": "Explore more hubers",
     "story": "Story",
-    "huber": "Huber"
+    "huber": "Huber",
+    "see_more": "See more"
   },
   "HumanBookRegister": {
     "select_topics": "What do you want to tag Huber as?",
@@ -726,8 +729,7 @@
     "comment_title": "Share your thoughts about this story",
     "comment_placeholder": "Share here",
     "comment_submitted": "Comment submitted successfully",
-    "comment_error": "Failed to submit comment",
-    "cancel": "Cancel"
+    "comment_error": "Failed to submit comment"
   },
   "Huber": {
     "title": "Explore our Hubers",
@@ -888,7 +890,6 @@
     "update_successfully": "Update successfully",
     "topics": "Topics",
     "title": "Title",
-    "abstract": "Story Content",
     "content": "The story content",
     "cover_picture": "Cover for story",
     "cover_font": "Font",
@@ -902,10 +903,11 @@
     "cancel": "Cancel",
     "submit": "Submit",
     "rejected": "Rejected",
+    "in_review": "In review",
+    "rejection_reason": "Rejection reason",
     "approve": "Approve",
     "report": "Report",
     "placeholder_title": "Please enter the title of your story",
-    "placeholder_abstract": "Please enter the content of your story",
     "placeholder_content": "Please enter the content of your story",
     "title_notification": "Submitted",
     "notification": "\"Thanks for your story! HuLib will keep you informed when our process completes. We look forward to your participation as a Huber!\"",
@@ -999,7 +1001,6 @@
     "update_your_schedule": "Update Your Schedule",
     "update_schedule_description": "Update your schedule so others can chat with you directly.",
     "update_personal_schedule": "Update Personal Schedule",
-    "reader_views": "Reader reviews: {view}",
     "search_by_keyword": "Search by keyword",
     "change": "Change",
     "password_length": "Password has at least 8 characters.",
