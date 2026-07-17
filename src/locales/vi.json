@@ -670,7 +670,8 @@
     "my_stories": "Truyện của tôi",
     "my_favorite": "Sách yêu thích",
     "no_own_stories_title": "Bạn chưa có câu chuyện nào",
-    "no_own_stories_body": "Chia sẻ những câu chuyện của bạn, biết đâu nó sẽ giúp ích được cho nhiều người"
+    "no_own_stories_body": "Chia sẻ những câu chuyện của bạn, biết đâu nó sẽ giúp ích được cho nhiều người",
+    "joined_since": "Tham gia Hulib {date}"
   },
   "MyFavorites": {
     "choose_all": "Chọn tất cả",
