@@ -1,7 +1,7 @@
 'use client';
 
 import { Eye, ShareFat, ThumbsUp } from '@phosphor-icons/react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { useRouter } from '@/libs/i18nNavigation';
 
@@ -35,7 +35,6 @@ type IStoryCardProps = {
 export const StoryCard = ({ data, className, outletClassName, isShowReadAll = true, isShowFavorite = true, isShowStoryBage = false }: IStoryCardProps) => {
   const router = useRouter();
   const { requireAuth } = useRequireAuth();
-  const locale = useLocale();
   const t = useTranslations('ExploreStory');
   const isMobile = useMobile();
   const [handleUpdateLikeCount] = useLikeStoryMutation();
@@ -54,7 +53,7 @@ export const StoryCard = ({ data, className, outletClassName, isShowReadAll = tr
 
   const handleClickRead = async () => {
     const isAuth = await requireAuth(() => {
-      router.push(`/${locale}/explore-story/${data.id}`);
+      router.push(`/explore-story/${data.id}`);
     });
     console.log('isAuth', isAuth);
     if (!isAuth) {

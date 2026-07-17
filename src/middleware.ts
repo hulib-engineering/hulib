@@ -5,6 +5,17 @@ import createMiddleware from 'next-intl/middleware';
 
 import { AppConfig } from './utils/AppConfig';
 
+const SOCIAL_CRAWLER_PATTERNS = [
+  'facebookexternalhit',
+  'Facebot',
+  'Twitterbot',
+  'LinkedInBot',
+  'WhatsApp',
+  'Discordbot',
+  'Slackbot-LinkExpanding',
+  'Googlebot',
+];
+
 const intlMiddleware = createMiddleware({
   locales: AppConfig.locales,
   defaultLocale: AppConfig.defaultLocale,
@@ -59,6 +70,15 @@ export default async function middleware(request: NextRequest) {
     route => normalizedPath === route || normalizedPath.startsWith(`${route}/`),
   );
   if (isPublic) {
+    return response;
+  }
+
+  // Allow social media crawlers through so generateMetadata can produce OG tags
+  const userAgent = request.headers.get('user-agent') ?? '';
+  const isSocialCrawler = SOCIAL_CRAWLER_PATTERNS.some(
+    pattern => userAgent.toLowerCase().includes(pattern.toLowerCase()),
+  );
+  if (isSocialCrawler) {
     return response;
   }
 
