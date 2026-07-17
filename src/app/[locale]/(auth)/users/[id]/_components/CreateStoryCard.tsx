@@ -13,7 +13,7 @@ export default function CreateStoryCard({ className, onClick }: CreateStoryCardP
   const t = useTranslations('MyProfile');
 
   return (
-    <div className={mergeClassnames('flex size-full min-h-[287px] max-w-[392px] items-center justify-center rounded-[20px] border border-lavender-80 bg-white', className)}>
+    <div className={mergeClassnames('flex size-full min-h-[220px] w-full items-center justify-center rounded-[20px] border border-lavender-80 bg-white md:min-h-[287px]', className)}>
       <div className="flex flex-col items-center gap-6">
         <Image
           className="cursor-pointer"

@@ -41,6 +41,7 @@ export default function LiberProfileContent({ userDetail, notMe }: LiberProfileC
 
   return (
     <ControlOverview
+      className="p-2"
       currentTab={currentTab}
       onTabChange={setCurrentTab}
       tabs={tabs.map(({ value, label }) => ({ value, label: t(label) }))}

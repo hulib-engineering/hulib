@@ -87,7 +87,7 @@ export const ControlOverview = ({
         })}
       </nav>
 
-      <div className="min-w-0 flex-1 p-4 lg:p-5">
+      <div className="min-w-0 flex-1 pt-4 lg:p-5">
         {children}
       </div>
     </div>
