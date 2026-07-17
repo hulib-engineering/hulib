@@ -640,7 +640,8 @@
     "my_stories": "My Stories",
     "my_favorite": "My Favorite",
     "no_own_stories_title": "You don't have any stories yet",
-    "no_own_stories_body": "Share your stories, they might help more people than you think"
+    "no_own_stories_body": "Share your stories, they might help more people than you think",
+    "joined_since": "Joined HuLib since {date}"
   },
   "MyFavorites": {
     "choose_all": "Choose all",

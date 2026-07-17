@@ -1,7 +1,7 @@
 'use client';
 
 import { Heart, PencilSimple, TelegramLogo } from '@phosphor-icons/react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 
 import Avatar from '@/components/core/avatar/Avatar';
@@ -27,6 +27,15 @@ export default function ProfileHero({
   onChatClick,
 }: ProfileHeroProps) {
   const t = useTranslations('MyProfile');
+  const locale = useLocale();
+
+  const joinDateRaw = userDetail?.huberSince ?? userDetail?.createdAt;
+  const joinDateFormatted = joinDateRaw
+    ? new Date(joinDateRaw).toLocaleDateString(
+        locale === 'en' ? 'en-US' : 'vi-VN',
+        { day: 'numeric', month: 'long', year: 'numeric' },
+      )
+    : null;
 
   return (
     <div className="flex flex-col overflow-hidden rounded-xl shadow-sm">
@@ -72,7 +81,11 @@ export default function ProfileHero({
                     {userDetail?.fullName}
                   </h4>
                 </div>
-                <p className="text-sm text-neutral-40">Tham gia Hulib 18 tháng 6 năm 2026</p>
+                {joinDateFormatted && (
+                  <p className="text-sm text-neutral-40">
+                    {t('joined_since', { date: joinDateFormatted })}
+                  </p>
+                )}
                 {isHuberProfile && (
                   <div className="flex items-center gap-2">
                     <Heart className="text-pink-50" weight="fill" />
