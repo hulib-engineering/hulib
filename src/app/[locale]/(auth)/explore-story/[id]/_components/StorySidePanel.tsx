@@ -12,9 +12,12 @@ import {
   ThreadsLogo,
   ThumbsUp,
 } from '@phosphor-icons/react';
-import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
+
 import * as React from 'react';
+
+import { usePathname, useRouter } from '@/libs/i18nNavigation';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
@@ -51,11 +54,21 @@ type StorySidePanelProps = {
 
 export default function StorySidePanel({ data }: StorySidePanelProps) {
   const router = useRouter();
+  const { data: session } = useSession();
+  const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslations('ExploreStory');
 
   const [shareStory] = useShareStoryMutation();
   const [handleUpdateLikeCount] = useLikeStoryMutation();
+
+  const requireAuth = React.useCallback(() => {
+    if (!session) {
+      router.push(`/auth/login?callbackUrl=${encodeURIComponent(pathname)}`);
+      return false;
+    }
+    return true;
+  }, [session, router, pathname]);
 
   const [isFavorite, setIsFavorite] = React.useState(false);
   const [likeCount, setLikeCount] = React.useState(data?.likeCount ?? 0);
@@ -93,6 +106,9 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
   ], [storyUrl]);
 
   const clickLikeStory = React.useCallback(async () => {
+    if (!requireAuth()) {
+      return;
+    }
     try {
       const newCount = isFavorite ? likeCount - 1 : likeCount + 1;
       if (isFavorite) {
@@ -113,9 +129,12 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
     } catch {
       pushError(t('like_error'));
     }
-  }, [isFavorite, likeCount, data?.id, handleUpdateLikeCount, t]);
+  }, [requireAuth, isFavorite, likeCount, data?.id, handleUpdateLikeCount, t]);
 
   const handleClickShare = React.useCallback(async () => {
+    if (!requireAuth()) {
+      return;
+    }
     if (!storyUrl) {
       return;
     }
@@ -131,22 +150,28 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
     setShareCount(prev => prev + 1);
     pushSuccess(t('share_copied'));
     setIsShareModalOpen(true);
-  }, [storyUrl, data.id, shareStory, t]);
+  }, [requireAuth, storyUrl, data?.id, shareStory, t]);
 
   const handleCloseShareModal = React.useCallback(() => {
     setIsShareModalOpen(false);
   }, []);
 
   const handleAuthorClick = React.useCallback(() => {
+    if (!requireAuth()) {
+      return;
+    }
     if (!data?.humanBook?.id) {
       return;
     }
     router.push(`/users/${data.humanBook.id}`);
-  }, [router, data?.humanBook?.id]);
+  }, [requireAuth, router, data?.humanBook?.id]);
 
   const handleBookingClick = React.useCallback(() => {
+    if (!requireAuth()) {
+      return;
+    }
     router.push(`${data?.id}/booking`);
-  }, [router, data?.id]);
+  }, [requireAuth, router, data?.id]);
 
   return (
     <>
@@ -188,7 +213,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
               <div className="flex items-center gap-x-1">
                 <Eye className="text-primary-50" size={16} />
                 <p className="text-[14px] font-medium leading-4 text-neutral-10">
-                  {data.viewCount ?? 0}
+                  {data?.viewCount ?? 0}
                 </p>
               </div>
               <div className="flex items-center gap-x-1">
@@ -258,8 +283,8 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           >
             <div className="relative">
               <Avatar
-                imageUrl={data.humanBook?.photo?.path}
-                name={data.humanBook?.fullName}
+                imageUrl={data?.humanBook?.photo?.path}
+                name={data?.humanBook?.fullName}
                 className="size-9"
               />
               <div className="absolute left-6 top-5 flex items-center justify-center rounded-full bg-lavender-80 p-0.5">
