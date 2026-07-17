@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import { mergeClassnames } from '@/components/core/private/utils';
 import { DetailedStory } from '@/features/stories/components/DetailedStory';
 import StoryReviews from '@/app/[locale]/(auth)/explore-story/[id]/_components/StoryReviews';
@@ -12,6 +14,8 @@ type StoryContentProps = {
 };
 
 export default function StoryContent({ abstract, bookWidth, storyId }: StoryContentProps) {
+  const t = useTranslations('ExploreStory');
+
   return (
     <div className="flex min-w-0 flex-1 flex-col gap-y-8 xxl:w-[888px] xxl:max-w-[888px]">
       <DetailedStory
@@ -25,7 +29,7 @@ export default function StoryContent({ abstract, bookWidth, storyId }: StoryCont
         style={{ height: 'auto' }}
       >
         <h6 className="text-xl font-medium leading-7 text-neutral-20">
-          Cảm nghĩ từ người đọc
+          {t('review_title')}
         </h6>
         <CommentInput storyId={storyId} />
         <StoryReviews />

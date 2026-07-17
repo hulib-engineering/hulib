@@ -823,6 +823,9 @@
     "comment_placeholder": "Chia sẻ tại đây",
     "comment_submitted": "Bình luận đã được gửi thành công",
     "comment_error": "Gửi bình luận thất bại",
+    "comment_login_prompt": "Đăng nhập/đăng ký để viết cảm nghĩ của bạn về câu chuyện",
+    "review_title": "Cảm nghĩ từ người đọc",
+    "no_reviews": "Cuốn sách này chưa có nhận xét",
     "cancel": "Huỷ"
   },
   "Huber": {
