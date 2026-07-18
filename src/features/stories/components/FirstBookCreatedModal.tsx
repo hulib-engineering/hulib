@@ -3,6 +3,7 @@ import { CalendarDot, X } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
+import IconButton from '@/components/core/iconButton/IconButton';
 
 type FBModal = | {
   onClose: () => void;
@@ -12,22 +13,22 @@ export default function FirstBookCreatedModal(props: FBModal) {
   const tCommon = useTranslations('Common');
   return (
     <div className="flex size-full max-h-[900px]
-            max-w-[400px] flex-col items-center gap-20 rounded-2xl
-            sm:max-w-[1244px]"
+            flex-col items-center gap-20 rounded-2xl"
     >
       {/* Close button 'x' */}
-      <button
+      <IconButton
         type="button"
+        variant="ghost"
         className="absolute right-5 top-5 p-3"
         onClick={props.onClose}
         aria-label="Close"
       >
         <X size={20} />
-      </button>
+      </IconButton>
       {/* Content */}
       <div className="flex h-full max-h-[800px]
                 flex-col items-center
-                gap-8 pb-[230px] pt-[76px]"
+                gap-8 pb-[200px] pt-20"
       >
         {/* Top section */}
         <div className="flex max-h-[348.67px] w-full flex-col items-center justify-center rounded-xl px-[54px]">
