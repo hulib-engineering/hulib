@@ -730,7 +730,11 @@
     "comment_title": "Share your thoughts about this story",
     "comment_placeholder": "Share here",
     "comment_submitted": "Comment submitted successfully",
-    "comment_error": "Failed to submit comment"
+    "comment_error": "Failed to submit comment",
+    "comment_login_prompt": "Sign in/Sign up to share your thoughts about this story",
+    "review_title": "Readers' thoughts",
+    "no_reviews": "This book has no reviews yet",
+    "cancel": "Cancel"
   },
   "Huber": {
     "title": "Explore our Hubers",
