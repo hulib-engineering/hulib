@@ -48,8 +48,9 @@ export default function LiberMyFavorite() {
 
   const handleRemoveAllFavorites = async () => {
     try {
-      const res = await removeMyFavorites().unwrap();
-      pushSuccess(res?.message || tExplore('story_removed_from_favorites'));
+      await removeMyFavorites().unwrap();
+      pushSuccess(tExplore('story_removed_from_favorites'));
+      setAllStories([]);
       setIsShowModalRemoveAll(false);
       setPage(1);
     } catch (error: any) {

@@ -4,13 +4,14 @@ import { Heart, PencilSimple, TelegramLogo } from '@phosphor-icons/react';
 import { useLocale, useTranslations } from 'next-intl';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 
+import type { TUserDetail } from './profile.type';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import IconButton from '@/components/core/iconButton/IconButton';
 
 type ProfileHeroProps = {
-  userDetail: any;
+  userDetail: TUserDetail;
   notMe: boolean;
   isHuberProfile: boolean;
   onEditAvatarClick?: () => void;

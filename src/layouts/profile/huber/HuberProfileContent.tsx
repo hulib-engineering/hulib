@@ -3,25 +3,16 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { HUBER_OTHERS_TABS, HUBER_OWN_TABS } from '../profile.contant';
+import type { TUserDetail } from '../profile.type';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
 import { mergeClassnames } from '@/components/core/private/utils';
 import AboutPanel from '@/layouts/profile/AboutPanel';
 import MyFavoritesPanel from '@/app/[locale]/(auth)/users/[id]/_components/MyFavoritesPanel';
 import MyStoriesPanel from '@/app/[locale]/(auth)/users/[id]/_components/MyStoriesPanel';
 
-const HUBER_OWN_TABS = [
-  { value: 'about', label: 'about' },
-  { value: 'stories', label: 'my_stories' },
-  { value: 'favorite-list', label: 'my_favorite' },
-] as const;
-
-const HUBER_OTHERS_TABS = [
-  { value: 'about', label: 'about' },
-  { value: 'stories', label: 'my_stories' },
-] as const;
-
 type HuberProfileContentProps = {
-  userDetail: any;
+  userDetail: TUserDetail;
   notMe: boolean;
 };
 

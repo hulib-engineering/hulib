@@ -6,11 +6,7 @@ import { Books, ThumbsUp, UserList } from '@phosphor-icons/react';
 
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
-
-type TabItem = {
-  value: string;
-  label: string;
-};
+import type { TabItem } from '@/types/common';
 
 type ControlOverviewProps = {
   className?: string;

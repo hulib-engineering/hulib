@@ -30,3 +30,7 @@ export enum StatusEnum {
   Approved = 'approved',
   Missed = 'missed',
 }
+export type TabItem = {
+  value: string;
+  label: string;
+};

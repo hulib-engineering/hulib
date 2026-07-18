@@ -3,24 +3,16 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { LIBER_OTHERS_TABS, LIBER_OWN_TABS } from '../profile.contant';
+import type { TUserDetail } from '../profile.type';
 import { ControlOverview } from './ControlOverview';
 import LiberMyFavorite from './LiberMyFavorite';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
 import AboutPanel from '@/layouts/profile/AboutPanel';
 import MyStoriesPanel from '@/app/[locale]/(auth)/users/[id]/_components/MyStoriesPanel';
 
-const LIBER_OWN_TABS = [
-  { value: 'about', label: 'about' },
-  { value: 'stories', label: 'my_stories' },
-  { value: 'favorite-list', label: 'my_favorite' },
-] as const;
-
-const LIBER_OTHERS_TABS = [
-  { value: 'about', label: 'about' },
-] as const;
-
 type LiberProfileContentProps = {
-  userDetail: any;
+  userDetail: TUserDetail;
   notMe: boolean;
 };
 

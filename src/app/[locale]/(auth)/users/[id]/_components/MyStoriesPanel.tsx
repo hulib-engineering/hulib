@@ -42,34 +42,25 @@ export default function MyStoriesPanel({ storyOwnerId, showOthers = false }: MyS
 
   const isEmpty = !stories?.data?.length;
 
-  const renderContent = () => {
-    if (isLoading) {
-      return <StoriesSkeleton />;
-    }
-    if (isEmpty && showOthers) {
-      return <StoriesOthersEmptyState />;
-    }
-    if (isEmpty) {
-      return <MyStoriesEmptyState onCreateClick={() => setIsCreateModalOpen(true)} />;
-    }
-
-    return (
-      <div className="flex flex-col gap-6">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {!showOthers && <CreateStoryCard onClick={() => setIsCreateModalOpen(true)} className="w-full max-w-none" />}
-          {stories?.data?.map((story: TStory) => (
-            showOthers
-              ? <StoryCard key={story.id} data={story} />
-              : <MyStoryCard key={story.id} data={story} />
-          ))}
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div className="lg:px-0">
-      {renderContent()}
+      {isLoading && <StoriesSkeleton />}
+      {!isLoading && isEmpty && showOthers && <StoriesOthersEmptyState />}
+      {!isLoading && isEmpty && !showOthers && (
+        <MyStoriesEmptyState onCreateClick={() => setIsCreateModalOpen(true)} />
+      )}
+      {!isLoading && !isEmpty && (
+        <div className="flex flex-col gap-6">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {!showOthers && <CreateStoryCard onClick={() => setIsCreateModalOpen(true)} className="w-full max-w-none" />}
+            {stories?.data?.map((story: TStory) => (
+              showOthers
+                ? <StoryCard key={story.id} data={story} />
+                : <MyStoryCard key={story.id} data={story} />
+            ))}
+          </div>
+        </div>
+      )}
       {!showOthers && (
         <>
           <Modal
