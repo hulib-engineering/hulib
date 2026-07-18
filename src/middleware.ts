@@ -62,6 +62,7 @@ export default async function middleware(request: NextRequest) {
     '/auth/forgot-password',
     '/auth/reset-password',
     '/admin/auth/login',
+    '/explore-story',
     // '/register-huber/policy',
     // '/register-huber/create-book',
     // '/register-huber/success',
