@@ -108,8 +108,8 @@ const MainTemplate = (props: WithChildren) => {
       >
         <div className="flex size-full flex-col">
           <Header />
-          <main className={mergeClassnames('flex-1 bg-neutral-98', !pathname.includes('messages') && 'overflow-y-auto')}>
-            <div className={mergeClassnames('bg-neutral-98', pathname.includes('messages') ? 'h-full' : 'min-h-[calc(100vh-410px)]')}>
+          <main className={mergeClassnames('flex-1', !pathname.includes('messages') && 'overflow-y-auto')}>
+            <div className={mergeClassnames(pathname.includes('messages') ? 'h-full' : 'min-h-[calc(100vh-410px)]')}>
               {props.children}
             </div>
 

@@ -33,9 +33,11 @@ export enum PublishStatusEnum {
 }
 
 export enum StoryPublishStatus {
-  DELETED = 'deleted',
+  DRAFT = 'draft',
+  PENDING = 'pending',
   PUBLISHED = 'published',
   REJECTED = 'rejected',
+  DELETED = 'deleted',
 }
 
 export type Story = {
@@ -58,6 +60,7 @@ export type Story = {
   viewCount?: number;
   shareCount?: number;
   likeCount?: number;
+  rejectionReason?: string;
 };
 
 type Histogram = {
