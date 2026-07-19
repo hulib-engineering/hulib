@@ -96,20 +96,20 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
 
       </div>
     );
+  } else {
+    return (
+      <div className={mergeClassnames(poppins.className, 'relative antialiased min-h-screen flex flex-col')}>
+        <PublicHeader />
+        <main className="flex-1 bg-neutral-98 pt-14 lg:pt-16">
+          <div className="min-h-[calc(100vh-410px)]">
+            {children}
+          </div>
+          <FooterWebApp />
+        </main>
+        <CustomToastifyContainer />
+      </div>
+    );
   }
-
-  return (
-    <div className={mergeClassnames(poppins.className, 'relative antialiased min-h-screen flex flex-col')}>
-      <PublicHeader />
-      <main className="flex-1 bg-neutral-98 pt-14 lg:pt-16">
-        <div className="min-h-[calc(100vh-410px)]">
-          {children}
-        </div>
-        <FooterWebApp />
-      </main>
-      <CustomToastifyContainer />
-    </div>
-  );
 }
 
 export { HomeTemplateInner };

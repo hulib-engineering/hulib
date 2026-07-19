@@ -21,13 +21,18 @@ import { useMobile, useRequireAuth } from '@/libs/hooks';
 import AnimatedCover from '@/features/stories/components/AnimatedCover';
 import { useLikeStoryMutation } from '@/libs/services/modules/stories';
 import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
+import { StoryBage } from '@/components/StoryBage';
 
 type IStoryCardProps = {
   data: TStory;
   className?: string;
+  outletClassName?: string;
+  isShowReadAll?: boolean;
+  isShowFavorite?: boolean;
+  isShowStoryBage?: boolean;
 };
 
-export const StoryCard = ({ data, className }: IStoryCardProps) => {
+export const StoryCard = ({ data, className, outletClassName, isShowReadAll = true, isShowFavorite = true, isShowStoryBage = false }: IStoryCardProps) => {
   const router = useRouter();
   const { requireAuth } = useRequireAuth();
   const t = useTranslations('ExploreStory');
@@ -85,7 +90,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
   };
 
   return (
-    <div className="relative max-h-[365px] max-w-[402px] gap-3 rounded-2xl bg-white p-4 shadow-sm">
+    <div className={mergeClassnames('relative max-h-[365px] max-w-[402px] gap-3 rounded-2xl bg-white p-4 shadow-sm', outletClassName)}>
       <div className={mergeClassnames(
         'flex w-full items-stretch gap-2',
         className,
@@ -93,6 +98,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
       >
         <div className="flex min-w-0 flex-1 flex-col justify-between gap-3 lg:gap-4">
           <div className="flex flex-1 flex-col gap-2 lg:gap-3">
+            {isShowStoryBage && <StoryBage status={data.publishStatus} rejectionReason={data.rejectionReason} />}
             <h6 className="line-clamp-2 min-h-14 text-xl font-medium capitalize leading-7 text-primary-10">
               {data?.title}
             </h6>
@@ -181,29 +187,33 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
         </div>
       </div>
       <div className="mt-3 flex w-full items-center gap-2">
-        <Button
-          size="lg"
-          className="flex-1 rounded-full py-3 text-base font-medium leading-5"
-          onClick={handleClickRead}
-        >
-          {t('read_all')}
-        </Button>
-        <IconButton
-          variant="outline"
-          size="md"
-          className={mergeClassnames(
-            'rounded-full p-3',
-            isFavorite ? 'border-orange-80' : 'border-primary-90',
-          )}
-          onClick={handleClickFavorite}
-          aria-label="Like story"
-        >
-          <ThumbsUp
-            className={isFavorite ? 'text-orange-50' : 'text-primary-50'}
-            size={20}
-            weight={isFavorite ? 'fill' : 'bold'}
-          />
-        </IconButton>
+        {isShowReadAll && (
+          <Button
+            size="lg"
+            className="flex-1 rounded-full py-3 text-base font-medium leading-5"
+            onClick={handleClickRead}
+          >
+            {t('read_all')}
+          </Button>
+        )}
+        {isShowFavorite && (
+          <IconButton
+            variant="outline"
+            size="md"
+            className={mergeClassnames(
+              'rounded-full p-3',
+              isFavorite ? 'border-orange-80' : 'border-primary-90',
+            )}
+            onClick={handleClickFavorite}
+            aria-label="Like story"
+          >
+            <ThumbsUp
+              className={isFavorite ? 'text-orange-50' : 'text-primary-50'}
+              size={20}
+              weight={isFavorite ? 'fill' : 'bold'}
+            />
+          </IconButton>
+        )}
       </div>
     </div>
   );
