@@ -1,7 +1,7 @@
 'use client';
 
 import localFont from 'next/font/local';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { type ReactNode, useEffect, useState } from 'react';
 
 import PublicHeader from './PublicHeader';
@@ -42,9 +42,9 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
   const pathname = usePathname();
   const dispatch = useAppDispatch();
 
-  const isAuthenticated = !!session;
+  const isAuthenticated = !!session?.accessToken;
 
-  const { data: personalInfo } = useGetPersonalInfoQuery(undefined, {
+  const { data: personalInfo, error: personalInfoError } = useGetPersonalInfoQuery(undefined, {
     skip: !isAuthenticated,
   });
   const [markSeen] = useMarkHuberOnboardingSeenMutation();
@@ -52,6 +52,13 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
   const [isFirstBookModalOpen, setIsFirstBookModalOpen] = useState(false);
 
   useEffect(() => {
+    if (personalInfoError) {
+      dispatch(setUserInfo({}));
+      dispatch(setAvatarUrl(undefined));
+      signOut({ redirect: false });
+      return;
+    }
+
     if (personalInfo) {
       dispatch(setUserInfo(personalInfo));
       dispatch(setAvatarUrl(personalInfo.photo));
@@ -59,14 +66,14 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
         setIsFirstBookModalOpen(true);
       }
     }
-  }, [personalInfo, dispatch]);
+  }, [personalInfo, personalInfoError, dispatch]);
 
   const handleCloseModal = () => {
     setIsFirstBookModalOpen(false);
     markSeen(personalInfo?.id);
   };
 
-  if (isAuthenticated) {
+  if (isAuthenticated && !personalInfoError) {
     return (
       <div className={mergeClassnames(poppins.className, 'relative antialiased h-screen flex flex-col')}>
         <div className="flex size-full flex-col">
