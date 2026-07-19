@@ -62,11 +62,11 @@ export default function Index() {
       </Button>
 
       {/* Story information */}
-      <div className="h-[210px] p-2">
+      <div className="p-2">
         <div className="flex w-full gap-4 rounded-2xl bg-white p-3">
-          <div className="lg:h-[170px] lg:w-[120px]">
-            <Cover src={data?.cover?.path ?? DEFAULT_STORY_COVER_ASSET} />
-          </div>
+          {/* <div className="lg:h-[170px] lg:w-[120px]"> */}
+          <Cover src={data?.cover?.path ?? DEFAULT_STORY_COVER_ASSET} size="w-[144px] h-[202px] " />
+          {/* </div> */}
           <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-1">
               <h5 className="text-2xl font-medium leading-8 text-primary-10">{data?.title}</h5>
@@ -107,13 +107,14 @@ export default function Index() {
           </div>
         </div>
       </div>
-      <DetailedStory
-        title={data?.title || ''}
-        cover={data?.humanBook?.photo?.path ?? '/assets/images/landing/half-title-illus.png'}
-        authorName={data?.humanBook?.fullName || ''}
-        abstract={data?.abstract || ''}
-      />
-
+      <div className="relative">
+        <DetailedStory
+          title={data?.title || ''}
+          cover={data?.humanBook?.photo?.path ?? '/assets/images/landing/half-title-illus.png'}
+          authorName={data?.humanBook?.fullName || ''}
+          abstract={data?.abstract || ''}
+        />
+      </div>
       <div className="flex items-center justify-end gap-3">
         <Button
           variant="outline"
