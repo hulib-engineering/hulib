@@ -5,6 +5,7 @@ import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
 
 import Header from '@/app/[locale]/(auth)/_components/Header';
+import MobileBottomNav from '@/app/[locale]/(auth)/_components/MobileBottomNav';
 import FooterWebApp from '@/app/[locale]/(auth)/_components/FooterWebApp';
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import type { WithChildren } from '@/components/core/private/types';
@@ -120,6 +121,7 @@ const MainTemplate = (props: WithChildren) => {
 
             {!pathname.includes('messages') && <FooterWebApp />}
           </main>
+          {!pathname.includes('messages') && <MobileBottomNav />}
           {!pathname.includes('messages') && <MessengerWidget />}
         </div>
         <CustomToastifyContainer />
