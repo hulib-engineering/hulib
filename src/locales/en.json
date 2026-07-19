@@ -1087,6 +1087,10 @@
     }
   },
   "LandingPage": {
+    "bottomNav": {
+      "home": "Home",
+      "profile": "Profile"
+    },
     "navigation": {
       "bookshelf": "Bookshelf",
       "about_us": "About us"

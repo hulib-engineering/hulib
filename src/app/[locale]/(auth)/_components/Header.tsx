@@ -2,13 +2,11 @@
 
 import {
   Bell,
-  List,
   MessengerLogo,
-  X,
 } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import Popover from '@/components/core/popover/Popover';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -32,7 +30,6 @@ import {
 import { useLazyGetUsersByIdQuery } from '@/libs/services/modules/user';
 import type { Message } from '@/libs/store/messenger';
 import { openChat } from '@/libs/store/messenger';
-import { Role } from '@/types/common';
 import { Link, usePathname, useRouter } from '@/libs/i18nNavigation';
 
 export const HeaderIconButtonWithBadge = ({
@@ -64,12 +61,6 @@ const Header = () => {
 
   const router = useRouter();
   const currentPathname = usePathname();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [currentPathname]);
-
   const user = useAppSelector(state => state.auth.userInfo);
 
   const { data, isLoading, error } = useGetNotificationsQuery({ page: 1, limit: 5 });
@@ -159,90 +150,39 @@ const Header = () => {
       {/* Mobile version */}
       <header className="flex w-screen flex-col bg-white px-4 pb-2 pt-4 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:hidden">
         <div className="relative z-[1000] flex items-center justify-between">
-          <Link href="/">
-            <Logo size="small" />
-          </Link>
           <div className="flex items-center gap-2">
-            <LocaleSwitcher />
-            {!user || !user?.id
-              ? (
-                  <SkeletonHeader />
-                )
-              : (
-                  <>
-                    <button type="button" className="xl:hidden" onClick={() => router.push('/messages')}>
-                      <HeaderIconButtonWithBadge badge={totalUnread} open={currentPathname === '/messages'}>
-                        <MessengerLogo className="text-[28px]" />
-                      </HeaderIconButtonWithBadge>
-                    </button>
-                    {(!isLoading && !error) && (
-                      <button type="button" className="xl:hidden" onClick={() => router.push('/notifications')}>
-                        <HeaderIconButtonWithBadge badge={data ? data.unseenCount : 0} open={currentPathname === '/notifications'}>
-                          <Bell className="text-[28px]" />
-                        </HeaderIconButtonWithBadge>
-                      </button>
-                    )}
-                    <div className="ml-2">
-                      <AvatarPopover />
-                    </div>
-                    <button
-                      type="button"
-                      className="inline-flex items-center justify-center rounded-full p-2 text-neutral-20"
-                      aria-label="Open menu"
-                      aria-expanded={isMenuOpen}
-                      onClick={() => setIsMenuOpen(true)}
-                    >
-                      <List size={24} weight="bold" />
-                    </button>
-                  </>
-                )}
-          </div>
-        </div>
-      </header>
-      {isMenuOpen && (
-        <div
-          className="fixed inset-0 z-[1000] bg-black/40 transition-opacity duration-200 lg:hidden"
-          onClick={() => setIsMenuOpen(false)}
-          aria-hidden="true"
-        />
-      )}
-      <aside
-        className={mergeClassnames(
-          'fixed right-0 top-0 z-[1001] h-screen w-[82%] max-w-[320px] bg-white shadow-xl transition-transform duration-300 lg:hidden',
-          isMenuOpen ? 'translate-x-0' : 'translate-x-full',
-        )}
-        aria-label="Mobile menu"
-      >
-        <div className="flex h-full flex-col">
-          <div className="flex items-center justify-between border-b border-neutral-90 p-4">
-            <Logo size="small" />
-            <button
-              type="button"
-              className="rounded-full p-2 text-neutral-20"
-              aria-label="Close menu"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <X size={20} weight="bold" />
-            </button>
-          </div>
-          <div className="flex flex-1 flex-col gap-2 p-4">
-            <Link
-              href="/explore-story"
-              className="rounded-lg px-2 py-3 text-base font-medium leading-5 text-neutral-20"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {t('navigation.bookshelf')}
+            <Link href="/">
+              <Logo size="small" />
             </Link>
             <Link
               href="/about"
               className="rounded-lg px-2 py-3 text-base font-medium leading-5 text-neutral-20"
-              onClick={() => setIsMenuOpen(false)}
             >
               {t('navigation.about_us')}
             </Link>
           </div>
+          {!user || !user?.id
+            ? (
+                <SkeletonHeader />
+              )
+            : (
+                <div className="flex items-center gap-2">
+                  <button type="button" className="xl:hidden" onClick={() => router.push('/messages')}>
+                    <HeaderIconButtonWithBadge badge={totalUnread} open={currentPathname === '/messages'}>
+                      <MessengerLogo className="text-[28px]" />
+                    </HeaderIconButtonWithBadge>
+                  </button>
+                  {(!isLoading && !error) && (
+                    <button type="button" className="xl:hidden" onClick={() => router.push('/notifications')}>
+                      <HeaderIconButtonWithBadge badge={data ? data.unseenCount : 0} open={currentPathname === '/notifications'}>
+                        <Bell className="text-[28px]" />
+                      </HeaderIconButtonWithBadge>
+                    </button>
+                  )}
+                </div>
+              )}
         </div>
-      </aside>
+      </header>
 
       {/* PC version */}
       <header className="hidden w-screen items-center justify-between bg-white px-4 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex xl:px-28">
@@ -250,16 +190,16 @@ const Header = () => {
           <Link href="/">
             <Logo size="small" />
           </Link>
-          {user && user?.role?.id !== Role.ADMIN && (
-            <div className="flex items-center gap-3">
-              <Link href="/explore-story" className="p-3 font-medium leading-5 text-neutral-10">
-                {t('navigation.bookshelf')}
-              </Link>
-              <Link href="/about" className="p-3 font-medium leading-5 text-neutral-10">
-                {t('navigation.about_us')}
-              </Link>
-            </div>
-          )}
+          {/* {user && user?.role?.id !== Role.ADMIN && ( */}
+          <div className="flex items-center gap-3">
+            <Link href="/explore-story" className="p-3 font-medium leading-5 text-neutral-10">
+              {t('navigation.bookshelf')}
+            </Link>
+            <Link href="/about" className="p-3 font-medium leading-5 text-neutral-10">
+              {t('navigation.about_us')}
+            </Link>
+          </div>
+          {/* )} */}
         </div>
         {!user || !user?.id
           ? (
