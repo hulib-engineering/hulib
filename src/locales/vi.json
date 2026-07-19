@@ -1282,6 +1282,10 @@
     }
   },
   "LandingPage": {
+    "bottomNav": {
+      "home": "Trang chủ",
+      "profile": "Cá nhân"
+    },
     "navigation": {
       "bookshelf": "Kệ sách",
       "pinboard": "Bảng ghim",
