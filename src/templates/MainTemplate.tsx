@@ -5,6 +5,7 @@ import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
 
 import Header from '@/app/[locale]/(auth)/_components/Header';
+import MobileBottomNav from '@/app/[locale]/(auth)/_components/MobileBottomNav';
 import FooterWebApp from '@/app/[locale]/(auth)/_components/FooterWebApp';
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import type { WithChildren } from '@/components/core/private/types';
@@ -108,13 +109,14 @@ const MainTemplate = (props: WithChildren) => {
       >
         <div className="flex size-full flex-col">
           <Header />
-          <main className={mergeClassnames('flex-1 bg-neutral-98', !pathname.includes('messages') && 'overflow-y-auto')}>
+          <main className={mergeClassnames('flex-1 bg-neutral-98', !pathname.includes('messages') && 'overflow-y-auto pb-14 lg:pb-0')}>
             <div className={mergeClassnames('bg-neutral-98', pathname.includes('messages') ? 'h-full' : 'min-h-[calc(100vh-410px)]')}>
               {props.children}
             </div>
 
             {!pathname.includes('messages') && <FooterWebApp />}
           </main>
+          {!pathname.includes('messages') && <MobileBottomNav />}
           {!pathname.includes('messages') && <MessengerWidget />}
         </div>
         <CustomToastifyContainer />
