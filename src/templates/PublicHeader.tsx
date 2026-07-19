@@ -44,7 +44,7 @@ export default function PublicHeader() {
               </Link>
             </div>
           </div>
-          <div className="items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-3 lg:flex">
             <Button
               variant="outline"
               size="sm"
