@@ -120,8 +120,20 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  -webkit-transition: all 100ms ease-in;
-  transition: all 100ms ease-in;
+  -webkit-transition:
+    color 100ms ease-in,
+    background-color 100ms ease-in,
+    border-color 100ms ease-in,
+    outline-color 100ms ease-in,
+    opacity 100ms ease-in,
+    box-shadow 100ms ease-in;
+  transition:
+    color 100ms ease-in,
+    background-color 100ms ease-in,
+    border-color 100ms ease-in,
+    outline-color 100ms ease-in,
+    opacity 100ms ease-in,
+    box-shadow 100ms ease-in;
 }
 
 html {

@@ -1,6 +1,5 @@
 'use client';
 
-import localFont from 'next/font/local';
 import { SessionProvider } from 'next-auth/react';
 
 import { useEffect } from 'react';
@@ -8,76 +7,12 @@ import * as React from 'react';
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
+import { poppins } from '@/styles/fonts';
 import Header from '@/layouts/admin/Header';
 import { redirect } from '@/libs/i18nNavigation';
 import { setAvatarUrl, setUserInfo } from '@/libs/store/authentication';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import { useAppDispatch } from '@/libs/hooks';
-
-const poppins = localFont({
-  src: [
-    {
-      path: '../styles/fonts/SVN-Poppins-ExtraLight.otf',
-      weight: '200',
-      style: 'normal',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-ExtraLightItalic.otf',
-      weight: '200',
-      style: 'italic',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-Light.otf',
-      weight: '300',
-      style: 'normal',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-LightItalic.otf',
-      weight: '300',
-      style: 'italic',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-Medium.otf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-MediumItalic.otf',
-      weight: '400',
-      style: 'italic',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-Bold.otf',
-      weight: '700',
-      style: 'normal',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-BoldItalic.otf',
-      weight: '700',
-      style: 'italic',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-ExtraBold.otf',
-      weight: '800',
-      style: 'normal',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-ExtraBoldItalic.otf',
-      weight: '800',
-      style: 'italic',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-Black.otf',
-      weight: '900',
-      style: 'normal',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-BlackItalic.otf',
-      weight: '900',
-      style: 'italic',
-    },
-  ],
-});
 
 const AdminTemplate = (props: WithChildren) => {
   // const pathname = usePathname();

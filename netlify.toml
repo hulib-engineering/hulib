@@ -7,3 +7,37 @@ package = "@netlify/plugin-nextjs"
 
 [build.environment]
 NODE_VERSION = "20"
+
+# JS/CSS chunks có content hash → cache vĩnh viễn
+[[headers]]
+for = "/_next/static/*"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+# Font files → cache vĩnh viễn (đổi tên khi đổi nội dung)
+[[headers]]
+for = "/*.woff2"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/*.otf"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+# Audio files → cache 1 ngày
+[[headers]]
+for = "/assets/media/*"
+
+[headers.values]
+Cache-Control = "public, max-age=86400"
+
+# Lottie animation JSON → cache 1 tuần
+[[headers]]
+for = "/assets/animations/*"
+
+[headers.values]
+Cache-Control = "public, max-age=604800"
