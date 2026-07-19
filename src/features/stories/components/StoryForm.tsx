@@ -370,7 +370,7 @@ export default function StoryForm(props: IStoryFormProps) {
                       <CaretDown />
                     </Combobox.VisualMultiSelect>
                     <Combobox.Transition>
-                      <Combobox.Options className="flex flex-wrap gap-2 p-1">
+                      <Combobox.Options className="z-50 flex flex-wrap gap-2 p-1">
                         {queriedTopicOptions.length === 0 && topicQuery !== '' ? (
                           <div className="relative cursor-default select-none text-neutral-40">
                             Nothing found.
