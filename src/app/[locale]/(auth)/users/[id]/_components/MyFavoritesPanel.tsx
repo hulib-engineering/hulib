@@ -52,7 +52,7 @@ export default function MyFavoritesPanel() {
   }, [activeChip]);
 
   const renderEmptyState = (type: ChipType) => (
-    <div className="flex flex-col items-center justify-center gap-5">
+    <div className="flex w-full flex-col items-center justify-center gap-5">
       <Image
         src="/assets/images/landing/no-results-found.png"
         className="h-[378px] w-[482px] object-contain"

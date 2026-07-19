@@ -668,7 +668,10 @@
     "submit_appeal": "Gửi khiếu nại",
     "about": "Giới thiệu",
     "my_stories": "Truyện của tôi",
-    "my_favorite": "Yêu thích của tôi"
+    "my_favorite": "Sách yêu thích",
+    "no_own_stories_title": "Bạn chưa có câu chuyện nào",
+    "no_own_stories_body": "Chia sẻ những câu chuyện của bạn, biết đâu nó sẽ giúp ích được cho nhiều người",
+    "joined_since": "Tham gia Hulib {date}"
   },
   "MyFavorites": {
     "choose_all": "Chọn tất cả",
@@ -685,7 +688,8 @@
     "explore_more_stories": "Khám phá thêm nhiều truyện",
     "explore_more_hubers": "Khám phá thêm nhiều tác giả",
     "story": "Truyện",
-    "huber": "Huber"
+    "huber": "Huber",
+    "see_more": "Xem thêm"
   },
   "HumanBookRegister": {
     "register_as_a_human_book": "Đăng ký làm Người Sách",
@@ -768,7 +772,6 @@
     "view_more": "Xem thêm",
     "topics": "Chủ đề",
     "ratings": "Đánh giá",
-    "abstract": "Nội dung câu chuyện",
     "read_story": "Đọc truyện",
     "productivity": "Năng suất",
     "all": "Tất cả",
@@ -1057,7 +1060,6 @@
     "create_first_story": "Tạo câu chuyện đầu tiên",
     "topics": "Chủ đề",
     "title": "Tiêu đề",
-    "abstract": "Nội dung câu chuyện",
     "content": "Nội dung câu chuyện",
     "cover_picture": "Ảnh bìa",
     "edit_cover": "Tùy chỉnh ảnh bìa",
@@ -1076,10 +1078,11 @@
     "cancel": "Huỷ bỏ",
     "submit": "Hoàn thành",
     "rejected": "Từ chối",
+    "in_review": "Đang xem xét",
+    "rejection_reason": "Lý do từ chối",
     "approve": "Chấp nhận",
     "report": "Báo cáo",
     "placeholder_title": "Nhập tiêu đề câu chuyện của bạn",
-    "placeholder_abstract": "Viết câu chuyện của bạn đây nha",
     "placeholder_content": "Nhập nội dung câu chuyện của bạn",
     "title_notification": "Hoàn tất đăng kí",
     "notification": "Cảm ơn bạn đã gửi câu chuyện! Hẹn gặp bạn trong suốt hành trình làm Huber nhé!",
@@ -1171,7 +1174,6 @@
     "update_your_schedule": " Cập nhật lịch của bạn",
     "update_schedule_description": "Cập nhật lịch của bạn để mọi người có thể trò chuyện trực tiếp với bạn",
     "update_personal_schedule": " Cập nhật lịch cá nhân",
-    "reader_views": "Đánh giá của độc giả: {view}",
     "all": "Tất cả",
     "search_by_keyword": "Tìm kiếm theo từ khóa",
     "about": "Giới thiệu",
