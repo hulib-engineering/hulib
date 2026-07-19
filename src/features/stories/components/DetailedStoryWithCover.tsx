@@ -2,13 +2,15 @@
 
 import Image from 'next/image';
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
-import HTMLFlipBook from 'react-pageflip';
+import dynamic from 'next/dynamic';
 
 import { Page } from './DetailedStory';
 
 import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { paginateText } from '@/utils/paginateTextUtil';
+
+const HTMLFlipBook = dynamic(() => import('react-pageflip'), { ssr: false });
 
 const PageCoverFront = forwardRef<HTMLDivElement, WithChildren<{}>>((props, ref) => {
   return (

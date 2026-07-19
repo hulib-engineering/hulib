@@ -15,6 +15,7 @@ import { ToastContainer } from 'react-toastify';
 import StoreProvider from '@/app/StoreProvider';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import { AppConfig } from '@/utils/AppConfig';
+import { poppins } from '@/styles/fonts';
 
 export const metadata: Metadata = {
   icons: [
@@ -62,7 +63,7 @@ export default function RootLayout({
   const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={poppins.className}>
       <body suppressHydrationWarning>
         {gaMeasurementId && (
           <>
