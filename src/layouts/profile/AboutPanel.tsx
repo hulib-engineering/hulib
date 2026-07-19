@@ -37,12 +37,14 @@ const AboutPanel = ({
 }: { data: User & { firstStory: Story }; editable?: boolean; awaiting?: boolean; underAdminControls?: boolean }) => {
   const t = useTranslations('MyProfile.about_panel');
 
+  const role = data.role.id;
+
   const [currentSection, setCurrentSection] = useState('overview');
 
   const sectionMenu: TAboutSectionMenu[] = [
     {
       type: 'overview',
-      label: data.role.id === Role.HUBER ? t('liber_overview') : t('huber_overview'),
+      label: role === Role.HUBER ? t('liber_overview') : t('huber_overview'),
       icon: (
         <Books
           className={mergeClassnames(
@@ -54,7 +56,7 @@ const AboutPanel = ({
     },
     {
       type: 'myBook',
-      label: data.role.id === Role.HUBER ? t('my_book') : t('my_book'),
+      label: role === Role.HUBER ? t('my_book') : t('my_book'),
       icon: (
         <Books
           className={mergeClassnames(
@@ -105,130 +107,125 @@ const AboutPanel = ({
   return (
     <div className="w-full overflow-visible bg-white lg:rounded-xl lg:shadow-sm">
       {/* Mobile View - Accordion Style */}
-      <div className="flex w-full flex-col rounded-xl border-neutral-90 px-5 py-4 lg:hidden">
-        <div className="px-3 py-1 font-medium leading-5 text-neutral-10">
-          {awaiting ? t('information') : t('introduction')}
-        </div>
-        <Accordion defaultValue="about-section-overview" singleOpen>
-          {sectionMenu.map(section => (
-            <Accordion.Item key={section.type} value={`about-section-${section.type}`}>
-              <Accordion.Header className="hulib-open:rounded-b-lg hulib-open:bg-primary-98">
-                <Accordion.Button className="ps-2">
-                  <div className="flex items-center gap-2">
-                    {section.icon}
-                    <span className="text-sm leading-4">{section.label}</span>
-                  </div>
-                  <CaretDown className="text-2xl hulib-open:text-primary-20 hulib-open:rotate-180" />
-                </Accordion.Button>
-              </Accordion.Header>
-              <Accordion.Content className={mergeClassnames(
-                'mt-1 rounded-none border-t-0 p-0',
-                section.type !== 'work' && 'border-b-[0.5px]',
-              )}
-              >
-                <div className={mergeClassnames(
-                  'flex w-full flex-col',
-                  section.type === 'overview' && 'gap-2 p-3',
-                  section.type === 'myBook' && 'gap-2 p-3',
-                  section.type === 'work' && 'gap-1 p-0 lg:gap-2',
-                  section.type === 'contact' && 'p-3',
-                )}
-                >
-                  <AboutSectionRenderer type={section.type} data={data} editable={editable} />
-                </div>
-              </Accordion.Content>
-            </Accordion.Item>
-          ))}
-        </Accordion>
-      </div>
-
-      {/* Desktop View - Side by Side */}
-      <div className="hidden rounded-xl border-neutral-90 bg-white lg:flex">
-        <div className="flex w-1/4 flex-col gap-3 rounded-l-xl border-r border-neutral-80 bg-white px-4 py-5">
-          <div className="flex flex-col gap-1">
-            <div className="rounded-lg bg-white px-3 py-1 font-medium text-neutral-10">
+      {role !== Role.LIBER && (
+        <>
+          <div className="flex w-full flex-col rounded-xl border-neutral-90 px-5 py-4 lg:hidden">
+            <div className="px-3 py-1 font-medium leading-5 text-neutral-10">
               {awaiting ? t('information') : t('introduction')}
             </div>
-            {sectionMenu.map(section => (
-              <MenuItem
-                key={section.type}
-                as="button"
-                type="button"
-                isSelected={currentSection === section.type}
-                className={mergeClassnames(
-                  section.type === 'moderations' && 'border border-red-90',
-                )}
-                onClick={() => setCurrentSection(section.type)}
-              >
-                {section.icon}
-                <MenuItem.Title
-                  className={mergeClassnames(
-                    'text-neutral-10 ',
-                    currentSection === section.type && 'text-primary-60',
+            <Accordion defaultValue="about-section-overview" singleOpen>
+              {sectionMenu.map(section => (
+                <Accordion.Item key={section.type} value={`about-section-${section.type}`}>
+                  <Accordion.Header className="hulib-open:rounded-b-lg hulib-open:bg-primary-98">
+                    <Accordion.Button className="ps-2">
+                      <div className="flex items-center gap-2">
+                        {section.icon}
+                        <span className="text-sm leading-4">{section.label}</span>
+                      </div>
+                      <CaretDown className="text-2xl hulib-open:text-primary-20 hulib-open:rotate-180" />
+                    </Accordion.Button>
+                  </Accordion.Header>
+                  <Accordion.Content className={mergeClassnames(
+                    'mt-1 rounded-none border-t-0 p-0',
+                    section.type !== 'work' && 'border-b-[0.5px]',
                   )}
-                >
-                  {section.label}
-                </MenuItem.Title>
-                {/* {section.type === 'moderations' && awaitingStories?.meta?.totalItems > 0 && ( */}
-                {/*  <div */}
-                {/*    className="flex h-4 w-[18px] items-center justify-center rounded-lg border border-white bg-red-50 px-1 py-[0.5px] text-[10px] font-medium leading-3 text-white" */}
-                {/*  > */}
-                {/*    {awaitingStories?.meta?.totalItems} */}
-                {/*  </div> */}
-                {/* )} */}
-              </MenuItem>
-            ))}
+                  >
+                    <div className={mergeClassnames(
+                      'flex w-full flex-col',
+                      section.type === 'overview' && 'gap-2 p-3',
+                      section.type === 'myBook' && 'gap-2 p-3',
+                      section.type === 'work' && 'gap-1 p-0 lg:gap-2',
+                      section.type === 'contact' && 'p-3',
+                    )}
+                    >
+                      <AboutSectionRenderer type={section.type} data={data} editable={editable} />
+                    </div>
+                  </Accordion.Content>
+                </Accordion.Item>
+              ))}
+            </Accordion>
           </div>
-          {awaiting && (
-            <div className="flex flex-col gap-1">
-              <div className="rounded-lg bg-white px-3 py-1 font-medium text-neutral-10">
-                {t('story')}
+          <div className="hidden rounded-xl border-neutral-90 bg-white lg:flex">
+            <div className="flex w-1/4 flex-col gap-3 rounded-l-xl border-r border-neutral-80 bg-white px-4 py-5">
+              <div className="flex flex-col gap-1">
+                <div className="rounded-lg bg-white px-3 py-1 font-medium text-neutral-10">
+                  {awaiting ? t('information') : t('introduction')}
+                </div>
+                {sectionMenu.map(section => (
+                  <MenuItem
+                    key={section.type}
+                    as="button"
+                    type="button"
+                    isSelected={currentSection === section.type}
+                    className={mergeClassnames(
+                      section.type === 'moderations' && 'border border-red-90',
+                    )}
+                    onClick={() => setCurrentSection(section.type)}
+                  >
+                    {section.icon}
+                    <MenuItem.Title
+                      className={mergeClassnames(
+                        'text-neutral-10 ',
+                        currentSection === section.type && 'text-primary-60',
+                      )}
+                    >
+                      {section.label}
+                    </MenuItem.Title>
+                  </MenuItem>
+                ))}
               </div>
-              <MenuItem
-                as="button"
-                type="button"
-                isSelected={currentSection === 'first-story'}
-                onClick={() => setCurrentSection('first-story')}
-              >
-                <Books
-                  className={mergeClassnames(
-                    'text-neutral-20 text-xl hulib-open:text-primary-20 lg:hover:text-primary-60',
-                    currentSection === 'first-story' && 'lg:text-primary-60',
-                  )}
+              {awaiting && (
+                <div className="flex flex-col gap-1">
+                  <div className="rounded-lg bg-white px-3 py-1 font-medium text-neutral-10">
+                    {t('story')}
+                  </div>
+                  <MenuItem
+                    as="button"
+                    type="button"
+                    isSelected={currentSection === 'first-story'}
+                    onClick={() => setCurrentSection('first-story')}
+                  >
+                    <Books
+                      className={mergeClassnames(
+                        'text-neutral-20 text-xl hulib-open:text-primary-20 lg:hover:text-primary-60',
+                        currentSection === 'first-story' && 'lg:text-primary-60',
+                      )}
+                    />
+                    <MenuItem.Title
+                      className={mergeClassnames(
+                        'text-neutral-10 ',
+                        currentSection === 'first-story' && 'text-primary-60',
+                      )}
+                    >
+                      Story
+                    </MenuItem.Title>
+                  </MenuItem>
+                </div>
+              )}
+            </div>
+            {currentSection !== 'first-story' ? (
+              <div className="flex flex-1 flex-col gap-6 rounded-xl border-r bg-white px-7 py-5">
+                <AboutSectionRenderer type={currentSection} data={data} editable={editable} />
+              </div>
+            ) : (
+              <div className="flex flex-1 flex-col gap-3 rounded-xl border-r bg-white p-2">
+                <div className="flex gap-4 rounded-2xl p-3">
+                  <Cover src={data?.firstStory?.cover?.path ?? DEFAULT_STORY_COVER_ASSET} />
+                  <div className="flex flex-col gap-3">
+                    <h5 className="text-2xl font-medium leading-8 text-primary-10">{data?.fullName}</h5>
+                  </div>
+                </div>
+                <DetailedStory
+                  title={data?.firstStory?.title}
+                  cover={data?.photo?.path}
+                  authorName={data?.fullName}
+                  abstract={data?.firstStory?.abstract}
                 />
-                <MenuItem.Title
-                  className={mergeClassnames(
-                    'text-neutral-10 ',
-                    currentSection === 'first-story' && 'text-primary-60',
-                  )}
-                >
-                  Story
-                </MenuItem.Title>
-              </MenuItem>
-            </div>
-          )}
-        </div>
-        {currentSection !== 'first-story' ? (
-          <div className="flex flex-1 flex-col gap-6 rounded-xl border-r bg-white px-7 py-5">
-            <AboutSectionRenderer type={currentSection} data={data} editable={editable} />
-          </div>
-        ) : (
-          <div className="flex flex-1 flex-col gap-3 rounded-xl border-r bg-white p-2">
-            <div className="flex gap-4 rounded-2xl p-3">
-              <Cover src={data?.firstStory?.cover?.path ?? DEFAULT_STORY_COVER_ASSET} />
-              <div className="flex flex-col gap-3">
-                <h5 className="text-2xl font-medium leading-8 text-primary-10">{data?.fullName}</h5>
               </div>
-            </div>
-            <DetailedStory
-              title={data?.firstStory?.title}
-              cover={data?.photo?.path}
-              authorName={data?.fullName}
-              abstract={data?.firstStory?.abstract}
-            />
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
     </div>
   );
 };

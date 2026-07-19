@@ -30,7 +30,6 @@ import {
 import { useLazyGetUsersByIdQuery } from '@/libs/services/modules/user';
 import type { Message } from '@/libs/store/messenger';
 import { openChat } from '@/libs/store/messenger';
-import { Role } from '@/types/common';
 import { Link, usePathname, useRouter } from '@/libs/i18nNavigation';
 
 export const HeaderIconButtonWithBadge = ({
@@ -151,21 +150,23 @@ const Header = () => {
       {/* Mobile version */}
       <header className="flex w-screen flex-col bg-white px-4 pb-2 pt-4 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:hidden">
         <div className="relative z-[1000] flex items-center justify-between">
-          <Link href="/">
-            <Logo size="small" />
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link href="/">
+              <Logo size="small" />
+            </Link>
+            <Link
+              href="/about"
+              className="rounded-lg px-2 py-3 text-base font-medium leading-5 text-neutral-20"
+            >
+              {t('navigation.about_us')}
+            </Link>
+          </div>
           {!user || !user?.id
             ? (
                 <SkeletonHeader />
               )
             : (
                 <div className="flex items-center gap-2">
-                  <Link
-                    href="/about"
-                    className="rounded-lg px-2 py-3 text-base font-medium leading-5 text-neutral-20"
-                  >
-                    {t('navigation.about_us')}
-                  </Link>
                   <button type="button" className="xl:hidden" onClick={() => router.push('/messages')}>
                     <HeaderIconButtonWithBadge badge={totalUnread} open={currentPathname === '/messages'}>
                       <MessengerLogo className="text-[28px]" />
@@ -189,16 +190,16 @@ const Header = () => {
           <Link href="/">
             <Logo size="small" />
           </Link>
-          {user && user?.role?.id !== Role.ADMIN && (
-            <div className="flex items-center gap-3">
-              <Link href="/explore-story" className="p-3 font-medium leading-5 text-neutral-10">
-                {t('navigation.bookshelf')}
-              </Link>
-              <Link href="/about" className="p-3 font-medium leading-5 text-neutral-10">
-                {t('navigation.about_us')}
-              </Link>
-            </div>
-          )}
+          {/* {user && user?.role?.id !== Role.ADMIN && ( */}
+          <div className="flex items-center gap-3">
+            <Link href="/explore-story" className="p-3 font-medium leading-5 text-neutral-10">
+              {t('navigation.bookshelf')}
+            </Link>
+            <Link href="/about" className="p-3 font-medium leading-5 text-neutral-10">
+              {t('navigation.about_us')}
+            </Link>
+          </div>
+          {/* )} */}
         </div>
         {!user || !user?.id
           ? (
