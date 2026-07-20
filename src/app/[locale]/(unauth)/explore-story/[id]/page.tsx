@@ -32,7 +32,6 @@ export default function Index() {
 
   const humanBookId = data?.humanBookId;
   const topics = data?.topics;
-
   const topicIds = React.useMemo(
     () => topics?.map((topic: { id: number }) => topic.id) ?? [],
     [topics],
