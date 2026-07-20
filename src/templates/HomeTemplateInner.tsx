@@ -1,14 +1,14 @@
 'use client';
 
 import localFont from 'next/font/local';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { type ReactNode, useEffect, useState } from 'react';
 
 import PublicHeader from './PublicHeader';
 import { usePathname } from '@/libs/i18nNavigation';
 import Header from '@/app/[locale]/(auth)/_components/Header';
+import MobileBottomNav from '@/app/[locale]/(auth)/_components/MobileBottomNav';
 import FooterWebApp from '@/app/[locale]/(auth)/_components/FooterWebApp';
-import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import MessengerWidget from '@/layouts/webapp/MultipleChatWidget';
 import { useAppDispatch } from '@/libs/hooks';
@@ -43,9 +43,9 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
   const pathname = usePathname();
   const dispatch = useAppDispatch();
 
-  const isAuthenticated = !!session;
+  const isAuthenticated = !!session?.accessToken;
 
-  const { data: personalInfo } = useGetPersonalInfoQuery(undefined, {
+  const { data: personalInfo, error: personalInfoError } = useGetPersonalInfoQuery(undefined, {
     skip: !isAuthenticated,
   });
   const [markSeen] = useMarkHuberOnboardingSeenMutation();
@@ -54,6 +54,13 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
   const [isPersonalCalendarModalOpen, setIsPersonalCalendarModalOpen] = useState(false);
 
   useEffect(() => {
+    if (personalInfoError) {
+      dispatch(setUserInfo({}));
+      dispatch(setAvatarUrl(undefined));
+      signOut({ redirect: false });
+      return;
+    }
+
     if (personalInfo) {
       dispatch(setUserInfo(personalInfo));
       dispatch(setAvatarUrl(personalInfo.photo));
@@ -61,7 +68,7 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
         setIsFirstBookModalOpen(true);
       }
     }
-  }, [personalInfo, dispatch]);
+  }, [personalInfo, personalInfoError, dispatch]);
 
   const handleCloseModal = () => {
     setIsFirstBookModalOpen(false);
@@ -72,20 +79,20 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
     setIsPersonalCalendarModalOpen(false);
   };
 
-  if (isAuthenticated) {
+  if (isAuthenticated && !personalInfoError) {
     return (
       <div className={mergeClassnames(poppins.className, 'relative antialiased h-screen flex flex-col')}>
         <div className="flex size-full flex-col">
           <Header />
-          <main className={mergeClassnames('flex-1 bg-neutral-98', !pathname.includes('messages') && 'overflow-y-auto')}>
+          <main className={mergeClassnames('flex-1 bg-neutral-98', !pathname.includes('messages') && 'overflow-y-auto pb-14 lg:pb-0')}>
             <div className={mergeClassnames('bg-neutral-98', pathname.includes('messages') ? 'h-full' : 'min-h-[calc(100vh-410px)]')}>
               {children}
             </div>
             {!pathname.includes('messages') && <FooterWebApp />}
           </main>
+          {!pathname.includes('messages') && <MobileBottomNav />}
           {!pathname.includes('messages') && <MessengerWidget />}
         </div>
-        <CustomToastifyContainer />
         {/* FirstBookCreatedModal */}
         <Modal
           open={isFirstBookModalOpen}
@@ -123,7 +130,6 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
         </div>
         <FooterWebApp />
       </main>
-      <CustomToastifyContainer />
     </div>
   );
 }

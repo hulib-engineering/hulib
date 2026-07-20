@@ -49,9 +49,17 @@ export default function RecommendedHuberList() {
       </div>
       <div className="group relative w-full">
         <Swiper
-          slidesPerView={2.5}
+          slidesPerView={1}
           spaceBetween={16}
           breakpoints={{
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 16,
+            },
+            1024: {
+              slidesPerView: 2.5,
+              spaceBetween: 16,
+            },
             1440: {
               slidesPerView: 4.5,
               spaceBetween: 16,
@@ -73,7 +81,7 @@ export default function RecommendedHuberList() {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className="absolute left-0 top-1/4 z-10 flex w-full justify-between px-1 lg:hidden">
+        <div className="absolute left-0 top-1/3 z-10 flex w-full justify-between px-1 lg:hidden">
           <IconButton
             variant="soft"
             size="sm"

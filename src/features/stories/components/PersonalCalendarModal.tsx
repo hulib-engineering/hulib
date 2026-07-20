@@ -1,9 +1,14 @@
 'use client';
-import { useState } from 'react';
+
+import { useCallback, useState } from 'react';
 import { CalendarCheck } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
+import {
+  DAYS_OF_WEEK as DAYS,
+  TIME_SLOTS,
+} from '@/libs/constants/date';
 
 // import IconButton from '@/components/core/iconButton/IconButton';
 
@@ -11,7 +16,6 @@ type PCModal = {
   onClose: () => void;
 };
 
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as const; // wrap translation function around these?
 type Day = (typeof DAYS)[number];
 
 type BottomButtonsType = {
@@ -54,11 +58,6 @@ function PersonalCalendar(props: PCModal) {
   /* TODO: Make it so the chosen timeslots will only be saved when pressed on the bottom left button - (for the current Day of Week).
   As of now they are still saved irregardless. */
 
-  const TIME_SLOTS = {
-    morning: ['6:00 AM', '6:30 AM', '7:00 AM', '7:30 AM', '8:00 AM', '8:30 AM', '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM'],
-    afternoon: ['12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM'],
-    evening: ['6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM', '8:00 PM', '8:30 PM', '9:00 PM', '9:30 PM', '10:00 PM', '10:30 PM', '11:00 PM', '11:30 PM'],
-  };
   const [currentChosenDay, setCurrentChosenDay] = useState<Day>('Monday');
   const [timeSlotsByDay, setTimeSlotsByDay] = useState<
     Record<Day, Set<string>>
@@ -72,7 +71,7 @@ function PersonalCalendar(props: PCModal) {
     Sunday: new Set(),
   });
 
-  const toggleTimeSlot = (slot: string) => {
+  const toggleTimeSlot = useCallback((slot: string) => {
     setTimeSlotsByDay((prev) => {
       const next = { ...prev };
       const daySlots = new Set(next[currentChosenDay]);
@@ -84,7 +83,7 @@ function PersonalCalendar(props: PCModal) {
       next[currentChosenDay] = daySlots;
       return next;
     });
-  };
+  }, [currentChosenDay]);
 
   const nextDay = (day: Day): Day => {
     const idx = DAYS.indexOf(day);

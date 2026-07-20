@@ -1,7 +1,4 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
-import type { Story } from '@storybook/react';
-
-// import type { Story } from './storiesType';
 
 export enum ChangeCountEnum {
   UP = 'up',
@@ -11,9 +8,14 @@ export enum ChangeCountEnum {
 export type UpdateLikeStoryRequest = {
   id: number;
   type: ChangeCountEnum;
+  userId: string;
 };
 
-type UpdateStoryResponse = {} & Story;
+type UpdateStoryResponse = {
+  id: number | string;
+  likeCount: number;
+  likedUserIds: string[];
+};
 
 const updateLikeCountStory = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.mutation<UpdateStoryResponse, UpdateLikeStoryRequest>({
