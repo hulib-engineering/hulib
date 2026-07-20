@@ -1,13 +1,17 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
-import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
 
+type Response = {
+  id: string;
+  shareCount: string | number;
+  sharedUserIds: string[];
+};
 const shareStory = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
-  build.mutation<void, number>({
-    query: id => ({
-      url: `stories/${id}/share`,
+  build.mutation<Response, { storyId: number; userId: string }>({
+    query: ({ storyId, userId }) => ({
+      url: `stories/${storyId}/share`,
       method: 'POST',
       body: {
-        type: ChangeCountEnum.UP,
+        userId,
       },
     }),
   });
