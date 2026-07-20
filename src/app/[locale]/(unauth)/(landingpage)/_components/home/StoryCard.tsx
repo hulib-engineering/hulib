@@ -17,26 +17,32 @@ import {
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
-import { useMobile, useRequireAuth } from '@/libs/hooks';
+import { useAppSelector, useMobile, useRequireAuth } from '@/libs/hooks';
 import AnimatedCover from '@/features/stories/components/AnimatedCover';
 import { useLikeStoryMutation } from '@/libs/services/modules/stories';
 import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
+import { StoryBage } from '@/components/StoryBage';
 
 type IStoryCardProps = {
   data: TStory;
   className?: string;
+  outletClassName?: string;
+  isShowReadAll?: boolean;
+  isShowFavorite?: boolean;
+  isShowStoryBage?: boolean;
 };
 
-export const StoryCard = ({ data, className }: IStoryCardProps) => {
+export const StoryCard = ({ data, className, outletClassName, isShowReadAll = true, isShowFavorite = true, isShowStoryBage = false }: IStoryCardProps) => {
   const router = useRouter();
   const { requireAuth } = useRequireAuth();
   const t = useTranslations('ExploreStory');
   const isMobile = useMobile();
   const [handleUpdateLikeCount] = useLikeStoryMutation();
 
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = React.useState(data?.likeCount ?? 0);
 
+  const userId = useAppSelector(state => state.auth.userInfo?.id);
   const visibleTopics = data?.topics?.slice(0, 1) ?? [];
   const remainingTopicsCount = Math.max((data.topics?.length ?? 0) - visibleTopics.length, 0);
 
@@ -46,11 +52,26 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
 
   const newEventTagText = visibleTopics.find(topic => topic.name.toLowerCase().includes('khoảnh khắc'))?.name ?? '';
 
+  const prevLikeCountRef = React.useRef(data?.likeCount);
+
+  React.useEffect(() => {
+    if (prevLikeCountRef.current !== data?.likeCount) {
+      prevLikeCountRef.current = data?.likeCount;
+      setLikeCount(data?.likeCount ?? 0);
+    }
+  }, [data?.likeCount]);
+
+  React.useEffect(() => {
+    if (userId && data?.likedUserIds) {
+      setIsLiked(
+        data.likedUserIds.some((id: string) => Number(id) === Number(userId)),
+      );
+    }
+  }, [data?.likedUserIds, userId]);
   const handleClickRead = async () => {
     const isAuth = await requireAuth(() => {
       router.push(`/explore-story/${data.id}`);
     });
-    console.log('isAuth', isAuth);
     if (!isAuth) {
       router.push('/auth/login');
     }
@@ -59,24 +80,28 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
   const handleClickFavorite = async () => {
     const isAuth = await requireAuth(async () => {
       try {
-        const newCount = isFavorite ? likeCount - 1 : likeCount + 1;
-        if (isFavorite) {
-          await handleUpdateLikeCount({
+        const isCurrentlyLiked = isLiked;
+        if (isCurrentlyLiked) {
+          const res = await handleUpdateLikeCount({
             id: data.id,
             type: ChangeCountEnum.DOWN,
-          });
+            userId,
+          }).unwrap();
+          setIsLiked(false);
+          setLikeCount(res.likeCount);
           pushSuccess(t('story_removed_from_favorites'));
         } else {
-          await handleUpdateLikeCount({
+          const res = await handleUpdateLikeCount({
             id: data.id,
             type: ChangeCountEnum.UP,
-          });
+            userId,
+          }).unwrap();
+          setIsLiked(true);
+          setLikeCount(res.likeCount);
           pushSuccess(t('story_added_to_favorites'));
         }
-        setIsFavorite(prev => !prev);
-        setLikeCount(newCount);
-      } catch (err: any) {
-        pushError(err?.data?.message || t('error_contact_admin'));
+      } catch {
+        pushError(t('like_error'));
       }
     });
     if (!isAuth) {
@@ -85,7 +110,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
   };
 
   return (
-    <div className="relative max-h-[365px] max-w-[402px] gap-3 rounded-2xl bg-white p-4 shadow-sm">
+    <div className={mergeClassnames('relative max-h-[365px] max-w-[402px] gap-3 rounded-2xl bg-white p-4 shadow-sm', outletClassName)}>
       <div className={mergeClassnames(
         'flex w-full items-stretch gap-2',
         className,
@@ -93,6 +118,7 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
       >
         <div className="flex min-w-0 flex-1 flex-col justify-between gap-3 lg:gap-4">
           <div className="flex flex-1 flex-col gap-2 lg:gap-3">
+            {isShowStoryBage && <StoryBage status={data.publishStatus} rejectionReason={data.rejectionReason} />}
             <h6 className="line-clamp-2 min-h-14 text-xl font-medium capitalize leading-7 text-primary-10">
               {data?.title}
             </h6>
@@ -181,29 +207,33 @@ export const StoryCard = ({ data, className }: IStoryCardProps) => {
         </div>
       </div>
       <div className="mt-3 flex w-full items-center gap-2">
-        <Button
-          size="lg"
-          className="flex-1 rounded-full py-3 text-base font-medium leading-5"
-          onClick={handleClickRead}
-        >
-          {t('read_all')}
-        </Button>
-        <IconButton
-          variant="outline"
-          size="md"
-          className={mergeClassnames(
-            'rounded-full p-3',
-            isFavorite ? 'border-orange-80' : 'border-primary-90',
-          )}
-          onClick={handleClickFavorite}
-          aria-label="Like story"
-        >
-          <ThumbsUp
-            className={isFavorite ? 'text-orange-50' : 'text-primary-50'}
-            size={20}
-            weight={isFavorite ? 'fill' : 'bold'}
-          />
-        </IconButton>
+        {isShowReadAll && (
+          <Button
+            size="lg"
+            className="flex-1 rounded-full py-3 text-base font-medium leading-5"
+            onClick={handleClickRead}
+          >
+            {t('read_all')}
+          </Button>
+        )}
+        {isShowFavorite && (
+          <IconButton
+            variant="outline"
+            size="md"
+            className={mergeClassnames(
+              'rounded-full p-3',
+              isLiked ? 'border-orange-80' : 'border-primary-90',
+            )}
+            onClick={handleClickFavorite}
+            aria-label="Like story"
+          >
+            <ThumbsUp
+              className={isLiked ? 'text-orange-50' : 'text-primary-50'}
+              size={20}
+              weight={isLiked ? 'fill' : 'bold'}
+            />
+          </IconButton>
+        )}
       </div>
     </div>
   );

@@ -38,6 +38,7 @@ import type { CoverPresetAsset } from '@/features/stories/constants';
 import {
   COVER_EXPORT_ELEMENT_ID,
   COVER_PRESET_ASSETS,
+  PRIORITY_TOPIC_KEYWORD,
 } from '@/features/stories/constants';
 import {
   getDefaultCustomization,
@@ -163,7 +164,21 @@ export default function StoryForm(props: IStoryFormProps) {
   const [currentCoverIndex, setCurrentCoverIndex] = useState(0);
   const [selectedTopics, setSelectedTopics] = useState<TFilter[]>(storyRelatedTopics);
   // const queriedTopicOptions = filter(topicQuery, topicOptions || []);
-  const queriedTopicOptions = topicOptions;
+  // const queriedTopicOptions = topicOptions;
+  const sortTopicsByPriority = (topics: { label: string; value: string; id: number }[]) => {
+    return [...topics].sort((a, b) => {
+      const aIsPriority = a.label.toLowerCase().startsWith(PRIORITY_TOPIC_KEYWORD);
+      const bIsPriority = b.label.toLowerCase().startsWith(PRIORITY_TOPIC_KEYWORD);
+      if (aIsPriority && !bIsPriority) {
+        return -1;
+      }
+      if (!aIsPriority && bIsPriority) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+  const queriedTopicOptions = sortTopicsByPriority(topicOptions);
 
   useEffect(() => {
     setValue('topics', selectedTopics.map(topic => ({ id: topic.id.toString() })));
@@ -370,7 +385,7 @@ export default function StoryForm(props: IStoryFormProps) {
                       <CaretDown />
                     </Combobox.VisualMultiSelect>
                     <Combobox.Transition>
-                      <Combobox.Options className="flex flex-wrap gap-2 p-1">
+                      <Combobox.Options className="z-50 flex flex-wrap gap-2 p-1">
                         {queriedTopicOptions.length === 0 && topicQuery !== '' ? (
                           <div className="relative cursor-default select-none text-neutral-40">
                             Nothing found.
