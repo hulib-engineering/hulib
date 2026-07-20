@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { CalendarCheck } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
@@ -25,7 +25,7 @@ type BottomButtonsType = {
   onClose: () => void;
 };
 
-function BottomButtons(props: BottomButtonsType) {
+const BottomButtons = memo((props: BottomButtonsType) => {
   return (
     <div className="flex items-center justify-between gap-4">
       <Button
@@ -52,7 +52,7 @@ function BottomButtons(props: BottomButtonsType) {
       </Button>
     </div>
   );
-}
+});
 
 function PersonalCalendar(props: PCModal) {
   /* TODO: Make it so the chosen timeslots will only be saved when pressed on the bottom left button - (for the current Day of Week).
@@ -85,13 +85,16 @@ function PersonalCalendar(props: PCModal) {
     });
   }, [currentChosenDay]);
 
-  const nextDay = (day: Day): Day => {
+  const nextDay = useCallback((day: Day): Day => {
     const idx = DAYS.indexOf(day);
     return DAYS[(idx + 1) % DAYS.length] as Day;
-  };
+  }, []);
 
   // Check if a given day has selected time slots
-  const isDayPicked = (day: Day) => timeSlotsByDay[day].size > 0;
+  const isDayPicked = useCallback(
+    (day: Day) => timeSlotsByDay[day].size > 0,
+    [timeSlotsByDay],
+  );
 
   return (
     <div
