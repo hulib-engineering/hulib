@@ -17,7 +17,7 @@ import {
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
-import { useMobile, useRequireAuth } from '@/libs/hooks';
+import { useAppSelector, useMobile, useRequireAuth } from '@/libs/hooks';
 import AnimatedCover from '@/features/stories/components/AnimatedCover';
 import { useLikeStoryMutation } from '@/libs/services/modules/stories';
 import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
@@ -39,9 +39,10 @@ export const StoryCard = ({ data, className, outletClassName, isShowReadAll = tr
   const isMobile = useMobile();
   const [handleUpdateLikeCount] = useLikeStoryMutation();
 
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = React.useState(data?.likeCount ?? 0);
 
+  const userId = useAppSelector(state => state.auth.userInfo?.id);
   const visibleTopics = data?.topics?.slice(0, 1) ?? [];
   const remainingTopicsCount = Math.max((data.topics?.length ?? 0) - visibleTopics.length, 0);
 
@@ -51,11 +52,26 @@ export const StoryCard = ({ data, className, outletClassName, isShowReadAll = tr
 
   const newEventTagText = visibleTopics.find(topic => topic.name.toLowerCase().includes('khoảnh khắc'))?.name ?? '';
 
+  const prevLikeCountRef = React.useRef(data?.likeCount);
+
+  React.useEffect(() => {
+    if (prevLikeCountRef.current !== data?.likeCount) {
+      prevLikeCountRef.current = data?.likeCount;
+      setLikeCount(data?.likeCount ?? 0);
+    }
+  }, [data?.likeCount]);
+
+  React.useEffect(() => {
+    if (userId && data?.likedUserIds) {
+      setIsLiked(
+        data.likedUserIds.some((id: string) => Number(id) === Number(userId)),
+      );
+    }
+  }, [data?.likedUserIds, userId]);
   const handleClickRead = async () => {
     const isAuth = await requireAuth(() => {
       router.push(`/explore-story/${data.id}`);
     });
-    console.log('isAuth', isAuth);
     if (!isAuth) {
       router.push('/auth/login');
     }
@@ -64,24 +80,28 @@ export const StoryCard = ({ data, className, outletClassName, isShowReadAll = tr
   const handleClickFavorite = async () => {
     const isAuth = await requireAuth(async () => {
       try {
-        const newCount = isFavorite ? likeCount - 1 : likeCount + 1;
-        if (isFavorite) {
-          await handleUpdateLikeCount({
+        const isCurrentlyLiked = isLiked;
+        if (isCurrentlyLiked) {
+          const res = await handleUpdateLikeCount({
             id: data.id,
             type: ChangeCountEnum.DOWN,
-          });
+            userId,
+          }).unwrap();
+          setIsLiked(false);
+          setLikeCount(res.likeCount);
           pushSuccess(t('story_removed_from_favorites'));
         } else {
-          await handleUpdateLikeCount({
+          const res = await handleUpdateLikeCount({
             id: data.id,
             type: ChangeCountEnum.UP,
-          });
+            userId,
+          }).unwrap();
+          setIsLiked(true);
+          setLikeCount(res.likeCount);
           pushSuccess(t('story_added_to_favorites'));
         }
-        setIsFavorite(prev => !prev);
-        setLikeCount(newCount);
-      } catch (err: any) {
-        pushError(err?.data?.message || t('error_contact_admin'));
+      } catch {
+        pushError(t('like_error'));
       }
     });
     if (!isAuth) {
@@ -202,15 +222,15 @@ export const StoryCard = ({ data, className, outletClassName, isShowReadAll = tr
             size="md"
             className={mergeClassnames(
               'rounded-full p-3',
-              isFavorite ? 'border-orange-80' : 'border-primary-90',
+              isLiked ? 'border-orange-80' : 'border-primary-90',
             )}
             onClick={handleClickFavorite}
             aria-label="Like story"
           >
             <ThumbsUp
-              className={isFavorite ? 'text-orange-50' : 'text-primary-50'}
+              className={isLiked ? 'text-orange-50' : 'text-primary-50'}
               size={20}
-              weight={isFavorite ? 'fill' : 'bold'}
+              weight={isLiked ? 'fill' : 'bold'}
             />
           </IconButton>
         )}
