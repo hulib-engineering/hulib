@@ -699,6 +699,8 @@
     "share": "Share",
     "share_to": "Share to",
     "share_copied": "Link copied to clipboard!",
+    "copy_link_success": "Story link copied to clipboard!",
+    "copy_link_error": "Could not copy story link",
     "share_story": "Share another story",
     "like_button": "Like",
     "like_error": "Failed to update like",

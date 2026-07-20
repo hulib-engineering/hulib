@@ -31,7 +31,6 @@ import { useLikeStoryMutation, useShareStoryMutation } from '@/libs/services/mod
 import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { copyToClipboard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/utils';
-import { COPY_STORY_LINK_ERROR_MESSAGE, COPY_STORY_LINK_SUCCESS_MESSAGE } from '@/features/stories/constants';
 import { AppConfig } from '@/utils/AppConfig';
 import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/ShareModal';
 
@@ -169,15 +168,15 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
       setIsShared(true);
 
       if (!isCopied) {
-        pushError(COPY_STORY_LINK_ERROR_MESSAGE);
+        pushError(t('copy_link_error'));
         return;
       }
 
       setShareCount(rs.shareCount);
     }
-    pushSuccess(COPY_STORY_LINK_SUCCESS_MESSAGE);
+    pushSuccess(t('copy_link_success'));
     setIsShareModalOpen(true);
-  }, [requireAuth, storyUrl, isShared, shareStory, data.id, userId]);
+  }, [t, requireAuth, storyUrl, isShared, shareStory, data.id, userId]);
 
   const handleCloseShareModal = React.useCallback(() => {
     setIsShareModalOpen(false);
