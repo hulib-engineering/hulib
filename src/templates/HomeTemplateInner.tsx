@@ -9,7 +9,6 @@ import { usePathname } from '@/libs/i18nNavigation';
 import Header from '@/app/[locale]/(auth)/_components/Header';
 import MobileBottomNav from '@/app/[locale]/(auth)/_components/MobileBottomNav';
 import FooterWebApp from '@/app/[locale]/(auth)/_components/FooterWebApp';
-import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import MessengerWidget from '@/layouts/webapp/MultipleChatWidget';
 import { useAppDispatch } from '@/libs/hooks';
@@ -88,7 +87,6 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
           {!pathname.includes('messages') && <MobileBottomNav />}
           {!pathname.includes('messages') && <MessengerWidget />}
         </div>
-        <CustomToastifyContainer />
         {/* FirstBookCreatedModal */}
         <Modal
           open={isFirstBookModalOpen}
@@ -116,7 +114,6 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
         </div>
         <FooterWebApp />
       </main>
-      <CustomToastifyContainer />
     </div>
   );
 }
