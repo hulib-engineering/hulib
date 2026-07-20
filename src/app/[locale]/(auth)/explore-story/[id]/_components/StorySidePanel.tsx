@@ -18,6 +18,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import * as React from 'react';
 
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
+import { useAppSelector } from '@/libs/hooks';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
@@ -30,7 +31,7 @@ import { useLikeStoryMutation, useShareStoryMutation } from '@/libs/services/mod
 import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { copyToClipboard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/utils';
-import { COPY_STORY_LINK_ERROR_MESSAGE } from '@/features/stories/constants';
+import { COPY_STORY_LINK_ERROR_MESSAGE, COPY_STORY_LINK_SUCCESS_MESSAGE } from '@/features/stories/constants';
 import { AppConfig } from '@/utils/AppConfig';
 import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/ShareModal';
 
@@ -42,6 +43,8 @@ type StorySidePanelProps = {
     topics?: Topic[];
     viewCount?: number;
     shareCount?: number;
+    sharedUserIds?: string[];
+    likedUserIds?: string[];
     humanBook?: {
       id: string | number;
       fullName: string;
@@ -70,10 +73,13 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
     return true;
   }, [session, router, pathname]);
 
-  const [isFavorite, setIsFavorite] = React.useState(false);
+  const [isLiked, setIsLiked] = React.useState(false);
+  const [isShared, setIsShared] = React.useState(false);
   const [likeCount, setLikeCount] = React.useState(data?.likeCount ?? 0);
   const [shareCount, setShareCount] = React.useState(data?.shareCount ?? 0);
   const [isShareModalOpen, setIsShareModalOpen] = React.useState(false);
+
+  const userId = useAppSelector(state => state.auth.userInfo?.id);
 
   const prevLikeCountRef = React.useRef(data?.likeCount);
 
@@ -83,6 +89,20 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
       setLikeCount(data?.likeCount ?? 0);
     }
   }, [data?.likeCount]);
+
+  React.useEffect(() => {
+    if (userId && data?.likedUserIds) {
+      setIsLiked(
+        data.likedUserIds.some((id: string) => Number(id) === Number(userId)),
+      );
+    }
+
+    if (userId && data?.sharedUserIds) {
+      setIsShared(
+        data.sharedUserIds.some((id: string) => Number(id) === Number(userId)),
+      );
+    }
+  }, [data?.likedUserIds, data?.sharedUserIds, userId]);
 
   const storyUrl = React.useMemo(() => {
     if (!data?.id) {
@@ -110,26 +130,30 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
       return;
     }
     try {
-      const newCount = isFavorite ? likeCount - 1 : likeCount + 1;
-      if (isFavorite) {
-        await handleUpdateLikeCount({
+      const isCurrentlyLiked = isLiked;
+      if (isCurrentlyLiked) {
+        const res = await handleUpdateLikeCount({
           id: data.id,
           type: ChangeCountEnum.DOWN,
-        });
+          userId,
+        }).unwrap();
+        setIsLiked(false);
+        setLikeCount(res.likeCount);
         pushSuccess(t('story_removed_from_favorites'));
       } else {
-        await handleUpdateLikeCount({
+        const res = await handleUpdateLikeCount({
           id: data.id,
           type: ChangeCountEnum.UP,
-        });
+          userId,
+        }).unwrap();
+        setIsLiked(true);
+        setLikeCount(res.likeCount);
         pushSuccess(t('story_added_to_favorites'));
       }
-      setIsFavorite(prev => !prev);
-      setLikeCount(newCount);
     } catch {
       pushError(t('like_error'));
     }
-  }, [requireAuth, isFavorite, likeCount, data?.id, handleUpdateLikeCount, t]);
+  }, [requireAuth, isLiked, handleUpdateLikeCount, data.id, userId, t]);
 
   const handleClickShare = React.useCallback(async () => {
     if (!requireAuth()) {
@@ -139,18 +163,21 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
       return;
     }
 
-    const isCopied = await copyToClipboard(storyUrl);
-    shareStory(data.id).unwrap();
+    if (!isShared) {
+      const isCopied = await copyToClipboard(storyUrl);
+      const rs = await shareStory({ storyId: data.id, userId }).unwrap();
+      setIsShared(true);
 
-    if (!isCopied) {
-      pushError(COPY_STORY_LINK_ERROR_MESSAGE);
-      return;
+      if (!isCopied) {
+        pushError(COPY_STORY_LINK_ERROR_MESSAGE);
+        return;
+      }
+
+      setShareCount(rs.shareCount);
     }
-
-    setShareCount(prev => prev + 1);
-    pushSuccess(t('share_copied'));
+    pushSuccess(COPY_STORY_LINK_SUCCESS_MESSAGE);
     setIsShareModalOpen(true);
-  }, [requireAuth, storyUrl, data?.id, shareStory, t]);
+  }, [requireAuth, storyUrl, isShared, shareStory, data.id, userId]);
 
   const handleCloseShareModal = React.useCallback(() => {
     setIsShareModalOpen(false);
@@ -237,14 +264,13 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
             >
               {t('share')}
             </Button>
-
             <Button
               variant="outline"
               iconLeft={(
                 <ThumbsUp
-                  className={isFavorite ? 'text-pink-40' : 'text-primary-50'}
+                  className={isLiked ? 'text-pink-40' : 'text-primary-50'}
                   size={20}
-                  weight={isFavorite ? 'fill' : 'bold'}
+                  weight={isLiked ? 'fill' : 'bold'}
                 />
               )}
               onClick={clickLikeStory}
