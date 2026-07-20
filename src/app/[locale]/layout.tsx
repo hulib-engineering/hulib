@@ -10,7 +10,6 @@ import Script from 'next/script';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import type { ReactNode } from 'react';
 import { Suspense } from 'react';
-import { ToastContainer } from 'react-toastify';
 
 import StoreProvider from '@/app/StoreProvider';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
@@ -84,7 +83,6 @@ export default function RootLayout({
         <Suspense>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <StoreProvider>{children}</StoreProvider>
-            <ToastContainer />
           </NextIntlClientProvider>
         </Suspense>
       </body>

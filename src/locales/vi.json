@@ -794,6 +794,8 @@
     "share": "Chia sẻ",
     "share_to": "Chia sẻ đến",
     "share_copied": "Đã sao chép liên kết!",
+    "copy_link_success": "Đã sao chép liên kết câu chuyện",
+    "copy_link_error": "Không thể sao chép liên kết câu chuyện",
     "share_story": "Chia sẽ thêm",
     "like_button": "Thích",
     "like_error": "Thất bại",
