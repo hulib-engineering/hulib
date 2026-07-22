@@ -27,7 +27,6 @@ const InfoContainer = (props: IInfoContainerProps) => {
           <Image
             alt={props.imageAlt}
             src={props.imageSrc}
-            priority
             width={600}
             height={600}
             className="rounded-3xl object-cover lg:hidden"
@@ -52,7 +51,6 @@ const InfoContainer = (props: IInfoContainerProps) => {
             <Image
               alt={props.imageAlt}
               src={props.imageSrc}
-              priority
               width={600}
               height={600}
               className="rounded-3xl object-cover"
@@ -79,7 +77,6 @@ const InfoContainer = (props: IInfoContainerProps) => {
             <Image
               alt={props.imageAlt}
               src={props.imageSrc}
-              priority
               width={600}
               height={600}
               className="hidden rounded-3xl lg:block"
