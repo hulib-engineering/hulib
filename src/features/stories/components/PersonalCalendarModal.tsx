@@ -25,7 +25,7 @@ type BottomButtonsType = {
   onClose: () => void;
 };
 
-const BottomButtons = memo((props: BottomButtonsType) => {
+function BottomButtons(props: BottomButtonsType) {
   return (
     <div className="flex items-center justify-between gap-4">
       <Button
@@ -52,7 +52,8 @@ const BottomButtons = memo((props: BottomButtonsType) => {
       </Button>
     </div>
   );
-});
+};
+const MemoBottomButtons = memo(BottomButtons);
 
 function PersonalCalendar(props: PCModal) {
   /* TODO: Make it so the chosen timeslots will only be saved when pressed on the bottom left button - (for the current Day of Week).
@@ -88,7 +89,7 @@ function PersonalCalendar(props: PCModal) {
   const nextDay = useCallback((day: Day): Day => {
     const idx = DAYS.indexOf(day);
     return DAYS[(idx + 1) % DAYS.length] as Day;
-  }, []);
+  }, [DAYS]);
 
   // Check if a given day has selected time slots
   const isDayPicked = useCallback(
@@ -171,7 +172,7 @@ function PersonalCalendar(props: PCModal) {
 
         {/* 3A. Bottom Buttons - normal screen */}
         <div className="max-sm:hidden">
-          <BottomButtons
+          <MemoBottomButtons
             currentChosenDay={currentChosenDay}
             nextDay={nextDay}
             onClose={props.onClose}
@@ -182,7 +183,7 @@ function PersonalCalendar(props: PCModal) {
 
       {/* 3A. Bottom Buttons - mobile screen */}
       <div className="sm:hidden">
-        <BottomButtons
+        <MemoBottomButtons
           currentChosenDay={currentChosenDay}
           nextDay={nextDay}
           onClose={props.onClose}
