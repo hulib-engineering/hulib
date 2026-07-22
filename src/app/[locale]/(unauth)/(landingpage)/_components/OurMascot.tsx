@@ -26,6 +26,7 @@ export default function OurMascot() {
             alt="Our Mascot Illustration"
             width={462}
             height={462}
+            loading="lazy"
             className="absolute inset-0 aspect-square h-auto w-[462px] object-cover"
           />
           <div className="absolute start-full top-1/2 flex w-[301px] flex-col items-center justify-center gap-2 rounded-[20px] border-4 border-white bg-[#FFF7E3] p-4 shadow-[0_12px_24px_0_#E8F99E] backdrop-blur-[50px] -translate-y-1/2">
@@ -66,6 +67,7 @@ export default function OurMascot() {
               alt="Our Mascot Illustration"
               width={462}
               height={462}
+              loading="lazy"
               className="aspect-square h-auto w-3/4 object-cover object-center"
             />
           </div>

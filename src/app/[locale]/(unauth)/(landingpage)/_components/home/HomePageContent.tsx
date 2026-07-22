@@ -1,11 +1,23 @@
+import dynamic from 'next/dynamic';
 import Banner from './Banner';
-import HuberCTA from './HuberCTA';
-import RecommendedHuberList from './RecommendedHuberList';
 import { NewestStoryList } from './NewestStoryList';
 import { MostPopularStoryList } from './MostPopularStoryList';
-import {
-  StoryListByMostPopularTopics,
-} from './StoryListByMostPopularTopics';
+import { HuberCardListSkeleton, StoriesSkeleton } from '@/components/loadingState/Skeletons';
+
+const RecommendedHuberList = dynamic(
+  () => import('./RecommendedHuberList'),
+  { ssr: true, loading: () => <HuberCardListSkeleton /> },
+);
+
+const StoryListByMostPopularTopics = dynamic(
+  () => import('./StoryListByMostPopularTopics').then(mod => mod.StoryListByMostPopularTopics),
+  { ssr: true, loading: () => <StoriesSkeleton /> },
+);
+
+const HuberCTA = dynamic(
+  () => import('./HuberCTA'),
+  { ssr: true, loading: () => <div className="h-[403px] md:h-[532px]" /> },
+);
 
 export default function HomePageContent() {
   return (
