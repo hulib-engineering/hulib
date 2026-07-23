@@ -1,7 +1,7 @@
 'use client';
 
 import { Plus, SealCheck } from '@phosphor-icons/react';
-import React, { memo, useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import type { WorkEntry, WorkEntryFormValues } from './type';
 import WorkEntryForm from './WorkEntryForm';
@@ -16,22 +16,21 @@ type LiberWorkSectionProps = {
   onSave?: (values: WorkEntryFormValues, editingId?: number) => Promise<void> | void;
 };
 
-const LiberWorkSection = memo(({
+export type { LiberWorkSectionProps };
+
+export default function LiberWorkSection({
   title,
   entries = [],
   editable = false,
   onSave,
-}: LiberWorkSectionProps) => {
+}: LiberWorkSectionProps) {
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
 
   const hasContent = entries.length > 0;
   const isEditing = isAdding || editingId !== null;
 
-  const handleStartEdit = useCallback(
-    (id?: number) => setEditingId(id ?? null),
-    [],
-  );
+  const handleStartEdit = (id?: number) => setEditingId(id ?? null);
 
   const handleAddSave = async (values: WorkEntryFormValues) => {
     await onSave?.(values);
@@ -103,9 +102,4 @@ const LiberWorkSection = memo(({
       )}
     </div>
   );
-});
-
-LiberWorkSection.displayName = 'LiberWorkSection';
-
-export type { LiberWorkSectionProps };
-export default LiberWorkSection;
+}

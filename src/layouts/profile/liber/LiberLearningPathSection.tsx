@@ -1,7 +1,7 @@
 'use client';
 
 import { Plus, SealCheck } from '@phosphor-icons/react';
-import React, { memo, useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import type { LearningEntry, LearningEntryFormValues } from './type';
 import LearningEntryForm from './LearningEntryForm';
@@ -16,23 +16,19 @@ type LiberLearningPathSectionProps = {
   onSave?: (values: LearningEntryFormValues, editingId?: number | string) => Promise<void> | void;
 };
 
-const LiberLearningPathSection = memo(({
+export default function LiberLearningPathSection({
   title,
   entries = [],
   editable = false,
   onSave,
-}: LiberLearningPathSectionProps) => {
+}: LiberLearningPathSectionProps) {
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<number | string | null>(null);
 
   const hasContent = entries.length > 0;
   const isEditing = isAdding || editingId !== null;
 
-  // useCallback: stable ref for memo'd LearningItem.onEdit
-  const handleStartEdit = useCallback(
-    (id?: number | string) => setEditingId(id ?? null),
-    [],
-  );
+  const handleStartEdit = (id?: number | string) => setEditingId(id ?? null);
 
   const handleAddSave = async (values: LearningEntryFormValues) => {
     await onSave?.(values);
@@ -104,9 +100,4 @@ const LiberLearningPathSection = memo(({
       )}
     </div>
   );
-});
-
-LiberLearningPathSection.displayName = 'LiberLearningPathSection';
-
-export type { LiberLearningPathSectionProps };
-export default LiberLearningPathSection;
+}

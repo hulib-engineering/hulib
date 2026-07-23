@@ -2,7 +2,6 @@
 
 import { PencilSimple } from '@phosphor-icons/react';
 import { useLocale, useTranslations } from 'next-intl';
-import React, { memo } from 'react';
 
 import type { WorkEntry } from './type';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -13,7 +12,9 @@ type WorkItemProps = {
   onEdit: (id?: number) => void;
 };
 
-const WorkItem = memo(({ entry, editable, onEdit }: WorkItemProps) => {
+export type { WorkItemProps };
+
+export default function WorkItem({ entry, editable, onEdit }: WorkItemProps) {
   const locale = useLocale();
   const t = useTranslations('MyProfile');
 
@@ -50,9 +51,4 @@ const WorkItem = memo(({ entry, editable, onEdit }: WorkItemProps) => {
       )}
     </div>
   );
-});
-
-WorkItem.displayName = 'WorkItem';
-
-export type { WorkItemProps };
-export default WorkItem;
+}

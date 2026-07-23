@@ -1,6 +1,5 @@
 'use client';
 
-import React, { memo, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 
 import type { LearningEntryFormValues, LiberAboutData, Topic, WorkEntryFormValues } from './type';
@@ -19,7 +18,7 @@ type LiberAboutPanelProps = {
   onSaveTopics?: (topics: Topic[]) => Promise<void> | void;
 };
 
-const LiberAboutPanel = memo(({
+export default function LiberAboutPanel({
   data,
   editable = false,
   availableTopics,
@@ -27,13 +26,8 @@ const LiberAboutPanel = memo(({
   onSaveLearningEntry,
   onSaveWorkEntry,
   onSaveTopics,
-}: LiberAboutPanelProps) => {
+}: LiberAboutPanelProps) {
   const t = useTranslations('MyProfile');
-
-  const handleSaveJourney = useCallback(
-    (value: string) => onSaveText?.('bio', value),
-    [onSaveText],
-  );
 
   return (
     <div className="flex flex-col gap-4 rounded-xl bg-white px-3 py-4 sm:px-6 sm:py-5 lg:px-8">
@@ -42,7 +36,7 @@ const LiberAboutPanel = memo(({
         placeholder={t('liber_about.journey_placeholder')}
         value={data?.journey}
         editable={editable}
-        onSave={handleSaveJourney}
+        onSave={value => onSaveText?.('bio', value)}
       />
       <LiberLearningPathSection
         title={t('liber_about.learning_path_title')}
@@ -65,9 +59,4 @@ const LiberAboutPanel = memo(({
       />
     </div>
   );
-});
-
-LiberAboutPanel.displayName = 'LiberAboutPanel';
-
-export type { LiberAboutData, LiberAboutPanelProps };
-export default LiberAboutPanel;
+}
