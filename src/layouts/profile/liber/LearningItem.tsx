@@ -8,7 +8,7 @@ import {
   UserSwitch,
 } from '@phosphor-icons/react';
 import { useLocale, useTranslations } from 'next-intl';
-import React, { memo } from 'react';
+import React from 'react';
 
 import type { LearningEntry, LearningType } from './type';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -44,7 +44,9 @@ type LearningItemProps = {
   onEdit: (id?: number | string) => void;
 };
 
-const LearningItem = memo(({ entry, editable, onEdit }: LearningItemProps) => {
+export type { LearningItemProps };
+
+export default function LearningItem({ entry, editable, onEdit }: LearningItemProps) {
   const locale = useLocale();
   const t = useTranslations('MyProfile');
   const config = TYPE_CONFIG[entry.type];
@@ -92,9 +94,4 @@ const LearningItem = memo(({ entry, editable, onEdit }: LearningItemProps) => {
       )}
     </div>
   );
-});
-
-LearningItem.displayName = 'LearningItem';
-
-export type { LearningItemProps };
-export default LearningItem;
+}

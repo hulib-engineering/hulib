@@ -2,7 +2,7 @@
 
 import { CaretDown, CircleNotch, PencilSimple, Plus, SealCheck } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { type CSSProperties, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import type { Topic } from './type';
@@ -18,19 +18,21 @@ type LiberTopicsSectionProps = {
   onSave?: (topics: Topic[]) => Promise<void> | void;
 };
 
-const LiberTopicsSection = memo(({
+export type { LiberTopicsSectionProps };
+
+export default function LiberTopicsSection({
   title,
   topics = [],
   availableTopics = [],
   editable = false,
   onSave,
-}: LiberTopicsSectionProps) => {
+}: LiberTopicsSectionProps) {
   const t = useTranslations('MyProfile');
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [draft, setDraft] = useState<Topic[]>(topics);
   const [dropOpen, setDropOpen] = useState(false);
-  const [panelStyle, setPanelStyle] = useState<React.CSSProperties>({});
+  const [panelStyle, setPanelStyle] = useState<CSSProperties>({});
 
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -63,9 +65,9 @@ const LiberTopicsSection = memo(({
 
   const handleSelect = (topic: Topic) => setDraft(prev => [...prev, topic]);
 
-  const handleRemove = useCallback((id?: number | string) => {
+  const handleRemove = (id?: number | string) => {
     setDraft(prev => prev.filter(d => d.id !== id));
-  }, []);
+  };
 
   const handleEdit = () => {
     setDraft(topics);
@@ -94,7 +96,6 @@ const LiberTopicsSection = memo(({
       <div className="flex flex-col gap-4 rounded-xl bg-primary-98 p-5 shadow-[0_4px_5px_rgba(28,30,33,0.10),0_0_4px_rgba(15,15,16,0.06)]">
         <h3 className="text-xl font-medium leading-7 tracking-tight text-neutral-10">{title}</h3>
 
-        {/* Selected chips */}
         {draft.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {draft.map(topic => (
@@ -103,7 +104,6 @@ const LiberTopicsSection = memo(({
           </div>
         )}
 
-        {/* Trigger */}
         <button
           ref={triggerRef}
           type="button"
@@ -118,7 +118,6 @@ const LiberTopicsSection = memo(({
           />
         </button>
 
-        {/* Portal dropdown panel */}
         {dropOpen && createPortal(
           <div
             ref={panelRef}
@@ -187,9 +186,4 @@ const LiberTopicsSection = memo(({
       )}
     </div>
   );
-});
-
-LiberTopicsSection.displayName = 'LiberTopicsSection';
-
-export type { LiberTopicsSectionProps };
-export default LiberTopicsSection;
+}

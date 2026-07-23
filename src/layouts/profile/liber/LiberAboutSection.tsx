@@ -2,7 +2,7 @@
 
 import { CircleNotch, PencilSimple, Plus, SealCheck } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
-import React, { memo, useState } from 'react';
+import { useState } from 'react';
 
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -16,13 +16,15 @@ type LiberAboutSectionProps = {
   onSave?: (value: string) => Promise<void> | void;
 };
 
-const LiberAboutSection = memo(({
+export type { LiberAboutSectionProps };
+
+export default function LiberAboutSection({
   title,
   value,
   editable = false,
   placeholder,
   onSave,
-}: LiberAboutSectionProps) => {
+}: LiberAboutSectionProps) {
   const t = useTranslations('MyProfile');
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -100,9 +102,4 @@ const LiberAboutSection = memo(({
       )}
     </div>
   );
-});
-
-LiberAboutSection.displayName = 'LiberAboutSection';
-
-export type { LiberAboutSectionProps };
-export default LiberAboutSection;
+}
