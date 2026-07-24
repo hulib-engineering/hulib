@@ -7,6 +7,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import type { Swiper as SwiperType } from 'swiper';
 import { Mousewheel } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 import { useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
@@ -60,7 +61,6 @@ export default function OutstandingFeatures() {
                     width={800}
                     height={568.9}
                     className="aspect-[45/32] h-auto w-[50rem] object-cover"
-                    priority
                   />
                 </SwiperSlide>
               ))}

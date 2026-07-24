@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import type { Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 import React, { useRef } from 'react';
 
 import { Link } from '@/libs/i18nNavigation';
@@ -61,7 +62,7 @@ export default function News() {
           onSwiper={swiper => (swiperRef.current = swiper)}
         >
           {NewsAndEvents.map((each, index) => (
-            <SwiperSlide key={index} className="flex w-full justify-center overflow-visible">
+            <SwiperSlide key={each.index} className="flex w-full justify-center overflow-visible">
               {({ isActive }) => (
                 <>
                   <Link href={each.link} target="_blank" className="hidden size-full xl:block">
@@ -77,7 +78,6 @@ export default function News() {
                         width={945}
                         height={630}
                         className="aspect-[3/2] h-auto w-full bg-neutral-90 object-cover object-top"
-                        priority
                       />
                       <div className="absolute bottom-6 w-full px-6">
                         <div className="flex flex-col gap-2 rounded-[20px] border-4 border-white bg-white/80 p-4 backdrop-blur-[50px]">
@@ -109,7 +109,6 @@ export default function News() {
                         width={945}
                         height={630}
                         className="aspect-[3/2] h-auto w-full rounded-xl bg-neutral-90 object-cover object-top"
-                        priority
                       />
                     </Link>
                     <div className="flex flex-col gap-2 rounded-[20px] border-2 border-white bg-white/80 p-2 outline outline-2 -outline-offset-2 outline-white backdrop-blur-[50px]">

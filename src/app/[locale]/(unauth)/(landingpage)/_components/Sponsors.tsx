@@ -41,6 +41,7 @@ const SponsorItemCard = (props: ISponsorItemCardProps) => {
             alt={`Chip ${props.tooltipText}`}
             src={`/assets/images/sponsor-tiers/${props.type}.svg`}
             className="absolute right-0 top-0"
+            loading="lazy"
           />
           <div className="flex flex-col items-center justify-center">
             <Image
@@ -49,6 +50,7 @@ const SponsorItemCard = (props: ISponsorItemCardProps) => {
               alt={props.name}
               height={64}
               width={300}
+              loading="lazy"
             />
           </div>
         </div>

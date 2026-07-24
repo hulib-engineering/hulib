@@ -2,6 +2,8 @@
 
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
+import 'swiper/css';
+import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -134,7 +136,7 @@ const Testimonial = () => {
           modules={[Pagination]}
         >
           {TestimonialItems.map((each, index) => (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={each.name}>
               <TestimonialItemCard
                 content={each.content}
                 avatarUrl={each.avatarUrl}
