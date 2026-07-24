@@ -13,6 +13,7 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import MessengerWidget from '@/layouts/webapp/MultipleChatWidget';
 import { useAppDispatch } from '@/libs/hooks';
 import FirstBookCreatedModal from '@/features/stories/components/FirstBookCreatedModal';
+import PersonalCalendarModal from '@/features/stories/components/PersonalCalendarModal';
 import {
   useGetPersonalInfoQuery,
   useMarkHuberOnboardingSeenMutation,
@@ -50,6 +51,7 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
   const [markSeen] = useMarkHuberOnboardingSeenMutation();
 
   const [isFirstBookModalOpen, setIsFirstBookModalOpen] = useState(false);
+  const [isPersonalCalendarModalOpen, setIsPersonalCalendarModalOpen] = useState(false);
 
   useEffect(() => {
     if (personalInfoError) {
@@ -71,6 +73,10 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
   const handleCloseModal = () => {
     setIsFirstBookModalOpen(false);
     markSeen(personalInfo?.id);
+  };
+
+  const handleClosePSModal = () => {
+    setIsPersonalCalendarModalOpen(false);
   };
 
   if (isAuthenticated && !personalInfoError) {
@@ -98,9 +104,19 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
               onClose={handleCloseModal}
             />
           </Modal.Panel>
-
         </Modal>
-
+        {/* PersonalCalendarModal */}
+        <Modal
+          open={isPersonalCalendarModalOpen}
+          onClose={handleClosePSModal}
+        >
+          <Modal.Backdrop />
+          <Modal.Panel className="w-full shadow-none lg:w-5/6 lg:max-w-6xl">
+            <PersonalCalendarModal
+              onClose={handleClosePSModal}
+            />
+          </Modal.Panel>
+        </Modal>
       </div>
     );
   }
