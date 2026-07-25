@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  Bell,
   MessengerLogo,
 } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
@@ -172,13 +171,7 @@ const Header = () => {
                       <MessengerLogo className="text-[28px]" />
                     </HeaderIconButtonWithBadge>
                   </button>
-                  {(!isLoading && !error) && (
-                    <button type="button" className="xl:hidden" onClick={() => router.push('/notifications')}>
-                      <HeaderIconButtonWithBadge badge={data ? data.unseenCount : 0} open={currentPathname === '/notifications'}>
-                        <Bell className="text-[28px]" />
-                      </HeaderIconButtonWithBadge>
-                    </button>
-                  )}
+                  <LocaleSwitcher />
                 </div>
               )}
         </div>
