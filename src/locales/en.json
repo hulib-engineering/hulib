@@ -641,7 +641,34 @@
     "my_favorite": "My Favorite",
     "no_own_stories_title": "You don't have any stories yet",
     "no_own_stories_body": "Share your stories, they might help more people than you think",
-    "joined_since": "Joined HuLib since {date}"
+    "joined_since": "Joined HuLib since {date}",
+    "liber_about": {
+      "journey_title": "Experiences That Made Me Grow",
+      "journey_placeholder": "Share experiences that helped you grow...",
+      "learning_path_title": "Where I Learned",
+      "works_title": "What I've Done",
+      "topics_title": "Topics I Share",
+      "topics_placeholder": "Choose your topics",
+      "topics_all_selected": "All topics have been selected",
+      "education_type_label": "Education type",
+      "education_type_vocational": "Vocational, short courses, trade school",
+      "education_type_university": "College, University & Postgraduate",
+      "education_type_life_experience": "Life school, real-world experience",
+      "education_name_label": "Name",
+      "education_name_placeholder": "Enter major / course name / role",
+      "education_org_label": "Organization",
+      "education_org_placeholder": "Enter school / organization / company",
+      "work_position_label": "Position",
+      "work_position_placeholder": "Enter position / title",
+      "work_company_label": "Company",
+      "work_company_placeholder": "Enter company / organization name",
+      "is_public_label": "Everyone can see this information",
+      "date_from": "From",
+      "date_to": "to",
+      "present": "Present",
+      "cancel": "Cancel",
+      "save": "Save"
+    }
   },
   "MyFavorites": {
     "choose_all": "Choose all",
@@ -895,6 +922,7 @@
   "Common": {
     "error_contact_admin": "An error occurred, please contact admin for support!",
     "update_successfully": "Update successfully",
+    "update_failed": "Update failed",
     "topics": "Topics",
     "title": "Title",
     "content": "The story content",

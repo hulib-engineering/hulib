@@ -48,4 +48,6 @@ export const EducationValidation = z.object({
   institution: z.string().trim().min(1),
   startedAt: z.string().trim().min(1),
   endedAt: z.string().optional(),
+  type: z.string().optional(),
+  isPublic: z.boolean().optional(),
 });

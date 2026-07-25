@@ -21,6 +21,7 @@ import editEducation from './editEducation';
 
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 import markHuberOnboardingSeen from '@/libs/services/modules/auth/markHuberOnboardingSeen';
+import updateUserTopics from '@/libs/services/modules/auth/updateUserTopics';
 
 type Enum = {
   id: number;
@@ -81,6 +82,7 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
     addEducation: addEducation(build),
     editEducation: editEducation(build),
     markHuberOnboardingSeen: markHuberOnboardingSeen(build),
+    updateUserTopics: updateUserTopics(build),
   }),
   overrideExisting: false,
 });
@@ -103,4 +105,5 @@ export const {
   useAddEducationMutation,
   useEditEducationMutation,
   useMarkHuberOnboardingSeenMutation,
+  useUpdateUserTopicsMutation,
 }: any = authApi;
