@@ -41,6 +41,7 @@ const SponsorItemCard = (props: ISponsorItemCardProps) => {
             alt={`Chip ${props.tooltipText}`}
             src={`/assets/images/sponsor-tiers/${props.type}.svg`}
             className="absolute right-0 top-0"
+            loading="lazy"
           />
           <div className="flex flex-col items-center justify-center">
             <Image
@@ -49,6 +50,7 @@ const SponsorItemCard = (props: ISponsorItemCardProps) => {
               alt={props.name}
               height={64}
               width={300}
+              loading="lazy"
             />
           </div>
         </div>
@@ -141,9 +143,9 @@ const Sponsors = () => {
       </h1>
       <div className="flex flex-col gap-6 px-4 md:w-5/6 xl:w-3/4 xl:px-10 2xl:px-[5.625rem]">
         <div className="inline-flex flex-wrap items-center justify-center gap-6">
-          {SponsorList.map((sponsor, index) => (
+          {SponsorList.map(sponsor => (
             <SponsorItemCard
-              key={index}
+              key={sponsor.name}
               {...sponsor}
               tooltipText={t(sponsor.tooltipKey)}
             />

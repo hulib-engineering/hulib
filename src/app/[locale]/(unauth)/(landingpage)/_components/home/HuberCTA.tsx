@@ -23,6 +23,7 @@ export default function HuberCTA() {
           className="object-cover object-top"
           sizes="1216px"
           aria-hidden
+          loading="lazy"
         />
       </div>
 
@@ -35,6 +36,7 @@ export default function HuberCTA() {
           className="object-cover object-top"
           sizes="628px"
           aria-hidden
+          loading="lazy"
         />
       </div>
 

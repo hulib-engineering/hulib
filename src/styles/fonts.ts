@@ -72,6 +72,26 @@ export const poppins = localFont({
       style: 'italic',
     },
     {
+      path: './fonts/SVN-Poppins-Medium.otf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: './fonts/SVN-Poppins-MediumItalic.otf',
+      weight: '500',
+      style: 'italic',
+    },
+    {
+      path: './fonts/SVN-Poppins-Bold.otf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: './fonts/SVN-Poppins-BoldItalic.otf',
+      weight: '600',
+      style: 'italic',
+    },
+    {
       path: './fonts/SVN-Poppins-Bold.otf',
       weight: '700',
       style: 'normal',
@@ -82,22 +102,22 @@ export const poppins = localFont({
       style: 'italic',
     },
     {
-      path: './fonts/SVN-Poppins-ExtraBold.otf',
+      path: './fonts/SVN-Poppins-Bold.otf',
       weight: '800',
       style: 'normal',
     },
     {
-      path: './fonts/SVN-Poppins-ExtraBoldItalic.otf',
+      path: './fonts/SVN-Poppins-BoldItalic.otf',
       weight: '800',
       style: 'italic',
     },
     {
-      path: './fonts/SVN-Poppins-Black.otf',
+      path: './fonts/SVN-Poppins-Bold.otf',
       weight: '900',
       style: 'normal',
     },
     {
-      path: './fonts/SVN-Poppins-BlackItalic.otf',
+      path: './fonts/SVN-Poppins-BoldItalic.otf',
       weight: '900',
       style: 'italic',
     },
