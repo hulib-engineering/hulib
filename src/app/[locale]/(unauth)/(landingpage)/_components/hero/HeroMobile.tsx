@@ -5,8 +5,8 @@ import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
+import HeroCTAButton from './HeroCTAButton';
 import type { HeroProps } from '.';
-import Button from '@/components/core/button/Button';
 import { HighlightContentBox } from '@/components/HighlightContentBox';
 import { customMessage } from '@/utils/i18NRichTextUtils';
 
@@ -35,16 +35,10 @@ const HeroMobile = (props: HeroProps) => {
           {t('hero_description')}
         </p>
         <div className="flex items-center justify-center">
-          <Button
-            as="a"
-            rel="noopener noreferrer"
-            href="/auth/login"
-            size="lg"
-            iconRight={<ArrowRight />}
+          <HeroCTAButton
             className="bg-lp-primary-blue hover:bg-primary-hover"
-          >
-            {t('hero_call_to_action')}
-          </Button>
+            iconRight={<ArrowRight />}
+          />
         </div>
       </div>
       <div className="flex flex-col gap-3">
