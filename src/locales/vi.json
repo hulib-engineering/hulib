@@ -1313,6 +1313,7 @@
   "LandingPage": {
     "bottomNav": {
       "home": "Trang chủ",
+      "notification": "Thông báo",
       "profile": "Cá nhân"
     },
     "navigation": {

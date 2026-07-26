@@ -1119,6 +1119,7 @@
   "LandingPage": {
     "bottomNav": {
       "home": "Home",
+      "notification": "Notifications",
       "profile": "Profile"
     },
     "navigation": {
