@@ -71,6 +71,7 @@ const HumanBookBanner = () => {
             alt="banner"
             width={404}
             height={64}
+            loading="lazy"
           />
         </div>
 

@@ -18,7 +18,6 @@ export default function NoResultFound({ className = '' }: { className?: string }
         width={482}
         height={378}
         className="h-auto w-full max-w-xs"
-        priority
       />
       <div className="flex flex-col gap-2 text-primary-10">
         <h5 className="text-2xl font-bold leading-tight">

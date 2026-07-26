@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  Bell,
   Books,
   House,
   SignOut,
@@ -20,6 +21,7 @@ import StoryForm from '@/features/stories/components/StoryForm';
 import { useAppSelector } from '@/libs/hooks';
 import { Env } from '@/libs/Env.mjs';
 import { Role } from '@/types/common';
+import { useGetNotificationsQuery } from '@/libs/services/modules/notifications';
 import { Link, usePathname } from '@/libs/i18nNavigation';
 
 const LogoIcon = ({ size = 24 }: { size?: number }) => (
@@ -46,6 +48,8 @@ const MobileBottomNav = () => {
 
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const { data: notifData } = useGetNotificationsQuery({ page: 1, limit: 5 });
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
   const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
@@ -92,6 +96,20 @@ const MobileBottomNav = () => {
       label: t('navigation.bookshelf'),
       icon: <Books size={24} />,
       href: '/explore-story',
+    },
+    {
+      label: t('bottomNav.notification'),
+      icon: (
+        <div className="relative">
+          <Bell size={24} />
+          {notifData && notifData.unseenCount > 0 && (
+            <div className="absolute -right-1.5 -top-1.5 flex h-4 w-[18px] items-center justify-center rounded-lg border border-white bg-red-50 px-1 py-[0.5px] text-[10px] font-medium leading-3 text-white">
+              {notifData.unseenCount}
+            </div>
+          )}
+        </div>
+      ),
+      href: '/notifications',
     },
     {
       label: t('bottomNav.profile'),
@@ -252,7 +270,7 @@ const MobileBottomNav = () => {
 
       {/* Bottom Nav */}
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-90 bg-white lg:hidden">
-        <div className="flex size-full items-center justify-around px-2">
+        <div className="flex size-full items-center justify-around px-4 py-3">
           {navItems.map(item => (
             item.href
               ? (
