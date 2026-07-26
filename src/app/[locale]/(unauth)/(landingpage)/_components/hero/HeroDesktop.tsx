@@ -6,9 +6,9 @@ import WavesurferPlayer from '@wavesurfer/react';
 import { useTranslations } from 'next-intl';
 
 import React from 'react';
+import HeroCTAButton from './HeroCTAButton';
 import type { HeroProps } from '.';
 
-import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { HighlightContentBox } from '@/components/HighlightContentBox';
 import { customMessage } from '@/utils/i18NRichTextUtils';
@@ -140,16 +140,10 @@ const HeroDesktop = (props: HeroProps) => {
             </div>
           </div>
         </div>
-        <Button
-          as="a"
-          rel="noopener noreferrer"
-          href="/auth/login"
-          size="lg"
+        <HeroCTAButton
           className="!size-fit rounded-full bg-lp-primary-blue px-6 py-4 text-xl leading-7 hover:bg-primary-hover"
           iconRight={<ArrowRight weight="bold" className="text-2xl" />}
-        >
-          {t('hero_call_to_action')}
-        </Button>
+        />
       </div>
     </section>
   );
