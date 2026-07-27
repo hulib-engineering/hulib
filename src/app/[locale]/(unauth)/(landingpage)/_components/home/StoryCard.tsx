@@ -69,12 +69,7 @@ export const StoryCard = ({ data, className, outletClassName, isShowReadAll = tr
     }
   }, [data?.likedUserIds, userId]);
   const handleClickRead = async () => {
-    const isAuth = await requireAuth(() => {
-      router.push(`/explore-story/${data.id}`);
-    });
-    if (!isAuth) {
-      router.push('/auth/login');
-    }
+    router.push(`/explore-story/${data.id}`);
   };
 
   const handleClickFavorite = async () => {
