@@ -176,7 +176,7 @@ const HandleReportModal = ({
             )}
             {isApproved && (
               <div className="flex flex-col">
-                <div className="bg-red-60 p-2 text-center text-lg font-medium text-white">Reported user</div>
+                <div className="bg-red-60 p-2 text-center text-lg font-medium text-white">{t('reported_user')}</div>
                 <div className="flex h-20 items-center justify-center gap-2 py-2 text-sm font-medium leading-4">
                   <Avatar
                     imageUrl={data?.reportee?.photo?.path}

@@ -1,6 +1,6 @@
 import { PenNib, SealWarning, Warning } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
@@ -24,6 +24,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
   const router = useRouter();
 
   const locale = useLocale();
+  const t = useTranslations('notifications');
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
@@ -138,7 +139,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
                   notification.type.name !== NotificationType.APPEAL_RESPONSE && 'line-clamp-2',
                 )}
               >
-                {cfg.getMessage(notification, userInfo?.role?.id ?? Role.LIBER)}
+                {cfg.getMessage(t, notification, userInfo?.role?.id ?? Role.LIBER)}
               </p>
               {notification.type.name === NotificationType.SESSION_REQUEST && (
                 <Link href="#" className="text-sm font-medium text-primary-60 underline" onClick={() => setIsSessionRequestModalOpen(true)}>

@@ -1,6 +1,6 @@
 import { Warning, XCircle } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
@@ -20,8 +20,8 @@ export default function InformativeNotificationCard({ notification, showExtras, 
   const cfg = notificationConfig[notification.type.name as NotificationType];
 
   const router = useRouter();
-
   const locale = useLocale();
+  const t = useTranslations('notifications');
 
   const [isShareReasonModalOpen, setIsShareReasonModalOpen] = useState(false);
   const [isAppealModalOpen, setIsAppealModalOpen] = useState(false);
@@ -83,8 +83,8 @@ export default function InformativeNotificationCard({ notification, showExtras, 
         </div>
         <div className="flex flex-1 items-center gap-3">
           <div className="flex w-full flex-col gap-2">
-            <p className="line-clamp-2 font-bold">{cfg.title}</p>
-            <p className="font-medium">{cfg.getMessage(notification)}</p>
+            <p className="line-clamp-2 font-bold">{typeof cfg.title === 'function' ? cfg.title(t) : cfg.title}</p>
+            <p className="font-medium">{cfg.getMessage(t, notification)}</p>
             {![NotificationType.SESSION_APPROVAL, NotificationType.SESSION_MISS, NotificationType.HUBER_WARNING]
               .includes(notification.type.name as NotificationType) && (
               <p
@@ -99,7 +99,7 @@ export default function InformativeNotificationCard({ notification, showExtras, 
                   : notification.type.name === NotificationType.SESSION_REJECTION
                     ? notification.relatedEntity?.rejectReason
                     : notification.type.name === NotificationType.SESSION_CANCELLATION ? notification.relatedEntity?.note
-                      : (notification.relatedEntity?.rejectionReason ?? 'No reason')}
+                      : (notification.relatedEntity?.rejectionReason ?? t('no_reason'))}
               </p>
             )}
             {notification.type.name === NotificationType.SESSION_APPROVAL && (
@@ -110,11 +110,11 @@ export default function InformativeNotificationCard({ notification, showExtras, 
                 )}
               >
                 <div className="flex items-center justify-between">
-                  <p className="text-neutral-50">From:</p>
+                  <p className="text-neutral-50">{t('from')}</p>
                   <p className="line-clamp-1 text-primary-60">{notification.relatedEntity?.storyTitle}</p>
                 </div>
                 <div className="flex items-center justify-between">
-                  <p className="text-neutral-50">Time:</p>
+                  <p className="text-neutral-50">{t('time')}</p>
                   <p>
                     {toLocaleDateString(notification.relatedEntity?.startedAt, locale === 'en' ? 'en-GB' : 'vi-VI')}
                     {' '}
@@ -126,21 +126,21 @@ export default function InformativeNotificationCard({ notification, showExtras, 
                   </p>
                 </div>
                 <div className="flex items-center justify-between">
-                  <p className="text-neutral-50">Huber:</p>
+                  <p className="text-neutral-50">{t('huber')}</p>
                   <p>{notification.sender.fullName}</p>
                 </div>
               </div>
             )}
             {notification.type.name === NotificationType.STORY_REJECTION && (
-              <Button size="sm" onClick={handleClick}>See the rejected stories</Button>
+              <Button size="sm" onClick={handleClick}>{t('see_rejected_stories')}</Button>
             )}
             {notification.type.name === NotificationType.SESSION_REJECTION && (
-              <Button size="sm" onClick={() => router.push('/explore-story')}>Explore other stories</Button>
+              <Button size="sm" onClick={() => router.push('/explore-story')}>{t('explore_other_stories')}</Button>
             )}
             {notification.type.name === NotificationType.SESSION_MISS && (
-              <Button size="sm" onClick={() => setIsShareReasonModalOpen(true)}>Share the reason</Button>)}
+              <Button size="sm" onClick={() => setIsShareReasonModalOpen(true)}>{t('share_reason')}</Button>)}
             {notification.type.name === NotificationType.HUBER_WARNING && (
-              <Button size="sm" onClick={() => setIsShareReasonModalOpen(true)}>Appeal</Button>)}
+              <Button size="sm" onClick={() => setIsShareReasonModalOpen(true)}>{t('appeal')}</Button>)}
           </div>
           {!notification.seen && (notification.type.name !== NotificationType.HUBER_WARNING ? (
             <Image
