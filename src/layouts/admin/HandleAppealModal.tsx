@@ -91,7 +91,7 @@ const HandleAppealModal = ({
               </div>
             </div>
             <div className="flex flex-col gap-4 p-6">
-              <p className="text-lg font-medium">Appeal form</p>
+              <p className="text-lg font-medium">{t('appeal_form')}</p>
               <div
                 className="h-[162px] rounded-2xl bg-neutral-98 px-3 py-0.5 leading-10 text-neutral-40 outline outline-1 -outline-offset-1 outline-neutral-90"
               >

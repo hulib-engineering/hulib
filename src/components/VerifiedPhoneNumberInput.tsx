@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import type { ConfirmationResult } from 'firebase/auth';
 import { PhoneAuthProvider, RecaptchaVerifier, signInWithCredential, signInWithPhoneNumber } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
 import Button from '@/components/core/button/Button';
@@ -48,6 +49,8 @@ const VerifiedPhoneNumberInput = ({
     },
   });
 
+  const t = useTranslations('Common');
+
   const [confirmationResponse, setConfirmationResponse]
     = useState<ConfirmationResult | null>(null);
   const [verifiedNumber, setVerifiedNumber] = useState(value);
@@ -56,7 +59,7 @@ const VerifiedPhoneNumberInput = ({
     if (isError) {
       setError('parentPhoneNumber', {
         type: 'unverified',
-        message: hintText || 'Invalid',
+        message: hintText || t('invalid'),
       });
     }
   }, [isError, hintText, setError]);
@@ -78,7 +81,7 @@ const VerifiedPhoneNumberInput = ({
         console.error('OTP Verification Error:', error);
         setError('verificationCode', {
           type: 'unverified',
-          message: 'Invalid OTP. Please try again.',
+          message: t('invalid_otp'),
         });
       }
     };
@@ -155,8 +158,8 @@ const VerifiedPhoneNumberInput = ({
       <fieldset className="w-2/3">
         <TextInput
           type="tel"
-          label="Parent's phone number"
-          placeholder="+84xxxxxxxxxx"
+          label={t('parent_phone_number')}
+          placeholder={t('phone_placeholder')}
           {...register('parentPhoneNumber')}
           isError={!!errors.parentPhoneNumber}
           hintText={errors.parentPhoneNumber?.message}
@@ -177,14 +180,14 @@ const VerifiedPhoneNumberInput = ({
                 }
                 onClick={handleSendCode}
               >
-                Verify
+                {t('verify')}
               </Button>
             )
           : !watch('isVerified')
               ? (
                   <TextInput
                     type="number"
-                    label="Verification code"
+                    label={t('verification_code')}
                     {...register('verificationCode')}
                     isError={!!errors.verificationCode}
                     hintText={errors.verificationCode?.message}
@@ -197,7 +200,7 @@ const VerifiedPhoneNumberInput = ({
                       'hover:bg-green-98 hover:text-green-50',
                     )}
                   >
-                    Verified
+                    {t('verified')}
                   </Chip>
                 )}
       </fieldset>

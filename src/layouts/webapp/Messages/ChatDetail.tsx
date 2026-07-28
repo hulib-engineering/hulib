@@ -8,6 +8,7 @@ import {
   isToday,
   isYesterday,
 } from 'date-fns';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React, { useCallback, useEffect, useRef } from 'react';
 
@@ -117,6 +118,7 @@ export const MessageItem = React.memo(({
 MessageItem.displayName = 'MessageItem';
 
 export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixed?: boolean; onBack?: () => void }) {
+  const t = useTranslations('Common');
   const currentOpeningChat = useAppSelector(
     state => state.messenger.currentChatDetail,
   );
@@ -301,7 +303,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
         <Button variant="ghost" size="sm" onClick={onBack}>
           <div className="flex items-center gap-1.5 text-black">
             <ArrowLeft />
-            <span>Back</span>
+            <span>{t('back')}</span>
           </div>
         </Button>
       </div>
