@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import { Pacifico } from 'next/font/google';
 import React from 'react';
 
@@ -61,7 +62,7 @@ const pacifico = Pacifico({
 });
 
 const SpecialSection = () => {
-  // const t = useTranslations('Index');
+  const t = useTranslations('Common');
 
   return (
     <div
@@ -71,7 +72,7 @@ const SpecialSection = () => {
       )}
     >
       <div className="absolute top-1/3 w-full animate-display-message text-center text-[6.25rem] font-extrabold text-[#f48fb1] opacity-0 sm:top-1/2">
-        Happy New Year
+        {t('happy_new_year')}
       </div>
       <div className="absolute left-0 top-0 flex size-full flex-row items-center justify-center overflow-hidden p-[12.5rem_6.25rem_0_0] text-[175px] font-bold text-white">
         <span>

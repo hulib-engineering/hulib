@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 import { notificationConfig } from '../private/config';
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
@@ -13,6 +14,7 @@ export default function SystemNotificationCard({ notification, onClick }: INotif
   const isUpcomingSession = notification.type.name === NotificationType.OTHER;
 
   const router = useRouter();
+  const t = useTranslations('notifications');
 
   const handleClick = () => {
     if (onClick) {
@@ -43,15 +45,15 @@ export default function SystemNotificationCard({ notification, onClick }: INotif
       <div className="flex items-center gap-3">
         <div className="flex flex-col gap-1">
           <div className="flex items-center justify-between">
-            <p className="line-clamp-2 font-bold">{cfg.title}</p>
+            <p className="line-clamp-2 font-bold">{typeof cfg.title === 'function' ? cfg.title(t) : cfg.title}</p>
             {notification.type.name === NotificationType.OTHER && (
-              <p className="text-sm font-extrabold text-orange-50">Now</p>
+              <p className="text-sm font-extrabold text-orange-50">{t('now')}</p>
             )}
           </div>
-          <p className="font-medium">{cfg.getMessage(notification)}</p>
+          <p className="font-medium">{cfg.getMessage(t, notification)}</p>
           {isUpcomingSession
-            ? <Button size="sm" fullWidth onClick={handleClick}>Join now</Button>
-            : <Button size="sm" onClick={handleClick}>Feedback</Button>}
+            ? <Button size="sm" fullWidth onClick={handleClick}>{t('join_now')}</Button>
+            : <Button size="sm" onClick={handleClick}>{t('feedback')}</Button>}
         </div>
       </div>
     </button>
