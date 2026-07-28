@@ -1,6 +1,7 @@
 'use client';
 
 import { Minus, X } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -37,6 +38,7 @@ type IChatBubbleProps = {
 };
 
 const ChatBubble = (props: IChatBubbleProps) => {
+  const t = useTranslations('Common');
   const direction
     = `${props.lastMessage?.recipientId}` === props.id ? 'received' : 'sent';
   const [isHovering, setIsHovering] = useState(false);
@@ -91,13 +93,13 @@ const ChatBubble = (props: IChatBubbleProps) => {
             ? (
                 <p className="line-clamp-1 truncate text-sm leading-5 text-neutral-20">
                   {`${
-                    direction === 'sent' ? 'You:' : ''
+                    direction === 'sent' ? t('you') : ''
                   } ${props.lastMessage?.message || ''}`}
                 </p>
               )
             : (
                 <p>
-                  {direction === 'sent' ? 'You sent a sticker' : 'Sent a sticker'}
+                  {direction === 'sent' ? t('you_sent_sticker') : t('sent_sticker')}
                 </p>
               )}
         </div>

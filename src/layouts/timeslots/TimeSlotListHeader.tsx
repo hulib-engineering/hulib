@@ -1,49 +1,8 @@
 'use client';
 
-import { mergeClassnames } from '@/components/core/private/utils';
+import { useTranslations } from 'next-intl';
 
-type TWeekDay = {
-  title: string;
-  name: string;
-  text: string;
-};
-const WeekDays: Record<number, TWeekDay> = {
-  0: {
-    title: 'SUN',
-    name: 'Sunday',
-    text: 'Wait, you\'re working on Sunday too? 😆',
-  },
-  1: {
-    title: 'MON',
-    name: 'Monday',
-    text: 'Hey, are you really that busy on Monday? 😊',
-  },
-  2: {
-    title: 'TUE',
-    name: 'Tuesday',
-    text: 'Is setting aside just 30 minutes really that hard? 😢',
-  },
-  3: {
-    title: 'WED',
-    name: 'Wednesday',
-    text: 'Come on, is 30 minutes that tough to spare? 😢',
-  },
-  4: {
-    title: 'THU',
-    name: 'Thursday',
-    text: 'Is setting aside just 30 minutes really that hard? 😢',
-  },
-  5: {
-    title: 'FRI',
-    name: 'Friday',
-    text: 'Come on, is 30 minutes that tough to spare? 😢',
-  },
-  6: {
-    title: 'SAT',
-    name: 'Saturday',
-    text: 'Hey, are you really that busy on Saturday? 🤔',
-  },
-};
+import { mergeClassnames } from '@/components/core/private/utils';
 
 type ITimeSlotListHeaderProps = {
   currentDayOfWeek: number;
@@ -52,12 +11,24 @@ type ITimeSlotListHeaderProps = {
   scrollable?: boolean;
 };
 
+const DAY_KEYS = [
+  { short: 'day_short_0', full: 'day_full_0', prompt: 'day_prompt_0' },
+  { short: 'day_short_1', full: 'day_full_1', prompt: 'day_prompt_1' },
+  { short: 'day_short_2', full: 'day_full_2', prompt: 'day_prompt_2' },
+  { short: 'day_short_3', full: 'day_full_3', prompt: 'day_prompt_3' },
+  { short: 'day_short_4', full: 'day_full_4', prompt: 'day_prompt_4' },
+  { short: 'day_short_5', full: 'day_full_5', prompt: 'day_prompt_5' },
+  { short: 'day_short_6', full: 'day_full_6', prompt: 'day_prompt_6' },
+] as const;
+
 export default function TimeSlotListHeader({
   currentDayOfWeek = 0,
   onCurrentDayOfWeekChange,
   slots = 0,
   scrollable = false,
 }: ITimeSlotListHeaderProps) {
+  const t = useTranslations('Time_slots');
+
   return (
     <div className="flex flex-col gap-2">
       {/* Day Selector Row */}
@@ -66,24 +37,24 @@ export default function TimeSlotListHeader({
         scrollable && 'w-full overflow-x-auto scrollbar-hide',
       )}
       >
-        {Object.entries(WeekDays).map(([key, day]) => (
+        {DAY_KEYS.map((day, dayIndex) => (
           <div
-            key={key}
+            key={dayIndex}
             role="button"
             tabIndex={0}
             className={mergeClassnames(
               'flex-1 cursor-pointer rounded-[100px] px-2.5 py-2 transition-colors text-black text-sm leading-4 text-center',
-              currentDayOfWeek === Number(key) && 'bg-primary-90 text-primary-50',
+              currentDayOfWeek === dayIndex && 'bg-primary-90 text-primary-50',
               scrollable && 'rounded-lg',
             )}
-            onClick={() => onCurrentDayOfWeekChange(Number(key))}
+            onClick={() => onCurrentDayOfWeekChange(dayIndex)}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
-                onCurrentDayOfWeekChange(Number(key));
+                onCurrentDayOfWeekChange(dayIndex);
               }
             }}
           >
-            <p className={mergeClassnames(scrollable && 'w-[31px]')}>{day.title}</p>
+            <p className={mergeClassnames(scrollable && 'w-[31px]')}>{t(day.short)}</p>
           </div>
         ))}
       </div>
@@ -96,8 +67,8 @@ export default function TimeSlotListHeader({
       )}
       >
         {slots > 0
-          ? `Amazing!!! You can meet ${slots} Libers every ${WeekDays[currentDayOfWeek]?.name ?? 'day'}`
-          : WeekDays[currentDayOfWeek]?.text ?? 'You did not choose any available time slot in this day, update now to meet with more people'}
+          ? t('slots_message', { slots, day: t(DAY_KEYS[currentDayOfWeek]!.full) })
+          : t(DAY_KEYS[currentDayOfWeek]!.prompt)}
       </p>
     </div>
   );

@@ -3,170 +3,122 @@ import type { ReactNode } from 'react';
 import React from 'react';
 
 import { format } from 'date-fns';
+import type { useTranslations } from 'next-intl';
 import { NotificationType } from './types';
 
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
 import { toLocaleDateString } from '@/utils/dateUtils';
 import { Role } from '@/types/common';
 
+type TFunction = ReturnType<typeof useTranslations<'notifications'>>;
+
 type NotificationConfig = {
   [_K in NotificationType]: {
-    getMessage: (m: Notification, roleId?: number) => ReactNode;
+    getMessage: (t: TFunction, m: Notification, roleId?: number) => ReactNode;
     route?: (relatedEntityId: number, roleId?: number) => string;
-    title?: ReactNode;
+    title?: ReactNode | ((t: TFunction) => ReactNode);
   };
 };
 
 export const notificationConfig: NotificationConfig = {
   [NotificationType.ACCOUNT_UPGRADE]: {
-    getMessage: (m: Notification, roleId?: number) => roleId === Role.LIBER ? (
-      <>
-        <span className="font-bold">Your registration to become a Huber</span>
-        {' '}
-        has been accepted. Welcome onboard!
-      </>
+    getMessage: (t, m, roleId) => (roleId === Role.LIBER ? (
+      <>{t('registration_accepted')}</>
     ) : (
-      <>
-        <span className="font-bold">{m?.sender.fullName}</span>
-        {' has submitted a request to become a Huber.'}
-      </>
-    ),
+      <>{t('registration_submitted', { name: m?.sender.fullName })}</>
+    )),
     route: (relatedEntityId: number, roleId?: number) => (roleId && roleId === Role.ADMIN)
       ? `/admin/users/approval/${relatedEntityId}` : '',
   },
   [NotificationType.SESSION_REQUEST]: {
-    getMessage: (m: Notification) => (
-      <>
-        <span className="font-bold">{m.sender.fullName}</span>
-        {' '}
-        would love to have a meeting with you.
-      </>
+    getMessage: (t, m) => (
+      <>{t('session_request', { name: m.sender.fullName })}</>
     ),
   },
   [NotificationType.STORY_REVIEW]: {
-    getMessage: (m: Notification) => (
-      <>
-        <span className="font-bold">{m.sender.fullName}</span>
-        {' have also reviewed your story '}
-        <span className="font-bold text-primary-60">{`“${m.relatedEntity?.title}”`}</span>
-        .
-      </>
+    getMessage: (t, m) => (
+      <>{t('story_reviewed', { name: m.sender.fullName, title: m.relatedEntity?.title ?? '' })}</>
     ),
   },
   [NotificationType.STORY_PUBLISH]: {
-    getMessage: (m: Notification, roleId?: number) => roleId === Role.HUBER ? (
-      <>
-        Your story,
-        {' '}
-        <span className="font-bold text-primary-60">{`“${m.relatedEntity?.title}”`}</span>
-        ,  has been successfully published.
-      </>
+    getMessage: (t, m, roleId) => (roleId === Role.HUBER ? (
+      <>{t('story_published_huber', { title: m.relatedEntity?.title ?? '' })}</>
     ) : (
-      <>
-        <span className="font-bold">{`${m?.sender.fullName} `}</span>
-        has sent a request to create a new Story
-        <span className="font-bold text-primary-60">{` ${m.relatedEntity?.title}.`}</span>
-      </>
-    ),
+      <>{t('story_published_admin', { name: m?.sender.fullName ?? '', title: m.relatedEntity?.title ?? '' })}</>
+    )),
     route: (relatedEntityId: number, roleId?: number) => (roleId && roleId === Role.ADMIN)
       ? `/admin/stories/${relatedEntityId}/approval` : `/explore-story/${relatedEntityId}`,
   },
   [NotificationType.STORY_REJECTION]: {
-    getMessage: (m: Notification) => (
-      <>
-        Your story,
-        {' '}
-        <span className="font-bold text-primary-60">{`“${m.relatedEntity?.title}”`}</span>
-        , has not published successfully. Reason:
-      </>
+    getMessage: (t, m) => (
+      <>{t('story_rejected', { title: m.relatedEntity?.title ?? '' })}</>
     ),
     route: relatedEntityId => `/explore-story/${relatedEntityId}/preview`,
   },
   [NotificationType.HUBER_REPORT]: {
-    getMessage: (m: Notification) => (
-      <>
-        <span className="font-bold">Huber “</span>
-        <span className="font-bold text-red-50">{m.relatedEntity?.reportee?.fullName}</span>
-        <span className="font-bold">” is reported.</span>
-      </>
+    getMessage: (t, m) => (
+      <>{t('huber_reported', { name: m.relatedEntity?.reportee?.fullName ?? '' })}</>
     ),
   },
   [NotificationType.HUBER_WARNING]: {
-    getMessage: () => (
-      <>
-        Your account has received a warning due to a report. Your account will be ban if you receive 3 reports.
-      </>
+    getMessage: t => (
+      <>{t('huber_warning')}</>
     ),
-    title: <span className="text-orange-50">You’ve been warned</span>,
+    title: (t: TFunction) => <span className="text-orange-50">{t('huber_warning_title')}</span>,
   },
   [NotificationType.HUBER_REJECTION]: {
-    getMessage: () => (
-      <>
-        We're sorry, but your registration to become Huber was not successfully. Reason:
-      </>
+    getMessage: t => (
+      <>{t('huber_rejection')}</>
     ),
-    title: <span className="text-red-60">Huber Registration did not go through.</span>,
+    title: (t: TFunction) => <span className="text-red-60">{t('huber_rejection_title')}</span>,
   },
   [NotificationType.SESSION_REJECTION]: {
-    getMessage: (m: Notification) => (
-      <>
-        Unfortunately,
-        {' '}
-        <span className="text-primary-60">{`Huber ${m.sender?.fullName} `}</span>
-        isn’t available for this meeting (
-        {m.relatedEntity?.startTime}
-        {' '}
-        to
-        {' '}
-        {m.relatedEntity?.endTime}
-        ,
-        {' '}
-        {format(m.relatedEntity?.startedAt ? new Date(m.relatedEntity?.startedAt) : new Date(), 'dd MMM, yyyy')}
-        ). Reason:
-      </>
-    ),
-    title: <span className="text-red-60">Your request for meeting is rejected</span>,
+    getMessage: (t, m) => {
+      const date = format(m.relatedEntity?.startedAt ? new Date(m.relatedEntity?.startedAt) : new Date(), 'dd MMM, yyyy');
+      return (
+        <>
+          {t('session_rejection', {
+            name: m.sender?.fullName ?? '',
+            startTime: m.relatedEntity?.startTime ?? '',
+            endTime: m.relatedEntity?.endTime ?? '',
+            date,
+          })}
+        </>
+      );
+    },
+    title: (t: TFunction) => <span className="text-red-60">{t('session_rejection_title')}</span>,
   },
   [NotificationType.SESSION_APPROVAL]: {
-    getMessage: (m: Notification) => (
-      <>
-        We’re happy to let you know that
-        {' '}
-        <span className="text-primary-60">{`Huber ${m.sender.fullName} `}</span>
-        has accepted your meeting request. Don’t forget to join the meeting on time.
-      </>
+    getMessage: (t, m) => (
+      <>{t('session_approval', { name: m.sender.fullName })}</>
     ),
-    title: <span className="text-primary-60">Your request for meeting is accepted</span>,
+    title: (t: TFunction) => <span className="text-primary-60">{t('session_approval_title')}</span>,
     route: () => '/my-schedule',
   },
   [NotificationType.OTHER]: {
-    getMessage: (m: Notification) => (
-      <>
-        Meeting with
-        {' '}
-        <span className="text-primary-50">{`Huber ${m.relatedEntity?.humanBookId}`}</span>
-        {' '}
-        is starting now. Hurry up to make it happen with a great soul. Click below to join.
-      </>
+    getMessage: (t, m) => (
+      <>{t('session_upcoming', { name: m.relatedEntity?.humanBookId ?? '' })}</>
     ),
-    title: <p className="font-bold text-neutral-10">It’s time for your session</p>,
+    title: (t: TFunction) => <p className="font-bold text-neutral-10">{t('session_upcoming_title')}</p>,
     route: (url: string | number) => `${url}`,
   },
   [NotificationType.SESSION_COMPLETION]: {
-    getMessage: (m: Notification) => (
-      <>
-        Wish you have a memorable time. Now please spend a little time to share your thought about
-        <span className="text-primary-50">{` Huber ${m.relatedEntity?.humanBookName} `}</span>
-        and the session from
-        <span className="text-primary-50">
-          {` ${m.relatedEntity?.startTime} to ${m.relatedEntity?.endTime}, ${toLocaleDateString(m.relatedEntity?.startedAt, 'en-GB')}`}
-        </span>
-        . Your feedback is valuable for Hulib.
-      </>
-    ),
-    title: (
+    getMessage: (t, m) => {
+      const date = toLocaleDateString(m.relatedEntity?.startedAt, 'en-GB');
+      return (
+        <>
+          {t('session_completion', {
+            name: m.relatedEntity?.humanBookName ?? '',
+            startTime: m.relatedEntity?.startTime ?? '',
+            endTime: m.relatedEntity?.endTime ?? '',
+            date,
+          })}
+        </>
+      );
+    },
+    title: (t: TFunction) => (
       <div className="flex items-center gap-2 font-bold text-neutral-10">
-        <p>The session is finished</p>
+        <p>{t('session_completion_title')}</p>
         <Image
           src="/assets/icons/kissing-icon.svg"
           width={24}
@@ -179,38 +131,44 @@ export const notificationConfig: NotificationConfig = {
     route: (url: string | number) => `${url}`,
   },
   [NotificationType.SESSION_CANCELLATION]: {
-    getMessage: (m: Notification) => (
-      <>
-        We want you to notify that
-        {' '}
-        <span className="text-yellow-30">{`Liber ${m.sender?.fullName} `}</span>
-        has canceled the meeting (
-        <span className="text-yellow-30">{`${m.relatedEntity?.startTime} to ${m.relatedEntity?.endTime}, ${toLocaleDateString(m.relatedEntity?.startedAt, 'en-GB')}`}</span>
-        ). Reason:
-      </>
-    ),
-    title: <span className="text-red-60">The meeting is canceled</span>,
+    getMessage: (t, m) => {
+      const date = toLocaleDateString(m.relatedEntity?.startedAt, 'en-GB');
+      return (
+        <>
+          {t('session_cancellation', {
+            name: m.sender?.fullName ?? '',
+            startTime: m.relatedEntity?.startTime ?? '',
+            endTime: m.relatedEntity?.endTime ?? '',
+            date,
+          })}
+        </>
+      );
+    },
+    title: (t: TFunction) => <span className="text-red-60">{t('session_cancellation_title')}</span>,
   },
   [NotificationType.SESSION_MISS]: {
-    getMessage: (m: Notification) => (
-      <>
-        You didn’t join the meeting today (
-        <span className="font-bold">{`${m.relatedEntity?.startTime} to ${m.relatedEntity?.endTime}, ${toLocaleDateString(m.relatedEntity?.startedAt, 'en-GB')}). `}</span>
-        We’d love to know what happened, so we can improve the experience for everyone.
-      </>
-    ),
-    title: <span className="text-orange-50">Meeting not attended !</span>,
+    getMessage: (t, m) => {
+      const date = toLocaleDateString(m.relatedEntity?.startedAt, 'en-GB');
+      return (
+        <>
+          {t('session_miss', {
+            startTime: m.relatedEntity?.startTime ?? '',
+            endTime: m.relatedEntity?.endTime ?? '',
+            date,
+          })}
+        </>
+      );
+    },
+    title: (t: TFunction) => <span className="text-orange-50">{t('session_miss_title')}</span>,
   },
   [NotificationType.USER_APPEAL]: {
-    getMessage: (m: Notification) => (
-      <span className="font-bold text-red-50">{`User appeal report #${m.relatedEntity?.moderationRelatedReport?.id}`}</span>
+    getMessage: (t, m) => (
+      <span className="font-bold text-red-50">{t('user_appeal', { id: String(m.relatedEntity?.moderationRelatedReport?.id ?? '') })}</span>
     ),
   },
   [NotificationType.APPEAL_RESPONSE]: {
-    getMessage: (m: Notification) => (
-      <>
-        {m.relatedEntity?.status === 'accepted' ? 'Your appeal request is accepted, your account does not receive warning. Thank you for clarifying the situation.' : 'After reviewing your appeal, we’ve decided to keep the warning. Please be careful that your account will be ban if you receive 3 reports.'}
-      </>
+    getMessage: (t, m) => (
+      <>{m.relatedEntity?.status === 'accepted' ? t('appeal_accepted') : t('appeal_rejected')}</>
     ),
   },
-} as const;
+};
