@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -18,12 +19,16 @@ type IEmojiRateScaleProps = {
 };
 
 const EmojiRateScale = ({
-  lowestRateText = 'Not good',
-  highestRateText = 'Very good',
+  lowestRateText,
+  highestRateText,
   value,
   onChange,
-}: IEmojiRateScaleProps) =>
-  (
+}: IEmojiRateScaleProps) => {
+  const t = useTranslations('Common');
+  const lowest = lowestRateText ?? t('not_good');
+  const highest = highestRateText ?? t('very_good');
+
+  return (
     <div className="flex justify-between overflow-x-auto xl:justify-center xl:gap-11 xl:overflow-x-visible">
       {ratingImages.map((image, index) => (
         <div className="flex min-w-fit flex-col items-center gap-2" key={index}>
@@ -40,7 +45,7 @@ const EmojiRateScale = ({
           >
             <Image
               src={image}
-              alt={`Rating ${index + 1}`}
+              alt={t('rating_alt', { index: index + 1 })}
               width={32}
               height={32}
               className="size-8 object-contain"
@@ -49,17 +54,18 @@ const EmojiRateScale = ({
 
           {index === 0 && (
             <span className="hidden text-xs font-medium text-primary-60 xl:block">
-              {lowestRateText}
+              {lowest}
             </span>
           )}
           {index === 4 && (
             <span className="hidden text-xs font-medium text-primary-60 xl:block">
-              {highestRateText}
+              {highest}
             </span>
           )}
         </div>
       ))}
     </div>
   );
+};
 
 export { EmojiRateScale };
