@@ -61,8 +61,8 @@ export default function LiberMyFavorite() {
   if (allStories.length === 0 && !isLoading && !isFetching) {
     return (
       <LiberMyFavoriteEmpty
-        title=" Bạn chưa yêu thích câu chuyện nào"
-        description=" Xem những câu chuyện dưới đây, biết đâu sẽ kết nối được điều bạn tìm kiếm bấy lâu"
+        title={tMyFavorites('no_favorite_title')}
+        description={tMyFavorites('no_favorite_desc')}
       />
     );
   }
