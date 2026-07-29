@@ -48,7 +48,7 @@ function Subtitles() {
     <div className="flex flex-col gap-3">
       <div className="flex gap-2">
         <TimerIcon color="#0858FA" className="size-4 shrink-0 lg:size-5" />
-        <h2 className="text-smfont-normal">
+        <h2 className="text-sm font-normal">
           Các cuộc hẹn có thời gian tối đa 30 phút
         </h2>
       </div>
