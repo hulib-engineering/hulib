@@ -59,7 +59,7 @@ export default function Index() {
   );
 
   const handleBack = React.useCallback(() => {
-    router.push('/');
+    router.back();
   }, [router]);
 
   const handleSeeAllClick = React.useCallback(() => {
