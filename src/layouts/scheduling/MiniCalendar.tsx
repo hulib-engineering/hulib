@@ -7,28 +7,33 @@ import {
   endOfMonth,
   endOfWeek,
   format,
+  isBefore,
+  startOfDay,
   startOfMonth,
   startOfWeek,
 } from 'date-fns';
-import { useTranslations } from 'next-intl';
+// import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 import type { ReadingSession } from '@/libs/services/modules/reading-session/createNewReadingSession';
+import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
+import { useTimeslotGrouping } from '@/libs/hooks/useTimeslotGrouping';
 
 const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
 type GroupedReadingSessions = Record<string, ReadingSession[]>;
 type MonthCalendarProps = {
   onChange: (date: Date) => void;
-  onUpdateTimeslots: () => void;
+  type?: string;
+  huberId?: number;
+  chosenDay: Date; // Clicked day on the MiniCalendar
+  // onUpdateTimeslots: () => void;
 };
 
-export default function MiniCalendar({ onChange, onUpdateTimeslots }: MonthCalendarProps) {
-  const t = useTranslations('Time_slots');
-
+export default function MiniCalendar({ onChange, type, huberId, chosenDay }: MonthCalendarProps) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const monthStart = startOfMonth(currentMonth);
@@ -40,6 +45,11 @@ export default function MiniCalendar({ onChange, onUpdateTimeslots }: MonthCalen
   const start = startOfWeek(monthStart, { weekStartsOn: 0 });
   const end = endOfWeek(monthEnd, { weekStartsOn: 0 });
   const days = eachDayOfInterval({ start, end });
+
+  const { data: timeSlots } = useGetTimeslotsByHuberQuery({
+    id: huberId,
+  });
+  const groupingTimeslots = useTimeslotGrouping(timeSlots);
 
   const { data } = useGetReadingSessionsQuery({
     startedAt: monthStartDate.toISOString(),
@@ -64,7 +74,7 @@ export default function MiniCalendar({ onChange, onUpdateTimeslots }: MonthCalen
   }, [data]);
 
   return (
-    <div className="flex w-full flex-col gap-1 rounded-lg bg-white px-4 py-2 shadow-sm lg:max-w-[25rem] xl:px-2">
+    <div className="flex flex-col gap-1 rounded-lg bg-white px-4 py-2 shadow-sm lg:max-w-[25rem] xl:px-2">
       {/* Header */}
       <div className="flex items-center justify-between gap-3 p-2">
         <button
@@ -84,9 +94,9 @@ export default function MiniCalendar({ onChange, onUpdateTimeslots }: MonthCalen
         </button>
       </div>
 
-      <p className="text-center text-xs text-neutral-40">
+      {/* <p className="text-center text-xs text-neutral-40">
         {`Today, ${format(new Date(), 'dd MMM, yyyy')}`}
-      </p>
+      </p> */}
 
       {/* Weekday header */}
       <div className="grid grid-cols-7">
@@ -96,38 +106,37 @@ export default function MiniCalendar({ onChange, onUpdateTimeslots }: MonthCalen
       </div>
       {/* Day grid */}
       <div className="grid grid-cols-7 gap-[6px] text-center text-sm">
-        {days.map((day, i) => {
+        {days.map((day) => {
           const isCurrentMonth = day.getMonth() === currentMonth.getMonth();
           const isToday = format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd');
-          const hasSessions = groupedReadingSessions[day.toLocaleDateString()]?.length > 0;
+          const conditionBlueText = type === 'booking'
+            ? groupedReadingSessions[day.toLocaleDateString()]?.length > 0 // default calendar: if the day has some 'sessions' - whatever it is
+            : groupingTimeslots[day.getDay()]; // booking calendar: if the day has some available time slots
+          const isPastDate = isBefore(startOfDay(day), startOfDay(new Date()));
+          const disabled = !isCurrentMonth || isPastDate;
+          const isSelected
+              = chosenDay?.toDateString() === day.toDateString();
 
           return (
             <Button
-              key={i}
-              variant={hasSessions ? 'outline' : !isToday ? 'ghost' : 'fill'}
+              key={day.getTime()}
+              variant="ghost"
               size="sm"
-              disabled={!isCurrentMonth}
+              disabled={disabled}
               onClick={() => onChange(day)}
               className={mergeClassnames(
                 'transition-colors h-fit rounded-lg px-0 py-3 text-center text-sm leading-4',
+                'disabled:text-neutral-70',
                 isCurrentMonth && 'text-neutral-10',
-                isToday && 'text-primary-98',
-                hasSessions && 'text-primary-50',
+                isToday && !disabled && 'border border-primary-60 focus:border-primary-60 bg-white',
+                conditionBlueText && 'text-primary-50',
+                isSelected && 'bg-primary-50 text-white border-none active:border-none hover:bg-primary-50 focus:ring-0',
               )}
             >
               {format(day, 'd')}
             </Button>
           );
         })}
-      </div>
-
-      <div className="flex flex-col gap-2.5 py-4 lg:hidden">
-        <Button
-          size="lg"
-          onClick={onUpdateTimeslots}
-        >
-          {t('update_time_slots')}
-        </Button>
       </div>
     </div>
   );
