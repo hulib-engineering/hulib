@@ -65,7 +65,7 @@ export default function NotificationPopover({
                   <>
                     <div className="flex flex-col">
                       <div className="px-3">
-                        <h6 className="text-xl font-bold leading-9 text-primary-60">Meeting request</h6>
+                        <h6 className="text-xl font-bold leading-9 text-primary-60">{t('meeting_request')}</h6>
                       </div>
                       {sessionRequestNotifications.map(notification => (
                         <NotificationItemRenderer
