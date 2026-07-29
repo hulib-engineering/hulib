@@ -1,6 +1,6 @@
 'use client';
 
-import { CaretLeft, CaretRight, Info, Warning } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import {
   addDays,
   differenceInHours,
@@ -15,15 +15,16 @@ import {
 import { fromZonedTime } from 'date-fns-tz';
 import { isEmpty } from 'lodash';
 import { useLocale, useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as React from 'react';
 
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { Link } from '@/libs/i18nNavigation';
-import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
+// import { Link } from '@/libs/i18nNavigation';
+// import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
 import { useTimeslotGrouping } from '@/libs/hooks/useTimeslotGrouping';
+// import TimeslotWarning from '@/app/[locale]/(auth)/explore-story/[id]/booking/_components/TimeslotWarning';
 import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
 import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
 import { CURRENT_TZ } from '@/utils/dateUtils';
@@ -32,9 +33,63 @@ type IBookingTimetableProps = {
   tz?: string;
   huberId: number;
   onSelectTime: (date: Date) => void;
-  onOpenHuberConv: () => void;
+  // onOpenHuberConv: () => void;
+  MiniCalendarChosenDay?: Date;
 };
-export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHuberConv }: IBookingTimetableProps) {
+
+type TimeslotPeriodRowProps = {
+  slots: string[]; // groupingTimeslots[weekday][each]
+  selectedDate: Date;
+  selectedTime: string;
+  bookedSlots?: string[];
+  onSelectTime: (time: string) => void;
+};
+
+/* TODO: A lot of logic/variables/states/components could need some optimization?
+   Q: Should a period section (around TimeslotPeriodRow) be hidden if it has no timeslot?
+*/
+
+function TimeslotPeriodRow(props: TimeslotPeriodRowProps) {
+  return (
+    <div className="flex w-full items-center gap-1 overflow-x-auto">
+      {props.slots.map((item) => {
+        const hour = Number.parseInt(item.split(':')[0] ?? '0', 10) ?? 0;
+        const minute = Number.parseInt(item.split(':')[1] ?? '0', 10) ?? 0;
+        const selectedTimestamp = new Date(props.selectedDate);
+        selectedTimestamp.setHours(hour, minute, 0, 0);
+        const isBooked
+        = props.bookedSlots
+          && props.bookedSlots.length
+          && props.bookedSlots.includes(selectedTimestamp.toISOString());
+          // const isDisabled = differenceInHours(selectedTimestamp, new Date()) < 24;
+
+        return (
+          <Button
+            key={item}
+            variant={props.selectedTime === item ? 'fill' : 'outline'}
+            size="sm"
+            // disabled={isDisabled}
+            className={mergeClassnames(
+              'flex-shrink-0 min-w-fit rounded-lg px-3 py-2',
+              'text-sm font-normal leading-4',
+              'focus:ring-0',
+              isBooked && 'invisible',
+              props.selectedTime !== item && 'text-primary-50',
+            )}
+            onClick={() => props.onSelectTime(item)}
+          >
+            {item}
+            {' '}
+            {hour < 12 ? 'AM' : 'PM' }
+            {props.selectedTime === item && <span className="max-lg:hidden">✓</span>}
+          </Button>
+        );
+      })}
+    </div>
+  );
+}
+
+export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenHuberConv, */ MiniCalendarChosenDay = new Date() }: IBookingTimetableProps) {
   const today = new Date();
 
   const locale = useLocale();
@@ -55,6 +110,10 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHube
 
   const currentWeek = startOfWeek(today, { weekStartsOn: 1 });
   const displayedWeek = startOfWeek(currentDate, { weekStartsOn: 1 });
+
+  useEffect(() => {
+    setCurrentDate(MiniCalendarChosenDay);
+  }, [MiniCalendarChosenDay]);
 
   const getWeekDays = () => {
     return Array.from({ length: 7 }, (_, i) => addDays(displayedWeek, i));
@@ -104,8 +163,10 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHube
     onSelectTime(utcInstant);
   };
 
+  const weekday = selectedDate.getDay();
+
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex w-full flex-col gap-5">
       <div className="flex w-full flex-col gap-2 rounded-2xl bg-white p-4 shadow-popover">
         <div className="flex items-center justify-between">
           <IconButton
@@ -149,13 +210,16 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHube
             const isPastDate = isBefore(startOfDay(day), startOfDay(new Date()));
             const isSelected
               = selectedDate?.toDateString() === day.toDateString();
+            const isUnavailable = !groupingTimeslots[day.getDay()];
 
             return (
               <Button
                 key={day.getTime()}
                 variant={isSelected ? 'fill' : 'ghost'}
                 size="sm"
-                className={mergeClassnames('w-full rounded-lg py-2 px-3', isToday(day) && 'border border-primary-60')}
+                className={
+                  mergeClassnames('w-full rounded-lg py-2 px-3', isToday(day) && 'border border-primary-60', isUnavailable && 'text-neutral-70', isSelected && isUnavailable && 'bg-neutral-90 hover:bg-neutral-90 border-none focus:ring-0')
+                }
                 onClick={() => onClickDateItem(day)}
                 disabled={isPastDate}
               >
@@ -173,55 +237,33 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHube
               day: '2-digit',
             })}
           </p>
-          {(['morning', 'afternoon', 'evening'] as const).map((each) => {
-            const weekday = selectedDate.getDay();
-
-            return (
-              <div
-                key={each}
-                className="flex flex-col gap-2"
-              >
-                <p className="text-neutral-40">
-                  {t(each)}
-                </p>
-                {groupingTimeslots[weekday] && groupingTimeslots[weekday][each] && groupingTimeslots[weekday][each]?.length > 0 && (
-                  <div className="flex w-full items-center gap-1 overflow-x-auto">
-                    {groupingTimeslots[weekday][each].map((item) => {
-                      const hour = Number.parseInt(item.split(':')[0] ?? '0', 10) ?? 0;
-                      const minute = Number.parseInt(item.split(':')[1] ?? '0', 10) ?? 0;
-                      const selectedTimestamp = new Date(selectedDate);
-                      selectedTimestamp.setHours(hour, minute, 0, 0);
-                      const isBooked
-                      = bookedSlots
-                        && bookedSlots.length
-                        && bookedSlots.includes(selectedTimestamp.toISOString());
-                      const isDisabled = differenceInHours(selectedTimestamp, new Date()) < 24;
-
-                      return (
-                        <Button
-                          key={item}
-                          variant={selectedTime === item ? 'fill' : 'outline'}
-                          size="sm"
-                          disabled={isDisabled}
-                          className={mergeClassnames(
-                            'flex-shrink-0 min-w-fit rounded-lg px-3 py-2 text-sm font-normal leading-4',
-                            'focus:border-none focus:shadow-none',
-                            isBooked && 'invisible',
-                            selectedTime !== item && 'text-neutral-10',
-                          )}
-                          onClick={() => setSelectedTime(item)}
-                        >
-                          {item}
-                          {' '}
-                          {hour < 12 ? 'AM' : 'PM'}
-                        </Button>
-                      );
-                    })}
+          {groupingTimeslots[weekday]
+            ? (['morning', 'afternoon', 'evening'] as const).map((each) => {
+                return (
+                  <div
+                    key={each}
+                    className="flex flex-col gap-3 bg-white p-3"
+                  >
+                    <p className="text-neutral-40">
+                      {t(each)}
+                    </p>
+                    {groupingTimeslots[weekday] && groupingTimeslots[weekday][each] && groupingTimeslots[weekday][each]?.length > 0 && (
+                      <TimeslotPeriodRow
+                        slots={groupingTimeslots[weekday][each]}
+                        selectedDate={selectedDate}
+                        selectedTime={selectedTime}
+                        bookedSlots={bookedSlots}
+                        onSelectTime={setSelectedTime}
+                      />
+                    )}
                   </div>
-                )}
-              </div>
-            );
-          })}
+                );
+              })
+            : (
+                <p className="text-[#FF2C94]">
+                  Ôi, Huber không rảnh hôm nay. Hãy chọn một ngày khác để gặp!
+                </p>
+              )}
         </div>
       </div>
       <div className="flex items-center justify-between gap-8">
@@ -229,7 +271,7 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHube
           <p className="leading-5 text-neutral-20">
             {t('confirm_time')}
             {' '}
-            <span className="text-primary-60">
+            <span className="max-lg:text-primary-60">
               {selectedTime}
               {' '}
               {Number(selectedTime.split(':')[0]) < 12 ? 'AM' : 'PM'}
@@ -243,17 +285,14 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHube
             </span>
           </p>
         ) : (
-          <div className="flex gap-2 font-medium text-yellow-30">
-            <Warning className="text-yellow-50" />
-            <span className="text-sm leading-4">
-              To help the Huber arrange their schedule, please choose a time slot at least 24 hours after your meeting request.
-            </span>
-          </div>
+          <>
+            {/* <TimeslotWarning /> */}
+          </>
         )}
 
         <Button
           size="lg"
-          className="w-full xl:w-[300px]"
+          className="w-[300px] max-lg:w-full"
           disabled={isEmpty(selectedTime)}
           onClick={handleNextToTimeConfirmation}
         >
@@ -261,7 +300,7 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHube
         </Button>
       </div>
 
-      <ScheduleInfoItemLayout icon={<Info size={16} />} title={t('notice')} className="xl:hidden">
+      {/* <ScheduleInfoItemLayout icon={<Info size={16} />} title={t('notice')} className="xl:hidden">
         <p className="text-sm font-normal text-neutral-40">
           {t('notice_text')}
         </p>
@@ -272,7 +311,7 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, onOpenHube
             {t('click_here')}
           </Link>
         </p>
-      </ScheduleInfoItemLayout>
+      </ScheduleInfoItemLayout> */}
     </div>
   );
 }
