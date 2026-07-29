@@ -75,7 +75,7 @@ const ActionOnUserModal: FC<IActionOnUserModalProps> = ({
         </div>
         <TextArea
           rows={5}
-          placeholder="Reason for warning"
+          placeholder={tCommon('reason_for_warning')}
           value={reasonForAction}
           onChange={e => setReasonForAction(e.target.value)}
         />
