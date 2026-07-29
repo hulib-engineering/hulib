@@ -109,7 +109,7 @@ export default function Index() {
               size="sm"
               iconLeft={<ArrowLeft size={20} weight="bold" />}
               className="w-fit text-black xl:hidden"
-              onClick={() => router.push('/')}
+              onClick={() => router.back()}
             >
               {t('back')}
             </Button>
