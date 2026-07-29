@@ -118,7 +118,7 @@ export default function SelectTime(props: SelectTimeProps) {
         variant="ghost"
         iconLeft={<ArrowLeft size={20} weight="bold" />}
         className="size-fit rounded-full p-4 text-black"
-        onClick={() => router.push('/')}
+        onClick={() => router.back()}
       >
       </Button>
 
