@@ -3,15 +3,7 @@
     "contact_us": "liên hệ"
   },
   "HeaderWebApp": {
-    "contact_us": "liên hệ",
     "my_schedule": "Lịch trình của tôi",
-    "books": "Câu chuyện",
-    "mentors": "Huber",
-    "log_in": "Đăng nhập",
-    "sign_up": "Đăng kí",
-    "clear": "Xoá",
-    "recent_searches": "Tìm kiếm gần đây:",
-    "search_by_keyword": "Tìm kiếm bởi từ khoá",
     "dashboard": "Bảng điều khiển",
     "my_profile": "Hồ sơ của tôi",
     "change_password": "Đổi mật khẩu",
@@ -50,33 +42,21 @@
       "description": "Chúng tôi không tìm thấy kết quả nào phù hợp với tìm kiếm của bạn. Vui lòng thử tìm kiếm lại."
     }
   },
-  "FirstBookCreated": {
-    "welcome_title": "Chào mừng bạn đến với cộng đồng",
-    "welcome_description": "Cuốn sách đầu tiên của bạn đã được duyệt, bây giờ mọi người có thể xem câu chuyện của bạn",
-    "update_schedule_title": "Bạn đã sẵn sàng để kết nối cùng Liber chưa?",
-    "update_schedule_description": "Hãy cập nhật thời gian rảnh để Liber có thể liên hệ với bạn nhé",
-    "update_schedule_button": "Cập nhật lịch cá nhân"
-  },
   "Footer": {
-    "footer_description": "Ta sinh ra để là một ai đó. Mỗi chúng ta đều mang trong mình một câu chuyện và những trải nghiệm rất riêng.",
     "copyright": "© 2026 HuLib. Đã đăng ký bản quyền.",
     "privacy_policy": "chính sách bảo mật",
     "term_of_service": "điều khoản dịch vụ",
-    "cookie_settings": "cài đặt cookie",
     "community_guidelines": "hướng dẫn cộng đồng"
   },
   "FooterWebApp": {
     "footer_description": "Ta sinh ra để là một ai đó. Mỗi chúng ta đều mang trong mình một câu chuyện và những trải nghiệm rất riêng.",
-    "copyright": "© 2026 HuLib. Đã đăng ký bản quyền.",
     "privacy_policy": "Chính sách bảo mật",
     "term_of_service": "Điều khoản dịch vụ",
     "community_guidelines": "Hướng dẫn cộng đồng",
-    "cookie_settings": "Cài đặt cookie",
     "site": "Trang web",
     "my_schedule": "Lịch trình của tôi",
     "books": "Câu chuyện",
     "hubers": "Huber",
-    "profile": "Hồ sơ",
     "help": "Trợ giúp",
     "contact": "Liên hệ",
     "join_our_social_community": "THAM GIA CỘNG ĐỒNG XÃ HỘI CỦA CHÚNG TÔI",
@@ -154,12 +134,10 @@
       }
     },
     "outstanding_features_cta_button": "Trải nghiệm ngay",
-
     "our_mascots_title": "nhân vật đại diện",
     "our_mascots_description": "Từ sẻ chia đến thấu hiểu",
     "our_mascots_hubers": "Mình là <highlight>Huber</highlight>, <highlight>người gom nhặt</highlight> những <highlight>lát cắt của cuộc sống</highlight> và kể lại <highlight>câu chuyện</highlight> ấy bằng <highlight>sự chân thành</highlight> cho <highlight>Liber</highlight>.<br></br><br></br> <i>Mỗi câu chuyện được sẻ chia không chỉ để truyền cảm hứng, mà còn để gieo lại chút <highlight>ấm áp</highlight>, chút <highlight>đồng cảm</highlight> như <highlight>ánh sáng</highlight> khẽ len qua những ngày chênh vênh.</i>",
     "our_mascots_libers": "Mình là <highlight>Liber</highlight>, người <highlight>lắng nghe, tìm kiếm sự đồng cảm và đồng hành</highlight>.<br></br><br></br> <i>Tại HuLib, mình có thể lựa chọn những <highlight>“cuốn sách sống”</highlight> gần gũi, kết nối với Huber mà mình cảm thấy <highlight>đồng điệu</highlight>, để từ đó <highlight>khám phá</highlight> thêm chính mình.</i>",
-
     "testimonial_title": "cùng gặp gỡ HuLib",
     "testimonial_description": "Các thành viên HuLib đã chia sẻ những gì?",
     "sponsors_title": "nhà tài trợ",
@@ -226,32 +204,32 @@
       "index_1": {
         "location": "Đà Nẵng, Việt Nam",
         "heading": "Sự kiện “Hiểu mình, thương mình”",
-        "content": "\uD83D\uDC99 Recap Sự kiện “Hiểu Mình, Thương Mình”, nơi những cảm xúc được lắng nghe, và bản thân được ôm trọn \uD83D\uDC99\nThứ bảy vừa rồi thật đặc biệt. Một ngày đầy cảm xúc, nơi ai cũng đến với câu chuyện riêng - rồi cùng nhau ngồi lại, lắng nghe và được lắng nghe.\n\uD83E\uDD70Cảm ơn Chị Chi Phan và thầy Minh Quang đã giúp tụi mình nhìn sâu vào bên trong, đã mở ra những khoảng lặng, giúp ta gọi tên cảm xúc và học cách ôm lấy chúng bằng lòng bao dung.\n\uD83E\uDD70Phần đấu giá cảm xúc khiến cả khán phòng như gần nhau hơn - khi ai đó nói ra điều mình giấu kỹ, ai đó khác lại mỉm cười đồng cảm.\n\uD83E\uDD70Và khi vẽ tranh, dường như mỗi nét vẽ là một cái ôm, gửi đến chính mình.\nCảm ơn bạn đã đến, đã chia sẻ, đã để trái tim mở ra thêm một chút \uD83C\uDF38.Hy vọng sau hôm nay, bạn vẫn sẽ tiếp tục hiểu mình hơn, thương mình hơn — nhẹ nhàng thôi, nhưng thật lòng \uD83C\uDF43\nĐừng quên ghé Hulib, nơi những cuộc trò chuyện nhỏ nhưng ấm áp vẫn đang chờ bạn \uD83E\uDD0D\n\uD83D\uDCF8 Xem thêm những khoảnh khắc đáng nhớ tại đây nhé: https://drive.google.com/.../1ASeOumuqQ6...\n\uD83D\uDC99 Kết nối webapp của tụi mình tại đây: https://www.hulib.org"
+        "content": "💙 Recap Sự kiện “Hiểu Mình, Thương Mình”, nơi những cảm xúc được lắng nghe, và bản thân được ôm trọn 💙\nThứ bảy vừa rồi thật đặc biệt. Một ngày đầy cảm xúc, nơi ai cũng đến với câu chuyện riêng - rồi cùng nhau ngồi lại, lắng nghe và được lắng nghe.\n🥰Cảm ơn Chị Chi Phan và thầy Minh Quang đã giúp tụi mình nhìn sâu vào bên trong, đã mở ra những khoảng lặng, giúp ta gọi tên cảm xúc và học cách ôm lấy chúng bằng lòng bao dung.\n🥰Phần đấu giá cảm xúc khiến cả khán phòng như gần nhau hơn - khi ai đó nói ra điều mình giấu kỹ, ai đó khác lại mỉm cười đồng cảm.\n🥰Và khi vẽ tranh, dường như mỗi nét vẽ là một cái ôm, gửi đến chính mình.\nCảm ơn bạn đã đến, đã chia sẻ, đã để trái tim mở ra thêm một chút 🌸.Hy vọng sau hôm nay, bạn vẫn sẽ tiếp tục hiểu mình hơn, thương mình hơn — nhẹ nhàng thôi, nhưng thật lòng 🍃\nĐừng quên ghé Hulib, nơi những cuộc trò chuyện nhỏ nhưng ấm áp vẫn đang chờ bạn 🤍\n📸 Xem thêm những khoảnh khắc đáng nhớ tại đây nhé: https://drive.google.com/.../1ASeOumuqQ6...\n💙 Kết nối webapp của tụi mình tại đây: https://www.hulib.org"
       },
       "index_2": {
         "location": "Sài Gòn, Việt Nam",
         "heading": "Triển lãm VietFuture Awards 2025",
-        "content": "\uD83C\uDF31 HuLib @ VietFuture Awards 2025 – Booth Recap \uD83C\uDF31\n\nVậy là triển lãm VietFuture Awards 2025 đã khép lại với thật nhiều cảm xúc! Trong 2 ngày vừa rồi, tụi mình đã:\n✨ Gặp gỡ hơn 100+ bạn sinh viên quan tâm đến HuLib\n✨ Kết nối với 20+ bạn đăng ký Huber/Liber\n✨ Đạt hơn 3,500 lượt tương tác trên mạng xã hội trong 2 ngày sự kiện\n\nĐây là một dấu mốc quan trọng trên hành trình HuLib lan toả thông điệp về well-being & sức khỏe tinh thần.\n\n\uD83D\uDE4F HuLib xin gửi lời cảm ơn chân thành đến BTC VietFuture Awards, các Huber, Liber tương lai, và tất cả những bạn đã ghé booth, lắng nghe, chia sẻ và đồng hành cùng tụi mình.\n\n\uD83D\uDC99 Hẹn gặp mọi người ở những sự kiện tiếp theo (vào tháng 10 này!!!), nơi HuLib sẽ tiếp tục trở thành “thư viện cảm xúc” để mỗi người tìm thấy sự lắng nghe và thấu hiểu."
+        "content": "🌱 HuLib @ VietFuture Awards 2025 – Booth Recap 🌱\n\nVậy là triển lãm VietFuture Awards 2025 đã khép lại với thật nhiều cảm xúc! Trong 2 ngày vừa rồi, tụi mình đã:\n✨ Gặp gỡ hơn 100+ bạn sinh viên quan tâm đến HuLib\n✨ Kết nối với 20+ bạn đăng ký Huber/Liber\n✨ Đạt hơn 3,500 lượt tương tác trên mạng xã hội trong 2 ngày sự kiện\n\nĐây là một dấu mốc quan trọng trên hành trình HuLib lan toả thông điệp về well-being & sức khỏe tinh thần.\n\n🙏 HuLib xin gửi lời cảm ơn chân thành đến BTC VietFuture Awards, các Huber, Liber tương lai, và tất cả những bạn đã ghé booth, lắng nghe, chia sẻ và đồng hành cùng tụi mình.\n\n💙 Hẹn gặp mọi người ở những sự kiện tiếp theo (vào tháng 10 này!!!), nơi HuLib sẽ tiếp tục trở thành “thư viện cảm xúc” để mỗi người tìm thấy sự lắng nghe và thấu hiểu."
       },
       "index_3": {
         "location": "Trực tuyến",
         "heading": "Workshop “Tôi là ai giữa ngã ba đường”",
-        "content": "[RECAP EVENT] BẠN ĐÃ CÓ SỰ LỰA CHỌN CHO RIÊNG MÌNH CHƯA?\n\n\uD83C\uDF3FChúng mình xin chân thành cảm ơn ban tổ chức chương trình, các nhà tài trợ, diễn giả, và quan trọng nhất, sự hiện diện của các bạn tham gia đã làm cho buổi workshop trở nên thật ấm áp và náo nhiệt!\n\n\uD83C\uDF1FNhững sự chia sẻ và giảng giải nhiệt tình của anh Hiền và chị Ngọc Rinh trong buổi workshop chắc hẳn sẽ một phần giúp ích cho sự lựa chọn của bạn trên con đường sau này!\n\n✨Một vài điểm nổi bật ở buổi workshop “TÔI LÀ AI GIỮA NGÃ BA ĐƯỜNG”\n\nCác bạn có vẻ đã “thư giãn” hơn rất nhiều qua phần Quiz không chỉ vui nhộn mà còn ‘hơi’ căng thẳng nữa đó nha!\n\nChị Ngọc Rinh sẽ trình bày quan điểm và chia sẻ kinh nghiệm, câu chuyện để giúp bạn hiểu hơn về con đường mà bạn chọn.\n\nCác bạn sẽ được khám phá về bản thân mình hơn qua bài test của chúng mình và anh Hiền sẽ trình bày quan điểm để có thể hình dung rõ hơn và sâu sắc hơn.\n\nCuối cùng, các bạn có thể Q&A với speaker về những điều mà các bạn thắc mắc. Đồng thời, chúng mình cũng có một chiếc GA nhỏ xinh để cổ vũ các bạn nè!<br></br>\uD83C\uDF37Qua buổi event lần này, chúng mình mong sẽ đóng góp được dù chỉ là một phần nhỏ để bạn có thể thật quyết đoán, tự tin đi trên con đường của mình.<br></br>\uD83D\uDC9DĐừng quên để lại cho chúng mình những góp ý yêu thương về buổi workshop này nha! Ý kiến của mọi người sẽ góp rất nhiều động lực cho chúng mình cho các buổi event tiếp theo đó!\uD83D\uDC96"
+        "content": "[RECAP EVENT] BẠN ĐÃ CÓ SỰ LỰA CHỌN CHO RIÊNG MÌNH CHƯA?\n\n🌿Chúng mình xin chân thành cảm ơn ban tổ chức chương trình, các nhà tài trợ, diễn giả, và quan trọng nhất, sự hiện diện của các bạn tham gia đã làm cho buổi workshop trở nên thật ấm áp và náo nhiệt!\n\n🌟Những sự chia sẻ và giảng giải nhiệt tình của anh Hiền và chị Ngọc Rinh trong buổi workshop chắc hẳn sẽ một phần giúp ích cho sự lựa chọn của bạn trên con đường sau này!\n\n✨Một vài điểm nổi bật ở buổi workshop “TÔI LÀ AI GIỮA NGÃ BA ĐƯỜNG”\n\nCác bạn có vẻ đã “thư giãn” hơn rất nhiều qua phần Quiz không chỉ vui nhộn mà còn ‘hơi’ căng thẳng nữa đó nha!\n\nChị Ngọc Rinh sẽ trình bày quan điểm và chia sẻ kinh nghiệm, câu chuyện để giúp bạn hiểu hơn về con đường mà bạn chọn.\n\nCác bạn sẽ được khám phá về bản thân mình hơn qua bài test của chúng mình và anh Hiền sẽ trình bày quan điểm để có thể hình dung rõ hơn và sâu sắc hơn.\n\nCuối cùng, các bạn có thể Q&A với speaker về những điều mà các bạn thắc mắc. Đồng thời, chúng mình cũng có một chiếc GA nhỏ xinh để cổ vũ các bạn nè!<br></br>🌷Qua buổi event lần này, chúng mình mong sẽ đóng góp được dù chỉ là một phần nhỏ để bạn có thể thật quyết đoán, tự tin đi trên con đường của mình.<br></br>💝Đừng quên để lại cho chúng mình những góp ý yêu thương về buổi workshop này nha! Ý kiến của mọi người sẽ góp rất nhiều động lực cho chúng mình cho các buổi event tiếp theo đó!💖"
       },
       "index_4": {
         "location": "Trực tuyến",
         "heading": "Cuộc thi “Nhặc lại khoảnh khắc”",
-        "content": "\uD83C\uDF3F NHẶT LẠI KHOẢNH KHẮC – MỘT HÀNH TRÌNH ĐẸP ĐÃ KHÉP LẠI \uD83C\uDF3F\n\uD83D\uDC96Vậy là sau hơn một tháng đồng hành cùng nhau. Đã đến lúc chúng ta cùng nhau khép lại khoảng thời gian thật đặc biệt. Nhặt lại khoảnh khắc không chỉ là một buổi chia sẻ, mà còn là một không gian để mỗi người có dịp nhìn lại, trải lòng và trân trọng những điều đã trải qua. \uD83D\uDC99\n\uD83D\uDC8C Cảm ơn các bạn và tất cả những câu chuyện mà các bạn đã gửi gắm. Mỗi bài viết là một mảnh ghép đầy cảm xúc, giúp chúng ta hiểu và nhận ra rằng, dù ở đâu hay trong hoàn cảnh nào, ai cũng có những khoảnh khắc đáng trân quý. Đó là một khoảnh khắc nhỏ, một niềm vui hay nỗi buồn, tất cả đều đã góp phần tạo nên một hành trình tuyệt vời của chúng ta\n\uD83C\uDF88 Buổi chia sẻ này đã kết thúc và điều đặc biệt nhất chính là những cung bậc cảm xúc mà chúng mình đã cùng nhau trải qua. Hy vọng rằng sau hành trình lần này, các bạn vẫn sẽ tiếp tục yêu thương nhiều hơn, gìn giữ và viết tiếp những câu chuyện tuyệt vời của bản thân nhé!\nMột lần nữa, cảm ơn vì đã đồng hành! Hy vọng ta sẽ tiếp tục gặp lại nhau trong những sự kiện sắp tới của HuLib và Hugo nhé! \uD83D\uDCAB"
+        "content": "🌿 NHẶT LẠI KHOẢNH KHẮC – MỘT HÀNH TRÌNH ĐẸP ĐÃ KHÉP LẠI 🌿\n💖Vậy là sau hơn một tháng đồng hành cùng nhau. Đã đến lúc chúng ta cùng nhau khép lại khoảng thời gian thật đặc biệt. Nhặt lại khoảnh khắc không chỉ là một buổi chia sẻ, mà còn là một không gian để mỗi người có dịp nhìn lại, trải lòng và trân trọng những điều đã trải qua. 💙\n💌 Cảm ơn các bạn và tất cả những câu chuyện mà các bạn đã gửi gắm. Mỗi bài viết là một mảnh ghép đầy cảm xúc, giúp chúng ta hiểu và nhận ra rằng, dù ở đâu hay trong hoàn cảnh nào, ai cũng có những khoảnh khắc đáng trân quý. Đó là một khoảnh khắc nhỏ, một niềm vui hay nỗi buồn, tất cả đều đã góp phần tạo nên một hành trình tuyệt vời của chúng ta\n🎈 Buổi chia sẻ này đã kết thúc và điều đặc biệt nhất chính là những cung bậc cảm xúc mà chúng mình đã cùng nhau trải qua. Hy vọng rằng sau hành trình lần này, các bạn vẫn sẽ tiếp tục yêu thương nhiều hơn, gìn giữ và viết tiếp những câu chuyện tuyệt vời của bản thân nhé!\nMột lần nữa, cảm ơn vì đã đồng hành! Hy vọng ta sẽ tiếp tục gặp lại nhau trong những sự kiện sắp tới của HuLib và Hugo nhé! 💫"
       },
       "index_5": {
         "location": "Trực tuyến",
         "heading": "Sự kiện “Tiếng chuông tỉnh thức”",
-        "content": "[RECAP EVENT] BẠN ĐÃ ĐÁNH THỨC ĐƯỢC CHÍNH MÌNH CHƯA?<br></br>\uD83D\uDC96 HuLib gửi lời cảm ơn sâu sắc đến Ban tổ chức, các diễn giả, các sponsors , Dr Jennifer thuộc nhà tài trợ KIP và tất cả các bạn đã cùng tạo nên một không gian sẻ chia thật ấm áp và ý nghĩa vào ngày 14/12 vừa qua.<br></br>\uD83D\uDCAC Những gì còn đọng lại sau sự kiện không chỉ là câu chuyện chân thành từ chị Ly, chị Trúc, chị Nắng, anh Phước và anh Phúc, mà còn là những bài học gần gũi, có thể áp dụng ngay trong cuộc sống:<br></br>✨ Điều HuLib mong bạn ghi nhớ:\n1\uFE0F⃣ Bắt đầu từ chính mình:\nTrước khi cố gắng kết nối với người khác, hãy dành thời gian hiểu bản thân trước. Khi bạn biết mình cần gì và muốn gì, bạn sẽ dễ dàng xây dựng mối quan hệ phù hợp hơn.\n\n2\uFE0F⃣ Mối quan hệ độc hại không đáng để níu giữ:\nĐôi khi, yêu thương bản thân có nghĩa là dám giảm tương tác hoặc bước đi thật xa để bảo vệ mình, dù đó là người thân, bạn bè hay người yêu.\n\n3\uFE0F⃣ Gia đình không hoàn hảo? Không sao cả. Giảm kỳ vọng, giữ một khoảng cách vừa đủ và luôn cư xử tử tế có thể là chìa khóa để giữ hòa khí.<br></br>\uD83C\uDF31 Và khi bạn thấy mình mệt mỏi, lạc lối trong một mối quan hệ nào đó, hãy tự hỏi:\n\"Mình thực sự trân trọng người này chứ?\"\n\"Điều gì mình đang tìm kiếm từ họ mà chính mình không thể tự làm cho bản thân?\"<br></br>\uD83D\uDC96 Đôi khi, tất cả những gì bạn cần chỉ là dừng lại, yêu thương bản thân nhiều hơn và tự mang đến hạnh phúc cho chính mình trước khi mong chờ điều đó từ người khác.<br></br>\uD83D\uDC8C Hy vọng sau buổi trò chuyện này, tiếng chuông từ các diễn giả đã có thể đánh thức được bạn phần nào đó, và bạn cũng tìm được điều gì đó ý nghĩa và thiết thực cho chính mình. HuLib tin rằng mỗi hành trình đều cần bắt đầu từ sự thấu hiểu và yêu thương bản thân.<br></br>\uD83C\uDF1F Đừng quên để lại góp ý cho HuLib về event đợt này qua form dưới đây nha! Ý kiến của bạn chính là động lực để chúng mình mang đến những sự kiện giá trị hơn nữa.\nHẹn gặp lại bạn ở những buổi trò chuyện tiếp theo!"
+        "content": "[RECAP EVENT] BẠN ĐÃ ĐÁNH THỨC ĐƯỢC CHÍNH MÌNH CHƯA?<br></br>💖 HuLib gửi lời cảm ơn sâu sắc đến Ban tổ chức, các diễn giả, các sponsors , Dr Jennifer thuộc nhà tài trợ KIP và tất cả các bạn đã cùng tạo nên một không gian sẻ chia thật ấm áp và ý nghĩa vào ngày 14/12 vừa qua.<br></br>💬 Những gì còn đọng lại sau sự kiện không chỉ là câu chuyện chân thành từ chị Ly, chị Trúc, chị Nắng, anh Phước và anh Phúc, mà còn là những bài học gần gũi, có thể áp dụng ngay trong cuộc sống:<br></br>✨ Điều HuLib mong bạn ghi nhớ:\n1️⃣ Bắt đầu từ chính mình:\nTrước khi cố gắng kết nối với người khác, hãy dành thời gian hiểu bản thân trước. Khi bạn biết mình cần gì và muốn gì, bạn sẽ dễ dàng xây dựng mối quan hệ phù hợp hơn.\n\n2️⃣ Mối quan hệ độc hại không đáng để níu giữ:\nĐôi khi, yêu thương bản thân có nghĩa là dám giảm tương tác hoặc bước đi thật xa để bảo vệ mình, dù đó là người thân, bạn bè hay người yêu.\n\n3️⃣ Gia đình không hoàn hảo? Không sao cả. Giảm kỳ vọng, giữ một khoảng cách vừa đủ và luôn cư xử tử tế có thể là chìa khóa để giữ hòa khí.<br></br>🌱 Và khi bạn thấy mình mệt mỏi, lạc lối trong một mối quan hệ nào đó, hãy tự hỏi:\n\"Mình thực sự trân trọng người này chứ?\"\n\"Điều gì mình đang tìm kiếm từ họ mà chính mình không thể tự làm cho bản thân?\"<br></br>💖 Đôi khi, tất cả những gì bạn cần chỉ là dừng lại, yêu thương bản thân nhiều hơn và tự mang đến hạnh phúc cho chính mình trước khi mong chờ điều đó từ người khác.<br></br>💌 Hy vọng sau buổi trò chuyện này, tiếng chuông từ các diễn giả đã có thể đánh thức được bạn phần nào đó, và bạn cũng tìm được điều gì đó ý nghĩa và thiết thực cho chính mình. HuLib tin rằng mỗi hành trình đều cần bắt đầu từ sự thấu hiểu và yêu thương bản thân.<br></br>🌟 Đừng quên để lại góp ý cho HuLib về event đợt này qua form dưới đây nha! Ý kiến của bạn chính là động lực để chúng mình mang đến những sự kiện giá trị hơn nữa.\nHẹn gặp lại bạn ở những buổi trò chuyện tiếp theo!"
       },
       "index_6": {
         "location": "Trực tuyến",
         "heading": "Sự kiện “Đi học, đi làm - hướng nào dễ hơn”",
-        "content": "[RECAP EVENT] HULIB MONG BẠN \"THU HOẠCH\" ĐƯỢC GÌ ĐÓ TỪ BUỔI SHARING 28/9.<br></br>\uD83D\uDC96Trước tiên, HuLib xin gửi lời cảm ơn chân thành đến Ban tổ chức, các diễn giả, và đặc biệt là các bạn – những người đã nhiệt tình tham gia và tạo nên không khí tuyệt vời cho sự kiện vừa qua!<br></br>\uD83D\uDCACDù sự kiện đã khép lại, nhưng những bài học quý báu, những chia sẻ chân thành từ chú Hoàng Xuân Vinh, chị Nguyên Phan, anh Phi Trương và anh Phú Cường chắc chắn vẫn còn đọng lại đâu đó trong tâm trí mỗi chúng ta – và cả HuLib nữa.<br></br>✨HuLib hy vọng rằng sau buổi chia sẻ này, bạn đã có thêm những góc nhìn mới mẻ và cụ thể hơn về việc \"từng bước\" học tập, phát triển bản thân và chuẩn bị hành trang cho con đường phía trước sao cho thật phù hợp với hoàn cảnh của chính mình.<br></br>\uD83C\uDF31 Có một điều mà HuLib nhận ra sau buổi hôm qua: Việc đi đúng hướng rất quan trọng, nhưng để chạm đến thành công, sự lạc quan và kiên trì là hai chìa khóa không thể thiếu. Trên hành trình học hỏi, mỗi bước đi đều đòi hỏi sức bền và tinh thần không bao giờ bỏ cuộc.<br></br>\uD83D\uDCA1 Và nếu một ngày bạn không đậu vào ngành học mà mình đã chọn? Đừng vội nản lòng! Hãy dành thời gian ngồi lại, suy ngẫm và tự hỏi bản thân: Mình thực sự đam mê, \"giữ lửa\" được với ngành nào? Khi đã có câu trả lời, hãy tiếp tục cố gắng chinh phục nó!<br></br>\uD83D\uDC8CMột lần nữa, HuLib xin gửi lời cảm ơn sâu sắc đến tất cả các bạn. HuLib mong rằng sẽ sớm có cơ hội gặp lại mọi người trong một ngày gần nhất, để chúng ta lại cùng nhau ngồi lại, lắng nghe, học hỏi và trau dồi thêm nhiều điều mới mẻ từ các \"Human Books\".<br></br>\uD83D\uDCA1Để nâng cao chất lượng các sự kiện trong tương lai, HuLib mong các bạn sẽ dành 2-3 phút điền vào biểu mẫu dưới đây. HuLib rất trân trọng ý kiến của các bạn, vì điều đó sẽ giúp cải thiện chất lượng và nội dung, từ đó mang đến nhiều buổi chia sẻ có giá trị hơn."
+        "content": "[RECAP EVENT] HULIB MONG BẠN \"THU HOẠCH\" ĐƯỢC GÌ ĐÓ TỪ BUỔI SHARING 28/9.<br></br>💖Trước tiên, HuLib xin gửi lời cảm ơn chân thành đến Ban tổ chức, các diễn giả, và đặc biệt là các bạn – những người đã nhiệt tình tham gia và tạo nên không khí tuyệt vời cho sự kiện vừa qua!<br></br>💬Dù sự kiện đã khép lại, nhưng những bài học quý báu, những chia sẻ chân thành từ chú Hoàng Xuân Vinh, chị Nguyên Phan, anh Phi Trương và anh Phú Cường chắc chắn vẫn còn đọng lại đâu đó trong tâm trí mỗi chúng ta – và cả HuLib nữa.<br></br>✨HuLib hy vọng rằng sau buổi chia sẻ này, bạn đã có thêm những góc nhìn mới mẻ và cụ thể hơn về việc \"từng bước\" học tập, phát triển bản thân và chuẩn bị hành trang cho con đường phía trước sao cho thật phù hợp với hoàn cảnh của chính mình.<br></br>🌱 Có một điều mà HuLib nhận ra sau buổi hôm qua: Việc đi đúng hướng rất quan trọng, nhưng để chạm đến thành công, sự lạc quan và kiên trì là hai chìa khóa không thể thiếu. Trên hành trình học hỏi, mỗi bước đi đều đòi hỏi sức bền và tinh thần không bao giờ bỏ cuộc.<br></br>💡 Và nếu một ngày bạn không đậu vào ngành học mà mình đã chọn? Đừng vội nản lòng! Hãy dành thời gian ngồi lại, suy ngẫm và tự hỏi bản thân: Mình thực sự đam mê, \"giữ lửa\" được với ngành nào? Khi đã có câu trả lời, hãy tiếp tục cố gắng chinh phục nó!<br></br>💌Một lần nữa, HuLib xin gửi lời cảm ơn sâu sắc đến tất cả các bạn. HuLib mong rằng sẽ sớm có cơ hội gặp lại mọi người trong một ngày gần nhất, để chúng ta lại cùng nhau ngồi lại, lắng nghe, học hỏi và trau dồi thêm nhiều điều mới mẻ từ các \"Human Books\".<br></br>💡Để nâng cao chất lượng các sự kiện trong tương lai, HuLib mong các bạn sẽ dành 2-3 phút điền vào biểu mẫu dưới đây. HuLib rất trân trọng ý kiến của các bạn, vì điều đó sẽ giúp cải thiện chất lượng và nội dung, từ đó mang đến nhiều buổi chia sẻ có giá trị hơn."
       }
     },
     "newsletter_title": "tham gia cùng chúng mình",
@@ -333,8 +311,7 @@
       "index_4": "5. người dùng",
       "index_5": "6. quyền sở hữu trí tuệ",
       "index_6": "7. chấm dứt quá trình sử dụng",
-      "index_7": "8. giải quyết tranh chấp",
-      "index_8": "9. miễn trừ trách nhiệm"
+      "index_7": "8. giải quyết tranh chấp"
     },
     "term_of_use_sections": {
       "index_0": {
@@ -522,7 +499,6 @@
     "reported_user": "Người dùng bị báo cáo",
     "back": "Quay lại",
     "hearts": "Trái tim",
-    "approve": "Duyệt",
     "decline": "Từ chối"
   },
   "MiniGame": {
@@ -534,8 +510,6 @@
     "movements": "Biến động"
   },
   "SignIn": {
-    "meta_title": "Đăng nhập",
-    "meta_description": "Đăng nhập vào tài khoản của bạn thông qua quá trình đăng nhập thân thiện với người dùng.",
     "welcome_back": "Chào mừng bạn đến với HuLib!",
     "login_to_hulib": "Đăng nhập vào tài khoản HuLib của bạn nào",
     "email": "Địa chỉ email",
@@ -560,7 +534,6 @@
     "or_social_login": "Hoặc đăng ký bằng",
     "registered": "Đã có tài khoản?",
     "log_in": "Đăng nhập",
-    "with_gg": "với Google",
     "fullname": "Họ và tên",
     "gender": "Giới tính",
     "birthday": "Ngày sinh",
@@ -569,9 +542,6 @@
       "first": "Bằng việc tạo tài khoản, tôi đồng ý với",
       "second": "và"
     },
-    "male": "Nam",
-    "female": "Nữ",
-    "other": "Khác",
     "enter_otp": "Nhập mã xác minh",
     "support_otp": "Hãy nhập mã xác minh 6 chữ số được gửi đến",
     "not_receive_otp": "Chưa nhận được email?",
@@ -580,8 +550,6 @@
     "welcome": "Chào mừng đến với",
     "account_created": "Xin chúc mừng, tài khoản của bạn đã được tạo",
     "get_started": "Bắt đầu",
-    "huber_register": "Đăng ký thờ thành Huber",
-    "all_done": "Hoàn tất",
     "reset_password": "Đặt lại mật khẩu",
     "at_least_8_characters": "Ít nhất 8 ký tự",
     "contains_special_character": "Chứa một ký tự đặc biệt",
@@ -703,11 +671,12 @@
   "MyFavorites": {
     "choose_all": "Chọn tất cả",
     "remove": "Xoá",
-    "delete_confirm": "Bạn có chắc chắn muốn xoá ảnh đại diện của mình không?",
     "cancel": "Hủy",
     "confirm": "Xác nhận",
     "delete_confirm_all": "Bạn có chắc chắn muốn xoá tất cả ảnh đại diện của mình không?",
     "delete_confirm_all_hubers": "Bạn có chắc chắn muốn xoá tất huber yêu thích của mình không?",
+    "no_favorite_title": "Bạn chưa yêu thích câu chuyện nào",
+    "no_favorite_desc": "Xem những câu chuyện dưới đây...",
     "no_favorite_story": "Không có câu chuyện yêu thích nào",
     "no_favorite_huber": "Không có huber yêu thích nào",
     "explore_stories": "Khám phá các câu chuyện",
@@ -719,62 +688,15 @@
     "see_more": "Xem thêm"
   },
   "HumanBookRegister": {
-    "register_as_a_human_book": "Đăng ký làm Người Sách",
-    "register_confirm_message": "Bạn có chắc chắn đăng ký làm Human Book không?",
     "select_topics": "Bạn muốn gắn thẻ Huber như thế nào?",
     "placeholder_topics": "Chọn thể loại...",
     "add_more_topics": "Thêm thể loại...",
-    "no_topics_found": "Không tìm thấy thể loại nào",
-    "creating": "Đang tạo...",
-    "add_new": "Thêm mới",
     "all_topics_selected": "Không tìm thấy kết quả.",
-    "About": "Giới thiệu",
-    "placeholder_about": "Hãy kể về bản thân bạn...",
-    "Session": "Phiên",
-    "placeholder_session": "Tìm kiếm phiên",
-    "Education": "Học vấn",
-    "placeholder_education": "Placeholder",
-    "From": "Từ",
-    "placeholder_from": "2024",
-    "To": "Đến",
-    "placeholder_to": "2024",
-    "footer_description_underline": "Lưu ý:",
-    "footer_description": "Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar tempor dui massa ut.",
-    "Next": "Tiếp theo",
-    "introduction_video": "Video giới thiệu",
-    "Back": "Quay lại",
-    "Register": "Đăng ký",
-    "error_browser_not_support_video": "Trình duyệt của bạn không hỗ trợ thẻ video.",
-    "drag_or_drop_files_here": "Kéo thả file vào đây",
-    "choose_file": "Chọn file",
-    "maxSize": "Tối đa 100MB",
-    "delete_selected_video": "Xoá",
-    "success_submit_form_header": "Gửi thành công",
-    "success_submit_form_description": "Đã gửi thành công! Đơn đăng ký của bạn sẽ được xử lý trong vòng 7-10 ngày làm việc.",
-    "back_to_home": "Trở về Trang chủ",
-    "searchSession": "Nhập từ khóa tìm kiếm",
-    "insert_url": "Thêm đường dẫn",
-    "supporting_text": "Văn bản hỗ trợ",
-    "Submit": "Nộp",
-    "humanBookRegistered": "Bạn đã đăng ký trở thành Human Book. Vui lòng chờ Admin phê duyệt!",
     "Step2": {
-      "title": "Đăng ký huber",
-      "available_slots": "Lịch trống của mình",
-      "available_slots_description": "Dưới đây là khung giờ trống của bạn",
-      "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
-      "success_time_slots": "Tạo khung giờ thành công!",
-      "success_time_slots_description": "Bạn đã tạo khung giờ của mình thành công",
-      "validation": {
-        "error_select_at_least_one_time_slot": "Vui lòng chọn ít nhất một khung giờ"
-      }
+      "title": "Đăng ký huber"
     },
     "validation": {
-      "required": "Bắt buộc",
-      "invalidYear": "Năm không hợp lệ",
       "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại",
-      "bio_required": "Vui lòng nhập tiểu sử của bạn",
-      "terms_required": "Vui lòng chấp thuận các điều khoản và điều kiện",
-      "topics_required": "Vui lòng chọn ít nhất một thể loại",
       "time_slots_required": "Vui lòng chọn ít nhất một khung giờ"
     },
     "bio": {
@@ -790,37 +712,19 @@
     "cancel": "Hủy",
     "back": "Quay lại",
     "next": "Tiếp theo",
-    "step_1_title": "Đăng ký Huber",
-    "general": "General"
+    "step_1_title": "Đăng ký Huber"
   },
   "ExploreStory": {
-    "title": "Khám phá kho truyện",
     "description": "Tìm thấy câu chuyện dành riêng cho bạn\n",
-    "view_more": "Xem thêm",
-    "topics": "Chủ đề",
     "ratings": "Đánh giá",
     "read_story": "Đọc truyện",
-    "productivity": "Năng suất",
-    "all": "Tất cả",
-    "health": "Sức khỏe",
-    "emotional": "Cảm xúc",
-    "motivationAndInspiration": "Động lực & Cảm hứng",
-    "career": "Sự nghiệp",
-    "education": "Giáo dục",
     "similar_stories": "Những câu chuyện tương tự",
-    "see_all": "Xem tất cả",
-    "hide_all": "Ẩn tất cả",
     "story_added_to_favorites": "Thêm vào danh sách yêu thích thành công",
     "story_removed_from_favorites": "Xóa khỏi danh sách yêu thích thành công",
     "huber_removed_from_favorites": "Thành công xoá huber hỏi danh sách yêu thích",
     "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
-    "save_for_late": "Lưu lại để đọc sau",
-    "schedule_meeting": "Đặt lịch hẹn",
-    "saved_for_later_success": "Đã lưu truyện thành công",
-    "remove_from_saved_for_later": "Xoá khỏi danh sách đã lưu",
     "share": "Chia sẻ",
     "share_to": "Chia sẻ đến",
-    "share_copied": "Đã sao chép liên kết!",
     "copy_link_success": "Đã sao chép liên kết câu chuyện",
     "copy_link_error": "Không thể sao chép liên kết câu chuyện",
     "share_story": "Chia sẽ thêm",
@@ -857,19 +761,13 @@
     "comment_error": "Gửi bình luận thất bại",
     "comment_login_prompt": "Đăng nhập/đăng ký để viết cảm nghĩ của bạn về câu chuyện",
     "review_title": "Cảm nghĩ từ người đọc",
-    "no_reviews": "Cuốn sách này chưa có nhận xét",
-    "cancel": "Huỷ"
+    "no_reviews": "Cuốn sách này chưa có nhận xét"
   },
   "Huber": {
     "title": "Xem danh sách Huber",
     "description": "Tìm thấy câu chuyện dành riêng cho bạn",
-    "huber_btn_all": "Xem tất cả",
-    "huber_view_more": "Xem thêm",
-    "explore_all_huber": "Khám phá tất cả Hubers",
     "card": {
-      "introduce": "Tên tôi là {fullName}, tôi là một người yêu sách và thích chia sẻ kiến thức. Tôi đã đọc rất nhiều sách và muốn chia sẻ những gì tôi đã học được với mọi người.",
       "topics": "Chủ đề",
-      "ratings": "Yêu thích",
       "visit_profile": "Xem hồ sơ",
       "added_to_favorites_success": "Đã thêm vào danh sách yêu thích",
       "removed_from_favorites_success": "Đã xóa khỏi danh sách yêu thích",
@@ -937,45 +835,67 @@
     "content_to_avoid": "Nội dung cần tránh"
   },
   "Time_slots": {
-    "title": "Khung giờ",
-    "description": "Chọn khung giờ bạn có sẵn",
-    "time_slots": "Khung giờ",
     "available_time_slots": "Lịch trống của mình",
     "available_time_slots_description": "Dưới đây là khung giờ trống của bạn",
-    "select_time_slots": "Chọn thời gian bạn có sẵn cho Liber!",
     "update_time_slots": "Cập nhật khung giờ",
-    "select_time_slots_description": "Chọn khung giờ bạn có sẵn cho phiên làm việc",
-    "error_time_slots": "Đã xảy ra lỗi. Vui lòng kiểm tra khung giờ của bạn và thử lại.",
     "success_time_slots_description": "Bạn đã tạo khung giờ thành công",
-    "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!"
+    "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
+    "day_short_0": "CN",
+    "day_short_1": "T2",
+    "day_short_2": "T3",
+    "day_short_3": "T4",
+    "day_short_4": "T5",
+    "day_short_5": "T6",
+    "day_short_6": "T7",
+    "day_full_0": "Chủ Nhật",
+    "day_full_1": "Thứ Hai",
+    "day_full_2": "Thứ Ba",
+    "day_full_3": "Thứ Tư",
+    "day_full_4": "Thứ Năm",
+    "day_full_5": "Thứ Sáu",
+    "day_full_6": "Thứ Bảy",
+    "day_prompt_0": "Chủ nhật mà bạn cũng làm việc sao? 😆",
+    "day_prompt_1": "Bạn thực sự bận vào thứ Hai à? 😊",
+    "day_prompt_2": "Dành ra 30 phút khó vậy sao? 😢",
+    "day_prompt_3": "Thôi nào, 30 phút cũng khó à? 😢",
+    "day_prompt_4": "Dành ra 30 phút khó vậy sao? 😢",
+    "day_prompt_5": "Thôi nào, 30 phút cũng khó à? 😢",
+    "day_prompt_6": "Bạn thực sự bận vào thứ Bảy à? 🤔",
+    "slots_message": "Tuyệt vời!!! Bạn có thể gặp {slots} Libers mỗi {day}"
   },
   "Meeting": {
-    "cancel_meeting": "Tôi không muốn gặp nữa",
     "survey_submitted_successfully": "Khảo sát đã được gửi thành công. Chúc bạn có thời gian vui vẻ với Huber",
     "you_have_meeting_now": "Bạn có cuộc họp ngay bây giờ",
     "detail": "Chi tiết"
   },
   "Schedule": {
-    "appointment_schedule": "Lịch trò chuyện tháng",
-    "type_meeting": "Loại cuộc hẹn",
     "waiting": "Đang chờ",
+    "missed": "đã bỏ lỡ",
+    "vibing_with_huber": "Trò chuyện cùng Huber",
+    "session_with_liber": "Buổi họp với Liber",
+    "meeting_not_attended": "Cuộc họp không tham gia",
+    "waiting_for_approving": "Đang chờ phê duyệt",
+    "done": "Hoàn thành",
+    "from": "Từ:",
+    "view_on_schedule": "Xem trong lịch trình",
+    "tbu": "TBU",
+    "cancel": "Hủy",
+    "reject": "Từ chối",
+    "accept": "Chấp nhận",
+    "feedback": "Phản hồi",
+    "reason": "Lý do:",
+    "share_reason_here": "Chia sẻ lý do tại đây",
+    "confirm": "Xác nhận",
+    "status_updated": "Cập nhật trạng thái thành công!",
+    "status_update_failed": "Cập nhật trạng thái thất bại. Vui lòng thử lại.",
     "upcoming": {
-      "upcoming_event": "Sự kiện sắp tới",
-      "meeting_with": "Cuộc hẹn với"
+      "upcoming_event": "Sự kiện sắp tới"
     },
     "tabs_all": "Tất cả",
     "meeting_status": {
       "meetings_today": "Cuộc hẹn hôm nay",
       "next_meetings": "Cuộc hẹn tiếp theo",
       "done_meetings": "Cuộc hẹn đã hoàn thành"
-    },
-    "this_week": "Tuần này",
-    "no_meetings": {
-      "huber_description": "Chưa có cuộc hẹn nào? Bạn có thể bắt đầu bằng cách chia sẻ câu chuyện của mình để người khác tìm thấy và đặt lịch gặp, hoặc khám phá các câu chuyện khác và đặt lịch hẹn.",
-      "user_description": "Bạn chưa tham gia cuộc hẹn nào. Hãy dành thời gian khám phá, đọc một số câu chuyện và kết nối với Huber.",
-      "share_story_btn": "Chia sẻ câu chuyện",
-      "explore_story_btn": "Khám phá câu chuyện",
-      "noMeetingsFound": "Không tìm thấy cuộc họp nào"
     },
     "MainScreen": {
       "title": "Đặt lịch trò chuyện",
@@ -1015,53 +935,48 @@
   },
   "notifications": {
     "title": "Thông báo",
-    "unknownUser": "Người dùng không xác định",
-    "seeDetail": "Xem chi tiết",
-    "seeAll": "Xem tất cả",
-    "newNotification": "Thông báo mới",
     "noNotifications": "Không có thông báo",
     "loadingFailed": "Tải thông báo thất bại",
-    "loading": "Đang tải...",
     "seePreviousNotifications": "Xem thông báo trước đó",
-    "sessionRequest": {
-      "message": "muốn có một cuộc họp với bạn."
-    },
-    "reviewStory": {
-      "message": "cũng đã đánh giá câu chuyện của bạn"
-    },
-    "publishStory": {
-      "user": {
-        "prefix": "Cuốn sách của bạn,",
-        "suffix": ", đã được xuất bản thành công."
-      },
-      "admin": {
-        "message": "đã gửi yêu cầu tạo một Câu chuyện mới"
-      }
-    },
-    "account": {
-      "user": {
-        "prefix": "Đăng ký trở thành Huber của bạn",
-        "suffix": "đã được chấp nhận. Chào mừng bạn!"
-      },
-      "admin": {
-        "message": "đã gửi yêu cầu trở thành Huber."
-      }
-    },
-    "upComming": {
-      "title": "Đã đến giờ cho buổi họp của bạn",
-      "meetingWith": "Cuộc họp với",
-      "startingNow": "đang bắt đầu.",
-      "encouragement": "Nhanh chóng tham gia để tạo nên một buổi họp tuyệt vời.",
-      "callToAction": "Nhấn vào bên dưới để tham gia."
-    },
-    "meeting_request": "Yêu cầu cuộc họp"
-  },
-  "Home": {
-    "explore_stories": {
-      "btn2": "Xem thêm",
-      "btn3": "Khám phá tất cả sách về con người"
-    },
-    "no_data": "Không có dữ liệu"
+    "meeting_request": "Yêu cầu cuộc họp",
+    "registration_accepted": "Đăng ký trở thành Huber của bạn đã được chấp nhận. Chào mừng bạn!",
+    "registration_submitted": "{name} đã gửi yêu cầu trở thành Huber.",
+    "session_request": "{name} muốn có một cuộc họp với bạn.",
+    "story_reviewed": "{name} cũng đã đánh giá câu chuyện {title} của bạn.",
+    "story_published_huber": "Câu chuyện {title} của bạn đã được xuất bản thành công.",
+    "story_published_admin": "{name} đã gửi yêu cầu tạo một Câu chuyện mới {title}.",
+    "story_rejected": "Câu chuyện {title} của bạn chưa được xuất bản. Lý do:",
+    "huber_reported": "Huber \"{name}\" đã bị báo cáo.",
+    "huber_warning": "Tài khoản của bạn đã nhận được cảnh cáo do bị báo cáo. Tài khoản của bạn sẽ bị cấm nếu nhận đủ 3 báo cáo.",
+    "huber_warning_title": "Bạn đã bị cảnh cáo",
+    "huber_rejection": "Rất tiếc, đăng ký trở thành Huber của bạn không thành công. Lý do:",
+    "huber_rejection_title": "Đăng ký Huber không thành công.",
+    "session_rejection": "Rất tiếc, Huber {name} không có lịch trống cho cuộc họp này ({startTime} đến {endTime}, {date}). Lý do:",
+    "session_rejection_title": "Yêu cầu cuộc họp của bạn đã bị từ chối",
+    "session_approval": "Chúng tôi vui mừng thông báo rằng Huber {name} đã chấp nhận yêu cầu cuộc họp của bạn. Đừng quên tham gia cuộc họp đúng giờ.",
+    "session_approval_title": "Yêu cầu cuộc họp của bạn đã được chấp nhận",
+    "session_upcoming": "Cuộc họp với Huber {name} sắp bắt đầu. Nhanh chóng tham gia để tạo nên một buổi họp tuyệt vời. Nhấn vào bên dưới để tham gia.",
+    "session_upcoming_title": "Đã đến giờ cho buổi họp của bạn",
+    "session_completion": "Chúc bạn có khoảng thời gian đáng nhớ. Hãy dành chút thời gian chia sẻ cảm nghĩ của bạn về Huber {name} và buổi họp từ {startTime} đến {endTime}, {date}. Phản hồi của bạn rất quý giá cho Hulib.",
+    "session_completion_title": "Buổi họp đã kết thúc",
+    "session_cancellation": "Chúng tôi muốn thông báo rằng Liber {name} đã hủy cuộc họp ({startTime} đến {endTime}, {date}). Lý do:",
+    "session_cancellation_title": "Cuộc họp đã bị hủy",
+    "session_miss": "Bạn đã không tham gia cuộc họp hôm nay ({startTime} đến {endTime}, {date}). Chúng tôi rất muốn biết chuyện gì đã xảy ra để cải thiện trải nghiệm.",
+    "session_miss_title": "Cuộc họp không được tham gia!",
+    "user_appeal": "Khiếu nại báo cáo người dùng #{id}",
+    "appeal_accepted": "Yêu cầu khiếu nại của bạn đã được chấp nhận, tài khoản của bạn sẽ không bị cảnh cáo. Cảm ơn bạn đã làm rõ sự việc.",
+    "appeal_rejected": "Sau khi xem xét khiếu nại của bạn, chúng tôi quyết định giữ nguyên cảnh cáo. Vui lòng lưu ý rằng tài khoản của bạn sẽ bị cấm nếu nhận đủ 3 báo cáo.",
+    "now": "Ngay bây giờ",
+    "join_now": "Tham gia ngay",
+    "feedback": "Phản hồi",
+    "no_reason": "Không có lý do",
+    "from": "Từ:",
+    "time": "Thời gian:",
+    "huber": "Huber:",
+    "see_rejected_stories": "Xem câu chuyện bị từ chối",
+    "explore_other_stories": "Khám phá câu chuyện khác",
+    "share_reason": "Chia sẻ lý do",
+    "appeal": "Khiếu nại"
   },
   "HuberCTA": {
     "title": "Chia sẻ câu chuyện của bạn",
@@ -1081,22 +996,16 @@
     "followers": "theo dõi"
   },
   "Common": {
-    "no_data": "Không có dữ liệu",
     "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
-    "validation_error": "Dữ liệu không hợp lệ",
     "update_failed": "Cập nhật thất bại",
     "update_successfully": "Cập nhật thành công",
-    "create_first_story": "Tạo câu chuyện đầu tiên",
     "topics": "Chủ đề",
     "title": "Tiêu đề",
     "content": "Nội dung câu chuyện",
     "cover_picture": "Ảnh bìa",
-    "edit_cover": "Tùy chỉnh ảnh bìa",
     "cover_font": "Phông chữ",
-    "cover_font_size": "Cỡ chữ",
     "cover_text_color": "Màu chữ",
     "cover_background_color": "Màu nền",
-    "cover_preview": "Xem trước",
     "increase_font_size": "Tăng cỡ chữ",
     "decrease_font_size": "Giảm cỡ chữ",
     "done": "Xong",
@@ -1205,9 +1114,6 @@
     "update_personal_schedule": " Cập nhật lịch cá nhân",
     "all": "Tất cả",
     "search_by_keyword": "Tìm kiếm theo từ khóa",
-    "about": "Giới thiệu",
-    "my_stories": "Truyện của tôi",
-    "my_favorite": "Yêu thích của tôi",
     "change": "Đổi",
     "password_length": "Mật khẩu phải có ít nhất 8 ký tự.",
     "password_special_char": "Mật khẩu phải chứa ký tự đặc biệt.",
@@ -1216,13 +1122,38 @@
     "password_match": "Mật khẩu nhập lại phải trùng khớp.",
     "search_for_name": "Tìm theo tên",
     "notification_title": "Thông báo",
-    "no_messages": "Bạn chưa có cuộc trò chuyện nào."
+    "no_messages": "Bạn chưa có cuộc trò chuyện nào.",
+    "invalid": "Không hợp lệ",
+    "invalid_otp": "OTP không hợp lệ. Vui lòng thử lại.",
+    "parent_phone_number": "Số điện thoại của phụ huynh",
+    "phone_placeholder": "+84xxxxxxxxxx",
+    "verify": "Xác thực",
+    "verification_code": "Mã xác thực",
+    "verified": "Đã xác thực",
+    "view_reason": "Xem lý do",
+    "cancel_vibing": "Hủy trò chuyện với Liber",
+    "frequency_of_access": "Tần suất truy cập",
+    "completed_meeting": "Cuộc họp đã hoàn thành",
+    "declined_meeting": "Cuộc họp đã từ chối",
+    "missed_meeting": "Cuộc họp đã bỏ lỡ",
+    "activities_title": "Hoạt động của {name}",
+    "error_editing": "Lỗi khi chỉnh sửa {type}",
+    "upload_photo": "Tải ảnh lên",
+    "delete_avatar": "Xóa ảnh đại diện",
+    "delete_cover": "Xóa ảnh bìa",
+    "not_good": "Không tốt",
+    "very_good": "Rất tốt",
+    "rating_alt": "Đánh giá {index}",
+    "you": "Bạn:",
+    "you_sent_sticker": "Bạn đã gửi một nhãn dán",
+    "sent_sticker": "Đã gửi một nhãn dán",
+    "happy_new_year": "Chúc mừng năm mới",
+    "meeting_request": "Yêu cầu cuộc họp",
+    "reason_for_warning": "Lý do cảnh cáo"
   },
   "feedback_form": {
     "session_feedback": "Phản hồi cho buổi học",
     "feedback_for_huber": "Phản hồi cho Huber",
-    "attendees": "{count} Người tham gia",
-    "you": "Bạn",
     "how_do_you_feel": "Bạn cảm thấy thế nào sau khi tham gia buổi học?",
     "not_good": "Không tốt",
     "very_good": "Rất tốt",
@@ -1233,26 +1164,11 @@
     "share_thought": "Chia sẻ suy nghĩ của bạn về câu chuyện",
     "cancel": "Hủy",
     "next": "Tiếp theo",
-    "back": "Quay lại",
     "skip": "Bỏ qua",
     "confirm": "Xác nhận",
     "how_many_love": "Bạn muốn gửi bao nhiêu tình yêu đến Huber",
     "say_something": "Nói gì đó với Huber của bạn",
     "write_something": "Viết gì đó ở đây",
-    "what_tag": "Bạn muốn gắn thẻ Huber như thế nào? (Tùy chọn)",
-    "choose_tag": "Chọn một thẻ",
-    "tags": {
-      "self_taught": "Tự học",
-      "optimistic": "Lạc quan",
-      "energy": "Năng lượng",
-      "select_option": "Chọn tùy chọn"
-    },
-    "thank_you": "Cảm ơn bạn đã phản hồi",
-    "feedback_value": "Phản hồi của bạn rất có giá trị đối với sự hoàn thiện và phát triển của Hulib",
-    "go_to_schedule": "Lịch trò chuyện",
-    "back_to_home": "Về Trang chủ"
-  },
-  "thanks_page": {
     "thank_you": "Cảm ơn bạn đã phản hồi",
     "feedback_value": "Phản hồi của bạn rất có giá trị đối với sự hoàn thiện và phát triển của Hulib",
     "go_to_schedule": "Lịch trò chuyện",
@@ -1264,8 +1180,6 @@
     "no_messages": "Bạn chưa có cuộc trò chuyện nào."
   },
   "ScheduleBasicInfo": {
-    "topics": "Chủ đề",
-    "rating": "Đánh giá",
     "duration": "Thời lượng",
     "duration_time": "30 phút",
     "notice": "Lưu ý",
@@ -1318,11 +1232,9 @@
     },
     "navigation": {
       "bookshelf": "Kệ sách",
-      "pinboard": "Bảng ghim",
       "about_us": "Về Hulib"
     },
     "button": {
-      "read_all": "Đọc hết",
       "sign_in": "Đăng nhập",
       "sign_up": "Đăng ký"
     }
