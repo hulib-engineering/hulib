@@ -1,3 +1,5 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 import type { ToastProps } from 'node_modules/react-toastify/dist/types';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 

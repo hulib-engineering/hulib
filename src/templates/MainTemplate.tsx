@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import Header from '@/app/[locale]/(auth)/_components/Header';
 import MobileBottomNav from '@/app/[locale]/(auth)/_components/MobileBottomNav';
 import FooterWebApp from '@/app/[locale]/(auth)/_components/FooterWebApp';
-import CustomToastifyContainer from '@/components/CustomToastifyContainer';
+import LazyToastContainer from '@/components/LazyToastContainer';
 import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
 import MessengerWidget from '@/layouts/webapp/MultipleChatWidget';
@@ -59,7 +59,7 @@ const MainTemplate = (props: WithChildren) => {
           {!pathname.includes('messages') && <MobileBottomNav />}
           {!pathname.includes('messages') && <MessengerWidget />}
         </div>
-        <CustomToastifyContainer />
+        <LazyToastContainer />
       </div>
     </SessionProvider>
   );
