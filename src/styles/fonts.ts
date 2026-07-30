@@ -6,14 +6,14 @@ import {
 import localFont from 'next/font/local';
 
 export const svnRio = localFont({
-  src: './fonts/SVN-Rio-2016.otf',
+  src: './fonts/SVN-Rio2016.woff2',
   weight: '400',
   style: 'normal',
 });
 
 /** Figma cover preset Opt@2 (red/purple) — title font */
 export const svnApple = localFont({
-  src: './fonts/SVN-Apple.ttf',
+  src: './fonts/SVN-Apple.woff2',
   weight: '400',
   style: 'normal',
 });
@@ -42,62 +42,82 @@ export const bellotaText = bellotaTextGoogle({
 export const poppins = localFont({
   src: [
     {
-      path: './fonts/SVN-Poppins-ExtraLight.otf',
+      path: './fonts/SVN-PoppinsExtraLight.woff2',
       weight: '200',
       style: 'normal',
     },
     {
-      path: './fonts/SVN-Poppins-ExtraLightItalic.otf',
+      path: './fonts/SVN-PoppinsExtraLightItalic.woff2',
       weight: '200',
       style: 'italic',
     },
     {
-      path: './fonts/SVN-Poppins-Light.otf',
+      path: './fonts/SVN-PoppinsLight.woff2',
       weight: '300',
       style: 'normal',
     },
     {
-      path: './fonts/SVN-Poppins-LightItalic.otf',
+      path: './fonts/SVN-PoppinsLightItalic.woff2',
       weight: '300',
       style: 'italic',
     },
     {
-      path: './fonts/SVN-Poppins-Medium.otf',
+      path: './fonts/SVN-PoppinsMedium.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: './fonts/SVN-Poppins-MediumItalic.otf',
+      path: './fonts/SVN-PoppinsMediumItalic.woff2',
       weight: '400',
       style: 'italic',
     },
     {
-      path: './fonts/SVN-Poppins-Bold.otf',
+      path: './fonts/SVN-PoppinsMedium.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: './fonts/SVN-PoppinsMediumItalic.woff2',
+      weight: '500',
+      style: 'italic',
+    },
+    {
+      path: './fonts/SVN-PoppinsBold.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: './fonts/SVN-PoppinsBoldItalic.woff2',
+      weight: '600',
+      style: 'italic',
+    },
+    {
+      path: './fonts/SVN-PoppinsBold.woff2',
       weight: '700',
       style: 'normal',
     },
     {
-      path: './fonts/SVN-Poppins-BoldItalic.otf',
+      path: './fonts/SVN-PoppinsBoldItalic.woff2',
       weight: '700',
       style: 'italic',
     },
     {
-      path: './fonts/SVN-Poppins-ExtraBold.otf',
+      path: './fonts/SVN-PoppinsBold.woff2',
       weight: '800',
       style: 'normal',
     },
     {
-      path: './fonts/SVN-Poppins-ExtraBoldItalic.otf',
+      path: './fonts/SVN-PoppinsBoldItalic.woff2',
       weight: '800',
       style: 'italic',
     },
     {
-      path: './fonts/SVN-Poppins-Black.otf',
+      path: './fonts/SVN-PoppinsBold.woff2',
       weight: '900',
       style: 'normal',
     },
     {
-      path: './fonts/SVN-Poppins-BlackItalic.otf',
+      path: './fonts/SVN-PoppinsBoldItalic.woff2',
       weight: '900',
       style: 'italic',
     },

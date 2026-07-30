@@ -5,16 +5,8 @@ import {
   PRESET_COVER_ASSET_SEGMENT,
   TEXT_COLORS,
 } from '@/features/stories/constants';
-import type { CoverCustomization, CoverFontFamily, CoverPresetStyle } from '@/features/stories/types';
+import type { CoverCustomization, CoverPresetStyle } from '@/features/stories/types';
 import { resolveCoverColorSwatch } from '@/features/stories/utils/coverColorSwatch';
-import {
-  bellotaText,
-  benchNine,
-  caesarDressing,
-  poppins,
-  svnApple,
-  svnRio,
-} from '@/styles/fonts';
 
 export const isValidCoverColor = (color?: string): color is string =>
   Boolean(color && color !== 'transparent' && color !== COVER_COLOR_GRADIENT);
@@ -56,20 +48,6 @@ export const getPresetPlainBackgroundColor = (backgroundSrc: string): string => 
   );
   return match?.[1] ?? '#FAF6EB';
 };
-
-export const DEFAULT_COVER_FONT_FAMILY: CoverFontFamily = 'svn-rio';
-
-const COVER_FONT_CLASS_NAMES: Record<CoverFontFamily, string> = {
-  'svn-rio': svnRio.className,
-  'poppins': poppins.className,
-  'caesar-dressing': caesarDressing.className,
-  'svn-apple': svnApple.className,
-  'benchnine': benchNine.className,
-  'bellota-text': bellotaText.className,
-};
-
-export const getCoverFontClassName = (fontFamily?: CoverFontFamily) =>
-  COVER_FONT_CLASS_NAMES[fontFamily ?? DEFAULT_COVER_FONT_FAMILY];
 
 const DEFAULT_PRESET_STYLE = COVER_PRESET_STYLES.story_background_yellow!;
 

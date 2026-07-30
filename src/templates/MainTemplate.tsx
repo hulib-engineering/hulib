@@ -1,6 +1,5 @@
 'use client';
 
-import localFont from 'next/font/local';
 import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
 
@@ -15,71 +14,7 @@ import { useAppDispatch } from '@/libs/hooks';
 import { usePathname } from '@/libs/i18nNavigation';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import { logout, setAvatarUrl, setUserInfo } from '@/libs/store/authentication';
-
-const poppins = localFont({
-  src: [
-    {
-      path: '../styles/fonts/SVN-Poppins-ExtraLight.otf',
-      weight: '200',
-      style: 'normal',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-ExtraLightItalic.otf',
-      weight: '200',
-      style: 'italic',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-Light.otf',
-      weight: '300',
-      style: 'normal',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-LightItalic.otf',
-      weight: '300',
-      style: 'italic',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-Medium.otf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-MediumItalic.otf',
-      weight: '400',
-      style: 'italic',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-Bold.otf',
-      weight: '700',
-      style: 'normal',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-BoldItalic.otf',
-      weight: '700',
-      style: 'italic',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-ExtraBold.otf',
-      weight: '800',
-      style: 'normal',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-ExtraBoldItalic.otf',
-      weight: '800',
-      style: 'italic',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-Black.otf',
-      weight: '900',
-      style: 'normal',
-    },
-    {
-      path: '../styles/fonts/SVN-Poppins-BlackItalic.otf',
-      weight: '900',
-      style: 'italic',
-    },
-  ],
-});
+import { poppins } from '@/styles/fonts';
 
 const MainTemplate = (props: WithChildren) => {
   const pathname = usePathname();

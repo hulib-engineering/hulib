@@ -5,16 +5,13 @@ import WavesurferPlayer from '@wavesurfer/react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
+import HeroCTAButton from './HeroCTAButton';
 import type { HeroProps } from '.';
-import Button from '@/components/core/button/Button';
 import { HighlightContentBox } from '@/components/HighlightContentBox';
-import { mergeClassnames } from '@/components/core/private/utils';
 import { customMessage } from '@/utils/i18NRichTextUtils';
 
 const HeroMobile = (props: HeroProps) => {
   const {
-    StarIcons,
-    VectorIcons,
     onReady,
     isPlaying,
     onPlayPause,
@@ -38,16 +35,10 @@ const HeroMobile = (props: HeroProps) => {
           {t('hero_description')}
         </p>
         <div className="flex items-center justify-center">
-          <Button
-            as="a"
-            rel="noopener noreferrer"
-            href="/auth/login"
-            size="lg"
-            iconRight={<ArrowRight />}
+          <HeroCTAButton
             className="bg-lp-primary-blue hover:bg-primary-hover"
-          >
-            {t('hero_call_to_action')}
-          </Button>
+            iconRight={<ArrowRight />}
+          />
         </div>
       </div>
       <div className="flex flex-col gap-3">
@@ -73,34 +64,6 @@ const HeroMobile = (props: HeroProps) => {
               height={188}
               className="aspect-[5/4] h-auto w-3/4 object-cover object-center"
             />
-            {StarIcons.map((each, index) => (
-              <Image
-                key={index}
-                width={each.size}
-                height={each.size}
-                alt={`Hero star ${index}`}
-                src={`/assets/icons/stars/star-${index}.svg`}
-                className={mergeClassnames(
-                  'absolute shrink-0',
-                  each.xPosition && each.xPosition,
-                  each.yPosition && each.yPosition,
-                )}
-              />
-            ))}
-            {VectorIcons.map((each, index) => (
-              <Image
-                key={index}
-                width={each.width}
-                height={each.height}
-                alt={`Hero vector ${index}`}
-                src={`/assets/icons/vectors/vector-${index}.svg`}
-                className={mergeClassnames(
-                  'absolute shrink-0',
-                  each.xPosition && each.xPosition,
-                  each.yPosition && each.yPosition,
-                )}
-              />
-            ))}
           </div>
         </div>
         <div className="grid grid-cols-2 gap-x-2 px-4">
@@ -127,7 +90,7 @@ const HeroMobile = (props: HeroProps) => {
                 width={32}
                 height={32}
                 alt="Play icon"
-                src={`/icons/${isPlaying ? 'pause' : 'play'
+                src={`/assets/icons/${isPlaying ? 'pause' : 'play'
                 }-circle.svg`}
                 className="size-8 cursor-pointer object-cover object-center"
               />

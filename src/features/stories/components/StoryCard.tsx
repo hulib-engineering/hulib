@@ -4,6 +4,7 @@ import { BookOpen, BookmarkSimple, Bookmarks, CaretCircleRight, Heart, Trash } f
 import { useTranslations } from 'next-intl';
 import React, { useRef, useState } from 'react';
 
+import dynamic from 'next/dynamic';
 import { DEFAULT_STORY_COVER_ASSET } from '../constants';
 
 import AnimatedCover from './AnimatedCover';
@@ -17,7 +18,6 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import Modal from '@/components/Modal';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import { renderHighlightedText } from '@/features/stories/utils/renderHighlightedText';
-import StoryForm from '@/features/stories/components/StoryForm';
 import { useDeleteStoryMutation } from '@/libs/services/modules/stories';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
@@ -25,6 +25,8 @@ import { useAddStoryToMyFavoritesMutation, useRemoveStoryFromMyFavoritesMutation
 import { useMobile } from '@/libs/hooks';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import IconButton from '@/components/core/iconButton/IconButton';
+
+const StoryForm = dynamic(() => import('@/features/stories/components/StoryForm'), { ssr: false });
 
 type IStoryCardProps = {
   data: TStory;

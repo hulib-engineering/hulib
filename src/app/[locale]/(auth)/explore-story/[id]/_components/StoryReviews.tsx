@@ -160,10 +160,11 @@ export default function StoryReviews() {
     return (
       <div className="flex flex-col items-center gap-4">
         <Image
-          src="/assets/icons/review-card.svg"
+          src="/assets/icons/review-card.png"
           alt="No reviews illustration"
           width={66}
           height={64}
+          className="rounded-[32px]"
         />
         {tExploreStory('no_reviews')}
       </div>

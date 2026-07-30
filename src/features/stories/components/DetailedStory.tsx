@@ -3,11 +3,13 @@
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import type { ReactNode } from 'react';
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
-import HTMLFlipBook from 'react-pageflip';
+import dynamic from 'next/dynamic';
 
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { paginateText } from '@/utils/paginateTextUtil';
+
+const HTMLFlipBook = dynamic(() => import('react-pageflip'), { ssr: false });
 
 type PageProps = {
   page: number;
@@ -113,7 +115,7 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
 
     window.addEventListener('resize', updateDimensions);
 
-    flipSound.current = new Audio('/assets/media/flip.mp3');
+    flipSound.current = new Audio('/assets/media/flip-sound.mp3');
 
     return () => {
       window.removeEventListener('resize', updateDimensions);
@@ -199,7 +201,7 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
 
   return (
     <div className="flex flex-col items-center gap-4 lg:gap-5">
-      <div className="w-full" id="demoBlock">
+      <div className="min-h-[440px] w-full xl:min-h-[600px]" id="demoBlock">
         <div
           className="book-page-padding relative z-50 flex size-full overflow-visible"
           ref={contentRef}

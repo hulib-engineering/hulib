@@ -1,11 +1,13 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
 
 import { mergeClassnames } from '@/components/core/private/utils';
 import { DetailedStory } from '@/features/stories/components/DetailedStory';
-import StoryReviews from '@/app/[locale]/(auth)/explore-story/[id]/_components/StoryReviews';
-import CommentInput from '@/app/[locale]/(auth)/explore-story/[id]/_components/CommentInput';
+
+const StoryReviews = dynamic(() => import('@/app/[locale]/(auth)/explore-story/[id]/_components/StoryReviews'), { ssr: false });
+const CommentInput = dynamic(() => import('@/app/[locale]/(auth)/explore-story/[id]/_components/CommentInput'), { ssr: false });
 
 type StoryContentProps = {
   abstract: string;
