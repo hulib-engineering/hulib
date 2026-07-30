@@ -3,7 +3,7 @@
 import {
   CalendarDot,
 } from '@phosphor-icons/react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import * as React from 'react';
 
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -15,6 +15,7 @@ import { toLocaleDateString } from '@/utils/dateUtils';
 
 const ModerationCard = ({ createdAt, report, manualReason, actionType }: ModerationHistory) => {
   const locale = useLocale();
+  const t = useTranslations('Common');
 
   return (
     <div className={mergeClassnames('relative size-full rounded-2xl bg-neutral-98 px-5 py-4', actionType === 'ban' && 'bg-red-98')}>
@@ -24,7 +25,7 @@ const ModerationCard = ({ createdAt, report, manualReason, actionType }: Moderat
           <span>{toLocaleDateString(new Date(createdAt).toLocaleDateString(), locale)}</span>
         </div>
         <div className="flex flex-col gap-1">
-          <Label className="text-base font-medium">Reason:</Label>
+          <Label className="text-base font-medium">{t('reason_for_warning')}</Label>
           <div
             className="rounded-2xl border border-neutral-90 bg-neutral-98 px-3 py-3.5 text-sm leading-4 text-neutral-40"
           >

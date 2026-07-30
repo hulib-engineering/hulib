@@ -5,6 +5,7 @@ import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
 import * as React from 'react';
 import LazyToastContainer from '@/components/LazyToastContainer';
+import { poppins } from '@/styles/fonts';
 import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
 import Header from '@/layouts/admin/Header';
@@ -12,7 +13,6 @@ import { redirect } from '@/libs/i18nNavigation';
 import { setAvatarUrl, setUserInfo } from '@/libs/store/authentication';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import { useAppDispatch } from '@/libs/hooks';
-import { poppins } from '@/styles/fonts';
 
 const AdminTemplate = (props: WithChildren) => {
   // const pathname = usePathname();

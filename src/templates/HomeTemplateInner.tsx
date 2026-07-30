@@ -4,6 +4,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { type ReactNode, useEffect, useState } from 'react';
 
 import PublicHeader from './PublicHeader';
+import { poppins } from '@/styles/fonts';
 import { usePathname } from '@/libs/i18nNavigation';
 import Header from '@/app/[locale]/(auth)/_components/Header';
 import MobileBottomNav from '@/app/[locale]/(auth)/_components/MobileBottomNav';
@@ -19,13 +20,8 @@ import {
 } from '@/libs/services/modules/auth';
 import { setAvatarUrl, setUserInfo } from '@/libs/store/authentication';
 import Modal from '@/components/Modal';
-import { poppins } from '@/styles/fonts';
 
-export default function HomeTemplateInner({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function HomeTemplateInner({ children }: { children: ReactNode }) {
   const { data: session } = useSession();
   const pathname = usePathname();
   const dispatch = useAppDispatch();

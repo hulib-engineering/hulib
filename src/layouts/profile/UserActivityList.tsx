@@ -14,7 +14,7 @@ import {
 import * as React from 'react';
 import { useRef, useState } from 'react';
 
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Accordion from '@/components/core/accordion/Accordion';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -36,6 +36,7 @@ const SessionOverviewForAdminCard = ({
   isMissed = false,
 }: { session: ReadingSession; isLiber?: boolean; isRejected?: boolean; isMissed?: boolean }) => {
   const locale = useLocale();
+  const t = useTranslations('Common');
 
   const dummyRef = useRef<HTMLDivElement>(null);
 
@@ -71,7 +72,7 @@ const SessionOverviewForAdminCard = ({
           >
             <div className="flex items-center gap-1.5">
               <CaretCircleRight className="text-xl" />
-              <span>View reason</span>
+              <span>{t('view_reason')}</span>
             </div>
           </Button>
         )}
@@ -88,7 +89,7 @@ const SessionOverviewForAdminCard = ({
           <div className="flex flex-col items-center justify-center gap-4">
             {/* Title */}
             <h5 className="text-center text-2xl font-medium leading-8 text-neutral-10">
-              ⚠️ Cancel vibing with Liber
+              {t('cancel_vibing')}
             </h5>
 
             <ScheduleInfoItemLayout
@@ -107,7 +108,10 @@ const SessionOverviewForAdminCard = ({
             />
 
             <div className="flex w-full flex-col gap-1">
-              <p className="font-medium text-neutral-10">Reason:</p>
+              <p className="font-medium text-neutral-10">
+                {t('rejection_reason')}
+                :
+              </p>
               <div className="flex h-14 rounded-lg border border-primary-60 bg-white px-3 py-2 text-sm font-medium leading-4 text-neutral-10">
                 {session.rejectReason}
               </div>
@@ -135,37 +139,25 @@ type ActivityType = StatusEnum.Finished | StatusEnum.Rejected | StatusEnum.Misse
 
 const ActivityTypes = [
   {
-    type: 'frequency',
-    label: 'Frequency of access',
-    icon: (
-      <ChartLine />
-    ),
+    type: 'frequency' as const,
+    icon: <ChartLine />,
   },
   {
-    type: StatusEnum.Finished,
-    label: 'Completed meeting',
-    icon: (
-      <VideoConference />
-    ),
+    type: StatusEnum.Finished as const,
+    icon: <VideoConference />,
   },
   {
-    type: StatusEnum.Rejected,
-    label: 'Declined meeting',
-    icon: (
-      <XSquare />
-    ),
+    type: StatusEnum.Rejected as const,
+    icon: <XSquare />,
   },
   {
-    type: StatusEnum.Missed,
-    label: 'Missed meeting',
-    icon: (
-      <Warning />
-    ),
+    type: StatusEnum.Missed as const,
+    icon: <Warning />,
   },
 ] as const;
 
 const UserActivityList = ({ userInfo }: { userInfo: Huber }) => {
-  // const t = useTranslations('MyProfile.about_panel');
+  const t = useTranslations('Common');
 
   const [type, setType] = useState<ActivityType>('frequency');
 
@@ -175,16 +167,16 @@ const UserActivityList = ({ userInfo }: { userInfo: Huber }) => {
     limit: 100,
   }, { skip: type === 'frequency' });
 
-  const renderActivityListTitle = () => {
-    switch (type) {
+  const getActivityLabel = (activityType: ActivityType) => {
+    switch (activityType) {
       case StatusEnum.Finished:
-        return 'Completed meeting';
+        return t('completed_meeting');
       case StatusEnum.Rejected:
-        return 'Declined meeting';
+        return t('declined_meeting');
       case StatusEnum.Missed:
-        return 'Missed meeting';
+        return t('missed_meeting');
       default:
-        return 'Frequency of access';
+        return t('frequency_of_access');
     }
   };
 
@@ -197,7 +189,7 @@ const UserActivityList = ({ userInfo }: { userInfo: Huber }) => {
       {/* Mobile View - Accordion Style */}
       <div className="flex w-full flex-col rounded-xl border-neutral-90 px-5 py-4 lg:hidden">
         <div className="px-3 py-1 font-medium leading-5 text-neutral-10">
-          {`${userInfo?.fullName}'s Activities`}
+          {t('activities_title', { name: userInfo?.fullName })}
         </div>
         <Accordion defaultValue="about-section-overview" singleOpen>
           {ActivityTypes.map(section => (
@@ -206,14 +198,14 @@ const UserActivityList = ({ userInfo }: { userInfo: Huber }) => {
                 <Accordion.Button className="ps-2">
                   <div className="flex items-center gap-2">
                     {section.icon}
-                    <span className="text-sm leading-4">{section.label}</span>
+                    <span className="text-sm leading-4">{getActivityLabel(section.type)}</span>
                   </div>
                   <CaretDown className="text-2xl hulib-open:text-primary-20 hulib-open:rotate-180" />
                 </Accordion.Button>
               </Accordion.Header>
               <Accordion.Content className="mt-1 rounded-none border-t-0 p-0">
                 <div className="flex flex-1 flex-col gap-6 border-r bg-white px-8 py-5 shadow-sm">
-                  <p className="font-medium leading-loose">{renderActivityListTitle()}</p>
+                  <p className="font-medium leading-loose">{getActivityLabel(type)}</p>
                   <div className="grid grid-cols-1 gap-4">
                     {data?.data.map((item: ReadingSession) => (
                       <SessionOverviewForAdminCard
@@ -236,7 +228,7 @@ const UserActivityList = ({ userInfo }: { userInfo: Huber }) => {
       <div className="hidden h-full overflow-hidden rounded-xl border-neutral-90 bg-white lg:flex">
         <div className="flex w-1/4 flex-col gap-1 border-r border-neutral-80 bg-white px-4 py-5">
           <div className="rounded-lg bg-white px-3 py-1 font-medium text-neutral-10">
-            {`${userInfo?.fullName}'s Activities`}
+            {t('activities_title', { name: userInfo?.fullName })}
           </div>
           {ActivityTypes.map((section, index) => (
             <MenuItem
@@ -252,13 +244,13 @@ const UserActivityList = ({ userInfo }: { userInfo: Huber }) => {
                   type === section.type && 'text-primary-60',
                 )}
               >
-                {section.label}
+                {getActivityLabel(section.type)}
               </MenuItem.Title>
             </MenuItem>
           ))}
         </div>
         <div className="flex flex-1 flex-col gap-6 border-r bg-white px-8 py-5 shadow-sm">
-          <p className="font-medium leading-loose">{renderActivityListTitle()}</p>
+          <p className="font-medium leading-loose">{getActivityLabel(type)}</p>
           <div className="grid grid-cols-2 gap-4">
             {data?.data.map((item: ReadingSession) => (
               <SessionOverviewForAdminCard

@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import StoryPageClient from './StoryPageClient';
 import { fetchStoryDetail } from '@/libs/services/server/stories';
@@ -16,9 +16,9 @@ export default async function Index({ params }: { params: { id: string; locale: 
     return notFound();
   }
 
-  // if (data.publishStatus !== StoryPublishStatus.PUBLISHED) {
-  //   return redirect(`/explore-story/${data.id}/preview`);
-  // }
+  if (data.publishStatus !== StoryPublishStatus.PUBLISHED) {
+    return redirect(`/explore-story/${data.id}/preview`);
+  }
 
   return <StoryPageClient initialData={data} storyId={storyId} />;
 }

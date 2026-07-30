@@ -2,6 +2,7 @@
 
 import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
+import { poppins } from '@/styles/fonts';
 
 import Header from '@/app/[locale]/(auth)/_components/Header';
 import MobileBottomNav from '@/app/[locale]/(auth)/_components/MobileBottomNav';
@@ -14,7 +15,6 @@ import { useAppDispatch } from '@/libs/hooks';
 import { usePathname } from '@/libs/i18nNavigation';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import { logout, setAvatarUrl, setUserInfo } from '@/libs/store/authentication';
-import { poppins } from '@/styles/fonts';
 
 const MainTemplate = (props: WithChildren) => {
   const pathname = usePathname();

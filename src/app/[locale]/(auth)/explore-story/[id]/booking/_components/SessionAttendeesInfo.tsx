@@ -25,7 +25,7 @@ const ScheduleBasicInfo = ({ huber, onOpenHuberConv }: { huber: z.infer<typeof P
         variant="ghost"
         iconLeft={<ArrowLeft />}
         className="w-fit text-black"
-        onClick={() => router.push('/')}
+        onClick={() => router.back()}
       >
         {t('back')}
       </Button>
