@@ -4,7 +4,7 @@ import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import {
   addDays,
   differenceInHours,
-  differenceInWeeks,
+  // differenceInWeeks, [C1]
   format,
   isBefore,
   isSameWeek,
@@ -29,12 +29,16 @@ import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
 import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
 import { CURRENT_TZ } from '@/utils/dateUtils';
 
+// CHANGE: Removed the date limit on how you can only choose week in range <= 4 weeks (a month) - as the designer has said there's no cap on that.
+// In case the condition is actually needed, please revert (de-comment) the code lines I have marked with [C1]
+
 type IBookingTimetableProps = {
   tz?: string;
   huberId: number;
   onSelectTime: (date: Date) => void;
   // onOpenHuberConv: () => void;
   MiniCalendarChosenDay?: Date;
+  setMiniCalendarChosenDay?: React.Dispatch<React.SetStateAction<Date>>;
 };
 
 type TimeslotPeriodRowProps = {
@@ -42,12 +46,8 @@ type TimeslotPeriodRowProps = {
   selectedDate: Date;
   selectedTime: string;
   bookedSlots?: string[];
-  onSelectTime: (time: string) => void;
+  setSelectedTime: (time: string) => void;
 };
-
-/* TODO: A lot of logic/variables/states/components could need some optimization?
-   Q: Should a period section (around TimeslotPeriodRow) be hidden if it has no timeslot?
-*/
 
 function TimeslotPeriodRow(props: TimeslotPeriodRowProps) {
   return (
@@ -61,14 +61,14 @@ function TimeslotPeriodRow(props: TimeslotPeriodRowProps) {
         = props.bookedSlots
           && props.bookedSlots.length
           && props.bookedSlots.includes(selectedTimestamp.toISOString());
-          // const isDisabled = differenceInHours(selectedTimestamp, new Date()) < 24;
+        const isDisabled = differenceInHours(selectedTimestamp, new Date()) < 24;
 
         return (
           <Button
             key={item}
             variant={props.selectedTime === item ? 'fill' : 'outline'}
             size="sm"
-            // disabled={isDisabled}
+            disabled={isDisabled}
             className={mergeClassnames(
               'flex-shrink-0 min-w-fit rounded-lg px-3 py-2',
               'text-sm font-normal leading-4',
@@ -76,7 +76,7 @@ function TimeslotPeriodRow(props: TimeslotPeriodRowProps) {
               isBooked && 'invisible',
               props.selectedTime !== item && 'text-primary-50',
             )}
-            onClick={() => props.onSelectTime(item)}
+            onClick={() => props.setSelectedTime(item)}
           >
             {item}
             {' '}
@@ -89,7 +89,7 @@ function TimeslotPeriodRow(props: TimeslotPeriodRowProps) {
   );
 }
 
-export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenHuberConv, */ MiniCalendarChosenDay = new Date() }: IBookingTimetableProps) {
+export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenHuberConv, */ MiniCalendarChosenDay = new Date(), setMiniCalendarChosenDay = () => {} }: IBookingTimetableProps) {
   const today = new Date();
 
   const locale = useLocale();
@@ -113,6 +113,7 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenH
 
   useEffect(() => {
     setCurrentDate(MiniCalendarChosenDay);
+    setSelectedDate(MiniCalendarChosenDay);
   }, [MiniCalendarChosenDay]);
 
   const getWeekDays = () => {
@@ -121,10 +122,11 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenH
   const canGoPrevious = () => {
     return !isSameWeek(displayedWeek, currentWeek, { weekStartsOn: 1 });
   };
-  const canGoNext = () => {
+  /* const canGoNext = () => {
     const weeksFromCurrent = differenceInWeeks(displayedWeek, currentWeek);
     return weeksFromCurrent < 3;
   };
+  [C1] */
 
   const handlePrevWeek = () => {
     if (canGoPrevious()) {
@@ -132,15 +134,16 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenH
     }
   };
   const handleNextWeek = () => {
-    if (canGoNext()) {
-      setCurrentDate(addDays(currentDate, 7));
-    }
+    // if (canGoNext()) { [C1]
+    setCurrentDate(addDays(currentDate, 7));
+    // } [C1]
   };
   const onClickDateItem = (item: Date) => {
     if (isBefore(startOfDay(item), startOfDay(new Date()))) {
       return;
     }
     setSelectedDate(item);
+    setMiniCalendarChosenDay(item);
     if (selectedTime) {
       const [h = 0, m = 0] = selectedTime.split(':').map(v => Number(v || 0));
       const newTimestamp = new Date(item);
@@ -191,9 +194,10 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenH
           <IconButton
             variant="ghost"
             size="sm"
-            className={mergeClassnames(!canGoNext() ? 'text-neutral-70' : 'text-primary-50')}
+            // className={mergeClassnames(!canGoNext() ? 'text-neutral-70' : 'text-primary-50')} [C1]
+            className={mergeClassnames('text-primary-50')}
             onClick={handleNextWeek}
-            disabled={!canGoNext()}
+            // disabled={!canGoNext()} [C1]
           >
             <CaretRight />
           </IconButton>
@@ -242,7 +246,10 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenH
                 return (
                   <div
                     key={each}
-                    className="flex flex-col gap-3 bg-white p-3"
+                    className={
+                      mergeClassnames('flex flex-col gap-3 bg-white p-3', groupingTimeslots[weekday]?.[each]?.length === 0 && 'hidden',
+                      )
+                    }
                   >
                     <p className="text-neutral-40">
                       {t(each)}
@@ -253,7 +260,7 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenH
                         selectedDate={selectedDate}
                         selectedTime={selectedTime}
                         bookedSlots={bookedSlots}
-                        onSelectTime={setSelectedTime}
+                        setSelectedTime={setSelectedTime}
                       />
                     )}
                   </div>

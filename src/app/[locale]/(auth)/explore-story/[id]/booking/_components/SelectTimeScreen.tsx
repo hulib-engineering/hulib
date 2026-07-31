@@ -5,7 +5,6 @@ import {
   FingerprintIcon,
   TimerIcon,
 } from '@phosphor-icons/react';
-import * as HoverCard from '@radix-ui/react-hover-card';
 import TimeslotWarning from './TimeslotWarning';
 import Button from '@/components/core/button/Button';
 
@@ -29,19 +28,9 @@ type SelectTimeProps = {
   setCurrentTz: React.Dispatch<React.SetStateAction<string>>;
 };
 
-/* TODO:
-- Add translations for the texts.
-- Optimize 'AuthorName' and its children.
-- Is it only possible to book a meeting in a month (4 weeks) in advance at best?
-if Yes => make it so the day chosen on the MiniCalendar would be limited like that (like the BookingTimetable) as well
-if No => remove the cap on the BookingTimetable
-- Does clicking on a day on MiniCalendar set the presented day of BookingTimeTable as well?
-if Yes => implement it
-*/
+// TODO: Add translations for the texts.
 
 const MemoizedAuthorQuickView = memo(AuthorQuickView);
-const MemoizedMiniCalendar = memo(MiniCalendar);
-const MemoizedBookingTimetable = memo(BookingTimetable);
 
 function Subtitles() {
   return (
@@ -64,25 +53,18 @@ function Subtitles() {
 }
 
 const AuthorName = React.memo((props: AuthorBasicInfoProps) => {
-  const [open, setOpen] = useState(false);
-
   return (
-    <HoverCard.Root openDelay={0} open={open} onOpenChange={setOpen}>
-      <HoverCard.Trigger>
-        <span className="text-[#0442BF] max-lg:underline">{` ${props.authorFullName}`}</span>
-      </HoverCard.Trigger>
-
-      {open && ( // 'open' is here for better perf
-        <HoverCard.Portal>
-          <HoverCard.Content side="right" sideOffset={8} collisionPadding={{ top: 96 }}>
-            <MemoizedAuthorQuickView
-              avatarImageUrl={props.avatarImageUrl}
-              authorFullName={props.authorFullName}
-            />
-          </HoverCard.Content>
-        </HoverCard.Portal>
-      )}
-    </HoverCard.Root>
+    <>
+      {' '}
+      <div className="group relative inline-block">
+        <span className="text-[#0442BF] max-lg:underline">{props.authorFullName}</span>
+        <MemoizedAuthorQuickView
+          avatarImageUrl={props.avatarImageUrl}
+          authorFullName={props.authorFullName}
+        />
+      </div>
+      {' '}
+    </>
   );
 });
 
@@ -127,7 +109,6 @@ export default function SelectTime(props: SelectTimeProps) {
         <div className="flex flex-col gap-4">
           <h1 className="text-xl font-medium lg:text-3xl">
             Đặt hẹn trò chuyện với tác giả
-            {/* <span className='text-[#0442BF] max-lg:underline'>{' ' + authorName}</span> */}
             <AuthorName authorFullName={authorFullName} avatarImageUrl={avatarImageUrl} />
           </h1>
           <Subtitles />
@@ -143,7 +124,7 @@ export default function SelectTime(props: SelectTimeProps) {
         <div className="flex flex-col gap-4 lg:flex-row">
           <div className="flex w-full shrink-0 flex-col gap-4 lg:w-[344px]">
             <div className="max-lg:px-10">
-              <MemoizedMiniCalendar
+              <MiniCalendar
                 onChange={setChosenDay}
                 chosenDay={chosenDay}
                 huberId={props.story?.humanBookId}
@@ -152,12 +133,13 @@ export default function SelectTime(props: SelectTimeProps) {
             <TimeslotWarning />
           </div>
 
-          <MemoizedBookingTimetable
+          <BookingTimetable
             huberId={props.story?.humanBookId}
             tz={props.currentTz}
             onSelectTime={props.handleSelectTime}
             // onOpenHuberConv={handleOpenHuberChat}
             MiniCalendarChosenDay={chosenDay}
+            setMiniCalendarChosenDay={setChosenDay}
           />
         </div>
       </div>
