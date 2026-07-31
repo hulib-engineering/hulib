@@ -13,7 +13,7 @@ import {
   startOfWeek,
 } from 'date-fns';
 // import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -35,6 +35,9 @@ type MonthCalendarProps = {
 
 export default function MiniCalendar({ onChange, type, huberId, chosenDay }: MonthCalendarProps) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  useEffect(() => {
+    setCurrentMonth(chosenDay);
+  }, [chosenDay]);
 
   const monthStart = startOfMonth(currentMonth);
   const monthStartDate = new Date(monthStart);

@@ -95,9 +95,11 @@ function Stories() {
 
 export default function AuthorQuickView(props: AuthorBasicInfoProps) {
   return (
-    <div className="box-border flex w-[420px] flex-col
-      items-start gap-5 rounded-2xl border-2 border-[#0858FA] bg-white
-      p-5 shadow-[0px_0px_4px_rgba(15,15,16,0.06),0px_4px_5px_rgba(28,30,33,0.1)]"
+    // remove the first line of css <- if somebody decided to make a hover card and wrap it around this component:
+    <div className="absolute left-full z-50 ml-2 box-border flex hidden
+      w-[420px] flex-col items-start gap-5
+      rounded-2xl border-2 border-[#0858FA] bg-white p-5 shadow-[0px_0px_4px_rgba(15,15,16,0.06),0px_4px_5px_rgba(28,30,33,0.1)]
+      -translate-y-8 group-hover:block"
     >
       <AuthorBasicInfo avatarSize="2xl" avatarImageUrl={props.avatarImageUrl} authorFullName={props.authorFullName} />
       <Description />
