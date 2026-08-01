@@ -1,4 +1,4 @@
-import { CaretDown, Globe } from '@phosphor-icons/react';
+import { GlobeIcon } from '@phosphor-icons/react';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 
@@ -26,11 +26,11 @@ export const TimezoneSelect = ({ value, onChange }: ITimezoneSelectProps) => {
         <Button
           variant="ghost"
           size="sm"
-          iconLeft={<Globe weight="bold" />}
-          iconRight={<CaretDown weight="bold" />}
+          iconLeft={<GlobeIcon weight="bold" />}
+          // iconRight={<CaretDown weight="bold" />}
           className="gap-1.5 py-2 text-sm leading-4 text-blue-50"
         >
-          {formatTimezone(selected)}
+          {formatTimezone(selected, 'noCity')}
         </Button>
       </Dropdown.Trigger>
       <Dropdown.Options className="max-h-44 min-w-0 max-w-xs overflow-y-auto">

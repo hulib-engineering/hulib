@@ -898,10 +898,11 @@
       "done_meetings": "Cuộc hẹn đã hoàn thành"
     },
     "MainScreen": {
-      "title": "Đặt lịch trò chuyện",
-      "subtitle": "Chọn thời gian trò chuyện",
+      "title": "Đặt hẹn trò chuyện với tác giả",
+      "subtitle1": "Các cuộc hẹn có thời gian tối đa 30 phút",
+      "subtitle2": "Cuộc hẹn diễn ra trên website Hulib và chỉ được ghi âm khi có sự đồng ý từ cả hai bên",
       "huber_timezone": "Múi giờ của Huber",
-      "choose_time": "Vui lòng chọn thời gian",
+      "choose_time": "Chọn thời gian cho buổi trò chuyện diễn ra",
       "morning": "Buổi sáng",
       "afternoon": "Buổi chiều",
       "evening": "Buổi tối",
@@ -926,7 +927,9 @@
       "notice": "Lưu ý",
       "notice_text": "Vui lòng đảm bảo bạn chọn đúng khung giờ cho lịch hẹn của mình. Thời gian hiển thị là theo múi giờ địa phương của bạn.",
       "support_text": "Nếu chưa thấy khung giờ phù hợp, cứ thoải mái nhắn cho Huber để trao đổi",
-      "click_here": "tại đây"
+      "click_here": "tại đây",
+      "unavailable": "Ôi, Huber không rảnh hôm nay. Hãy chọn một ngày khác để gặp!",
+      "warning_timeslot": "Để giúp Huber sắp xếp lịch trình, vui lòng chọn khung giờ cho buổi trò chuyện ít nhất 24 giờ sau thời điểm này"
     },
     "meeting_with": "Cuộc hẹn với",
     "meeting_schedule": "Lịch hẹn",
