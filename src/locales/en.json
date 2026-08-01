@@ -898,11 +898,11 @@
       "done_meetings": "Done meetings"
     },
     "MainScreen": {
-      "title": "[bổ sung khi có bản dịch tiếng Anh]",
+      "title": " ",
       "subtitle1": "Each conversation session lasts up to 30 minutes.",
       "subtitle2": "Conversations on HuLib may only be recorded with the explicit consent of both participants.",
       "huber_timezone": "Huber's time zone",
-      "choose_time": "[bổ sung khi có bản dịch tiếng Anh]",
+      "choose_time": " ",
       "morning": "Morning",
       "afternoon": "Afternoon",
       "evening": "Night",
@@ -928,7 +928,7 @@
       "notice_text": "Please make sure you select the correct time slot for your schedule. The time shown is in your local timezone.",
       "support_text": "In case you do not find an open time slot. Feel free to check with the Huber over chat",
       "click_here": "click here",
-      "unavailable": "[bổ sung khi có bản dịch tiếng Anh]",
+      "unavailable": " ",
       "warning_timeslot": "Please choose a time slot at least 24 hours from now to give Huber time to prepare"
     },
     "meeting_with": "Meeting with",
