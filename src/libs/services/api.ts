@@ -4,13 +4,13 @@ import { Mutex } from 'async-mutex';
 import { getSession } from 'next-auth/react';
 
 import { logout, refreshAccessToken } from '../store/authentication';
+import { Env } from '@/libs/Env.mjs';
 import { AppConfig } from '@/utils/AppConfig';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${AppConfig.api.endpoint}/${AppConfig.api.version}/`,
   prepareHeaders: async (headers) => {
-    // By default, if we have a token in the resto, let's use that for authenticated requests
-    headers.set('hulib-service-key', 'hlb-93td6qrktpz6xrm4jj6dejgmffm4ya_pk');
+    headers.set('hulib-service-key', Env.NEXT_PUBLIC_HULIB_SERVICE_KEY);
 
     const session: any = await getSession();
 
