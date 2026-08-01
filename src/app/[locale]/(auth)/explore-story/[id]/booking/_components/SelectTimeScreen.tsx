@@ -5,13 +5,13 @@ import {
   FingerprintIcon,
   TimerIcon,
 } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 import TimeslotWarning from './TimeslotWarning';
 import Button from '@/components/core/button/Button';
 
 import { useRouter } from '@/libs/i18nNavigation';
 import { TimezoneSelect } from '@/components/TimezoneSelect';
 import BookingTimetable from '@/layouts/booking/BookingTimetable';
-// import { useTranslations } from 'next-intl';
 // import { useAppDispatch } from '@/libs/hooks';
 // import { openChat } from '@/libs/store/messenger';
 import type { AuthorBasicInfoProps } from '@/components/author/private/types';
@@ -33,26 +33,28 @@ type SelectTimeProps = {
 const MemoizedAuthorQuickView = memo(AuthorQuickView);
 
 function Subtitles() {
+  const t = useTranslations('Schedule.MainScreen');
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex gap-2">
         <TimerIcon color="#0858FA" className="size-4 shrink-0 lg:size-5" />
         <h2 className="text-sm font-normal">
-          Các cuộc hẹn có thời gian tối đa 30 phút
+          {t('subtitle1')}
         </h2>
       </div>
 
       <div className="flex gap-2">
         <FingerprintIcon color="#0858FA" className="size-4 shrink-0 lg:size-5" />
         <h2 className="text-sm font-normal">
-          Cuộc hẹn diễn ra trên website Hulib và chỉ được ghi âm khi có sự đồng ý từ cả hai bên
+          {t('subtitle2')}
         </h2>
       </div>
     </div>
   );
 }
 
-const AuthorName = React.memo((props: AuthorBasicInfoProps) => {
+const AuthorName = (props: AuthorBasicInfoProps) => {
   return (
     <>
       {' '}
@@ -66,11 +68,11 @@ const AuthorName = React.memo((props: AuthorBasicInfoProps) => {
       {' '}
     </>
   );
-});
+};
 
 export default function SelectTime(props: SelectTimeProps) {
   const router = useRouter();
-  // const t = useTranslations('Schedule.MainScreen');
+  const t = useTranslations('Schedule.MainScreen');
   // const dispatch = useAppDispatch();
 
   const [chosenDay, setChosenDay] = useState<Date>(new Date()); // store day clicked on calendar
@@ -108,7 +110,7 @@ export default function SelectTime(props: SelectTimeProps) {
         {/* | Texts section */}
         <div className="flex flex-col gap-4">
           <h1 className="text-xl font-medium lg:text-3xl">
-            Đặt hẹn trò chuyện với tác giả
+            {t('title')}
             <AuthorName authorFullName={authorFullName} avatarImageUrl={avatarImageUrl} />
           </h1>
           <Subtitles />
@@ -116,7 +118,7 @@ export default function SelectTime(props: SelectTimeProps) {
 
         {/* | Features' UIs section */}
         <div className="flex w-full flex-col lg:flex-row lg:justify-between">
-          <h1 className="text-[18px] font-medium lg:text-xl">Chọn thời gian cho buổi trò chuyện diễn ra</h1>
+          <h1 className="text-[18px] font-medium lg:text-xl">{t('choose_time')}</h1>
           <TimezoneSelect value={props.currentTz} onChange={props.setCurrentTz} />
         </div>
 

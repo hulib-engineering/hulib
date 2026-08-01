@@ -28,6 +28,7 @@ import { useTimeslotGrouping } from '@/libs/hooks/useTimeslotGrouping';
 import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
 import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
 import { CURRENT_TZ } from '@/utils/dateUtils';
+import { DAY_KEYS } from '@/libs/constants/date';
 
 // CHANGE: Removed the date limit on how you can only choose week in range <= 4 weeks (a month) - as the designer has said there's no cap on that.
 // In case the condition is actually needed, please revert (de-comment) the code lines I have marked with [C1]
@@ -94,6 +95,7 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenH
 
   const locale = useLocale();
   const t = useTranslations('Schedule.MainScreen');
+  const tTimeslot = useTranslations('Time_slots');
 
   const { data: timeSlots } = useGetTimeslotsByHuberQuery({
     id: huberId,
@@ -204,8 +206,8 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenH
         </div>
 
         <div className="grid grid-cols-7 gap-2 text-center">
-          {getWeekDays().map(day =>
-            <span key={day.getTime()} className="text-sm leading-4  text-neutral-40">{format(day, 'EEEEEE')}</span>,
+          {DAY_KEYS.map(day =>
+            <span key={day.short} className="text-sm leading-4 text-neutral-40">{tTimeslot(day.short)}</span>,
           )}
         </div>
 
@@ -267,9 +269,7 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenH
                 );
               })
             : (
-                <p className="text-[#FF2C94]">
-                  Ôi, Huber không rảnh hôm nay. Hãy chọn một ngày khác để gặp!
-                </p>
+                <p className="text-[#FF2C94]">{t('unavailable')}</p>
               )}
         </div>
       </div>
