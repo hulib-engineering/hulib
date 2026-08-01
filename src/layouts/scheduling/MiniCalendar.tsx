@@ -12,7 +12,7 @@ import {
   startOfMonth,
   startOfWeek,
 } from 'date-fns';
-// import { useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 
 import Button from '@/components/core/button/Button';
@@ -21,8 +21,7 @@ import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-sess
 import type { ReadingSession } from '@/libs/services/modules/reading-session/createNewReadingSession';
 import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
 import { useTimeslotGrouping } from '@/libs/hooks/useTimeslotGrouping';
-
-const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+import { DAY_KEYS } from '@/libs/constants/date';
 
 type GroupedReadingSessions = Record<string, ReadingSession[]>;
 type MonthCalendarProps = {
@@ -34,6 +33,8 @@ type MonthCalendarProps = {
 };
 
 export default function MiniCalendar({ onChange, type, huberId, chosenDay }: MonthCalendarProps) {
+  const t = useTranslations('Time_slots');
+
   const [currentMonth, setCurrentMonth] = useState(new Date());
   useEffect(() => {
     setCurrentMonth(chosenDay);
@@ -103,8 +104,13 @@ export default function MiniCalendar({ onChange, type, huberId, chosenDay }: Mon
 
       {/* Weekday header */}
       <div className="grid grid-cols-7">
-        {weekdays.map(day => (
-          <div key={day} className="py-2 text-center text-sm leading-4 text-neutral-40">{day}</div>
+        {DAY_KEYS.map(day => (
+          <div
+            key={day.short}
+            className="py-2 text-center text-sm leading-4 text-neutral-40"
+          >
+            {t(day.short).slice(0, 2)}
+          </div>
         ))}
       </div>
       {/* Day grid */}
