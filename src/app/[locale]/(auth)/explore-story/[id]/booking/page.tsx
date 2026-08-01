@@ -5,32 +5,25 @@ import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 import { format } from 'date-fns';
 import { isEmpty } from 'lodash';
 import { useLocale, useTranslations } from 'next-intl';
-import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
-import * as React from 'react';
 
-import ScheduleBasicInfo from './_components/SessionAttendeesInfo';
+import Success from './_components/SuccessScreen';
+import SelectTime from './_components/SelectTimeScreen';
 
 import Button from '@/components/core/button/Button';
-import { useRouter } from '@/libs/i18nNavigation';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import TextArea from '@/components/core/textArea/TextArea';
-import { TimezoneSelect } from '@/components/TimezoneSelect';
 import Loading from '@/app/[locale]/loading';
-import BookingTimetable from '@/layouts/booking/BookingTimetable';
 import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
-import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import { useAppSelector } from '@/libs/hooks';
 import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
 import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
-import { openChat } from '@/libs/store/messenger';
 import { CURRENT_TZ, formatTimezone } from '@/utils/dateUtils';
 
 export default function Index() {
-  const router = useRouter();
-
   const { id: storyId } = useParams();
 
   const locale = useLocale();
@@ -41,11 +34,10 @@ export default function Index() {
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
-  const dispatch = useAppDispatch();
-
   const [currentStep, setCurrentStep] = useState<
     'select-time' | 'confirm' | 'success'
   >('select-time');
+
   const [selectedTime, setSelectedTime] = useState(fromZonedTime(new Date(), CURRENT_TZ));
   const [displayedTime, setDisplayedTime] = useState(new Date());
   const [note, setNote] = useState('');
@@ -56,6 +48,7 @@ export default function Index() {
     setDisplayedTime(toZonedTime(date, CURRENT_TZ));
     setCurrentStep('confirm');
   };
+
   const handlePlaceRequest = async () => {
     try {
       const endedAt = fromZonedTime(new Date(selectedTime.getTime() + 30 * 60 * 1000), CURRENT_TZ);
@@ -77,19 +70,6 @@ export default function Index() {
     }
   };
 
-  const handleOpenHuberChat = () => {
-    dispatch(
-      openChat({
-        id: story?.humanBookId,
-        name: story?.humanBook.fullName,
-        avatarUrl: story?.humanBook.photo?.path,
-        isOpen: true,
-        isMinimized: false,
-        unread: 0,
-      }),
-    );
-  };
-
   if (!story) {
     return (
       <div className="flex h-screen w-full flex-1 items-center justify-center">
@@ -99,41 +79,14 @@ export default function Index() {
   }
 
   return (
-    <div className="py-8 sm:px-28">
+    <div className="px-4 py-8 lg:px-28">
       {currentStep === 'select-time' && (
-        <div className="flex size-full gap-6">
-          <ScheduleBasicInfo huber={story?.humanBook} onOpenHuberConv={handleOpenHuberChat} />
-          <div className="flex w-full flex-col gap-4 rounded-[20px] bg-white p-4 xl:w-2/3 xl:p-8">
-            <Button
-              variant="ghost"
-              size="sm"
-              iconLeft={<ArrowLeft size={20} weight="bold" />}
-              className="w-fit text-black xl:hidden"
-              onClick={() => router.back()}
-            >
-              {t('back')}
-            </Button>
-            <div>
-              <h4 className="text-[28px] font-medium">{t('title')}</h4>
-              <p className="text-[18px] font-normal text-neutral-20">
-                {t('subtitle')}
-              </p>
-            </div>
-            <div className="flex w-full flex-col">
-              <p className="text-base font-normal text-neutral-40">
-                {t('huber_timezone')}
-              </p>
-              <TimezoneSelect value={currentTz} onChange={setCurrentTz} />
-            </div>
-            <h5 className="text-2xl font-medium text-neutral-10">{format(new Date(), 'MMMM - yyyy')}</h5>
-            <BookingTimetable
-              huberId={story?.humanBookId}
-              tz={currentTz}
-              onSelectTime={handleSelectTime}
-              onOpenHuberConv={handleOpenHuberChat}
-            />
-          </div>
-        </div>
+        <SelectTime
+          story={story}
+          handleSelectTime={handleSelectTime}
+          currentTz={currentTz}
+          setCurrentTz={setCurrentTz}
+        />
       )}
       {currentStep !== 'select-time' && (
         <div className="flex w-full items-center justify-center rounded-none bg-white p-4 xl:rounded-3xl xl:p-8">
@@ -227,32 +180,7 @@ export default function Index() {
                   </>
                 )
               : (
-                  <>
-                    <Image
-                      src="/assets/images/misc/schedule-success.svg"
-                      alt="Successful illustration"
-                      width={480}
-                      height={420}
-                      className="w-[398px] object-cover xl:w-[480px]"
-                    />
-                    <h4 className="text-[28px] font-medium">{t('success_title')}</h4>
-                    <p className="text-center text-sm text-neutral-30">{t('success_detail')}</p>
-                    <div className="grid grid-cols-2 items-center justify-center gap-x-2 md:gap-x-4">
-                      <Button
-                        variant="outline"
-                        className="w-full"
-                        onClick={() => router.push('/my-schedule')}
-                      >
-                        {t('back_to_schedule')}
-                      </Button>
-                      <Button
-                        className="w-full"
-                        onClick={() => router.push('/')}
-                      >
-                        {t('back_to_home')}
-                      </Button>
-                    </div>
-                  </>
+                  <Success />
                 )}
           </div>
         </div>

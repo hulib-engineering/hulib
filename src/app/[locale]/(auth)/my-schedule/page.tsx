@@ -49,6 +49,7 @@ const filter = (
 
 export default function Index() {
   const t = useTranslations('Schedule');
+  const tTimeslot = useTranslations('Time_slots');
   const tCommon = useTranslations('Common');
   const locale = useLocale();
 
@@ -160,7 +161,15 @@ export default function Index() {
               </div>
             )}
             <div className="px-4 lg:px-0">
-              <MiniCalendar onChange={setDateInWeekView} onUpdateTimeslots={() => setShowMobileTimeslotRegistration(true)} />
+              <MiniCalendar onChange={setDateInWeekView} chosenDay={dateInWeekView} />
+              <div className="flex flex-col gap-2.5 py-4 lg:hidden">
+                <Button
+                  size="lg"
+                  onClick={() => setShowMobileTimeslotRegistration(true)}
+                >
+                  {tTimeslot('update_time_slots')}
+                </Button>
+              </div>
             </div>
             <div className="hidden lg:block">
               <TimeSlotList />
