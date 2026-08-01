@@ -28,3 +28,13 @@ export const TIME_SLOTS = {
   afternoon: generateSlots(12, 18),
   evening: generateSlots(18, 24),
 };
+
+export const DAY_KEYS = [
+  { short: 'day_short_1', full: 'day_full_1', prompt: 'day_prompt_1' },
+  { short: 'day_short_2', full: 'day_full_2', prompt: 'day_prompt_2' },
+  { short: 'day_short_3', full: 'day_full_3', prompt: 'day_prompt_3' },
+  { short: 'day_short_4', full: 'day_full_4', prompt: 'day_prompt_4' },
+  { short: 'day_short_5', full: 'day_full_5', prompt: 'day_prompt_5' },
+  { short: 'day_short_6', full: 'day_full_6', prompt: 'day_prompt_6' },
+  { short: 'day_short_0', full: 'day_full_0', prompt: 'day_prompt_0' },
+] as const;

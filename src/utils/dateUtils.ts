@@ -65,7 +65,7 @@ const formatOffset = (timeZone: string) => {
   // Clean up: remove "GMT+07:00" → "GMT+7"
   return offsetPart.value.replace(':00', '').replace('0', '');
 };
-export const formatTimezone = (tz: string) => {
+export const formatTimezone = (tz: string, formatName?: string) => {
   const now = new Date();
   const city = tz.split('/').pop()?.replace('_', ' ') ?? tz;
   // Get abbreviation like "ICT"
@@ -82,6 +82,11 @@ export const formatTimezone = (tz: string) => {
   }
   // Get offset like "+07"
   const offset = formatOffset(tz);
+
+  // Check if there's a matching formatName -- return default format (bottom line) otherwise
+  if (formatName === 'noCity') {
+    return `${!abbr.startsWith('GMT') ? `${abbr}` : ''} | ${offset}`;
+  }
 
   return `${city} ${!abbr.startsWith('GMT') ? `(${abbr})` : ''} | ${offset}`;
 };
