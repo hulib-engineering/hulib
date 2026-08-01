@@ -169,6 +169,7 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenH
   };
 
   const weekday = selectedDate.getDay();
+  const daySlots = groupingTimeslots[weekday];
 
   return (
     <div className="flex w-full flex-col gap-5">
@@ -243,28 +244,24 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenH
               day: '2-digit',
             })}
           </p>
-          {groupingTimeslots[weekday]
-            ? (['morning', 'afternoon', 'evening'] as const).map((each) => {
+          {daySlots
+            ? (['morning', 'afternoon', 'evening'] as const).map((period) => {
+                const slots = daySlots[period];
+
+                if (!slots?.length) {
+                  return null;
+                }
+
                 return (
-                  <div
-                    key={each}
-                    className={
-                      mergeClassnames('flex flex-col gap-3 bg-white p-3', groupingTimeslots[weekday]?.[each]?.length === 0 && 'hidden',
-                      )
-                    }
-                  >
-                    <p className="text-neutral-40">
-                      {t(each)}
-                    </p>
-                    {groupingTimeslots[weekday] && groupingTimeslots[weekday][each] && groupingTimeslots[weekday][each]?.length > 0 && (
-                      <TimeslotPeriodRow
-                        slots={groupingTimeslots[weekday][each]}
-                        selectedDate={selectedDate}
-                        selectedTime={selectedTime}
-                        bookedSlots={bookedSlots}
-                        setSelectedTime={setSelectedTime}
-                      />
-                    )}
+                  <div key={period} className="flex flex-col gap-3 bg-white p-3">
+                    <p className="text-neutral-40">{t(period)}</p>
+                    <TimeslotPeriodRow
+                      slots={slots}
+                      selectedDate={selectedDate}
+                      selectedTime={selectedTime}
+                      bookedSlots={bookedSlots}
+                      setSelectedTime={setSelectedTime}
+                    />
                   </div>
                 );
               })
