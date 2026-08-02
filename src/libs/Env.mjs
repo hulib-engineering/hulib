@@ -19,7 +19,7 @@ export const Env = createEnv({
     GG_FONTS_API_KEY: z.string().min(1).optional(),
   },
   client: {
-    NEXT_PUBLIC_HULIB_SERVICE_KEY: z.string().min(1),
+    NEXT_PUBLIC_HULIB_SERVICE_KEY: z.string().trim().min(1),
     NEXT_PUBLIC_REACT_APP_BACKEND_VERSION: z.string().trim().min(1),
     NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT: z.string().trim().min(1),
     NEXT_PUBLIC_REACT_APP_BACKEND_SOCKET_ENDPOINT: z.string().trim().min(1),
