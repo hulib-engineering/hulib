@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import type { z } from 'zod';
 
-import { CustomCoverModal } from './CustomCoverModal';
+import dynamic from 'next/dynamic';
 import { useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
 import Combobox, { getChipColor } from '@/components/core/combobox/Combobox';
@@ -33,7 +33,6 @@ import type { Story } from '@/libs/services/modules/stories/storiesType';
 import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 import { StoriesValidation } from '@/validations/StoriesValidation';
-import { CustomCoverBuilder } from '@/features/stories/components/CustomCoverBuilder';
 import type { CoverCustomization } from '@/features/stories/types';
 import type { CoverPresetAsset } from '@/features/stories/constants';
 import {
@@ -46,6 +45,20 @@ import {
   rasterizeCoverElement,
   uploadCoverBlob,
 } from '@/features/stories/utils';
+
+const CustomCoverModal = dynamic(
+  () => import('./CustomCoverModal').then(m => ({ default: m.CustomCoverModal })),
+  { ssr: false },
+);
+
+const CoverBuilderSkeleton = () => (
+  <div className="animate-pulse rounded-xl bg-neutral-90" style={{ width: 120, height: 180 }} />
+);
+
+const CustomCoverBuilder = dynamic(
+  () => import('@/features/stories/components/CustomCoverBuilder').then(m => ({ default: m.CustomCoverBuilder })),
+  { ssr: false, loading: CoverBuilderSkeleton },
+);
 
 // const filter = (
 //   query: string,

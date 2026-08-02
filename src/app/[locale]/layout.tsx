@@ -1,4 +1,3 @@
-import 'react-toastify/dist/ReactToastify.css';
 import '@/styles/global.css';
 
 import type { Metadata } from 'next';
@@ -11,6 +10,7 @@ import { Suspense } from 'react';
 import StoreProvider from '@/app/StoreProvider';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import { AppConfig } from '@/utils/AppConfig';
+import { poppins } from '@/styles/fonts';
 
 export const metadata: Metadata = {
   icons: [
@@ -57,8 +57,22 @@ export default function RootLayout({
   // Google Analytics 4 Measurement ID
   const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
+  const apiEndpoint = process.env.NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT;
+  let apiOrigin: string | null = null;
+  try {
+    if (apiEndpoint) {
+      apiOrigin = new URL(apiEndpoint).origin;
+    }
+  } catch {
+    // invalid URL — skip preconnect
+  }
+
   return (
-    <html lang={locale}>
+    <html lang={locale} className={poppins.className}>
+      <head>
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        {apiOrigin && <link rel="preconnect" href={apiOrigin} />}
+      </head>
       <body suppressHydrationWarning>
         {gaMeasurementId && (
           <>

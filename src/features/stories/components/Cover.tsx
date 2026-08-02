@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Image from 'next/image';
 import { DEFAULT_STORY_COVER_ASSET } from '../constants';
 import { getPresetPlainBackgroundColor, isPresetCoverAsset } from '../utils/coverPreset';
 
@@ -49,16 +50,21 @@ export function Cover({
       id={id}
       {...interactiveProps}
       className={mergeClassnames(
-        'bg-left-top bg-no-repeat bg-[length:100%_100%]',
+        'relative overflow-hidden',
         fillParent ? 'size-full' : size,
         !active && 'grayscale',
         onClick && 'cursor-pointer',
         className,
       )}
-      style={{
-        backgroundColor: bgColor,
-        backgroundImage: `url(${coverSrc})`,
-      }}
-    />
+      style={{ backgroundColor: bgColor }}
+    >
+      <Image
+        src={coverSrc}
+        alt=""
+        fill
+        className="object-cover object-top"
+        sizes="(max-width: 768px) 100vw, 400px"
+      />
+    </div>
   );
 }

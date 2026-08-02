@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import NiceAvatar, { genConfig } from 'react-nice-avatar';
+import dynamic from 'next/dynamic';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
@@ -11,6 +11,19 @@ import Avatar from '@/components/core/avatar/Avatar';
 import { useAppSelector } from '@/libs/hooks';
 import { useCreateStoryReviewMutation } from '@/libs/services/modules/story-reviews';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+
+const NiceAvatarLazy = dynamic(
+  () => import('react-nice-avatar').then(async (m) => {
+    const { genConfig } = m;
+    const NiceAvatar = m.default;
+    return {
+      default: ({ seed }: { seed: string }) => (
+        <NiceAvatar className="size-10 shrink-0 rounded-full" {...genConfig(seed)} />
+      ),
+    };
+  }),
+  { ssr: false },
+);
 
 type CommentInputProps = {
   storyId: number;
@@ -65,7 +78,7 @@ export default function CommentInput({ storyId }: CommentInputProps) {
 
   if (!session) {
     return (
-      <div className="flex flex-col items-center justify-between gap-y-3 rounded-xl bg-primary-98 p-4 py-6 xxl:flex-row">
+      <div className="flex min-h-80 flex-col items-center justify-between gap-y-3 rounded-xl bg-primary-98 p-4 py-6 xxl:flex-row">
         <span className="text-center">{t('comment_login_prompt')}</span>
 
         <div className="flex items-center gap-2 xxl:gap-3">
@@ -101,10 +114,7 @@ export default function CommentInput({ storyId }: CommentInputProps) {
               <Avatar imageUrl={avatarUrl} className="size-10 shrink-0" />
             )
           : (
-              <NiceAvatar
-                className="size-10 shrink-0 rounded-full"
-                {...genConfig(fullName ?? String(id ?? 'huber'))}
-              />
+              <NiceAvatarLazy seed={fullName ?? String(id ?? 'huber')} />
             )}
         <input
           type="text"

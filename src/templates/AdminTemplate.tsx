@@ -4,8 +4,8 @@ import { SessionProvider } from 'next-auth/react';
 
 import { useEffect } from 'react';
 import * as React from 'react';
+import LazyToastContainer from '@/components/LazyToastContainer';
 import { poppins } from '@/styles/fonts';
-import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
 import Header from '@/layouts/admin/Header';
@@ -46,7 +46,7 @@ const AdminTemplate = (props: WithChildren) => {
             {props.children}
           </main>
         </div>
-        <CustomToastifyContainer />
+        <LazyToastContainer />
       </div>
     </SessionProvider>
   );

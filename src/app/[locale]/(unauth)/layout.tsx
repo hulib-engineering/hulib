@@ -3,7 +3,7 @@
 import { SessionProvider } from 'next-auth/react';
 import type { ReactNode } from 'react';
 
-import CustomToastifyContainer from '@/components/CustomToastifyContainer';
+import LazyToastContainer from '@/components/LazyToastContainer';
 
 export default function UnauthLayout({
   children,
@@ -13,7 +13,7 @@ export default function UnauthLayout({
   return (
     <SessionProvider>
       {children}
-      <CustomToastifyContainer />
+      <LazyToastContainer />
     </SessionProvider>
   );
 }

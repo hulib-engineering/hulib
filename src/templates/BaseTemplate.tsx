@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import Footer from '@/app/[locale]/(unauth)/(landingpage)/_components/Footer';
 import Header from '@/app/[locale]/(unauth)/(landingpage)/_components/Header';
-import CustomToastifyContainer from '@/components/CustomToastifyContainer';
+import LazyToastContainer from '@/components/LazyToastContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { poppins } from '@/styles/fonts';
 
@@ -24,7 +24,7 @@ const BaseTemplate = (props: IBaseTemplateProps) => (
 
       <Footer />
     </div>
-    <CustomToastifyContainer />
+    <LazyToastContainer />
   </div>
 );
 

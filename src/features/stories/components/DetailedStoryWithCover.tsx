@@ -2,13 +2,15 @@
 
 import Image from 'next/image';
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
-import HTMLFlipBook from 'react-pageflip';
+import dynamic from 'next/dynamic';
 
 import { Page } from './DetailedStory';
 
 import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { paginateText } from '@/utils/paginateTextUtil';
+
+const HTMLFlipBook = dynamic(() => import('react-pageflip'), { ssr: false });
 
 const PageCoverFront = forwardRef<HTMLDivElement, WithChildren<{}>>((props, ref) => {
   return (
@@ -112,7 +114,7 @@ export const DetailedStoryWithCover = ({
 
     window.addEventListener('resize', updateDimensions);
 
-    flipSound.current = new Audio('/assets/media/flip.mp3');
+    flipSound.current = new Audio('/assets/media/flip-sound.mp3');
 
     return () => {
       window.removeEventListener('resize', updateDimensions);

@@ -28,13 +28,15 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
 
   const isAuthenticated = !!session?.accessToken;
 
-  const { data: personalInfo, error: personalInfoError } = useGetPersonalInfoQuery(undefined, {
-    skip: !isAuthenticated,
-  });
+  const { data: personalInfo, error: personalInfoError }
+    = useGetPersonalInfoQuery(undefined, {
+      skip: !isAuthenticated,
+    });
   const [markSeen] = useMarkHuberOnboardingSeenMutation();
 
   const [isFirstBookModalOpen, setIsFirstBookModalOpen] = useState(false);
-  const [isPersonalCalendarModalOpen, setIsPersonalCalendarModalOpen] = useState(false);
+  const [isPersonalCalendarModalOpen, setIsPersonalCalendarModalOpen]
+    = useState(false);
 
   useEffect(() => {
     if (personalInfoError) {
@@ -47,7 +49,10 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
     if (personalInfo) {
       dispatch(setUserInfo(personalInfo));
       dispatch(setAvatarUrl(personalInfo.photo));
-      if (personalInfo?.role?.name === 'Huber' && !personalInfo?.hasSeenHuberOnboarding) {
+      if (
+        personalInfo?.role?.name === 'Huber'
+        && !personalInfo?.hasSeenHuberOnboarding
+      ) {
         setIsFirstBookModalOpen(true);
       }
     }
@@ -64,11 +69,28 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
 
   if (isAuthenticated && !personalInfoError) {
     return (
-      <div className={mergeClassnames(poppins.className, 'relative antialiased h-screen flex flex-col')}>
+      <div
+        className={mergeClassnames(
+          poppins.className,
+          'relative antialiased h-screen flex flex-col',
+        )}
+      >
         <div className="flex size-full flex-col">
           <Header />
-          <main className={mergeClassnames('flex-1 bg-neutral-98', !pathname.includes('messages') && 'overflow-y-auto pb-14 lg:pb-0')}>
-            <div className={mergeClassnames('bg-neutral-98', pathname.includes('messages') ? 'h-full' : 'min-h-[calc(100vh-410px)]')}>
+          <main
+            className={mergeClassnames(
+              'flex-1 bg-neutral-98',
+              !pathname.includes('messages') && 'overflow-y-auto pb-14 lg:pb-0',
+            )}
+          >
+            <div
+              className={mergeClassnames(
+                'bg-neutral-98',
+                pathname.includes('messages')
+                  ? 'h-full'
+                  : 'min-h-[calc(100vh-410px)]',
+              )}
+            >
               {children}
             </div>
             {!pathname.includes('messages') && <FooterWebApp />}
@@ -77,27 +99,17 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
           {!pathname.includes('messages') && <MessengerWidget />}
         </div>
         {/* FirstBookCreatedModal */}
-        <Modal
-          open={isFirstBookModalOpen}
-          onClose={handleCloseModal}
-        >
+        <Modal open={isFirstBookModalOpen} onClose={handleCloseModal}>
           <Modal.Backdrop />
           <Modal.Panel className="w-full shadow-none lg:w-5/6 lg:max-w-6xl">
-            <FirstBookCreatedModal
-              onClose={handleCloseModal}
-            />
+            <FirstBookCreatedModal onClose={handleCloseModal} />
           </Modal.Panel>
         </Modal>
         {/* PersonalCalendarModal */}
-        <Modal
-          open={isPersonalCalendarModalOpen}
-          onClose={handleClosePSModal}
-        >
+        <Modal open={isPersonalCalendarModalOpen} onClose={handleClosePSModal}>
           <Modal.Backdrop />
           <Modal.Panel className="w-full shadow-none lg:w-5/6 lg:max-w-6xl">
-            <PersonalCalendarModal
-              onClose={handleClosePSModal}
-            />
+            <PersonalCalendarModal onClose={handleClosePSModal} />
           </Modal.Panel>
         </Modal>
       </div>
@@ -105,12 +117,15 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
   }
 
   return (
-    <div className={mergeClassnames(poppins.className, 'relative antialiased min-h-screen flex flex-col')}>
+    <div
+      className={mergeClassnames(
+        poppins.className,
+        'relative antialiased min-h-screen flex flex-col',
+      )}
+    >
       <PublicHeader />
       <main className="flex-1 bg-neutral-98 pt-14 lg:pt-16">
-        <div className="min-h-[calc(100vh-410px)]">
-          {children}
-        </div>
+        <div className="min-h-[calc(100vh-410px)]">{children}</div>
         <FooterWebApp />
       </main>
     </div>

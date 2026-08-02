@@ -4,14 +4,8 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import Dropdown from '@/components/core/dropdown/Dropdown';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import type { CoverFontFamily } from '@/features/stories/types';
-import {
-  bellotaText,
-  benchNine,
-  caesarDressing,
-  poppins,
-  svnApple,
-  svnRio,
-} from '@/styles/fonts';
+import { bellotaText, benchNine, caesarDressing } from '@/styles/coverFonts';
+import { poppins, svnApple, svnRio } from '@/styles/fonts';
 
 const COVER_FONT_OPTIONS = [
   { id: 'svn-rio', label: 'SVN-Rio 2016', className: svnRio.className },

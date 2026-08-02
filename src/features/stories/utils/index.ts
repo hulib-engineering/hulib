@@ -1,5 +1,5 @@
+export { getCoverFontClassName } from './coverFontPreset';
 export {
-  getCoverFontClassName,
   getDefaultCustomization,
   getAdminPresetCustomization,
   getPresetPlainBackgroundColor,

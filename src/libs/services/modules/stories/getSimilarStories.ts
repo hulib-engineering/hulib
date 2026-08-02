@@ -34,7 +34,7 @@ const getSimilarStories = (
     },
     serializeQueryArgs: ({ endpointName, queryArgs }) => {
       const { page, limit, humanBookId, topicIds } = queryArgs;
-      return `${endpointName}-${page}-${limit}-${humanBookId}-${topicIds?.sort()?.join(',')}`;
+      return `${endpointName}-${page}-${limit}-${humanBookId}-${topicIds?.slice().sort().join(',')}`;
     },
     providesTags: result =>
       result
