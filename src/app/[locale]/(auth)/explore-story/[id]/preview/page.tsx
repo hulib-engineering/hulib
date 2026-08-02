@@ -86,7 +86,7 @@ export default function Index() {
           size="lg"
           iconLeft={<ArrowLeft />}
           className="w-fit text-black"
-          onClick={() => router.push('/')}
+          onClick={() => router.back()}
         >
           {tCommon('back')}
         </Button>
