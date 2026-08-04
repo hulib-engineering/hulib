@@ -6,9 +6,9 @@ import Image from 'next/image';
 export default function Banner() {
   const locale = useLocale();
   return (
-    <div className="relative left-1/2 -mt-4 mb-2 flex w-screen items-center justify-center -translate-x-1/2 sm:-mt-6 sm:mb-3 md:-mt-8 md:mb-4">
+    <div className="relative left-1/2 -mt-4 flex w-screen items-center justify-center -translate-x-1/2 sm:-mt-6 md:-mt-8 ">
       {/* Mobile Banner */}
-      <div className="relative aspect-[430/164] w-full overflow-hidden md:hidden">
+      <div className="relative aspect-[430/164] size-full overflow-hidden md:hidden">
         <Image
           src={`/assets/images/banners/banner_mb_${locale}.png`}
           alt="Home Banner Mobile"
