@@ -13,7 +13,7 @@ import { DEFAULT_STORY_COVER_ASSET } from '@/features/stories/constants';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { ApprovalModalLayout } from '@/layouts/admin/ApprovalModalLayout';
 import { TopicChip } from '@/layouts/webapp/ChipFilter';
-import { useUpdateStoryMutation } from '@/libs/services/modules/stories';
+import { useReviewStoryMutation } from '@/libs/services/modules/stories';
 import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 import type { ProfileValidation } from '@/validations/ProfileValidation';
@@ -46,14 +46,14 @@ export default function StoryConfirmationModal({
   const router = useRouter();
   const t = useTranslations('Admin');
 
-  const [updateStory, { isLoading }] = useUpdateStoryMutation();
+  const [reviewStory, { isLoading }] = useReviewStoryMutation();
 
   const [rejectionReason, setRejectionReason] = useState('');
   const [isSuccessful, setIsSuccessful] = useState(false);
 
   const handleUpdateStoryStatus = async () => {
     try {
-      await updateStory({
+      await reviewStory({
         id: Number(story.id),
         ...type === 'approve'
           ? { publishStatus: StoryPublishStatus.PUBLISHED }
