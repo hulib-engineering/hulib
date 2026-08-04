@@ -21,6 +21,7 @@ import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { StoryCard } from '@/features/stories/components/StoryCard';
 import ChipFilter from '@/layouts/webapp/ChipFilter';
+import { useInfiniteScroll } from '@/libs/hooks/useInfiniteScroll';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
 import { useGetMyFavoritesQuery } from '@/libs/services/modules/user';
@@ -38,6 +39,7 @@ export default function Index() {
   const [page, setPage] = useState(1);
   const [filterBy, setFilterBy] = useState<number[]>(topicIds?.map(id => Number(id)) ?? []);
   const [orderBy, setOrderBy] = useState('newest');
+  const [items, setItems] = useState<StoryType[]>([]);
 
   const {
     data: stories,
@@ -54,14 +56,43 @@ export default function Index() {
   });
   const { data: favoriteStories } = useGetMyFavoritesQuery();
 
+  const hasNextPage
+    = stories?.meta?.currentPage && stories?.meta?.totalPages
+      ? stories.meta.currentPage < stories.meta.totalPages
+      : false;
+
+  const loadMoreRef = useInfiniteScroll(() => {
+    if (hasNextPage && !isFetching) {
+      setPage(prev => prev + 1);
+    }
+  }, hasNextPage && !isFetching);
+
+  // Reset pagination when filters or sort change
+  useEffect(() => {
+    setPage(1);
+    setItems([]);
+  }, [filterBy, orderBy]);
+
+  useEffect(() => {
+    if (stories?.data) {
+      if (page === 1) {
+        setItems(stories.data);
+      } else {
+        setItems((prev) => {
+          return Array.from(new Map([...prev, ...stories.data].map(i => [i.id, i])).values());
+        });
+      }
+    }
+  }, [stories, page]);
+
   const storiesWithFavorites = useMemo(() => {
-    return stories && stories?.data && stories?.data.map((story: StoryType) => {
+    return items.map((story: StoryType) => {
       const isFavorite
         = favoriteStories
-          && favoriteStories?.some((favorite: any) => favorite.storyId === story.id);
+        && favoriteStories?.some((favorite: any) => favorite.storyId === story.id);
       return { ...story, isFavorite };
     });
-  }, [stories, favoriteStories]);
+  }, [items, favoriteStories]);
 
   // Update URL when filterBy changes
   useEffect(() => {
@@ -97,7 +128,7 @@ export default function Index() {
   ];
 
   const handleLoadMore = () => {
-    if (stories.hasNextPage) {
+    if (hasNextPage) {
       setPage(prev => prev + 1);
     }
   };
@@ -162,36 +193,39 @@ export default function Index() {
           </Dropdown>
         </div>
 
-        {stories?.data.length > 0
+        {items.length > 0
           ? (
-              <div
-                className={mergeClassnames(
-                  'grid grid-cols-1 gap-4 rounded-lg',
-                  'sm:gap-6 sm:px-4',
-                  'md:grid-cols-2 md:gap-8 md:px-0',
-                  'xl:grid-cols-3',
-                )}
-              >
-                {storiesWithFavorites?.map((item: StoryType) => (
-                  <StoryCard key={item.id} data={item} />
-                ))}
-              </div>
-            )
+            <div
+              className={mergeClassnames(
+                'grid grid-cols-1 gap-4 rounded-lg',
+                'sm:gap-6 sm:px-4',
+                'md:grid-cols-2 md:gap-8 md:px-0',
+                'xl:grid-cols-3',
+              )}
+            >
+              {storiesWithFavorites?.map((item: StoryType) => (
+                <StoryCard key={item.id} data={item} />
+              ))}
+            </div>
+          )
           : (
-              <div className="flex w-full flex-col items-center justify-center gap-5">
-                <Image
-                  src="/assets/images/landing/no-results-found.png"
-                  className="h-auto w-full object-contain"
-                  width={300}
-                  height={300}
-                  quality={100}
-                  alt="No results found"
-                />
-                <h5 className="text-2xl font-bold leading-snug text-primary-10">{t('no_data_available')}</h5>
-              </div>
-            )}
+            <div className="flex w-full flex-col items-center justify-center gap-5">
+              <Image
+                src="/assets/images/landing/no-results-found.png"
+                className="h-auto w-full object-contain"
+                width={300}
+                height={300}
+                quality={100}
+                alt="No results found"
+              />
+              <h5 className="text-2xl font-bold leading-snug text-primary-10">{t('no_data_available')}</h5>
+            </div>
+          )}
 
-        {(isFetching || stories.hasNextPage) && (
+        {/* Infinite scroll anchor */}
+        <div ref={loadMoreRef} className="hidden h-px lg:block" />
+
+        {(isFetching || hasNextPage) && (
           <div className="flex w-full items-center justify-center">
             {isFetching ? <Loader /> : (
               <>
