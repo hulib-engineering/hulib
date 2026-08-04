@@ -10,7 +10,7 @@ export default function Banner() {
       {/* Mobile Banner */}
       <div className="relative aspect-[430/164] w-full overflow-hidden md:hidden">
         <Image
-          src={`/assets/images/banners/Banner-${locale}-mobile.svg`}
+          src={`/assets/images/banners/banner_mb_${locale}.png`}
           alt="Home Banner Mobile"
           fill
           className="object-cover object-center"
@@ -21,7 +21,7 @@ export default function Banner() {
 
       <div className="relative hidden aspect-[1440/176] h-fit w-full overflow-hidden md:block">
         <Image
-          src={`/assets/images/banners/Banner-${locale}.svg`}
+          src={`/assets/images/banners/banner_${locale}.png`}
           alt="Home Banner"
           fill
           className="object-cover object-center"
