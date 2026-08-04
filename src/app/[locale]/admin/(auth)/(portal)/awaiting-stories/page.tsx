@@ -8,16 +8,18 @@ import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
 import IconButton from '@/components/core/iconButton/IconButton';
 import Pagination from '@/components/core/pagination/Pagination';
 import { StoryCard } from '@/features/stories/components/StoryCard';
-import { useGetAdminStoriesQuery } from '@/libs/services/modules/stories';
+import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
-import { AWAITING_STORIES_QUERY_ARGS } from '@/app/[locale]/admin/(auth)/(portal)/awaiting-stories/queryArgs';
+import { PublishStatusEnum } from '@/libs/services/modules/stories/storiesType';
 
 export default function AwaitingStoriesPage() {
   const t = useTranslations('Admin');
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: awaitingStories, isLoading } = useGetAdminStoriesQuery({
-    ...AWAITING_STORIES_QUERY_ARGS,
+  const { data: awaitingStories, isLoading } = useGetStoriesQuery({
     page: currentPage,
+    limit: 6,
+    publishStatus: PublishStatusEnum.DRAFT,
+    sort: [{ orderBy: 'createdAt', order: 'DESC' }],
   });
 
   const list = awaitingStories?.data ?? [];

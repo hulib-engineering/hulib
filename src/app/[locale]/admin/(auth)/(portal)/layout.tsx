@@ -7,8 +7,7 @@ import type { ComponentType, ReactNode } from 'react';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { Link, usePathname } from '@/libs/i18nNavigation';
-import { useGetAdminStoriesQuery } from '@/libs/services/modules/stories';
-import { AWAITING_STORIES_QUERY_ARGS } from '@/app/[locale]/admin/(auth)/(portal)/awaiting-stories/queryArgs';
+import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 
 type AdminNavSection = 'storiesToPublish' | 'users' | 'nameTags';
 
@@ -56,7 +55,7 @@ export default function AdminPortalLayout({
   children: ReactNode;
 }) {
   const pathname = usePathname();
-  const { data: awaitingStories } = useGetAdminStoriesQuery(AWAITING_STORIES_QUERY_ARGS);
+  const { data: awaitingStories } = useGetStoriesQuery({ page: 1, limit: 6 });
   const storiesBadgeCount = awaitingStories?.meta?.totalItems ?? 0;
 
   return (
