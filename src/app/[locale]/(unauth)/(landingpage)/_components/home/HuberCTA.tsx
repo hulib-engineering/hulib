@@ -11,8 +11,6 @@ export default function HuberCTA() {
 
   return (
     <div className="relative inset-x-1/2 -mb-8 h-[403px] w-screen overflow-hidden bg-gradient-to-t from-[#fdf3ce] to-transparent -translate-x-1/2 md:h-[532px]">
-      {/* Top fade into page background */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 hidden h-16 bg-gradient-to-b from-white/80 to-transparent md:block lg:h-24" />
 
       {/* Desktop background image — matches Figma: frame at bottom-[-475px], image overflows */}
       <div className="absolute bottom-[-475px] left-1/2 z-0 hidden h-[983px] w-[1216px] overflow-hidden -translate-x-1/2 md:block">
