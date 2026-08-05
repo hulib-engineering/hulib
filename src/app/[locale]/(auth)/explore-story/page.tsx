@@ -89,7 +89,7 @@ export default function Index() {
     return items.map((story: StoryType) => {
       const isFavorite
         = favoriteStories
-        && favoriteStories?.some((favorite: any) => favorite.storyId === story.id);
+          && favoriteStories?.some((favorite: any) => favorite.storyId === story.id);
       return { ...story, isFavorite };
     });
   }, [items, favoriteStories]);
@@ -195,32 +195,32 @@ export default function Index() {
 
         {items.length > 0
           ? (
-            <div
-              className={mergeClassnames(
-                'grid grid-cols-1 gap-4 rounded-lg',
-                'sm:gap-6 sm:px-4',
-                'md:grid-cols-2 md:gap-8 md:px-0',
-                'xl:grid-cols-3',
-              )}
-            >
-              {storiesWithFavorites?.map((item: StoryType) => (
-                <StoryCard key={item.id} data={item} />
-              ))}
-            </div>
-          )
+              <div
+                className={mergeClassnames(
+                  'grid grid-cols-1 gap-4 rounded-lg',
+                  'sm:gap-6 sm:px-4',
+                  'md:grid-cols-2 md:gap-8 md:px-0',
+                  'xl:grid-cols-3',
+                )}
+              >
+                {storiesWithFavorites?.map((item: StoryType) => (
+                  <StoryCard key={item.id} data={item} />
+                ))}
+              </div>
+            )
           : (
-            <div className="flex w-full flex-col items-center justify-center gap-5">
-              <Image
-                src="/assets/images/landing/no-results-found.png"
-                className="h-auto w-full object-contain"
-                width={300}
-                height={300}
-                quality={100}
-                alt="No results found"
-              />
-              <h5 className="text-2xl font-bold leading-snug text-primary-10">{t('no_data_available')}</h5>
-            </div>
-          )}
+              <div className="flex w-full flex-col items-center justify-center gap-5">
+                <Image
+                  src="/assets/images/landing/no-results-found.png"
+                  className="h-auto w-full object-contain"
+                  width={300}
+                  height={300}
+                  quality={100}
+                  alt="No results found"
+                />
+                <h5 className="text-2xl font-bold leading-snug text-primary-10">{t('no_data_available')}</h5>
+              </div>
+            )}
 
         {/* Infinite scroll anchor */}
         <div ref={loadMoreRef} className="hidden h-px lg:block" />
