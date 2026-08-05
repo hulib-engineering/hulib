@@ -16,6 +16,7 @@ import Modal from '@/components/Modal';
 import TextInput from '@/components/core/textInput-v1/TextInput';
 import { useChangePasswordMutation } from '@/libs/services/modules/auth';
 import { ChangePasswordValidation } from '@/validations/ChangePasswordValidation';
+import { PASSWORD_CHECKLIST_RULES } from '@/validations/PasswordValidation';
 import { useRouter } from '@/libs/i18nNavigation';
 
 export default function Index() {
@@ -119,7 +120,7 @@ export default function Index() {
             {touchedFields.newPassword && (
               <div className="w-full lg:-mt-6">
                 <PasswordChecklist
-                  rules={['minLength', 'specialChar', 'number', 'capital', 'match']}
+                  rules={PASSWORD_CHECKLIST_RULES}
                   minLength={8}
                   value={watch('newPassword')}
                   valueAgain={watch('confirmPassword')}
