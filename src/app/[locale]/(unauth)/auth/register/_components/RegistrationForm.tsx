@@ -33,6 +33,7 @@ import {
   useRegisterMutation,
   useResendOTPMutation,
 } from '@/libs/services/modules/auth';
+import { PASSWORD_CHECKLIST_RULES } from '@/validations/PasswordValidation';
 import {
   RegisterStep1Validation,
   RegisterStep2Validation,
@@ -87,7 +88,7 @@ const Step1Form = ({
           id="email"
           type="email"
           label={t('email')}
-          placeholder="john@company.com"
+          placeholder="yourname@gmail.com"
           {...register('email')}
           isError={!!errors.email}
           hintText={errors.email?.message}
@@ -99,6 +100,7 @@ const Step1Form = ({
           type="password"
           label={t('password')}
           {...register('password')}
+          isError={!!errors.password}
         />
       </Form.Item>
       <Form.Item>
@@ -107,11 +109,13 @@ const Step1Form = ({
           type="password"
           label={t('confirm_password')}
           {...register('confirmPassword')}
+          isError={!!errors.confirmPassword}
+          hintText={errors.confirmPassword?.message}
         />
       </Form.Item>
       {touchedFields.password && (
         <PasswordChecklist
-          rules={['minLength', 'specialChar', 'number', 'capital', 'match']}
+          rules={PASSWORD_CHECKLIST_RULES}
           minLength={8}
           value={watch('password')}
           valueAgain={watch('confirmPassword')}
@@ -204,7 +208,7 @@ const Step2Form = ({
             id="fullname"
             type="text"
             label={t('fullname')}
-            placeholder="John Doe"
+            placeholder={t('fullname_placeholder')}
             {...register('fullname')}
             isError={!!errors.fullname}
             hintText={errors.fullname?.message}
