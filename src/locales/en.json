@@ -535,6 +535,7 @@
     "registered": "Already have an account?",
     "log_in": "Log in",
     "fullname": "Full name",
+    "fullname_placeholder": "Emma Johnson",
     "gender": "Gender",
     "birthday": "Date of birth",
     "register": "Create account",

@@ -88,7 +88,7 @@ const Step1Form = ({
           id="email"
           type="email"
           label={t('email')}
-          placeholder="john@company.com"
+          placeholder="yourname@gmail.com"
           {...register('email')}
           isError={!!errors.email}
           hintText={errors.email?.message}
@@ -208,7 +208,7 @@ const Step2Form = ({
             id="fullname"
             type="text"
             label={t('fullname')}
-            placeholder="John Doe"
+            placeholder={t('fullname_placeholder')}
             {...register('fullname')}
             isError={!!errors.fullname}
             hintText={errors.fullname?.message}
