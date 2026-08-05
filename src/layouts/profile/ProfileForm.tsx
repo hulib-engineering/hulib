@@ -19,7 +19,7 @@ import { useAppDispatch } from '@/libs/hooks';
 import type { User } from '@/libs/services/modules/auth';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { setUserInfo } from '@/libs/store/authentication';
-import { ProfileValidation } from '@/validations/ProfileValidation';
+import { PHONE_NUMBER_REGEX, ProfileValidation } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
 
 type IProfileFormProps = {
@@ -69,7 +69,27 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
 
   const handleUpdate = handleSubmit(async (values: any) => {
     try {
-      const response = await updateProfile({ ...values, gender: { id: values.gender?.id } }).unwrap();
+      // isUnderGuard is a client-only flag (derived from birthday) used to
+      // decide whether to show/require the guardian fields — it isn't a
+      // real profile attribute and must not be sent to the backend.
+      const { isUnderGuard, ...profilePatch } = values;
+
+      // Backend's @IsOptional() only skips @IsPhoneNumber() for null or
+      // undefined — never for "". Sending "" gets rejected as an invalid
+      // number, while sending undefined gets dropped by JSON.stringify and
+      // is indistinguishable from "field omitted, leave it alone" under
+      // PATCH semantics — which would make a previously-set number
+      // impossible to ever clear from this form. null is the one value
+      // that both passes validation AND is still serialized, so it reaches
+      // the backend as an explicit "clear this field".
+      if (!profilePatch.phoneNumber) {
+        profilePatch.phoneNumber = null;
+      }
+      if (!profilePatch.parentPhoneNumber) {
+        profilePatch.parentPhoneNumber = null;
+      }
+
+      const response = await updateProfile({ ...profilePatch, gender: { id: values.gender?.id } }).unwrap();
       dispatch(setUserInfo(response));
       onSucceed();
     } catch (error: any) {
@@ -175,9 +195,12 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
       <Form.Item>
         <TextInput
           type="tel"
-          pattern="^\+?[1-9]\d{1,3}[ -]?\d{6,14}$"
+          pattern={PHONE_NUMBER_REGEX.source}
+          placeholder={t('phone_number_placeholder')}
           label={t('phone_number')}
           {...register('phoneNumber')}
+          isError={!!errors.phoneNumber}
+          hintText={errors.phoneNumber?.message ? t(errors.phoneNumber.message) : undefined}
         />
       </Form.Item>
       {watch('isUnderGuard') && (
@@ -191,12 +214,13 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
           <TextInput
             id="parentPhoneNumber"
             type="tel"
-            pattern="^\+?[1-9]\d{1,3}[ -]?\d{6,14}$"
+            pattern={PHONE_NUMBER_REGEX.source}
+            placeholder={t('phone_number_placeholder')}
             label={t('guardian_phone_number')}
             {...register('parentPhoneNumber')}
             required
             isError={!!errors.parentPhoneNumber}
-            hintText={errors.parentPhoneNumber?.message as string}
+            hintText={errors.parentPhoneNumber?.message ? t(errors.parentPhoneNumber.message as string) : undefined}
           />
         </>
       )}
