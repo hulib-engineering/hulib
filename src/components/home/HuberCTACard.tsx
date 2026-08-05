@@ -1,7 +1,6 @@
 'use client';
 
-import { BookOpenTextIcon } from '@phosphor-icons/react';
-import Button from '@/components/core/button/Button';
+import CreateNewStoryButton from '../CreateNewStoryButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { useMobile } from '@/libs/hooks';
 
@@ -15,7 +14,6 @@ type HuberCTACardProps = {
 export default function HuberCTACard({
   title,
   subtitle,
-  buttonLabel,
   onClick,
 }: HuberCTACardProps) {
   const isMobile = useMobile();
@@ -30,11 +28,11 @@ export default function HuberCTACard({
 
   const subtitleClassName = mergeClassnames(
     textBaseClass,
-    isMobile ? 'text-sm' : 'text-left text-xl font-medium leading-7',
+    isMobile ? 'text-sm' : 'text-xl font-medium leading-7',
   );
 
   return (
-    <div className="flex w-[366px] flex-col gap-5 rounded-[32px] bg-white p-5 ring-8 ring-white/60 backdrop-blur-[50px] md:p-8 xxl:w-[536px]">
+    <div className="flex w-[366px] flex-col gap-5 rounded-[32px] bg-white p-5 text-center ring-8 ring-white/60 backdrop-blur-[50px] md:p-8 xxl:w-[536px]">
       {isMobile ? (
         <h5 className={titleClassName}>{title}</h5>
       ) : (
@@ -46,14 +44,7 @@ export default function HuberCTACard({
       ) : (
         <h6 className={subtitleClassName}>{subtitle}</h6>
       )}
-
-      <Button
-        iconLeft={<BookOpenTextIcon size={20} />}
-        className="w-full rounded-full"
-        onClick={onClick}
-      >
-        {buttonLabel}
-      </Button>
+      <CreateNewStoryButton onClick={onClick} className="max-w-none" />
     </div>
   );
 }
