@@ -67,7 +67,7 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
       <div className={mergeClassnames(poppins.className, 'relative antialiased h-screen flex flex-col')}>
         <div className="flex size-full flex-col">
           <Header />
-          <main className={mergeClassnames('flex-1 bg-neutral-98', !pathname.includes('messages') && 'overflow-y-auto pb-14 lg:pb-0')}>
+          <main className={mergeClassnames('flex-1 overflow-x-hidden bg-neutral-98', !pathname.includes('messages') && 'overflow-y-auto pb-14 lg:pb-0')}>
             <div className={mergeClassnames('bg-neutral-98', pathname.includes('messages') ? 'h-full' : 'min-h-[calc(100vh-410px)]')}>
               {children}
             </div>
@@ -107,7 +107,7 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
   return (
     <div className={mergeClassnames(poppins.className, 'relative antialiased min-h-screen flex flex-col')}>
       <PublicHeader />
-      <main className="flex-1 bg-neutral-98 pt-14 lg:pt-16">
+      <main className="flex-1 overflow-x-hidden bg-neutral-98 pt-14 lg:pt-16">
         <div className="min-h-[calc(100vh-410px)]">
           {children}
         </div>
