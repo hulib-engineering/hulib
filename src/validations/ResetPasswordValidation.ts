@@ -1,8 +1,10 @@
 import { z } from 'zod';
 
+import { passwordSchema } from './PasswordValidation';
+
 export const ResetPasswordValidation = z
   .object({
-    password: z.string().trim().min(8),
+    password: passwordSchema,
     confirmPassword: z.string().trim().min(8),
   })
   .superRefine(({ confirmPassword, password }, ctx) => {

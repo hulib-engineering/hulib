@@ -14,6 +14,7 @@ import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import TextInput from '@/components/core/textInput/TextInput';
 import { useResetPasswordMutation } from '@/libs/services/modules/auth';
+import { PASSWORD_CHECKLIST_RULES } from '@/validations/PasswordValidation';
 import { ResetPasswordValidation } from '@/validations/ResetPasswordValidation';
 
 const ResetPasswordSuccess = () => {
@@ -142,7 +143,7 @@ const ResetPasswordForm = () => {
         {touchedFields.password && (
           <div className="bg-gray-50 rounded-md p-3">
             <PasswordChecklist
-              rules={['minLength', 'specialChar', 'number', 'capital', 'match']}
+              rules={PASSWORD_CHECKLIST_RULES}
               minLength={8}
               value={watch('password')}
               valueAgain={watch('confirmPassword')}
