@@ -33,8 +33,6 @@ const CustomDatePicker = ({
   // Get the first day of that month using startOfMonth
   const firstDayOfCurrentMonth = startOfMonth(currentDate);
 
-  // The actual day-of-month from `value` — must NOT come from firstDayOfCurrentMonth,
-  // which is always the 1st and would silently reset the day on every mount.
   const initialDay = new Date(value).getDate();
 
   const {
