@@ -19,7 +19,7 @@ import { useAppDispatch } from '@/libs/hooks';
 import type { User } from '@/libs/services/modules/auth';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { setUserInfo } from '@/libs/store/authentication';
-import { ProfileValidation } from '@/validations/ProfileValidation';
+import { PHONE_NUMBER_MESSAGE, PHONE_NUMBER_REGEX, ProfileValidation } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
 
 type IProfileFormProps = {
@@ -39,6 +39,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
     control,
     register,
     setValue,
+    setError,
     watch,
     handleSubmit,
     formState: { errors, isSubmitting, isDirty },
@@ -69,13 +70,35 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
 
   const handleUpdate = handleSubmit(async (values: any) => {
     try {
-      const response = await updateProfile({ ...values, gender: { id: values.gender?.id } }).unwrap();
+      const { isUnderGuard, ...profilePatch } = values;
+
+      if (!profilePatch.phoneNumber) {
+        profilePatch.phoneNumber = null;
+      }
+      if (!profilePatch.parentPhoneNumber) {
+        profilePatch.parentPhoneNumber = null;
+      }
+
+      const response = await updateProfile({ ...profilePatch, gender: { id: values.gender?.id } }).unwrap();
       dispatch(setUserInfo(response));
       onSucceed();
     } catch (error: any) {
-      pushError(t(error.message));
+      const fieldErrors = error?.data?.errors;
+      if (fieldErrors && typeof fieldErrors === 'object') {
+        Object.keys(fieldErrors).forEach((field) => {
+          setError(field as keyof z.infer<typeof ProfileValidation>, {
+            type: 'server',
+            message: PHONE_NUMBER_MESSAGE,
+          });
+        });
+      } else {
+        pushError(t(error.message));
+      }
     }
   });
+
+  const phoneHintText = (fieldError: typeof errors.phoneNumber) =>
+    fieldError?.message ? t(fieldError.message as any) : undefined;
 
   return (
     <Form className="flex w-full flex-col gap-3" onSubmit={handleUpdate}>
@@ -175,9 +198,12 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
       <Form.Item>
         <TextInput
           type="tel"
-          pattern="^\+?[1-9]\d{1,3}[ -]?\d{6,14}$"
+          pattern={PHONE_NUMBER_REGEX.source}
+          placeholder={t('phone_number_placeholder')}
           label={t('phone_number')}
           {...register('phoneNumber')}
+          isError={!!errors.phoneNumber}
+          hintText={phoneHintText(errors.phoneNumber)}
         />
       </Form.Item>
       {watch('isUnderGuard') && (
@@ -191,12 +217,13 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
           <TextInput
             id="parentPhoneNumber"
             type="tel"
-            pattern="^\+?[1-9]\d{1,3}[ -]?\d{6,14}$"
+            pattern={PHONE_NUMBER_REGEX.source}
+            placeholder={t('phone_number_placeholder')}
             label={t('guardian_phone_number')}
             {...register('parentPhoneNumber')}
             required
             isError={!!errors.parentPhoneNumber}
-            hintText={errors.parentPhoneNumber?.message as string}
+            hintText={phoneHintText(errors.parentPhoneNumber)}
           />
         </>
       )}
