@@ -19,7 +19,7 @@ import { useAppDispatch } from '@/libs/hooks';
 import type { User } from '@/libs/services/modules/auth';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { setUserInfo } from '@/libs/store/authentication';
-import { PHONE_NUMBER_REGEX, ProfileValidation } from '@/validations/ProfileValidation';
+import { PHONE_NUMBER_MESSAGE, PHONE_NUMBER_REGEX, ProfileValidation } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
 
 type IProfileFormProps = {
@@ -39,6 +39,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
     control,
     register,
     setValue,
+    setError,
     watch,
     handleSubmit,
     formState: { errors, isSubmitting, isDirty },
@@ -69,19 +70,8 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
 
   const handleUpdate = handleSubmit(async (values: any) => {
     try {
-      // isUnderGuard is a client-only flag (derived from birthday) used to
-      // decide whether to show/require the guardian fields — it isn't a
-      // real profile attribute and must not be sent to the backend.
       const { isUnderGuard, ...profilePatch } = values;
 
-      // Backend's @IsOptional() only skips @IsPhoneNumber() for null or
-      // undefined — never for "". Sending "" gets rejected as an invalid
-      // number, while sending undefined gets dropped by JSON.stringify and
-      // is indistinguishable from "field omitted, leave it alone" under
-      // PATCH semantics — which would make a previously-set number
-      // impossible to ever clear from this form. null is the one value
-      // that both passes validation AND is still serialized, so it reaches
-      // the backend as an explicit "clear this field".
       if (!profilePatch.phoneNumber) {
         profilePatch.phoneNumber = null;
       }
@@ -93,9 +83,22 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
       dispatch(setUserInfo(response));
       onSucceed();
     } catch (error: any) {
-      pushError(t(error.message));
+      const fieldErrors = error?.data?.errors;
+      if (fieldErrors && typeof fieldErrors === 'object') {
+        Object.keys(fieldErrors).forEach((field) => {
+          setError(field as keyof z.infer<typeof ProfileValidation>, {
+            type: 'server',
+            message: PHONE_NUMBER_MESSAGE,
+          });
+        });
+      } else {
+        pushError(t(error.message));
+      }
     }
   });
+
+  const phoneHintText = (fieldError: typeof errors.phoneNumber) =>
+    fieldError?.message ? t(fieldError.message as any) : undefined;
 
   return (
     <Form className="flex w-full flex-col gap-3" onSubmit={handleUpdate}>
@@ -200,7 +203,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
           label={t('phone_number')}
           {...register('phoneNumber')}
           isError={!!errors.phoneNumber}
-          hintText={errors.phoneNumber?.message ? t(errors.phoneNumber.message) : undefined}
+          hintText={phoneHintText(errors.phoneNumber)}
         />
       </Form.Item>
       {watch('isUnderGuard') && (
@@ -220,7 +223,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
             {...register('parentPhoneNumber')}
             required
             isError={!!errors.parentPhoneNumber}
-            hintText={errors.parentPhoneNumber?.message ? t(errors.parentPhoneNumber.message as string) : undefined}
+            hintText={phoneHintText(errors.parentPhoneNumber)}
           />
         </>
       )}
