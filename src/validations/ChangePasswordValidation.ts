@@ -1,12 +1,11 @@
 import { z } from 'zod';
 
+import { passwordSchema } from './PasswordValidation';
+
 export const ChangePasswordValidation = z
   .object({
     oldPassword: z.string().trim().min(1),
-    newPassword: z
-      .string()
-      .trim()
-      .min(8, 'The new password is not in the correct format, please re-enter'),
+    newPassword: passwordSchema,
     confirmPassword: z.string().trim().min(8),
   })
   .superRefine(({ confirmPassword, newPassword, oldPassword }, ctx) => {

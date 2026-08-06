@@ -1,16 +1,11 @@
 import { z } from 'zod';
 
+import { passwordSchema } from './PasswordValidation';
+
 export const RegisterStep1Validation = z
   .object({
     email: z.string().trim().min(1).email(),
-    password: z
-      .string()
-      .trim()
-      .min(8)
-      .refine(password => /[A-Z]/.test(password))
-      .refine(password => /[a-z]/.test(password))
-      .refine(password => /\d/.test(password))
-      .refine(password => /[!@#$%^&*]/.test(password)),
+    password: passwordSchema,
     confirmPassword: z.string(),
   })
   .refine(data => data.password === data.confirmPassword, {
