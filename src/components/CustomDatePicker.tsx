@@ -33,6 +33,8 @@ const CustomDatePicker = ({
   // Get the first day of that month using startOfMonth
   const firstDayOfCurrentMonth = startOfMonth(currentDate);
 
+  const initialDay = new Date(value).getDate();
+
   const {
     watch,
     setValue,
@@ -40,7 +42,7 @@ const CustomDatePicker = ({
   } = useForm <z.infer<typeof DateOfBirthFieldsetValidation>>({
     resolver: zodResolver(DateOfBirthFieldsetValidation),
     defaultValues: {
-      day: firstDayOfCurrentMonth.getDate(),
+      day: initialDay,
       month: firstDayOfCurrentMonth.getMonth() + 1,
       year: firstDayOfCurrentMonth.getFullYear(),
     },
