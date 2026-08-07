@@ -82,7 +82,8 @@ export default function Index() {
     <div className="px-4 py-8 lg:px-28">
       {currentStep === 'select-time' && (
         <SelectTime
-          story={story}
+          humanBook={story?.humanBook}
+          humanBookId={story?.humanBookId}
           handleSelectTime={handleSelectTime}
           currentTz={currentTz}
           setCurrentTz={setCurrentTz}
