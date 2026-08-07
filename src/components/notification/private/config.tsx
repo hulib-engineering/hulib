@@ -40,6 +40,18 @@ export const notificationConfig: NotificationConfig = {
       <>{t('story_reviewed', { name: m.sender.fullName, title: m.relatedEntity?.title ?? '' })}</>
     ),
   },
+  [NotificationType.STORY_REACTION]: {
+    getMessage: (t, m) => (
+      <>{t('story_reacted', { name: m.sender.fullName, title: m.relatedEntity?.title ?? '' })}</>
+    ),
+    route: relatedEntityId => `/explore-story/${relatedEntityId}`,
+  },
+  [NotificationType.STORY_SHARE]: {
+    getMessage: (t, m) => (
+      <>{t('story_shared', { name: m.sender.fullName, title: m.relatedEntity?.title ?? '' })}</>
+    ),
+    route: relatedEntityId => `/explore-story/${relatedEntityId}`,
+  },
   [NotificationType.STORY_PUBLISH]: {
     getMessage: (t, m, roleId) => (roleId === Role.HUBER ? (
       <>{t('story_published_huber', { title: m.relatedEntity?.title ?? '' })}</>
