@@ -24,7 +24,7 @@ import {
 } from '@/libs/services/modules/chat';
 import {
   notificationApi,
-  useGetNotificationsQuery,
+  useGetUnseenNotificationCountQuery,
 } from '@/libs/services/modules/notifications';
 import { useLazyGetUsersByIdQuery } from '@/libs/services/modules/user';
 import type { Message } from '@/libs/store/messenger';
@@ -62,7 +62,7 @@ const Header = () => {
   const currentPathname = usePathname();
   const user = useAppSelector(state => state.auth.userInfo);
 
-  const { data, isLoading, error } = useGetNotificationsQuery({ page: 1, limit: 5 });
+  const { data, isLoading, error } = useGetUnseenNotificationCountQuery();
   const { data: conversations = [] } = useGetConversationContactsQuery(
     undefined,
     {
@@ -88,6 +88,19 @@ const Header = () => {
           }
 
           Object.assign(draft, notifications);
+        },
+      ),
+    );
+    dispatch(
+      notificationApi.util.updateQueryData(
+        'getUnseenNotificationCount',
+        undefined,
+        (draft) => {
+          if (!draft) {
+            return;
+          }
+
+          draft.unseenCount = notifications.unseenCount;
         },
       ),
     );

@@ -1,7 +1,7 @@
 'use client';
 
 import { Bell } from '@phosphor-icons/react';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/libs/i18nNavigation';
 
@@ -9,6 +9,7 @@ import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Hea
 import Button from '@/components/core/button/Button';
 import { NotificationType } from '@/components/notification/private/types';
 import NotificationItemRenderer from '@/components/notification/NotificationItemRenderer';
+import NotificationSkeleton from '@/components/notification/NotificationSkeleton';
 import Popover from '@/components/core/popover/Popover';
 import { useGetNotificationsQuery } from '@/libs/services/modules/notifications';
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
@@ -24,10 +25,13 @@ export default function NotificationPopover({
   const router = useRouter();
   const t = useTranslations('Common');
 
-  const { data, error, isLoading } = useGetNotificationsQuery({
-    page: 1,
-    limit: 5,
-  });
+  // Content is only fetched once the user actually opens the popover.
+  const [hasOpened, setHasOpened] = useState(false);
+
+  const { data, error, isLoading } = useGetNotificationsQuery(
+    { page: 1, limit: 5 },
+    { skip: !hasOpened },
+  );
 
   const sessionRequestNotifications: Notification[] = useMemo(() => {
     return data?.data.filter((notification: Notification) =>
@@ -37,16 +41,15 @@ export default function NotificationPopover({
   const otherNotifications: Notification[] = useMemo(() => data?.data.filter((notification: Notification) =>
     notification.type.name !== NotificationType.SESSION_REQUEST) || [], [data]);
 
-  if (!data || error) {
-    return null;
-  }
-
   return (
     <Popover position="bottom">
       {({ open, close }) => {
         return (
           <>
-            <Popover.Trigger data-testid="notifications-popover-trigger">
+            <Popover.Trigger
+              data-testid="notifications-popover-trigger"
+              onClick={() => setHasOpened(true)}
+            >
               <HeaderIconButtonWithBadge
                 badge={unreadNotifCount}
                 open={open}
@@ -61,52 +64,58 @@ export default function NotificationPopover({
                     {t('notification_title')}
                   </h4>
                 </div>
-                {sessionRequestNotifications.length > 0 && (
-                  <>
-                    <div className="flex flex-col">
-                      <div className="px-3">
-                        <h6 className="text-xl font-bold leading-9 text-primary-60">{t('meeting_request')}</h6>
-                      </div>
-                      {sessionRequestNotifications.map(notification => (
-                        <NotificationItemRenderer
-                          key={notification.id}
-                          notification={notification}
-                          showExtras={false}
-                          onClick={close || (() => { })}
-                        />
-                      ))}
-                    </div>
-                    <div className="h-0 outline outline-1 outline-offset-[-0.50px] outline-neutral-90"></div>
-                  </>
-                )}
-                {!isLoading && data.data?.length === 0
-                  ? (
-                      <div className="flex flex-1 items-center justify-center">
-                        {t('no_messages')}
-                      </div>
-                    )
+                {isLoading || !data
+                  ? <NotificationSkeleton count={3} />
                   : (
                       <>
-                        <div className="flex h-[280px] flex-col gap-2.5 overflow-y-auto">
-                          {otherNotifications.map((notification: Notification) => (
-                            <NotificationItemRenderer
-                              key={notification.id}
-                              notification={notification}
-                              showExtras={false}
-                              onClick={close || (() => { })}
-                            />
-                          ))}
-                        </div>
-                        <div className="px-2.5">
-                          <Button
-                            variant="outline"
-                            size="lg"
-                            fullWidth
-                            onClick={() => router.push('/notifications')}
-                          >
-                            {t('see_all')}
-                          </Button>
-                        </div>
+                        {sessionRequestNotifications.length > 0 && (
+                          <>
+                            <div className="flex flex-col">
+                              <div className="px-3">
+                                <h6 className="text-xl font-bold leading-9 text-primary-60">{t('meeting_request')}</h6>
+                              </div>
+                              {sessionRequestNotifications.map(notification => (
+                                <NotificationItemRenderer
+                                  key={notification.id}
+                                  notification={notification}
+                                  showExtras={false}
+                                  onClick={close || (() => { })}
+                                />
+                              ))}
+                            </div>
+                            <div className="h-0 outline outline-1 outline-offset-[-0.50px] outline-neutral-90"></div>
+                          </>
+                        )}
+                        {data.data?.length === 0
+                          ? (
+                              <div className="flex flex-1 items-center justify-center">
+                                {t('no_messages')}
+                              </div>
+                            )
+                          : (
+                              <>
+                                <div className="flex h-[280px] flex-col gap-2.5 overflow-y-auto">
+                                  {otherNotifications.map((notification: Notification) => (
+                                    <NotificationItemRenderer
+                                      key={notification.id}
+                                      notification={notification}
+                                      showExtras={false}
+                                      onClick={close || (() => { })}
+                                    />
+                                  ))}
+                                </div>
+                                <div className="px-2.5">
+                                  <Button
+                                    variant="outline"
+                                    size="lg"
+                                    fullWidth
+                                    onClick={() => router.push('/notifications')}
+                                  >
+                                    {t('see_all')}
+                                  </Button>
+                                </div>
+                              </>
+                            )}
                       </>
                     )}
               </div>
