@@ -19,7 +19,7 @@ import { Role, StatusEnum } from '@/types/common';
 import { toLocaleDateString } from '@/utils/dateUtils';
 
 export default function DefaultNotificationCard({ notification, showExtras, onClick }: INotificationItemRendererProps) {
-  const cfg = notificationConfig[notification.type.name as NotificationType];
+  const cfg = notificationConfig[notification.type.name as NotificationType] ?? notificationConfig[NotificationType.OTHER];
 
   const router = useRouter();
 

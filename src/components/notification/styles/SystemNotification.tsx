@@ -10,7 +10,7 @@ import { NotificationType } from '@/components/notification/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
 
 export default function SystemNotificationCard({ notification, onClick }: INotificationItemRendererProps) {
-  const cfg = notificationConfig[notification.type.name as NotificationType];
+  const cfg = notificationConfig[notification.type.name as NotificationType] ?? notificationConfig[NotificationType.OTHER];
   const isUpcomingSession = notification.type.name === NotificationType.OTHER;
 
   const router = useRouter();
@@ -20,7 +20,7 @@ export default function SystemNotificationCard({ notification, onClick }: INotif
     if (onClick) {
       onClick();
     }
-    if (cfg.route) {
+    if (cfg.route && notification.relatedEntity?.sessionUrl) {
       router.push(cfg.route(notification.relatedEntity.sessionUrl));
     }
   };

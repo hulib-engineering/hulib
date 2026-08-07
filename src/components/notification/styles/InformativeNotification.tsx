@@ -17,7 +17,7 @@ import SessionDetailCard from '@/layouts/scheduling/SessionDetailCard';
 import { toLocaleDateString } from '@/utils/dateUtils';
 
 export default function InformativeNotificationCard({ notification, showExtras, onClick }: INotificationItemRendererProps) {
-  const cfg = notificationConfig[notification.type.name as NotificationType];
+  const cfg = notificationConfig[notification.type.name as NotificationType] ?? notificationConfig[NotificationType.OTHER];
 
   const router = useRouter();
   const locale = useLocale();

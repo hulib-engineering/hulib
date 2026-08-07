@@ -2,6 +2,8 @@ export enum NotificationType {
   SESSION_REQUEST = 'sessionRequest',
   ACCOUNT_UPGRADE = 'account',
   STORY_REVIEW = 'reviewStory',
+  STORY_REACTION = 'reactStory',
+  STORY_SHARE = 'shareStory',
   STORY_PUBLISH = 'publishStory',
   STORY_REJECTION = 'rejectStory',
   HUBER_REPORT = 'huberReported',

@@ -949,6 +949,8 @@
     "registration_submitted": "{name} đã gửi yêu cầu trở thành Huber.",
     "session_request": "{name} muốn có một cuộc họp với bạn.",
     "story_reviewed": "{name} cũng đã đánh giá câu chuyện {title} của bạn.",
+    "story_reacted": "{name} thích câu chuyện {title} của bạn.",
+    "story_shared": "{name} chia sẻ câu chuyện {title} của bạn.",
     "story_published_huber": "Câu chuyện {title} của bạn đã được xuất bản thành công.",
     "story_published_admin": "{name} đã gửi yêu cầu tạo một Câu chuyện mới {title}.",
     "story_rejected": "Câu chuyện {title} của bạn chưa được xuất bản. Lý do:",
