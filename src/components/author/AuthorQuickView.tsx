@@ -101,10 +101,11 @@ export default function AuthorQuickView({ humanBook }: { humanBook: User }) {
   return (
     // (remove the first line of css) <- if somebody decided to make a hover card and wrap it around this component:
     // (remove 'hidden') <- for easier debugging
-    <div className="absolute left-full z-50 ml-2 box-border flex hidden
-      w-[420px] flex-col items-start gap-5
-      rounded-2xl border-2 border-[#0858FA] bg-white p-5 shadow-[0px_0px_4px_rgba(15,15,16,0.06),0px_4px_5px_rgba(28,30,33,0.1)]
-      -translate-y-8 group-hover:flex"
+    <div className="absolute z-50 box-border flex hidden
+      w-[420px] flex-col items-start gap-5 rounded-2xl
+      border-2 border-[#0858FA] bg-white p-5
+      shadow-[0px_0px_4px_rgba(15,15,16,0.06),0px_4px_5px_rgba(28,30,33,0.1)] -translate-y-8 group-hover:flex max-lg:right-1/2 max-lg:top-full max-lg:mt-6
+      lg:left-full lg:ml-2"
     >
       <AuthorBasicInfo
         avatarSize="2xl"
