@@ -54,6 +54,9 @@ type StorySidePanelProps = {
   };
 };
 
+// Note: Anybody who works on this file may want to consider replacing the last component with <AuthorBasicInfo> instead
+// (components/author/AuthorBasicInfo)                                                      <--|
+
 export default function StorySidePanel({ data }: StorySidePanelProps) {
   const router = useRouter();
   const { data: session } = useSession();
