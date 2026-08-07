@@ -30,7 +30,7 @@ export default function Index() {
   const userDetail = notMe
     ? data
     : { ...userInfo, photo: { id: userAvatarId, path: userAvatarUrl } };
-
+  console.log(data);
   const dispatch = useAppDispatch();
   const [isReportModalOpen, setReportModalOpen] = useState(false);
   const [currentEditableImageData, setCurrentEditableImageData] = useState({ type: '', data: '' });

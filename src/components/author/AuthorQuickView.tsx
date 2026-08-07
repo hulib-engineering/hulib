@@ -1,111 +1,120 @@
 'use client';
 import React from 'react';
+import { useTranslations } from 'next-intl';
+import {
+  BookOpen,
+  // GraduationCapIcon,
+  // BagIcon,
+} from '@phosphor-icons/react';
+import { mergeClassnames } from '../core/private/utils';
 import AuthorBasicInfo from './AuthorBasicInfo';
-import type { AuthorBasicInfoProps } from './private/types';
-import Sessions from '@/components/SessionsSection';
-// import { useTranslations } from 'next-intl';
-import { Chip } from '@/components/core/chip/Chip';
+// import type { AuthorBasicInfoProps } from './private/types';
+import Section from '@/components/Section';
+// import { Chip } from '@/components/core/chip/Chip';
+// import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
+import { useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
+import type { User } from '@/features/users/types';
+// import type { Topic, TopicResponse } from '@/libs/services/modules/topics/topicType';
+import type { GetHuberStoriesResponse, Story } from '@/libs/services/modules/stories/storiesType';
 
-function Description() {
+// TODO: Integrate API response for the Topics component once the 'topics' values are fixed in the BE - (if it's supposed to be removed then
+// ...there will need to be a 3rd API call using 'useGetUsersByIdQuery')
+
+function MaturingExperiences({ bio }: { bio: string | null }) {
   return (
-    <div className="w-full text-sm leading-[22px] tracking-[0.015em] text-[#2E3032]">
-      Lorem ipsum dolor sit amet consectetur. Eget magna vel platea pulvinar
-      tempor dui massa ut. Egestas nunc mi tristique ornare commodo vitae
-      dignissim commodo. Pellentesque nulla nam ante turpis velit amet cras
-      ac aliquam. Ut amet nulla lobortis amet.
+    <div className={mergeClassnames('w-full text-sm leading-[22px] tracking-[0.015em] text-[#2E3032]', !bio && 'hidden')}>
+      {bio}
     </div>
   );
 }
-/* TODO:
-- complete the UI features
-*/
-function Topics() {
-  return (
-    <Sessions title="Lĩnh vực" row>
-      <Chip className="box-border flex h-[30px] items-center gap-1 rounded-lg border border-[#84ACFC] bg-[#CDDDFE] px-3 py-2">
-        <span className="whitespace-nowrap text-xs font-medium leading-[14px] text-[#0858FA]">
-          Cảm xúc
-        </span>
-      </Chip>
-      {/* Below is duplicate for preview purpose - delete them when no longer needed */}
-      <Chip className="box-border flex h-[30px] items-center gap-1 rounded-lg border border-[#84ACFC] bg-[#CDDDFE] px-3 py-2">
-        <span className="whitespace-nowrap text-xs font-medium leading-[14px] text-[#0858FA]">
-          Cảm xúc
-        </span>
-      </Chip>
-    </Sessions>
-  );
-}
 
-function BasicInfo() {
-  return (
-    <Sessions title="Thông tin cơ bản">
-      <div className="flex h-[22px] items-start gap-2">
-        <div className="size-5 shrink-0 bg-[#0858FA]" />
-        {' '}
-        {/* replace icon on this line */}
-        <span className="whitespace-nowrap text-sm leading-[22px] tracking-[0.015em] text-[#2E3032]">
-          Bách khoa
-        </span>
-      </div>
-      {/* Below is duplicate for preview purpose - delete them when no longer needed */}
-      <div className="flex h-[22px] items-start gap-2">
-        <div className="size-5 shrink-0 bg-[#0858FA]" />
-        {' '}
-        {/* replace icon on this line */}
-        <span className="whitespace-nowrap text-sm leading-[22px] tracking-[0.015em] text-[#2E3032]">
-          Bách khoa
-        </span>
-      </div>
-    </Sessions>
-  );
-}
+/* function Topics({ stories }: any) {
+  const t = useTranslations('Schedule.HoverCard');
 
-function Stories() {
-  // TODO: Change the styling codes to Tailwind codes
-  // Or, just delete the entire thing and do from scratch
   return (
-    <Sessions title="Các câu chuyện">
-      {[1, 2].map(i => (
-        <div
-          key={i}
-          style={{
-            boxSizing: 'border-box',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            padding: 8,
-            gap: 8,
-            background: '#F0F5FF',
-            border: '1px solid #C7C9CB',
-            borderRadius: 8,
-          }}
+    <Section title={t('topics')} row>
+      {topics?.map((t: any) => (
+        <Chip
+          key={t?.topicId}
+          as="span"
+          className={mergeClassnames(
+            'h-full rounded-2xl border p-2 text-xs font-medium leading-[14px]',
+            getTopicBadgeClasses(t?.topic.color),
+          )}
         >
-          <div className="flex w-full items-start gap-2">
-            <div className="size-4 shrink-0 bg-[#0442BF]" />
-            <span className="flex-1 text-sm leading-4 text-black">
-              Cơn ác mộng đã lâu không trở lại
-            </span>
-          </div>
+          {t?.topic.name}
+        </Chip>
+      ))}
+    </Section>
+  );
+} */
+
+/* function About() {
+  const t = useTranslations('Schedule.HoverCard');
+  return (
+    // Top is Work - Bottom is Education
+    <Section title={t('about')}>
+      <div className="flex h-[22px] items-start gap-2">
+        <GraduationCapIcon size={20} color="#0442BF" />
+        <span className="whitespace-nowrap text-sm leading-[22px] tracking-[0.015em] text-[#2E3032]">
+          {}
+        </span>
+      </div>
+
+      <div className="flex h-[22px] items-start gap-2">
+        <BagIcon size={20} color="#0442BF" />
+        <span className="whitespace-nowrap text-sm leading-[22px] tracking-[0.015em] text-[#2E3032]">
+          {}
+        </span>
+      </div>
+    </Section>
+  );
+} */
+
+function Stories({ stories }: { stories: GetHuberStoriesResponse }) {
+  const t = useTranslations('Schedule.HoverCard');
+  return (
+    <Section title={t('stories')}>
+      {stories?.data?.map((story: Story) => (
+        <div
+          key={story.id}
+          className="box-border flex w-full items-center gap-2 rounded-lg border border-[#C7C9CB] bg-[#F0F5FF] p-2"
+        >
+          <BookOpen color="#0442BF" size={16} />
+          <span className="flex-1 text-sm leading-4 text-black translate-y-[2px]">
+            {story.title}
+          </span>
         </div>
       ))}
-    </Sessions>
+    </Section>
   );
 }
+// TODO: remove this query, use a gethuberinfo at the ancestor component instead
+export default function AuthorQuickView({ humanBook }: { humanBook: User }) {
+  // 2nd API call - as the API call on parent component (which gets user's info) doesn't return list of stories (or at least their titles)
+  // Do add 'isLoading' to const {} if need to add loading for the hover card
+  const { data: storiesList } = useGetHuberStoriesQuery(
+    { huberId: humanBook.id, publishedOnly: true },
+    { skip: !humanBook.id },
+  );
 
-export default function AuthorQuickView(props: AuthorBasicInfoProps) {
   return (
-    // remove the first line of css <- if somebody decided to make a hover card and wrap it around this component:
+    // (remove the first line of css) <- if somebody decided to make a hover card and wrap it around this component:
+    // (remove 'hidden') <- for easier debugging
     <div className="absolute left-full z-50 ml-2 box-border flex hidden
       w-[420px] flex-col items-start gap-5
       rounded-2xl border-2 border-[#0858FA] bg-white p-5 shadow-[0px_0px_4px_rgba(15,15,16,0.06),0px_4px_5px_rgba(28,30,33,0.1)]
-      -translate-y-8 group-hover:block"
+      -translate-y-8 group-hover:flex"
     >
-      <AuthorBasicInfo avatarSize="2xl" avatarImageUrl={props.avatarImageUrl} authorFullName={props.authorFullName} />
-      <Description />
-      <Topics />
-      <BasicInfo />
-      <Stories />
+      <AuthorBasicInfo
+        avatarSize="2xl"
+        humanBook={humanBook}
+        stories={storiesList}
+      />
+      <MaturingExperiences bio={humanBook.bio} />
+      {/* <Topics stories={storiesList} /> */}
+      {/* <About /> */}
+      <Stories stories={storiesList} />
     </div>
   );
 }

@@ -64,6 +64,16 @@ export type Story = {
   likedUserIds?: string[];
 };
 
+export type GetHuberStoriesResponse = {
+  data: Story[];
+  meta: {
+    currentPage: number;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
+  };
+};
+
 type Histogram = {
   rating: number;
   numberOfReviews: number;

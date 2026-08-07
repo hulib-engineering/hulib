@@ -14,7 +14,7 @@ import { TimezoneSelect } from '@/components/TimezoneSelect';
 import BookingTimetable from '@/layouts/booking/BookingTimetable';
 // import { useAppDispatch } from '@/libs/hooks';
 // import { openChat } from '@/libs/store/messenger';
-import type { AuthorBasicInfoProps } from '@/components/author/private/types';
+import type { User } from '@/features/users/types';
 
 // import ScheduleBasicInfo from './SessionAttendeesInfo';
 import MiniCalendar from '@/layouts/scheduling/MiniCalendar';
@@ -22,7 +22,9 @@ import AuthorQuickView from '@/components/author/AuthorQuickView';
 // import { useAppSelector } from '@/libs/hooks';
 
 type SelectTimeProps = {
-  story: any;
+  // story: any;
+  humanBook: User;
+  humanBookId: number;
   handleSelectTime: (date: Date) => void;
   currentTz: string;
   setCurrentTz: React.Dispatch<React.SetStateAction<string>>;
@@ -54,16 +56,13 @@ function Subtitles() {
   );
 }
 
-const AuthorName = (props: AuthorBasicInfoProps) => {
+const AuthorName = ({ humanBook }: { humanBook: User }) => {
   return (
     <>
       {' '}
       <div className="group relative inline-block">
-        <span className="text-[#0442BF] max-lg:underline">{props.authorFullName}</span>
-        <MemoizedAuthorQuickView
-          avatarImageUrl={props.avatarImageUrl}
-          authorFullName={props.authorFullName}
-        />
+        <span className="text-[#0442BF] max-lg:underline">{humanBook.fullName}</span>
+        <MemoizedAuthorQuickView humanBook={humanBook} />
       </div>
       {' '}
     </>
@@ -77,15 +76,12 @@ export default function SelectTime(props: SelectTimeProps) {
 
   const [chosenDay, setChosenDay] = useState<Date>(new Date()); // store day clicked on calendar
 
-  const authorFullName = props.story?.humanBook.fullName;
-  const avatarImageUrl = props.story?.humanBook.photo?.path;
-
   /* const handleOpenHuberChat = () => {
     dispatch(
       openChat({
-        id: props.story?.humanBookId,
-        name: authorFullName,
-        avatarUrl: avatarImageUrl,
+        id: props.humanBookId,
+        name: props.humanBook.fullName,
+        avatarUrl: props.humanBook.photo?.path,
         isOpen: true,
         isMinimized: false,
         unread: 0,
@@ -111,7 +107,7 @@ export default function SelectTime(props: SelectTimeProps) {
         <div className="flex flex-col gap-4">
           <h1 className="text-xl font-medium lg:text-3xl">
             {t('title')}
-            <AuthorName authorFullName={authorFullName} avatarImageUrl={avatarImageUrl} />
+            <AuthorName humanBook={props.humanBook} />
           </h1>
           <Subtitles />
         </div>
@@ -129,14 +125,14 @@ export default function SelectTime(props: SelectTimeProps) {
               <MiniCalendar
                 onChange={setChosenDay}
                 chosenDay={chosenDay}
-                huberId={props.story?.humanBookId}
+                huberId={props.humanBookId}
               />
             </div>
             <TimeslotWarning />
           </div>
 
           <BookingTimetable
-            huberId={props.story?.humanBookId}
+            huberId={props.humanBookId}
             tz={props.currentTz}
             onSelectTime={props.handleSelectTime}
             // onOpenHuberConv={handleOpenHuberChat}

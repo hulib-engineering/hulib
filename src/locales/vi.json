@@ -934,6 +934,11 @@
       "unavailable": "Ôi, Huber không rảnh hôm nay. Hãy chọn một ngày khác để gặp!",
       "warning_timeslot": "Để giúp Huber sắp xếp lịch trình, vui lòng chọn khung giờ cho buổi trò chuyện ít nhất 24 giờ sau thời điểm này"
     },
+    "HoverCard": {
+      "topics": "Lĩnh vực",
+      "about": "Thông tin cơ bản",
+      "stories": "Các câu chuyện"
+    },
     "meeting_with": "Cuộc hẹn với",
     "meeting_schedule": "Lịch hẹn",
     "view": "Xem",
@@ -1187,6 +1192,10 @@
     "your_messages": "Tin nhắn của bạn",
     "messages": "Tin nhắn",
     "no_messages": "Bạn chưa có cuộc trò chuyện nào."
+  },
+  "AuthorBasicInfo": {
+    "stories": "câu chuyện",
+    "rating": "yêu thích"
   },
   "ScheduleBasicInfo": {
     "duration": "Thời lượng",
