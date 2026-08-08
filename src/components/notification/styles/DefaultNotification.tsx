@@ -152,10 +152,14 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
                 <p className="text-sm">
                   {toLocaleDateString(notification.createdAt, locale === 'en' ? 'en-GB' : 'vi-VI')}
                 </p>
-                {showExtras && notification.type.name === NotificationType.STORY_REVIEW && (
+                {showExtras && [NotificationType.STORY_REVIEW, NotificationType.STORY_REACTION, NotificationType.STORY_SHARE].includes(notification.type.name as NotificationType) && (
                   <div className="flex items-center gap-5 text-sm font-medium text-primary-50">
-                    <p>{`${notification.relatedEntity?.numOfRatings ?? 0} rating`}</p>
-                    <p>{`${notification.relatedEntity?.numOfComments ?? 0} comment`}</p>
+                    <p>
+                      {notification.type.name === NotificationType.STORY_REACTION
+                        ? t('like_count', { count: notification.relatedEntity?.likeCount ?? 0 })
+                        : t('rating_count', { count: notification.relatedEntity?.numOfRatings ?? 0 })}
+                    </p>
+                    <p>{t('comment_count', { count: notification.relatedEntity?.numOfComments ?? 0 })}</p>
                   </div>
                 )}
               </div>
