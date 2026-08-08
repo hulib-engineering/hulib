@@ -818,7 +818,7 @@
     },
     "create_book_title": "Tạo câu chuyện",
     "success_create_book": "Viết câu chuyện thành công",
-    "thanks_for_story": "Cảm ơn bạn đã chia sẻ câu chuyện! HuLib sẽ giữ bạn được thông báo khi quá trình của chúng tôi hoàn thành.",
+    "thanks_for_story": "Cảm ơn bạn đã chia sẻ câu chuyện 💙 HuLib sẽ thông báo cho bạn khi quá trình duyệt hoàn tất trong 24–48 giờ nha",
     "in_review": "Đang xem xét",
     "back_to_profile": "Quay về trang cá nhân",
     "create_new_book": "Tạo câu chuyện mới",
@@ -985,8 +985,8 @@
     "appeal": "Khiếu nại"
   },
   "HuberCTA": {
-    "title": "Cảm ơn bạn đã chia sẻ câu chuyện 💙",
-    "subtitle": "HuLib sẽ thông báo cho bạn khi quá trình duyệt hoàn tất trong 24–48 giờ nha.",
+    "title": "Chia sẻ câu chuyện của bạn",
+    "subtitle": "Hãy chia sẽ trải nghiệm, bài học, hoặc điều bạn muốn lan tỏa. Biết đâu câu chuyện của bạn sẽ giúp ai đó bớt cô đơn. Đọc story guidelines trước khi bắt đầu nhé.",
     "button_label": "Tạo sách mới"
   },
   "HomeStories": {
