@@ -7,6 +7,7 @@ import { REFERENCE_MONDAY } from '@/utils/dateUtils';
 
 type TPeriodLabel = 'morning' | 'afternoon' | 'evening';
 type TDaySlots = Record<TPeriodLabel, string[]>;
+export type GroupingTimeslots = Record<number, TDaySlots>;
 
 type UtcSlot = {
   dayOfWeek: number;
@@ -56,7 +57,7 @@ export const useTimeslotGrouping = (slots?: UtcSlot[], tz?: string) => {
       return {};
     }
 
-    const grouped: Record<number, TDaySlots> = {};
+    const grouped: GroupingTimeslots = {};
 
     slots.forEach((slot) => {
       const local = convertUtcToLocal(slot, tz);

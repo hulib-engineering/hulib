@@ -51,7 +51,8 @@ function Topics({ topics }: { topics: Topic[] }) {
   );
 }
 
-/* function About() {
+/* TODO: finish this once there's works and education data to test
+function About() {
   const t = useTranslations('Schedule.HoverCard');
   return (
     // Top is Work - Bottom is Education
