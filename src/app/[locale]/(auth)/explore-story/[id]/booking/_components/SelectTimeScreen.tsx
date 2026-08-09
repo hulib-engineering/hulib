@@ -22,7 +22,6 @@ import AuthorQuickView from '@/components/author/AuthorQuickView';
 // import { useAppSelector } from '@/libs/hooks';
 
 type SelectTimeProps = {
-  // story: any;
   humanBook: User;
   handleSelectTime: (date: Date) => void;
   currentTz: string;
@@ -90,7 +89,7 @@ export default function SelectTime({ humanBook, handleSelectTime, currentTz, set
 
   return (
     <div className="flex flex-col gap-5">
-      {/* <ScheduleBasicInfo huber={story?.humanBook} onOpenHuberConv={handleOpenHuberChat} /> */}
+      {/* <ScheduleBasicInfo huber={humanBook} onOpenHuberConv={handleOpenHuberChat} /> */}
 
       {/* | Back button */}
       <Button
@@ -125,6 +124,7 @@ export default function SelectTime({ humanBook, handleSelectTime, currentTz, set
                 onChange={setChosenDay}
                 chosenDay={chosenDay}
                 huberId={humanBook.id}
+                type="booking"
               />
             </div>
             <TimeslotWarning />
