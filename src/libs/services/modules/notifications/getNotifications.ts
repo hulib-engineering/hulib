@@ -18,8 +18,10 @@ const getNotifications = (
       },
     }),
 
-    // 👇 Group all pages into one cache key ("getNotifications")
-    serializeQueryArgs: ({ endpointName }) => endpointName,
+    // 👇 Group pages sharing the same limit into one cache key, so callers using
+    // different limits (e.g. the popup vs. the notifications page) don't share
+    // or clobber each other's cached results.
+    serializeQueryArgs: ({ endpointName, queryArgs }) => `${endpointName}-${queryArgs?.limit ?? 'default'}`,
 
     // 👇 Merge new results into the cache
     merge: (currentCache, newItems) => {

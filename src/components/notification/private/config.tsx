@@ -8,10 +8,11 @@ import { NotificationType } from './types';
 
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
 import { toLocaleDateString } from '@/utils/dateUtils';
-import { customMessage } from '@/utils/i18NRichTextUtils';
+import { customMessage, strongMessage } from '@/utils/i18NRichTextUtils';
 import { Role } from '@/types/common';
 
 const storyTitleMessage = customMessage('font-bold text-primary-60');
+const senderNameMessage = strongMessage();
 
 type TFunction = ReturnType<typeof useTranslations<'notifications'>>;
 
@@ -40,18 +41,18 @@ export const notificationConfig: NotificationConfig = {
   },
   [NotificationType.STORY_REVIEW]: {
     getMessage: (t, m) => (
-      <>{t.rich('story_reviewed', { name: m.sender.fullName, title: m.relatedEntity?.title ?? '', hl: storyTitleMessage })}</>
+      <>{t.rich('story_reviewed', { name: m.sender.fullName, title: m.relatedEntity?.title ?? '', hl: storyTitleMessage, b: senderNameMessage })}</>
     ),
   },
   [NotificationType.STORY_REACTION]: {
     getMessage: (t, m) => (
-      <>{t.rich('story_reacted', { name: m.sender.fullName, title: m.relatedEntity?.title ?? '', hl: storyTitleMessage })}</>
+      <>{t.rich('story_reacted', { name: m.sender.fullName, title: m.relatedEntity?.title ?? '', hl: storyTitleMessage, b: senderNameMessage })}</>
     ),
     route: relatedEntityId => `/explore-story/${relatedEntityId}`,
   },
   [NotificationType.STORY_SHARE]: {
     getMessage: (t, m) => (
-      <>{t.rich('story_shared', { name: m.sender.fullName, title: m.relatedEntity?.title ?? '', hl: storyTitleMessage })}</>
+      <>{t.rich('story_shared', { name: m.sender.fullName, title: m.relatedEntity?.title ?? '', hl: storyTitleMessage, b: senderNameMessage })}</>
     ),
     route: relatedEntityId => `/explore-story/${relatedEntityId}`,
   },
