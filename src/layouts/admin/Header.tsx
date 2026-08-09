@@ -15,13 +15,13 @@ import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
 import {
   notificationApi,
-  useGetNotificationsQuery,
+  useGetUnseenNotificationCountQuery,
 } from '@/libs/services/modules/notifications';
 
 const Header = () => {
   const router = useRouter();
 
-  const { data, isLoading, error } = useGetNotificationsQuery({ page: 1, limit: 5 });
+  const { data, isLoading, error } = useGetUnseenNotificationCountQuery();
 
   const user = useAppSelector(state => state.auth.userInfo);
 
@@ -38,6 +38,19 @@ const Header = () => {
           }
 
           Object.assign(draft, notifications);
+        },
+      ),
+    );
+    dispatch(
+      notificationApi.util.updateQueryData(
+        'getUnseenNotificationCount',
+        undefined,
+        (draft) => {
+          if (!draft) {
+            return;
+          }
+
+          draft.unseenCount = notifications.unseenCount;
         },
       ),
     );

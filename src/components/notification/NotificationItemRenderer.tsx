@@ -1,3 +1,4 @@
+import React from 'react';
 import { notificationRegistry } from './private/registry';
 
 import { NotificationType } from '@/components/notification/private/types';
@@ -9,6 +10,19 @@ export type INotificationItemRendererProps = {
   onClick?: () => void;
   showExtras?: boolean;
 };
+
+// Isolates one bad notification (e.g. unregistered type) so it doesn't crash the whole list.
+class ItemBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+  override state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  override render() {
+    return this.state.hasError ? null : this.props.children;
+  }
+}
 
 export default function NotificationItemRenderer({ notification, showExtras, onClick }: INotificationItemRendererProps) {
   const Component
@@ -23,5 +37,9 @@ export default function NotificationItemRenderer({ notification, showExtras, onC
     }
   };
 
-  return <Component notification={notification} showExtras={showExtras} onClick={handleClick} />;
+  return (
+    <ItemBoundary>
+      <Component notification={notification} showExtras={showExtras} onClick={handleClick} />
+    </ItemBoundary>
+  );
 }

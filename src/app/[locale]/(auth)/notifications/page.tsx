@@ -4,13 +4,12 @@ import { useTranslations } from 'next-intl';
 import React, { useMemo, useState } from 'react';
 
 import Button from '@/components/core/button/Button';
-import { NotificationType } from '@/components/notification/private/types';
+import { NotificationType, isPendingSessionStatus } from '@/components/notification/private/types';
 import NotificationSkeleton from '@/components/notification/NotificationSkeleton';
 import NotificationItemRenderer from '@/components/notification/NotificationItemRenderer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { useGetNotificationsQuery } from '@/libs/services/modules/notifications';
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
-import { StatusEnum } from '@/types/common';
 
 export default function Notifications() {
   const t = useTranslations('notifications');
@@ -19,12 +18,12 @@ export default function Notifications() {
 
   const { data, isLoading, error } = useGetNotificationsQuery({
     page: currentPage,
-    limit: 10,
+    limit: 8,
   });
 
   const sessionRequestNotifications: Notification[] = useMemo(() => {
     return data?.data.filter((notification: Notification) =>
-      notification.type.name === NotificationType.SESSION_REQUEST && notification.relatedEntity?.sessionStatus === StatusEnum.Pending) || [];
+      notification.type.name === NotificationType.SESSION_REQUEST && isPendingSessionStatus(notification.relatedEntity?.sessionStatus)) || [];
   }, [data]);
   const otherNotifications: Notification[] = useMemo(() => data?.data.filter((notification: Notification) =>
     notification.type.name !== NotificationType.SESSION_REQUEST) || [], [data]);
