@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import React, { useMemo, useState } from 'react';
 
 import Button from '@/components/core/button/Button';
-import { isPendingSessionStatus, NotificationType } from '@/components/notification/private/types';
+import { NotificationType, isPendingSessionStatus } from '@/components/notification/private/types';
 import NotificationSkeleton from '@/components/notification/NotificationSkeleton';
 import NotificationItemRenderer from '@/components/notification/NotificationItemRenderer';
 import { mergeClassnames } from '@/components/core/private/utils';
