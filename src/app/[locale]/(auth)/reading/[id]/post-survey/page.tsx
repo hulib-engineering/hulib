@@ -150,8 +150,8 @@ export default function PostSurvey() {
                 title={`${toLocaleDateString(readingSession?.startedAt, locale === 'en' ? 'en-GB' : 'vi-VI')} | ${readingSession?.startTime} - ${readingSession?.endTime}`}
               />
               <SessionAttendees
-                huber={readingSession?.humanBook}
-                liber={readingSession?.reader}
+                bookedHuber={readingSession?.humanBook}
+                me={readingSession?.reader}
                 isVibing
                 icon={<User className="text-primary-60" />}
                 childClassname="pl-4"

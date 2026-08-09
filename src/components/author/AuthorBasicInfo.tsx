@@ -1,6 +1,6 @@
 import {
   BooksIcon,
-  Check,
+  CheckIcon,
   HeartIcon,
 } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
@@ -32,7 +32,7 @@ export default function AuthorBasicInfo({ humanBook, avatarSize, stories }: Auth
           imageUrl={humanBook.photo?.path}
           name={humanBook.fullName}
         >
-          <Check
+          <CheckIcon
             size={16}
             weight="bold"
             className="absolute bottom-0 right-0

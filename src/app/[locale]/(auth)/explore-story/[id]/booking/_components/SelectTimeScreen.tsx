@@ -30,8 +30,6 @@ type SelectTimeProps = {
   setCurrentTz: React.Dispatch<React.SetStateAction<string>>;
 };
 
-// TODO: Add translations for the texts.
-
 const MemoizedAuthorQuickView = memo(AuthorQuickView);
 
 function Subtitles() {
@@ -91,7 +89,7 @@ export default function SelectTime(props: SelectTimeProps) {
 
   return (
     <div className="flex flex-col gap-5">
-      {/* <ScheduleBasicInfo huber={props.story?.humanBook} onOpenHuberConv={handleOpenHuberChat} /> */}
+      {/* <ScheduleBasicInfo huber={props.humanBook} onOpenHuberConv={handleOpenHuberChat} /> */}
 
       {/* | Back button */}
       <Button
