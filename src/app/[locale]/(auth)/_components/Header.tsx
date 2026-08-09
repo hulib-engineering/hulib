@@ -24,7 +24,7 @@ import {
 } from '@/libs/services/modules/chat';
 import {
   notificationApi,
-  useGetNotificationsQuery,
+  useGetUnseenNotificationCountQuery,
 } from '@/libs/services/modules/notifications';
 import { useLazyGetUsersByIdQuery } from '@/libs/services/modules/user';
 import type { Message } from '@/libs/store/messenger';
@@ -35,16 +35,28 @@ export const HeaderIconButtonWithBadge = ({
   children,
   badge,
   open = false,
+  onClick,
 }: {
   children: ReactNode;
   badge: number;
   open?: boolean;
+  onClick?: () => void;
 }) => (
   <div
     className={mergeClassnames(
       'relative w-fit rounded-[100px] p-2 text-[#343330] hover:bg-neutral-90',
       open && 'bg-primary-90 text-primary-50 hover:bg-primary-90',
     )}
+    role={onClick ? 'button' : undefined}
+    tabIndex={onClick ? 0 : undefined}
+    onClick={onClick}
+    onKeyDown={onClick
+      ? (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            onClick();
+          }
+        }
+      : undefined}
   >
     {children}
     {badge > 0 && (
@@ -62,7 +74,7 @@ const Header = () => {
   const currentPathname = usePathname();
   const user = useAppSelector(state => state.auth.userInfo);
 
-  const { data, isLoading, error } = useGetNotificationsQuery({ page: 1, limit: 5 });
+  const { data, isLoading, error } = useGetUnseenNotificationCountQuery();
   const { data: conversations = [] } = useGetConversationContactsQuery(
     undefined,
     {
@@ -88,6 +100,19 @@ const Header = () => {
           }
 
           Object.assign(draft, notifications);
+        },
+      ),
+    );
+    dispatch(
+      notificationApi.util.updateQueryData(
+        'getUnseenNotificationCount',
+        undefined,
+        (draft) => {
+          if (!draft) {
+            return;
+          }
+
+          draft.unseenCount = notifications.unseenCount;
         },
       ),
     );

@@ -19,6 +19,8 @@ export const notificationRegistry: Record<
   // [NotificationType.STORY_PUBLISH_REQUEST]: DefaultNotificationCard,
   [NotificationType.SESSION_REQUEST]: DefaultNotificationCard,
   [NotificationType.STORY_REVIEW]: DefaultNotificationCard,
+  [NotificationType.STORY_REACTION]: DefaultNotificationCard,
+  [NotificationType.STORY_SHARE]: DefaultNotificationCard,
   [NotificationType.STORY_PUBLISH]: DefaultNotificationCard,
   [NotificationType.STORY_REJECTION]: InformativeNotificationCard,
   [NotificationType.HUBER_REPORT]: DefaultNotificationCard,
