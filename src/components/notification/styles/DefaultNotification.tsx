@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
 import { notificationConfig } from '../private/config';
-import { NotificationType } from '../private/types';
+import { isPendingSessionStatus, NotificationType } from '../private/types';
 import { Link, useRouter } from '@/libs/i18nNavigation';
 
 import Avatar from '@/components/core/avatar/Avatar';
@@ -15,10 +15,12 @@ import HandleAppealModal from '@/layouts/admin/HandleAppealModal';
 import HandleReportModal from '@/layouts/admin/HandleReportModal';
 import SessionDetailCard from '@/layouts/scheduling/SessionDetailCard';
 import { useAppSelector } from '@/libs/hooks';
-import { Role, StatusEnum } from '@/types/common';
+import { Role } from '@/types/common';
 import { toLocaleDateString } from '@/utils/dateUtils';
 
-export default function DefaultNotificationCard({ notification, showExtras, onClick }: INotificationItemRendererProps) {
+const STORY_INTERACTION_TYPES = [NotificationType.STORY_REVIEW, NotificationType.STORY_REACTION, NotificationType.STORY_SHARE];
+
+export default function DefaultNotificationCard({ notification, onClick }: INotificationItemRendererProps) {
   const cfg = notificationConfig[notification.type.name as NotificationType] ?? notificationConfig[NotificationType.OTHER];
 
   const router = useRouter();
@@ -40,7 +42,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
           alt="Seen icon"
           width={20}
           height={20}
-          className="hidden size-5 object-cover object-center xl:block"
+          className="size-5 object-cover object-center"
         />
       );
     } else {
@@ -59,7 +61,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
               alt="Seen icon"
               width={20}
               height={20}
-              className="hidden size-5 object-cover object-center xl:block"
+              className="size-5 object-cover object-center"
             />
           );
         default:
@@ -89,7 +91,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
     }
   };
 
-  if (!notification || (notification.type.name === NotificationType.SESSION_REQUEST && notification.relatedEntity?.sessionStatus !== StatusEnum.Pending)) {
+  if (!notification || (notification.type.name === NotificationType.SESSION_REQUEST && !isPendingSessionStatus(notification.relatedEntity?.sessionStatus))) {
     return undefined;
   }
 
@@ -98,9 +100,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
       <button
         type="button"
         className={mergeClassnames(
-          'flex w-full items-start gap-3 rounded-none bg-white py-2.5 px-4 text-left transition-colors delay-300 hover:bg-primary-98',
-          'xl:py-4 xl:rounded-lg',
-          notification.type.name === NotificationType.APPEAL_RESPONSE && 'items-center',
+          'flex w-full items-start gap-3 rounded-lg bg-white py-4 px-5 text-left transition-colors delay-300 hover:bg-primary-98',
           ([NotificationType.HUBER_REPORT, NotificationType.USER_APPEAL].includes(notification.type.name as NotificationType)
             || (notification.type.name === NotificationType.APPEAL_RESPONSE && notification.relatedEntity?.status === 'rejected'))
           && 'hover:bg-red-90',
@@ -116,7 +116,7 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
               : notification.sender.photo?.path}
             name={notification.sender.fullName}
             size="xl"
-            className={mergeClassnames(showExtras && 'xl:!size-[72px]')}
+            className="!size-[72px]"
           />
           {notification.type.name === NotificationType.SESSION_REQUEST && (
             <div className="absolute bottom-0 right-0">
@@ -130,12 +130,12 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
             </div>
           )}
         </div>
-        <div className="flex flex-1 items-center gap-3">
+        <div className="flex flex-1 items-start gap-3">
           <div className="flex flex-1 flex-col gap-1">
             <div className="flex items-center justify-between">
               <p
                 className={mergeClassnames(
-                  'font-medium',
+                  'text-base font-medium leading-6 tracking-[0.005em] text-neutral-10',
                   notification.type.name !== NotificationType.APPEAL_RESPONSE && 'line-clamp-2',
                 )}
               >
@@ -149,17 +149,18 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
             </div>
             {![NotificationType.USER_APPEAL, NotificationType.APPEAL_RESPONSE].includes(notification.type.name as NotificationType) && (
               <div className="flex items-center justify-between">
-                <p className="text-sm">
+                <p className="text-sm font-normal leading-[22px] tracking-[0.015em] text-neutral-10">
                   {toLocaleDateString(notification.createdAt, locale === 'en' ? 'en-GB' : 'vi-VI')}
                 </p>
-                {showExtras && [NotificationType.STORY_REVIEW, NotificationType.STORY_REACTION, NotificationType.STORY_SHARE].includes(notification.type.name as NotificationType) && (
-                  <div className="flex items-center gap-5 text-sm font-medium text-primary-50">
+                {STORY_INTERACTION_TYPES.includes(notification.type.name as NotificationType) && (
+                  <div className="flex items-center gap-5 text-sm font-medium leading-5 tracking-[0.015em] text-primary-60">
                     <p>
                       {notification.type.name === NotificationType.STORY_REACTION
                         ? t('like_count', { count: notification.relatedEntity?.likeCount ?? 0 })
-                        : t('rating_count', { count: notification.relatedEntity?.numOfRatings ?? 0 })}
+                        : notification.type.name === NotificationType.STORY_REVIEW
+                          ? t('rating_count', { count: notification.relatedEntity?.numOfRatings ?? 0 })
+                          : t('share_count', { count: notification.relatedEntity?.shareCount ?? 0 })}
                     </p>
-                    <p>{t('comment_count', { count: notification.relatedEntity?.numOfComments ?? 0 })}</p>
                   </div>
                 )}
               </div>
@@ -175,7 +176,9 @@ export default function DefaultNotificationCard({ notification, showExtras, onCl
               </Link>
             )}
           </div>
-          {!notification.seen && renderUnseenIcon()}
+          <div className="flex size-6 shrink-0 items-center justify-center">
+            {!notification.seen && renderUnseenIcon()}
+          </div>
         </div>
       </button>
 

@@ -142,18 +142,19 @@ export default function InformativeNotificationCard({ notification, showExtras, 
             {notification.type.name === NotificationType.HUBER_WARNING && (
               <Button size="sm" onClick={() => setIsShareReasonModalOpen(true)}>{t('appeal')}</Button>)}
           </div>
-          {!notification.seen && (notification.type.name !== NotificationType.HUBER_WARNING ? (
-            <Image
-              src="/assets/icons/leaf.svg"
-              alt="Seen icon"
-              width={20}
-              height={20}
-              className="hidden size-5 object-cover object-center xl:block"
-            />
-          ) : (
-            <Warning className="hidden text-xl text-orange-50 xl:block" />
-          ))}
-
+          <div className="flex size-6 shrink-0 items-center justify-center">
+            {!notification.seen && (notification.type.name !== NotificationType.HUBER_WARNING ? (
+              <Image
+                src="/assets/icons/leaf.svg"
+                alt="Seen icon"
+                width={20}
+                height={20}
+                className="size-5 object-cover object-center"
+              />
+            ) : (
+              <Warning className="text-xl text-orange-50" />
+            ))}
+          </div>
         </div>
       </button>
 

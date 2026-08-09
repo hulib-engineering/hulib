@@ -7,13 +7,12 @@ import { useRouter } from '@/libs/i18nNavigation';
 
 import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
 import Button from '@/components/core/button/Button';
-import { NotificationType } from '@/components/notification/private/types';
+import { isPendingSessionStatus, NotificationType } from '@/components/notification/private/types';
 import NotificationItemRenderer from '@/components/notification/NotificationItemRenderer';
 import NotificationSkeleton from '@/components/notification/NotificationSkeleton';
 import Popover from '@/components/core/popover/Popover';
 import { useGetNotificationsQuery } from '@/libs/services/modules/notifications';
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
-import { StatusEnum } from '@/types/common';
 
 type NotificationButtonProps = {
   unreadNotifCount?: number;
@@ -29,13 +28,13 @@ export default function NotificationPopover({
   const [hasOpened, setHasOpened] = useState(false);
 
   const { data, error, isLoading } = useGetNotificationsQuery(
-    { page: 1, limit: 5 },
+    { page: 1, limit: 3 },
     { skip: !hasOpened },
   );
 
   const sessionRequestNotifications: Notification[] = useMemo(() => {
     return data?.data.filter((notification: Notification) =>
-      notification.type.name === NotificationType.SESSION_REQUEST && notification.relatedEntity?.sessionStatus === StatusEnum.Pending) || [];
+      notification.type.name === NotificationType.SESSION_REQUEST && isPendingSessionStatus(notification.relatedEntity?.sessionStatus)) || [];
   }, [data]);
 
   const otherNotifications: Notification[] = useMemo(() => data?.data.filter((notification: Notification) =>
@@ -57,7 +56,7 @@ export default function NotificationPopover({
                 <Bell className="text-[28px]" />
               </HeaderIconButtonWithBadge>
             </Popover.Trigger>
-            <Popover.Panel className="flex w-[430px] flex-col gap-1 px-0 py-4">
+            <Popover.Panel className="flex w-[480px] flex-col gap-1 px-0 py-4">
               <div data-testid="notifications-popover-content" className="flex flex-col gap-2.5">
                 <div className="px-2.5">
                   <h4 className="text-[28px] font-bold leading-9 text-black">
@@ -94,7 +93,7 @@ export default function NotificationPopover({
                             )
                           : (
                               <>
-                                <div className="flex h-[280px] flex-col gap-2.5 overflow-y-auto">
+                                <div className="flex flex-col gap-2.5">
                                   {otherNotifications.map((notification: Notification) => (
                                     <NotificationItemRenderer
                                       key={notification.id}
