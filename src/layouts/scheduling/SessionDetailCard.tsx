@@ -109,8 +109,8 @@ const SessionDetailCard: FC<SessionCardProps> = ({
             </span>
           </div>
           <SessionAttendees
-            huber={session.humanBook}
-            liber={session.reader}
+            bookedHuber={session.humanBook}
+            me={session.reader}
             isVibing={isLiber}
             showParticipantOnly
           />
@@ -219,15 +219,15 @@ const SessionDetailCard: FC<SessionCardProps> = ({
               </div>
             )}
             <SessionAttendees
-              huber={session.humanBook}
-              liber={session.reader}
+              bookedHuber={session.humanBook}
+              me={session.reader}
               isVibing={isLiber}
               showParticipantOnly
               classname="mt-2 hulib-open:hidden"
             />
             <SessionAttendees
-              huber={session.humanBook}
-              liber={session.reader}
+              bookedHuber={session.humanBook}
+              me={session.reader}
               isVibing={isLiber}
               classname="mt-2 hidden hulib-open:flex"
               childClassname="pl-4"

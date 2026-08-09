@@ -1,4 +1,4 @@
-import { UserIcon } from '@phosphor-icons/react';
+import { CheckIcon, UserIcon } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import React from 'react';
@@ -11,11 +11,13 @@ import Avatar from '@/components/core/avatar/Avatar';
 import { Chip } from '@/components/core/chip/Chip';
 import { ROLE_NAME, Role } from '@/types/common';
 import type { ProfileValidation } from '@/validations/ProfileValidation';
+// import type { User as Huber }  from '@/features/users/types'
 
-type User = Omit<z.infer<typeof ProfileValidation>, 'isUnderGuard'> & { photo?: { path: string } };
-type ISessionAttendeesProps = {
-  huber: User;
-  liber: User;
+// TODO: create a different type for Huber, if API response schema of getUser and getHuber turned out to be different
+type User = Omit<z.infer<typeof ProfileValidation>, 'isUnderGuard'> & { photo?: { path: string }; role?: { name: string } };
+export type ISessionAttendeesProps = {
+  bookedHuber: User;
+  me: User;
   isVibing: boolean;
   isAdmin?: boolean;
   classname?: string;
@@ -24,11 +26,52 @@ type ISessionAttendeesProps = {
   showParticipantOnly?: boolean;
 };
 
+function Attendee({ user }: { user: User }) {
+  return (
+    <div className="flex items-center gap-1">
+      {user?.photo?.path ? (
+        <Avatar
+          size="sm"
+          imageUrl={user.photo.path}
+        />
+      ) : (
+        <NiceAvatar
+          className="size-8 rounded-full"
+          {...genConfig(user?.fullName || 'user')}
+        />
+      )}
+      <div className="flex flex-row items-center">
+        {user?.role?.name === 'Liber' ? (
+          <span
+            className="mr-1 rounded-[100px] border border-yellow-70 bg-yellow-90
+          px-2 py-0.5
+          text-sm text-orange-50"
+          >
+            {ROLE_NAME[Role.LIBER]}
+          </span>
+        ) : (
+          <CheckIcon
+            size={16}
+            weight="bold"
+            className="bottom-0 right-0 ml-[2px] mr-[5px]
+          rounded-full bg-gradient-to-b from-blue-50 to-lavender-40 p-0.5
+          text-lavender-80 ring-2 ring-lavender-80"
+          />
+        )}
+        <span className="font-medium">
+          {user?.fullName || 'Unnamed'}
+          {/*! isVibing && !isAdmin && ` (${t('you')})` */}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export const SessionAttendees = ({
-  huber,
-  liber,
+  bookedHuber,
+  me,
   isVibing,
-  isAdmin = false,
+  // isAdmin = false,
   classname,
   childClassname,
   icon,
@@ -41,19 +84,18 @@ export const SessionAttendees = ({
       <div className={mergeClassnames('flex items-center gap-2 text-sm text-black', classname)}>
         {icon ?? <UserIcon size={16} className="text-[#343330]" />}
         <div className="flex items-center gap-1">
-          {(isVibing ? huber?.photo?.path : liber?.photo?.path) ? (
+          {(isVibing ? bookedHuber?.photo?.path : me?.photo?.path) ? (
             <Avatar
               size="sm"
-              imageUrl={isVibing ? huber?.photo?.path : liber?.photo?.path}
+              imageUrl={isVibing ? bookedHuber?.photo?.path : me?.photo?.path}
             />
           ) : (
             <NiceAvatar
               className="size-8 rounded-full"
-              {...genConfig((isVibing ? huber?.fullName : liber?.fullName) || 'user')}
+              {...genConfig((isVibing ? bookedHuber?.fullName : me?.fullName) || 'user')}
             />
           )}
           <Chip
-            disabled
             className={mergeClassnames(
               '!size-fit rounded-[100px] px-2.5 py-0.5 opacity-100 text-xs font-medium leading-4',
               isVibing ? 'bg-primary-90 text-primary-50' : 'bg-yellow-90 text-yellow-40',
@@ -62,7 +104,7 @@ export const SessionAttendees = ({
             {isVibing ? ROLE_NAME[Role.HUBER] : ROLE_NAME[Role.LIBER]}
           </Chip>
           <span className="text-sm font-medium text-neutral-10">
-            {isVibing ? huber?.fullName : liber?.fullName}
+            {isVibing ? bookedHuber?.fullName : me?.fullName}
           </span>
         </div>
       </div>
@@ -70,65 +112,10 @@ export const SessionAttendees = ({
   }
 
   return (
-    <ScheduleInfoItemLayout icon={icon ?? <UserIcon size={16} />} title={t('attendees')} className={classname}>
+    <ScheduleInfoItemLayout icon={icon ?? <UserIcon size={16} className="mb-1" />} title={t('attendees')} className={classname}>
       <div className={mergeClassnames('flex flex-col space-y-2', childClassname)}>
-        <div className="flex items-center">
-          {huber?.photo?.path ? (
-            <Avatar
-              size="sm"
-              imageUrl={huber.photo.path}
-            />
-          ) : (
-            <NiceAvatar
-              className="size-8 rounded-full"
-              {...genConfig(huber?.fullName || 'user')}
-            />
-          )}
-          <div className="ml-2">
-            <span
-              className="mr-1 rounded-[100px] px-2 py-0.5 text-xs"
-              style={{
-                backgroundColor: 'rgba(205, 221, 254, 1)',
-                color: 'rgba(4, 66, 191, 1)',
-              }}
-            >
-              {ROLE_NAME[Role.HUBER]}
-            </span>
-            <span className="text-sm font-medium text-black">
-              {huber?.fullName || 'Unnamed'}
-              {!isVibing && !isAdmin && ` (${t('you')})`}
-            </span>
-          </div>
-        </div>
-
-        <div className="flex items-center">
-          {liber?.photo?.path ? (
-            <Avatar
-              size="sm"
-              imageUrl={liber.photo.path}
-            />
-          ) : (
-            <NiceAvatar
-              className="size-8 rounded-full"
-              {...genConfig(liber?.fullName || 'user')}
-            />
-          )}
-          <div className="ml-2">
-            <span
-              className="mr-1 rounded-[100px] px-2 py-0.5 text-xs"
-              style={{
-                backgroundColor: 'rgba(253, 243, 206, 1)',
-                color: 'rgba(219, 174, 10, 1)',
-              }}
-            >
-              {ROLE_NAME[Role.LIBER]}
-            </span>
-            <span className="text-sm font-medium text-black">
-              {liber?.fullName || 'Unnamed'}
-              {isVibing && ` (${t('you')})`}
-            </span>
-          </div>
-        </div>
+        <Attendee user={me} />
+        <Attendee user={bookedHuber} />
       </div>
     </ScheduleInfoItemLayout>
   );
