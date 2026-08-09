@@ -43,6 +43,7 @@ export const notificationConfig: NotificationConfig = {
     getMessage: (t, m) => (
       <>{t.rich('story_reviewed', { name: m.sender.fullName, title: m.relatedEntity?.title ?? '', hl: storyTitleMessage, b: senderNameMessage })}</>
     ),
+    route: relatedEntityId => `/explore-story/${relatedEntityId}`,
   },
   [NotificationType.STORY_REACTION]: {
     getMessage: (t, m) => (

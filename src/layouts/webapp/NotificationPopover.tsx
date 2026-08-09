@@ -7,7 +7,7 @@ import { useRouter } from '@/libs/i18nNavigation';
 
 import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
 import Button from '@/components/core/button/Button';
-import { isPendingSessionStatus, NotificationType } from '@/components/notification/private/types';
+import { NotificationType, isPendingSessionStatus } from '@/components/notification/private/types';
 import NotificationItemRenderer from '@/components/notification/NotificationItemRenderer';
 import NotificationSkeleton from '@/components/notification/NotificationSkeleton';
 import Popover from '@/components/core/popover/Popover';
@@ -27,7 +27,7 @@ export default function NotificationPopover({
   // Content is only fetched once the user actually opens the popover.
   const [hasOpened, setHasOpened] = useState(false);
 
-  const { data, error, isLoading } = useGetNotificationsQuery(
+  const { data, isLoading } = useGetNotificationsQuery(
     { page: 1, limit: 3 },
     { skip: !hasOpened },
   );
@@ -45,13 +45,11 @@ export default function NotificationPopover({
       {({ open, close }) => {
         return (
           <>
-            <Popover.Trigger
-              data-testid="notifications-popover-trigger"
-              onClick={() => setHasOpened(true)}
-            >
+            <Popover.Trigger data-testid="notifications-popover-trigger">
               <HeaderIconButtonWithBadge
                 badge={unreadNotifCount}
                 open={open}
+                onClick={() => setHasOpened(true)}
               >
                 <Bell className="text-[28px]" />
               </HeaderIconButtonWithBadge>

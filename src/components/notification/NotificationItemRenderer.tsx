@@ -13,13 +13,13 @@ export type INotificationItemRendererProps = {
 
 // Isolates one bad notification (e.g. unregistered type) so it doesn't crash the whole list.
 class ItemBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
-  state = { hasError: false };
+  override state = { hasError: false };
 
   static getDerivedStateFromError() {
     return { hasError: true };
   }
 
-  render() {
+  override render() {
     return this.state.hasError ? null : this.props.children;
   }
 }

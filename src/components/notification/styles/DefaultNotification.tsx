@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
 import { notificationConfig } from '../private/config';
-import { isPendingSessionStatus, NotificationType } from '../private/types';
+import { NotificationType, isPendingSessionStatus } from '../private/types';
 import { Link, useRouter } from '@/libs/i18nNavigation';
 
 import Avatar from '@/components/core/avatar/Avatar';
@@ -85,7 +85,9 @@ export default function DefaultNotificationCard({ notification, onClick }: INoti
       setIsHandleAppealModalOpen(true);
       return;
     }
-    const relatedEntityId = notification.type.name === NotificationType.ACCOUNT_UPGRADE ? notification.sender.id : notification.relatedEntityId;
+    const relatedEntityId = notification.type.name === NotificationType.ACCOUNT_UPGRADE
+      ? notification.sender.id
+      : (notification.relatedEntityId ?? notification.relatedEntity?.id);
     if (cfg.route && cfg.route(relatedEntityId, userInfo?.role?.id ?? Role.LIBER) !== '') {
       router.push(cfg.route(relatedEntityId, userInfo?.role?.id ?? Role.LIBER));
     }
