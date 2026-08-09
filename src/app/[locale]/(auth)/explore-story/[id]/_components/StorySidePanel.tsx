@@ -199,8 +199,11 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
     if (!requireAuth()) {
       return;
     }
-    router.push(`${data?.id}/booking`);
-  }, [requireAuth, router, data?.id]);
+    if (!data?.humanBook?.id) {
+      return;
+    }
+    router.push(`${data?.id}_${data?.humanBook?.id}/booking`);
+  }, [requireAuth, router, data?.id, data?.humanBook?.id]);
 
   return (
     <>
