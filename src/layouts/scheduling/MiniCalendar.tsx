@@ -70,6 +70,8 @@ function DefaultCalendarButton(
   );
 }
 
+const DAY_KEYS_SUNDAYFIRST = [DAY_KEYS.at(-1)!, ...DAY_KEYS.slice(0, -1)];
+
 function BookingCalendarButton(
   { day, currentMonth, chosenDay, onChange, groupingTimeslots }: CalendarButton & { groupingTimeslots: GroupingTimeslots },
 ) {
@@ -173,7 +175,7 @@ export default function MiniCalendar({ onChange, type, huberId, chosenDay }: Mon
 
       {/* Weekday header */}
       <div className="grid grid-cols-7">
-        {DAY_KEYS.map(day => (
+        {DAY_KEYS_SUNDAYFIRST.map(day => (
           <div
             key={day.short}
             className="py-2 text-center text-sm leading-4 text-neutral-40"
