@@ -901,11 +901,11 @@
       "done_meetings": "Done meetings"
     },
     "MainScreen": {
-      "title": " ",
+      "title": "Connect with",
       "subtitle1": "Each conversation session lasts up to 30 minutes.",
       "subtitle2": "Conversations on HuLib may only be recorded with the explicit consent of both participants.",
       "huber_timezone": "Huber's time zone",
-      "choose_time": " ",
+      "choose_time": "Pick a time to chat",
       "morning": "Morning",
       "afternoon": "Afternoon",
       "evening": "Night",
@@ -931,8 +931,13 @@
       "notice_text": "Please make sure you select the correct time slot for your schedule. The time shown is in your local timezone.",
       "support_text": "In case you do not find an open time slot. Feel free to check with the Huber over chat",
       "click_here": "click here",
-      "unavailable": " ",
+      "unavailable": "Oops, Huber isn’t available today. Pick another day to chat.",
       "warning_timeslot": "Please choose a time slot at least 24 hours from now to give Huber time to prepare"
+    },
+    "HoverCard": {
+      "topics": "Topics",
+      "about": "About",
+      "stories": "Published Stories"
     },
     "meeting_with": "Meeting with",
     "meeting_schedule": "Meeting schedule",
@@ -1247,6 +1252,10 @@
     "your_messages": "Your messages",
     "messages": "Messages",
     "no_messages": "You have no conversations yet!"
+  },
+  "AuthorBasicInfo": {
+    "stories": "stories",
+    "rating": "hearts"
   },
   "event": {
     "event_registration_title": "Register for HuLib Event",

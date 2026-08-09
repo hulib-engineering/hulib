@@ -12,6 +12,11 @@ export type Topic = {
   updatedAt?: string | undefined;
 };
 
+export type TopicResponse = {
+  data: Topic[];
+  hasNextPage: boolean;
+}; // consider thinking a better name for this type, similar to "GetHuberStoriesResponse" maybe
+
 export type GetTopicsParams = {
   page?: number;
   limit?: number;

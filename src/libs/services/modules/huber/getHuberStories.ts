@@ -1,29 +1,10 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
+import type { GetHuberStoriesResponse } from '@/libs/services/modules/stories/storiesType';
 
 type GetHuberStoriesParams = {
   page?: number;
   limit?: number;
   publishedOnly?: boolean;
-};
-
-type Story = {
-  id: number;
-  title: string;
-  description: string;
-  coverImage: string;
-  createdAt: string;
-  updatedAt: string;
-  // Add other story fields as needed
-};
-
-type GetHuberStoriesResponse = {
-  data: Story[];
-  meta: {
-    currentPage: number;
-    itemsPerPage: number;
-    totalItems: number;
-    totalPages: number;
-  };
 };
 
 const getHuberStories = (
