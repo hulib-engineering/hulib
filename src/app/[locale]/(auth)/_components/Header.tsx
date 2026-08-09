@@ -35,16 +35,28 @@ export const HeaderIconButtonWithBadge = ({
   children,
   badge,
   open = false,
+  onClick,
 }: {
   children: ReactNode;
   badge: number;
   open?: boolean;
+  onClick?: () => void;
 }) => (
   <div
     className={mergeClassnames(
       'relative w-fit rounded-[100px] p-2 text-[#343330] hover:bg-neutral-90',
       open && 'bg-primary-90 text-primary-50 hover:bg-primary-90',
     )}
+    role={onClick ? 'button' : undefined}
+    tabIndex={onClick ? 0 : undefined}
+    onClick={onClick}
+    onKeyDown={onClick
+      ? (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            onClick();
+          }
+        }
+      : undefined}
   >
     {children}
     {badge > 0 && (
