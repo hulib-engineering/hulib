@@ -5,4 +5,6 @@ export type AuthorBasicInfoProps = {
   avatarSize?: SizeProps; // sm, md, xl, 2xl, etc..
   avatarImageUrl: NonNullable<User['photo']>['path'] | undefined;
   authorFullName: User['fullName'] | undefined;
+  numStories: number;
+  numRating: number;
 };
