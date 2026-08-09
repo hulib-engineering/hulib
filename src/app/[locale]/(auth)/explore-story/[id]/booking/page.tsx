@@ -1,15 +1,16 @@
 'use client';
 
-import { ArrowLeft, ArrowRight, CalendarDots, Note, Timer, Warning } from '@phosphor-icons/react';
+import { ArrowLeft, Note, Timer, Warning } from '@phosphor-icons/react';
 import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 import { format } from 'date-fns';
 import { isEmpty } from 'lodash';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
 import Success from './_components/SuccessScreen';
 import SelectTime from './_components/SelectTimeScreen';
+import { Time } from './_components/ScheduleInfoItems';
 
 import Button from '@/components/core/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
@@ -21,14 +22,13 @@ import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLay
 import { useAppSelector } from '@/libs/hooks';
 import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
-import { CURRENT_TZ, formatTimezone } from '@/utils/dateUtils';
+import { CURRENT_TZ } from '@/utils/dateUtils';
 
 export default function Index() {
   // TODO: handle the case the user enter URL that doesn't conform to the format of /sID_bID/ (could cause infinite loop)
   const { id } = useParams<{ id: string }>();
   const [storyId, humanBookId] = id.split('_').map(Number);
 
-  const locale = useLocale();
   const t = useTranslations('Schedule.MainScreen');
 
   const { data: humanBook } = useGetUsersByIdQuery(humanBookId);
@@ -92,9 +92,9 @@ export default function Index() {
         />
       )}
       {currentStep !== 'select-time' && (
-        <div className="flex w-full items-center justify-center rounded-none bg-white p-4 xl:rounded-3xl xl:p-8">
+        <div className="flex w-full items-center justify-center rounded-none bg-white p-4 lg:rounded-3xl lg:p-8">
           <div
-            className={mergeClassnames('flex w-full flex-col gap-2 xl:max-w-[480px] xl:gap-4', currentStep === 'success' && 'items-center')}
+            className={mergeClassnames('flex w-full flex-col gap-2 lg:max-w-[480px] lg:gap-4', currentStep === 'success' && 'items-center')}
           >
             {currentStep === 'confirm'
               ? (
@@ -103,7 +103,7 @@ export default function Index() {
                       variant="ghost"
                       size="sm"
                       iconLeft={<ArrowLeft size={20} weight="bold" />}
-                      className="w-fit text-black xl:hidden"
+                      className="w-fit text-black lg:hidden"
                       onClick={() => setCurrentStep('select-time')}
                     >
                       {t('back')}
@@ -112,40 +112,22 @@ export default function Index() {
                       variant="ghost"
                       size="lg"
                       iconLeft={<ArrowLeft size={20} weight="bold" />}
-                      className="hidden w-fit text-black xl:flex"
+                      className="hidden w-fit text-black lg:flex"
                       onClick={() => setCurrentStep('select-time')}
                     >
                       {t('back')}
                     </Button>
                     <h4
-                      className="text-2xl font-medium text-black xl:text-[28px] xl:leading-9"
+                      className="text-2xl font-medium text-black lg:text-[28px] lg:leading-9"
                     >
                       {t('confirmation_title')}
                     </h4>
                     <SessionAttendees
-                      huber={humanBook}
-                      liber={userInfo}
+                      bookedHuber={humanBook}
+                      me={userInfo}
                       isVibing
                     />
-                    <ScheduleInfoItemLayout icon={<CalendarDots size={16} />} title={t('time')}>
-                      <div className="grid grid-cols-3 place-items-center gap-2 text-primary-50">
-                        <span className="w-full text-left">{format(displayedTime, 'HH:mm')}</span>
-                        <ArrowRight size={16} weight="bold" color="#2E3032" />
-                        <span className="w-full text-right">
-                          {format(displayedTime.getTime() + 30 * 60 * 1000, 'HH:mm')}
-                        </span>
-                      </div>
-                      <div className="grid grid-cols-2 items-center justify-between gap-2 text-primary-50">
-                        <span>
-                          {displayedTime?.toLocaleDateString(locale === 'en' ? 'en-GB' : 'vi-VI', {
-                            weekday: 'short',
-                            month: 'long',
-                            day: '2-digit',
-                          })}
-                        </span>
-                        <span className="text-right">{formatTimezone(CURRENT_TZ)}</span>
-                      </div>
-                    </ScheduleInfoItemLayout>
+                    <Time displayedTime={displayedTime} />
 
                     <div className="flex flex-col gap-1 border-l border-red-40 bg-red-98 px-4 py-2 text-sm text-red-40">
                       <div className="flex items-center gap-2 font-medium leading-4">
@@ -161,13 +143,13 @@ export default function Index() {
                       <p className="leading-6 text-neutral-40">{t('message_helper_txt')}</p>
                       <TextArea
                         aria-multiline
-                        className="h-[240px] text-sm leading-4 placeholder:text-sm placeholder:leading-4 xl:h-[120px]"
+                        className="h-[240px] text-sm leading-4 placeholder:text-sm placeholder:leading-4 lg:h-[120px]"
                         placeholder={t('message_placeholder')}
                         value={note}
                         onChange={e => setNote(e.target.value)}
                       />
                     </ScheduleInfoItemLayout>
-                    <div className="grid grid-cols-2 place-items-center  gap-x-4">
+                    <div className="grid grid-cols-2 place-items-center gap-x-4">
                       <Button variant="outline" className="w-full" onClick={() => setCurrentStep('select-time')}>
                         {t('back')}
                       </Button>
@@ -183,7 +165,12 @@ export default function Index() {
                   </>
                 )
               : (
-                  <Success />
+                  <Success
+                    bookedHuber={humanBook}
+                    me={userInfo}
+                    isVibing
+                    displayedTime={displayedTime}
+                  />
                 )}
           </div>
         </div>

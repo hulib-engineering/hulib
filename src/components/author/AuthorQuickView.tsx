@@ -17,9 +17,6 @@ import type { User } from '@/features/users/types';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 import type { GetHuberStoriesResponse, Story } from '@/libs/services/modules/stories/storiesType';
 
-// TODO: Integrate API response for the Topics component once the 'topics' values are fixed in the BE - (if it's supposed to be removed then
-// ...there will need to be a 3rd API call using 'useGetUsersByIdQuery')
-
 function MaturingExperiences({ bio }: { bio: string | null }) {
   return (
     <div className={mergeClassnames('w-full text-sm leading-[22px] tracking-[0.015em] text-[#2E3032]', !bio && 'hidden')}>

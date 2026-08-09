@@ -58,8 +58,8 @@ const SessionOverviewForAdminCard = ({
           className="mt-2"
         />
         <SessionAttendees
-          huber={session.humanBook}
-          liber={session.reader}
+          bookedHuber={session.humanBook}
+          me={session.reader}
           isVibing={isLiber}
           isAdmin
           childClassname="pl-4"
@@ -99,8 +99,8 @@ const SessionOverviewForAdminCard = ({
             />
 
             <SessionAttendees
-              huber={session.humanBook}
-              liber={session.reader}
+              bookedHuber={session.humanBook}
+              me={session.reader}
               isVibing={isLiber}
               isAdmin
               classname="w-full"
