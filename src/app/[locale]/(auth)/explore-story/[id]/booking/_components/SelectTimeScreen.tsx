@@ -28,8 +28,6 @@ type SelectTimeProps = {
   setCurrentTz: React.Dispatch<React.SetStateAction<string>>;
 };
 
-// TODO: Add translations for the texts.
-
 const MemoizedAuthorQuickView = memo(AuthorQuickView);
 
 function Subtitles() {
