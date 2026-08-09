@@ -20,16 +20,19 @@ import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
 import { useAppSelector } from '@/libs/hooks';
 import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
-import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
+import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import { CURRENT_TZ, formatTimezone } from '@/utils/dateUtils';
 
 export default function Index() {
-  const { id: storyId } = useParams();
+  // TODO: handle the case the user enter URL that doesn't conform to the format of /sID_bID/ (could cause infinite loop)
+  const { id } = useParams<{ id: string }>();
+  const [storyId, humanBookId] = id.split('_').map(Number);
 
   const locale = useLocale();
   const t = useTranslations('Schedule.MainScreen');
 
-  const { data: story } = useGetStoryDetailQuery(Number(storyId));
+  const { data: humanBook } = useGetUsersByIdQuery(humanBookId);
+
   const [placeRequest] = useCreateNewReadingSessionMutation();
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
@@ -54,7 +57,7 @@ export default function Index() {
       const endedAt = fromZonedTime(new Date(selectedTime.getTime() + 30 * 60 * 1000), CURRENT_TZ);
       const endTime = format(displayedTime.getTime() + 30 * 60 * 1000, 'HH:mm');
       await placeRequest({
-        humanBookId: Number(story?.humanBookId),
+        humanBookId: Number(humanBookId),
         readerId: userInfo?.id,
         storyId: Number(storyId),
         startTime: format(displayedTime, 'HH:mm'),
@@ -70,7 +73,7 @@ export default function Index() {
     }
   };
 
-  if (!story) {
+  if (!humanBook) {
     return (
       <div className="flex h-screen w-full flex-1 items-center justify-center">
         <Loading />
@@ -82,7 +85,7 @@ export default function Index() {
     <div className="px-4 py-8 lg:px-28">
       {currentStep === 'select-time' && (
         <SelectTime
-          story={story}
+          humanBook={humanBook}
           handleSelectTime={handleSelectTime}
           currentTz={currentTz}
           setCurrentTz={setCurrentTz}
@@ -120,7 +123,7 @@ export default function Index() {
                       {t('confirmation_title')}
                     </h4>
                     <SessionAttendees
-                      huber={story?.humanBook}
+                      huber={humanBook}
                       liber={userInfo}
                       isVibing
                     />
