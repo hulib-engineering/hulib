@@ -22,9 +22,7 @@ import AuthorQuickView from '@/components/author/AuthorQuickView';
 // import { useAppSelector } from '@/libs/hooks';
 
 type SelectTimeProps = {
-  // story: any;
   humanBook: User;
-  humanBookId: number;
   handleSelectTime: (date: Date) => void;
   currentTz: string;
   setCurrentTz: React.Dispatch<React.SetStateAction<string>>;
@@ -67,7 +65,7 @@ const AuthorName = ({ humanBook }: { humanBook: User }) => {
   );
 };
 
-export default function SelectTime(props: SelectTimeProps) {
+export default function SelectTime({ humanBook, handleSelectTime, currentTz, setCurrentTz }: SelectTimeProps) {
   const router = useRouter();
   const t = useTranslations('Schedule.MainScreen');
   // const dispatch = useAppDispatch();
@@ -77,19 +75,19 @@ export default function SelectTime(props: SelectTimeProps) {
   /* const handleOpenHuberChat = () => {
     dispatch(
       openChat({
-        id: props.humanBookId,
-        name: props.humanBook.fullName,
-        avatarUrl: props.humanBook.photo?.path,
+        id: humanBookId,
+        name: humanBook.fullName,
+        avatarUrl: humanBook.photo?.path,
         isOpen: true,
         isMinimized: false,
         unread: 0,
-      }),
+
     );
   }; */
 
   return (
     <div className="flex flex-col gap-5">
-      {/* <ScheduleBasicInfo huber={props.humanBook} onOpenHuberConv={handleOpenHuberChat} /> */}
+      {/* <ScheduleBasicInfo huber={humanBook} onOpenHuberConv={handleOpenHuberChat} /> */}
 
       {/* | Back button */}
       <Button
@@ -105,7 +103,7 @@ export default function SelectTime(props: SelectTimeProps) {
         <div className="flex flex-col gap-4">
           <h1 className="text-xl font-medium lg:text-3xl">
             {t('title')}
-            <AuthorName humanBook={props.humanBook} />
+            <AuthorName humanBook={humanBook} />
           </h1>
           <Subtitles />
         </div>
@@ -113,7 +111,7 @@ export default function SelectTime(props: SelectTimeProps) {
         {/* | Features' UIs section */}
         <div className="flex w-full flex-col lg:flex-row lg:justify-between">
           <h1 className="text-[18px] font-medium lg:text-xl">{t('choose_time')}</h1>
-          <TimezoneSelect value={props.currentTz} onChange={props.setCurrentTz} />
+          <TimezoneSelect value={currentTz} onChange={setCurrentTz} />
         </div>
 
         {/* <h5 className="text-2xl font-medium text-neutral-10">format(new Date(), 'MMMM - yyyy')</h5> */}
@@ -123,16 +121,17 @@ export default function SelectTime(props: SelectTimeProps) {
               <MiniCalendar
                 onChange={setChosenDay}
                 chosenDay={chosenDay}
-                huberId={props.humanBookId}
+                huberId={humanBook.id}
+                type="booking"
               />
             </div>
             <TimeslotWarning />
           </div>
 
           <BookingTimetable
-            huberId={props.humanBookId}
-            tz={props.currentTz}
-            onSelectTime={props.handleSelectTime}
+            huberId={humanBook.id}
+            tz={currentTz}
+            onSelectTime={handleSelectTime}
             // onOpenHuberConv={handleOpenHuberChat}
             MiniCalendarChosenDay={chosenDay}
             setMiniCalendarChosenDay={setChosenDay}
