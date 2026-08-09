@@ -42,7 +42,7 @@ export default function DefaultNotificationCard({ notification, onClick }: INoti
           alt="Seen icon"
           width={20}
           height={20}
-          className="size-5 object-cover object-center"
+          className="size-4 object-cover object-center xl:size-5"
         />
       );
     } else {
@@ -61,7 +61,7 @@ export default function DefaultNotificationCard({ notification, onClick }: INoti
               alt="Seen icon"
               width={20}
               height={20}
-              className="size-5 object-cover object-center"
+              className="size-4 object-cover object-center xl:size-5"
             />
           );
         default:
@@ -116,7 +116,7 @@ export default function DefaultNotificationCard({ notification, onClick }: INoti
               : notification.sender.photo?.path}
             name={notification.sender.fullName}
             size="xl"
-            className="!size-[72px]"
+            className="xl:!size-[72px]"
           />
           {notification.type.name === NotificationType.SESSION_REQUEST && (
             <div className="absolute bottom-0 right-0">
@@ -135,7 +135,8 @@ export default function DefaultNotificationCard({ notification, onClick }: INoti
             <div className="flex items-center justify-between">
               <p
                 className={mergeClassnames(
-                  'text-base font-medium leading-6 tracking-[0.005em] text-neutral-10',
+                  'text-sm font-medium leading-5 tracking-[0.015em] text-neutral-10',
+                  'xl:text-base xl:leading-6 xl:tracking-[0.005em]',
                   notification.type.name !== NotificationType.APPEAL_RESPONSE && 'line-clamp-2',
                 )}
               >
@@ -148,12 +149,12 @@ export default function DefaultNotificationCard({ notification, onClick }: INoti
               )}
             </div>
             {![NotificationType.USER_APPEAL, NotificationType.APPEAL_RESPONSE].includes(notification.type.name as NotificationType) && (
-              <div className="flex items-center justify-between">
-                <p className="text-sm font-normal leading-[22px] tracking-[0.015em] text-neutral-10">
+              <div className="flex items-start justify-between xl:items-center">
+                <p className="text-xs font-normal leading-[14px] text-neutral-10 xl:text-sm xl:leading-[22px] xl:tracking-[0.015em]">
                   {toLocaleDateString(notification.createdAt, locale === 'en' ? 'en-GB' : 'vi-VI')}
                 </p>
                 {STORY_INTERACTION_TYPES.includes(notification.type.name as NotificationType) && (
-                  <div className="flex items-center gap-5 text-sm font-medium leading-5 tracking-[0.015em] text-primary-60">
+                  <div className="flex items-center gap-5 text-sm font-medium leading-4 text-primary-60 xl:leading-5 xl:tracking-[0.015em]">
                     <p>
                       {notification.type.name === NotificationType.STORY_REACTION
                         ? t('like_count', { count: notification.relatedEntity?.likeCount ?? 0 })
@@ -176,7 +177,7 @@ export default function DefaultNotificationCard({ notification, onClick }: INoti
               </Link>
             )}
           </div>
-          <div className="flex size-6 shrink-0 items-center justify-center">
+          <div className="flex size-4 shrink-0 items-center justify-center xl:size-6">
             {!notification.seen && renderUnseenIcon()}
           </div>
         </div>
