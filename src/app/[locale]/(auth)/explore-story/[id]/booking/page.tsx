@@ -5,8 +5,10 @@ import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 import { format } from 'date-fns';
 import { isEmpty } from 'lodash';
 import { useTranslations } from 'next-intl';
+// import { useRouter } from '@/libs/i18nNavigation';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
+// import { useState, useEffect } from 'react';
 
 import Success from './_components/SuccessScreen';
 import SelectTime from './_components/SelectTimeScreen';
@@ -25,12 +27,13 @@ import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import { CURRENT_TZ } from '@/utils/dateUtils';
 
 export default function Index() {
-  // TODO: handle the case the user enter URL that doesn't conform to the format of /sID_bID/ (could cause infinite loop)
+  // const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const [storyId, humanBookId] = id.split('_').map(Number);
 
   const t = useTranslations('Schedule.MainScreen');
 
+  // const { data: humanBook, error } = useGetUsersByIdQuery(humanBookId);
   const { data: humanBook } = useGetUsersByIdQuery(humanBookId);
 
   const [placeRequest] = useCreateNewReadingSessionMutation();
@@ -39,7 +42,7 @@ export default function Index() {
 
   const [currentStep, setCurrentStep] = useState<
     'select-time' | 'confirm' | 'success'
-  >('select-time');
+  >('success'); // debugging
 
   const [selectedTime, setSelectedTime] = useState(fromZonedTime(new Date(), CURRENT_TZ));
   const [displayedTime, setDisplayedTime] = useState(new Date());
@@ -72,6 +75,23 @@ export default function Index() {
       pushError('Failed to book meeting');
     }
   };
+
+  /* TODO: handle the case the user enter URL that doesn't conform to the format of /sID_bID/ (could cause infinite loading screen)
+ // make a guard rail in cases: user doesn't exist => beam back to the other page | bookId doesn't match what the user has => ...
+ // or show error
+ // Can ignore if this is too much of a hassle
+
+ const isNotFound = error && "status" in error && error.status === 404;
+
+  useEffect(() => {
+    if (isNotFound) {
+      router.push('/explore-story');
+    }
+  }, [isNotFound, router]);
+
+  if (isNotFound) {
+    return null;
+  } */
 
   if (!humanBook) {
     return (
