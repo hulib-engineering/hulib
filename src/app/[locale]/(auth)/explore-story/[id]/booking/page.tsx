@@ -42,7 +42,7 @@ export default function Index() {
 
   const [currentStep, setCurrentStep] = useState<
     'select-time' | 'confirm' | 'success'
-  >('success'); // debugging
+  >('select-time');
 
   const [selectedTime, setSelectedTime] = useState(fromZonedTime(new Date(), CURRENT_TZ));
   const [displayedTime, setDisplayedTime] = useState(new Date());
