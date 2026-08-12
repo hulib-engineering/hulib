@@ -2,6 +2,7 @@ import type { z } from 'zod';
 
 import type { Topic } from '@/libs/services/modules/user/userType';
 import type { EducationValidation, WorkExperienceValidation } from '@/validations/ProfileValidation';
+import type { Story } from '@/libs/services/modules/stories/storiesType';
 
 export type User = {
   id: number;
@@ -56,4 +57,9 @@ export type User = {
   works: (z.infer<typeof WorkExperienceValidation> & { id: number })[];
   educations: (z.infer<typeof EducationValidation> & { id: number })[];
   hasSeenHuberOnboarding: boolean;
+  storiesCount?: number;
+  conversationsCount?: number;
+  ratingCount?: number;
 };
+
+export type TUserDetail = User & { firstStory: Story; huberSince?: string; createdAt?: string };
