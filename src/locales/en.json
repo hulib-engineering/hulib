@@ -924,7 +924,7 @@
       "message_placeholder": "Enter meeting notes...",
       "submit": "Place request",
       "success_title": "Booking request sent successfully",
-      "success_detail": "Your request has been sent to Huber. You’ll hear from us soon.",
+      "success_detail": "You've successfully sent a request for this conversation to the Huber. When the Huber accepts your request, we will notify you.",
       "back_to_home": "Back to Homepage",
       "back_to_schedule": "My calendar",
       "notice": "Notice",
