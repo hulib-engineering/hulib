@@ -432,7 +432,11 @@
     "awaiting_stories_page": {
       "title": "Chờ phê duyệt - Câu chuyện",
       "subtitle": "Danh sách câu chuyện đang chờ phê duyệt",
-      "empty_state": "Bạn có một trái tim ấm áp"
+      "empty_state": "Bạn có một trái tim ấm áp",
+      "filter_pending": "Chờ duyệt",
+      "filter_published": "Đã xuất bản",
+      "filter_rejected": "Bị từ chối",
+      "filter_deleted": "Đã xoá"
     },
     "tags_page": {
       "title": "Danh sách chủ đề",
