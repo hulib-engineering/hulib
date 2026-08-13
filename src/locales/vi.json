@@ -432,7 +432,11 @@
     "awaiting_stories_page": {
       "title": "Chờ phê duyệt - Câu chuyện",
       "subtitle": "Danh sách câu chuyện đang chờ phê duyệt",
-      "empty_state": "Bạn có một trái tim ấm áp"
+      "empty_state": "Bạn có một trái tim ấm áp",
+      "filter_pending": "Chờ duyệt",
+      "filter_published": "Đã xuất bản",
+      "filter_rejected": "Bị từ chối",
+      "filter_deleted": "Đã xoá"
     },
     "tags_page": {
       "title": "Danh sách chủ đề",
@@ -818,7 +822,7 @@
     },
     "create_book_title": "Tạo câu chuyện",
     "success_create_book": "Viết câu chuyện thành công",
-    "thanks_for_story": "Cảm ơn bạn đã chia sẻ câu chuyện! HuLib sẽ giữ bạn được thông báo khi quá trình của chúng tôi hoàn thành.",
+    "thanks_for_story": "Cảm ơn bạn đã chia sẻ câu chuyện 💙 HuLib sẽ thông báo cho bạn khi quá trình duyệt hoàn tất trong 24–48 giờ nha",
     "in_review": "Đang xem xét",
     "back_to_profile": "Quay về trang cá nhân",
     "create_new_book": "Tạo câu chuyện mới",
@@ -924,7 +928,7 @@
       "message_placeholder": "Ghi chú...",
       "submit": "Đặt cuộc hẹn",
       "success_title": "Gửi yêu cầu lịch hẹn thành công",
-      "success_detail": "Bạn đã gửi yêu cầu cho buổi trò chuyện thành công tới Huber. Khi Huber chấp nhận yêu cầu, chúng tôi sẽ thông báo đến bạn.",
+      "success_detail": "Yêu cầu lịch hẹn đã được gửi tới Huber. Chờ tin từ tụi mình nhé!",
       "back_to_home": "Quay về Trang chủ",
       "back_to_schedule": "Lịch của tôi",
       "notice": "Lưu ý",
@@ -996,8 +1000,8 @@
     "appeal": "Khiếu nại"
   },
   "HuberCTA": {
-    "title": "Cảm ơn bạn đã chia sẻ câu chuyện 💙",
-    "subtitle": "HuLib sẽ thông báo cho bạn khi quá trình duyệt hoàn tất trong 24–48 giờ nha.",
+    "title": "Chia sẻ câu chuyện của bạn",
+    "subtitle": "Hãy chia sẽ trải nghiệm, bài học, hoặc điều bạn muốn lan tỏa. Biết đâu câu chuyện của bạn sẽ giúp ai đó bớt cô đơn. Đọc story guidelines trước khi bắt đầu nhé.",
     "button_label": "Tạo sách mới"
   },
   "HomeStories": {
