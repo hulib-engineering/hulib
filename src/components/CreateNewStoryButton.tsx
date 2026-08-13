@@ -16,7 +16,7 @@ export default function CreateNewStoryButton({ onClick, className }: CreateNewSt
     <button
       type="button"
       onClick={onClick}
-      className={mergeClassnames('flex h-11 w-full max-w-[318px] items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#007CBE] to-[#8845C6] px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90', className)}
+      className={mergeClassnames('flex h-11 w-full max-w-[318px] border shadow-[0px_0px_0px_2px_rgba(132,_172,_252,_1)] border-primary-50 items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#007CBE] to-[#8845C6] px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90', className)}
     >
       <Image
         src="/assets/images/register-huber/white_book.png"

@@ -20,4 +20,5 @@ export const timeslotApi = apiWithTag.injectEndpoints({
 export const {
   useCreateTimeslotsMutation,
   useGetTimeslotsByHuberQuery,
+  useGetTimeslotsQuery,
 }: any = timeslotApi;
