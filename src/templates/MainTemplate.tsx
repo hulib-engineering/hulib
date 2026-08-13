@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { poppins } from '@/styles/fonts';
 
 import Header from '@/app/[locale]/(auth)/_components/Header';
+import AuthSessionSync from '@/components/AuthSessionSync';
 import MobileBottomNav from '@/app/[locale]/(auth)/_components/MobileBottomNav';
 import FooterWebApp from '@/app/[locale]/(auth)/_components/FooterWebApp';
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
@@ -41,6 +42,7 @@ const MainTemplate = (props: WithChildren) => {
 
   return (
     <SessionProvider>
+      <AuthSessionSync />
       <div
         className={mergeClassnames(
           poppins.className,

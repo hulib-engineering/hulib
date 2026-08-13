@@ -10,6 +10,7 @@ import type { z } from 'zod';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/libs/i18nNavigation';
 
+import AuthSessionSync from '@/components/AuthSessionSync';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import Checkbox from '@/components/core/checkbox/Checkbox';
@@ -168,6 +169,7 @@ const LoginForm = () => {
 
 export const LoginWithSession = () => (
   <SessionProvider>
+    <AuthSessionSync />
     <LoginForm />
   </SessionProvider>
 );
