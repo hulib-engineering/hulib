@@ -1,104 +1,99 @@
-import { getSession } from 'next-auth/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Socket } from 'socket.io-client';
 
-import { socket as createSocket } from '@/libs/services/socket';
+import { acquireSocket, releaseSocket } from '@/libs/services/socket';
+import useAppSelector from './useAppSelector';
 
 type UseSocketOptions<TEvents> = {
   namespace: 'notification' | 'chat' | string;
   listeners?: Partial<{ [K in keyof TEvents]: (payload: TEvents[K]) => void }>;
-  maxRetries?: number;
-  cleanupOnUnmount?: boolean;
 };
 
 export const useSocket = <TEvents = Record<string, any>>({
   namespace,
   listeners = {},
-  maxRetries = 3,
-  cleanupOnUnmount = true,
 }: UseSocketOptions<TEvents>) => {
   const socketRef = useRef<Socket | null>(null);
-  const retryCountRef = useRef(0);
   const [isConnected, setIsConnected] = useState(false);
 
-  const bindListeners = useCallback(
-    (socket: Socket) => {
-      Object.entries(listeners).forEach(([event, handler]) => {
-        if (typeof handler === 'function') {
-          socket.off(event); // remove any existing handlers for this event
-          socket.on(event, handler as (...args: any[]) => void);
-        }
-      });
-    },
-    [listeners],
-  );
-
+  // acquireSocket() may hand back a socket that other consumers are also
+  // using (same namespace). off(event) would wipe their handlers too, so
+  // each consumer tracks its own bound handlers and only ever removes
+  // exactly those, by reference, instead of blanket-clearing the event.
+  const boundHandlersRef = useRef<Map<string, (...args: any[]) => void>>(new Map());
+  const listenersRef = useRef(listeners);
   useEffect(() => {
-    let active = true;
+    listenersRef.current = listeners;
+  }, [listeners]);
 
-    const initSocket = async () => {
-      const session = await getSession();
-      const token = session?.accessToken;
-      if (!token || !active) {
+  // Every useSocket instance used to call next-auth's getSession() itself
+  // on mount. AuthSessionSync keeps this in Redux, so read it from there
+  // instead: no network call here at all.
+  const { accessToken, isSessionHydrated } = useAppSelector(state => state.auth);
+
+  const bindListeners = useCallback((socket: Socket) => {
+    const bound = boundHandlersRef.current;
+    Object.entries(listenersRef.current).forEach(([event, handler]) => {
+      if (typeof handler !== 'function') {
         return;
       }
+      const prev = bound.get(event);
+      if (prev === handler) {
+        return;
+      }
+      if (prev) {
+        socket.off(event, prev);
+      }
+      socket.on(event, handler as (...args: any[]) => void);
+      bound.set(event, handler as (...args: any[]) => void);
+    });
+  }, []);
 
-      const socketInstance = createSocket(namespace, token);
-      socketRef.current = socketInstance;
+  useEffect(() => {
+    // Not hydrated yet, or hydrated-and-anonymous: nothing to connect with.
+    // Once AuthSessionSync dispatches, isSessionHydrated/accessToken change
+    // and this effect re-runs — still zero network calls made from here.
+    if (!isSessionHydrated || !accessToken) {
+      return undefined;
+    }
 
-      socketInstance.on('connect', () => {
-        setIsConnected(true);
-        bindListeners(socketInstance);
-      });
+    const socketInstance = acquireSocket(namespace, accessToken);
+    socketRef.current = socketInstance;
 
-      socketInstance.on('disconnect', () => {
-        console.warn(`[${namespace}] disconnected`);
-        setIsConnected(false);
-      });
-
-      socketInstance.on('error', (err: Error) => {
-        console.error(`[${namespace}] Socket error:`, err);
-      });
-
-      socketInstance.on('message', (msg) => {
-        console.info(`[${namespace}] Default message:`, msg);
-      });
-
-      socketInstance.onAny((event, ...args) => {
-        console.debug(`[${namespace}] [onAny] ${event}`, ...args);
-      });
-
-      socketInstance.io.on('reconnect_attempt', () => {
-        retryCountRef.current += 1;
-        if (retryCountRef.current > maxRetries) {
-          console.warn(`[${namespace}] Max retries exceeded. Disconnecting.`);
-          socketInstance.disconnect();
-        }
-      });
-
-      socketInstance.connect();
+    const handleConnect = () => {
+      setIsConnected(true);
+      bindListeners(socketInstance);
     };
+    const handleDisconnect = () => setIsConnected(false);
 
-    initSocket();
+    socketInstance.on('connect', handleConnect);
+    socketInstance.on('disconnect', handleDisconnect);
+
+    // The shared socket may already be connected (another consumer got
+    // there first) — in that case 'connect' won't fire again, so bind now.
+    if (socketInstance.connected) {
+      handleConnect();
+    }
 
     return () => {
-      active = false;
-      const socketInstance = socketRef.current;
-      if (socketInstance) {
-        socketInstance.removeAllListeners();
-        if (cleanupOnUnmount) {
-          socketInstance.disconnect();
-        }
-        socketRef.current = null;
-      }
+      socketInstance.off('connect', handleConnect);
+      socketInstance.off('disconnect', handleDisconnect);
+      boundHandlersRef.current.forEach((handler, event) => socketInstance.off(event, handler));
+      boundHandlersRef.current.clear();
+      releaseSocket(namespace);
+      socketRef.current = null;
+      setIsConnected(false);
     };
-  }, [namespace, bindListeners, maxRetries, cleanupOnUnmount]);
+  }, [namespace, accessToken, isSessionHydrated, bindListeners]);
 
+  // Re-bind whenever the caller's listeners object changes (most callers
+  // pass an inline object, so this runs often — bindListeners is a no-op
+  // per event whose handler reference hasn't actually changed).
   useEffect(() => {
     if (isConnected && socketRef.current) {
       bindListeners(socketRef.current);
     }
-  }, [isConnected, bindListeners]);
+  }, [isConnected, listeners, bindListeners]);
 
   const emit = useCallback(
     (event: string, ...args: any[]) => {
@@ -113,7 +108,6 @@ export const useSocket = <TEvents = Record<string, any>>({
   );
 
   const reconnect = useCallback(() => {
-    retryCountRef.current = 0;
     socketRef.current?.connect();
   }, []);
 
