@@ -73,8 +73,8 @@ const ScheduleBasicInfo = ({ huber, onOpenHuberConv }: { huber: z.infer<typeof P
         </div>
       </div>
       <SessionAttendees
-        huber={huber}
-        liber={userInfo}
+        bookedHuber={huber}
+        me={userInfo}
         isVibing
       />
       <ScheduleInfoItemLayout icon={<Timer size={16} />} title={t('duration')}>

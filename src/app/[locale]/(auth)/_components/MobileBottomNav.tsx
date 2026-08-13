@@ -21,7 +21,7 @@ import StoryForm from '@/features/stories/components/StoryForm';
 import { useAppSelector } from '@/libs/hooks';
 import { Env } from '@/libs/Env.mjs';
 import { Role } from '@/types/common';
-import { useGetNotificationsQuery } from '@/libs/services/modules/notifications';
+import { useGetUnseenNotificationCountQuery } from '@/libs/services/modules/notifications';
 import { Link, usePathname } from '@/libs/i18nNavigation';
 
 const LogoIcon = ({ size = 24 }: { size?: number }) => (
@@ -49,7 +49,7 @@ const MobileBottomNav = () => {
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
-  const { data: notifData } = useGetNotificationsQuery({ page: 1, limit: 5 });
+  const { data: notifData } = useGetUnseenNotificationCountQuery();
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
   const avatarUrl = useAppSelector(state => state.auth.avatarUrl);
