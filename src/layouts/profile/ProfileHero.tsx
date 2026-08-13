@@ -1,13 +1,14 @@
 'use client';
 
 import { Heart, PencilSimple, TelegramLogo } from '@phosphor-icons/react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import NiceAvatar, { genConfig } from 'react-nice-avatar';
+
+import type { TUserDetail } from './profile.type';
+import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import IconButton from '@/components/core/iconButton/IconButton';
-import type { TUserDetail } from '@/features/users/types';
-import JoinedSince from '@/_components/profile/JoinedSince';
-import UserAvatar from '@/_components/profile/UserAvatar';
 
 type ProfileHeroProps = {
   userDetail: TUserDetail;
@@ -27,7 +28,15 @@ export default function ProfileHero({
   onChatClick,
 }: ProfileHeroProps) {
   const t = useTranslations('MyProfile');
+  const locale = useLocale();
+
   const joinDateRaw = userDetail?.huberSince ?? userDetail?.createdAt;
+  const joinDateFormatted = joinDateRaw
+    ? new Date(joinDateRaw).toLocaleDateString(
+        locale === 'en' ? 'en-US' : 'vi-VN',
+        { day: 'numeric', month: 'long', year: 'numeric' },
+      )
+    : null;
 
   return (
     <div className="flex flex-col overflow-hidden rounded-xl shadow-sm">
@@ -36,11 +45,19 @@ export default function ProfileHero({
           <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
             <div className="flex flex-row items-center">
               <div className="group lg:min-h-[200px] lg:w-40">
-                <UserAvatar
-                  photo={userDetail.photo}
-                  fallbackSeed={userDetail?.fullName ?? String(userDetail?.id ?? 'huber')}
-                  className="size-16 lg:size-40"
-                />
+                {userDetail.photo?.path
+                  ? (
+                      <Avatar
+                        imageUrl={userDetail.photo.path}
+                        className="size-16 lg:size-40"
+                      />
+                    )
+                  : (
+                      <NiceAvatar
+                        className="size-16 rounded-full lg:size-40"
+                        {...genConfig(userDetail?.fullName ?? String(userDetail?.id ?? 'huber'))}
+                      />
+                    )}
                 {!notMe && (
                   <IconButton
                     variant="soft"
@@ -65,8 +82,12 @@ export default function ProfileHero({
                     {userDetail?.fullName}
                   </h4>
                 </div>
-                <JoinedSince date={joinDateRaw} />
-                {isHuberProfile && notMe && (
+                {joinDateFormatted && (
+                  <p className="text-sm text-neutral-40">
+                    {t('joined_since', { date: joinDateFormatted })}
+                  </p>
+                )}
+                {isHuberProfile && (
                   <div className="flex items-center gap-2">
                     <Heart className="text-pink-50" weight="fill" />
                     <p className="text-sm text-black opacity-80">
