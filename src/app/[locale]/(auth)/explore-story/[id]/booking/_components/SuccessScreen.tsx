@@ -7,6 +7,7 @@ import { useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
 import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
 import type { ISessionAttendeesProps } from '@/layouts/scheduling/SessionAttendees';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 function SuccessIcon() {
   // Fog and two icons
@@ -53,10 +54,10 @@ function SuccessMessage() {
 function ScheduleInfo(
   { displayedTime, ...props }: { displayedTime: Date } & ISessionAttendeesProps,
 ) {
+  const lg = 'lg:mt-[-20px]';
   return (
     <div
-      className="flex w-full flex-col gap-5 rounded-2xl
-      border border-[#0858FA] p-4"
+      className={mergeClassnames('flex w-full flex-col gap-5 rounded-2xl', 'border border-[#0858FA] p-4', lg)}
     >
       <Time displayedTime={displayedTime} />
       <SessionAttendees {...props} />
@@ -67,8 +68,12 @@ function ScheduleInfo(
 function Buttons() {
   const router = useRouter();
   const t = useTranslations('Schedule.MainScreen');
+
   return (
-    <div className="grid w-full grid-cols-2 items-center justify-center gap-x-2 md:gap-x-4">
+    <div className={mergeClassnames(
+      'grid w-full grid-cols-2 items-center justify-center gap-x-2 md:gap-x-4',
+    )}
+    >
       <Button
         variant="outline"
         className="w-full"
@@ -90,11 +95,15 @@ function Buttons() {
 export default function Index(
   props: ISessionAttendeesProps & { displayedTime: Date },
 ) {
+  const maxlg
+  = 'max-lg:shadow-[0px_4px_5px_0px_#1C1E211A,0px_0px_4px_0px_#0F0F100F] '
+    + 'max-lg:rounded-xl max-xl:p-4';
+
   return (
-    <>
+    <div className={mergeClassnames('flex flex-col gap-8', maxlg)}>
       <SuccessMessage />
       <ScheduleInfo {...props} />
       <Buttons />
-    </>
+    </div>
   );
 }
