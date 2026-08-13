@@ -1,6 +1,7 @@
 import { api } from '../../api';
 import createNotification from './createNotification';
 import getNotifications from './getNotifications';
+import getUnseenNotificationCount from './getUnseenNotificationCount';
 import updateNotification from './updateNotification';
 
 const apiWithTag = api.enhanceEndpoints?.({
@@ -11,6 +12,7 @@ export const notificationApi = apiWithTag.injectEndpoints({
   endpoints: (build: any) => ({
     createNotification: createNotification(build),
     getNotifications: getNotifications(build),
+    getUnseenNotificationCount: getUnseenNotificationCount(build),
     updateNotification: updateNotification(build),
   }),
   overrideExisting: false,
@@ -18,5 +20,6 @@ export const notificationApi = apiWithTag.injectEndpoints({
 
 export const {
   useGetNotificationsQuery,
+  useGetUnseenNotificationCountQuery,
   useUpdateNotificationMutation,
 }: any = notificationApi;
