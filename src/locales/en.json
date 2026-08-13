@@ -648,7 +648,7 @@
     "no_own_stories_body": "Share your stories, they might help more people than you think",
     "joined_since": "Joined HuLib since {date}",
     "become_huber_banner": "Create a new story to become a Huber",
-    "become_huber_star_title": "Complete your </strong>introduction</strong> and </strong>schedule</strong> to earn the \"Huber Star\" title",
+    "become_huber_star_title": "Complete your <strong>introduction</strong> and <strong>schedule</strong> to earn the \"Huber Star\" title",
     "become_huber_star_progress": "Progress",
     "profile_metrics": {
       "stories_title": "Stories",
