@@ -432,7 +432,11 @@
     "awaiting_stories_page": {
       "title": "Awaiting approval - Stories",
       "subtitle": "List of stories awaiting approval",
-      "empty_state": "You have a warm heart"
+      "empty_state": "You have a warm heart",
+      "filter_pending": "Pending",
+      "filter_published": "Published",
+      "filter_rejected": "Rejected",
+      "filter_deleted": "Deleted"
     },
     "tags_page": {
       "title": "Topic list",
@@ -924,7 +928,7 @@
       "message_placeholder": "Enter meeting notes...",
       "submit": "Place request",
       "success_title": "Booking request sent successfully",
-      "success_detail": "You've successfully sent a request for this conversation to the Huber. When the Huber accepts your request, we will notify you.",
+      "success_detail": "Your request has been sent to Huber. You’ll hear from us soon.",
       "back_to_home": "Back to Homepage",
       "back_to_schedule": "My calendar",
       "notice": "Notice",
