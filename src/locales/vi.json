@@ -842,11 +842,15 @@
     "content_to_avoid": "Nội dung cần tránh"
   },
   "Time_slots": {
+    "when_am_i_free": "Khi nào mình rảnh nhỉ?",
+    "description": "Chọn vài khung giờ phù hợp để bạn có thể trò chuyện trực tiếp với mọi người",
     "available_time_slots": "Lịch trống của mình",
     "available_time_slots_description": "Dưới đây là khung giờ trống của bạn",
     "update_time_slots": "Cập nhật khung giờ",
+    "save_and_next": "Lưu & qua",
     "success_time_slots_description": "Bạn đã tạo khung giờ thành công",
     "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
+    "i_am_busy": "tớ bận",
     "day_short_0": "CN",
     "day_short_1": "T2",
     "day_short_2": "T3",
@@ -1136,6 +1140,7 @@
     "update_your_schedule": " Cập nhật lịch của bạn",
     "update_schedule_description": "Cập nhật lịch của bạn để mọi người có thể trò chuyện trực tiếp với bạn",
     "update_personal_schedule": " Cập nhật lịch cá nhân",
+    "update_later": "Cập nhật sau",
     "all": "Tất cả",
     "search_by_keyword": "Tìm kiếm theo từ khóa",
     "change": "Đổi",
