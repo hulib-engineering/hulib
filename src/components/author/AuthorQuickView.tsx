@@ -96,7 +96,6 @@ export default function AuthorQuickView({ humanBook }: { humanBook: User }) {
   // 2nd API call - as the API call on parent component (which gets user's info) doesn't return list of stories (or at least their titles)
   // | remove if the 1st API call return response of stories list (or at least their titles)
 
-  // Do add 'isLoading' to const {} if need to add loading for the hover card
   const { data: storiesList } = useGetHuberStoriesQuery(
     { huberId: humanBook.id, publishedOnly: true },
     { skip: !humanBook.id },
@@ -105,16 +104,16 @@ export default function AuthorQuickView({ humanBook }: { humanBook: User }) {
   return (
     // (remove 'hidden') <- for easier debugging
     //
-    <div className="absolute z-50 box-border flex hidden
+    <div className="absolute z-50 box-border flex
       w-[420px] flex-col items-start gap-5 rounded-2xl
       border-2 border-[#0858FA] bg-white p-5
       shadow-[0px_0px_4px_rgba(15,15,16,0.06),0px_4px_5px_rgba(28,30,33,0.1)] -translate-y-8 group-hover:flex
       max-lg:top-full max-lg:mt-8 lg:left-full lg:ml-2"
     >
       <AuthorBasicInfo
-        avatarSize="2xl"
         humanBook={humanBook}
-        stories={storiesList}
+        numStories={storiesList?.data?.length}
+        type="hovercard"
       />
       <MaturingExperiences bio={humanBook.bio} />
       <Topics topics={humanBook.sharingTopics} />
