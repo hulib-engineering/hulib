@@ -26,7 +26,6 @@ type BottomButtonsType = {
 };
 
 function BottomButtons(props: BottomButtonsType) {
-  const tSlots = useTranslations('Time_slots');
   return (
     <div className="flex items-center justify-between gap-4">
       <Button
@@ -36,7 +35,7 @@ function BottomButtons(props: BottomButtonsType) {
         )}
         disabled={!props.isDayPicked(props.currentChosenDay)}
       >
-        {tSlots('save_and_next')}
+        Lưu & qua
         {' '}
         {props.nextDay(props.currentChosenDay)}
       </Button>
@@ -49,7 +48,7 @@ function BottomButtons(props: BottomButtonsType) {
       >
         {props.nextDay(props.currentChosenDay)}
         {' '}
-        {tSlots('i_am_busy')}
+        tớ bận
       </Button>
     </div>
   );
@@ -60,7 +59,6 @@ function PersonalCalendar(props: PCModal) {
   /* TODO: Make it so the chosen timeslots will only be saved when pressed on the bottom left button - (for the current Day of Week).
   As of now they are still saved irregardless. */
 
-  const tSlots = useTranslations('Time_slots');
   const [currentChosenDay, setCurrentChosenDay] = useState<Day>('Monday');
   const [timeSlotsByDay, setTimeSlotsByDay] = useState<
     Record<Day, Set<string>>
@@ -106,9 +104,9 @@ function PersonalCalendar(props: PCModal) {
     >
       {/* A Texts */}
       <div className="text-left">
-        <h6 className="mb-2 text-[20px] font-medium leading-6">{tSlots('when_am_i_free')}</h6>
+        <h6 className="mb-2 text-[20px] font-medium leading-6">Khi nào mình rảnh nhỉ?</h6>
         <p className="text-[14px] font-light leading-4">
-          {tSlots('description')}
+          Chọn vài khung giờ phù hợp để bạn có thể trò chuyện trực tiếp với mọi người
         </p>
       </div>
 
@@ -209,7 +207,7 @@ function Header(props: PCModal) {
         onClick={props.onClose}
         aria-label="Close"
       >
-        {tCommon('update_later')}
+        Cập nhật sau
       </Button>
     </div>
   );
