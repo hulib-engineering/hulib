@@ -921,6 +921,12 @@
     "accept": "Chấp nhận",
     "cancel_session": "Huỷ"
   },
+  "PersonalCalendarModal": {
+    "when_am_i_free": "Khi nào mình rảnh nhỉ?",
+    "description": "Chọn vài khung giờ phù hợp để bạn có thể trò chuyện trực tiếp với mọi người",
+    "i_am_busy": "{day} tớ bận",
+    "update_later": "Cập nhật sau"
+  },
   "Meeting": {
     "survey_submitted_successfully": "Khảo sát đã được gửi thành công. Chúc bạn có thời gian vui vẻ với Huber",
     "you_have_meeting_now": "Bạn có cuộc họp ngay bây giờ",
