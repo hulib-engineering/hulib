@@ -842,15 +842,11 @@
     "content_to_avoid": "Content to avoid"
   },
   "Time_slots": {
-    "when_am_i_free": "When am I free?",
-    "description": "Pick a few suitable time slots so people can chat with you directly.",
     "available_time_slots": "My available slots",
     "available_time_slots_description": "Wow below are slots you chose",
     "update_time_slots": "Update My Slots",
-    "save_and_next": "Save and Next",
     "success_time_slots_description": "You have successfully created your time slots",
     "error_contact_admin": "An error occurred, please contact admin for support!",
-    "i_am_busy": "I'm busy",
     "day_short_0": "Sun",
     "day_short_1": "Mon",
     "day_short_2": "Tue",
@@ -1140,7 +1136,6 @@
     "update_your_schedule": "Update Your Schedule",
     "update_schedule_description": "Update your schedule so others can chat with you directly.",
     "update_personal_schedule": "Update Personal Schedule",
-    "update_later": "Update Later",
     "search_by_keyword": "Search by keyword",
     "change": "Change",
     "password_length": "Password has at least 8 characters.",
