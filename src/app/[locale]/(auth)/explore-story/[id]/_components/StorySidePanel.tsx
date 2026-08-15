@@ -1,12 +1,9 @@
 'use client';
 
 import {
-  Books,
   CalendarDots,
-  Check,
   Eye,
   FacebookLogo,
-  Heart,
   InstagramLogo,
   ShareFat,
   ThreadsLogo,
@@ -20,7 +17,6 @@ import * as React from 'react';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
 import { useAppSelector } from '@/libs/hooks';
 
-import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -33,6 +29,9 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { copyToClipboard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/utils';
 import { AppConfig } from '@/utils/AppConfig';
 import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/ShareModal';
+import AuthorBasicInfo from '@/components/author/AuthorBasicInfo';
+import type { User } from '@/features/users/types';
+import { useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
 
 type StorySidePanelProps = {
   data: {
@@ -44,18 +43,9 @@ type StorySidePanelProps = {
     shareCount?: number;
     sharedUserIds?: string[];
     likedUserIds?: string[];
-    humanBook?: {
-      id: string | number;
-      fullName: string;
-      photo?: { path: string };
-      countTopics?: number;
-      rating?: number;
-    };
+    humanBook?: User;
   };
 };
-
-// Note: Anybody who works on this file may want to consider replacing the last component with <AuthorBasicInfo> instead
-// (components/author/AuthorBasicInfo)                                                      <--|
 
 export default function StorySidePanel({ data }: StorySidePanelProps) {
   const router = useRouter();
@@ -66,6 +56,11 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
 
   const [shareStory] = useShareStoryMutation();
   const [handleUpdateLikeCount] = useLikeStoryMutation();
+
+  const { data: storiesList } = useGetHuberStoriesQuery(
+    { huberId: data?.humanBook?.id, publishedOnly: true },
+    { skip: !data?.humanBook?.id },
+  ); // TODO: remove if/once storyDetailQuery API returns a number of published stories in humanbook
 
   const requireAuth = React.useCallback(() => {
     if (!session) {
@@ -306,45 +301,11 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
             'flex w-full flex-col gap-y-3 overflow-hidden rounded-2xl bg-white p-5 shadow-sm',
           )}
         >
-          <p className="text-sm font-medium leading-4 text-neutral-50">{t('author')}</p>
-          <button
-            type="button"
-            className="flex items-center gap-1 lg:gap-2"
-            onClick={handleAuthorClick}
-          >
-            <div className="relative">
-              <Avatar
-                imageUrl={data?.humanBook?.photo?.path}
-                name={data?.humanBook?.fullName}
-                className="size-9"
-              />
-              <div className="absolute left-6 top-5 flex items-center justify-center rounded-full bg-lavender-80 p-0.5">
-                <div className="flex items-center justify-center rounded-full bg-gradient-to-b from-blue-50 to-lavender-40 p-0.5">
-                  <Check size={8} weight="bold" className="text-lavender-80" />
-                </div>
-              </div>
-            </div>
-
-            <span className="line-clamp-1 text-[18px] font-medium leading-7 text-primary-50 hover:cursor-pointer hover:underline">
-              {data?.humanBook?.fullName}
-            </span>
-          </button>
-          <div className="flex flex-wrap justify-between gap-2">
-            <div className="flex items-center gap-1">
-              <Books className="text-neutral-20" size={16} weight="fill" />
-              <p className="text-[14px] font-medium leading-4 text-neutral-20">
-                {data?.humanBook?.countTopics ?? 0}
-              </p>
-              <p className="text-[14px] font-normal leading-4 text-neutral-10">{t('stories')}</p>
-            </div>
-            <div className="flex items-center gap-1">
-              <Heart className="text-pink-40" size={16} weight="fill" />
-              <p className="text-[14px] font-medium leading-4 text-neutral-20">
-                {data?.humanBook?.rating ?? 0}
-              </p>
-              <p className="text-[14px] font-normal leading-4 text-neutral-10">{t('favorites')}</p>
-            </div>
-          </div>
+          <AuthorBasicInfo
+            humanBook={data?.humanBook}
+            numStories={storiesList?.data?.length}
+            onClickFunction={handleAuthorClick}
+          />
         </div>
       </div>
     </>
