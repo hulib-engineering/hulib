@@ -432,7 +432,11 @@
     "awaiting_stories_page": {
       "title": "Awaiting approval - Stories",
       "subtitle": "List of stories awaiting approval",
-      "empty_state": "You have a warm heart"
+      "empty_state": "You have a warm heart",
+      "filter_pending": "Pending",
+      "filter_published": "Published",
+      "filter_rejected": "Rejected",
+      "filter_deleted": "Deleted"
     },
     "tags_page": {
       "title": "Topic list",
@@ -642,28 +646,9 @@
     "about": "About",
     "my_stories": "My Stories",
     "my_favorite": "My Favorite",
-    "my_schedule": "My Schedule",
-    "my_feedback": "My Feedback",
     "no_own_stories_title": "You don't have any stories yet",
     "no_own_stories_body": "Share your stories, they might help more people than you think",
     "joined_since": "Joined HuLib since {date}",
-    "become_huber_banner": "Create a new story to become a Huber",
-    "become_huber_star_title": "Complete your <strong>introduction</strong> and <strong>schedule</strong> to earn the \"Huber Star\" title",
-    "become_huber_star_progress": "Progress",
-    "profile_metrics": {
-      "stories_title": "Stories",
-      "stories_sub": "Shared",
-      "conversations_title": "Conversations",
-      "conversations_sub": "Accompanied",
-      "rating_title": "Rating",
-      "rating_sub": "({count} ratings)",
-      "followers_title": "Followers"
-    },
-    "feedback_panel": {
-      "no_feedback_title": "No feedback yet",
-      "no_feedback_body": "Feedback from your readers will appear here after they complete a reading session with you.",
-      "total_ratings": "{count} ratings"
-    },
     "liber_about": {
       "journey_title": "Experiences That Made Me Grow",
       "journey_placeholder": "Share experiences that helped you grow...",
@@ -690,6 +675,25 @@
       "present": "Present",
       "cancel": "Cancel",
       "save": "Save"
+    },
+    "my_schedule": "My Schedule",
+    "my_feedback": "My Feedback",
+    "become_huber_banner": "Create a new story to become a Huber",
+    "become_huber_star_title": "Complete your <strong>introduction</strong> and <strong>schedule</strong> to earn the \"Huber Star\" title",
+    "become_huber_star_progress": "Progress",
+    "profile_metrics": {
+      "stories_title": "Stories",
+      "stories_sub": "Shared",
+      "conversations_title": "Conversations",
+      "conversations_sub": "Accompanied",
+      "rating_title": "Rating",
+      "rating_sub": "({count} ratings)",
+      "followers_title": "Followers"
+    },
+    "feedback_panel": {
+      "no_feedback_title": "No feedback yet",
+      "no_feedback_body": "Feedback from your readers will appear here after they complete a reading session with you.",
+      "total_ratings": "{count} ratings"
     }
   },
   "MyFavorites": {
@@ -920,12 +924,6 @@
     "reject": "Reject",
     "accept": "Accept",
     "cancel_session": "Cancel"
-  },
-  "PersonalCalendarModal": {
-    "when_am_i_free": "When am I free?",
-    "description": "Pick some suitable time slots so people can chat with you directly.",
-    "i_am_busy": "I'm busy on {day}",
-    "update_later": "Update later"
   },
   "Meeting": {
     "survey_submitted_successfully": "Survey is submitted successfully. Hope you to have a good time with Huber",
@@ -1378,5 +1376,11 @@
       "reminder": "We are delighted to accompany you in the upcoming event! Before the event takes place, the organizers will send you a reminder email about the program. Please remember to check your inbox!",
       "close_button": "Gotchaaaa"
     }
+  },
+  "PersonalCalendarModal": {
+    "when_am_i_free": "When am I free?",
+    "description": "Pick some suitable time slots so people can chat with you directly.",
+    "i_am_busy": "I'm busy on {day}",
+    "update_later": "Update later"
   }
 }
