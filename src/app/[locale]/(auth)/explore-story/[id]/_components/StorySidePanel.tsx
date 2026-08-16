@@ -31,7 +31,7 @@ import { AppConfig } from '@/utils/AppConfig';
 import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/ShareModal';
 import AuthorBasicInfo from '@/components/author/AuthorBasicInfo';
 import type { User } from '@/features/users/types';
-import { useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
+import { useGetHuberBookedSessionsQuery, useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
 
 type StorySidePanelProps = {
   data: {
@@ -47,11 +47,13 @@ type StorySidePanelProps = {
   };
 };
 
-function BookMeeting({ handleBookingClick }: { handleBookingClick: () => void }) {
+function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () => void; userId: number | undefined }) {
   const t = useTranslations('ExploreStory');
   const { status } = useSession();
 
-  const disabledCondition = status === 'unauthenticated';
+  const disabledCondition = status === 'unauthenticated' || userId === undefined;
+  const { data: bookedSessionsList } = useGetHuberBookedSessionsQuery({ id: userId }); // replace with a var of user's number of booked sessions if BE added that
+
   return (
     <div
       className={mergeClassnames(
@@ -67,7 +69,9 @@ function BookMeeting({ handleBookingClick }: { handleBookingClick: () => void })
       >
         <span className="mt-1">{t('book_a_meeting')}</span>
       </Button>
-      <p className="text-center text-xs leading-[14px] text-neutral-20">{t('booking_count')}</p>
+      <p className="text-center text-xs leading-[14px] text-neutral-20">
+        {t('booking_count', { bookingCount: `${disabledCondition ? 0 : bookedSessionsList?.length}` })}
+      </p>
     </div>
   );
 }
@@ -311,7 +315,10 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           </div>
         </div>
 
-        <BookMeeting handleBookingClick={handleBookingClick} />
+        <BookMeeting
+          handleBookingClick={handleBookingClick}
+          userId={data?.humanBook?.id}
+        />
 
         <div className="w-full gap-y-3 overflow-hidden rounded-2xl bg-white p-5 shadow-sm">
           <AuthorBasicInfo

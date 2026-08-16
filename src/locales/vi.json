@@ -740,7 +740,7 @@
     "booking_cta": "Nếu câu chuyện này chạm đến bạn, hãy kết nối cùng tác giả qua một buổi trò chuyện tại đây nhé",
     "booking_cta_unauth": "Bạn cần đăng nhập để có thể đặt hẹn gặp gỡ trực tuyến với tác giả",
     "book_a_meeting": "Đặt hẹn trò chuyện",
-    "booking_count": "Đã có 100 cuộc hẹn từ câu chuyện này",
+    "booking_count": "Đã có {bookingCount} cuộc hẹn từ câu chuyện này",
     "author": "Tác giả",
     "stories": "câu chuyện",
     "favorites": "yêu thích",
