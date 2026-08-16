@@ -244,11 +244,11 @@ export default function StoryReviews() {
         ))}
       </div>
 
-      {true && (
+      {storyReviews?.meta?.totalPages > 1 && (
         <div className="flex items-center justify-center">
-          {true && (!isFetching ? (
+          {!isFetching ? (
             <ExpandCollapseButton onClick={hasNextPage ? handleLoadMore : handleCollapse} isExpandMode={hasNextPage} />
-          ) : <Loader />)}
+          ) : <Loader />}
         </div>
       )}
     </>
