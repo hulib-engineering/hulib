@@ -64,17 +64,23 @@ export default function AuthorBasicInfo({ humanBook, numStories = 0, type = 'def
         </div>
       </HasButton>
       {/* LOWER HALF */}
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full justify-between text-sm font-normal">
         {/* Number of stories */}
-        <div className="flex gap-1">
+        <div className="flex items-center gap-1">
           <BooksIcon size={16} />
-          <span className={mergeClassnames('text-sm leading-4 font-medium', type === 'hovercard' && 'translate-y-0.5')}>{`${numStories} ${t('stories')}`}</span>
+          <span className={mergeClassnames('leading-4 font-medium mt-1', type === 'hovercard' && 'translate-y-0.5 mt-0')}>
+            {numStories}
+          </span>
+          {t('stories')}
         </div>
 
         {/* Rating */}
-        <div className="flex gap-1">
+        <div className="flex items-center gap-1">
           <HeartIcon size={16} color="#FF2C94" weight="fill" />
-          <span className={mergeClassnames('text-sm leading-4 font-medium', type === 'hovercard' && 'translate-y-0.5')}>{`${0} ${t('rating')}`}</span>
+          <span className={mergeClassnames('leading-4 font-medium mt-1', type === 'hovercard' && 'translate-y-0.5 mt-0')}>
+            {0}
+          </span>
+          {t('rating')}
         </div>
       </div>
     </Section>
