@@ -4,7 +4,7 @@ import {
   HeartIcon,
 } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
-import type { ReactNode } from 'react';
+import React from 'react';
 import { mergeClassnames } from '../core/private/utils';
 import Section from '@/components/Section';
 import Avatar from '@/components/core/avatar/Avatar';
@@ -18,33 +18,25 @@ export type AuthorBasicInfoProps = {
   onClickFunction?: () => void;
 };
 
-type HasButtonProps = {
-  children: ReactNode;
-  isDefault: boolean;
-  onClickFunction?: () => void;
-};
 // TODO: add the var to 'rating' section once the api response for its value has been added
 // modify 'numStories' var if its API value for Huber is created
 
-function HasButton({ isDefault, onClickFunction, children }: HasButtonProps) {
-  return isDefault ? children : <button type="button" onClick={onClickFunction}>{children}</button>;
-}
-
 export default function AuthorBasicInfo({ humanBook, numStories = 0, type = 'default', onClickFunction }: AuthorBasicInfoProps) {
+  const isDefault = type === 'default';
   const t = useTranslations('AuthorBasicInfo');
 
+  const ButtonTag = isDefault ? 'button' : React.Fragment;
+  const ButtonProps = { type: 'button', onClick: onClickFunction } as const;
+
   return (
-    <Section title={type === 'default' ? 'Author' : undefined}>
+    <Section title={isDefault ? 'Author' : undefined}>
       {/* UPPER HALF */}
-      <HasButton
-        isDefault={type === 'default'}
-        onClickFunction={onClickFunction}
-      >
-        <div className="isolate flex items-center gap-2">
+      <ButtonTag {...(isDefault ? ButtonProps : {})}>
+        <div className="group isolate flex items-center gap-2">
           {/* Avatar */}
           <Avatar
             className="relative overflow-visible"
-            size={type === 'hovercard' ? '2xl' : 'md'}
+            size={!isDefault ? '2xl' : 'md'}
             imageUrl={humanBook?.photo?.path}
             name={humanBook?.fullName}
           >
@@ -58,17 +50,17 @@ export default function AuthorBasicInfo({ humanBook, numStories = 0, type = 'def
           </Avatar>
 
           {/* Name */}
-          <div className={mergeClassnames('line-clamp-1 font-medium', type === 'default' && 'leading-7 text-[18px] text-primary-50 hover:cursor-pointer hover:underline', type === 'hovercard' && 'leading-8 tracking-[-0.02em] items-start text-2xl')}>
+          <span className={mergeClassnames('line-clamp-1 font-medium', isDefault && 'leading-7 text-[18px] text-primary-50 hover:cursor-pointer group-hover:underline', !isDefault && 'leading-8 tracking-[-0.02em] items-start text-2xl')}>
             {humanBook?.fullName}
-          </div>
+          </span>
         </div>
-      </HasButton>
+      </ButtonTag>
       {/* LOWER HALF */}
       <div className="flex w-full justify-between text-sm font-normal">
         {/* Number of stories */}
         <div className="flex items-center gap-1">
           <BooksIcon size={16} />
-          <span className={mergeClassnames('leading-4 font-medium mt-1', type === 'hovercard' && 'translate-y-0.5 mt-0')}>
+          <span className={mergeClassnames('leading-4 font-medium mt-1', !isDefault && 'translate-y-0.5 mt-0')}>
             {numStories}
           </span>
           {t('stories')}
@@ -77,7 +69,7 @@ export default function AuthorBasicInfo({ humanBook, numStories = 0, type = 'def
         {/* Rating */}
         <div className="flex items-center gap-1">
           <HeartIcon size={16} color="#FF2C94" weight="fill" />
-          <span className={mergeClassnames('leading-4 font-medium mt-1', type === 'hovercard' && 'translate-y-0.5 mt-0')}>
+          <span className={mergeClassnames('leading-4 font-medium mt-1', !isDefault && 'translate-y-0.5 mt-0')}>
             {0}
           </span>
           {t('rating')}
