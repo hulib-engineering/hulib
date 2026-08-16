@@ -15,7 +15,7 @@ import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import Loader from '@/components/core/loader/Loader';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { useInfiniteScroll } from '@/libs/hooks/useInfiniteScroll';
+// import { useInfiniteScroll } from '@/libs/hooks/useInfiniteScroll';
 import { useDeleteStoryReviewMutation, useGetStoryReviewsByStoryIdQuery } from '@/libs/services/modules/story-reviews';
 import { SHOW_LIMIT_REVIEWS } from '@/libs/services/modules/story-reviews/getStoryReviewsByStoryId';
 import type { StoryReview as TStoryReview } from '@/libs/services/modules/story-reviews/storyReviewsType';
@@ -143,7 +143,6 @@ export default function StoryReviews() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [items, setItems] = useState<TStoryReview[]>([]);
-  const [expandAllReviews, setExpandAllReviews] = useState(false);
 
   const { data: storyReviews, isLoading, isFetching } = useGetStoryReviewsByStoryIdQuery({
     storyId: id,
@@ -166,11 +165,11 @@ export default function StoryReviews() {
       ? storyReviews.meta.currentPage < storyReviews.meta.totalPages
       : false;
 
-  const loadMoreRef = useInfiniteScroll(() => {
+  /* const loadMoreRef = useInfiniteScroll(() => {
     if (hasNextPage && !isFetching && expandAllReviews) {
       setCurrentPage(prevState => prevState + 1);
     }
-  }, hasNextPage && !isFetching);
+  }, hasNextPage && !isFetching); */
 
   useEffect(() => {
     if (storyReviews?.data) {
@@ -184,14 +183,17 @@ export default function StoryReviews() {
     }
   }, [storyReviews, currentPage]);
 
-  const handleLoadMore = () => {
-    setExpandAllReviews(true);
+  /* const handleLoadMore = () => {
+    if (hasNextPage)
     setCurrentPage(prev => prev + 1);
-  };
+  }; */
 
-  const handleCollapse = () => {
-    setExpandAllReviews(false);
-    setCurrentPage(1);
+  const handleExpandCollapse = () => {
+    if (hasNextPage) {
+      setCurrentPage(storyReviews?.meta?.totalPages);
+    } else {
+      setCurrentPage(1);
+    }
   };
 
   const handleDelete = async (reviewId: number) => {
@@ -230,16 +232,16 @@ export default function StoryReviews() {
       <div
         className={mergeClassnames('flex flex-1 flex-col gap-4')}
       >
-        {items.map((review, index) => (
+        {items.map(review => (
           <div key={review.id}>
             <ReviewItem
               {...review}
               onDelete={handleDelete}
               isDeleting={isDeleting}
             />
-            {index < items.length - 1 && (
+            {/* index < items.length - 1 && (
               <div ref={loadMoreRef} className="hidden h-px lg:block" />
-            )}
+            ) */}
           </div>
         ))}
       </div>
@@ -247,7 +249,7 @@ export default function StoryReviews() {
       {storyReviews?.meta?.totalPages > 1 && (
         <div className="flex items-center justify-center">
           {!isFetching ? (
-            <ExpandCollapseButton onClick={hasNextPage ? handleLoadMore : handleCollapse} isExpandMode={hasNextPage} />
+            <ExpandCollapseButton onClick={handleExpandCollapse} isExpandMode={hasNextPage} />
           ) : <Loader />}
         </div>
       )}
