@@ -24,12 +24,13 @@ export type AuthorBasicInfoProps = {
 export default function AuthorBasicInfo({ humanBook, numStories = 0, type = 'default', onClickFunction }: AuthorBasicInfoProps) {
   const isDefault = type === 'default';
   const t = useTranslations('AuthorBasicInfo');
+  const tExploreStory = useTranslations('ExploreStory');
 
   const ButtonTag = isDefault ? 'button' : React.Fragment;
   const ButtonProps = { type: 'button', onClick: onClickFunction } as const;
 
   return (
-    <Section title={isDefault ? 'Author' : undefined}>
+    <Section title={isDefault ? tExploreStory('author') : undefined}>
       {/* UPPER HALF */}
       <ButtonTag {...(isDefault ? ButtonProps : {})}>
         <div className="group isolate flex items-center gap-2">
