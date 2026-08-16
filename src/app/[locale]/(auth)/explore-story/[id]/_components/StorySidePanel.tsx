@@ -52,7 +52,8 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
   const { status } = useSession();
 
   const disabledCondition = status === 'unauthenticated' || userId === undefined;
-  const { data: bookedSessionsList } = useGetHuberBookedSessionsQuery({ id: userId }); // replace with a var of user's number of booked sessions if BE added that
+  const { data: bookedSessionsList, isLoading }
+  = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId }); // replace with a var of user's number of booked sessions if BE added that
 
   return (
     <div
@@ -70,7 +71,7 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
         <span className="mt-1">{t('book_a_meeting')}</span>
       </Button>
       <p className="text-center text-xs leading-[14px] text-neutral-20">
-        {t('booking_count', { bookingCount: `${disabledCondition ? 0 : bookedSessionsList?.length}` })}
+        {t('booking_count', { bookingCount: `${(disabledCondition || isLoading) ? 0 : bookedSessionsList?.length}` })}
       </p>
     </div>
   );
@@ -211,13 +212,10 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
   }, []);
 
   const handleAuthorClick = React.useCallback(() => {
-    console.log('test1');
     if (!requireAuth()) {
-      console.log('test2');
       return;
     }
     if (!data?.humanBook?.id) {
-      console.log('test3');
       return;
     }
     router.push(`/users/${data.humanBook.id}`);
