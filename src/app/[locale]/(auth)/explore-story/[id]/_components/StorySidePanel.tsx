@@ -82,10 +82,13 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
   const [shareStory] = useShareStoryMutation();
   const [handleUpdateLikeCount] = useLikeStoryMutation();
 
+  // TODO: remove if storyDetailQuery API returns a number of published stories in humanbook
+  // ISSUE: storiesList isn't loaded in private tab - due to the query only succeeds for authenticated users
+  // ...solution is either to allow guest access to these APIs, or hide these components for guests
   const { data: storiesList } = useGetHuberStoriesQuery(
     { huberId: data?.humanBook?.id, publishedOnly: true },
     { skip: !data?.humanBook?.id },
-  ); // TODO: remove if/once storyDetailQuery API returns a number of published stories in humanbook
+  );
 
   const requireAuth = React.useCallback(() => {
     if (!session) {
@@ -206,10 +209,13 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
   }, []);
 
   const handleAuthorClick = React.useCallback(() => {
+    console.log('test1');
     if (!requireAuth()) {
+      console.log('test2');
       return;
     }
     if (!data?.humanBook?.id) {
+      console.log('test3');
       return;
     }
     router.push(`/users/${data.humanBook.id}`);
