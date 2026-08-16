@@ -740,7 +740,7 @@
     "booking_cta": "Your story might help another young person discover that they never have to walk through life challenges alone. Before you begin, please review our e-stories guidelines.",
     "booking_cta_unauth": "",
     "book_a_meeting": "Book a Meeting",
-    "booking_count": "100 meetings have been booked from this story",
+    "booking_count": "{bookingCount} meetings have been booked from this story",
     "author": "Author",
     "stories": "stories",
     "favorites": "favorites",
