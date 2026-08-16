@@ -111,7 +111,8 @@ export default function CommentInput({ storyId }: CommentInputProps) {
           value={comment}
           onChange={e => setComment(e.target.value)}
           placeholder={t('comment_placeholder')}
-          className="flex-1 rounded-2xl border border-neutral-90 bg-neutral-98 px-4 py-2.5 text-sm text-neutral-20 placeholder:text-neutral-40 focus:outline-none"
+          className="flex-1 rounded-2xl border border-neutral-90 bg-neutral-98 px-4 py-2.5
+          text-sm text-neutral-20 placeholder:text-neutral-40 focus:outline-none"
         />
       </div>
       <div className="flex justify-end">

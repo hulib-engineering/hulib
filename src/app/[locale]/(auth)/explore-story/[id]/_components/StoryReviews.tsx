@@ -1,8 +1,8 @@
 'use client';
 
-import { CaretDown, DotsThreeVertical, Trash } from '@phosphor-icons/react';
+import { CaretDownIcon, CaretUpIcon, DotsThreeVerticalIcon, TrashIcon } from '@phosphor-icons/react';
 import { useParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
 import { isEmpty } from 'lodash';
@@ -15,7 +15,7 @@ import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import Loader from '@/components/core/loader/Loader';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { useInfiniteScroll } from '@/libs/hooks/useInfiniteScroll';
+// import { useInfiniteScroll } from '@/libs/hooks/useInfiniteScroll';
 import { useDeleteStoryReviewMutation, useGetStoryReviewsByStoryIdQuery } from '@/libs/services/modules/story-reviews';
 import { SHOW_LIMIT_REVIEWS } from '@/libs/services/modules/story-reviews/getStoryReviewsByStoryId';
 import type { StoryReview as TStoryReview } from '@/libs/services/modules/story-reviews/storyReviewsType';
@@ -26,14 +26,64 @@ type ReviewItemProps = TStoryReview & {
   isDeleting?: boolean;
 };
 
+type ExpandCollapseButtonProps = {
+  onClick: () => void;
+  isExpandMode: boolean;
+};
+
+function ExpandCollapseButton({ onClick, isExpandMode }: ExpandCollapseButtonProps) {
+  const t = useTranslations('Common');
+
+  return (
+    <Button variant="ghost" size="sm" className="w-full" onClick={onClick}>
+      <div className="flex items-center gap-1.5">
+        {isExpandMode
+          ? (
+              <>
+                <CaretDownIcon />
+                <span className="mt-1">{t('see_more')}</span>
+              </>
+            )
+          : (
+              <>
+                <CaretUpIcon />
+                <span className="mt-1">{t('see_less')}</span>
+              </>
+            )}
+      </div>
+    </Button>
+  );
+}
+
 export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemProps) => {
   const t = useTranslations('Common');
   const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showMenu) {
+      return;
+    }
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuRef.current
+        && !menuRef.current.contains(event.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showMenu]);
+
   if (isEmpty(storyReview.comment.trim())) {
     return;
   }
+
   return (
-    <div className="flex flex-col gap-4 rounded-[20px] p-4 shadow-[inset_0_-0.5px_0_0_#E3E5EB]">
+    <div className="flex flex-col gap-4 p-4 shadow-[inset_0_-0.5px_0_0_#E3E5EB]">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-2">
           <Avatar imageUrl={storyReview.user?.photo?.path} name={storyReview.user?.fullName} />
@@ -53,9 +103,9 @@ export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemP
 
           </div>
         </div>
-        <div className="relative">
+        <div ref={menuRef} className="relative">
           <IconButton variant="ghost" size="sm" onClick={() => setShowMenu(!showMenu)}>
-            <DotsThreeVertical />
+            <DotsThreeVerticalIcon />
           </IconButton>
           {showMenu && (
             <div className="absolute right-0 top-8 z-10 w-32 rounded-lg border border-neutral-90 bg-white py-1 shadow-md">
@@ -68,7 +118,7 @@ export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemP
                 }}
                 disabled={isDeleting}
               >
-                <Trash size={14} />
+                <TrashIcon size={14} />
                 {t('delete')}
               </button>
             </div>
@@ -115,11 +165,11 @@ export default function StoryReviews() {
       ? storyReviews.meta.currentPage < storyReviews.meta.totalPages
       : false;
 
-  const loadMoreRef = useInfiniteScroll(() => {
-    if (hasNextPage && !isFetching) {
+  /* const loadMoreRef = useInfiniteScroll(() => {
+    if (hasNextPage && !isFetching && expandAllReviews) {
       setCurrentPage(prevState => prevState + 1);
     }
-  }, hasNextPage && !isFetching);
+  }, hasNextPage && !isFetching); */
 
   useEffect(() => {
     if (storyReviews?.data) {
@@ -133,9 +183,16 @@ export default function StoryReviews() {
     }
   }, [storyReviews, currentPage]);
 
-  const handleLoadMore = () => {
+  /* const handleLoadMore = () => {
+    if (hasNextPage)
+    setCurrentPage(prev => prev + 1);
+  }; */
+
+  const handleExpandCollapse = () => {
     if (hasNextPage) {
-      setCurrentPage(prev => prev + 1);
+      setCurrentPage(storyReviews?.meta?.totalPages);
+    } else {
+      setCurrentPage(1);
     }
   };
 
@@ -175,30 +232,25 @@ export default function StoryReviews() {
       <div
         className={mergeClassnames('flex flex-1 flex-col gap-4')}
       >
-        {items.map((review, index) => (
+        {items.map(review => (
           <div key={review.id}>
             <ReviewItem
               {...review}
               onDelete={handleDelete}
               isDeleting={isDeleting}
             />
-            {index < items.length - 1 && (
+            {/* index < items.length - 1 && (
               <div ref={loadMoreRef} className="hidden h-px lg:block" />
-            )}
+            ) */}
           </div>
         ))}
       </div>
 
-      {hasNextPage && (
+      {storyReviews?.meta?.totalPages > 1 && (
         <div className="flex items-center justify-center">
-          {hasNextPage && (!isFetching ? (
-            <Button variant="ghost" size="sm" className="lg:hidden" onClick={handleLoadMore}>
-              <div className="flex items-center gap-1.5">
-                <CaretDown />
-                <span>{t('see_more')}</span>
-              </div>
-            </Button>
-          ) : <Loader />)}
+          {!isFetching ? (
+            <ExpandCollapseButton onClick={handleExpandCollapse} isExpandMode={hasNextPage} />
+          ) : <Loader />}
         </div>
       )}
     </>
