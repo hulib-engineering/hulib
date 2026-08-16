@@ -1,6 +1,6 @@
 'use client';
 
-import { CaretDown, DotsThreeVertical, Trash } from '@phosphor-icons/react';
+import { CaretDownIcon, DotsThreeVerticalIcon, TrashIcon } from '@phosphor-icons/react';
 import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
@@ -54,7 +54,7 @@ export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemP
   }
 
   return (
-    <div className="flex flex-col gap-4 rounded-[20px] p-4 shadow-[inset_0_-0.5px_0_0_#E3E5EB]">
+    <div className="flex flex-col gap-4 p-4 shadow-[inset_0_-0.5px_0_0_#E3E5EB]">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-2">
           <Avatar imageUrl={storyReview.user?.photo?.path} name={storyReview.user?.fullName} />
@@ -76,7 +76,7 @@ export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemP
         </div>
         <div ref={menuRef} className="relative">
           <IconButton variant="ghost" size="sm" onClick={() => setShowMenu(!showMenu)}>
-            <DotsThreeVertical />
+            <DotsThreeVerticalIcon />
           </IconButton>
           {showMenu && (
             <div className="absolute right-0 top-8 z-10 w-32 rounded-lg border border-neutral-90 bg-white py-1 shadow-md">
@@ -89,7 +89,7 @@ export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemP
                 }}
                 disabled={isDeleting}
               >
-                <Trash size={14} />
+                <TrashIcon size={14} />
                 {t('delete')}
               </button>
             </div>
@@ -114,6 +114,7 @@ export default function StoryReviews() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [items, setItems] = useState<TStoryReview[]>([]);
+  const [expandAllReviews, setExpandAllReviews] = useState(false);
 
   const { data: storyReviews, isLoading, isFetching } = useGetStoryReviewsByStoryIdQuery({
     storyId: id,
@@ -137,7 +138,7 @@ export default function StoryReviews() {
       : false;
 
   const loadMoreRef = useInfiniteScroll(() => {
-    if (hasNextPage && !isFetching) {
+    if (hasNextPage && !isFetching && expandAllReviews) {
       setCurrentPage(prevState => prevState + 1);
     }
   }, hasNextPage && !isFetching);
@@ -155,6 +156,7 @@ export default function StoryReviews() {
   }, [storyReviews, currentPage]);
 
   const handleLoadMore = () => {
+    setExpandAllReviews(true);
     if (hasNextPage) {
       setCurrentPage(prev => prev + 1);
     }
@@ -213,9 +215,9 @@ export default function StoryReviews() {
       {hasNextPage && (
         <div className="flex items-center justify-center">
           {hasNextPage && (!isFetching ? (
-            <Button variant="ghost" size="sm" className="lg:hidden" onClick={handleLoadMore}>
+            <Button variant="ghost" size="sm" onClick={handleLoadMore}>
               <div className="flex items-center gap-1.5">
-                <CaretDown />
+                <CaretDownIcon />
                 <span>{t('see_more')}</span>
               </div>
             </Button>
