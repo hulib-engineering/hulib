@@ -61,7 +61,7 @@ export default function HuberProfileComponent({ userDetail }: Props) {
         isHuberStar={isHuberStar}
       />
       {!isHuberStar && <BecomeHuberStar current={huberStarProgress} />}
-      <HuberProfileContent userDetail={userDetail} />
+      <HuberProfileContent />
       <EditImageModal
         {...currentEditableImageData}
         open={isEditImageModalOpen}

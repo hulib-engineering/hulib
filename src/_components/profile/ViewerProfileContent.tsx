@@ -1,10 +1,8 @@
 'use client';
 
 import { ControlOverview } from './ControlOverview';
-import AboutPanel from './MyAboutPanel';
 import type { TUserDetail } from '@/features/users/types';
 import { VIEWER_TABS } from '@/features/users/constants/profile.contant';
-import { buildUserData } from '@/features/users/utils/profile.util';
 import { useProfileTab } from '@/features/users/hooks/useProfileTab';
 
 type ViewerProfileContentProps = {
@@ -12,17 +10,14 @@ type ViewerProfileContentProps = {
 };
 
 export default function ViewerProfileContent({ userDetail }: ViewerProfileContentProps) {
-  const { currentTab, setCurrentTab, topicsData, translatedTabs } = useProfileTab(VIEWER_TABS);
-  const userData = buildUserData(userDetail);
+  const { currentTab, setCurrentTab, translatedTabs } = useProfileTab(VIEWER_TABS);
+
+  console.log('ViewerProfileContent userDetail:', userDetail);
 
   return (
     <ControlOverview className="p-2" currentTab={currentTab} onTabChange={setCurrentTab} tabs={translatedTabs}>
       {currentTab === 'about' && (
-        <AboutPanel
-          data={userData}
-          availableTopics={topicsData?.data}
-          editable={false}
-        />
+        <>My About Content</>
       )}
     </ControlOverview>
   );
