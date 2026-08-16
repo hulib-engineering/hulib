@@ -2,7 +2,7 @@
 
 import { CaretDown, DotsThreeVertical, Trash } from '@phosphor-icons/react';
 import { useParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
 import { isEmpty } from 'lodash';
@@ -29,9 +29,30 @@ type ReviewItemProps = TStoryReview & {
 export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemProps) => {
   const t = useTranslations('Common');
   const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showMenu) {
+      return;
+    }
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuRef.current
+        && !menuRef.current.contains(event.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showMenu]);
+
   if (isEmpty(storyReview.comment.trim())) {
     return;
   }
+
   return (
     <div className="flex flex-col gap-4 rounded-[20px] p-4 shadow-[inset_0_-0.5px_0_0_#E3E5EB]">
       <div className="flex w-full items-center justify-between">
@@ -53,7 +74,7 @@ export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemP
 
           </div>
         </div>
-        <div className="relative">
+        <div ref={menuRef} className="relative">
           <IconButton variant="ghost" size="sm" onClick={() => setShowMenu(!showMenu)}>
             <DotsThreeVertical />
           </IconButton>
