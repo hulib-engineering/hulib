@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { MainTemplate } from '@/templates/MainTemplate';
+import ConditionalTemplate from '@/templates/ConditionalTemplate';
 
 import { getStoryDetailServer, resolveCoverUrl } from '@/libs/services/modules/stories/storyMetadata';
 
@@ -37,5 +37,5 @@ export async function generateMetadata({ params }: StoryDetailLayoutParams): Pro
 }
 
 export default function StoryDetailLayout({ children }: { children: React.ReactNode }) {
-  return <MainTemplate>{children}</MainTemplate>;
+  return <ConditionalTemplate>{children}</ConditionalTemplate>;
 }
