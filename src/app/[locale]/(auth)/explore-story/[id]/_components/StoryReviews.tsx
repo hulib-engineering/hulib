@@ -1,6 +1,6 @@
 'use client';
 
-import { CaretDownIcon, DotsThreeVerticalIcon, TrashIcon } from '@phosphor-icons/react';
+import { CaretDownIcon, CaretUpIcon, DotsThreeVerticalIcon, TrashIcon } from '@phosphor-icons/react';
 import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
@@ -25,6 +25,35 @@ type ReviewItemProps = TStoryReview & {
   onDelete?: (id: number) => void;
   isDeleting?: boolean;
 };
+
+type ExpandCollapseButtonProps = {
+  onClick: () => void;
+  isExpandMode: boolean;
+};
+
+function ExpandCollapseButton({ onClick, isExpandMode }: ExpandCollapseButtonProps) {
+  const t = useTranslations('Common');
+
+  return (
+    <Button variant="ghost" size="sm" className="w-full" onClick={onClick}>
+      <div className="flex items-center gap-1.5">
+        {isExpandMode
+          ? (
+              <>
+                <CaretDownIcon />
+                <span className="mt-1">{t('see_more')}</span>
+              </>
+            )
+          : (
+              <>
+                <CaretUpIcon />
+                <span className="mt-1">{t('see_less')}</span>
+              </>
+            )}
+      </div>
+    </Button>
+  );
+}
 
 export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemProps) => {
   const t = useTranslations('Common');
@@ -157,9 +186,12 @@ export default function StoryReviews() {
 
   const handleLoadMore = () => {
     setExpandAllReviews(true);
-    if (hasNextPage) {
-      setCurrentPage(prev => prev + 1);
-    }
+    setCurrentPage(prev => prev + 1);
+  };
+
+  const handleCollapse = () => {
+    setExpandAllReviews(false);
+    setCurrentPage(1);
   };
 
   const handleDelete = async (reviewId: number) => {
@@ -212,15 +244,10 @@ export default function StoryReviews() {
         ))}
       </div>
 
-      {hasNextPage && (
+      {true && (
         <div className="flex items-center justify-center">
-          {hasNextPage && (!isFetching ? (
-            <Button variant="ghost" size="sm" onClick={handleLoadMore}>
-              <div className="flex items-center gap-1.5">
-                <CaretDownIcon />
-                <span>{t('see_more')}</span>
-              </div>
-            </Button>
+          {true && (!isFetching ? (
+            <ExpandCollapseButton onClick={hasNextPage ? handleLoadMore : handleCollapse} isExpandMode={hasNextPage} />
           ) : <Loader />)}
         </div>
       )}
