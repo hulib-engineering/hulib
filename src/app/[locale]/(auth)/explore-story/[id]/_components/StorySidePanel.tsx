@@ -87,8 +87,6 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
   const [handleUpdateLikeCount] = useLikeStoryMutation();
 
   // TODO: remove if storyDetailQuery API returns a number of published stories in humanbook
-  // ISSUE: storiesList isn't loaded in private tab - due to the query only succeeds for authenticated users
-  // ...solution is either to allow guest access to these APIs, or hide these components for guests
   const { data: storiesList } = useGetHuberStoriesQuery(
     { huberId: data?.humanBook?.id, publishedOnly: true },
     { skip: !data?.humanBook?.id },
