@@ -868,7 +868,41 @@
     "day_prompt_4": "Dành ra 30 phút khó vậy sao? 😢",
     "day_prompt_5": "Thôi nào, 30 phút cũng khó à? 😢",
     "day_prompt_6": "Bạn thực sự bận vào thứ Bảy à? 🤔",
-    "slots_message": "Tuyệt vời!!! Bạn có thể gặp {slots} Libers mỗi {day}"
+    "slots_message": "Tuyệt vời!!! Bạn có thể gặp {slots} Libers mỗi {day}",
+    "personal_time_tab": "Giờ cá nhân",
+    "meeting_tab": "Lịch trò chuyện",
+    "panel_description": "Với mỗi câu chuyện, một Liber có thể yêu cầu trò chuyện trực tiếp với bạn. Hãy chọn khung giờ trong tuần bạn rảnh để trò chuyện với Liber.",
+    "save_and_next": "Lưu & chuyển sang {day}",
+    "skip_day": "Bỏ qua {day}",
+    "edit": "Chỉnh sửa",
+    "morning": "Buổi sáng",
+    "afternoon": "Buổi chiều",
+    "evening": "Buổi tối",
+    "save_schedule": "Lưu lịch",
+    "save_success": "Lưu lịch thành công",
+    "status_updated_success": "Cập nhật phiên thành công",
+    "meeting_empty_title": "Bạn chưa có phiên nào",
+    "meeting_empty_description": "Khám phá những câu chuyện bên dưới, nếu bạn thấy kết nối, hãy đặt phiên với tác giả!",
+    "filter_view_label": "Xem:",
+    "filter_all": "Tất cả loại",
+    "filter_invitation": "Lời mời",
+    "filter_my_request": "Yêu cầu của tôi",
+    "filter_done": "Đã xong",
+    "filter_missed": "Bỏ lỡ",
+    "filter_no_results": "Không có phiên nào phù hợp với bộ lọc",
+    "status_right_now": "Ngay bây giờ!",
+    "status_invitation": "Lời mời",
+    "status_my_request": "Yêu cầu của tôi",
+    "status_done": "Đã xong",
+    "status_missed": "Bỏ lỡ",
+    "time_label": "Thời gian",
+    "meeting_with": "Họp với",
+    "requested_by": "Được yêu cầu bởi",
+    "send_to": "Gửi đến",
+    "join": "Tham gia",
+    "reject": "Từ chối",
+    "accept": "Chấp nhận",
+    "cancel_session": "Hủy"
   },
   "Meeting": {
     "survey_submitted_successfully": "Khảo sát đã được gửi thành công. Chúc bạn có thời gian vui vẻ với Huber",
@@ -1321,5 +1355,11 @@
       "reminder": "Chúng tôi rất vui khi được đồng hành cùng bạn trong sự kiện sắp tới! Vào trước ngày diễn ra sự kiện BTC sẽ gửi một email nhắc nhở bạn về chương trình, mong bạn sẽ để ý check mail nhé!",
       "close_button": "Gotchaaaa"
     }
+  },
+  "PersonalCalendarModal": {
+    "when_am_i_free": "Khi nào mình rảnh nhỉ?",
+    "description": "Chọn vài khung giờ phù hợp để bạn có thể trò chuyện trực tiếp với mọi người",
+    "i_am_busy": "{day} tớ bận",
+    "update_later": "Cập nhật sau"
   }
 }

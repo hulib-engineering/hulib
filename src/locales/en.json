@@ -587,7 +587,9 @@
       "about": "About",
       "my_stories": "My Stories",
       "stories": "Stories",
-      "my_favorite": "My Favorite"
+      "my_favorite": "My Favorite",
+      "my_schedule": "My Schedule",
+      "my_feedback": "My Feedback"
     },
     "about_panel": {
       "title": "About",
@@ -673,6 +675,25 @@
       "present": "Present",
       "cancel": "Cancel",
       "save": "Save"
+    },
+    "my_schedule": "My Schedule",
+    "my_feedback": "My Feedback",
+    "become_huber_banner": "Create a new story to become a Huber",
+    "become_huber_star_title": "Complete your <strong>introduction</strong> and <strong>schedule</strong> to earn the \"Huber Star\" title",
+    "become_huber_star_progress": "Progress",
+    "profile_metrics": {
+      "stories_title": "Stories",
+      "stories_sub": "Shared",
+      "conversations_title": "Conversations",
+      "conversations_sub": "Accompanied",
+      "rating_title": "Rating",
+      "rating_sub": "({count} ratings)",
+      "followers_title": "Followers"
+    },
+    "feedback_panel": {
+      "no_feedback_title": "No feedback yet",
+      "no_feedback_body": "Feedback from your readers will appear here after they complete a reading session with you.",
+      "total_ratings": "{count} ratings"
     }
   },
   "MyFavorites": {
@@ -822,7 +843,7 @@
     },
     "create_book_title": "Create your story",
     "success_create_book": "Write your success story",
-    "thanks_for_story": "Thanks for sharing your story 💙 HuLib will notify you once our review is complete within 24-48 hours.",
+    "thanks_for_story": "Thanks for your story! HuLib will keep you informed when our process completes.",
     "in_review": "In review",
     "back_to_profile": "Back to Profile",
     "create_new_book": "Create New Book",
@@ -868,7 +889,41 @@
     "day_prompt_4": "Is setting aside just 30 minutes really that hard? 😢",
     "day_prompt_5": "Come on, is 30 minutes that tough to spare? 😢",
     "day_prompt_6": "Hey, are you really that busy on Saturday? 🤔",
-    "slots_message": "Amazing!!! You can meet {slots} Libers every {day}"
+    "slots_message": "Amazing!!! You can meet {slots} Libers every {day}",
+    "personal_time_tab": "Personal time",
+    "meeting_tab": "Meeting schedule",
+    "panel_description": "For each story, a Liber can request a direct conversation with you. Please select the time slots during the week when you are available to chat with Liber.",
+    "save_and_next": "Save & go to {day}",
+    "skip_day": "Skip {day}",
+    "edit": "Edit",
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "evening": "Night",
+    "save_schedule": "Save schedule",
+    "save_success": "Schedule saved successfully",
+    "status_updated_success": "Session updated successfully",
+    "meeting_empty_title": "You have no sessions yet",
+    "meeting_empty_description": "Explore the stories below, if you feel connected, book a session with the author!",
+    "filter_view_label": "View:",
+    "filter_all": "All types",
+    "filter_invitation": "Invitations",
+    "filter_my_request": "My requests",
+    "filter_done": "Done",
+    "filter_missed": "Missed",
+    "filter_no_results": "No sessions match this filter",
+    "status_right_now": "Right now!",
+    "status_invitation": "Invitation",
+    "status_my_request": "My request",
+    "status_done": "Done",
+    "status_missed": "Missed",
+    "time_label": "Time",
+    "meeting_with": "Meeting with",
+    "requested_by": "Requested by",
+    "send_to": "Send to",
+    "join": "Join",
+    "reject": "Reject",
+    "accept": "Accept",
+    "cancel_session": "Cancel"
   },
   "Meeting": {
     "survey_submitted_successfully": "Survey is submitted successfully. Hope you to have a good time with Huber",
@@ -1000,8 +1055,8 @@
     "appeal": "Appeal"
   },
   "HuberCTA": {
-    "title": "Share Your Story",
-    "subtitle": "Share your experiences, the lessons you've learned, or something meaningful you'd like to pass on. Your story could be the light that helps someone through a difficult day. Before you begin, please read our Story Guidelines.",
+    "title": "Thanks for sharing your story 💙",
+    "subtitle": "HuLib will notify you once our review is complete within 24-48 hours.",
     "button_label": "Create new story"
   },
   "HomeStories": {
@@ -1321,5 +1376,11 @@
       "reminder": "We are delighted to accompany you in the upcoming event! Before the event takes place, the organizers will send you a reminder email about the program. Please remember to check your inbox!",
       "close_button": "Gotchaaaa"
     }
+  },
+  "PersonalCalendarModal": {
+    "when_am_i_free": "When am I free?",
+    "description": "Pick some suitable time slots so people can chat with you directly.",
+    "i_am_busy": "I'm busy on {day}",
+    "update_later": "Update later"
   }
 }
