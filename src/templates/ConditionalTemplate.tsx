@@ -3,6 +3,7 @@
 import { useSession } from 'next-auth/react';
 import type { ReactNode } from 'react';
 import { MainTemplate } from '@/templates/MainTemplate';
+import HomeTemplate from '@/templates/HomeTemplate';
 
 export default function ConditionalTemplate({ children }: { children: ReactNode }) {
   const { status } = useSession();
@@ -15,5 +16,5 @@ export default function ConditionalTemplate({ children }: { children: ReactNode 
     return <MainTemplate>{children}</MainTemplate>;
   }
 
-  return <>{children}</>;
+  return <HomeTemplate>{children}</HomeTemplate>;
 }
