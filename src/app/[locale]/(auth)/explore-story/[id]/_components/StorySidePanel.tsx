@@ -47,6 +47,31 @@ type StorySidePanelProps = {
   };
 };
 
+function BookMeeting({ handleBookingClick }: { handleBookingClick: () => void }) {
+  const t = useTranslations('ExploreStory');
+  const { status } = useSession();
+
+  const disabledCondition = status === 'unauthenticated';
+  return (
+    <div
+      className={mergeClassnames(
+        'flex w-full flex-col items-center gap-y-5 overflow-hidden rounded-2xl bg-white p-5 shadow-sm border-2 border-primary-70',
+      )}
+    >
+      <p className="text-center text-base leading-6 text-neutral-20">{disabledCondition ? t('booking_cta_unauth') : t('booking_cta')}</p>
+      <Button
+        onClick={handleBookingClick}
+        disabled={disabledCondition}
+        iconLeft={<CalendarDots className={mergeClassnames(!disabledCondition && 'text-white')} size={20} weight="bold" />}
+        className={mergeClassnames('w-full', !disabledCondition && 'border border-primary-80 bg-gradient-to-b from-blue-40 to-lavender-40 text-white hover:opacity-95')}
+      >
+        <span className="mt-1">{t('book_a_meeting')}</span>
+      </Button>
+      <p className="text-center text-xs leading-[14px] text-neutral-20">{t('booking_count')}</p>
+    </div>
+  );
+}
+
 export default function StorySidePanel({ data }: StorySidePanelProps) {
   const router = useRouter();
   const { data: session } = useSession();
@@ -280,27 +305,9 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           </div>
         </div>
 
-        <div
-          className={mergeClassnames(
-            'flex w-full flex-col items-center gap-y-5 overflow-hidden rounded-2xl bg-white p-5 shadow-sm border-2 border-primary-70',
-          )}
-        >
-          <p className="text-center text-base leading-6 text-neutral-20">{t('booking_cta')}</p>
-          <Button
-            onClick={handleBookingClick}
-            iconLeft={<CalendarDots className="text-white" size={20} weight="bold" />}
-            className="w-full border border-primary-80 bg-gradient-to-b from-blue-40 to-lavender-40 text-white hover:opacity-95"
-          >
-            {t('book_a_meeting')}
-          </Button>
-          <p className="text-center text-xs leading-[14px] text-neutral-20">{t('booking_count')}</p>
-        </div>
+        <BookMeeting handleBookingClick={handleBookingClick} />
 
-        <div
-          className={mergeClassnames(
-            'flex w-full flex-col gap-y-3 overflow-hidden rounded-2xl bg-white p-5 shadow-sm',
-          )}
-        >
+        <div className="w-full gap-y-3 overflow-hidden rounded-2xl bg-white p-5 shadow-sm">
           <AuthorBasicInfo
             humanBook={data?.humanBook}
             numStories={storiesList?.data?.length}
