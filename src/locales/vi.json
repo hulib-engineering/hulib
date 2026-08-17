@@ -591,7 +591,9 @@
       "about": "Giới thiệu",
       "my_stories": "Câu chuyện của tôi",
       "stories": "Câu chuyện",
-      "my_favorite": "Yêu thích"
+      "my_favorite": "Yêu thích",
+      "my_schedule": "Lịch của tôi",
+      "my_feedback": "Đánh giá của tôi"
     },
     "about_panel": {
       "title": "Giới thiệu",
