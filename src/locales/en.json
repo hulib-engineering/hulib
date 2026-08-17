@@ -565,7 +565,11 @@
     "passwords_match": "Passwords match",
     "resetting": "Resetting...",
     "back_to_login": "Back to login",
-    "submit": "Submit"
+    "submit": "Submit",
+    "email_already_exists": "Email already exists. Please use a different email",
+    "invalid_verification_code": "The verification code is not correct, please re-enter",
+    "terms_of_use": "Terms of Use",
+    "privacy_policy": "Privacy Policy"
   },
   "ForgotPassword": {
     "meta_title": "Forgot password",
