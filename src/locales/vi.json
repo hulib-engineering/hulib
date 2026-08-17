@@ -565,7 +565,11 @@
     "passwords_match": "Mật khẩu trùng khớp",
     "resetting": "Đang đặt lại...",
     "back_to_login": "Quay lại Đăng nhập",
-    "submit": "Gửi"
+    "submit": "Gửi",
+    "email_already_exists": "Email đã tồn tại. Vui lòng sử dụng email khác",
+    "invalid_verification_code": "Mã xác minh không chính xác, vui lòng nhập lại",
+    "terms_of_use": "Điều khoản sử dụng",
+    "privacy_policy": "Chính sách bảo mật"
   },
   "ForgotPassword": {
     "meta_title": "Quên mật khẩu",
