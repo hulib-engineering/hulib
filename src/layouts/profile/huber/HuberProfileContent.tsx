@@ -3,18 +3,22 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { HUBER_OTHERS_TABS, HUBER_OWN_TABS } from '../profile.contant';
+
 import type { TUserDetail } from '../profile.type';
+import { ControlOverview } from '../liber/ControlOverview';
+import LiberAboutPanel from '../liber/LiberAboutPanel';
+import type { LearningType } from '../liber/type';
+import useLiberProfileActions from '../liber/useLiberProfileActions';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
-import { mergeClassnames } from '@/components/core/private/utils';
-import AboutPanel from '@/layouts/profile/AboutPanel';
-import MyFavoritesPanel from '@/app/[locale]/(auth)/users/[id]/_components/MyFavoritesPanel';
-import MyStoriesPanel from '@/app/[locale]/(auth)/users/[id]/_components/MyStoriesPanel';
 
 type HuberProfileContentProps = {
   userDetail: TUserDetail;
   notMe: boolean;
 };
+
+const HUBER_ABOUT_TABS = [
+  { value: 'about', label: 'about' },
+] as const;
 
 export default function HuberProfileContent({ userDetail, notMe }: HuberProfileContentProps) {
   const t = useTranslations('MyProfile');
@@ -22,50 +26,70 @@ export default function HuberProfileContent({ userDetail, notMe }: HuberProfileC
   const currentPathname = usePathname();
   const searchParams = useSearchParams();
 
-  const tabs = notMe ? HUBER_OTHERS_TABS : HUBER_OWN_TABS;
+  const tabs = HUBER_ABOUT_TABS;
   const [currentTab, setCurrentTab] = useState(searchParams.get('tab') || 'about');
+  const canEditOwnProfile = !notMe;
+  const {
+    handleSaveText,
+    handleSaveLearningEntry,
+    handleSaveWorkEntry,
+  } = useLiberProfileActions();
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set('tab', currentTab);
+    const tabValues = tabs.map(tab => tab.value);
+    const nextTab = tabValues.includes(currentTab as any) ? currentTab : 'about';
+
+    if (nextTab !== currentTab) {
+      setCurrentTab(nextTab);
+      return;
+    }
+
+    params.set('tab', nextTab);
     router.push(`${currentPathname}?${params.toString()}`, { scroll: false });
-  }, [currentPathname, currentTab, router, searchParams]);
+  }, [currentPathname, currentTab, router, searchParams, tabs]);
+
+  const huberAboutData = {
+    journey: (userDetail as any)?.bio,
+    learningPath: (userDetail as any)?.educations?.map((education: any) => ({
+      id: education.id,
+      type: (education.type ?? 'university') as LearningType,
+      name: education.major,
+      organization: education.institution,
+      startedAt: education.startedAt,
+      endedAt: education.endedAt,
+      isPublic: education.isPublic ?? false,
+    })),
+    works: (userDetail as any)?.works,
+    topics: userDetail.humanBookTopic?.map(humanBookTopic => humanBookTopic.topic),
+  };
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-xl bg-white shadow-sm">
-      <div className="border-b border-neutral-90">
-        <div className="flex items-center gap-6 px-4 lg:px-6">
-          {tabs.map(({ value, label }) => (
-            <button
-              key={value}
-              type="button"
-              onClick={() => setCurrentTab(value)}
-              className={mergeClassnames(
-                'border-b-2 py-3 text-sm font-medium transition-colors',
-                currentTab === value
-                  ? 'border-primary-60 text-primary-60'
-                  : 'border-transparent text-neutral-40 hover:text-neutral-20',
-              )}
-            >
-              {t(label)}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="p-4 lg:p-6">
-        {currentTab === 'about' && (
-          <AboutPanel data={userDetail} editable={!notMe} />
-        )}
-        {currentTab === 'stories' && (
-          <MyStoriesPanel
-            topics={userDetail?.humanBookTopic}
-            storyOwnerId={userDetail?.id}
-            showOthers={notMe}
-          />
-        )}
-        {currentTab === 'favorite-list' && <MyFavoritesPanel />}
-      </div>
-    </div>
+    <ControlOverview
+      className="p-2"
+      currentTab={currentTab}
+      onTabChange={setCurrentTab}
+      tabs={tabs.map(({ value, label }) => ({ value, label: t(label) }))}
+    >
+      {currentTab === 'about' && (
+        <LiberAboutPanel
+          data={huberAboutData}
+          editable={canEditOwnProfile}
+          huberFieldsEditable={canEditOwnProfile}
+          showTopics
+          labels={{
+            journeyTitle: t('huber_about.journey_title'),
+            journeyPlaceholder: t('huber_about.journey_placeholder'),
+            learningPathTitle: t('huber_about.learning_path_title'),
+            worksTitle: t('huber_about.works_title'),
+            topicsTitle: t('huber_about.topics_title'),
+          }}
+          onSaveText={handleSaveText}
+          onSaveLearningEntry={canEditOwnProfile ? handleSaveLearningEntry : undefined}
+          onSaveWorkEntry={canEditOwnProfile ? handleSaveWorkEntry : undefined}
+          onSaveTopics={undefined}
+        />
+      )}
+    </ControlOverview>
   );
 }

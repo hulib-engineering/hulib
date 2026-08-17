@@ -13,23 +13,32 @@ import Loading from '@/app/[locale]/loading';
 import EditImageModal from '@/layouts/profile/EditImageModal';
 import ReportModal from '@/layouts/profile/ReportModal';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import { openChat } from '@/libs/store/messenger';
 import { Role } from '@/types/common';
 
 export default function Index() {
   const { status } = useSession();
-  const { id: userId } = useParams();
+  const { id: userIdParam } = useParams();
+  const userId = Number(Array.isArray(userIdParam) ? userIdParam[0] : userIdParam);
   const userInfo = useAppSelector(state => state.auth.userInfo);
   const userAvatarId = useAppSelector(state => state.auth.avatarId);
   const userAvatarUrl = useAppSelector(state => state.auth.avatarUrl);
-  const notMe = Number(userId) !== Number(userInfo?.id);
+  const { data: meData, isLoading: isMeLoading } = useGetPersonalInfoQuery();
+  const currentUserId = meData?.id ?? userInfo?.id;
+  const notMe = currentUserId
+    ? userId !== Number(currentUserId)
+    : true;
 
-  const { data, isLoading } = useGetUsersByIdQuery(userId, { skip: !notMe });
+  const shouldFetchProfileById = notMe || !meData?.id;
+  const { data, isLoading } = useGetUsersByIdQuery(userId, {
+    skip: !shouldFetchProfileById || !Number.isFinite(userId),
+  });
 
-  const userDetail = notMe
+  const userDetail = shouldFetchProfileById
     ? data
-    : { ...userInfo, photo: { id: userAvatarId, path: userAvatarUrl } };
+    : meData ?? (userInfo?.id ? { ...userInfo, photo: { id: userAvatarId, path: userAvatarUrl } } : undefined);
 
   const dispatch = useAppDispatch();
   const [isReportModalOpen, setReportModalOpen] = useState(false);
@@ -60,7 +69,13 @@ export default function Index() {
     return redirect('/auth/login');
   }
 
-  if ((notMe && isLoading) || !userDetail) {
+  if (
+    status === 'loading'
+    || isMeLoading
+    || (shouldFetchProfileById && isLoading)
+    || !Number.isFinite(userId)
+    || !userDetail
+  ) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
         <Loading />

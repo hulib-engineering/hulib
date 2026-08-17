@@ -12,8 +12,8 @@ import LiberAboutPanel from './LiberAboutPanel';
 import type { LearningType } from './type';
 import useLiberProfileActions from './useLiberProfileActions';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
-import MyStoriesPanel from '@/app/[locale]/(auth)/users/[id]/_components/MyStoriesPanel';
 import { useGetTopicsQuery } from '@/libs/services/modules/topics';
+import { Role } from '@/types/common';
 
 type LiberProfileContentProps = {
   userDetail: TUserDetail;
@@ -28,20 +28,29 @@ export default function LiberProfileContent({ userDetail, notMe }: LiberProfileC
 
   const tabs = notMe ? LIBER_OTHERS_TABS : LIBER_OWN_TABS;
   const [currentTab, setCurrentTab] = useState(searchParams.get('tab') || 'about');
+  const canEditOwnProfile = !notMe;
+  const isHuber = userDetail.role?.id === Role.HUBER;
 
   const { data: topicsData } = useGetTopicsQuery({ limit: 100 });
   const {
     handleSaveText,
     handleSaveLearningEntry,
     handleSaveWorkEntry,
-    handleSaveTopics,
   } = useLiberProfileActions();
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set('tab', currentTab);
+    const tabValues = tabs.map(tab => tab.value);
+    const nextTab = tabValues.includes(currentTab as any) ? currentTab : 'about';
+
+    if (nextTab !== currentTab) {
+      setCurrentTab(nextTab);
+      return;
+    }
+
+    params.set('tab', nextTab);
     router.push(`${currentPathname}?${params.toString()}`, { scroll: false });
-  }, [currentPathname, currentTab, router, searchParams]);
+  }, [currentPathname, currentTab, router, searchParams, tabs]);
 
   const liberData = {
     journey: (userDetail as any)?.bio,
@@ -69,17 +78,13 @@ export default function LiberProfileContent({ userDetail, notMe }: LiberProfileC
         <LiberAboutPanel
           data={liberData}
           availableTopics={topicsData?.data}
-          editable={!notMe}
+          editable={canEditOwnProfile}
+          huberFieldsEditable={canEditOwnProfile}
+          showTopics={isHuber}
           onSaveText={handleSaveText}
-          onSaveLearningEntry={handleSaveLearningEntry}
-          onSaveWorkEntry={handleSaveWorkEntry}
-          onSaveTopics={handleSaveTopics}
-        />
-      )}
-      {currentTab === 'stories' && (
-        <MyStoriesPanel
-          topics={userDetail?.humanBookTopic}
-          storyOwnerId={userDetail.id}
+          onSaveLearningEntry={canEditOwnProfile ? handleSaveLearningEntry : undefined}
+          onSaveWorkEntry={canEditOwnProfile ? handleSaveWorkEntry : undefined}
+          onSaveTopics={undefined}
         />
       )}
       {currentTab === 'favorite-list' && <LiberMyFavorite />}

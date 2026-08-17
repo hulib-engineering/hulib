@@ -676,6 +676,13 @@
       "cancel": "Cancel",
       "save": "Save"
     },
+    "huber_about": {
+      "journey_title": "Experiences that helped me grow",
+      "journey_placeholder": "Share experiences that helped you grow...",
+      "learning_path_title": "Where I learned",
+      "works_title": "What I did",
+      "topics_title": "Topics I share"
+    },
     "my_schedule": "My Schedule",
     "my_feedback": "My Feedback",
     "become_huber_banner": "Create a new story to become a Huber",

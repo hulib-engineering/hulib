@@ -673,6 +673,13 @@
       "present": "Hiện tại",
       "cancel": "Huỷ",
       "save": "Lưu"
+    },
+    "huber_about": {
+      "journey_title": "Những trải nghiệm giúp tôi trưởng thành",
+      "journey_placeholder": "Chia sẻ những trải nghiệm đã giúp bạn trưởng thành...",
+      "learning_path_title": "Nơi tôi đã học hỏi",
+      "works_title": "Điều tôi đã làm",
+      "topics_title": "Chủ đề tôi chia sẻ"
     }
   },
   "MyFavorites": {

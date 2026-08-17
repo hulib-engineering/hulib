@@ -11,6 +11,15 @@ import LiberWorkSection from './LiberWorkSection';
 type LiberAboutPanelProps = {
   data?: LiberAboutData;
   editable?: boolean;
+  huberFieldsEditable?: boolean;
+  showTopics?: boolean;
+  labels?: {
+    journeyTitle: string;
+    journeyPlaceholder: string;
+    learningPathTitle: string;
+    worksTitle: string;
+    topicsTitle: string;
+  };
   availableTopics?: Topic[];
   onSaveText?: (key: 'bio', value: string) => Promise<void> | void;
   onSaveLearningEntry?: (values: LearningEntryFormValues, editingId?: number | string) => Promise<void> | void;
@@ -21,6 +30,9 @@ type LiberAboutPanelProps = {
 export default function LiberAboutPanel({
   data,
   editable = false,
+  huberFieldsEditable = editable,
+  showTopics = false,
+  labels,
   availableTopics,
   onSaveText,
   onSaveLearningEntry,
@@ -32,31 +44,33 @@ export default function LiberAboutPanel({
   return (
     <div className="flex flex-col gap-4 rounded-xl bg-white px-3 py-4 sm:px-6 sm:py-5 lg:px-8">
       <LiberAboutSection
-        title={t('liber_about.journey_title')}
-        placeholder={t('liber_about.journey_placeholder')}
+        title={labels?.journeyTitle ?? t('liber_about.journey_title')}
+        placeholder={labels?.journeyPlaceholder ?? t('liber_about.journey_placeholder')}
         value={data?.journey}
         editable={editable}
         onSave={value => onSaveText?.('bio', value)}
       />
       <LiberLearningPathSection
-        title={t('liber_about.learning_path_title')}
+        title={labels?.learningPathTitle ?? t('liber_about.learning_path_title')}
         entries={data?.learningPath}
-        editable={editable}
+        editable={huberFieldsEditable}
         onSave={onSaveLearningEntry}
       />
       <LiberWorkSection
-        title={t('liber_about.works_title')}
+        title={labels?.worksTitle ?? t('liber_about.works_title')}
         entries={data?.works}
-        editable={editable}
+        editable={huberFieldsEditable}
         onSave={onSaveWorkEntry}
       />
-      <LiberTopicsSection
-        title={t('liber_about.topics_title')}
-        topics={data?.topics}
-        availableTopics={availableTopics}
-        editable={editable}
-        onSave={onSaveTopics}
-      />
+      {showTopics && (
+        <LiberTopicsSection
+          title={labels?.topicsTitle ?? t('liber_about.topics_title')}
+          topics={data?.topics}
+          availableTopics={availableTopics}
+          editable={false}
+          onSave={onSaveTopics}
+        />
+      )}
     </div>
   );
 }

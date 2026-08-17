@@ -2,7 +2,7 @@
 
 import { CircleNotch, PencilSimple, Plus, SealCheck } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -28,14 +28,23 @@ export default function LiberAboutSection({
   const t = useTranslations('MyProfile');
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [displayValue, setDisplayValue] = useState(value ?? '');
   const [draft, setDraft] = useState(value ?? '');
 
-  const hasContent = Boolean(value?.trim());
+  useEffect(() => {
+    setDisplayValue(value ?? '');
+    if (!isEditing) {
+      setDraft(value ?? '');
+    }
+  }, [isEditing, value]);
+
+  const hasContent = Boolean(displayValue.trim());
 
   const handleSave = async () => {
     setIsSaving(true);
     try {
       await onSave?.(draft);
+      setDisplayValue(draft);
       setIsEditing(false);
     } finally {
       setIsSaving(false);
@@ -43,12 +52,12 @@ export default function LiberAboutSection({
   };
 
   const handleCancel = () => {
-    setDraft(value ?? '');
+    setDraft(displayValue);
     setIsEditing(false);
   };
 
   const handleEdit = () => {
-    setDraft(value ?? '');
+    setDraft(displayValue);
     setIsEditing(true);
   };
 
