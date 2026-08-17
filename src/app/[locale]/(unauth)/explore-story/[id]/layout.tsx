@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import HomeTemplate from '@/templates/HomeTemplate';
 
 import { getStoryDetailServer, resolveCoverUrl } from '@/libs/services/modules/stories/storyMetadata';
 
@@ -36,5 +37,5 @@ export async function generateMetadata({ params }: StoryDetailLayoutParams): Pro
 }
 
 export default function StoryDetailLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <HomeTemplate>{children}</HomeTemplate>;
 }
