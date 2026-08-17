@@ -13,7 +13,7 @@ type LiberProfileContentProps = {
 };
 
 export default function LiberProfileContent({ userDetail }: LiberProfileContentProps) {
-  const { currentTab, setCurrentTab, topicsData, translatedTabs } = useProfileTab(LIBER_OWN_TABS);
+  const { currentTab, setCurrentTab, topicsData, translatedTabs } = useProfileTab(LIBER_OWN_TABS, true);
   const { handleSaveText, handleSaveLearningEntry, handleSaveWorkEntry, handleSaveTopics } = useLiberProfileActions();
   const userData = buildUserData(userDetail);
 

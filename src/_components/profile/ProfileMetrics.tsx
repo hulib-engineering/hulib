@@ -48,14 +48,14 @@ export default function ProfileMetrics({
     <div className="grid grid-cols-2 gap-y-4 py-2 lg:flex lg:items-center lg:justify-between lg:gap-4 lg:border-t lg:border-neutral-variant-90 lg:py-4">
       <MetricItem
         icon={<BooksIcon size={40} className="text-primary-50" />}
-        value={storiesCount ?? '-'}
+        value={storiesCount > 0 ? storiesCount : '-'}
         title={t('stories_title')}
         subtitle={t('stories_sub')}
       />
       <Divider />
       <MetricItem
         icon={<VideoCameraIcon size={40} className="text-primary-50" />}
-        value={conversationsCount ?? '-'}
+        value={conversationsCount > 0 ? conversationsCount : '-'}
         title={t('conversations_title')}
         subtitle={t('conversations_sub')}
       />

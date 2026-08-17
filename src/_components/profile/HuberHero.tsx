@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/aria-role */
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { GreenTick } from './GreenTick';
 import JoinedSince from './JoinedSince';
 import ProfileMetrics from './ProfileMetrics';
@@ -14,15 +13,10 @@ type ProfileHeroProps = {
   userDetail: TUserDetail;
   isHuberStar?: boolean;
   handleEditAvatarClick?: () => void;
+  onCreateStoryClick?: () => void;
 };
 
-export default function HuberHero({ userDetail, isHuberStar = false, handleEditAvatarClick }: ProfileHeroProps) {
-  const router = useRouter();
-
-  const handleCreateNewStoryClick = () => {
-    router.push('/register-huber/policy');
-  };
-
+export default function HuberHero({ userDetail, isHuberStar = false, handleEditAvatarClick, onCreateStoryClick }: ProfileHeroProps) {
   return (
     <div className="rounded-2xl bg-white p-3 shadow-sm lg:px-4 lg:py-6">
       <div className="flex flex-row items-start gap-2 lg:gap-6">
@@ -45,7 +39,7 @@ export default function HuberHero({ userDetail, isHuberStar = false, handleEditA
               </div>
               <JoinedSince date={userDetail?.createdAt} />
             </div>
-            <CreateNewStoryButton onClick={handleCreateNewStoryClick} className="w-fit shrink-0" />
+            <CreateNewStoryButton onClick={onCreateStoryClick} className="w-fit shrink-0" />
           </div>
 
           <ProfileMetrics
