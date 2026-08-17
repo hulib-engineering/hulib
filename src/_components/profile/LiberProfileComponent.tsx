@@ -16,11 +16,11 @@ export default function LiberProfileComponent({ userDetail }: Props) {
   const [isEditImageModalOpen, setEditImageModalOpen] = useState(false);
   const [currentEditableImageData, setCurrentEditableImageData] = useState({ type: '', data: '' });
 
-  const { data } = useGetHuberStoriesQuery(
+  const { data, isLoading } = useGetHuberStoriesQuery(
     { huberId: userDetail.id, publishedOnly: false },
     { skip: !userDetail.id },
   );
-  const hasNoStory = (data?.data?.length ?? 0) === 0;
+  const hasNoStory = (data?.data?.length ?? 0) === 0 && !isLoading;
 
   const handleEditAvatarClick = useCallback(() => {
     setCurrentEditableImageData({ type: 'avatar', data: userDetail?.photo?.path ?? '' });
