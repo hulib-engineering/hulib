@@ -432,7 +432,11 @@
     "awaiting_stories_page": {
       "title": "Awaiting approval - Stories",
       "subtitle": "List of stories awaiting approval",
-      "empty_state": "You have a warm heart"
+      "empty_state": "You have a warm heart",
+      "filter_pending": "Pending",
+      "filter_published": "Published",
+      "filter_rejected": "Rejected",
+      "filter_deleted": "Deleted"
     },
     "tags_page": {
       "title": "Topic list",
@@ -561,7 +565,11 @@
     "passwords_match": "Passwords match",
     "resetting": "Resetting...",
     "back_to_login": "Back to login",
-    "submit": "Submit"
+    "submit": "Submit",
+    "email_already_exists": "Email already exists. Please use a different email",
+    "invalid_verification_code": "The verification code is not correct, please re-enter",
+    "terms_of_use": "Terms of Use",
+    "privacy_policy": "Privacy Policy"
   },
   "ForgotPassword": {
     "meta_title": "Forgot password",
@@ -754,9 +762,10 @@
     "share_story": "Share another story",
     "like_button": "Like",
     "like_error": "Failed to update like",
-    "booking_cta": "Your story might help another young person diícover that they never have to walk through life challenges alone. Before you begin, please review our e-stories guidelines.",
+    "booking_cta": "Your story might help another young person discover that they never have to walk through life challenges alone. Before you begin, please review our e-stories guidelines.",
+    "booking_cta_unauth": "You’ll need to log in to book a meeting with this author.",
     "book_a_meeting": "Book a Meeting",
-    "booking_count": "100 meetings have been booked from this story",
+    "booking_count": "{bookingCount} meetings have been booked from this story",
     "author": "Author",
     "stories": "stories",
     "favorites": "favorites",
@@ -979,7 +988,7 @@
       "message_placeholder": "Enter meeting notes...",
       "submit": "Place request",
       "success_title": "Booking request sent successfully",
-      "success_detail": "You've successfully sent a request for this conversation to the Huber. When the Huber accepts your request, we will notify you.",
+      "success_detail": "Your request has been sent to Huber. You’ll hear from us soon.",
       "back_to_home": "Back to Homepage",
       "back_to_schedule": "My calendar",
       "notice": "Notice",
@@ -1174,6 +1183,7 @@
     "return_home": "Return Home",
     "view_more": "View more",
     "see_more": "See more",
+    "see_less": "Collapse",
     "back": "Back",
     "edit": "Edit",
     "delete": "Delete",
@@ -1372,5 +1382,11 @@
       "reminder": "We are delighted to accompany you in the upcoming event! Before the event takes place, the organizers will send you a reminder email about the program. Please remember to check your inbox!",
       "close_button": "Gotchaaaa"
     }
+  },
+  "PersonalCalendarModal": {
+    "when_am_i_free": "When am I free?",
+    "description": "Pick some suitable time slots so people can chat with you directly.",
+    "i_am_busy": "I'm busy on {day}",
+    "update_later": "Update later"
   }
 }
