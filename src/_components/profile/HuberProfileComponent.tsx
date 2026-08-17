@@ -8,6 +8,9 @@ import type { TUserDetail } from '@/features/users/types';
 import EditImageModal from '@/layouts/profile/EditImageModal';
 import { useGetMyFavoritesQuery } from '@/libs/services/modules/user';
 import { useGetTimeslotsQuery } from '@/libs/services/modules/time-slots';
+import Modal from '@/components/Modal';
+import StoryForm from '@/features/stories/components/StoryForm';
+import FirstBookCreatedModal from '@/features/stories/components/FirstBookCreatedModal';
 
 type Props = {
   userDetail: TUserDetail;
@@ -16,6 +19,8 @@ type Props = {
 export default function HuberProfileComponent({ userDetail }: Props) {
   const [isEditImageModalOpen, setEditImageModalOpen] = useState(false);
   const [currentEditableImageData, setCurrentEditableImageData] = useState({ type: '', data: '' });
+  const [isCreateStoryModalOpen, setIsCreateStoryModalOpen] = useState(false);
+  const [isFirstBookModalOpen, setIsFirstBookModalOpen] = useState(false);
 
   const { data: timeslotsData } = useGetTimeslotsQuery();
   const { data: favoritesData } = useGetMyFavoritesQuery({ limit: 1 });
@@ -59,6 +64,7 @@ export default function HuberProfileComponent({ userDetail }: Props) {
         handleEditAvatarClick={handleEditAvatarClick}
         userDetail={userDetail}
         isHuberStar={isHuberStar}
+        onCreateStoryClick={() => setIsCreateStoryModalOpen(true)}
       />
       {!isHuberStar && <BecomeHuberStar current={huberStarProgress} />}
       <HuberProfileContent />
@@ -67,6 +73,25 @@ export default function HuberProfileComponent({ userDetail }: Props) {
         open={isEditImageModalOpen}
         onClose={handleCloseEditImageModal}
       />
+      <Modal open={isCreateStoryModalOpen} onClose={() => setIsCreateStoryModalOpen(false)}>
+        <Modal.Backdrop />
+        <Modal.Panel className="w-full shadow-none lg:w-5/6 lg:max-w-6xl">
+          <StoryForm
+            type="create"
+            onSucceed={() => {
+              setIsCreateStoryModalOpen(false);
+              setIsFirstBookModalOpen(true);
+            }}
+            onCancel={() => setIsCreateStoryModalOpen(false)}
+          />
+        </Modal.Panel>
+      </Modal>
+      <Modal open={isFirstBookModalOpen} onClose={() => setIsFirstBookModalOpen(false)}>
+        <Modal.Backdrop />
+        <Modal.Panel className="w-full shadow-none lg:w-5/6 lg:max-w-6xl">
+          <FirstBookCreatedModal onClose={() => setIsFirstBookModalOpen(false)} />
+        </Modal.Panel>
+      </Modal>
     </div>
   );
 }
