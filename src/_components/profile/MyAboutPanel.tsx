@@ -2,11 +2,11 @@
 
 import { useTranslations } from 'next-intl';
 
-import type { LearningEntryFormValues, LiberAboutData, Topic, WorkEntryFormValues } from './type';
-import LiberAboutSection from './LiberAboutSection';
-import LiberLearningPathSection from './LiberLearningPathSection';
-import LiberTopicsSection from './LiberTopicsSection';
-import LiberWorkSection from './LiberWorkSection';
+import type { LearningEntryFormValues, LiberAboutData, Topic, WorkEntryFormValues } from '../../features/users/types/profile';
+import LiberAboutSection from './MyAboutSection';
+import LiberLearningPathSection from './MyLearningPathSection';
+import MyWorkSection from './MyWorkSection';
+import MyTopicsSection from './MyTopicsSection';
 
 type LiberAboutPanelProps = {
   data?: LiberAboutData;
@@ -18,7 +18,7 @@ type LiberAboutPanelProps = {
   onSaveTopics?: (topics: Topic[]) => Promise<void> | void;
 };
 
-export default function LiberAboutPanel({
+export default function MyAboutPanel({
   data,
   editable = false,
   availableTopics,
@@ -44,13 +44,13 @@ export default function LiberAboutPanel({
         editable={editable}
         onSave={onSaveLearningEntry}
       />
-      <LiberWorkSection
+      <MyWorkSection
         title={t('liber_about.works_title')}
         entries={data?.works}
         editable={editable}
         onSave={onSaveWorkEntry}
       />
-      <LiberTopicsSection
+      <MyTopicsSection
         title={t('liber_about.topics_title')}
         topics={data?.topics}
         availableTopics={availableTopics}

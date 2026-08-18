@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import type { WorkEntryFormValues } from './type';
+import type { WorkEntryFormValues } from '../../features/users/types/profile';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import InsetInput from '@/components/core/insetInput/InsetInput';
