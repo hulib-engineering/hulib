@@ -10,7 +10,7 @@ import {
 import { useLocale, useTranslations } from 'next-intl';
 import React from 'react';
 
-import type { LearningEntry, LearningType } from './type';
+import type { LearningEntry, LearningType } from '../../features/users/types/profile';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 

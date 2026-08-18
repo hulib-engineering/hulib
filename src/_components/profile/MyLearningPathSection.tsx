@@ -3,7 +3,7 @@
 import { Plus, SealCheck } from '@phosphor-icons/react';
 import { useState } from 'react';
 
-import type { LearningEntry, LearningEntryFormValues } from './type';
+import type { LearningEntry, LearningEntryFormValues } from '../../features/users/types/profile';
 import LearningEntryForm from './LearningEntryForm';
 import LearningItem from './LearningItem';
 import { mergeClassnames } from '@/components/core/private/utils';

@@ -2,7 +2,7 @@
 
 import { X } from '@phosphor-icons/react';
 
-import type { Topic } from './type';
+import type { Topic } from '../../features/users/types/profile';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 

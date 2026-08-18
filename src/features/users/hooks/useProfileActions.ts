@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 
-import type { LearningEntryFormValues, Topic, WorkEntryFormValues } from './type';
+import type { LearningEntryFormValues, Topic, WorkEntryFormValues } from '../types/profile';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import {
   useAddEducationMutation,
@@ -13,7 +13,7 @@ import {
   useUpdateUserTopicsMutation,
 } from '@/libs/services/modules/auth';
 
-const useLiberProfileActions = () => {
+const useProfileActions = () => {
   const tCommon = useTranslations('Common');
 
   const [updateProfile] = useUpdateProfileMutation();
@@ -98,4 +98,4 @@ const useLiberProfileActions = () => {
   };
 };
 
-export default useLiberProfileActions;
+export default useProfileActions;

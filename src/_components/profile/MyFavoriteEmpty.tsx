@@ -13,7 +13,7 @@ type LiberMyFavoriteEmptyProps = {
   description: string;
 };
 
-export const LiberMyFavoriteEmpty = ({ className, title, description }: LiberMyFavoriteEmptyProps) => {
+export const MyFavoriteEmpty = ({ className, title, description }: LiberMyFavoriteEmptyProps) => {
   const { data: stories, isLoading } = useGetSimilarStoriesQuery({
     page: 1,
     limit: 4,
