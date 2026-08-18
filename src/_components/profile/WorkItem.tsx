@@ -3,7 +3,7 @@
 import { PencilSimple } from '@phosphor-icons/react';
 import { useLocale, useTranslations } from 'next-intl';
 
-import type { WorkEntry } from './type';
+import type { WorkEntry } from '../../features/users/types/profile';
 import IconButton from '@/components/core/iconButton/IconButton';
 
 type WorkItemProps = {
