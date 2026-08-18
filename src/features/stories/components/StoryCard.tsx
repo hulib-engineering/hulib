@@ -25,7 +25,7 @@ import { useAddStoryToMyFavoritesMutation, useRemoveStoryFromMyFavoritesMutation
 import { useMobile } from '@/libs/hooks';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import IconButton from '@/components/core/iconButton/IconButton';
-
+// TODO: refactor the mess, unite this file with (landingpage)/_components/home/storypage.tsx - shouldn't this be a sort of component itself?
 type IStoryCardProps = {
   data: TStory;
   editable?: boolean;
@@ -294,7 +294,7 @@ export const StoryCard = ({
                     key={topic.id}
                     as="span"
                     className={mergeClassnames(
-                      'h-auto shrink-0 overflow-visible whitespace-nowrap rounded-2xl px-2 py-1 text-xs leading-[14px] md:py-2',
+                      'h-auto shrink-0 overflow-visible whitespace-nowrap rounded-2xl px-2 py-1 text-xs leading-[14px] md:py-2 font-medium',
                       'border',
                       getTopicBadgeClasses(topic.color),
                     )}
