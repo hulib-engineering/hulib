@@ -1,8 +1,8 @@
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { ConfirmModal } from './ConfirmModal';
-import { LiberMyFavoriteEmpty } from './LiberMyFavoriteEmpty';
+import { ConfirmModal } from '../../components/ConfirmModal';
+import { MyFavoriteEmpty } from './MyFavoriteEmpty';
 import { pushSuccess } from '@/components/CustomToastifyContainer';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
 import {
@@ -16,7 +16,7 @@ import Button from '@/components/core/button/Button';
 
 const PAGE_SIZE = 8;
 
-export default function LiberMyFavorite() {
+export default function MyFavoritePanel() {
   const tExplore = useTranslations('ExploreStory');
   const tMyFavorites = useTranslations('MyFavorites');
 
@@ -60,7 +60,7 @@ export default function LiberMyFavorite() {
 
   if (allStories.length === 0 && !isLoading && !isFetching) {
     return (
-      <LiberMyFavoriteEmpty
+      <MyFavoriteEmpty
         title={tMyFavorites('no_favorite_title')}
         description={tMyFavorites('no_favorite_desc')}
       />

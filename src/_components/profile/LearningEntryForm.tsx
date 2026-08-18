@@ -5,7 +5,7 @@ import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 
-import type { LearningEntryFormValues, LearningType } from './type';
+import type { LearningEntryFormValues, LearningType } from '../../features/users/types/profile';
 import Button from '@/components/core/button/Button';
 import Checkbox from '@/components/core/checkbox/Checkbox';
 import Dropdown from '@/components/core/dropdown/Dropdown';

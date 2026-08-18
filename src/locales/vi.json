@@ -591,7 +591,9 @@
       "about": "Giới thiệu",
       "my_stories": "Câu chuyện của tôi",
       "stories": "Câu chuyện",
-      "my_favorite": "Yêu thích"
+      "my_favorite": "Yêu thích",
+      "my_schedule": "Lịch của tôi",
+      "my_feedback": "Đánh giá của tôi"
     },
     "about_panel": {
       "title": "Giới thiệu",
@@ -650,7 +652,26 @@
     "my_favorite": "Sách yêu thích",
     "no_own_stories_title": "Bạn chưa có câu chuyện nào",
     "no_own_stories_body": "Chia sẻ những câu chuyện của bạn, biết đâu nó sẽ giúp ích được cho nhiều người",
+    "my_schedule": "Lịch của tôi",
+    "my_feedback": "Đánh giá của tôi",
     "joined_since": "Tham gia Hulib {date}",
+    "become_huber_banner": "Tạo câu chuyện mới để trở thành Huber",
+    "become_huber_star_title": "Hoàn thiện phần <strong>giới thiệu</strong> và <strong>lịch trình</strong> để đạt danh hiệu \"Huber Sao\"",
+    "become_huber_star_progress": "Tiến độ",
+    "profile_metrics": {
+      "stories_title": "Câu chuyện",
+      "stories_sub": "Đã chia sẻ",
+      "conversations_title": "Cuộc trò chuyện",
+      "conversations_sub": "Đã đồng hành",
+      "rating_title": "Đánh giá",
+      "rating_sub": "({count} đánh giá)",
+      "followers_title": "Người theo dõi"
+    },
+    "feedback_panel": {
+      "no_feedback_title": "Chưa có đánh giá nào",
+      "no_feedback_body": "Đánh giá từ độc giả sẽ xuất hiện ở đây sau khi họ hoàn thành buổi đọc cùng bạn.",
+      "total_ratings": "{count} đánh giá"
+    },
     "liber_about": {
       "journey_title": "Những trải nghiệm giúp tớ trưởng thành",
       "journey_placeholder": "Chia sẻ những trải nghiệm đã giúp bạn trưởng thành...",

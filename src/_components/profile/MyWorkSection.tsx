@@ -3,7 +3,7 @@
 import { Plus, SealCheck } from '@phosphor-icons/react';
 import { useState } from 'react';
 
-import type { WorkEntry, WorkEntryFormValues } from './type';
+import type { WorkEntry, WorkEntryFormValues } from '../../features/users/types/profile';
 import WorkEntryForm from './WorkEntryForm';
 import WorkItem from './WorkItem';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -18,7 +18,7 @@ type LiberWorkSectionProps = {
 
 export type { LiberWorkSectionProps };
 
-export default function LiberWorkSection({
+export default function MyWorkSection({
   title,
   entries = [],
   editable = false,

@@ -40,3 +40,5 @@ export type LiberAboutData = {
   works?: WorkEntry[];
   topics?: Topic[];
 };
+
+export type CardVariant = 'right_now' | 'upcoming' | 'invitation' | 'my_request' | 'done' | 'missed';

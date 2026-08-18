@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import React from 'react';
-import { Books, ThumbsUp, UserList } from '@phosphor-icons/react';
+import { Books, CalendarDotsIcon, HeartIcon, ThumbsUp, UserList } from '@phosphor-icons/react';
 
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -17,9 +17,11 @@ type ControlOverviewProps = {
 };
 
 const TAB_ICONS: Record<string, React.ElementType> = {
-  'about': UserList,
-  'stories': Books,
-  'favorite-list': ThumbsUp,
+  about: UserList,
+  stories: Books,
+  my_favorite: ThumbsUp,
+  my_feedback: HeartIcon,
+  my_schedule: CalendarDotsIcon,
 };
 
 export const ControlOverview = ({
@@ -38,7 +40,7 @@ export const ControlOverview = ({
     >
       {/* Mobile: horizontal tab bar */}
       <nav
-        className="flex shrink-0 border-b border-neutral-90 bg-white lg:hidden"
+        className="scrollbar-none flex shrink-0 overflow-x-auto border-b border-neutral-90 bg-white lg:hidden"
         aria-label="Profile sections"
       >
         {tabs.map(({ value, label }) => {
@@ -50,14 +52,14 @@ export const ControlOverview = ({
               type="button"
               onClick={() => onTabChange(value)}
               className={mergeClassnames(
-                'flex flex-1 flex-col items-center gap-1 border-b-2 px-3 py-3 text-xs font-medium transition-colors',
+                'flex shrink-0 flex-col items-center gap-1 border-b-2 px-3 py-3 text-xs font-medium transition-colors',
                 isActive
                   ? 'border-primary-60 text-primary-60'
                   : 'border-transparent text-neutral-40',
               )}
             >
               {Icon && <Icon className="size-5" />}
-              <span>{label}</span>
+              <span className="whitespace-nowrap">{label}</span>
             </button>
           );
         })}

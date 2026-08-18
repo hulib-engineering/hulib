@@ -5,12 +5,12 @@ import { useTranslations } from 'next-intl';
 import { type CSSProperties, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import type { Topic } from './type';
+import type { Topic } from '../../features/users/types/profile';
 import TopicChip from './TopicChip';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 
-type LiberTopicsSectionProps = {
+type MyTopicsSectionProps = {
   title: string;
   topics?: Topic[];
   availableTopics?: Topic[];
@@ -18,15 +18,15 @@ type LiberTopicsSectionProps = {
   onSave?: (topics: Topic[]) => Promise<void> | void;
 };
 
-export type { LiberTopicsSectionProps };
+export type { MyTopicsSectionProps };
 
-export default function LiberTopicsSection({
+export default function MyTopicsSection({
   title,
   topics = [],
   availableTopics = [],
   editable = false,
   onSave,
-}: LiberTopicsSectionProps) {
+}: MyTopicsSectionProps) {
   const t = useTranslations('MyProfile');
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
