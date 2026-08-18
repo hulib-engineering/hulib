@@ -12,7 +12,7 @@ export default function Banner() {
         <h2 className="text-sm font-medium leading-snug text-white sm:text-base md:text-2xl">
           {t('banner_title')}
         </h2>
-        <p className="max-w-[90%] text-xs leading-relaxed text-white/90 md:text-sm">
+        <p className="max-w-[90%] leading-relaxed text-white/90 max-md:text-xs">
           {t('banner_description')}
         </p>
       </div>
