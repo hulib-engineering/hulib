@@ -846,9 +846,9 @@
         "rules": "Once your book is approved, you'll be invited to join a voluntary challenge by sharing your available time on the platform (at least 30 minutes per week). This helps your story reach more Libers—young people facing similar situations or feeling stuck, who may find connection and encouragement through your book."
       }
     },
-    "create_book_title": "Create your story",
-    "success_create_book": "Write your success story",
-    "thanks_for_story": "Thanks for your story! HuLib will keep you informed when our process completes.",
+    "create_book_title": "Create book",
+    "success_create_book": "Book created successfully",
+    "thanks_for_story": "Your book is being reviewed by the HuLib team and will have results within the next 24 hours.",
     "in_review": "In review",
     "back_to_profile": "Back to Profile",
     "create_new_book": "Create New Book",
@@ -864,7 +864,6 @@
     "declined": "Declined",
     "reason_for_rejection": "Reason for rejection",
     "back": "Back",
-    "new_book_icon_alt": "New book icon",
     "content_to_avoid": "Content to avoid"
   },
   "Time_slots": {
@@ -1094,6 +1093,8 @@
     "style": "Style",
     "cancel": "Cancel",
     "submit": "Submit",
+    "submit_create_book_mobile": "Confirm",
+    "submit_create_book_desktop": "Create book",
     "rejected": "Rejected",
     "in_review": "In review",
     "rejection_reason": "Rejection reason",

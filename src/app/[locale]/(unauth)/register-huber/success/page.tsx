@@ -122,7 +122,11 @@ export default function RegisterHuberSuccess() {
 
           {/* Gratitude text - Mobile */}
           <div className="flex flex-col gap-2 px-4 sm:hidden">
-            <h1 className="text-center text-[28px] font-[500] leading-[36px]"> Viết câu chuyện thành công </h1>
+            <h1 className="text-center text-[28px] font-[500] leading-[36px]">
+              {' '}
+              {t('success_create_book')}
+              {' '}
+            </h1>
             <p className="max-w-md text-center text-[16px] font-[400] leading-[24px] tracking-[0.5%] text-gray-500">
               {t('thanks_for_story')}
             </p>
@@ -135,13 +139,13 @@ export default function RegisterHuberSuccess() {
           max-sm:gap-2 max-sm:rounded-t-2xl
           max-sm:shadow-[0_0_4px_rgba(15,15,16,0.06)]"
         >
-          <button onClick={() => router.push(`/users/${story.humanBookId}?tab=about`)} className="hover:bg-gray-50 h-[44px] rounded-full border border-[#C2C6CF] px-6 py-3 text-sm font-medium text-[#0442BF] transition-colors sm:w-[232px]">
+          <button type="button" onClick={() => router.push(`/users/${story.humanBookId}?tab=about`)} className="hover:bg-gray-50 h-[44px] rounded-full border border-[#C2C6CF] px-6 py-3 text-sm font-medium text-[#0442BF] transition-colors sm:w-[232px]">
             {t('back_to_profile')}
           </button>
-          <button onClick={() => router.push(`/`)} className="flex h-[44px] items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#007CBE] to-[#8845C6] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#14144a] sm:w-[232px]">
+          <button type="button" onClick={() => router.push(`/`)} className="flex h-[44px] items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#007CBE] to-[#8845C6] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#14144a] sm:w-[232px]">
             <Image
               src="/assets/images/register-huber/white_book.png"
-              alt={t('new_book_icon_alt')}
+              alt=""
               width={18}
               height={18}
               className="object-contain brightness-[10]"
