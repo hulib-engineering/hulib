@@ -23,8 +23,8 @@ export default function RestrictedContent() {
             <Image
               src="/assets/images/register-huber/warning.png"
               alt="warning"
-              width={30}
-              height={30}
+              width={32}
+              height={32}
             />
           </div>
           <h3 className="text-[16px] font-[500] leading-6 tracking-[0.5%] text-black">{t('content_to_avoid')}</h3>
@@ -41,7 +41,7 @@ export default function RestrictedContent() {
                 height={20}
                 className="mt-0.5"
               />
-              <span className="text-[14px] leading-[18px] text-[#171819]">{t(key)}</span>
+              <span className="text-[14px] leading-[22px] text-[#171819]">{t(key)}</span>
             </div>
           ))}
         </div>
