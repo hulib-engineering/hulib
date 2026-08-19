@@ -36,7 +36,7 @@ type RuleCardProps = {
 
 export default function Rulecard({ card }: RuleCardProps) {
   return (
-    <div className="flex flex-col rounded-2xl border border-[#CDDDFE] bg-white px-5 py-6">
+    <div className="flex flex-col rounded-[12px] border border-[#CDDDFE] bg-white px-3 py-6">
       <div className="justify-left mb-4 flex flex-row items-center gap-3 ">
         <div className={`flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full ${card.iconBg}`}>
           {card.size === 'small' ? (
@@ -45,14 +45,14 @@ export default function Rulecard({ card }: RuleCardProps) {
             <Image src={card.icon} alt="icon" width={32} height={32} />
           )}
         </div>
-        <h3 className="pt-0.5 text-[16px] font-semibold leading-snug text-gray-800">{card.title}</h3>
+        <h3 className="pt-0.5 text-[16px] font-medium leading-snug text-[#171819]">{card.title}</h3>
       </div>
       {/* <ul className="flex flex-col gap-2.5">
         {card.rules.map((rule, idx) => (
           <RuleItem key={idx} type={rule.type} text={rule.text} />
         ))}
       </ul> */}
-      <p className="text-[14px] leading-[18px] tracking-[1.5%] text-[#171819]">{card.rules}</p>
+      <p className="text-[14px] leading-[22px] tracking-[1.5%] text-[#171819]">{card.rules}</p>
     </div>
   );
 }
