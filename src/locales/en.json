@@ -848,7 +848,7 @@
     },
     "create_book_title": "Create your story",
     "success_create_book": "Write your success story",
-    "thanks_for_story": "Thanks for your story! HuLib will keep you informed when our process completes.",
+    "thanks_for_story": "Thanks for sharing your story 💙 HuLib will notify you once our review is complete within 24-48 hours.",
     "in_review": "In review",
     "back_to_profile": "Back to Profile",
     "create_new_book": "Create New Book",
@@ -1060,8 +1060,8 @@
     "appeal": "Appeal"
   },
   "HuberCTA": {
-    "title": "Thanks for sharing your story 💙",
-    "subtitle": "HuLib will notify you once our review is complete within 24-48 hours.",
+    "title": "Share Your Story",
+    "subtitle": "Share your experiences, the lessons you've learned, or something meaningful you'd like to pass on. Your story could be the light that helps someone through a difficult day. Before you begin, please read our Story Guidelines.",
     "button_label": "Create new story"
   },
   "HomeStories": {
