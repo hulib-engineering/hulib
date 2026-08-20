@@ -148,9 +148,9 @@ export const StoryCard = ({
         return (
           <Button
             size="lg"
-            onClick={() => router.push(`/explore-story/${data.id}/preview`)}
+            onClick={() => router.push(detailPath)}
           >
-            Preview
+            {t('preview')}
           </Button>
         );
       }
@@ -158,9 +158,9 @@ export const StoryCard = ({
         <div className="hidden w-full items-center gap-2 md:flex">
           <Button
             className="flex-1"
-            onClick={() => router.push(`/explore-story/${data.id}`)}
+            onClick={() => router.push(detailPath)}
           >
-            {t('read_story')}
+            {data.publishStatus === StoryPublishStatus.PUBLISHED ? t('read_story') : t('preview')}
           </Button>
           <IconButton
             variant="outline"
@@ -269,7 +269,7 @@ export const StoryCard = ({
                 iconLeft={<BookOpen />}
                 onClick={() => router.push(detailPath)}
               >
-                {isPublished ? t('read_all') : 'Preview'}
+                {isPublished ? t('read_all') : t('preview')}
               </Button>
             )}
           </div>
