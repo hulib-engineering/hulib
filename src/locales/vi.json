@@ -846,12 +846,12 @@
         "rules": "Sau khi được duyệt, Huber sẽ có thử thách tự nguyện để cập nhật thời gian rảnh của mình trên nền tảng (tối thiểu 30 phút mỗi tuần). Thông qua đó, câu chuyện của bạn có thể tiếp cận nhiều Liber hơn — các bạn trẻ trải qua hoàn cảnh tương tự hoặc đang mắc kẹt trong một vấn đề nào đó và tìm thấy sự liên kết từ cuốn sách của bạn."
       }
     },
-    "create_book_title": "Tạo câu chuyện",
-    "success_create_book": "Viết câu chuyện thành công",
-    "thanks_for_story": "Cảm ơn bạn đã chia sẻ câu chuyện 💙 HuLib sẽ thông báo cho bạn khi quá trình duyệt hoàn tất trong 24–48 giờ nha",
+    "create_book_title": "Tạo sách",
+    "success_create_book": "Tạo sách thành công",
+    "thanks_for_story": "Sách của bạn đang được đội ngũ HuLib xem xét và sẽ có kết quả trong vòng 24 giờ tới.",
     "in_review": "Đang xem xét",
     "back_to_profile": "Quay về trang cá nhân",
-    "create_new_book": "Tạo câu chuyện mới",
+    "create_new_book": "Tạo sách mới",
     "hearts": "Trái tim",
     "approve_huber_failed": "Không thể duyệt Huber. Vui lòng thử lại.",
     "waiting_for_approval": "Đang chờ duyệt",
@@ -864,7 +864,6 @@
     "declined": "Đã từ chối",
     "back": "Trở lại",
     "reason_for_rejection": "Lý do từ chối",
-    "new_book_icon_alt": "Biểu tượng sách mới",
     "content_to_avoid": "Nội dung cần tránh"
   },
   "Time_slots": {
@@ -1096,6 +1095,8 @@
     "back": "Quay lại",
     "cancel": "Huỷ bỏ",
     "submit": "Hoàn thành",
+    "submit_create_book_mobile": "Xác nhận",
+    "submit_create_book_desktop": "Tạo sách",
     "rejected": "Từ chối",
     "in_review": "Đang xem xét",
     "rejection_reason": "Lý do từ chối",
