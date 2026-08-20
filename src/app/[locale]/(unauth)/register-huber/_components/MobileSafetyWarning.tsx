@@ -1,9 +1,9 @@
 'use client';
-// import { useTranslations } from 'next-intl';
 import { ShieldCheckIcon } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 
 export default function MobileSafetyWarning() {
-  // const t = useTranslations('Huber');
+  const t = useTranslations('Huber');
 
   return (
     <div
@@ -13,7 +13,7 @@ export default function MobileSafetyWarning() {
     >
       <ShieldCheckIcon className="shrink-0" color="#FF7301" />
       <div className="text-[14px] font-medium text-[#45484A]">
-        Nếu bạn thấy ai đó đang trong tình huống nguy hiểm vui lòng liên hệ ngay dịch vụ hỗ trợ khấn cấp phù hợp.
+        {t('safety_warning')}
       </div>
     </div>
   );
