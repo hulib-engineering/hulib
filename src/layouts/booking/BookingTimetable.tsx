@@ -225,7 +225,7 @@ export default function BookingTimetable({ tz, huberId, onSelectTime, /* onOpenH
                 variant={isSelected ? 'fill' : 'ghost'}
                 size="sm"
                 className={
-                  mergeClassnames('w-full rounded-lg py-2 px-3', isToday(day) && 'border border-primary-60', isUnavailable && 'text-neutral-70', isSelected && isUnavailable && 'bg-neutral-90 hover:bg-neutral-90 border-none focus:ring-0')
+                  mergeClassnames('font-normal w-full rounded-lg py-2 px-3', isToday(day) && 'border border-primary-60', isUnavailable && 'text-neutral-70', isSelected && isUnavailable && 'bg-neutral-90 hover:bg-neutral-90 border-none focus:ring-0')
                 }
                 onClick={() => onClickDateItem(day)}
                 disabled={isPastDate}
