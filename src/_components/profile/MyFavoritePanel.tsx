@@ -1,4 +1,5 @@
 import { useTranslations } from 'next-intl';
+import { skipToken } from '@reduxjs/toolkit/query';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { ConfirmModal } from '../../components/ConfirmModal';
@@ -7,6 +8,7 @@ import { pushSuccess } from '@/components/CustomToastifyContainer';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
 import {
   useGetMyFavoritesQuery,
+  useGetUserFavoritesQuery,
   useRemoveMyFavoritesMutation,
 } from '@/libs/services/modules/user';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -16,31 +18,85 @@ import Button from '@/components/core/button/Button';
 
 const PAGE_SIZE = 8;
 
-export default function MyFavoritePanel() {
+type FavoriteStory = TStory & {
+  storyId?: number;
+};
+
+type MyFavoritePanelProps = {
+  userId?: number;
+  readOnly?: boolean;
+};
+
+const normalizeFavoriteStory = (story: FavoriteStory): TStory => ({
+  ...story,
+  id: story.storyId ?? story.id,
+  storyId: story.storyId ?? story.id,
+  isFavorite: true,
+});
+
+const getFavoriteStories = (favoritesData?: { data?: FavoriteStory[] } | FavoriteStory[]) => {
+  if (!favoritesData) {
+    return [];
+  }
+
+  return Array.isArray(favoritesData) ? favoritesData : favoritesData.data ?? [];
+};
+
+const getHasNextPage = (favoritesData?: { hasNextPage?: boolean } | FavoriteStory[]) => {
+  if (!favoritesData || Array.isArray(favoritesData)) {
+    return false;
+  }
+
+  return Boolean(favoritesData.hasNextPage);
+};
+
+export default function MyFavoritePanel({ userId, readOnly = false }: MyFavoritePanelProps) {
   const tExplore = useTranslations('ExploreStory');
   const tMyFavorites = useTranslations('MyFavorites');
 
   const [page, setPage] = useState(1);
   const [allStories, setAllStories] = useState<TStory[]>([]);
   const prevPageRef = useRef(1);
+  const isViewingUserFavorites = typeof userId === 'number';
 
-  const { data, isLoading, isFetching } = useGetMyFavoritesQuery({ page, limit: PAGE_SIZE });
+  const {
+    data: myFavoritesData,
+    isLoading: isLoadingMyFavorites,
+    isFetching: isFetchingMyFavorites,
+  } = useGetMyFavoritesQuery(isViewingUserFavorites ? skipToken : { page, limit: PAGE_SIZE });
+  const {
+    data: userFavoritesData,
+    isLoading: isLoadingUserFavorites,
+    isFetching: isFetchingUserFavorites,
+  } = useGetUserFavoritesQuery(isViewingUserFavorites ? { userId } : skipToken);
 
   const [removeMyFavorites, { isLoading: isRemovingMyFavorites }] = useRemoveMyFavoritesMutation();
 
   const [isShowModalRemoveAll, setIsShowModalRemoveAll] = useState(false);
 
   useEffect(() => {
-    if (!data) {
+    if (!myFavoritesData || isViewingUserFavorites) {
       return;
     }
+    const favoriteStories = getFavoriteStories(myFavoritesData);
+
     if (prevPageRef.current === 1 || page === 1) {
-      setAllStories(data);
+      setAllStories(favoriteStories.map(normalizeFavoriteStory));
     } else {
-      setAllStories(prev => [...prev, ...data]);
+      setAllStories(prev => [...prev, ...favoriteStories.map(normalizeFavoriteStory)]);
     }
     prevPageRef.current = page;
-  }, [data, page]);
+  }, [isViewingUserFavorites, myFavoritesData, page]);
+
+  useEffect(() => {
+    if (!isViewingUserFavorites) {
+      return;
+    }
+    setAllStories((userFavoritesData ?? []).map(normalizeFavoriteStory));
+  }, [isViewingUserFavorites, userFavoritesData]);
+
+  const isLoading = isViewingUserFavorites ? isLoadingUserFavorites : isLoadingMyFavorites;
+  const isFetching = isViewingUserFavorites ? isFetchingUserFavorites : isFetchingMyFavorites;
 
   if (isLoading && page === 1) {
     return <StoriesSkeleton />;
@@ -59,6 +115,16 @@ export default function MyFavoritePanel() {
   };
 
   if (allStories.length === 0 && !isLoading && !isFetching) {
+    if (readOnly) {
+      return (
+        <MyFavoriteEmpty
+          title={tMyFavorites('no_favorite_title')}
+          description={tMyFavorites('no_favorite_desc')}
+          showRecommendations={false}
+        />
+      );
+    }
+
     return (
       <MyFavoriteEmpty
         title={tMyFavorites('no_favorite_title')}
@@ -80,12 +146,13 @@ export default function MyFavoritePanel() {
             className="w-full"
             key={item.id}
             data={{ ...item, isFavorite: true }}
-            forceConfirm
+            forceConfirm={!readOnly}
+            withoutActions={readOnly}
           />
         ))}
       </div>
 
-      {data?.hasNextPage && (
+      {!readOnly && getHasNextPage(myFavoritesData) && (
         <div className="flex justify-center pt-2">
           <Button
             variant="outline"

@@ -13,8 +13,8 @@ type LiberProfileContentProps = {
 };
 
 export default function LiberProfileContent({ userDetail }: LiberProfileContentProps) {
-  const { currentTab, setCurrentTab, topicsData, translatedTabs } = useProfileTab(LIBER_OWN_TABS, true);
-  const { handleSaveText, handleSaveLearningEntry, handleSaveWorkEntry, handleSaveTopics } = useLiberProfileActions();
+  const { currentTab, setCurrentTab, translatedTabs } = useProfileTab(LIBER_OWN_TABS);
+  const { handleSaveText, handleSaveLearningEntry, handleSaveWorkEntry } = useLiberProfileActions();
   const userData = buildUserData(userDetail);
 
   return (
@@ -22,16 +22,15 @@ export default function LiberProfileContent({ userDetail }: LiberProfileContentP
       {currentTab === 'about' && (
         <MyAboutPanel
           data={userData}
-          availableTopics={topicsData?.data}
           editable
+          showTopics={false}
           onSaveText={handleSaveText}
           onSaveLearningEntry={handleSaveLearningEntry}
           onSaveWorkEntry={handleSaveWorkEntry}
-          onSaveTopics={handleSaveTopics}
         />
       )}
       {currentTab === 'stories' && (
-        <MyStoriesPanel topics={userDetail?.humanBookTopic} storyOwnerId={userDetail.id} />
+        <MyStoriesPanel topics={userDetail?.humanBookTopic} storyOwnerId={userDetail.id} variant="liber" />
       )}
       {currentTab === 'my_favorite' && <LiberMyFavorite />}
     </ControlOverview>
