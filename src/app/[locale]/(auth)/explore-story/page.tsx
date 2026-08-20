@@ -89,7 +89,7 @@ export default function Index() {
     return items.map((story: StoryType) => {
       const isFavorite
         = favoriteStories
-          && favoriteStories?.some((favorite: any) => favorite.storyId === story.id);
+          && favoriteStories?.data?.some((favorite: any) => favorite.storyId === story.id);
       return { ...story, isFavorite };
     });
   }, [items, favoriteStories]);
