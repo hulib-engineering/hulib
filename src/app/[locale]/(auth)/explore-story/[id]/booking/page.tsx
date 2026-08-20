@@ -34,7 +34,9 @@ export default function Index() {
   const t = useTranslations('Schedule.MainScreen');
 
   // const { data: humanBook, error } = useGetUsersByIdQuery(humanBookId);
-  const { data: humanBook } = useGetUsersByIdQuery(humanBookId);
+  const { data: humanBook } = useGetUsersByIdQuery(humanBookId, {
+    skip: !humanBookId,
+  });
 
   const [placeRequest] = useCreateNewReadingSessionMutation();
 

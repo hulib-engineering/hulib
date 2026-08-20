@@ -141,14 +141,14 @@ export const StoryCard = ({ data, className, outletClassName, isShowReadAll = tr
                 )}
               </div>
             )}
-            <div className="flex items-center gap-1 lg:gap-2">
+            <div className="flex items-center gap-1">
               <Avatar
                 imageUrl={data.humanBook.photo?.path}
                 name={data.humanBook.fullName}
                 className="size-[14px]"
                 size="xs"
               />
-              <span className="line-clamp-1 text-xs font-medium leading-[14px] text-neutral-50">
+              <span className="line-clamp-1 text-xs leading-[14px] text-neutral-50">
                 {data?.humanBook?.fullName}
               </span>
             </div>
