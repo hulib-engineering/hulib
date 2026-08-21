@@ -11,12 +11,20 @@ type LiberMyFavoriteEmptyProps = {
   className?: string;
   title: string;
   description: string;
+  showRecommendations?: boolean;
 };
 
-export const MyFavoriteEmpty = ({ className, title, description }: LiberMyFavoriteEmptyProps) => {
+export const MyFavoriteEmpty = ({
+  className,
+  title,
+  description,
+  showRecommendations = true,
+}: LiberMyFavoriteEmptyProps) => {
   const { data: stories, isLoading } = useGetSimilarStoriesQuery({
     page: 1,
     limit: 4,
+  }, {
+    skip: !showRecommendations,
   });
 
   return (
@@ -40,16 +48,18 @@ export const MyFavoriteEmpty = ({ className, title, description }: LiberMyFavori
         </div>
       </div>
 
-      <div className="mt-6">
-        {isLoading && <StoriesSkeleton />}
-        {!isLoading && stories?.data?.length > 0 && (
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {stories?.data?.map((story: TStory) => (
-              <StoryCard key={story.id} data={story} />
-            ))}
-          </div>
-        )}
-      </div>
+      {showRecommendations && (
+        <div className="mt-6">
+          {isLoading && <StoriesSkeleton />}
+          {!isLoading && stories?.data?.length > 0 && (
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {stories?.data?.map((story: TStory) => (
+                <StoryCard key={story.id} data={story} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
