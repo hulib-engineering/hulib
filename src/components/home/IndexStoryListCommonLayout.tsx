@@ -49,7 +49,7 @@ const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) =
     return props.stories && props.stories?.data && props.stories?.data.map((story: StoryType) => {
       const isFavorite
         = favoriteStories
-          && favoriteStories?.some((favorite: any) => favorite.storyId === story.id);
+          && favoriteStories?.data?.some((favorite: any) => favorite.storyId === story.id);
       return { ...story, isFavorite };
     });
   }, [props.stories, favoriteStories]);

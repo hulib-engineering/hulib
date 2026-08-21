@@ -35,9 +35,9 @@ export default function MyFavoritePanel() {
       return;
     }
     if (prevPageRef.current === 1 || page === 1) {
-      setAllStories(data);
+      setAllStories(data.data);
     } else {
-      setAllStories(prev => [...prev, ...data]);
+      setAllStories(prev => [...prev, ...data.data]);
     }
     prevPageRef.current = page;
   }, [data, page]);

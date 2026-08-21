@@ -37,7 +37,7 @@ export const IndexStoryListSectionLayout = (props: Props) => {
     return stories && stories?.data && stories?.data.map((story: StoryType) => {
       const isFavorite
         = favoriteStories
-          && favoriteStories?.some((favorite: any) => favorite.storyId === story.id);
+          && favoriteStories?.data?.some((favorite: any) => favorite.storyId === story.id);
       return { ...story, isFavorite };
     });
   }, [stories, favoriteStories]);
