@@ -37,7 +37,7 @@ export default function ViewerProfileComponent({ userDetail }: Props) {
         onChatClick={handleOpenChatWindow}
         onReportClick={handleOpenReportModal}
       />
-      <ViewerProfileContent />
+      <ViewerProfileContent userDetail={userDetail} />
 
       <ReportModal open={isReportModalOpen} onClose={handleCloseReportModal} />
     </div>

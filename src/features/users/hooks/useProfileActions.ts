@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 
-import type { LearningEntryFormValues, Topic, WorkEntryFormValues } from '../types/profile';
+import type { LearningEntryFormValues, WorkEntryFormValues } from '../types/profile';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import {
   useAddEducationMutation,
@@ -12,6 +12,7 @@ import {
   useUpdateProfileMutation,
   useUpdateUserTopicsMutation,
 } from '@/libs/services/modules/auth';
+import type { Topic } from '@/libs/services/modules/user/userType';
 
 const useProfileActions = () => {
   const tCommon = useTranslations('Common');
@@ -23,12 +24,25 @@ const useProfileActions = () => {
   const [editWork] = useEditWorkExperienceMutation();
   const [updateUserTopics] = useUpdateUserTopicsMutation();
 
+  const normalizeMonthDate = (value?: string) => {
+    if (!value) {
+      return undefined;
+    }
+    const match = value.match(/^(\d{4})-(\d{2})/);
+    if (!match) {
+      return undefined;
+    }
+    const [, year, month] = match;
+    return `${year}-${month}-01`;
+  };
+
   const handleSaveText = async (key: 'bio', value: string) => {
     try {
       await updateProfile({ [key]: value }).unwrap();
       pushSuccess(tCommon('update_successfully'));
     } catch {
       pushError(tCommon('update_failed'));
+      throw new Error(tCommon('update_failed'));
     }
   };
 
@@ -36,11 +50,13 @@ const useProfileActions = () => {
     values: LearningEntryFormValues,
     editingId?: number | string,
   ) => {
+    const name = values.name.trim();
+    const organization = values.organization?.trim();
     const payload = {
-      major: values.name,
-      institution: values.organization ?? '',
-      startedAt: values.startedAt,
-      endedAt: values.endedAt,
+      major: name,
+      institution: organization || '',
+      startedAt: normalizeMonthDate(values.startedAt) ?? values.startedAt,
+      endedAt: normalizeMonthDate(values.endedAt),
       type: values.type,
       isPublic: values.isPublic,
     };
@@ -61,11 +77,13 @@ const useProfileActions = () => {
     values: WorkEntryFormValues,
     editingId?: number,
   ) => {
+    const position = values.position.trim();
+    const company = values.company.trim();
     const payload = {
-      position: values.position,
-      company: values.company,
-      startedAt: values.startedAt,
-      endedAt: values.endedAt,
+      position,
+      company,
+      startedAt: normalizeMonthDate(values.startedAt) ?? values.startedAt,
+      endedAt: normalizeMonthDate(values.endedAt),
     };
     try {
       if (editingId !== undefined) {
@@ -81,8 +99,12 @@ const useProfileActions = () => {
   };
 
   const handleSaveTopics = async (topics: Topic[]) => {
+    const topicIds = topics
+      .map(topic => Number(topic.id))
+      .filter(Number.isFinite);
+
     try {
-      await updateUserTopics({ topics: topics.map(topic => topic.id) }).unwrap();
+      await updateUserTopics({ topics: topicIds }).unwrap();
       pushSuccess(tCommon('update_successfully'));
     } catch {
       pushError(tCommon('update_failed'));

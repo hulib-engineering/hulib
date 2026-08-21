@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import CreateStoryCard from './CreateStoryCard';
 import MyStoriesEmptyState from './MyStoriesEmptyState';
 import StoriesOthersEmptyState from './StoriesOthersEmptyState';
@@ -13,6 +14,8 @@ import FirstBookCreatedModal from '@/features/stories/components/FirstBookCreate
 import { useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import type { Topic } from '@/libs/services/modules/user/userType';
+import { mergeClassnames } from '@/components/core/private/utils';
+import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 
 type TTopic = {
   userId: number;
@@ -22,11 +25,18 @@ type TTopic = {
 
 type MyStoriesPanelProps = {
   storyOwnerId: number;
-  topics: TTopic[];
+  topics?: TTopic[];
   showOthers?: boolean;
+  variant?: 'liber' | 'huber';
 };
 
-export default function MyStoriesPanel({ storyOwnerId, showOthers = false }: MyStoriesPanelProps) {
+export default function MyStoriesPanel({
+  storyOwnerId,
+  topics = [],
+  showOthers = false,
+  variant = 'huber',
+}: MyStoriesPanelProps) {
+  const tMyProfile = useTranslations('MyProfile');
   const { data: stories, isLoading } = useGetHuberStoriesQuery(
     { huberId: storyOwnerId, publishedOnly: showOthers },
     { skip: !storyOwnerId },
@@ -34,13 +44,23 @@ export default function MyStoriesPanel({ storyOwnerId, showOthers = false }: MyS
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isFirstBookModalOpen, setIsFirstBookModalOpen] = useState(false);
+  const [selectedTopicId, setSelectedTopicId] = useState<number | 'all'>('all');
 
   const handleCreateSuccess = () => {
     setIsCreateModalOpen(false);
     setIsFirstBookModalOpen(true);
   };
 
-  const isEmpty = !stories?.data?.length;
+  const storyItems: TStory[] = stories?.data ?? [];
+  const topicFilters: Topic[] = (topics.length > 0
+    ? topics.map(item => item.topic)
+    : storyItems.flatMap((story: TStory) => story.topics ?? []) as Topic[])
+    .filter((topic: Topic, index: number, source: Topic[]) => source.findIndex(item => item.id === topic.id) === index);
+  const filteredStories = selectedTopicId === 'all'
+    ? storyItems
+    : storyItems.filter((story: TStory) => story.topics?.some(topic => topic.id === selectedTopicId));
+  const isEmpty = storyItems.length === 0;
+  const isHuberOwnStories = !showOthers && variant === 'huber';
 
   return (
     <div className="lg:px-0">
@@ -51,9 +71,41 @@ export default function MyStoriesPanel({ storyOwnerId, showOthers = false }: MyS
       )}
       {!isLoading && !isEmpty && (
         <div className="flex flex-col gap-6">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {isHuberOwnStories && topicFilters.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setSelectedTopicId('all')}
+                className={mergeClassnames(
+                  'rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors',
+                  selectedTopicId === 'all'
+                    ? 'border-primary-70 bg-primary-90 text-primary-50 shadow-[0_4px_12px_rgba(8,88,250,0.14)]'
+                    : 'border-primary-90 bg-white text-primary-50 hover:border-primary-70 hover:bg-primary-98',
+                )}
+              >
+                {tMyProfile('all')}
+              </button>
+              {topicFilters.map(topic => (
+                <button
+                  key={topic.id}
+                  type="button"
+                  onClick={() => setSelectedTopicId(topic.id)}
+                  className={mergeClassnames(
+                    'max-w-[180px] rounded-lg border px-3 py-1.5 text-xs font-semibold transition-transform hover:-translate-y-0.5',
+                    getTopicBadgeClasses(topic.color),
+                    selectedTopicId === topic.id
+                      ? 'shadow-[0_4px_12px_rgba(136,69,198,0.18)] ring-2 ring-primary-80'
+                      : 'opacity-80 hover:opacity-100',
+                  )}
+                >
+                  <span className="line-clamp-1">{topic.name}</span>
+                </button>
+              ))}
+            </div>
+          )}
+          <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
             {!showOthers && <CreateStoryCard onClick={() => setIsCreateModalOpen(true)} className="w-full max-w-none" />}
-            {stories?.data?.map((story: TStory) => (
+            {filteredStories.map((story: TStory) => (
               showOthers
                 ? <StoryCard key={story.id} data={story} />
                 : <MyStoryCard key={story.id} data={story} />

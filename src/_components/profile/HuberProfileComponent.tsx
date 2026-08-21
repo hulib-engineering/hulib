@@ -67,7 +67,7 @@ export default function HuberProfileComponent({ userDetail }: Props) {
         onCreateStoryClick={() => setIsCreateStoryModalOpen(true)}
       />
       {!isHuberStar && <BecomeHuberStar current={huberStarProgress} />}
-      <HuberProfileContent />
+      <HuberProfileContent userDetail={userDetail} />
       <EditImageModal
         {...currentEditableImageData}
         open={isEditImageModalOpen}
