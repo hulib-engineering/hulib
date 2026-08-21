@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 
-import type { LearningEntryFormValues, LiberAboutData, Topic, WorkEntryFormValues } from '../../features/users/types/profile';
+import type { LearningEntryFormValues, LiberAboutData, WorkEntryFormValues } from '../../features/users/types/profile';
 import LiberAboutSection from './MyAboutSection';
 import LiberLearningPathSection from './MyLearningPathSection';
 import MyWorkSection from './MyWorkSection';
@@ -11,17 +11,19 @@ import MyTopicsSection from './MyTopicsSection';
 type LiberAboutPanelProps = {
   data?: LiberAboutData;
   editable?: boolean;
-  availableTopics?: Topic[];
+  showTopics?: boolean;
+  availableTopics?: LiberAboutData['topics'];
   onSaveText?: (key: 'bio', value: string) => Promise<void> | void;
   onSaveLearningEntry?: (values: LearningEntryFormValues, editingId?: number | string) => Promise<void> | void;
   onSaveWorkEntry?: (values: WorkEntryFormValues, editingId?: number) => Promise<void> | void;
-  onSaveTopics?: (topics: Topic[]) => Promise<void> | void;
+  onSaveTopics?: (topics: NonNullable<LiberAboutData['topics']>) => Promise<void> | void;
 };
 
 export default function MyAboutPanel({
   data,
   editable = false,
-  availableTopics,
+  showTopics = false,
+  availableTopics = [],
   onSaveText,
   onSaveLearningEntry,
   onSaveWorkEntry,
@@ -50,13 +52,15 @@ export default function MyAboutPanel({
         editable={editable}
         onSave={onSaveWorkEntry}
       />
-      <MyTopicsSection
-        title={t('liber_about.topics_title')}
-        topics={data?.topics}
-        availableTopics={availableTopics}
-        editable={editable}
-        onSave={onSaveTopics}
-      />
+      {showTopics && (
+        <MyTopicsSection
+          title={t('liber_about.topics_title')}
+          topics={data?.topics}
+          availableTopics={availableTopics}
+          editable={editable}
+          onSave={onSaveTopics}
+        />
+      )}
     </div>
   );
 }
