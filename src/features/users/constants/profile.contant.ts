@@ -14,9 +14,20 @@ export const LIBER_OWN_TABS = [
   { value: 'my_favorite', label: 'my_favorite' },
 ] as const;
 
-export const VIEWER_TABS = [
+export const LIBER_VIEWER_TABS = [
   { value: 'about', label: 'about' },
+  { value: 'stories', label: 'my_stories' },
+  { value: 'my_favorite', label: 'my_favorite' },
 ] as const;
+
+export const HUBER_VIEWER_TABS = [
+  { value: 'about', label: 'about' },
+  { value: 'my_schedule', label: 'my_schedule' },
+  { value: 'stories', label: 'my_stories' },
+  { value: 'my_favorite', label: 'my_favorite' },
+] as const;
+
+export const VIEWER_TABS = LIBER_VIEWER_TABS;
 
 export const CARD_CLASS: Record<CardVariant, string> = {
   right_now: 'border-4 border-primary-70 bg-white shadow-[0px_0px_8.8px_0px_rgba(8,_88,_250,_1)]',
