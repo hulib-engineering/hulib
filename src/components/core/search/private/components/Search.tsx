@@ -31,6 +31,8 @@ const SearchRoot = ({
   children,
   isOpen,
   className,
+  withOverlay = true,
+  fullWidth = false,
 }: SearchProps) => {
   const isParentSelected
     = typeof selectedParent === 'number' && onChangeSelected;
@@ -41,78 +43,93 @@ const SearchRoot = ({
 
   const [ref, hasClickedOutside] = useClickOutside();
 
-  const handleChangeSelected = (direction?: 'up' | 'down') => {
-    const items = document.querySelectorAll('.search-list-item');
+  const handleChangeSelected = useCallback(
+    (direction?: 'up' | 'down') => {
+      const items = document.querySelectorAll('.search-list-item');
 
-    const selectedValue = isParentSelected ? selectedParent : selected;
+      const selectedValue = isParentSelected ? selectedParent : selected;
 
-    let index = 0;
-    let newIndex = 0;
+      let index = 0;
+      let newIndex = 0;
 
-    if (direction === 'down') {
-      items.forEach((_, i) => {
-        if (i === selectedValue) {
-          index = i;
-        }
-      });
+      if (direction === 'down') {
+        items.forEach((_, i) => {
+          if (i === selectedValue) {
+            index = i;
+          }
+        });
 
-      newIndex = index === items.length - 1 ? 0 : index + 1;
-    } else if (direction === 'up') {
-      items.forEach((_, i) => {
-        if (i === selectedValue) {
-          index = i;
-        }
-      });
+        newIndex = index === items.length - 1 ? 0 : index + 1;
+      } else if (direction === 'up') {
+        items.forEach((_, i) => {
+          if (i === selectedValue) {
+            index = i;
+          }
+        });
 
-      newIndex = !index ? items.length - 1 : index - 1;
-    } else if (isParentSelected) {
-      onChangeSelected(0);
-    } else {
-      setSelected(0);
-    }
-
-    const newItem = items[newIndex];
-
-    if (newItem) {
-      if (isParentSelected) {
-        onChangeSelected(newIndex);
+        newIndex = !index ? items.length - 1 : index - 1;
+      } else if (isParentSelected) {
+        onChangeSelected(0);
       } else {
-        setSelected(newIndex);
+        setSelected(0);
       }
-      newItem.scrollIntoView({
-        behavior: 'smooth',
-        block: newIndex ? 'center' : 'end',
+
+      const newItem = items[newIndex];
+
+      if (newItem) {
+        if (isParentSelected) {
+          onChangeSelected(newIndex);
+        } else {
+          setSelected(newIndex);
+        }
+        newItem.scrollIntoView({
+          behavior: 'smooth',
+          block: newIndex ? 'center' : 'end',
+        });
+      }
+    },
+    [isParentSelected, onChangeSelected, selected, selectedParent],
+  );
+
+  const handleSelect = useCallback(
+    () => {
+      const items = document.querySelectorAll('.search-list-item') as NodeListOf<
+        HTMLButtonElement | HTMLAnchorElement
+      >;
+      const selectedValue = isParentSelected ? selectedParent : selected;
+
+      let index = 0;
+
+      items.forEach((_, i) => {
+        if (i === selectedValue) {
+          index = i;
+        }
       });
-    }
-  };
-  const handleSelect = () => {
-    const items = document.querySelectorAll('.search-list-item') as NodeListOf<
-      HTMLButtonElement | HTMLAnchorElement
-    >;
-    const selectedValue = isParentSelected ? selectedParent : selected;
 
-    let index = 0;
+      const item = items[index];
 
-    items.forEach((_, i) => {
-      if (i === selectedValue) {
-        index = i;
+      if (item) {
+        item.click();
+        if (
+          item.attributes.getNamedItem('data-close-on-select')?.value === 'true'
+        ) {
+          onChangeOpen(false);
+        }
       }
-    });
+    },
+    [isParentSelected, onChangeOpen, selected, selectedParent],
+  );
 
-    const item = items[index];
-
-    if (item) {
-      item.click();
-      if (
-        item.attributes.getNamedItem('data-close-on-select')?.value === 'true'
-      ) {
-        onChangeOpen(false);
-      }
-    }
-  };
+  // Keep a ref to the latest handler so the effect below still only fires on
+  // `search` changes (adding the callback itself to deps would re-run it
+  // whenever the selection changes and reset the highlighted item).
+  const handleChangeSelectedRef = useRef(handleChangeSelected);
+  useEffect(() => {
+    handleChangeSelectedRef.current = handleChangeSelected;
+  });
 
   useEffect(() => {
-    handleChangeSelected();
+    handleChangeSelectedRef.current();
   }, [search]);
 
   const onKeyDown = useCallback(
@@ -163,7 +180,10 @@ const SearchRoot = ({
           role="button" // announce as interactive
           tabIndex={0} // focusable via keyboard
           aria-label="Close overlay"
-          className="fixed inset-0 z-[998] bg-[#2E3032]/50"
+          className={mergeClassnames(
+            'fixed inset-0 z-[998] bg-[#2E3032]/50',
+            !withOverlay && 'bg-transparent',
+          )}
           onClick={() => onChangeOpen(false)}
           onKeyDown={(e) => {
             if (e.key === 'Escape' || e.key === 'Enter') {
@@ -174,8 +194,23 @@ const SearchRoot = ({
           }}
         />
       )}
+      {isOpen && !withOverlay && (
+        <div
+          role="button"
+          tabIndex={0}
+          className="fixed inset-0 z-[998] bg-transparent"
+          onClick={() => onChangeOpen(false)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape' || e.key === 'Enter') {
+              e.preventDefault();
+              e.stopPropagation();
+              onChangeOpen(false);
+            }
+          }}
+        />
+      )}
 
-      <div className="relative z-[999] mx-auto w-full max-w-md transition-all">
+      <div className="relative z-[999] transition-all">
         <div
           ref={ref}
           role="button"
@@ -190,6 +225,7 @@ const SearchRoot = ({
               isOpen
                 ? 'rounded-t-2xl bg-neutral-98'
                 : 'rounded-2xl outline outline-1 outline-neutral-variant-90 bg-neutral-variant-98 hover:bg-neutral-variant-90',
+              fullWidth && 'w-full',
               search.trim().length > 0 && 'outline-2 outline-primary-80',
               className,
             )}
@@ -216,6 +252,9 @@ const SearchRoot = ({
             </SearchContext.Provider>
           </div>
         </div>
+        {isOpen && withOverlay ? (
+          <div className="absolute inset-0 bg-[#2E3032]/50" />
+        ) : null}
       </div>
     </div>
   );

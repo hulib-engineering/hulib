@@ -40,7 +40,8 @@
     "no_result": {
       "title": "Không tìm thấy kết quả",
       "description": "Chúng tôi không tìm thấy kết quả nào phù hợp với tìm kiếm của bạn. Vui lòng thử tìm kiếm lại."
-    }
+    },
+    "search_not_found": "Không có kết quả bạn cần tìm"
   },
   "Footer": {
     "copyright": "© 2026 HuLib. Đã đăng ký bản quyền.",
@@ -1207,6 +1208,8 @@
     "password_capital": "Mật khẩu phải chứa chữ cái viết hoa.",
     "password_match": "Mật khẩu nhập lại phải trùng khớp.",
     "search_for_name": "Tìm theo tên",
+    "popular_search": "Tìm kiếm phổ biến",
+    "recent_search": "Lần tìm gần đây",
     "notification_title": "Thông báo",
     "no_messages": "Bạn chưa có cuộc trò chuyện nào.",
     "invalid": "Không hợp lệ",

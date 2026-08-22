@@ -1,7 +1,7 @@
 'use client';
 
 import { ClockCounterClockwise, X } from '@phosphor-icons/react';
-import React, { type ReactNode, useEffect, useMemo, useState } from 'react';
+import React, { type ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/libs/i18nNavigation';
@@ -19,7 +19,13 @@ type Items = {
   id: string;
 };
 
-export default function AdvancedSearch() {
+export default function AdvancedSearch({
+  withOverlay = true,
+  fullWidth = false,
+}: {
+  withOverlay?: boolean;
+  fullWidth?: boolean;
+}) {
   const router = useRouter();
   const t = useTranslations('Common');
 
@@ -34,39 +40,44 @@ export default function AdvancedSearch() {
     }
   }, []);
 
-  const handleSearch = (query: string) => {
-    if (!query.trim()) {
-      return;
-    }
+  const handleSearch = useCallback(
+    (query: string) => {
+      if (!query.trim()) {
+        return;
+      }
 
-    // Update local storage
-    const updatedHistory = [...searchHistory, query];
-    const uniqueHistory = Array.from(new Set(updatedHistory)).slice(-6);
-    setSearchHistory(uniqueHistory);
-    localStorage.setItem('searchHistory', JSON.stringify(uniqueHistory));
+      // Update local storage
+      const updatedHistory = [...searchHistory, query];
+      const uniqueHistory = Array.from(new Set(updatedHistory)).slice(-6);
+      setSearchHistory(uniqueHistory);
+      localStorage.setItem('searchHistory', JSON.stringify(uniqueHistory));
 
-    // Navigate and close dropdown
-    router.push(`/search?q=${encodeURIComponent(query)}`);
-    setQString(query);
-    setOpen(false);
-  };
+      // Navigate and close dropdown
+      router.push(`/search?q=${encodeURIComponent(query)}`);
+      setQString(query);
+      setOpen(false);
+    },
+    [router, searchHistory],
+  );
 
   const filteredHistoryItems = useMemo(
     () =>
-      searchFilterItems(
-        [
-          {
-            heading: 'Recent search',
-            id: 'history',
-            items: searchHistory.map(search => ({
-              id: search,
-              children: search,
-              onClick: () => handleSearch(search), // reuse unified handler
-            })),
-          },
-        ],
-        qString,
-      ),
+      searchHistory.length > 0
+        ? searchFilterItems(
+            [
+              {
+                heading: 'Recent search',
+                id: 'history',
+                items: searchHistory.map(search => ({
+                  id: search,
+                  children: search,
+                  onClick: () => handleSearch(search), // reuse unified handler
+                })),
+              },
+            ],
+            qString,
+          )
+        : [],
     [handleSearch, qString, searchHistory],
   );
 
@@ -101,7 +112,9 @@ export default function AdvancedSearch() {
       search={qString}
       onChangeSearch={setQString}
       onChangeOpen={setOpen}
-      className={mergeClassnames(open && 'w-full lg:w-[317px]')}
+      className={mergeClassnames(open && 'w-full lg:w-[320px]')}
+      withOverlay={withOverlay}
+      fullWidth={fullWidth}
     >
       <Search.Input
         className={mergeClassnames(
@@ -109,6 +122,7 @@ export default function AdvancedSearch() {
         )}
       >
         <Search.Input.Input
+          className="w-[160px]"
           placeholder={t('search_by_keyword')}
           onKeyDown={e => e.key === 'Enter' && handleSearch(qString)}
         />
@@ -144,9 +158,7 @@ export default function AdvancedSearch() {
                   </ul>
                 ))
               )
-            : (
-                <Search.NoResults />
-              )}
+            : null}
         </Search.Result>
       </Search.Transition>
     </Search>
