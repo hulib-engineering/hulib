@@ -33,7 +33,18 @@ ARG NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
 ARG NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
 ARG NEXT_PUBLIC_FIREBASE_APP_ID
 
-ENV NEXT_PUBLIC_REACT_APP_BACKEND_VERSION=$NEXT_PUBLIC_REACT_APP_BACKEND_VERSION \
+# Not real credentials -- src/app/api/sign-cloudinary-params/route.ts throws
+# at module-load time if these are falsy, and Next.js evaluates route
+# modules during `next build`'s page-data collection, before the container
+# (and its real FE_CLOUDINARY_* secrets from Key Vault) ever exists. Any
+# truthy placeholder satisfies that check; the real values only matter once
+# the container actually calls the Cloudinary API at runtime.
+ARG FE_CLOUDINARY_API_KEY=build-placeholder
+ARG FE_CLOUDINARY_API_SECRET=build-placeholder
+
+ENV FE_CLOUDINARY_API_KEY=$FE_CLOUDINARY_API_KEY \
+    FE_CLOUDINARY_API_SECRET=$FE_CLOUDINARY_API_SECRET \
+    NEXT_PUBLIC_REACT_APP_BACKEND_VERSION=$NEXT_PUBLIC_REACT_APP_BACKEND_VERSION \
     NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT=$NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT \
     NEXT_PUBLIC_REACT_APP_BACKEND_SOCKET_ENDPOINT=$NEXT_PUBLIC_REACT_APP_BACKEND_SOCKET_ENDPOINT \
     NEXT_PUBLIC_EMAILJS_SERVICE_ID=$NEXT_PUBLIC_EMAILJS_SERVICE_ID \
