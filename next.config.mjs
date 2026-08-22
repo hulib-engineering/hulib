@@ -15,6 +15,10 @@ const bundleAnalyzer = withBundleAnalyzer({
 export default withSentryConfig(
   bundleAnalyzer(
     withNextIntlConfig({
+      // Needed for the Azure Container Apps Docker build (standalone
+      // server.js output) — Netlify/Vercel don't need this, but it's a
+      // no-op for them either way.
+      output: 'standalone',
       eslint: {
         dirs: ['.'],
         ignoreDuringBuilds: true,
