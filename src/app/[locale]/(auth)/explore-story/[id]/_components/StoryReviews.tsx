@@ -40,14 +40,14 @@ function ExpandCollapseButton({ onClick, isExpandMode }: ExpandCollapseButtonPro
         {isExpandMode
           ? (
               <>
-                <CaretDownIcon />
-                <span className="mt-1">{t('see_more')}</span>
+                <CaretUpIcon />
+                <span className="mt-1">{t('see_less')}</span>
               </>
             )
           : (
               <>
-                <CaretUpIcon />
-                <span className="mt-1">{t('see_less')}</span>
+                <CaretDownIcon />
+                <span className="mt-1">{t('see_more')}</span>
               </>
             )}
       </div>
@@ -141,14 +141,25 @@ export default function StoryReviews() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [expanded, setExpanded] = useState(false);
+  const handleExpandCollapse = () => {
+    setExpanded(!expanded);
+  };
+  // const [currentPage, setCurrentPage] = useState(1);
   const [items, setItems] = useState<TStoryReview[]>([]);
+  const [totalCount, setTotalCount] = useState(SHOW_LIMIT_REVIEWS);
 
   const { data: storyReviews, isLoading, isFetching } = useGetStoryReviewsByStoryIdQuery({
     storyId: id,
-    page: currentPage,
-    limit: SHOW_LIMIT_REVIEWS,
+    // page: currentPage,
+    limit: (expanded ? totalCount : SHOW_LIMIT_REVIEWS),
   });
+
+  useEffect(() => {
+    if (storyReviews?.meta?.totalItems) {
+      setTotalCount(storyReviews.meta.totalItems);
+    }
+  }, [storyReviews?.meta?.totalItems]);
 
   const [deleteStoryReview, { isLoading: isDeleting }] = useDeleteStoryReviewMutation();
 
@@ -160,10 +171,10 @@ export default function StoryReviews() {
     return true;
   }, [session, router, pathname]);
 
-  const hasNextPage
+  /* const hasNextPage
     = storyReviews?.meta?.currentPage && storyReviews?.meta?.totalPages
       ? storyReviews.meta.currentPage < storyReviews.meta.totalPages
-      : false;
+      : false; */
 
   /* const loadMoreRef = useInfiniteScroll(() => {
     if (hasNextPage && !isFetching && expandAllReviews) {
@@ -171,7 +182,7 @@ export default function StoryReviews() {
     }
   }, hasNextPage && !isFetching); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (storyReviews?.data) {
       if (currentPage === 1) {
         setItems(storyReviews.data); // reset when filter changes
@@ -181,20 +192,18 @@ export default function StoryReviews() {
         });
       }
     }
-  }, [storyReviews, currentPage]);
+  }, [storyReviews, currentPage]); */
+
+  useEffect(() => {
+    if (storyReviews?.data) {
+      setItems(storyReviews.data);
+    }
+  }, [storyReviews]);
 
   /* const handleLoadMore = () => {
     if (hasNextPage)
     setCurrentPage(prev => prev + 1);
   }; */
-
-  const handleExpandCollapse = () => {
-    if (hasNextPage) {
-      setCurrentPage(storyReviews?.meta?.totalPages);
-    } else {
-      setCurrentPage(1);
-    }
-  };
 
   const handleDelete = async (reviewId: number) => {
     if (!requireAuth()) {
@@ -246,13 +255,11 @@ export default function StoryReviews() {
         ))}
       </div>
 
-      {storyReviews?.meta?.totalPages > 1 && (
-        <div className="flex items-center justify-center">
-          {!isFetching ? (
-            <ExpandCollapseButton onClick={handleExpandCollapse} isExpandMode={hasNextPage} />
-          ) : <Loader />}
-        </div>
-      )}
+      <div className="flex items-center justify-center">
+        {!isFetching ? (
+          <ExpandCollapseButton onClick={handleExpandCollapse} isExpandMode={expanded} />
+        ) : <Loader />}
+      </div>
     </>
   );
 };
