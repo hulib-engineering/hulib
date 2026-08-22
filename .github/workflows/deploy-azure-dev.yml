@@ -40,6 +40,26 @@ jobs:
       # empty strings for all of them, failing Env.mjs's build-time
       # validation. They're still fine as GitHub secrets even though the
       # values end up public in the client bundle either way.
+
+      - name: Check build args
+        env:
+          BACKEND_VERSION: ${{ secrets.NEXT_PUBLIC_REACT_APP_BACKEND_VERSION }}
+          BACKEND_ENDPOINT: ${{ secrets.NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT }}
+          BACKEND_SOCKET: ${{ secrets.NEXT_PUBLIC_REACT_APP_BACKEND_SOCKET_ENDPOINT }}
+          EMAILJS_SERVICE: ${{ secrets.NEXT_PUBLIC_EMAILJS_SERVICE_ID }}
+          EMAILJS_TEMPLATE: ${{ secrets.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID }}
+          CONTACT_EMAIL: ${{ secrets.NEXT_PUBLIC_CONTACT_EMAIL }}
+          CONTACT_PHONE: ${{ secrets.NEXT_PUBLIC_CONTACT_PHONE_NUMBER }}
+          APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+        run: |
+          for v in BACKEND_VERSION BACKEND_ENDPOINT BACKEND_SOCKET EMAILJS_SERVICE EMAILJS_TEMPLATE CONTACT_EMAIL CONTACT_PHONE APP_URL; do
+            eval "val=\$$v"
+            case "$val" in
+              *'('*|*')'*) echo "⚠️ $v contains parentheses" ;;
+              *) echo "✓ $v looks OK" ;;
+            esac
+          done
+
       - name: Build and push image
         run: |
           az acr build \
