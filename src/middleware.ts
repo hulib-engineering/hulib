@@ -41,7 +41,7 @@ export default async function middleware(request: NextRequest) {
   }
 
   // Get session token - use process.env directly for Edge Runtime compatibility
-  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  const token = await getToken({ req: request, secret: process.env.FE_NEXTAUTH_SECRET });
 
   // Let next-intl handle locale
   const response = intlMiddleware(request);
