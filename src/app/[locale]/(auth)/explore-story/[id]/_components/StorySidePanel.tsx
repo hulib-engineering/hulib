@@ -28,7 +28,7 @@ import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/Sha
 import AuthorBasicInfo from '@/components/author/AuthorBasicInfo';
 import type { User } from '@/features/users/types';
 import { useGetHuberBookedSessionsQuery, useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
-import BookInfo from '@/components/book/BookInfo';
+import BookInfo from '@/features/stories/components/BookInfo';
 
 type StorySidePanelProps = {
   data: {
