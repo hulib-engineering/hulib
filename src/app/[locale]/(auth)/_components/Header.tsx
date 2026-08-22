@@ -74,7 +74,7 @@ const Header = () => {
   const currentPathname = usePathname();
   const user = useAppSelector(state => state.auth.userInfo);
 
-  const { data, isLoading, error } = useGetUnseenNotificationCountQuery();
+  const { data, isLoading } = useGetUnseenNotificationCountQuery();
   const { data: conversations = [] } = useGetConversationContactsQuery(
     undefined,
     {
@@ -245,7 +245,7 @@ const Header = () => {
                     </>
                   )}
                 </Popover>
-                {!isLoading && !error && <NotificationPopover unreadNotifCount={data ? data.unseenCount : 0} />}
+                {!isLoading && <NotificationPopover unreadNotifCount={data ? data.unseenCount : 0} />}
                 <div className="ml-2">
                   <AvatarPopover />
                 </div>
