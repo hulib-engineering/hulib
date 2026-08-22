@@ -40,7 +40,8 @@
     "no_result": {
       "title": "No Result Found",
       "description": "We cannot find any result that matches your search. Please try search again."
-    }
+    },
+    "search_not_found": "No results found for what you're looking for"
   },
   "Footer": {
     "copyright": "© 2026 HuLib. All rights reserved.",
@@ -1206,6 +1207,8 @@
     "password_capital": "Password has a capital letter.",
     "password_match": "Passwords match.",
     "search_for_name": "Search for name",
+    "popular_search": "Popular search",
+    "recent_search": "Recent search",
     "notification_title": "Notification",
     "no_messages": "You have no conversations yet!",
     "select_topics": "Select topics",
