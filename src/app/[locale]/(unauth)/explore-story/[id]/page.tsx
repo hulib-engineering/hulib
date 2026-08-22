@@ -72,7 +72,7 @@ export default function Index() {
         return;
       }
 
-      const isDesktop = window.matchMedia('(min-width: 1280px)').matches;
+      const isDesktop = window.matchMedia('(min-width: 768px)').matches;
       if (!isDesktop) {
         setBookWidth((prev) => {
           if (prev === undefined) {
@@ -90,7 +90,7 @@ export default function Index() {
       const leftPadding = layoutRect.left;
       const rightPadding = window.innerWidth - layoutRect.right;
       const computedBookWidth = window.innerWidth - leftPadding - rightPadding - sidePanelRect.width - gap;
-      const isWideDesktop = window.matchMedia('(min-width: 1440px)').matches;
+      const isWideDesktop = true; // DEBUGGING //window.matchMedia('(min-width: 1440px)').matches;
       const cappedBookWidth = isWideDesktop ? Math.min(computedBookWidth, 888) : computedBookWidth;
       const newWidth = Math.max(cappedBookWidth, 0);
 
@@ -121,7 +121,7 @@ export default function Index() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto w-full max-w-screen-sm py-6 xl:max-w-screen-2xl xl:px-28 xl:py-8">
+      <div className="mx-auto w-full max-w-screen-sm py-6 md:max-w-screen-2xl md:px-28 md:py-8">
         <StoryDetailSkeleton />
       </div>
     );
@@ -136,8 +136,8 @@ export default function Index() {
   }
 
   return (
-    <div className="mx-auto w-full py-6 xl:py-8">
-      <div className="flex flex-col gap-6 px-4 xl:gap-12 xl:px-0 xxl:mx-auto xxl:w-fit">
+    <div className="mx-auto w-full py-6 md:py-8">
+      <div className="flex flex-col gap-6 px-4 md:mx-auto md:w-fit md:gap-12 md:px-0">
         <div className="flex flex-col gap-2">
           <Button
             variant="ghost"
@@ -147,7 +147,7 @@ export default function Index() {
           />
           <div
             ref={storyLayoutRef}
-            className="flex flex-col gap-4 xl:flex-row xl:items-stretch xl:gap-8 xxl:justify-center xxl:gap-6"
+            className="flex flex-col gap-4 md:flex-row md:items-stretch md:justify-center md:gap-6 md:gap-8"
           >
             <StoryContent
               abstract={data?.abstract || ''}
