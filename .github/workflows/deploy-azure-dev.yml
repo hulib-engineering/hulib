@@ -21,7 +21,7 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: development
+    environment: azure-dev
 
     steps:
       - uses: actions/checkout@v4
