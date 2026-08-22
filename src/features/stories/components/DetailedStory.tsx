@@ -117,7 +117,7 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
     window.addEventListener('resize', updateDimensions);
 
     flipSound.current = new Audio('/assets/media/flip.mp3');
-    console.log('resized child');
+
     return () => {
       window.removeEventListener('resize', updateDimensions);
     };
