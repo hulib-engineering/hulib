@@ -241,7 +241,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
         shareOptions={shareOptions}
       />
 
-      <div className="flex w-full flex-col gap-y-5 lg:w-[336px] lg:w-auto lg:max-w-[336px] lg:shrink-0">
+      <div className="flex w-full flex-col gap-y-5 lg:w-[336px] lg:max-w-[336px] lg:shrink-0">
         <BookInfo
           coverPath={data?.cover?.path}
           topics={data?.topics}

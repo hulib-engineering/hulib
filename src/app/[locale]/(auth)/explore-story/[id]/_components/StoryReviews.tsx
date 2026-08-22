@@ -255,11 +255,13 @@ export default function StoryReviews() {
         ))}
       </div>
 
-      <div className="flex items-center justify-center">
-        {!isFetching ? (
-          <ExpandCollapseButton onClick={handleExpandCollapse} isExpandMode={expanded} />
-        ) : <Loader />}
-      </div>
+      {totalCount > SHOW_LIMIT_REVIEWS && (
+        <div className="flex items-center justify-center">
+          {!isFetching ? (
+            <ExpandCollapseButton onClick={handleExpandCollapse} isExpandMode={expanded} />
+          ) : <Loader />}
+        </div>
+      )}
     </>
   );
 };
