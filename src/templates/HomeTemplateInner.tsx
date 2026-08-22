@@ -21,6 +21,9 @@ import {
 import { setAvatarUrl, setUserInfo } from '@/libs/store/authentication';
 import Modal from '@/components/Modal';
 
+// TODO: put the breakpoints of the layout (footer and header) into a common constant file so every component has a reference point, one change supposed to affect all
+// (...although the first step is to find them first, where are they though?)
+
 export default function HomeTemplateInner({ children }: { children: ReactNode }) {
   const { data: session } = useSession();
   const pathname = usePathname();

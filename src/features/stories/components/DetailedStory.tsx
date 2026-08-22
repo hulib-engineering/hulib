@@ -18,7 +18,7 @@ type PageProps = {
   showPageNumber?: boolean;
   mobileFooter?: ReactNode;
 };
-
+// TODO: try to fix book doesn't resize as window resizes
 export const Page = forwardRef<HTMLDivElement, PageProps>(
   ({
     page,
@@ -30,12 +30,12 @@ export const Page = forwardRef<HTMLDivElement, PageProps>(
   }, ref) => (
     <div
       className={mergeClassnames(
-        'relative isolate size-full overflow-hidden rounded-xl bg-white px-8 pb-0 pt-8 shadow-sm md:rounded-xl',
-        'md:before:content-[""] md:before:absolute md:before:inset-y-0 md:before:h-full md:before:w-8 md:before:border-neutral-80',
-        'md:before:from-white md:before:from-20% md:before:via-[#C7C9CB]/10 md:before:via-40% md:before:to-[#C7C9CB]/40 md:before:to-100%',
+        'relative isolate size-full overflow-hidden rounded-xl bg-white px-8 pb-0 pt-8 shadow-sm lg:rounded-xl',
+        'lg:before:content-[""] lg:before:absolute lg:before:inset-y-0 lg:before:h-full lg:before:w-8 lg:before:border-neutral-80',
+        'lg:before:from-white lg:before:from-20% lg:before:via-[#C7C9CB]/10 lg:before:via-40% lg:before:to-[#C7C9CB]/40 lg:before:to-100%',
         page % 2 === 0
-          ? 'md:pr-6 md:shadow-book-right md:before:left-0 md:before:border-l-[0.5px] md:before:bg-gradient-to-l'
-          : 'md:pl-6 md:shadow-book-left md:before:right-0 md:before:border-r-[0.5px] md:before:bg-gradient-to-r',
+          ? 'lg:pr-6 lg:shadow-book-right lg:before:left-0 lg:before:border-l-[0.5px] lg:before:bg-gradient-to-l'
+          : 'lg:pl-6 lg:shadow-book-left lg:before:right-0 lg:before:border-r-[0.5px] lg:before:bg-gradient-to-r',
       )}
       ref={ref}
       data-density={density}
@@ -101,12 +101,12 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
       }
 
       const containerRect = contentRef.current.getBoundingClientRect();
-      const isDesktopViewport = window.matchMedia('(min-width: 768px)').matches;
+      const isDesktopViewport = window.matchMedia('(min-width: 1024px)').matches;
       const resolvedBookWidth = Math.max(props.bookWidth ?? containerRect.width, 0);
       // const pageWidth = isDesktopViewport ? resolvedBookWidth / 2 : resolvedBookWidth;
-      const pageWidth = isDesktop ? resolvedBookWidth / 2 : resolvedBookWidth;
-      const dynamicHeight = isDesktop ? 600 : 440;
-      console.log(isDesktop);
+      const pageWidth = isDesktopViewport ? resolvedBookWidth / 2 : resolvedBookWidth;
+      const dynamicHeight = isDesktopViewport ? 600 : 440;
+      // console.log(isDesktop);
       setIsDesktop(isDesktopViewport);
       setFlipBookWidth(pageWidth);
       setFlipBookHeight(dynamicHeight);
@@ -117,11 +117,11 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
     window.addEventListener('resize', updateDimensions);
 
     flipSound.current = new Audio('/assets/media/flip.mp3');
-
+    console.log('resized child');
     return () => {
       window.removeEventListener('resize', updateDimensions);
     };
-  }, [props.bookWidth, isDesktop]);
+  }, [props.bookWidth]);
 
   useEffect(() => {
     if (flipBookHeight && flipBookWidth && textContainerRef.current && props.abstract) {
@@ -201,7 +201,7 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
   );
 
   return (
-    <div className="flex flex-col items-center gap-4 md:gap-5">
+    <div className="flex flex-col items-center gap-4 lg:gap-5">
       <div className="w-full" id="demoBlock">
         <div
           className="book-page-padding relative z-50 flex size-full overflow-visible"

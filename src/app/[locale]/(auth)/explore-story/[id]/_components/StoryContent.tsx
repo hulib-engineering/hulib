@@ -17,7 +17,7 @@ export default function StoryContent({ abstract, bookWidth, storyId }: StoryCont
   const t = useTranslations('ExploreStory');
 
   return (
-    <div className="flex min-w-0 flex-1 flex-col gap-y-8 md:w-[888px] md:max-w-[888px]">
+    <div className="flex min-w-0 flex-1 flex-col gap-y-8 lg:w-[888px] lg:max-w-[888px]">
       <DetailedStory
         abstract={abstract}
         bookWidth={bookWidth}

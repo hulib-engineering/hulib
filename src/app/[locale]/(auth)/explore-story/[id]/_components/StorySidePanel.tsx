@@ -55,8 +55,8 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
   const { data: bookedSessionsList, isLoading }
   = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId }); // replace with a var of user's number of booked sessions if BE added that
 
-  const max_xl = '';// "max-md:absolute max-[425px]:bottom-10 max-md:bottom-20 max-md:left-0 max-md:z-0 max-md:mx-4 p-4";
-  const xl = 'md:p-5';
+  const max_xl = '';// "max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 max-lg:z-0 max-lg:mx-4 p-4";
+  const xl = 'lg:p-5';
 
   return (
     <div
@@ -244,7 +244,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
         shareOptions={shareOptions}
       />
 
-      <div className="flex w-full flex-col gap-y-5 md:w-[336px] md:w-auto md:max-w-[336px] md:shrink-0">
+      <div className="flex w-full flex-col gap-y-5 lg:w-[336px] lg:w-auto lg:max-w-[336px] lg:shrink-0">
         <div
           className={mergeClassnames(
             'flex w-full flex-col items-center gap-y-4 overflow-hidden rounded-2xl bg-white px-4 py-6 shadow-sm',
@@ -255,7 +255,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
               <Cover src={data?.cover?.path ?? null} size="w-[226px] h-[340px]" />
             </div>
             {data?.topics?.length ? (
-              <div className="scrollbar-none hidden w-auto gap-2 overflow-x-auto scroll-smooth py-1 md:flex">
+              <div className="scrollbar-none hidden w-auto gap-2 overflow-x-auto scroll-smooth py-1 lg:flex">
                 {data.topics.map((topic: Topic) => (
                   <Chip
                     key={topic.id}
@@ -272,7 +272,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
               </div>
             ) : null}
 
-            <div className="mt-4 flex flex-wrap items-center gap-2 md:gap-x-8">
+            <div className="mt-4 flex flex-wrap items-center gap-2 lg:gap-x-8">
               <div className="flex items-center gap-x-1">
                 <Eye className="text-primary-50" size={16} />
                 <p className="text-[14px] font-medium leading-4 text-neutral-10">
