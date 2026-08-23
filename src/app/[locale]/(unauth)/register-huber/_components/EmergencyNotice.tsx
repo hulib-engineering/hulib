@@ -16,7 +16,7 @@ export default function EmergencyNotice() {
         width={20}
         height={20}
       />
-      <p className="text-[14px] font-[500] leading-5 text-[#45484A]">
+      <p className="text-[14px] font-[500] leading-5 text-[#331700]">
         {t('emergency_notice')}
       </p>
     </div>
