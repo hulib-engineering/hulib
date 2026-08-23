@@ -15,6 +15,8 @@ type SearchProps = {
   isOpen: boolean;
   search: string;
   className?: string;
+  withOverlay?: boolean;
+  fullWidth?: boolean;
 };
 
 type ListItemBaseProps = {
