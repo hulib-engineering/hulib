@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  BookOpen,
   CalendarDots,
   FacebookLogo,
   InstagramLogo,
@@ -129,7 +130,6 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
         isOpen: true,
         isMinimized: false,
         unread: 0,
-
       }),
     );
   };
@@ -286,15 +286,26 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
             numStories={storiesList?.data?.length}
             onClickFunction={handleAuthorClick}
           />
+
           <Button
             variant="outline"
             className="justify-content box-border flex w-full flex-row items-center gap-[6px] rounded-[100px]
-            border border-[#C2C6CF] p-[12px] max-lg:hidden"
+            border border-[#C2C6CF] p-[12px]"
             onClick={handleOpenHuberChat}
           >
             <MessengerLogoIcon size={20} className="shrink-0" />
             <span className="mt-1">{t('lets_chat')}</span>
           </Button>
+
+          {/* For mobile screen only */}
+          <div className="box-border flex w-full items-center gap-2 rounded-lg
+            border border-[#C7C9CB] bg-[#F0F5FF] p-2 lg:hidden"
+          >
+            <BookOpen color="#0442BF" size={16} />
+            <span className="flex-1 text-sm leading-4 text-black translate-y-[2px]">
+              {storiesList?.data[0]?.title}
+            </span>
+          </div>
         </div>
       </div>
     </>
