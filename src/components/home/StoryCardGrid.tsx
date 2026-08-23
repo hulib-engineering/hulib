@@ -22,8 +22,8 @@ const StoryCardGrid = ({ stories, className, storyCardClassName }: IStoryCardGri
   const storiesWithFav = useMemo(() => {
     return stories && stories.map((story: TStory) => {
       const isFavorite
-        = favoriteStories
-          && favoriteStories?.some((favorite: any) => favorite.storyId === story.id);
+        = favoriteStories?.data
+          && favoriteStories.data.some((favorite: any) => favorite.storyId === story.id);
       return { ...story, isFavorite };
     });
   }, [stories, favoriteStories]);
