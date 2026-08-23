@@ -137,7 +137,7 @@ export default function Index() {
   }
 
   return (
-    <div className="mx-auto w-full py-6 lg:py-8">
+    <div className="mx-auto w-full py-6 lg:overflow-x-auto lg:py-8">
       <div className="flex flex-col gap-6 px-4 lg:mx-auto lg:w-fit lg:gap-12 lg:px-0">
         <div className="flex flex-col gap-2">
           <Button

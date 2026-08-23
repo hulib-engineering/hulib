@@ -204,7 +204,7 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
     <div className="flex flex-col items-center gap-4 lg:gap-5">
       <div className="w-full" id="demoBlock">
         <div
-          className="book-page-padding relative z-50 flex size-full overflow-visible"
+          className="book-page-padding relative z-0 flex size-full overflow-visible"
           ref={contentRef}
         >
           <div

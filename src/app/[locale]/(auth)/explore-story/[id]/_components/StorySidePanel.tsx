@@ -55,15 +55,15 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
   const { data: bookedSessionsList, isLoading }
   = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId }); // replace with a var of user's number of booked sessions if BE added that
 
-  const max_xl = '';// "max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 max-lg:z-0 max-lg:mx-4 p-4";
-  const xl = 'lg:p-5';
+  const max_lg = 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[9999] max-lg:mx-4 p-4';
+  const lg = 'lg:p-5';
 
   return (
     <div
       className={mergeClassnames(
         'w-auto flex flex-col items-center gap-5 overflow-hidden rounded-2xl bg-white shadow-sm border-2 border-primary-70',
-        max_xl,
-        xl,
+        max_lg,
+        lg,
       )}
     >
       <p className="text-center text-base leading-6 text-neutral-20">{disabledCondition ? t('booking_cta_unauth') : t('booking_cta')}</p>
