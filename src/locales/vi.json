@@ -749,7 +749,7 @@
   },
   "ExploreStory": {
     "description": "Tìm thấy câu chuyện dành riêng cho bạn\n",
-    "ratings": "Đánh giá",
+    "ratings": "đánh giá",
     "read_story": "Đọc truyện",
     "similar_stories": "Những câu chuyện tương tự",
     "story_added_to_favorites": "Thêm vào danh sách yêu thích thành công",
@@ -1268,6 +1268,10 @@
   "AuthorBasicInfo": {
     "stories": "câu chuyện",
     "rating": "yêu thích"
+  },
+  "BookInfo": {
+    "viewCount": "lượt xem",
+    "rating": "đánh giá"
   },
   "ScheduleBasicInfo": {
     "duration": "Thời lượng",

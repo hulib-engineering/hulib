@@ -1329,6 +1329,10 @@
     "stories": "stories",
     "rating": "hearts"
   },
+  "BookInfo": {
+    "viewCount": "view{plural}",
+    "rating": "rating{plural}"
+  },
   "event": {
     "event_registration_title": "Register for HuLib Event",
     "fullname_label": "Please share your full name with HuLib",
