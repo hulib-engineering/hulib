@@ -69,6 +69,9 @@ export default function CommentInput({ storyId }: CommentInputProps) {
         userId: id,
       });
       setComment('');
+      if (ref.current) {
+        ref.current.style.height = 'auto';
+      }
       pushSuccess(t('comment_submitted'));
     } catch {
       pushError(t('comment_error'));
