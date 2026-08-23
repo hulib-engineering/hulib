@@ -1,7 +1,8 @@
 import {
-  Eye,
-  ShareFat,
-  ThumbsUp,
+  EyeIcon,
+  HeartIcon,
+  ShareFatIcon,
+  ThumbsUpIcon,
 } from '@phosphor-icons/react';
 
 import { useTranslations } from 'next-intl';
@@ -22,6 +23,7 @@ type StatisticsProps = {
   viewCount: number | undefined;
   likeCount: number | undefined;
   shareCount: number | undefined;
+  rating: number | undefined;
 };
 
 type CoverDetailProps = {
@@ -32,15 +34,15 @@ type CoverDetailProps = {
 
 type BookInfoProps = BottomButtonsProps & StatisticsProps & CoverDetailProps;
 
-function CoverDetail(props: CoverDetailProps) {
+function CoverDetail({ coverPath, topics }: CoverDetailProps) {
   return (
     <div className="flex w-full flex-col gap-y-4">
       <div className="flex max-h-[340px] w-full items-center justify-center">
-        <Cover src={props.coverPath ?? null} size="w-[226px] h-[340px]" />
+        <Cover src={coverPath ?? null} size="w-[226px] h-[340px]" />
       </div>
-      {props.topics?.length ? (
+      {topics?.length ? (
         <div className="scrollbar-none hidden w-auto gap-2 overflow-x-auto scroll-smooth py-1 lg:flex">
-          {props.topics.map((topic: Topic) => (
+          {topics?.map((topic: Topic) => (
             <Chip
               key={topic.id}
               as="span"
@@ -61,51 +63,63 @@ function CoverDetail(props: CoverDetailProps) {
 
 // function SideButtons() {}
 
-function Statistics(props: StatisticsProps) {
+function Statistics({ viewCount, rating, likeCount, shareCount }: StatisticsProps) {
   return (
-    <div className="flex flex-wrap items-center gap-2 lg:gap-x-8">
+    <div className="flex flex-wrap items-center gap-2 max-lg:justify-between lg:gap-x-8">
+
       <div className="flex items-center gap-x-1">
-        <Eye className="text-primary-50" size={16} />
-        <p className="text-[14px] font-medium leading-4 text-neutral-10">
-          {props.viewCount ?? 0}
+        <EyeIcon className="text-primary-50" size={16} weight="bold" />
+        <p className="text-[14px] leading-4 text-neutral-10">
+          {viewCount ?? 0}
+          <span className="lg:hidden"> lượt xem </span>
         </p>
       </div>
-      <div className="flex items-center gap-x-1">
-        <ThumbsUp className="text-pink-40" size={16} weight="fill" />
-        <p className="text-[14px] font-medium leading-4 text-neutral-10">
-          {props.likeCount}
+
+      <div className="flex items-center gap-x-1 lg:hidden">
+        <HeartIcon className="text-yellow-40" size={16} weight="fill" />
+        <p className="text-[14px] leading-4 text-neutral-10">
+          {rating}
         </p>
       </div>
-      <div className="flex items-center gap-1">
-        <ShareFat className="text-primary-50" size={16} />
-        <p className="text-[14px] font-medium leading-4 text-neutral-20">
-          {props.shareCount}
+
+      <div className="flex items-center gap-x-1 max-lg:hidden">
+        <ThumbsUpIcon className="text-pink-40" size={16} weight="bold" />
+        <p className="text-[14px] leading-4 text-neutral-10">
+          {likeCount}
         </p>
       </div>
+
+      <div className="flex items-center gap-1 max-lg:hidden">
+        <ShareFatIcon className="text-primary-50" size={16} weight="bold" />
+        <p className="text-[14px] leading-4 text-neutral-20">
+          {shareCount}
+        </p>
+      </div>
+
     </div>
   );
 }
 
-function BottomButtons(props: BottomButtonsProps) {
+function BottomButtons({ handleClickShare, isLiked, clickLikeStory }: BottomButtonsProps) {
   const t = useTranslations('ExploreStory');
   return (
     <div className="flex w-full flex-col gap-2 max-lg:hidden">
       <Button
-        iconLeft={<ShareFat className="text-white" size={20} weight="bold" />}
-        onClick={props.handleClickShare}
+        iconLeft={<ShareFatIcon className="text-white" size={20} weight="bold" />}
+        onClick={handleClickShare}
       >
         {t('share')}
       </Button>
       <Button
         variant="outline"
         iconLeft={(
-          <ThumbsUp
-            className={props.isLiked ? 'text-pink-40' : 'text-primary-50'}
+          <ThumbsUpIcon
+            className={isLiked ? 'text-pink-40' : 'text-primary-50'}
             size={20}
-            weight={props.isLiked ? 'fill' : 'bold'}
+            weight={isLiked ? 'fill' : 'bold'}
           />
         )}
-        onClick={props.clickLikeStory}
+        onClick={clickLikeStory}
       >
         {t('like_button')}
       </Button>
@@ -118,7 +132,7 @@ export default function BookInfo(props: BookInfoProps) {
   return (
     <div
       className={mergeClassnames(
-        'flex w-full flex-col lg:items-start gap-y-4 overflow-hidden rounded-2xl bg-white px-4 py-6 shadow-sm',
+        'flex w-full flex-col lg:items-start gap-y-4 overflow-hidden rounded-2xl bg-white px-4 p-5 shadow-sm',
       )}
     >
       <CoverDetail
@@ -129,6 +143,7 @@ export default function BookInfo(props: BookInfoProps) {
         viewCount={props.viewCount}
         likeCount={props.likeCount}
         shareCount={props.shareCount}
+        rating={props.rating}
       />
       <BottomButtons
         isLiked={props.isLiked}

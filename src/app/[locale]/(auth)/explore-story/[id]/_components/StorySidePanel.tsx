@@ -41,6 +41,9 @@ type StorySidePanelProps = {
     sharedUserIds?: string[];
     likedUserIds?: string[];
     humanBook?: User;
+    storyReview?: {
+      rating?: number;
+    };
   };
 };
 
@@ -251,6 +254,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           isLiked={isLiked}
           handleClickShare={handleClickShare}
           clickLikeStory={clickLikeStory}
+          rating={data?.storyReview?.rating}
         />
 
         <BookMeeting

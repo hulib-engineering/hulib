@@ -65,7 +65,7 @@ export default function CommentInput({ storyId }: CommentInputProps) {
 
   if (!session) {
     return (
-      <div className="flex flex-col items-center justify-between gap-y-3 rounded-xl bg-primary-98 p-4 py-6 xxl:flex-row">
+      <div className="flex flex-col items-center justify-between gap-y-3 rounded-xl bg-primary-98 p-4 py-6 max-sm:items-end xxl:flex-row">
         <span className="text-center">{t('comment_login_prompt')}</span>
 
         <div className="flex items-center gap-2 xxl:gap-3">
