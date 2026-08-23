@@ -79,9 +79,12 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
       >
         <span className="mt-1">{t('book_a_meeting')}</span>
       </Button>
-      <p className="text-center text-xs leading-[14px] text-neutral-20">
-        {t('booking_count', { bookingCount: `${(disabledCondition || isLoading) ? 0 : bookedSessionsList?.length}` })}
-      </p>
+      {disabledCondition ? <></>
+        : (
+            <p className="text-center text-xs leading-[14px] text-neutral-20">
+              {t('booking_count', { bookingCount: `${(disabledCondition || isLoading) ? 0 : bookedSessionsList?.length}` })}
+            </p>
+          )}
     </div>
   );
 }
