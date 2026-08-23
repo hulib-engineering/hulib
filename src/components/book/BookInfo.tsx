@@ -1,7 +1,9 @@
 import {
   Eye,
+  NotePencil,
   ShareFat,
   ThumbsUp,
+  Trash,
 } from '@phosphor-icons/react';
 
 import { useTranslations } from 'next-intl';
@@ -10,6 +12,7 @@ import { Cover } from '@/features/stories/components/Cover';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import { Chip } from '@/components/core/chip/Chip';
 import Button from '@/components/core/button/Button';
+import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 
 type BookInfoProps = {
@@ -18,14 +21,17 @@ type BookInfoProps = {
   viewCount: number | undefined;
   likeCount: number | undefined;
   shareCount: number | undefined;
-  // userId: any;
   isLiked?: boolean;
+  isOwner?: boolean;
   handleClickShare?: () => void;
   clickLikeStory?: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
 };
 // TODO: continue refactoring (bring the functions here, share modal could be separated into a file in this same folder)
 export default function BookInfo(props: BookInfoProps) {
   const t = useTranslations('ExploreStory');
+  const tCommon = useTranslations('Common');
   return (
     <div
       className={mergeClassnames(
@@ -75,27 +81,69 @@ export default function BookInfo(props: BookInfoProps) {
           </div>
         </div>
       </div>
-      <div className="flex w-full flex-col gap-2 max-lg:hidden">
-        <Button
-          iconLeft={<ShareFat className="text-white" size={20} weight="bold" />}
-          onClick={props.handleClickShare}
-        >
-          {t('share')}
-        </Button>
-        <Button
-          variant="outline"
-          iconLeft={(
-            <ThumbsUp
-              className={props.isLiked ? 'text-pink-40' : 'text-primary-50'}
-              size={20}
-              weight={props.isLiked ? 'fill' : 'bold'}
-            />
-          )}
-          onClick={props.clickLikeStory}
-        >
-          {t('like_button')}
-        </Button>
-      </div>
+      {props.isOwner ? (
+        <div className="flex w-full flex-col gap-2 max-lg:hidden">
+          <div className="flex w-full gap-2">
+            <Button
+              iconLeft={<ShareFat className="text-white" size={20} weight="bold" />}
+              onClick={props.handleClickShare}
+              className="flex-1"
+            >
+              {t('share')}
+            </Button>
+            <Button
+              variant="outline"
+              iconLeft={<NotePencil className="text-primary-50" size={20} weight="bold" />}
+              onClick={props.onEdit}
+              className="flex-1"
+            >
+              {t('edit')}
+            </Button>
+          </div>
+          <div className="flex w-full gap-2">
+            <IconButton
+              variant="outline"
+              size="lg"
+              className="flex-1"
+              aria-label={tCommon('edit') as string}
+              onClick={props.onEdit}
+            >
+              <NotePencil className="text-[#2e3032]" size={20} weight="bold" />
+            </IconButton>
+            <IconButton
+              variant="outline"
+              size="lg"
+              className="flex-1"
+              aria-label={tCommon('delete') as string}
+              onClick={props.onDelete}
+            >
+              <Trash className="text-[#2e3032]" size={20} weight="bold" />
+            </IconButton>
+          </div>
+        </div>
+      ) : (
+        <div className="flex w-full flex-col gap-2 max-lg:hidden">
+          <Button
+            iconLeft={<ShareFat className="text-white" size={20} weight="bold" />}
+            onClick={props.handleClickShare}
+          >
+            {t('share')}
+          </Button>
+          <Button
+            variant="outline"
+            iconLeft={(
+              <ThumbsUp
+                className={props.isLiked ? 'text-pink-40' : 'text-primary-50'}
+                size={20}
+                weight={props.isLiked ? 'fill' : 'bold'}
+              />
+            )}
+            onClick={props.clickLikeStory}
+          >
+            {t('like_button')}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
