@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
@@ -11,6 +11,7 @@ import Avatar from '@/components/core/avatar/Avatar';
 import { useAppSelector } from '@/libs/hooks';
 import { useCreateStoryReviewMutation } from '@/libs/services/modules/story-reviews';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import TextArea from '@/components/core/textArea/TextArea';
 
 type CommentInputProps = {
   storyId: number;
@@ -19,6 +20,17 @@ type CommentInputProps = {
 export default function CommentInput({ storyId }: CommentInputProps) {
   const t = useTranslations('ExploreStory');
   const tButton = useTranslations('LandingPage');
+
+  const ref = useRef<HTMLTextAreaElement>(null);
+
+  const resize = () => {
+    const el = ref.current;
+    if (!el) {
+      return;
+    }
+    el.style.height = 'auto';
+    el.style.height = `${el.scrollHeight + 5}px`;
+  };
 
   const [comment, setComment] = useState('');
   const router = useRouter();
@@ -95,7 +107,7 @@ export default function CommentInput({ storyId }: CommentInputProps) {
       <h6 className="text-base font-medium leading-6 text-neutral-20">
         {t('comment_title')}
       </h6>
-      <div className="flex items-center gap-3">
+      <div className="flex items-start gap-3">
         {avatarUrl
           ? (
               <Avatar imageUrl={avatarUrl} className="size-10 shrink-0" />
@@ -106,13 +118,15 @@ export default function CommentInput({ storyId }: CommentInputProps) {
                 {...genConfig(fullName ?? String(id ?? 'huber'))}
               />
             )}
-        <input
-          type="text"
+        <TextArea
           value={comment}
+          ref={ref}
+          onInput={resize}
           onChange={e => setComment(e.target.value)}
           placeholder={t('comment_placeholder')}
-          className="flex-1 rounded-2xl border border-neutral-90 bg-neutral-98 px-4 py-2.5
-          text-sm text-neutral-20 placeholder:text-neutral-40 focus:outline-none"
+          className="max-h-[300px] flex-1 resize-none rounded-2xl border border-neutral-90 bg-neutral-98
+          px-4 py-2.5 text-sm text-neutral-20
+          placeholder:text-neutral-40 focus:outline-none"
         />
       </div>
       <div className="flex justify-end">
