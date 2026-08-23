@@ -37,7 +37,7 @@ export default function HuberProfileComponent({ userDetail }: Props) {
     if ((userDetail.storiesCount ?? 0) > 0) {
       count++;
     }
-    if ((favoritesData?.length ?? 0) > 0) {
+    if ((favoritesData?.data?.length ?? 0) > 0) {
       count++;
     }
     if ((userDetail.ratingCount ?? 0) > 0) {
