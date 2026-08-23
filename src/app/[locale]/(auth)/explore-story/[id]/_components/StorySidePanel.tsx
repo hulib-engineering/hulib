@@ -2,12 +2,9 @@
 
 import {
   CalendarDots,
-  Eye,
   FacebookLogo,
   InstagramLogo,
-  ShareFat,
   ThreadsLogo,
-  ThumbsUp,
 } from '@phosphor-icons/react';
 import { useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -18,10 +15,9 @@ import { usePathname, useRouter } from '@/libs/i18nNavigation';
 import { useAppSelector } from '@/libs/hooks';
 
 import Button from '@/components/core/button/Button';
-import { Chip } from '@/components/core/chip/Chip';
+
 import { mergeClassnames } from '@/components/core/private/utils';
-import { Cover } from '@/features/stories/components/Cover';
-import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
+
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 import { useLikeStoryMutation, useShareStoryMutation } from '@/libs/services/modules/stories';
 import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
@@ -32,6 +28,7 @@ import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/Sha
 import AuthorBasicInfo from '@/components/author/AuthorBasicInfo';
 import type { User } from '@/features/users/types';
 import { useGetHuberBookedSessionsQuery, useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
+import BookInfo from '@/components/book/BookInfo';
 
 type StorySidePanelProps = {
   data: {
@@ -55,10 +52,15 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
   const { data: bookedSessionsList, isLoading }
   = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId }); // replace with a var of user's number of booked sessions if BE added that
 
+  const max_xl = '';// "max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 max-lg:z-0 max-lg:mx-4 p-4";
+  const xl = 'lg:p-5';
+
   return (
     <div
       className={mergeClassnames(
-        'flex w-full flex-col items-center gap-y-5 overflow-hidden rounded-2xl bg-white p-5 shadow-sm border-2 border-primary-70',
+        'w-auto flex flex-col items-center gap-5 overflow-hidden rounded-2xl bg-white shadow-sm border-2 border-primary-70',
+        max_xl,
+        xl,
       )}
     >
       <p className="text-center text-base leading-6 text-neutral-20">{disabledCondition ? t('booking_cta_unauth') : t('booking_cta')}</p>
@@ -239,77 +241,17 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
         shareOptions={shareOptions}
       />
 
-      <div className="flex w-full flex-col gap-y-5 xl:w-auto xxl:w-[336px] xxl:max-w-[336px] xxl:shrink-0">
-        <div
-          className={mergeClassnames(
-            'flex w-full flex-col items-center gap-y-4 overflow-hidden rounded-2xl bg-white px-4 py-6 shadow-sm',
-          )}
-        >
-          <div className="flex w-full flex-col gap-y-4">
-            <div className="flex max-h-[340px] w-full items-center justify-center">
-              <Cover src={data?.cover?.path ?? null} size="w-[226px] h-[340px]" />
-            </div>
-            {data?.topics?.length ? (
-              <div className="scrollbar-none hidden w-auto gap-2 overflow-x-auto scroll-smooth py-1 xl:flex">
-                {data.topics.map((topic: Topic) => (
-                  <Chip
-                    key={topic.id}
-                    as="span"
-                    className={mergeClassnames(
-                      'min-w-0 shrink-0 overflow-visible whitespace-nowrap rounded border h-[22px] py-1 px-2',
-                      'text-xs font-medium leading-[14px] ',
-                      getTopicBadgeClasses(topic.color),
-                    )}
-                  >
-                    {topic.name}
-                  </Chip>
-                ))}
-              </div>
-            ) : null}
-
-            <div className="mt-4 flex flex-wrap items-center gap-2 xxl:gap-x-8">
-              <div className="flex items-center gap-x-1">
-                <Eye className="text-primary-50" size={16} />
-                <p className="text-[14px] font-medium leading-4 text-neutral-10">
-                  {data?.viewCount ?? 0}
-                </p>
-              </div>
-              <div className="flex items-center gap-x-1">
-                <ThumbsUp className="text-pink-40" size={16} weight="fill" />
-                <p className="text-[14px] font-medium leading-4 text-neutral-10">
-                  {likeCount}
-                </p>
-              </div>
-              <div className="flex items-center gap-1">
-                <ShareFat className="text-primary-50" size={16} />
-                <p className="text-[14px] font-medium leading-4 text-neutral-20">
-                  {shareCount}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="flex w-full flex-col gap-2">
-            <Button
-              iconLeft={<ShareFat className="text-white" size={20} weight="bold" />}
-              onClick={handleClickShare}
-            >
-              {t('share')}
-            </Button>
-            <Button
-              variant="outline"
-              iconLeft={(
-                <ThumbsUp
-                  className={isLiked ? 'text-pink-40' : 'text-primary-50'}
-                  size={20}
-                  weight={isLiked ? 'fill' : 'bold'}
-                />
-              )}
-              onClick={clickLikeStory}
-            >
-              {t('like_button')}
-            </Button>
-          </div>
-        </div>
+      <div className="flex w-full flex-col gap-y-5 lg:w-[336px] lg:max-w-[336px] lg:shrink-0">
+        <BookInfo
+          coverPath={data?.cover?.path}
+          topics={data?.topics}
+          viewCount={data?.viewCount}
+          likeCount={likeCount}
+          shareCount={shareCount}
+          isLiked={isLiked}
+          handleClickShare={handleClickShare}
+          clickLikeStory={clickLikeStory}
+        />
 
         <BookMeeting
           handleBookingClick={handleBookingClick}

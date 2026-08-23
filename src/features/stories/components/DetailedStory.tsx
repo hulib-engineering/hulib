@@ -18,7 +18,7 @@ type PageProps = {
   showPageNumber?: boolean;
   mobileFooter?: ReactNode;
 };
-
+// TODO: try to fix book doesn't resize as window resizes
 export const Page = forwardRef<HTMLDivElement, PageProps>(
   ({
     page,
@@ -96,17 +96,20 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
 
   useEffect(() => {
     const updateDimensions = () => {
-      if (contentRef.current) {
-        const containerRect = contentRef.current.getBoundingClientRect();
-        const isDesktopViewport = window.matchMedia('(min-width: 1280px)').matches;
-        const resolvedBookWidth = Math.max(props.bookWidth ?? containerRect.width, 0);
-        const pageWidth = isDesktopViewport ? resolvedBookWidth / 2 : resolvedBookWidth;
-        const dynamicHeight = isDesktopViewport ? 600 : 440;
-
-        setIsDesktop(isDesktopViewport);
-        setFlipBookWidth(pageWidth);
-        setFlipBookHeight(dynamicHeight);
+      if (!contentRef.current) {
+        return;
       }
+
+      const containerRect = contentRef.current.getBoundingClientRect();
+      const isDesktopViewport = window.matchMedia('(min-width: 1024px)').matches;
+      const resolvedBookWidth = Math.max(props.bookWidth ?? containerRect.width, 0);
+      // const pageWidth = isDesktopViewport ? resolvedBookWidth / 2 : resolvedBookWidth;
+      const pageWidth = isDesktopViewport ? resolvedBookWidth / 2 : resolvedBookWidth;
+      const dynamicHeight = isDesktopViewport ? 600 : 440;
+      // console.log(isDesktop);
+      setIsDesktop(isDesktopViewport);
+      setFlipBookWidth(pageWidth);
+      setFlipBookHeight(dynamicHeight);
     };
 
     updateDimensions();
@@ -212,6 +215,7 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
           <div className="relative">
             {/* @ts-ignore */}
             <HTMLFlipBook
+              key={isDesktop ? 'desktop' : 'mobile'}
               width={flipBookWidth}
               height={flipBookHeight}
               minWidth={flipBookWidth}
