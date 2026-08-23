@@ -13,7 +13,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import * as React from 'react';
 
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
-import { useAppSelector } from '@/libs/hooks';
+import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 
 import Button from '@/components/core/button/Button';
 
@@ -31,6 +31,8 @@ import type { User } from '@/features/users/types';
 import { useGetHuberBookedSessionsQuery, useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
 import BookInfo from '@/features/stories/components/BookInfo';
 
+import { openChat } from '@/libs/store/messenger';
+
 type StorySidePanelProps = {
   data: {
     id: number;
@@ -41,7 +43,7 @@ type StorySidePanelProps = {
     shareCount?: number;
     sharedUserIds?: string[];
     likedUserIds?: string[];
-    humanBook?: User;
+    humanBook: User;
     storyReview?: {
       rating?: number;
     };
@@ -56,7 +58,7 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
   const { data: bookedSessionsList, isLoading }
   = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId }); // replace with a var of user's number of booked sessions if BE added that
 
-  const max_lg = 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[9999] max-lg:mx-4 p-4';
+  const max_lg = 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4 p-4';
   const lg = 'lg:p-5';
 
   return (
@@ -116,6 +118,21 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
   const userId = useAppSelector(state => state.auth.userInfo?.id);
 
   const prevLikeCountRef = React.useRef(data?.likeCount);
+
+  const dispatch = useAppDispatch();
+  const handleOpenHuberChat = () => {
+    dispatch(
+      openChat({
+        id: data?.humanBook?.id.toString(),
+        name: data?.humanBook?.fullName,
+        avatarUrl: data?.humanBook?.photo?.path,
+        isOpen: true,
+        isMinimized: false,
+        unread: 0,
+
+      }),
+    );
+  };
 
   React.useEffect(() => {
     if (prevLikeCountRef.current !== data?.likeCount) {
@@ -271,8 +288,9 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           />
           <Button
             variant="outline"
-            className="justify-content box-border flex w-full flex-row items-center gap-[6px] rounded-[100px] border
-            border-[#C2C6CF] p-[12px] max-lg:hidden"
+            className="justify-content box-border flex w-full flex-row items-center gap-[6px] rounded-[100px]
+            border border-[#C2C6CF] p-[12px] max-lg:hidden"
+            onClick={handleOpenHuberChat}
           >
             <MessengerLogoIcon size={20} className="shrink-0" />
             <span className="mt-1">{t('lets_chat')}</span>
