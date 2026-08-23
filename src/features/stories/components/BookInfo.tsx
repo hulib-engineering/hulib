@@ -1,4 +1,5 @@
 import {
+  BookmarkIcon,
   EyeIcon,
   HeartIcon,
   ShareFatIcon,
@@ -29,16 +30,33 @@ type StatisticsProps = {
 type CoverDetailProps = {
   coverPath: string | undefined;
   topics?: Topic[];
+  children?: React.ReactNode;
   // userId: any;
 };
 
 type BookInfoProps = BottomButtonsProps & StatisticsProps & CoverDetailProps;
 
+function CornerButtons() {
+  // TODO: add buttons and their conditions
+  // e.g. mode = 'default' means there will be 2 edit and delete buttons
+  // mode = 'storypagemobile' or something like that will have the bookmark button
+  return (
+    <Button variant="outline" className="hidden w-fit rounded-full">
+      {' '}
+      {/* Add 'lg' back to 'lg:hidden' when there's a clear flow of the bookmark feature */}
+      <BookmarkIcon />
+    </Button>
+  );
+}
+
 function CoverDetail({ coverPath, topics }: CoverDetailProps) {
   return (
-    <div className="flex w-full flex-col gap-y-4">
+    <div className="relative flex w-full flex-col gap-y-4">
       <div className="flex max-h-[340px] w-full items-center justify-center">
         <Cover src={coverPath ?? null} size="w-[226px] h-[340px]" />
+      </div>
+      <div className="absolute right-0 top-0 -translate-y-5 translate-x-5">
+        <CornerButtons />
       </div>
       {topics?.length ? (
         <div className="scrollbar-none hidden w-auto gap-2 overflow-x-auto scroll-smooth py-1 lg:flex">
@@ -146,6 +164,7 @@ export default function BookInfo(props: BookInfoProps) {
       <CoverDetail
         coverPath={props.coverPath}
         topics={props.topics}
+        children={props.children}
       />
       <Statistics
         viewCount={props.viewCount}

@@ -285,12 +285,12 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
             humanBook={data?.humanBook}
             numStories={storiesList?.data?.length}
             onClickFunction={handleAuthorClick}
+            onClickHuberChat={handleOpenHuberChat}
           />
 
           <Button
             variant="outline"
-            className="justify-content box-border flex w-full flex-row items-center gap-[6px] rounded-[100px]
-            border border-[#C2C6CF] p-[12px]"
+            className="box-border rounded-[100px] border border-[#C2C6CF] p-3 max-lg:hidden"
             onClick={handleOpenHuberChat}
           >
             <MessengerLogoIcon size={20} className="shrink-0" />
