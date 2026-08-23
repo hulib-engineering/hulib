@@ -61,8 +61,8 @@ export default function Index() {
   const hubersWithIsFavoriteStatus = useMemo(() => {
     return items && items.map((item: HuberType) => {
       const isFavorite
-        = favoriteHubers
-          && favoriteHubers?.some((favorite: { huberId: number }) => favorite.huberId === item.id);
+        = favoriteHubers?.data
+          && favoriteHubers.data.some((favorite: { huberId: number }) => favorite.huberId === item.id);
       return { ...item, isFavorite };
     });
   }, [items, favoriteHubers]);
