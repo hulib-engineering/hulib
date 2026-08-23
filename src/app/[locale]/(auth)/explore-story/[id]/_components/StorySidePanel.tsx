@@ -59,7 +59,7 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
   const { data: bookedSessionsList, isLoading }
   = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId }); // replace with a var of user's number of booked sessions if BE added that
 
-  const max_lg = 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4 p-4';
+  const max_lg = '';// 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4 p-4';
   const lg = 'lg:p-5';
 
   return (
@@ -79,7 +79,7 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
       >
         <span className="mt-1">{t('book_a_meeting')}</span>
       </Button>
-      {disabledCondition ? <></>
+      {!disabledCondition ? <></>
         : (
             <p className="text-center text-xs leading-[14px] text-neutral-20">
               {t('booking_count', { bookingCount: `${(disabledCondition || isLoading) ? 0 : bookedSessionsList?.length}` })}
