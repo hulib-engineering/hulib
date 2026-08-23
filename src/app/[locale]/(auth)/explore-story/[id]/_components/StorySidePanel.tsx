@@ -125,11 +125,18 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
 
   const dispatch = useAppDispatch();
   const handleOpenHuberChat = () => {
+    if (!requireAuth()) {
+      return;
+    }
+    if (!data?.humanBook?.id) {
+      return;
+    }
+
     dispatch(
       openChat({
-        id: data?.humanBook?.id.toString(),
-        name: data?.humanBook?.fullName,
-        avatarUrl: data?.humanBook?.photo?.path,
+        id: data.humanBook.id.toString(),
+        name: data.humanBook.fullName,
+        avatarUrl: data.humanBook.photo?.path,
         isOpen: true,
         isMinimized: false,
         unread: 0,
