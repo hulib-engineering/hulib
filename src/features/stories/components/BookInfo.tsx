@@ -64,6 +64,7 @@ function CoverDetail({ coverPath, topics }: CoverDetailProps) {
 // function SideButtons() {}
 
 function Statistics({ viewCount, rating, likeCount, shareCount }: StatisticsProps) {
+  const t = useTranslations('BookInfo');
   return (
     <div className="flex flex-wrap items-center gap-2 max-lg:justify-between lg:gap-x-8">
 
@@ -71,28 +72,35 @@ function Statistics({ viewCount, rating, likeCount, shareCount }: StatisticsProp
         <EyeIcon className="text-primary-50" size={16} weight="bold" />
         <p className="text-[14px] leading-4 text-neutral-10">
           {viewCount ?? 0}
-          <span className="lg:hidden"> lượt xem </span>
+          {' '}
+          <span className="lg:hidden">
+            {t('viewCount', { plural: viewCount ? 's' : '' })}
+          </span>
         </p>
       </div>
 
       <div className="flex items-center gap-x-1 lg:hidden">
         <HeartIcon className="text-yellow-40" size={16} weight="fill" />
         <p className="text-[14px] leading-4 text-neutral-10">
-          {rating}
+          {rating ?? 0}
+          {' '}
+          <span className="lg:hidden">
+            {t('rating', { plural: rating ? 's' : '' })}
+          </span>
         </p>
       </div>
 
       <div className="flex items-center gap-x-1 max-lg:hidden">
         <ThumbsUpIcon className="text-pink-40" size={16} weight="bold" />
         <p className="text-[14px] leading-4 text-neutral-10">
-          {likeCount}
+          {likeCount ?? 0}
         </p>
       </div>
 
       <div className="flex items-center gap-1 max-lg:hidden">
         <ShareFatIcon className="text-primary-50" size={16} weight="bold" />
         <p className="text-[14px] leading-4 text-neutral-20">
-          {shareCount}
+          {shareCount ?? 0}
         </p>
       </div>
 
@@ -101,7 +109,7 @@ function Statistics({ viewCount, rating, likeCount, shareCount }: StatisticsProp
 }
 
 function BottomButtons({ handleClickShare, isLiked, clickLikeStory }: BottomButtonsProps) {
-  const t = useTranslations('ExploreStory');
+  const t = useTranslations('ExploreStory'); // TODO: change it to 'BookInfo', migrate the lines from it on the locale files to 'BookInfo'
   return (
     <div className="flex w-full flex-col gap-2 max-lg:hidden">
       <Button
