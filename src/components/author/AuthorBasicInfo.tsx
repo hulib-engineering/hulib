@@ -15,7 +15,7 @@ import type { User } from '@/features/users/types';
 
 export type AuthorBasicInfoProps = {
   humanBook: User | undefined;
-  numStories: number;
+  numStories: number | undefined;
   type?: 'hovercard' | 'default';
   onClickFunction?: () => void;
   onClickHuberChat?: () => void;
@@ -24,7 +24,7 @@ export type AuthorBasicInfoProps = {
 // TODO: add the var to 'rating' section once the api response for its value has been added
 // modify 'numStories' var if its API value for Huber is created
 
-export default function AuthorBasicInfo({ humanBook, numStories = 0, type = 'default', onClickFunction, onClickHuberChat }: AuthorBasicInfoProps) {
+export default function AuthorBasicInfo({ humanBook, numStories, type = 'default', onClickFunction, onClickHuberChat }: AuthorBasicInfoProps) {
   const isDefault = type === 'default';
   const t = useTranslations('AuthorBasicInfo');
   const tExploreStory = useTranslations('ExploreStory');
@@ -70,23 +70,28 @@ export default function AuthorBasicInfo({ humanBook, numStories = 0, type = 'def
       </div>
       {/* LOWER HALF */}
       <div className="flex w-full justify-between text-sm font-normal">
-        {/* Number of stories */}
-        <div className="flex items-center gap-1">
-          <BooksIcon size={16} />
-          <span className={mergeClassnames('leading-4 font-medium mt-1', !isDefault && 'translate-y-0.5 mt-0')}>
-            {numStories}
-          </span>
-          {t('stories')}
-        </div>
+        {!numStories ? <></>
+          : (
+              <div className="flex items-center gap-1">
+                <BooksIcon size={16} />
+                <span className={mergeClassnames('leading-4 font-medium mt-1', !isDefault && 'translate-y-0.5 mt-0')}>
+                  {numStories}
+                </span>
+                {t('stories')}
+              </div>
+            )}
 
-        {/* Rating */}
-        <div className="flex items-center gap-1">
-          <HeartIcon size={16} color="#FF2C94" weight="fill" />
-          <span className={mergeClassnames('leading-4 font-medium mt-1', !isDefault && 'translate-y-0.5 mt-0')}>
-            {0}
-          </span>
-          {t('rating')}
-        </div>
+        {!numStories ? <></>
+        /* NOTE: This (!numStories here) isn't a mistake, as of now there's no rating data to be replaced. So if the component above has undefined data, this component will be hidden as well */
+          : (
+              <div className="flex items-center gap-1">
+                <HeartIcon size={16} color="#FF2C94" weight="fill" />
+                <span className={mergeClassnames('leading-4 font-medium mt-1', !isDefault && 'translate-y-0.5 mt-0')}>
+                  {0}
+                </span>
+                {t('rating')}
+              </div>
+            )}
       </div>
     </Section>
   );
