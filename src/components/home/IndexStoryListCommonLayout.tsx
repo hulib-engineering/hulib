@@ -48,8 +48,8 @@ const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) =
   const storiesWithFav = useMemo(() => {
     return props.stories && props.stories?.data && props.stories?.data.map((story: StoryType) => {
       const isFavorite
-        = favoriteStories
-          && favoriteStories?.some((favorite: any) => favorite.storyId === story.id);
+        = favoriteStories?.data
+          && favoriteStories.data.some((favorite: any) => favorite.storyId === story.id);
       return { ...story, isFavorite };
     });
   }, [props.stories, favoriteStories]);
