@@ -4,6 +4,7 @@ import {
   CalendarDots,
   FacebookLogo,
   InstagramLogo,
+  MessengerLogoIcon,
   ThreadsLogo,
 } from '@phosphor-icons/react';
 import { useSession } from 'next-auth/react';
@@ -262,12 +263,20 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           userId={data?.humanBook?.id}
         />
 
-        <div className="w-full gap-y-3 overflow-hidden rounded-2xl bg-white p-5 shadow-sm">
+        <div className="flex w-full flex-col gap-y-3 overflow-hidden rounded-2xl bg-white p-5 shadow-sm">
           <AuthorBasicInfo
             humanBook={data?.humanBook}
             numStories={storiesList?.data?.length}
             onClickFunction={handleAuthorClick}
           />
+          <Button
+            variant="outline"
+            className="justify-content box-border flex w-full flex-row items-center gap-[6px] rounded-[100px] border
+            border-[#C2C6CF] p-[12px] max-lg:hidden"
+          >
+            <MessengerLogoIcon size={20} className="shrink-0" />
+            <span className="mt-1">{t('lets_chat')}</span>
+          </Button>
         </div>
       </div>
     </>
