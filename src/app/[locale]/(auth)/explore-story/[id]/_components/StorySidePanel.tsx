@@ -298,14 +298,17 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           </Button>
 
           {/* For mobile screen only */}
-          <div className="box-border flex w-full items-center gap-2 rounded-lg
+          {!storiesList?.data[0] ? <></>
+            : (
+                <div className="box-border flex w-full items-center gap-2 rounded-lg
             border border-[#C7C9CB] bg-[#F0F5FF] p-2 lg:hidden"
-          >
-            <BookOpen color="#0442BF" size={16} />
-            <span className="flex-1 text-sm leading-4 text-black translate-y-[2px]">
-              {storiesList?.data[0]?.title}
-            </span>
-          </div>
+                >
+                  <BookOpen color="#0442BF" size={16} />
+                  <span className="flex-1 text-sm leading-4 text-black translate-y-[2px]">
+                    {storiesList?.data[0]?.title}
+                  </span>
+                </div>
+              )}
         </div>
       </div>
     </>
