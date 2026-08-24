@@ -750,7 +750,7 @@
   },
   "ExploreStory": {
     "description": "Tìm thấy câu chuyện dành riêng cho bạn\n",
-    "ratings": "Đánh giá",
+    "ratings": "đánh giá",
     "read_story": "Đọc truyện",
     "similar_stories": "Những câu chuyện tương tự",
     "story_added_to_favorites": "Thêm vào danh sách yêu thích thành công",
@@ -764,9 +764,10 @@
     "share_story": "Chia sẽ thêm",
     "like_button": "Thích",
     "like_error": "Thất bại",
-    "booking_cta": "Nếu câu chuyện này chạm đến bạn, hãy kết nối cùng tác giả qua một buổi trò chuyện tại đây nhé",
+    "lets_chat": "Tám xíu nha",
+    "booking_cta": "Nếu câu chuyện này chạm đến bạn, hãy kết nối cùng tác giả qua cuộc trò chuyện 1-1 Miễn Phí đây nha",
     "booking_cta_unauth": "Bạn cần đăng nhập để có thể đặt hẹn gặp gỡ trực tuyến với tác giả",
-    "book_a_meeting": "Đặt hẹn trò chuyện",
+    "book_a_meeting": "Kết nối 1-1",
     "booking_count": "Đã có {bookingCount} cuộc hẹn từ câu chuyện này",
     "author": "Tác giả",
     "stories": "câu chuyện",
@@ -1273,6 +1274,10 @@
   "AuthorBasicInfo": {
     "stories": "câu chuyện",
     "rating": "yêu thích"
+  },
+  "BookInfo": {
+    "viewCount": "lượt xem",
+    "rating": "đánh giá"
   },
   "ScheduleBasicInfo": {
     "duration": "Thời lượng",
