@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
@@ -13,11 +13,13 @@ import { useCreateStoryReviewMutation } from '@/libs/services/modules/story-revi
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import TextArea from '@/components/core/textArea/TextArea';
 
-type CommentInputProps = {
+type CommentProps = {
   storyId: number;
+  comment: string;
+  setComment: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function CommentInput({ storyId }: CommentInputProps) {
+export default function CommentInput({ storyId, comment, setComment }: CommentProps) {
   const t = useTranslations('ExploreStory');
   const tButton = useTranslations('LandingPage');
 
@@ -32,7 +34,6 @@ export default function CommentInput({ storyId }: CommentInputProps) {
     el.style.height = `${el.scrollHeight + 5}px`;
   };
 
-  const [comment, setComment] = useState('');
   const router = useRouter();
   const { data: session } = useSession();
   const pathname = usePathname();
