@@ -33,7 +33,7 @@ export default function UserProfileClient({ userId }: Props) {
     : { ...(meData ?? userInfo), photo: meData?.photo ?? { id: userAvatarId, path: userAvatarUrl } };
 
   if (!isMeLoading && !userDetail) {
-    notFound();
+    return notFound();
   }
 
   if (!hasRouteUserId || (isMeLoading && !hasCurrentUserId && !data) || (notMe && isLoading) || !userDetail) {
