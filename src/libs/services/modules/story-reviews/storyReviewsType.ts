@@ -15,4 +15,5 @@ export type StoryReviewParams = {
   storyId: number;
   page: number;
   limit: number;
+  publishedOnly: boolean;
 };

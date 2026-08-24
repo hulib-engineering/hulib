@@ -21,7 +21,7 @@ import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
 
 import type { Topic } from '@/libs/services/modules/topics/topicType';
-import { useLikeStoryMutation, useShareStoryMutation } from '@/libs/services/modules/stories';
+import { useGetStoriesQuery, useLikeStoryMutation, useShareStoryMutation } from '@/libs/services/modules/stories';
 import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { copyToClipboard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/utils';
@@ -29,7 +29,7 @@ import { AppConfig } from '@/utils/AppConfig';
 import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/ShareModal';
 import AuthorBasicInfo from '@/components/author/AuthorBasicInfo';
 import type { User } from '@/features/users/types';
-import { useGetHuberBookedSessionsQuery, useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
+import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
 import BookInfo from '@/features/stories/components/BookInfo';
 
 import { openChat } from '@/libs/store/messenger';
@@ -100,8 +100,8 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
   const [handleUpdateLikeCount] = useLikeStoryMutation();
 
   // TODO: remove if storyDetailQuery API returns a number of published stories in humanbook
-  const { data: storiesList } = useGetHuberStoriesQuery(
-    { huberId: data?.humanBook?.id, publishedOnly: true },
+  const { data: storiesList } = useGetStoriesQuery(
+    { humanBookId: data?.humanBook?.id, publishStatus: 'published', type: 'most-popular' },
     { skip: !data?.humanBook?.id },
   );
 
