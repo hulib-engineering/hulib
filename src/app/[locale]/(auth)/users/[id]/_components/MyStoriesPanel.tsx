@@ -8,7 +8,7 @@ import StoriesOthersEmptyState from './StoriesOthersEmptyState';
 import MyStoryCard from './MyStoryCard';
 import Modal from '@/components/Modal';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
-import { StoryCard } from '@/features/stories/components/StoryCard';
+import { StoryCard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/StoryCard';
 import StoryForm from '@/features/stories/components/StoryForm';
 import FirstBookCreatedModal from '@/features/stories/components/FirstBookCreatedModal';
 import { useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
