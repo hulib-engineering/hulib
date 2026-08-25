@@ -1185,6 +1185,7 @@
     "save": "Save",
     "not_found": "Not Found",
     "could_not_find_resource": "Could not find requested resource",
+    "no_results_found": "Could not find what you're looking for",
     "return_home": "Return Home",
     "view_more": "View more",
     "see_more": "See more",
