@@ -16,12 +16,11 @@ import PersonalCalendarModal from '@/features/stories/components/PersonalCalenda
 
 type HuberSchedulePanelProps = {
   huberId: number;
-  variant?: 'schedule' | 'meeting';
 };
 
 const PERIODS = ['morning', 'afternoon', 'evening'] as const;
 
-export default function HuberSchedulePanel({ huberId, variant = 'schedule' }: HuberSchedulePanelProps) {
+export default function HuberSchedulePanel({ huberId }: HuberSchedulePanelProps) {
   const tSchedule = useTranslations('Schedule.MainScreen');
   const tCommon = useTranslations('Common');
   const tTimeslot = useTranslations('Time_slots');
@@ -37,19 +36,7 @@ export default function HuberSchedulePanel({ huberId, variant = 'schedule' }: Hu
   }
 
   if (!hasSlots) {
-    // Meeting variant empty (Figma 16223-48000 desktop, 17162-75066 mobile)
-    if (variant === 'meeting') {
-      return (
-        <div className="flex min-h-[280px] flex-col items-center justify-center gap-3 rounded-2xl border border-neutral-90 bg-white p-6 text-center shadow-sm">
-          <div className="bg-primary-95 flex size-14 items-center justify-center rounded-full text-primary-50">
-            <CalendarDots size={28} weight="bold" />
-          </div>
-          <p className="text-base font-semibold text-neutral-10">{tCommon('meeting_empty_title')}</p>
-          <p className="max-w-sm text-sm leading-5 text-neutral-40">{tCommon('meeting_empty_description')}</p>
-        </div>
-      );
-    }
-    // Owner schedule empty (Figma 16223-42390, 16223-166605) - CTA to update
+    // Owner schedule empty (Figma 16223-42390, 16223-166605) and Meeting empty (16223-48000) - CTA to update
     if (isOwner) {
       return (
         <>
