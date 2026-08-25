@@ -1,17 +1,15 @@
 'use client';
 
 import { CaretCircleRight } from '@phosphor-icons/react';
-import React, { useMemo } from 'react';
-import { useSession } from 'next-auth/react';
+import React from 'react';
 
 import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
-import { StoryCard } from '@/features/stories/components/StoryCard';
-import type { Story as StoryType, Story as TStory } from '@/libs/services/modules/stories/storiesType';
-import { useGetMyFavoritesQuery } from '@/libs/services/modules/user';
+import { StoryCardGrid } from '@/components/home/StoryCardGrid';
+import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 
 type TFilter = {
   id: string | number;
@@ -38,21 +36,7 @@ type IIndexStoryListSectionLayoutProps = | {
 };
 
 const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) => {
-  const { data: session } = useSession();
-  const { data: favoriteStories } = useGetMyFavoritesQuery(undefined, {
-    skip: !session,
-  });
-
   const t = useTranslations('Common');
-
-  const storiesWithFav = useMemo(() => {
-    return props.stories && props.stories?.data && props.stories?.data.map((story: StoryType) => {
-      const isFavorite
-        = favoriteStories
-          && favoriteStories?.some((favorite: any) => favorite.storyId === story.id);
-      return { ...story, isFavorite };
-    });
-  }, [props.stories, favoriteStories]);
 
   if (!props.isLoading && (!props.stories?.data || props.stories?.data.length === 0)) {
     return null;
@@ -93,17 +77,7 @@ const IndexStoryListSectionLayout = (props: IIndexStoryListSectionLayoutProps) =
           ))}
         </div>
       )}
-      <div
-        className={mergeClassnames(
-          'grid grid-cols-1 gap-5 rounded-lg',
-          'md:grid-cols-[repeat(2,392px)] md:justify-center',
-          'xl:grid-cols-[repeat(3,392px)]',
-        )}
-      >
-        {storiesWithFav?.map(item => (
-          <StoryCard key={item.id} data={item} />
-        ))}
-      </div>
+      <StoryCardGrid stories={props.stories?.data} />
       {(props.showFilter || props.stories?.hasNextPage) && (
         <div className="flex items-center justify-center">
           <Button
