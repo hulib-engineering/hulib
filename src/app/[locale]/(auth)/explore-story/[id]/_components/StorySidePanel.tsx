@@ -375,7 +375,9 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
         <Modal.Panel className="w-full max-w-xl bg-neutral-98 shadow-none">
           <div className="flex flex-col items-center justify-center">
             <div className="flex w-full items-center justify-end px-4 pt-4">
-              <X className="cursor-pointer text-2xl text-[#343330]" onClick={handleCloseEditSuccessModal} />
+              <IconButton variant="ghost" size="lg" aria-label={tCommon('cancel') as string} onClick={handleCloseEditSuccessModal}>
+                <X className="text-[#343330]" size={20} />
+              </IconButton>
             </div>
             <div className="flex flex-col items-center justify-center gap-5 px-6 pb-6">
               <div className="rounded-full bg-[#D9FDEE] p-1">
@@ -465,7 +467,9 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
         <Modal.Panel className="w-full max-w-xl bg-neutral-98 shadow-none">
           <div className="flex flex-col items-center justify-center">
             <div className="flex w-full items-center justify-end px-4 pt-4">
-              <X className="cursor-pointer text-2xl text-[#343330]" onClick={handleCloseDeleteSuccessModal} />
+              <IconButton variant="ghost" size="lg" aria-label={tCommon('cancel') as string} onClick={handleCloseDeleteSuccessModal}>
+                <X className="text-[#343330]" size={20} />
+              </IconButton>
             </div>
             <div className="flex flex-col items-center justify-center gap-5 px-6 pb-6">
               <div className="rounded-full bg-[#D9FDEE] p-1">
