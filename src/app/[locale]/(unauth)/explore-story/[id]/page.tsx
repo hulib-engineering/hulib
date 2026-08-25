@@ -29,7 +29,7 @@ export default function Index() {
 
   const storyId = React.useMemo(() => Number(params.id), [params.id]);
 
-  const { data, isLoading } = useGetStoryDetailQuery(storyId);
+  const { data, isLoading } = useGetStoryDetailQuery(storyId, { skip: !storyId });
 
   const [comment, setComment] = React.useState('');
 
