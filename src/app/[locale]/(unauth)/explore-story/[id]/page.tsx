@@ -131,12 +131,16 @@ export default function Index() {
     );
   }
 
-  if (data && data?.publishStatus !== PublishStatusEnum.PUBLISHED) {
-    return redirect(`/explore-story/${data.id}/preview`);
+  if (!data) {
+    return notFound();
   }
 
-  if (data && data?.publishStatus === PublishStatusEnum.DELETED) {
+  if (data?.publishStatus === PublishStatusEnum.DELETED) {
     return notFound();
+  }
+
+  if (data?.publishStatus !== PublishStatusEnum.PUBLISHED) {
+    return redirect(`/explore-story/${data.id}/preview`);
   }
 
   return (
