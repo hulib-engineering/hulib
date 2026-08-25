@@ -17,6 +17,7 @@ import { PublishStatusEnum } from '@/libs/services/modules/stories/storiesType';
 
 import StorySidePanel from '@/app/[locale]/(auth)/explore-story/[id]/_components/StorySidePanel';
 import StoryContent from '@/app/[locale]/(auth)/explore-story/[id]/_components/StoryContent';
+import CommentSection from '@/app/[locale]/(auth)/explore-story/[id]/_components/CommentSection';
 
 export default function Index() {
   const router = useRouter();
@@ -29,6 +30,8 @@ export default function Index() {
   const storyId = React.useMemo(() => Number(params.id), [params.id]);
 
   const { data, isLoading } = useGetStoryDetailQuery(storyId);
+
+  const [comment, setComment] = React.useState('');
 
   const humanBookId = data?.humanBookId;
   const topics = data?.topics;
@@ -128,20 +131,16 @@ export default function Index() {
     );
   }
 
-  if (!data) {
-    return notFound();
-  }
-
-  if (data?.publishStatus === PublishStatusEnum.DELETED) {
-    return notFound();
-  }
-
-  if (data?.publishStatus !== PublishStatusEnum.PUBLISHED) {
+  if (data && data?.publishStatus !== PublishStatusEnum.PUBLISHED) {
     return redirect(`/explore-story/${data.id}/preview`);
   }
 
+  if (data && data?.publishStatus === PublishStatusEnum.DELETED) {
+    return notFound();
+  }
+
   return (
-    <div className="mx-auto w-full py-6 lg:py-8">
+    <div className="mx-auto w-full py-6 lg:overflow-x-auto lg:py-8">
       <div className="flex flex-col gap-6 px-4 lg:mx-auto lg:w-fit lg:gap-12 lg:px-0">
         <div className="flex flex-col gap-2">
           <Button
@@ -158,6 +157,8 @@ export default function Index() {
               abstract={data?.abstract || ''}
               bookWidth={bookWidth}
               storyId={storyId}
+              comment={comment}
+              setComment={setComment}
             />
             <div ref={sidePanelRef}>
               <StorySidePanel data={data} />
@@ -165,6 +166,13 @@ export default function Index() {
           </div>
         </div>
 
+        <div className="lg:hidden">
+          <CommentSection
+            storyId={storyId}
+            comment={comment}
+            setComment={setComment}
+          />
+        </div>
         <IndexStoryListSectionLayout
           title={t('similar_stories')}
           stories={storiesProps}

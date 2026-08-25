@@ -12,7 +12,9 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import AvatarPopover from '@/layouts/webapp/AvatarPopover';
+import AdvancedSearch from '@/layouts/webapp/AdvancedSearch';
 import MessengerPopover from '@/layouts/webapp/MessengerPopover';
+import MobileSearch from '@/layouts/webapp/MobileSearch';
 import NotificationPopover from '@/layouts/webapp/NotificationPopover';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
@@ -191,6 +193,7 @@ const Header = () => {
               )
             : (
                 <div className="flex items-center gap-2">
+                  <MobileSearch />
                   <button type="button" className="xl:hidden" onClick={() => router.push('/messages')}>
                     <HeaderIconButtonWithBadge badge={totalUnread} open={currentPathname === '/messages'}>
                       <MessengerLogo className="text-[28px]" />
@@ -203,8 +206,8 @@ const Header = () => {
       </header>
 
       {/* PC version */}
-      <header className="hidden w-screen items-center justify-between bg-white px-4 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex xl:px-28">
-        <div className="flex items-center gap-6">
+      <header className="hidden w-screen items-center justify-between gap-6 bg-white px-4 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex xl:px-28">
+        <div className="flex shrink-0 items-center gap-6">
           <Link href="/">
             <Logo size="small" />
           </Link>
@@ -219,6 +222,11 @@ const Header = () => {
           </div>
           {/* )} */}
         </div>
+        {user && user?.id && (
+          <div className="flex w-full min-w-[300px] max-w-[420px] flex-1 justify-center lg:px-4">
+            <AdvancedSearch withOverlay={false} fullWidth />
+          </div>
+        )}
         {!user || !user?.id
           ? (
               <div className="flex gap-3 px-10 ">
