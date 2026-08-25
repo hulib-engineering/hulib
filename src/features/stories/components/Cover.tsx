@@ -43,7 +43,7 @@ export function Cover({
         }
       : undefined,
   };
-  console.log('coverSrc ', coverSrc);
+
   return (
     <div
       id={id}
