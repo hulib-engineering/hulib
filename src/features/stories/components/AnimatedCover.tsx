@@ -54,7 +54,7 @@ function fallbackSplit(text: string) {
 }
 
 export default function AnimatedCover(props: IAnimatedCoverProps) {
-  const abstractText = props.highlightAbstract || props.abstract;
+  const abstractText = props.abstract;
   const [pages, setPages] = useState(() => fallbackSplit(abstractText));
 
   const leftTextRef = useRef<HTMLParagraphElement>(null);
