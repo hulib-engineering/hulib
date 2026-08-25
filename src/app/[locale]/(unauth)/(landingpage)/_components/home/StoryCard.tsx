@@ -114,7 +114,7 @@ export const StoryCard = ({ data, className, outletClassName, isShowReadAll = tr
         <div className="flex min-w-0 flex-1 flex-col justify-between gap-3 lg:gap-4">
           <div className="flex flex-1 flex-col gap-2 lg:gap-3">
             {isShowStoryBage && <StoryBage status={data.publishStatus} rejectionReason={data.rejectionReason} />}
-            <h6 className="line-clamp-2 min-h-14 text-xl font-medium capitalize leading-7 text-primary-10">
+            <h6 className="line-clamp-2 min-h-14 text-xl font-medium leading-7 text-primary-10">
               {data?.title}
             </h6>
             {visibleTopics.length > 0 && (
@@ -184,7 +184,7 @@ export const StoryCard = ({ data, className, outletClassName, isShowReadAll = tr
               {newEventTagText}
             </span>
           )}
-          {isMobile ? (<Cover src={data?.cover?.path || DEFAULT_STORY_COVER_ASSET} />) : (
+          {isMobile ? (<Cover src={data?.cover?.path || DEFAULT_STORY_COVER_ASSET} size="w-[140px] h-[198px]" />) : (
             <div className="h-[262px] w-[185px] overflow-visible rounded-2xl">
               <AnimatedCover
                 abstract={data?.abstract ?? ''}
