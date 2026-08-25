@@ -191,8 +191,6 @@ export const StoryCard = ({ data, className, outletClassName, isShowReadAll = tr
                 title={data?.title ?? ''}
                 authorName={data?.humanBook?.fullName ?? ''}
                 coverUrl={data?.cover?.path || ''}
-                highlightTitle={data?.highlightTitle}
-                highlightAbstract={data?.highlightAbstract}
                 isPublished
                 onClick={() => router.push(`/explore-story/${data?.id}`)}
               />

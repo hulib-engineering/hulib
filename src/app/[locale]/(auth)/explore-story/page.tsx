@@ -19,7 +19,7 @@ import Loader from '@/components/core/loader/Loader';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { StoryCard } from '@/features/stories/components/StoryCard';
+import { StoryCard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/StoryCard';
 import ChipFilter from '@/layouts/webapp/ChipFilter';
 import { useInfiniteScroll } from '@/libs/hooks/useInfiniteScroll';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
