@@ -156,7 +156,7 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
     setIndex(e.data);
   };
   const pageStep = isDesktop ? 2 : 1;
-  const flippingTime = isDesktop ? 2400 : 1; // HERE
+  const flippingTime = isDesktop ? 400 : 1; // HERE
   const totalPages = pagesRender.length;
   const currentPage = totalPages === 0 ? 0 : Math.min(index + 1, totalPages);
   const hasEnoughPagesForDesktopNav = totalPages >= 3;
