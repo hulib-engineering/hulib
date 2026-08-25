@@ -59,13 +59,13 @@ function CoverDetail({ coverPath, topics }: CoverDetailProps) {
         <CornerButtons />
       </div>
       {topics?.length ? (
-        <div className="scrollbar-none hidden w-auto gap-2 overflow-x-auto scroll-smooth py-1 lg:flex">
+        <div className="flex flex-wrap gap-2 py-1 max-lg:hidden">
           {topics?.map((topic: Topic) => (
             <Chip
               key={topic.id}
               as="span"
               className={mergeClassnames(
-                'min-w-0 shrink-0 overflow-visible whitespace-nowrap rounded border h-[22px] py-1 px-2',
+                'min-w-0 shrink-0 rounded border h-[22px] py-1 px-2',
                 'text-xs font-medium leading-[14px] ',
                 getTopicBadgeClasses(topic.color),
               )}
@@ -78,8 +78,6 @@ function CoverDetail({ coverPath, topics }: CoverDetailProps) {
     </div>
   );
 }
-
-// function SideButtons() {}
 
 function Statistics({ viewCount, rating, likeCount, shareCount }: StatisticsProps) {
   const t = useTranslations('BookInfo');
@@ -129,7 +127,7 @@ function Statistics({ viewCount, rating, likeCount, shareCount }: StatisticsProp
 function BottomButtons({ handleClickShare, isLiked, clickLikeStory }: BottomButtonsProps) {
   const t = useTranslations('ExploreStory'); // TODO: change it to 'BookInfo', migrate the lines from it on the locale files to 'BookInfo'
   return (
-    <div className="flex w-full flex-col gap-2 max-lg:hidden">
+    <div className="flex w-full flex-col gap-2">
       <Button
         iconLeft={<ShareFatIcon className="text-white" size={20} weight="bold" />}
         onClick={handleClickShare}
