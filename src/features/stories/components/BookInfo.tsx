@@ -129,7 +129,7 @@ function Statistics({ viewCount, rating, likeCount, shareCount }: StatisticsProp
 function BottomButtons({ handleClickShare, isLiked, clickLikeStory }: BottomButtonsProps) {
   const t = useTranslations('ExploreStory'); // TODO: change it to 'BookInfo', migrate the lines from it on the locale files to 'BookInfo'
   return (
-    <div className="flex w-full flex-col gap-2 max-lg:hidden">
+    <div className="flex w-full flex-col gap-2">
       <Button
         iconLeft={<ShareFatIcon className="text-white" size={20} weight="bold" />}
         onClick={handleClickShare}
