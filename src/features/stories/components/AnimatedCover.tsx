@@ -45,7 +45,7 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
             'group-hover:z-10',
           )}
         >
-          <p ref={textContainerRef} className="font-['DVN-Poppins] break-all text-xs leading-5 tracking-[0.015em] text-neutral-30 lg:text-sm">
+          <p ref={textContainerRef} className="break-all font-['DVN-Poppins'] text-xs leading-5 tracking-[0.015em] text-neutral-30 lg:text-sm">
             {abstractPages[1] ? (
               props.highlightAbstract
                 ? renderHighlightedText(`${abstractPages[1]}...`)
@@ -83,7 +83,7 @@ export default function AnimatedCover(props: IAnimatedCoverProps) {
                 {props.title}
               </h6>
             )}
-            <p className="font-['DVN-Poppins] break-all text-xs leading-5 tracking-wider text-neutral-30 sm:text-sm">
+            <p className="break-all font-['DVN-Poppins'] text-xs leading-5 tracking-wider text-neutral-30 sm:text-sm">
               {abstractPages[0] ? (
                 props.highlightAbstract
                   ? renderHighlightedText(`${abstractPages[0]}...`)
