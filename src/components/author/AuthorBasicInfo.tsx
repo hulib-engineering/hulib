@@ -24,6 +24,8 @@ export type AuthorBasicInfoProps = {
 // TODO: add the var to 'rating' section once the api response for its value has been added
 // modify 'numStories' var if its API value for Huber is created
 
+// TODO: Figure out a better place to place this file and AuthorQuickView in the project's source folder
+
 export default function AuthorBasicInfo({ humanBook, numStories, type = 'default', onClickFunction, onClickHuberChat }: AuthorBasicInfoProps) {
   const isDefault = type === 'default';
   const t = useTranslations('AuthorBasicInfo');
