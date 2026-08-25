@@ -40,7 +40,7 @@ export const ControlOverview = ({
     >
       {/* Mobile: horizontal tab bar */}
       <nav
-        className="scrollbar-none flex shrink-0 overflow-x-auto border-b border-neutral-90 bg-white lg:hidden"
+        className="scrollbar-none flex w-full shrink-0 overflow-x-auto border-b border-neutral-90 bg-white lg:hidden"
         aria-label="Profile sections"
       >
         {tabs.map(({ value, label }) => {
@@ -52,7 +52,7 @@ export const ControlOverview = ({
               type="button"
               onClick={() => onTabChange(value)}
               className={mergeClassnames(
-                'flex shrink-0 flex-col items-center gap-1 border-b-2 px-3 py-3 text-xs font-medium transition-colors',
+                'flex flex-1 flex-col items-center gap-1 border-b-2 px-3 py-3 text-xs font-medium transition-colors',
                 isActive
                   ? 'border-primary-60 text-primary-60'
                   : 'border-transparent text-neutral-40',
