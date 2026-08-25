@@ -23,7 +23,7 @@ export default function RoleBadge({ role, rank, className, showLockIcon = false 
     >
       <span
         className={mergeClassnames(
-          'text-xl font-medium',
+          'text-xs md:text-xl font-medium',
           isHuber ? 'text-primary-50' : 'text-orange-40',
         )}
       >
