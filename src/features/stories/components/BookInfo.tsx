@@ -50,9 +50,6 @@ function CornerButtons() {
 }
 
 function CoverDetail({ coverPath, topics }: CoverDetailProps) {
-  const SORTED = true;
-  // DEV NOTE: Change the flag to false if sorting the topic chips isn't worth the trade off.
-
   return (
     <div className="relative flex w-full flex-col gap-y-4">
       <div className="flex max-h-[340px] w-full items-center justify-center">
@@ -63,20 +60,19 @@ function CoverDetail({ coverPath, topics }: CoverDetailProps) {
       </div>
       {topics?.length ? (
         <div className="flex flex-wrap gap-2 py-1 max-lg:hidden">
-          {(SORTED ? [...topics].sort((a: Topic, b: Topic) => a.name.length - b.name.length) : topics)
-            .map((topic: Topic) => (
-              <Chip
-                key={topic.id}
-                as="span"
-                className={mergeClassnames(
-                  'min-w-0 shrink-0 rounded border h-[22px] py-1 px-2',
-                  'text-xs font-medium leading-[14px] ',
-                  getTopicBadgeClasses(topic.color),
-                )}
-              >
-                {topic.name}
-              </Chip>
-            ))}
+          {topics?.map((topic: Topic) => (
+            <Chip
+              key={topic.id}
+              as="span"
+              className={mergeClassnames(
+                'min-w-0 shrink-0 rounded border h-[22px] py-1 px-2',
+                'text-xs font-medium leading-[14px] ',
+                getTopicBadgeClasses(topic.color),
+              )}
+            >
+              {topic.name}
+            </Chip>
+          ))}
         </div>
       ) : null}
     </div>

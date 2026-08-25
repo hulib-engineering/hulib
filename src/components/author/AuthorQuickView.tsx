@@ -28,25 +28,22 @@ function MaturingExperiences({ bio }: { bio: string | null }) {
 // Design note: no limit to the number of Topics - "as the user won't have so much free time to choose so many of them anyway", said the designer
 function Topics({ topics }: { topics: Topic[] }) {
   const t = useTranslations('Schedule.HoverCard');
-  const SORTED = true;
-  // DEV NOTE: Change the flag to false if sorting the topic chips isn't worth the trade off.
 
   return (
     <Section title={t('topics')} row>
       <div className="flex flex-wrap gap-2">
-        {(SORTED ? [...topics].sort((a: Topic, b: Topic) => a.name.length - b.name.length) : topics)
-          .map((t: Topic) => (
-            <div
-              key={t?.id}
-              className={mergeClassnames(
-                'py-2 px-3 rounded-2xl border',
-                'text-xs font-medium leading-[14px]',
-                getTopicBadgeClasses(t?.color),
-              )}
-            >
-              {t?.name}
-            </div>
-          ))}
+        {topics?.map((t: Topic) => (
+          <div
+            key={t?.id}
+            className={mergeClassnames(
+              'py-2 px-3 rounded-2xl border',
+              'text-xs font-medium leading-[14px]',
+              getTopicBadgeClasses(t?.color),
+            )}
+          >
+            {t?.name}
+          </div>
+        ))}
       </div>
     </Section>
   );
