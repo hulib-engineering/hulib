@@ -100,20 +100,11 @@ export default function BookInfo(props: BookInfoProps) {
               {t('edit')}
             </Button>
           </div>
-          <div className="flex w-full gap-2">
+          <div className="flex w-full">
             <IconButton
               variant="outline"
               size="lg"
-              className="flex-1"
-              aria-label={tCommon('edit') as string}
-              onClick={props.onEdit}
-            >
-              <NotePencil className="text-[#2e3032]" size={20} weight="bold" />
-            </IconButton>
-            <IconButton
-              variant="outline"
-              size="lg"
-              className="flex-1"
+              className="w-full"
               aria-label={tCommon('delete') as string}
               onClick={props.onDelete}
             >
