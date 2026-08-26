@@ -116,7 +116,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
   const [handleUpdateLikeCount] = useLikeStoryMutation();
   const [deleteStory, { isLoading: isDeletingStory }] = useDeleteStoryMutation();
 
-<  // TODO: remove if storyDetailQuery API returns a number of published stories in humanbook
+  // TODO: remove if storyDetailQuery API returns a number of published stories in humanbook
   const { data: storiesList } = useGetStoriesQuery(
     { humanBookId: data?.humanBook?.id, publishStatus: 'published', type: 'most-popular' },
     { skip: !data?.humanBook?.id },
