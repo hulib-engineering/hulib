@@ -30,22 +30,25 @@ function Topics({ topics }: { topics: Topic[] }) {
   const t = useTranslations('Schedule.HoverCard');
 
   return (
-    <Section title={t('topics')} row>
-      <div className="flex flex-wrap gap-2">
-        {topics?.map((t: Topic) => (
-          <div
-            key={t?.id}
-            className={mergeClassnames(
-              'py-2 px-3 rounded-2xl border',
-              'text-xs font-medium leading-[14px]',
-              getTopicBadgeClasses(t?.color),
-            )}
-          >
-            {t?.name}
-          </div>
-        ))}
-      </div>
-    </Section>
+    !topics?.length ? <></>
+      : (
+          <Section title={t('topics')} row>
+            <div className="flex flex-wrap gap-2">
+              {topics?.map((t: Topic) => (
+                <div
+                  key={t?.id}
+                  className={mergeClassnames(
+                    'py-2 px-3 rounded-2xl border',
+                    'text-xs font-medium leading-[14px]',
+                    getTopicBadgeClasses(t?.color),
+                  )}
+                >
+                  {t?.name}
+                </div>
+              ))}
+            </div>
+          </Section>
+        )
   );
 }
 
