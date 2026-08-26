@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { BookOpen, CaretDown, PencilSimple, Plus } from '@phosphor-icons/react';
+import { ArrowLeft, BookOpen, CaretDown, PencilSimple, Plus } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -12,6 +12,7 @@ import type { z } from 'zod';
 import { CustomCoverModal } from './CustomCoverModal';
 import { useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
+import IconButton from '@/components/core/iconButton/IconButton';
 import Combobox, { getChipColor } from '@/components/core/combobox/Combobox';
 import Form from '@/components/core/form/Form';
 // import MenuItem from '@/components/core/menuItem/MenuItem';
@@ -274,7 +275,7 @@ export default function StoryForm(props: IStoryFormProps) {
           cover: { id: uploadedCoverId },
           publishStatus: 'draft',
         }).unwrap();
-        pushSuccess('Story edited successfully');
+        pushSuccess(t('edit_book_success'));
         props.onSucceed();
       }
     } catch (error: any) {
@@ -286,6 +287,14 @@ export default function StoryForm(props: IStoryFormProps) {
     <div className="flex flex-col gap-6 rounded-[20px] bg-white
       max-[955px]:mt-2 min-[955px]:p-5"
     >
+      {props.type === 'edit' && (
+        <div className="flex items-center gap-3 px-4 pt-2 min-[955px]:px-0 min-[955px]:pt-0">
+          <IconButton variant="ghost" size="lg" onClick={props.onCancel} aria-label={t('back') as string}>
+            <ArrowLeft size={20} />
+          </IconButton>
+          <h2 className="text-2xl font-medium leading-9 text-black">{t('edit_book_title')}</h2>
+        </div>
+      )}
       <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <div className="flex flex-col gap-4 min-[955px]:flex-row
           min-[955px]:items-stretch min-[955px]:gap-6"
@@ -523,15 +532,19 @@ export default function StoryForm(props: IStoryFormProps) {
                 className="w-full min-[955px]:w-[300px]"
                 animation={isSubmitting && 'progress'}
                 disabled={isSubmitting || !isFormValid}
-                iconLeft={<BookOpen size={20} />}
-                iconRight={<Plus size={20} />}
+                iconLeft={props.type === 'edit' ? undefined : <BookOpen size={20} />}
+                iconRight={props.type === 'edit' ? undefined : <Plus size={20} />}
               >
-                <span className="min-[955px]:hidden">
-                  {t('submit_create_book_mobile')}
-                </span>
-                <span className="hidden min-[955px]:inline">
-                  {t('submit_create_book_desktop')}
-                </span>
+                {props.type === 'edit' ? t('confirm') : (
+                  <>
+                    <span className="min-[955px]:hidden">
+                      {t('submit_create_book_mobile')}
+                    </span>
+                    <span className="hidden min-[955px]:inline">
+                      {t('submit_create_book_desktop')}
+                    </span>
+                  </>
+                )}
               </Button>
             </div>
           </div>
