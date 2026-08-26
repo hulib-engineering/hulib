@@ -32,16 +32,18 @@ export default function UserProfileClient({ userId }: Props) {
     ? data
     : { ...(meData ?? userInfo), photo: meData?.photo ?? { id: userAvatarId, path: userAvatarUrl } };
 
-  if (!isMeLoading && !userDetail) {
-    return notFound();
-  }
+  const isTargetLoading = notMe ? isLoading : isMeLoading;
 
-  if (!hasRouteUserId || (isMeLoading && !hasCurrentUserId && !data) || (notMe && isLoading) || !userDetail) {
+  if (hasRouteUserId && (isMeLoading || isTargetLoading)) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
         <Loading />
       </div>
     );
+  }
+
+  if (!hasRouteUserId || !userDetail) {
+    return notFound();
   }
 
   const roleId = userDetail?.role?.id;
