@@ -2,8 +2,10 @@ import {
   BookmarkIcon,
   EyeIcon,
   HeartIcon,
+  NotePencil,
   ShareFatIcon,
   ThumbsUpIcon,
+  Trash,
 } from '@phosphor-icons/react';
 
 import { useTranslations } from 'next-intl';
@@ -12,12 +14,16 @@ import { Cover } from '@/features/stories/components/Cover';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import { Chip } from '@/components/core/chip/Chip';
 import Button from '@/components/core/button/Button';
+import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 
 type BottomButtonsProps = {
   isLiked?: boolean;
+  isOwner?: boolean;
   handleClickShare?: () => void;
   clickLikeStory?: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
 };
 
 type StatisticsProps = {
@@ -124,8 +130,43 @@ function Statistics({ viewCount, rating, likeCount, shareCount }: StatisticsProp
   );
 }
 
-function BottomButtons({ handleClickShare, isLiked, clickLikeStory }: BottomButtonsProps) {
+function BottomButtons({ handleClickShare, isLiked, clickLikeStory, isOwner, onEdit, onDelete }: BottomButtonsProps) {
   const t = useTranslations('ExploreStory'); // TODO: change it to 'BookInfo', migrate the lines from it on the locale files to 'BookInfo'
+  const tCommon = useTranslations('Common');
+  if (isOwner) {
+    return (
+      <div className="flex w-full flex-col gap-2">
+        <div className="flex w-full gap-2">
+          <Button
+            iconLeft={<ShareFatIcon className="text-white" size={20} weight="bold" />}
+            onClick={handleClickShare}
+            className="flex-1"
+          >
+            {t('share')}
+          </Button>
+          <Button
+            variant="outline"
+            iconLeft={<NotePencil className="text-primary-50" size={20} weight="bold" />}
+            onClick={onEdit}
+            className="flex-1"
+          >
+            {t('edit')}
+          </Button>
+        </div>
+        <div className="flex w-full">
+          <IconButton
+            variant="outline"
+            size="lg"
+            className="w-full"
+            aria-label={tCommon('delete') as string}
+            onClick={onDelete}
+          >
+            <Trash className="text-[#2e3032]" size={20} weight="bold" />
+          </IconButton>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="flex w-full flex-col gap-2">
       <Button
@@ -172,8 +213,11 @@ export default function BookInfo(props: BookInfoProps) {
       />
       <BottomButtons
         isLiked={props.isLiked}
+        isOwner={props.isOwner}
         handleClickShare={props.handleClickShare}
         clickLikeStory={props.clickLikeStory}
+        onEdit={props.onEdit}
+        onDelete={props.onDelete}
       />
     </div>
   );
