@@ -71,10 +71,9 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
   const { status } = useSession();
 
   const disabledCondition = status === 'unauthenticated' || userId === undefined;
-  const { data: bookedSessionsList, isLoading }
-  = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId });
+  const { data: bookedSessionsList, isLoading } = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId });
 
-<  const max_lg = '';// 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4';
+  const max_lg = '';// 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4';
   const lg = 'lg:p-5';
 
   return (
