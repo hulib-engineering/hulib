@@ -4,6 +4,7 @@ import { getToken } from 'next-auth/jwt';
 import createMiddleware from 'next-intl/middleware';
 
 import { AppConfig } from './utils/AppConfig';
+import { POST_LOGIN_REDIRECT_COOKIE } from './utils/authRedirect';
 
 const SOCIAL_CRAWLER_PATTERNS = [
   'facebookexternalhit',
@@ -86,9 +87,14 @@ export default async function middleware(request: NextRequest) {
   const isAdminPage = pathname.includes('/admin');
   const loginPath = isAdminPage ? '/admin/auth/login' : '/auth/login';
 
-  // Not logged in → redirect to the right login
+  // Not logged in → redirect to the right login, remembering where to return
   if (!token) {
-    return NextResponse.redirect(new URL(loginPath, request.url));
+    const redirectResponse = NextResponse.redirect(new URL(loginPath, request.url));
+    redirectResponse.cookies.set(POST_LOGIN_REDIRECT_COOKIE, pathname + request.nextUrl.search, {
+      maxAge: 600,
+      path: '/',
+    });
+    return redirectResponse;
   }
 
   // Role checks

@@ -15,6 +15,7 @@ import TextInput from '@/components/core/textInput-v1/TextInput';
 import type { EmailLoginResponse } from '@/libs/services/modules/auth';
 import { useLoginAsManagerMutation } from '@/libs/services/modules/auth';
 import { LoginValidation } from '@/validations/LoginValidation';
+import { consumePostLoginRedirect } from '@/utils/authRedirect';
 
 export default function AdminLoginForm() {
   const { update } = useSession();
@@ -50,11 +51,12 @@ export default function AdminLoginForm() {
         });
         // save access token to session
         await update({ accessToken: result.token });
+        const redirectTo = consumePostLoginRedirect('/admin/awaiting-stories');
         await signIn('credentials', {
           id: result.user.id,
           accessToken: result.token,
           role: result.user.role.name,
-          callbackUrl: `${window.location.origin}/admin/awaiting-stories`,
+          callbackUrl: `${window.location.origin}${redirectTo}`,
         });
       }
     } catch {
