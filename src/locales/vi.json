@@ -1,4 +1,4 @@
-{
+﻿{
   "Header": {
     "contact_us": "liên hệ"
   },
@@ -1209,8 +1209,6 @@
     "edit_book_title": "Chỉnh sửa sách",
     "edit_book_success": "Chỉnh sửa sách thành công",
     "my_schedule_empty_title": "Chưa có lịch cá nhân",
-    "meeting_empty_title": "Chưa có lịch hẹn",
-    "meeting_empty_description": "Bạn chưa có lịch hẹn nào. Hãy cập nhật lịch để bắt đầu nhận đặt hẹn.",
     "all": "Tất cả",
     "search_by_keyword": "Tìm kiếm theo từ khóa",
     "change": "Đổi",

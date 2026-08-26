@@ -1209,8 +1209,6 @@
     "edit_book_title": "Edit Book",
     "edit_book_success": "Book edited successfully",
     "my_schedule_empty_title": "No personal schedule yet",
-    "meeting_empty_title": "No meetings yet",
-    "meeting_empty_description": "You have no scheduled meetings. Update your schedule to start receiving bookings.",
     "search_by_keyword": "Search by keyword",
     "change": "Change",
     "password_length": "Password has at least 8 characters.",
