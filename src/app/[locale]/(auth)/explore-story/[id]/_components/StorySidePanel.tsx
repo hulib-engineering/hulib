@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  BookOpen,
+  // BookOpen,
   CalendarDots,
   FacebookLogo,
   InstagramLogo,
@@ -395,7 +395,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           </Button>
 
           {/* For mobile screen only */}
-          {!storiesList?.data[0] ? <></>
+          {/*! storiesList?.data[0] ? <></>
             : (
                 <div className="box-border flex w-full items-center gap-2 rounded-lg
             border border-[#C7C9CB] bg-[#F0F5FF] p-2 lg:hidden"
@@ -405,7 +405,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
                     {storiesList?.data[0]?.title}
                   </span>
                 </div>
-              )}
+              ) */}
         </div>
       </div>
 
