@@ -20,6 +20,7 @@ import { useDeleteStoryReviewMutation, useGetStoryReviewsByStoryIdQuery } from '
 import { SHOW_LIMIT_REVIEWS } from '@/libs/services/modules/story-reviews/getStoryReviewsByStoryId';
 import type { StoryReview as TStoryReview } from '@/libs/services/modules/story-reviews/storyReviewsType';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import { setPostLoginRedirect } from '@/utils/authRedirect';
 
 type ReviewItemProps = TStoryReview & {
   onDelete?: (id: number) => void;
@@ -165,7 +166,8 @@ export default function StoryReviews() {
 
   const requireAuth = useCallback(() => {
     if (!session) {
-      router.push(`/auth/login?callbackUrl=${encodeURIComponent(pathname)}`);
+      setPostLoginRedirect(pathname);
+      router.push('/auth/login');
       return false;
     }
     return true;
