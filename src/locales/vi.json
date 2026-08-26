@@ -40,7 +40,8 @@
     "no_result": {
       "title": "Không tìm thấy kết quả",
       "description": "Chúng tôi không tìm thấy kết quả nào phù hợp với tìm kiếm của bạn. Vui lòng thử tìm kiếm lại."
-    }
+    },
+    "search_not_found": "Không có kết quả bạn cần tìm"
   },
   "Footer": {
     "copyright": "© 2026 HuLib. Đã đăng ký bản quyền.",
@@ -749,7 +750,7 @@
   },
   "ExploreStory": {
     "description": "Tìm thấy câu chuyện dành riêng cho bạn\n",
-    "ratings": "Đánh giá",
+    "ratings": "đánh giá",
     "read_story": "Đọc truyện",
     "similar_stories": "Những câu chuyện tương tự",
     "story_added_to_favorites": "Thêm vào danh sách yêu thích thành công",
@@ -763,9 +764,10 @@
     "share_story": "Chia sẽ thêm",
     "like_button": "Thích",
     "like_error": "Thất bại",
-    "booking_cta": "Nếu câu chuyện này chạm đến bạn, hãy kết nối cùng tác giả qua một buổi trò chuyện tại đây nhé",
+    "lets_chat": "Tám xíu nha",
+    "booking_cta": "Nếu câu chuyện này chạm đến bạn, hãy kết nối cùng tác giả qua cuộc trò chuyện 1-1 Miễn Phí đây nha",
     "booking_cta_unauth": "Bạn cần đăng nhập để có thể đặt hẹn gặp gỡ trực tuyến với tác giả",
-    "book_a_meeting": "Đặt hẹn trò chuyện",
+    "book_a_meeting": "Kết nối 1-1",
     "booking_count": "Đã có {bookingCount} cuộc hẹn từ câu chuyện này",
     "author": "Tác giả",
     "stories": "câu chuyện",
@@ -783,6 +785,7 @@
     "story": "Câu chuyện",
     "is_deleted_successfully": "đã được xóa thành công",
     "read_all": "Đọc tất cả",
+    "preview": "Xem trước",
     "edit": "Chỉnh sửa",
     "favorite": "Yêu thích",
     "confirm_delete_story": "Bạn có chắc chắn muốn xóa câu chuyện này không?",
@@ -849,12 +852,12 @@
         "rules": "Sau khi được duyệt, Huber sẽ có thử thách tự nguyện để cập nhật thời gian rảnh của mình trên nền tảng (tối thiểu 30 phút mỗi tuần). Thông qua đó, câu chuyện của bạn có thể tiếp cận nhiều Liber hơn — các bạn trẻ trải qua hoàn cảnh tương tự hoặc đang mắc kẹt trong một vấn đề nào đó và tìm thấy sự liên kết từ cuốn sách của bạn."
       }
     },
-    "create_book_title": "Tạo câu chuyện",
-    "success_create_book": "Viết câu chuyện thành công",
-    "thanks_for_story": "Cảm ơn bạn đã chia sẻ câu chuyện 💙 HuLib sẽ thông báo cho bạn khi quá trình duyệt hoàn tất trong 24–48 giờ nha",
+    "create_book_title": "Tạo sách",
+    "success_create_book": "Tạo sách thành công",
+    "thanks_for_story": "Sách của bạn đang được đội ngũ HuLib xem xét và sẽ có kết quả trong vòng 24 giờ tới.",
     "in_review": "Đang xem xét",
     "back_to_profile": "Quay về trang cá nhân",
-    "create_new_book": "Tạo câu chuyện mới",
+    "create_new_book": "Tạo sách mới",
     "hearts": "Trái tim",
     "approve_huber_failed": "Không thể duyệt Huber. Vui lòng thử lại.",
     "waiting_for_approval": "Đang chờ duyệt",
@@ -867,7 +870,6 @@
     "declined": "Đã từ chối",
     "back": "Trở lại",
     "reason_for_rejection": "Lý do từ chối",
-    "new_book_icon_alt": "Biểu tượng sách mới",
     "content_to_avoid": "Nội dung cần tránh"
   },
   "Time_slots": {
@@ -1099,6 +1101,8 @@
     "back": "Quay lại",
     "cancel": "Huỷ bỏ",
     "submit": "Hoàn thành",
+    "submit_create_book_mobile": "Xác nhận",
+    "submit_create_book_desktop": "Tạo sách",
     "rejected": "Từ chối",
     "in_review": "Đang xem xét",
     "rejection_reason": "Lý do từ chối",
@@ -1185,6 +1189,7 @@
     "save": "Lưu",
     "not_found": "Không tìm thấy",
     "could_not_find_resource": "Không thể tìm thấy tài nguyên được yêu cầu",
+    "no_results_found": "Không có kết quả bạn cần tìm",
     "return_home": "Quay lại trang chủ",
     "view_more": "Xem thêm",
     "see_more": "Xem thêm",
@@ -1212,6 +1217,8 @@
     "password_capital": "Mật khẩu phải chứa chữ cái viết hoa.",
     "password_match": "Mật khẩu nhập lại phải trùng khớp.",
     "search_for_name": "Tìm theo tên",
+    "popular_search": "Tìm kiếm phổ biến",
+    "recent_search": "Lần tìm gần đây",
     "notification_title": "Thông báo",
     "no_messages": "Bạn chưa có cuộc trò chuyện nào.",
     "invalid": "Không hợp lệ",
@@ -1273,6 +1280,10 @@
   "AuthorBasicInfo": {
     "stories": "câu chuyện",
     "rating": "yêu thích"
+  },
+  "BookInfo": {
+    "viewCount": "lượt xem",
+    "rating": "đánh giá"
   },
   "ScheduleBasicInfo": {
     "duration": "Thời lượng",

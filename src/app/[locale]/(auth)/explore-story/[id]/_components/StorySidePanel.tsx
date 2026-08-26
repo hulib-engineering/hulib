@@ -1,9 +1,11 @@
 'use client';
 
 import {
+  BookOpen,
   CalendarDots,
   FacebookLogo,
   InstagramLogo,
+  MessengerLogoIcon,
   StarFour,
   ThreadsLogo,
   Trash,
@@ -16,7 +18,7 @@ import Image from 'next/image';
 import * as React from 'react';
 
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
-import { useAppSelector } from '@/libs/hooks';
+import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -28,16 +30,18 @@ import { AppConfig } from '@/utils/AppConfig';
 import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/ShareModal';
 import AuthorBasicInfo from '@/components/author/AuthorBasicInfo';
 import type { User } from '@/features/users/types';
-import { useGetHuberBookedSessionsQuery, useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
-import { useDeleteStoryMutation, useLikeStoryMutation, useShareStoryMutation } from '@/libs/services/modules/stories';
+import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
+import { useGetStoriesQuery, useLikeStoryMutation, useShareStoryMutation } from '@/libs/services/modules/stories';
+import { useDeleteStoryMutation } from '@/libs/services/modules/stories';
 import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
 import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
-import BookInfo from '@/components/book/BookInfo';
+import BookInfo from '@/features/stories/components/BookInfo';
 import { StoryCard } from '@/features/stories/components/StoryCard';
 import StoryForm from '@/features/stories/components/StoryForm';
 import PersonalCalendarModal from '@/features/stories/components/PersonalCalendarModal';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
+import { openChat } from '@/libs/store/messenger';
 
 type StorySidePanelProps = {
   data: {
@@ -55,7 +59,9 @@ type StorySidePanelProps = {
     humanBookId?: number;
     publishStatus?: string;
     rating?: number;
-    storyReview?: any;
+    storyReview?: {
+      rating?: number;
+    };
     isFavorite?: boolean;
   };
 };
@@ -68,15 +74,15 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
   const { data: bookedSessionsList, isLoading }
   = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId });
 
-  const max_xl = '';
-  const xl = 'lg:p-5';
+<  const max_lg = '';// 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4';
+  const lg = 'lg:p-5';
 
   return (
     <div
       className={mergeClassnames(
-        'w-auto flex flex-col items-center gap-5 overflow-hidden rounded-2xl bg-white shadow-sm border-2 border-primary-70',
-        max_xl,
-        xl,
+        'w-auto flex flex-col items-center gap-5 overflow-hidden rounded-2xl bg-white shadow-sm border-2 border-primary-70 p-4',
+        max_lg,
+        lg,
       )}
     >
       <p className="text-center text-base leading-6 text-neutral-20">{disabledCondition ? t('booking_cta_unauth') : t('booking_cta')}</p>
@@ -88,9 +94,12 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
       >
         <span className="mt-1">{t('book_a_meeting')}</span>
       </Button>
-      <p className="text-center text-xs leading-[14px] text-neutral-20">
-        {t('booking_count', { bookingCount: `${(disabledCondition || isLoading) ? 0 : bookedSessionsList?.length}` })}
-      </p>
+      {disabledCondition ? <></>
+        : (
+            <p className="text-center text-xs leading-[14px] text-neutral-20">
+              {t('booking_count', { bookingCount: `${(disabledCondition || isLoading) ? 0 : bookedSessionsList?.length}` })}
+            </p>
+          )}
     </div>
   );
 }
@@ -108,8 +117,9 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
   const [handleUpdateLikeCount] = useLikeStoryMutation();
   const [deleteStory, { isLoading: isDeletingStory }] = useDeleteStoryMutation();
 
-  const { data: storiesList } = useGetHuberStoriesQuery(
-    { huberId: data?.humanBook?.id, publishedOnly: true },
+<  // TODO: remove if storyDetailQuery API returns a number of published stories in humanbook
+  const { data: storiesList } = useGetStoriesQuery(
+    { humanBookId: data?.humanBook?.id, publishStatus: 'published', type: 'most-popular' },
     { skip: !data?.humanBook?.id },
   );
 
@@ -152,6 +162,27 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
   }, [timeslotsData]);
 
   const prevLikeCountRef = React.useRef(data?.likeCount);
+
+  const dispatch = useAppDispatch();
+  const handleOpenHuberChat = () => {
+    if (!requireAuth()) {
+      return;
+    }
+    if (!data?.humanBook?.id) {
+      return;
+    }
+
+    dispatch(
+      openChat({
+        id: data.humanBook.id.toString(),
+        name: data.humanBook.fullName,
+        avatarUrl: data.humanBook.photo?.path,
+        isOpen: true,
+        isMinimized: false,
+        unread: 0,
+      }),
+    );
+  };
 
   React.useEffect(() => {
     if (prevLikeCountRef.current !== data?.likeCount) {
@@ -322,6 +353,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           clickLikeStory={clickLikeStory}
           onEdit={() => setIsEditModalOpen(true)}
           onDelete={() => setIsDeleteModalOpen(true)}
+          rating={data?.storyReview?.rating}
         />
 
         {isOwner ? (
@@ -347,12 +379,35 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           />
         )}
 
-        <div className="w-full gap-y-3 overflow-hidden rounded-2xl bg-white p-5 shadow-sm">
+        <div className="flex w-full flex-col gap-y-3 overflow-hidden rounded-2xl bg-white p-5 shadow-sm">
           <AuthorBasicInfo
             humanBook={data?.humanBook}
             numStories={storiesList?.data?.length}
             onClickFunction={handleAuthorClick}
+            onClickHuberChat={handleOpenHuberChat}
           />
+
+          <Button
+            variant="outline"
+            className="box-border rounded-[100px] border border-[#C2C6CF] p-3 max-lg:hidden"
+            onClick={handleOpenHuberChat}
+          >
+            <MessengerLogoIcon size={20} className="shrink-0" />
+            <span className="mt-1">{t('lets_chat')}</span>
+          </Button>
+
+          {/* For mobile screen only */}
+          {!storiesList?.data[0] ? <></>
+            : (
+                <div className="box-border flex w-full items-center gap-2 rounded-lg
+            border border-[#C7C9CB] bg-[#F0F5FF] p-2 lg:hidden"
+                >
+                  <BookOpen color="#0442BF" size={16} />
+                  <span className="flex-1 text-sm leading-4 text-black translate-y-[2px]">
+                    {storiesList?.data[0]?.title}
+                  </span>
+                </div>
+              )}
         </div>
       </div>
 
