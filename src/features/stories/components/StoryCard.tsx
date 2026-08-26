@@ -1,6 +1,6 @@
 // TO DO: optimise rendering action buttons logic
 
-import { BookOpen, BookmarkSimple, Bookmarks, CaretCircleRight, Heart, Trash } from '@phosphor-icons/react';
+import { BookOpen, BookmarkSimple, Bookmarks, CaretCircleRight, Eye, ShareFat, ThumbsUp, Trash } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import React, { useRef, useState } from 'react';
 
@@ -15,6 +15,7 @@ import Button from '@/components/core/button/Button';
 import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
 import Modal from '@/components/Modal';
+import { StoryBage } from '@/components/StoryBage';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import { renderHighlightedText } from '@/features/stories/utils/renderHighlightedText';
 import StoryForm from '@/features/stories/components/StoryForm';
@@ -55,6 +56,11 @@ export const StoryCard = ({
   const [deleteStory, { isLoading: isDeletingStory }] = useDeleteStoryMutation();
 
   const dummyRef = useRef<HTMLDivElement>(null);
+
+  const isPublished = data.publishStatus === StoryPublishStatus.PUBLISHED;
+  const detailPath = showAdminControls
+    ? `/admin/stories/${data?.id}/approval`
+    : `/explore-story/${data?.id}${isPublished ? '' : '/preview'}`;
 
   const [isFavorite, setIsFavorite] = useState(data.isFavorite);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -142,19 +148,19 @@ export const StoryCard = ({
         return (
           <Button
             size="lg"
-            onClick={() => router.push(`/explore-story/${data.id}/preview`)}
+            onClick={() => router.push(detailPath)}
           >
-            Preview
+            {t('preview')}
           </Button>
         );
       }
       return (
-        <div className="hidden w-full items-center gap-2 lg:flex">
+        <div className="hidden w-full items-center gap-2 md:flex">
           <Button
             className="flex-1"
-            onClick={() => router.push(`/explore-story/${data.id}`)}
+            onClick={() => router.push(detailPath)}
           >
-            {t('read_story')}
+            {data.publishStatus === StoryPublishStatus.PUBLISHED ? t('read_story') : t('preview')}
           </Button>
           <IconButton
             variant="outline"
@@ -176,7 +182,7 @@ export const StoryCard = ({
   return (
     <>
       {/* Mobile version */}
-      {data.publishStatus === StoryPublishStatus.PUBLISHED && !editable && (
+      {!editable && (
         <div
           className={mergeClassnames(
             'w-full flex items-stretch gap-2.5 rounded-xl bg-white p-4 shadow-sm md:hidden',
@@ -191,8 +197,15 @@ export const StoryCard = ({
             <div className="flex flex-col justify-between">
               <div className="flex flex-1 flex-col gap-1.5">
                 <div className="flex flex-col">
-                  <h6 className="line-clamp-2 min-h-14 text-xl font-medium capitalize text-primary-10">
-                    {data?.title.toLowerCase()}
+                  {!isPublished && (
+                    <StoryBage
+                      status={data.publishStatus}
+                      rejectionReason={data.rejectionReason}
+                      className="mb-1.5"
+                    />
+                  )}
+                  <h6 className="line-clamp-2 min-h-14 text-xl font-medium text-primary-10">
+                    {data?.title}
                   </h6>
                 </div>
                 {data.topics && data.topics?.length > 0 && (
@@ -221,12 +234,23 @@ export const StoryCard = ({
                     {data?.humanBook?.fullName}
                   </span>
                   <div className="ml-1 flex items-center gap-1">
-                    <Heart className="text-xs text-yellow-50" weight="fill" />
+                    <ThumbsUp className="text-pink-40" size={16} weight="fill" />
                     <p className="text-xs font-medium leading-[14px] text-neutral-20">
-                      {data?.storyReview?.rating || 0}
+                      {data?.likeCount ?? 0}
                     </p>
-                    <p className="ml-1 line-clamp-1 text-[10px] font-normal leading-[14px] text-neutral-40">
-                      {`${data?.storyReview?.numberOfReviews || 0} ${t('ratings')}`}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
+                    <Eye className="text-primary-50" size={16} />
+                    <p className="text-xs font-medium leading-[14px] text-neutral-20">
+                      {data?.viewCount ?? 0}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <ShareFat className="text-primary-50" size={16} />
+                    <p className="text-xs font-medium leading-[14px] text-neutral-20">
+                      {data?.shareCount ?? 0}
                     </p>
                   </div>
                 </div>
@@ -243,9 +267,9 @@ export const StoryCard = ({
               <Button
                 size="lg"
                 iconLeft={<BookOpen />}
-                onClick={() => router.push(`/explore-story/${data.id}`)}
+                onClick={() => router.push(detailPath)}
               >
-                {t('read_all')}
+                {isPublished ? t('read_all') : t('preview')}
               </Button>
             )}
           </div>
@@ -256,7 +280,7 @@ export const StoryCard = ({
                 className="size-full"
               />
             </div>
-            {!withoutActions && (
+            {!withoutActions && isPublished && (
               <Button size="lg" variant="outline" iconLeft={<Bookmarks />} onClick={handleManageFavoriteList}>
                 {t('favorite')}
               </Button>
@@ -269,23 +293,23 @@ export const StoryCard = ({
       <div
         className={mergeClassnames(
           'items-stretch w-[392px] rounded-xl bg-white p-4 shadow-sm flex',
-          data.publishStatus === StoryPublishStatus.PUBLISHED && !editable && 'hidden md:flex',
+          !editable && 'hidden md:flex',
           className,
         )}
       >
         <div className="relative flex w-1/2 flex-1 flex-col justify-between pr-4 pt-2">
           <div className="flex flex-1 flex-col gap-2">
             <div className="flex flex-col">
-              <h6 className="line-clamp-2 min-h-14 text-xl font-medium capitalize leading-7 text-primary-10">
-                {data?.title.toLowerCase()}
-              </h6>
-              {data.publishStatus === 'rejected' && (
-                <p className="font-medium text-red-50">
-                  (
-                  {tCommon('rejected')}
-                  )
-                </p>
+              {!isPublished && (
+                <StoryBage
+                  status={data.publishStatus}
+                  rejectionReason={data.rejectionReason}
+                  className="mb-2"
+                />
               )}
+              <h6 className="line-clamp-2 min-h-14 text-xl font-medium leading-7 text-primary-10">
+                {data?.title}
+              </h6>
             </div>
             {data.topics && data.topics?.length > 0 && (
               <div className="scrollbar-none flex w-full items-center gap-2 overflow-x-auto overflow-y-hidden pb-0.5">
@@ -315,14 +339,25 @@ export const StoryCard = ({
                 {data?.humanBook?.fullName}
               </span>
             </div>
-            <div className="mt-1 flex items-center gap-1">
-              <Heart className="text-yellow-50" weight="fill" />
-              <p className="text-sm font-medium leading-4 text-neutral-20">
-                {data?.storyReview?.rating || 0}
-              </p>
-              <p className="ml-1 text-xs font-normal leading-[14px] text-neutral-40">
-                {`(${data?.storyReview?.numberOfReviews || 0} ${t('ratings')})`}
-              </p>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
+                <ThumbsUp className="text-pink-40" size={16} weight="fill" />
+                <p className="text-sm font-medium leading-4 text-neutral-20">
+                  {data?.likeCount ?? 0}
+                </p>
+              </div>
+              <div className="flex items-center gap-1">
+                <Eye className="text-primary-50" size={16} />
+                <p className="text-sm font-medium leading-4 text-neutral-20">
+                  {data?.viewCount ?? 0}
+                </p>
+              </div>
+              <div className="flex items-center gap-1">
+                <ShareFat className="text-primary-50" size={16} />
+                <p className="text-sm font-medium leading-4 text-neutral-20">
+                  {data?.shareCount ?? 0}
+                </p>
+              </div>
             </div>
           </div>
           {renderActionButtons()}
@@ -336,7 +371,7 @@ export const StoryCard = ({
             highlightTitle={data?.highlightTitle}
             highlightAbstract={data?.highlightAbstract}
             isPublished={data.publishStatus === 'published'}
-            onClick={() => router.push(showAdminControls ? `/admin/stories/${data?.id}/approval` : `/explore-story/${data?.id}${data.publishStatus !== 'published' ? '/preview' : ''}`)}
+            onClick={() => router.push(detailPath)}
           />
         </div>
       </div>

@@ -9,6 +9,7 @@ import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Logo } from '@/components/Logo';
 import AdvancedSearch from '@/layouts/webapp/AdvancedSearch';
 import AvatarPopover from '@/layouts/webapp/AvatarPopover';
+import MobileSearch from '@/layouts/webapp/MobileSearch';
 import NotificationPopover from '@/layouts/webapp/NotificationPopover';
 import SkeletonHeader from '@/layouts/webapp/SkeletonHeader';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
@@ -77,6 +78,7 @@ const Header = () => {
               )
             : (
                 <div className="flex items-center gap-2">
+                  <MobileSearch />
                   {(!isLoading && !error) && (
                     <button type="button" className="xl:hidden" onClick={() => router.push('/notifications')}>
                       <HeaderIconButtonWithBadge badge={data ? data.unseenCount : 0} open={false}>
@@ -90,19 +92,20 @@ const Header = () => {
                 </div>
               )}
         </div>
-        <AdvancedSearch />
       </header>
 
       {/* PC version */}
-      <header className="hidden w-screen items-center justify-between bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
+      <header className="hidden w-screen items-center justify-between gap-6 bg-white px-28 py-6 shadow-[0_0_6px_0_rgba(0,0,0,0.12)] lg:flex">
         <div className="flex items-center gap-6">
           <Link href="/">
             <Logo size="small" />
           </Link>
         </div>
-        <div className="w-[300px]">
-          <AdvancedSearch />
-        </div>
+        {user && user?.id && (
+          <div className="flex w-full min-w-[300px] max-w-[420px] flex-1 justify-center lg:px-4">
+            <AdvancedSearch withOverlay={false} fullWidth />
+          </div>
+        )}
         {!user || !user?.id
           ? (
               <div className="flex gap-3 px-10 ">

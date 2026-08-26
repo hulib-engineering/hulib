@@ -156,7 +156,7 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
     setIndex(e.data);
   };
   const pageStep = isDesktop ? 2 : 1;
-  const flippingTime = isDesktop ? 2400 : 1;
+  const flippingTime = isDesktop ? 400 : 1; // HERE
   const totalPages = pagesRender.length;
   const currentPage = totalPages === 0 ? 0 : Math.min(index + 1, totalPages);
   const hasEnoughPagesForDesktopNav = totalPages >= 3;
@@ -204,7 +204,7 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
     <div className="flex flex-col items-center gap-4 lg:gap-5">
       <div className="w-full" id="demoBlock">
         <div
-          className="book-page-padding relative z-50 flex size-full overflow-visible"
+          className="book-page-padding relative z-0 flex size-full overflow-visible"
           ref={contentRef}
         >
           <div

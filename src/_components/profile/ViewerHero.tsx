@@ -1,15 +1,15 @@
 'use client';
 
-import { DotsThreeIcon, PaperPlaneTiltIcon, WarningIcon } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 
+import { DotsThreeIcon, PaperPlaneTiltIcon, WarningIcon } from '@phosphor-icons/react';
 import JoinedSince from './JoinedSince';
 import RoleBadge from './RoleBadge';
 import UserAvatar from './UserAvatar';
-import Button from '@/components/core/button/Button';
 import { Role } from '@/types/common';
 import type { TUserDetail } from '@/features/users/types';
+import Button from '@/components/core/button/Button';
 
 type ViewerHeroProps = {
   userDetail: TUserDetail;
@@ -44,7 +44,7 @@ export default function ViewerHero({ userDetail, onChatClick, onReportClick }: V
   };
 
   return (
-    <div className="flex items-center gap-6 rounded-2xl bg-white px-4 py-6 shadow-sm">
+    <div className="flex flex-col items-center gap-6 rounded-2xl bg-white px-4 py-6 shadow-sm md:flex-row">
       <div className="flex flex-1 items-center gap-6">
         <UserAvatar
           photo={userDetail.photo}
@@ -67,7 +67,7 @@ export default function ViewerHero({ userDetail, onChatClick, onReportClick }: V
         </div>
       </div>
 
-      <div className="flex shrink-0 flex-col items-end justify-between gap-2 self-stretch lg:gap-0">
+      <div className="flex shrink-0 items-end justify-end gap-8 self-stretch md:flex-col md:justify-start lg:pt-8">
         <div className="relative" ref={dropdownRef}>
           <button
             type="button"

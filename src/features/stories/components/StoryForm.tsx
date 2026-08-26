@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, CaretDown, PencilSimple } from '@phosphor-icons/react';
+import { ArrowLeft, BookOpen, CaretDown, PencilSimple, Plus } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -154,6 +154,7 @@ export default function StoryForm(props: IStoryFormProps) {
     },
   });
   const title = watch('title') || '';
+  const abstract = watch('abstract') || '';
 
   const [selectedCoverSample, setSelectedCoverSample] = useState<CoverPresetAsset>(
     COVER_PRESET_ASSETS[0],
@@ -165,6 +166,9 @@ export default function StoryForm(props: IStoryFormProps) {
   const [isCustomCoverModalOpen, setIsCustomCoverModalOpen] = useState(false);
   const [currentCoverIndex, setCurrentCoverIndex] = useState(0);
   const [selectedTopics, setSelectedTopics] = useState<TFilter[]>(storyRelatedTopics);
+  const isFormValid = Boolean(
+    title.trim() && abstract.trim() && selectedTopics.length > 0,
+  );
   // const queriedTopicOptions = filter(topicQuery, topicOptions || []);
   // const queriedTopicOptions = topicOptions;
   const sortTopicsByPriority = (topics: { label: string; value: string; id: number }[]) => {
@@ -527,9 +531,20 @@ export default function StoryForm(props: IStoryFormProps) {
                 size="lg"
                 className="w-full min-[955px]:w-[300px]"
                 animation={isSubmitting && 'progress'}
-                disabled={isSubmitting}
+                disabled={isSubmitting || !isFormValid}
+                iconLeft={props.type === 'edit' ? undefined : <BookOpen size={20} />}
+                iconRight={props.type === 'edit' ? undefined : <Plus size={20} />}
               >
-                {props.type === 'edit' ? t('confirm') : t('submit')}
+                {props.type === 'edit' ? t('confirm') : (
+                  <>
+                    <span className="min-[955px]:hidden">
+                      {t('submit_create_book_mobile')}
+                    </span>
+                    <span className="hidden min-[955px]:inline">
+                      {t('submit_create_book_desktop')}
+                    </span>
+                  </>
+                )}
               </Button>
             </div>
           </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import { notFound } from 'next/navigation';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
@@ -31,12 +32,18 @@ export default function UserProfileClient({ userId }: Props) {
     ? data
     : { ...(meData ?? userInfo), photo: meData?.photo ?? { id: userAvatarId, path: userAvatarUrl } };
 
-  if (!hasRouteUserId || (isMeLoading && !hasCurrentUserId && !data) || (notMe && isLoading) || !userDetail) {
+  const isTargetLoading = notMe ? isLoading : isMeLoading;
+
+  if (hasRouteUserId && (isMeLoading || isTargetLoading)) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
         <Loading />
       </div>
     );
+  }
+
+  if (!hasRouteUserId || !userDetail) {
+    return notFound();
   }
 
   const roleId = userDetail?.role?.id;
