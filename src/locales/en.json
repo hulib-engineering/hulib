@@ -44,7 +44,7 @@
     "search_not_found": "No results found for what you're looking for"
   },
   "Footer": {
-    "copyright": "© 2026 HuLib. All rights reserved.",
+    "copyright": "Â© 2026 HuLib. All rights reserved.",
     "privacy_policy": "privacy policy",
     "term_of_service": "term of service",
     "community_guidelines": "community guidelines"
@@ -61,7 +61,7 @@
     "help": "Help",
     "contact": "Contact",
     "join_our_social_community": "JOIN OUR SOCIAL COMMUNITY",
-    "copy_right": "Copyright © 2026 HuLib Website. All rights reserved."
+    "copy_right": "Copyright Â© 2026 HuLib Website. All rights reserved."
   },
   "Index": {
     "meta_title": "HuLib | Landing Page",
@@ -129,7 +129,7 @@
       },
       "index_2": {
         "heading": "Effective time management",
-        "content": "HuLib’s integrated scheduling makes connecting with Hubers easier and more flexible than ever."
+        "content": "HuLibâ€™s integrated scheduling makes connecting with Hubers easier and more flexible than ever."
       },
       "index_3": {
         "heading": "Safe online sharing",
@@ -139,8 +139,8 @@
     "outstanding_features_cta_button": "Experience now",
     "our_mascots_title": "our brand buddies",
     "our_mascots_description": "From Sharing to Understanding",
-    "our_mascots_hubers": "Hey, I’m <highlight>Huber</highlight> - just someone <highlight>sharing</highlight> small pieces of <highlight>my stories</highlight>, hoping to bring <highlight>a little light</highlight> and remind <highlight>Liber</highlight> you’re not alone.<br></br><br></br> <i>Every story isn’t just meant to inspire, but to carry <highlight>warmth</highlight> and <highlight>understanding</highlight> through uncertain days.</i>",
-    "our_mascots_libers": "Hi I am <highlight>Liber</highlight> — someone who <highlight>listen, seek empathy and accompany</highlight>.<br></br><br></br> <i>At HuLib, I can pick the <highlight>“human books”</highlight> that <highlight>resonate with me</highlight> and connect with <highlight>Hubers</highlight>, <highlight>discovering</highlight> more about myself.</i>",
+    "our_mascots_hubers": "Hey, Iâ€™m <highlight>Huber</highlight> - just someone <highlight>sharing</highlight> small pieces of <highlight>my stories</highlight>, hoping to bring <highlight>a little light</highlight> and remind <highlight>Liber</highlight> youâ€™re not alone.<br></br><br></br> <i>Every story isnâ€™t just meant to inspire, but to carry <highlight>warmth</highlight> and <highlight>understanding</highlight> through uncertain days.</i>",
+    "our_mascots_libers": "Hi I am <highlight>Liber</highlight> â€” someone who <highlight>listen, seek empathy and accompany</highlight>.<br></br><br></br> <i>At HuLib, I can pick the <highlight>â€œhuman booksâ€</highlight> that <highlight>resonate with me</highlight> and connect with <highlight>Hubers</highlight>, <highlight>discovering</highlight> more about myself.</i>",
     "testimonial_title": "meet our team",
     "testimonial_description": "What do our members say?",
     "sponsors_title": "sponsors",
@@ -165,7 +165,7 @@
       "question": "2. Who can benefit from HuLib?",
       "answer": {
         "body_paras": {
-          "p1": "<highlight>HuLib</highlight> is a community-driven for young people aged <highlight>16–26</highlight>, from students to young professionals, who want to nurture their wellbeing, feel understood, find a sense of belonging, build meaningful connections, and grow together."
+          "p1": "<highlight>HuLib</highlight> is a community-driven for young people aged <highlight>16â€“26</highlight>, from students to young professionals, who want to nurture their wellbeing, feel understood, find a sense of belonging, build meaningful connections, and grow together."
         }
       }
     },
@@ -202,36 +202,36 @@
       "index_0": {
         "location": "United Nations Headquarters, New York, U.S",
         "heading": "ECOSOC World Youth Forum 2026",
-        "content": "“Xin Chao” from Central Vietnam 🇻🇳💙 HuLib is proud that our Founder, Uyen Nguyen was nominated under UNESCO x SEVENTEEN – #GoingTogether for Youth Creativity & Well-being 🌍, representing 100 youth-led projects around the world 🤝"
+        "content": "â€œXin Chaoâ€ from Central Vietnam ðŸ‡»ðŸ‡³ðŸ’™ HuLib is proud that our Founder, Uyen Nguyen was nominated under UNESCO x SEVENTEEN â€“ #GoingTogether for Youth Creativity & Well-being ðŸŒ, representing 100 youth-led projects around the world ðŸ¤"
       },
       "index_1": {
         "location": "Da Nang, Viet Nam",
-        "heading": "Workshop “Hiểu mình, thương mình”",
+        "heading": "Workshop â€œHiá»ƒu mÃ¬nh, thÆ°Æ¡ng mÃ¬nhâ€",
         "content": "Last Saturday was truly special. A day full of emotions, everyone came with their own story and together, we were heard."
       },
       "index_2": {
         "location": "Ho Chi Minh City, Vietnam",
         "heading": "Exhibition - VietFuture Awards 2025",
-        "content": "A milestone in HuLib’s journey, spreading the message of well-being and mental health."
+        "content": "A milestone in HuLibâ€™s journey, spreading the message of well-being and mental health."
       },
       "index_3": {
         "location": "Online",
-        "heading": "Event “Tôi là ai giữa ngã ba đường”",
+        "heading": "Event â€œTÃ´i lÃ  ai giá»¯a ngÃ£ ba Ä‘Æ°á»ngâ€",
         "content": "May this event give you the courage to move forward with confidence and heart."
       },
       "index_4": {
         "location": "Online",
-        "heading": "Story Competition “Nhặc lại khoảnh khắc”",
+        "heading": "Story Competition â€œNháº·c láº¡i khoáº£nh kháº¯câ€",
         "content": "Not just a contest but a space for us to pause, reflect, and appreciate our experiences. Happiness and sadness come together to create incredible journeys."
       },
       "index_5": {
         "location": "Online",
-        "heading": "Event “Tiếng chuông tỉnh thức”",
+        "heading": "Event â€œTiáº¿ng chuÃ´ng tá»‰nh thá»©câ€",
         "content": "No one enjoys toxic relationships. The event reminds us to love ourself, and create our own happiness before expecting it from others."
       },
       "index_6": {
         "location": "Online",
-        "heading": "Event “Đi học, đi làm - hướng nào dễ hơn”",
+        "heading": "Event â€œÄi há»c, Ä‘i lÃ m - hÆ°á»›ng nÃ o dá»… hÆ¡nâ€",
         "content": "Sharing was truly meaningful. Going in the right direction is important, but optimism and perseverance are key to success."
       }
     },
@@ -239,8 +239,8 @@
     "newsletter_description": "become the first person to join our HuLib community!",
     "newsletter_form_email_placeholder": "Email Address*",
     "newsletter_form_submit": "subscribe",
-    "newsletter_success_message": "Welcome aboard! 🌟 Your journey to wellness starts now. Keep an eye on your inbox for updates and exclusive content. Let's thrive together! 📩🌿",
-    "newsletter_error_message": "Oops! Something went wrong. Please try again later. 🤔",
+    "newsletter_success_message": "Welcome aboard! ðŸŒŸ Your journey to wellness starts now. Keep an eye on your inbox for updates and exclusive content. Let's thrive together! ðŸ“©ðŸŒ¿",
+    "newsletter_error_message": "Oops! Something went wrong. Please try again later. ðŸ¤”",
     "privacy_policy_title": "privacy policy",
     "privacy_policy_description": "<important>Last updated by [Date]</important><br></br>This privacy notice for HuLib (\"we,\" \"us,\" or \"our\"), describes how and why we might collect, store, use, and/or share (\"process\") your information when you use our services (\"Services\"), such as when you:<br></br>1. Visit our webapp at <linkTohHome>https://www.hulib.com</linkTohHome>, or any application of ours that links to this privacy notice<br></br>2. Download and use our mobile application (HuLib), or any other application of ours that links to this privacy notice<br></br>3. Engage with us in other related ways, including any sales, marketing, or events<br></br>If you still have any questions or concerns, please contact us at <sendEmail>hulibvietnam@gmail.com</sendEmail>",
     "privacy_policy_table_of_content": {
@@ -319,7 +319,7 @@
     "term_of_use_sections": {
       "index_0": {
         "heading": "1. ABOUT THIS AGREEMENT",
-        "content": "This agreement is between HuLib (“HuLib”, “we”, “us” and “our”) and the person signing up to be a User of the HuLib application (“you” and “your”). This agreement comprises these terms of use and any other document specified in these Terms of Use (“Agreement”). This Agreement governs the rights and obligations between HuLib and you, governing our provision and your use of our Services, web app or other software provided, and any material, communications, links or information contained on, or made available through, our Services. Together, the web app and Services provided comprise the “Platform”. <br></br> By signing up to the Platform, you acknowledge that you have read and agree to comply with and be bound by this Agreement (including any variations HuLib makes from time to time) and by HuLib's Privacy Policy (available at <linkToPrivacy>www.huLib.com.au/privacy-policy/</linkToPrivacy>). If you do not agree to this Agreement and the Privacy Policy, you must terminate your registration as a User."
+        "content": "This agreement is between HuLib (â€œHuLibâ€, â€œweâ€, â€œusâ€ and â€œourâ€) and the person signing up to be a User of the HuLib application (â€œyouâ€ and â€œyourâ€). This agreement comprises these terms of use and any other document specified in these Terms of Use (â€œAgreementâ€). This Agreement governs the rights and obligations between HuLib and you, governing our provision and your use of our Services, web app or other software provided, and any material, communications, links or information contained on, or made available through, our Services. Together, the web app and Services provided comprise the â€œPlatformâ€. <br></br> By signing up to the Platform, you acknowledge that you have read and agree to comply with and be bound by this Agreement (including any variations HuLib makes from time to time) and by HuLib's Privacy Policy (available at <linkToPrivacy>www.huLib.com.au/privacy-policy/</linkToPrivacy>). If you do not agree to this Agreement and the Privacy Policy, you must terminate your registration as a User."
       },
       "index_1": {
         "heading": "2. CHANGES TO THIS AGREEMENT",
@@ -327,11 +327,11 @@
       },
       "index_2": {
         "heading": "3. THE PLATFORM",
-        "content": "The Platform is designed to give you a space to view and/or listen to personal stories of overcoming difficulties from human books, through video or audio recordings, photographs or written pieces uploaded to the Platform (each upload a “Story”). The platform also connects you with other young people."
+        "content": "The Platform is designed to give you a space to view and/or listen to personal stories of overcoming difficulties from human books, through video or audio recordings, photographs or written pieces uploaded to the Platform (each upload a â€œStoryâ€). The platform also connects you with other young people."
       },
       "index_3": {
         "heading": "4. OUR COMMITMENT TO YOU",
-        "content": "HuLib will ensure that the Platform is provided to you with due care and skill, and by suitably qualified personnel.  We do not warrant that the Platform will be error-free, virus-free, continuous, suitable for you, or that the Platform will be compatible with your equipment. HuLib does not take responsibility for any actions or omissions by Users on or in relation to the Platform. <br></br> HuLib may add to, change or remove any features and functionality of the Platform at any time (with or without notice to you).  The features and functionality available on the Platform may also vary depending on the device or application that is used to access it (e.g. mobile vs desktop). <br></br> HuLib does not represent or guarantee that the Platform will be free from loss, corruption, interference, attack or other intrusion (“Security Incident”), and you release us from any liability relating to any such Security Incident."
+        "content": "HuLib will ensure that the Platform is provided to you with due care and skill, and by suitably qualified personnel.  We do not warrant that the Platform will be error-free, virus-free, continuous, suitable for you, or that the Platform will be compatible with your equipment. HuLib does not take responsibility for any actions or omissions by Users on or in relation to the Platform. <br></br> HuLib may add to, change or remove any features and functionality of the Platform at any time (with or without notice to you).  The features and functionality available on the Platform may also vary depending on the device or application that is used to access it (e.g. mobile vs desktop). <br></br> HuLib does not represent or guarantee that the Platform will be free from loss, corruption, interference, attack or other intrusion (â€œSecurity Incidentâ€), and you release us from any liability relating to any such Security Incident."
       },
       "index_4": {
         "heading": "5. USERS",
@@ -402,7 +402,7 @@
       },
       "index_1": {
         "heading": "Enforcement",
-        "content": "<ul><li>We are not a crisis helpline – crisis service contacts are available on the app and website.</li><li>No harassment, hate speech, bullying, or targeted attacks.</li><li>No spam, scams, or catfishing.</li><li>No sharing of personal information.</li><li>No offensive language or behavior.</li><li>HuLib is not responsible for misinformation provided by users.</li><li>HuLib content cannot be used for commercial purposes.</li></ul>"
+        "content": "<ul><li>We are not a crisis helpline â€“ crisis service contacts are available on the app and website.</li><li>No harassment, hate speech, bullying, or targeted attacks.</li><li>No spam, scams, or catfishing.</li><li>No sharing of personal information.</li><li>No offensive language or behavior.</li><li>HuLib is not responsible for misinformation provided by users.</li><li>HuLib content cannot be used for commercial purposes.</li></ul>"
       },
       "index_2": {
         "heading": "For Hubers",
@@ -488,7 +488,7 @@
       "set_active": "Set active",
       "edit_topic": "Edit {topic}",
       "delete_topic": "Delete {topic}",
-      "loading_topics": "Loading topics…",
+      "loading_topics": "Loading topicsâ€¦",
       "no_data_yet": " No data yet",
       "pagination": {
         "next_page": "Next page"
@@ -551,8 +551,8 @@
       "second": "and"
     },
     "enter_otp": "Enter verification code",
-    "support_otp": "It’s almost done. please enter the 6-digit verification code we just sent to",
-    "not_receive_otp": "Haven’t receive the email?",
+    "support_otp": "Itâ€™s almost done. please enter the 6-digit verification code we just sent to",
+    "not_receive_otp": "Havenâ€™t receive the email?",
     "resend": "Resend",
     "contact_us": "If you need help, contact us via email",
     "welcome": "Welcome to",
@@ -576,7 +576,7 @@
     "meta_title": "Forgot password",
     "meta_description": "Forgot password ...",
     "forgot_password": "Forgot your password?",
-    "forgot_password_subheading": "No worries, enter your account email and we’ll send you a link to reset your password.",
+    "forgot_password_subheading": "No worries, enter your account email and weâ€™ll send you a link to reset your password.",
     "email": "Email address",
     "send_reset_link": "Send link to email",
     "back_to_login": "Back to login",
@@ -609,7 +609,7 @@
       "story": "Story"
     },
     "report_modal": {
-      "header_title": "You’re about to report this person.",
+      "header_title": "Youâ€™re about to report this person.",
       "reason_checkbox_label": "Please take a moment to think it through and choose the most appropriate reason below.",
       "reason_0": "Use of vulgar, aggressive, racist... words.",
       "reason_1": "Ask for personal or sensitive information.",
@@ -620,7 +620,7 @@
       "other_reason_placeholder": "If you have any other reason, feel free to share it with us here.",
       "submit": "Submit",
       "success_report_title": "Report submitted successfully",
-      "success_report_detail": "Thank you for your report. We truly appreciate your help in keeping this community safe and respectful. Our team will carefully review the information you’ve provided."
+      "success_report_detail": "Thank you for your report. We truly appreciate your help in keeping this community safe and respectful. Our team will carefully review the information youâ€™ve provided."
     },
     "create_story": "Create Your Story",
     "edit_story": "Edit Your Story",
@@ -640,10 +640,10 @@
     "warn_user": "Warn user",
     "ban_user": " Ban user",
     "appeal_report": "Appeal report",
-    "appeal_description": "Please explain why you believe this action was taken by mistake. We’ll carefully review your response and follow up shortly.",
+    "appeal_description": "Please explain why you believe this action was taken by mistake. Weâ€™ll carefully review your response and follow up shortly.",
     "reported_by_someone": "Someone else has reported you. The reporter give the reason below:",
     "appeal_submitted": "Your appeal has been submitted.",
-    "appeal_review_notice": "We’ll review it and notify you within 3 working days.",
+    "appeal_review_notice": "Weâ€™ll review it and notify you within 3 working days.",
     "cancel": "Cancel",
     "appeal": "Appeal",
     "confirm_information_accuracy": "I confirm that the information I provided is accurate to the best of my knowledge.",
@@ -766,7 +766,7 @@
     "like_error": "Failed to update like",
     "lets_chat": "Let's chat",
     "booking_cta": "If this story speaks to your heart, connect with the author for Free one-on-one conversations here.",
-    "booking_cta_unauth": "You’ll need to log in to book a meeting with this author.",
+    "booking_cta_unauth": "Youâ€™ll need to log in to book a meeting with this author.",
     "book_a_meeting": "Connect 1-1",
     "booking_count": "{bookingCount} meetings have been booked from this story",
     "author": "Author",
@@ -837,7 +837,7 @@
       },
       "card_2": {
         "title": "Share with Authenticity",
-        "rules": "Tell your story from your own experiences and perspective. We encourage content that fosters empathy, understanding, and positive inspiration—especially for young people seeking connection and support."
+        "rules": "Tell your story from your own experiences and perspective. We encourage content that fosters empathy, understanding, and positive inspirationâ€”especially for young people seeking connection and support."
       },
       "card_3": {
         "title": "Keep It Original",
@@ -849,12 +849,12 @@
       },
       "card_5": {
         "title": "Support the Community",
-        "rules": "Once your book is approved, you'll be invited to join a voluntary challenge by sharing your available time on the platform (at least 30 minutes per week). This helps your story reach more Libers—young people facing similar situations or feeling stuck, who may find connection and encouragement through your book."
+        "rules": "Once your book is approved, you'll be invited to join a voluntary challenge by sharing your available time on the platform (at least 30 minutes per week). This helps your story reach more Libersâ€”young people facing similar situations or feeling stuck, who may find connection and encouragement through your book."
       }
     },
     "create_book_title": "Create your story",
     "success_create_book": "Write your success story",
-    "thanks_for_story": "Thanks for sharing your story 💙 HuLib will notify you once our review is complete within 24-48 hours.",
+    "thanks_for_story": "Thanks for sharing your story ðŸ’™ HuLib will notify you once our review is complete within 24-48 hours.",
     "in_review": "In review",
     "back_to_profile": "Back to Profile",
     "create_new_book": "Create New Book",
@@ -892,13 +892,13 @@
     "day_full_4": "Thursday",
     "day_full_5": "Friday",
     "day_full_6": "Saturday",
-    "day_prompt_0": "Wait, you're working on Sunday too? 😆",
-    "day_prompt_1": "Hey, are you really that busy on Monday? 😊",
-    "day_prompt_2": "Is setting aside just 30 minutes really that hard? 😢",
-    "day_prompt_3": "Come on, is 30 minutes that tough to spare? 😢",
-    "day_prompt_4": "Is setting aside just 30 minutes really that hard? 😢",
-    "day_prompt_5": "Come on, is 30 minutes that tough to spare? 😢",
-    "day_prompt_6": "Hey, are you really that busy on Saturday? 🤔",
+    "day_prompt_0": "Wait, you're working on Sunday too? ðŸ˜†",
+    "day_prompt_1": "Hey, are you really that busy on Monday? ðŸ˜Š",
+    "day_prompt_2": "Is setting aside just 30 minutes really that hard? ðŸ˜¢",
+    "day_prompt_3": "Come on, is 30 minutes that tough to spare? ðŸ˜¢",
+    "day_prompt_4": "Is setting aside just 30 minutes really that hard? ðŸ˜¢",
+    "day_prompt_5": "Come on, is 30 minutes that tough to spare? ðŸ˜¢",
+    "day_prompt_6": "Hey, are you really that busy on Saturday? ðŸ¤”",
     "slots_message": "Amazing!!! You can meet {slots} Libers every {day}",
     "personal_time_tab": "Personal time",
     "meeting_tab": "Meeting schedule",
@@ -993,14 +993,14 @@
       "message_placeholder": "Enter meeting notes...",
       "submit": "Place request",
       "success_title": "Booking request sent successfully",
-      "success_detail": "Your request has been sent to Huber. You’ll hear from us soon.",
+      "success_detail": "Your request has been sent to Huber. Youâ€™ll hear from us soon.",
       "back_to_home": "Back to Homepage",
       "back_to_schedule": "My calendar",
       "notice": "Notice",
       "notice_text": "Please make sure you select the correct time slot for your schedule. The time shown is in your local timezone.",
       "support_text": "In case you do not find an open time slot. Feel free to check with the Huber over chat",
       "click_here": "click here",
-      "unavailable": "Oops, Huber isn’t available today. Pick another day to chat.",
+      "unavailable": "Oops, Huber isnâ€™t available today. Pick another day to chat.",
       "warning_timeslot": "Please choose a time slot at least 24 hours from now to give Huber time to prepare"
     },
     "HoverCard": {
