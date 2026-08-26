@@ -28,6 +28,7 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { copyToClipboard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/utils';
 import { AppConfig } from '@/utils/AppConfig';
 import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/ShareModal';
+import { setPostLoginRedirect } from '@/utils/authRedirect';
 import AuthorBasicInfo from '@/components/author/AuthorBasicInfo';
 import type { User } from '@/features/users/types';
 import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
@@ -123,7 +124,8 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
 
   const requireAuth = React.useCallback(() => {
     if (!session) {
-      router.push(`/auth/login?callbackUrl=${encodeURIComponent(pathname)}`);
+      setPostLoginRedirect(pathname);
+      router.push('/auth/login');
       return false;
     }
     return true;
