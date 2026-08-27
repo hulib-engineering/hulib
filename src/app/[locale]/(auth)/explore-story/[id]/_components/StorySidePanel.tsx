@@ -353,7 +353,6 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           clickLikeStory={clickLikeStory}
           onEdit={() => setIsEditModalOpen(true)}
           onDelete={() => setIsDeleteModalOpen(true)}
-          rating={data?.storyReview?.rating}
         />
 
         {isOwner ? (
