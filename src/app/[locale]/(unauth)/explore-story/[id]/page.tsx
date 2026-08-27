@@ -18,6 +18,7 @@ import { PublishStatusEnum } from '@/libs/services/modules/stories/storiesType';
 import StorySidePanel from '@/app/[locale]/(auth)/explore-story/[id]/_components/StorySidePanel';
 import StoryContent from '@/app/[locale]/(auth)/explore-story/[id]/_components/StoryContent';
 import CommentSection from '@/app/[locale]/(auth)/explore-story/[id]/_components/CommentSection';
+import HuberCTA from '@/app/[locale]/(unauth)/(landingpage)/_components/home/HuberCTA';
 
 export default function Index() {
   const router = useRouter();
@@ -145,7 +146,7 @@ export default function Index() {
 
   return (
     <div className="mx-auto w-full py-6 lg:overflow-x-auto lg:py-8">
-      <div className="flex flex-col gap-6 px-4 lg:mx-auto lg:w-fit lg:gap-12 lg:px-0">
+      <div className="flex flex-col gap-6 lg:mx-auto lg:w-fit lg:gap-12 lg:px-0">
         <div className="flex flex-col gap-2">
           <Button
             variant="ghost"
@@ -155,7 +156,7 @@ export default function Index() {
           />
           <div
             ref={storyLayoutRef}
-            className="flex flex-col gap-4 lg:flex-row lg:items-stretch lg:justify-center lg:gap-6 lg:gap-8"
+            className="flex flex-col gap-4 px-4 lg:flex-row lg:items-stretch lg:justify-center lg:gap-6 lg:gap-8"
           >
             <StoryContent
               abstract={data?.abstract || ''}
@@ -170,7 +171,7 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="lg:hidden">
+        <div className="px-4 lg:hidden">
           <CommentSection
             storyId={storyId}
             comment={comment}
@@ -182,6 +183,9 @@ export default function Index() {
           stories={storiesProps}
           onSeeAllClick={handleSeeAllClick}
         />
+      </div>
+      <div className="lg:hidden">
+        <HuberCTA />
       </div>
     </div>
   );
