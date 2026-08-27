@@ -1,7 +1,6 @@
 import {
   BookmarkIcon,
   EyeIcon,
-  HeartIcon,
   NotePencil,
   ShareFatIcon,
   ThumbsUpIcon,
@@ -30,7 +29,7 @@ type StatisticsProps = {
   viewCount: number | undefined;
   likeCount: number | undefined;
   shareCount: number | undefined;
-  rating: number | undefined;
+  // rating: number | undefined;
 };
 
 type CoverDetailProps = {
@@ -85,23 +84,19 @@ function CoverDetail({ coverPath, topics }: CoverDetailProps) {
   );
 }
 
-function Statistics({ viewCount, rating, likeCount, shareCount }: StatisticsProps) {
-  const t = useTranslations('BookInfo');
+function Statistics({ viewCount, likeCount, shareCount }: StatisticsProps) {
+  // const t = useTranslations('BookInfo');
   return (
-    <div className="flex flex-wrap items-center gap-2 max-lg:justify-between lg:gap-x-8">
+    <div className="flex flex-wrap items-center gap-2 gap-x-8">
 
       <div className="flex items-center gap-x-1">
         <EyeIcon className="text-primary-50" size={16} weight="bold" />
         <p className="text-[14px] leading-4 text-neutral-10">
           {viewCount ?? 0}
-          {' '}
-          <span className="lg:hidden">
-            {t('viewCount', { plural: viewCount ? 's' : '' })}
-          </span>
         </p>
       </div>
 
-      <div className="flex items-center gap-x-1 lg:hidden">
+      {/* <div className="flex items-center gap-x-1 lg:hidden">
         <HeartIcon className="text-yellow-40" size={16} weight="fill" />
         <p className="text-[14px] leading-4 text-neutral-10">
           {rating ?? 0}
@@ -110,16 +105,16 @@ function Statistics({ viewCount, rating, likeCount, shareCount }: StatisticsProp
             {t('rating', { plural: rating ? 's' : '' })}
           </span>
         </p>
-      </div>
+      </div> */}
 
-      <div className="flex items-center gap-x-1 max-lg:hidden">
+      <div className="flex items-center gap-x-1">
         <ThumbsUpIcon className="text-pink-40" size={16} weight="bold" />
         <p className="text-[14px] leading-4 text-neutral-10">
           {likeCount ?? 0}
         </p>
       </div>
 
-      <div className="flex items-center gap-1 max-lg:hidden">
+      <div className="flex items-center gap-x-1">
         <ShareFatIcon className="text-primary-50" size={16} weight="bold" />
         <p className="text-[14px] leading-4 text-neutral-20">
           {shareCount ?? 0}
@@ -209,7 +204,6 @@ export default function BookInfo(props: BookInfoProps) {
         viewCount={props.viewCount}
         likeCount={props.likeCount}
         shareCount={props.shareCount}
-        rating={props.rating}
       />
       <BottomButtons
         isLiked={props.isLiked}

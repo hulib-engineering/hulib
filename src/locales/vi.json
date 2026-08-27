@@ -1281,10 +1281,6 @@
     "stories": "câu chuyện",
     "rating": "yêu thích"
   },
-  "BookInfo": {
-    "viewCount": "lượt xem",
-    "rating": "đánh giá"
-  },
   "ScheduleBasicInfo": {
     "duration": "Thời lượng",
     "duration_time": "30 phút",
