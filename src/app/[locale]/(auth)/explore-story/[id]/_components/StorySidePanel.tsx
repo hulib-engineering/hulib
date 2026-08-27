@@ -64,16 +64,27 @@ type StorySidePanelProps = {
     };
     isFavorite?: boolean;
   };
+  isPastStoryContent?: boolean;
 };
 
-function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () => void; userId: number | undefined }) {
+function BookMeeting({
+  handleBookingClick,
+  userId,
+  isPastStoryContent,
+}: {
+  handleBookingClick: () => void;
+  userId: number | undefined;
+  isPastStoryContent?: boolean;
+}) {
   const t = useTranslations('ExploreStory');
   const { status } = useSession();
 
   const disabledCondition = status === 'unauthenticated' || userId === undefined;
   const { data: bookedSessionsList, isLoading } = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId });
 
-  const max_lg = '';// 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4';
+  const max_lg = isPastStoryContent
+    ? 'max-lg:fixed max-lg:inset-x-4 max-lg:bottom-[82px] max-lg:z-40 max-lg:shadow-2xl'
+    : '';
   const lg = 'lg:p-5';
 
   return (
@@ -103,7 +114,7 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
   );
 }
 
-export default function StorySidePanel({ data }: StorySidePanelProps) {
+export default function StorySidePanel({ data, isPastStoryContent }: StorySidePanelProps) {
   const router = useRouter();
   const { data: session } = useSession();
   const pathname = usePathname();
@@ -375,6 +386,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           <BookMeeting
             handleBookingClick={handleBookingClick}
             userId={data?.humanBook?.id}
+            isPastStoryContent={isPastStoryContent}
           />
         )}
 
