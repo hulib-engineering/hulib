@@ -15,6 +15,7 @@ import { Chip } from '@/components/core/chip/Chip';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
+import type { Story } from '@/libs/services/modules/stories/storiesType';
 
 type BottomButtonsProps = {
   isLiked?: boolean;
@@ -25,16 +26,9 @@ type BottomButtonsProps = {
   onDelete?: () => void;
 };
 
-type StatisticsProps = {
-  viewCount: number | undefined;
-  likeCount: number | undefined;
-  shareCount: number | undefined;
-  // rating: number | undefined;
-};
+type StatisticsProps = Pick<Story, 'viewCount' | 'likeCount' | 'shareCount'>;
 
-type CoverDetailProps = {
-  coverPath: string | undefined;
-  topics?: Topic[];
+type CoverDetailProps = Pick<Story, 'cover' | 'topics'> & {
   children?: React.ReactNode;
   // userId: any;
 };
@@ -54,11 +48,11 @@ function CornerButtons() {
   );
 }
 
-function CoverDetail({ coverPath, topics }: CoverDetailProps) {
+function CoverDetail({ cover, topics }: CoverDetailProps) {
   return (
     <div className="relative flex w-full flex-col gap-y-4">
       <div className="flex max-h-[340px] w-full items-center justify-center">
-        <Cover src={coverPath ?? null} size="w-[226px] h-[340px]" />
+        <Cover src={cover?.path ?? null} size="w-[226px] h-[340px]" />
       </div>
       <div className="absolute right-0 top-0 -translate-y-5 translate-x-5">
         <CornerButtons />
@@ -196,7 +190,7 @@ export default function BookInfo(props: BookInfoProps) {
       )}
     >
       <CoverDetail
-        coverPath={props.coverPath}
+        cover={props.cover}
         topics={props.topics}
         children={props.children}
       />

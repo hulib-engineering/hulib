@@ -30,12 +30,10 @@ import { AppConfig } from '@/utils/AppConfig';
 import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/ShareModal';
 import { setPostLoginRedirect } from '@/utils/authRedirect';
 import AuthorBasicInfo from '@/components/author/AuthorBasicInfo';
-import type { User } from '@/features/users/types';
 import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
 import { useDeleteStoryMutation, useGetStoriesQuery, useLikeStoryMutation, useShareStoryMutation } from '@/libs/services/modules/stories';
 import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
 import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
-import type { Topic } from '@/libs/services/modules/topics/topicType';
 import BookInfo from '@/features/stories/components/BookInfo';
 import { StoryCard } from '@/features/stories/components/StoryCard';
 import StoryForm from '@/features/stories/components/StoryForm';
@@ -44,47 +42,19 @@ import type { Story } from '@/libs/services/modules/stories/storiesType';
 import { openChat } from '@/libs/store/messenger';
 
 type StorySidePanelProps = {
-  data: {
-    id: number;
-    title?: string;
-    abstract?: string;
-    cover?: { path: string; id?: string };
-    topics?: Topic[];
-    viewCount?: number;
-    shareCount?: number;
-    likeCount?: number;
-    sharedUserIds?: string[];
-    likedUserIds?: string[];
-    humanBook?: User;
-    humanBookId?: number;
-    publishStatus?: string;
-    rating?: number;
-    storyReview?: {
-      rating?: number;
-    };
-    isFavorite?: boolean;
-  };
+  data: Story;
+  isFavorite?: boolean;
   isPastStoryContent?: boolean;
 };
 
-function BookMeeting({
-  handleBookingClick,
-  userId,
-  isPastStoryContent,
-}: {
-  handleBookingClick: () => void;
-  userId: number | undefined;
-  isPastStoryContent?: boolean;
-}) {
+function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () => void; userId: number | undefined }) {
   const t = useTranslations('ExploreStory');
   const { status } = useSession();
 
   const disabledCondition = status === 'unauthenticated' || userId === undefined;
   const { data: bookedSessionsList, isLoading } = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId });
 
-  const max_lg = isPastStoryContent
-    ? 'max-lg:fixed max-lg:inset-x-4 max-lg:bottom-[82px] max-lg:z-40 max-lg:shadow-2xl'
-    : '';
+  const max_lg = '';// 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4';
   const lg = 'lg:p-5';
 
   return (
@@ -114,7 +84,7 @@ function BookMeeting({
   );
 }
 
-export default function StorySidePanel({ data, isPastStoryContent }: StorySidePanelProps) {
+export default function StorySidePanel({ data }: StorySidePanelProps) {
   const router = useRouter();
   const { data: session } = useSession();
   const pathname = usePathname();
@@ -353,7 +323,7 @@ export default function StorySidePanel({ data, isPastStoryContent }: StorySidePa
 
       <div className="flex w-full flex-col gap-y-5 lg:w-[336px] lg:max-w-[336px] lg:shrink-0">
         <BookInfo
-          coverPath={data?.cover?.path}
+          cover={data?.cover}
           topics={data?.topics}
           viewCount={data?.viewCount}
           likeCount={likeCount}
@@ -386,7 +356,6 @@ export default function StorySidePanel({ data, isPastStoryContent }: StorySidePa
           <BookMeeting
             handleBookingClick={handleBookingClick}
             userId={data?.humanBook?.id}
-            isPastStoryContent={isPastStoryContent}
           />
         )}
 
