@@ -70,9 +70,6 @@ export default function Index() {
     router.push('/explore-story');
   }, [router]);
 
-  const storyContentWrapperRef = React.useRef<HTMLDivElement>(null);
-  const [isPastStoryContent, setIsPastStoryContent] = React.useState(false);
-
   React.useEffect(() => {
     const updateBookWidth = () => {
       if (!storyLayoutRef.current || !sidePanelRef.current) {
@@ -97,6 +94,7 @@ export default function Index() {
       const leftPadding = layoutRect.left;
       const rightPadding = window.innerWidth - layoutRect.right;
       const computedBookWidth = window.innerWidth - leftPadding - rightPadding - sidePanelRect.width - gap;
+      // const isWideDesktop = window.matchMedia('(min-width: 1440px)').matches;
       const cappedBookWidth = isDesktop ? 888 : computedBookWidth;
       const newWidth = Math.max(cappedBookWidth, 0);
 
@@ -109,35 +107,20 @@ export default function Index() {
       });
     };
 
-    const updateScrollState = () => {
-      if (!storyContentWrapperRef.current) {
-        return;
-      }
-      const { bottom } = storyContentWrapperRef.current.getBoundingClientRect();
-      setIsPastStoryContent(bottom <= 0);
-    };
+    updateBookWidth();
 
-    const handleUpdate = () => {
-      updateBookWidth();
-      updateScrollState();
-    };
-
-    handleUpdate();
-
-    const layoutResizeObserver = new ResizeObserver(handleUpdate);
+    const layoutResizeObserver = new ResizeObserver(updateBookWidth);
     if (storyLayoutRef.current) {
       layoutResizeObserver.observe(storyLayoutRef.current);
     }
     if (sidePanelRef.current) {
       layoutResizeObserver.observe(sidePanelRef.current);
     }
-    window.addEventListener('resize', handleUpdate);
-    document.addEventListener('scroll', updateScrollState, { capture: true, passive: true });
+    window.addEventListener('resize', updateBookWidth);
 
     return () => {
       layoutResizeObserver.disconnect();
-      window.removeEventListener('resize', handleUpdate);
-      document.removeEventListener('scroll', updateScrollState, true);
+      window.removeEventListener('resize', updateBookWidth);
     };
   }, []);
 
@@ -175,17 +158,15 @@ export default function Index() {
             ref={storyLayoutRef}
             className="flex flex-col gap-4 px-4 lg:flex-row lg:items-stretch lg:justify-center lg:gap-6 lg:gap-8"
           >
-            <div ref={storyContentWrapperRef}>
-              <StoryContent
-                abstract={data?.abstract || ''}
-                bookWidth={bookWidth}
-                storyId={storyId}
-                comment={comment}
-                setComment={setComment}
-              />
-            </div>
+            <StoryContent
+              abstract={data?.abstract || ''}
+              bookWidth={bookWidth}
+              storyId={storyId}
+              comment={comment}
+              setComment={setComment}
+            />
             <div ref={sidePanelRef}>
-              <StorySidePanel data={data} isPastStoryContent={isPastStoryContent} />
+              <StorySidePanel data={data} />
             </div>
           </div>
         </div>

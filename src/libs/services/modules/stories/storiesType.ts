@@ -44,11 +44,13 @@ export type Story = {
   id: number;
   abstract: string;
   title: string;
+  coverId?: string;
   cover: FileType;
+  humanBookId?: number;
   humanBook: User;
   rating: number;
-  topics: Topic[];
-  storyReview: StoryReview;
+  topics?: Topic[];
+  storyReview: StoryReview; // TODO: check this type, seems to be a mismatch with API response
   createdAt?: string | undefined;
   updatedAt?: string | undefined;
   isFavorite?: boolean;
