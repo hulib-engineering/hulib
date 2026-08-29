@@ -70,6 +70,26 @@ export default function Index() {
     router.push('/explore-story');
   }, [router]);
 
+  const [floatingBooking, setFloatingBooking] = React.useState(false);
+  const sentinelRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setFloatingBooking(!entry?.isIntersecting);
+      },
+      { threshold: 0 },
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [isLoading]);
+
   React.useEffect(() => {
     const updateBookWidth = () => {
       if (!storyLayoutRef.current || !sidePanelRef.current) {
@@ -158,15 +178,17 @@ export default function Index() {
             ref={storyLayoutRef}
             className="flex flex-col gap-4 px-4 lg:flex-row lg:items-stretch lg:justify-center lg:gap-6 lg:gap-8"
           >
-            <StoryContent
-              abstract={data?.abstract || ''}
-              bookWidth={bookWidth}
-              storyId={storyId}
-              comment={comment}
-              setComment={setComment}
-            />
+            <div ref={sentinelRef}>
+              <StoryContent
+                abstract={data?.abstract || ''}
+                bookWidth={bookWidth}
+                storyId={storyId}
+                comment={comment}
+                setComment={setComment}
+              />
+            </div>
             <div ref={sidePanelRef}>
-              <StorySidePanel data={data} />
+              <StorySidePanel data={data} floatingBooking={floatingBooking} />
             </div>
           </div>
         </div>
