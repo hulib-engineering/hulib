@@ -56,22 +56,29 @@ type BookMeetingProps = {
 
 function BookMeeting({ handleBookingClick, userId, floatingBooking }: BookMeetingProps) {
   const t = useTranslations('ExploreStory');
+
   const { status } = useSession();
+  const bottomNavHeight = useAppSelector(state => state.uiState.bottomNavHeight);
 
   const disabledCondition = status === 'unauthenticated' || userId === undefined;
+
   const { data: bookedSessionsList, isLoading } = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId });
 
-  const max_lg = floatingBooking ? 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4' : '';
+  // Tailwind breakpoint CSS
+  const max_lg = floatingBooking && bottomNavHeight ? 'max-lg:absolute max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4' : '';
+  const max_lg_style = floatingBooking && bottomNavHeight
+    ? { bottom: `${bottomNavHeight}px` }
+    : undefined;
   const lg = 'lg:p-5';
 
   return (
     <div
-      id="booking-component"
       className={mergeClassnames(
         'w-auto flex flex-col items-center gap-5 overflow-hidden rounded-2xl bg-white shadow-sm border-2 border-primary-70 p-4',
         max_lg,
         lg,
       )}
+      style={max_lg_style}
     >
       <p className="text-center text-base leading-6 text-neutral-20">{disabledCondition ? t('booking_cta_unauth') : t('booking_cta')}</p>
       <Button
