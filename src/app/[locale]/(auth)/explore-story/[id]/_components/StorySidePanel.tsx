@@ -30,12 +30,10 @@ import { AppConfig } from '@/utils/AppConfig';
 import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/ShareModal';
 import { setPostLoginRedirect } from '@/utils/authRedirect';
 import AuthorBasicInfo from '@/components/author/AuthorBasicInfo';
-import type { User } from '@/features/users/types';
 import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
 import { useDeleteStoryMutation, useGetStoriesQuery, useLikeStoryMutation, useShareStoryMutation } from '@/libs/services/modules/stories';
 import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
 import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
-import type { Topic } from '@/libs/services/modules/topics/topicType';
 import BookInfo from '@/features/stories/components/BookInfo';
 import { StoryCard } from '@/features/stories/components/StoryCard';
 import StoryForm from '@/features/stories/components/StoryForm';
@@ -44,36 +42,33 @@ import type { Story } from '@/libs/services/modules/stories/storiesType';
 import { openChat } from '@/libs/store/messenger';
 
 type StorySidePanelProps = {
-  data: {
-    id: number;
-    title?: string;
-    abstract?: string;
-    cover?: { path: string; id?: string };
-    topics?: Topic[];
-    viewCount?: number;
-    shareCount?: number;
-    likeCount?: number;
-    sharedUserIds?: string[];
-    likedUserIds?: string[];
-    humanBook?: User;
-    humanBookId?: number;
-    publishStatus?: string;
-    rating?: number;
-    storyReview?: {
-      rating?: number;
-    };
-    isFavorite?: boolean;
-  };
+  data: Story;
+  isFavorite?: boolean;
+  isPastStoryContent?: boolean;
+  floatingBooking: boolean;
 };
 
-function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () => void; userId: number | undefined }) {
+type BookMeetingProps = {
+  handleBookingClick: () => void;
+  userId: number | undefined;
+  floatingBooking: boolean;
+};
+
+function BookMeeting({ handleBookingClick, userId, floatingBooking }: BookMeetingProps) {
   const t = useTranslations('ExploreStory');
+
   const { status } = useSession();
+  const bottomNavHeight = useAppSelector(state => state.uiState.bottomNavHeight);
 
   const disabledCondition = status === 'unauthenticated' || userId === undefined;
+
   const { data: bookedSessionsList, isLoading } = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId });
 
-  const max_lg = '';// 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4';
+  // Tailwind breakpoint CSS
+  const max_lg = floatingBooking && bottomNavHeight ? 'max-lg:absolute max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4' : '';
+  const max_lg_style = floatingBooking && bottomNavHeight
+    ? { bottom: `${bottomNavHeight}px` }
+    : undefined;
   const lg = 'lg:p-5';
 
   return (
@@ -83,6 +78,7 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
         max_lg,
         lg,
       )}
+      style={max_lg_style}
     >
       <p className="text-center text-base leading-6 text-neutral-20">{disabledCondition ? t('booking_cta_unauth') : t('booking_cta')}</p>
       <Button
@@ -103,7 +99,7 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
   );
 }
 
-export default function StorySidePanel({ data }: StorySidePanelProps) {
+export default function StorySidePanel({ data, floatingBooking }: StorySidePanelProps) {
   const router = useRouter();
   const { data: session } = useSession();
   const pathname = usePathname();
@@ -342,7 +338,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
 
       <div className="flex w-full flex-col gap-y-5 lg:w-[336px] lg:max-w-[336px] lg:shrink-0">
         <BookInfo
-          coverPath={data?.cover?.path}
+          cover={data?.cover}
           topics={data?.topics}
           viewCount={data?.viewCount}
           likeCount={likeCount}
@@ -353,7 +349,6 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           clickLikeStory={clickLikeStory}
           onEdit={() => setIsEditModalOpen(true)}
           onDelete={() => setIsDeleteModalOpen(true)}
-          rating={data?.storyReview?.rating}
         />
 
         {isOwner ? (
@@ -376,6 +371,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           <BookMeeting
             handleBookingClick={handleBookingClick}
             userId={data?.humanBook?.id}
+            floatingBooking={floatingBooking}
           />
         )}
 
