@@ -1,7 +1,6 @@
 import {
   BookmarkIcon,
   EyeIcon,
-  HeartIcon,
   NotePencil,
   ShareFatIcon,
   ThumbsUpIcon,
@@ -16,6 +15,7 @@ import { Chip } from '@/components/core/chip/Chip';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
+import type { Story } from '@/libs/services/modules/stories/storiesType';
 
 type BottomButtonsProps = {
   isLiked?: boolean;
@@ -26,16 +26,9 @@ type BottomButtonsProps = {
   onDelete?: () => void;
 };
 
-type StatisticsProps = {
-  viewCount: number | undefined;
-  likeCount: number | undefined;
-  shareCount: number | undefined;
-  rating: number | undefined;
-};
+type StatisticsProps = Pick<Story, 'viewCount' | 'likeCount' | 'shareCount'>;
 
-type CoverDetailProps = {
-  coverPath: string | undefined;
-  topics?: Topic[];
+type CoverDetailProps = Pick<Story, 'cover' | 'topics'> & {
   children?: React.ReactNode;
   // userId: any;
 };
@@ -55,11 +48,11 @@ function CornerButtons() {
   );
 }
 
-function CoverDetail({ coverPath, topics }: CoverDetailProps) {
+function CoverDetail({ cover, topics }: CoverDetailProps) {
   return (
     <div className="relative flex w-full flex-col gap-y-4">
       <div className="flex max-h-[340px] w-full items-center justify-center">
-        <Cover src={coverPath ?? null} size="w-[226px] h-[340px]" />
+        <Cover src={cover?.path ?? null} size="w-[226px] h-[340px]" />
       </div>
       <div className="absolute right-0 top-0 -translate-y-5 translate-x-5">
         <CornerButtons />
@@ -85,23 +78,19 @@ function CoverDetail({ coverPath, topics }: CoverDetailProps) {
   );
 }
 
-function Statistics({ viewCount, rating, likeCount, shareCount }: StatisticsProps) {
-  const t = useTranslations('BookInfo');
+function Statistics({ viewCount, likeCount, shareCount }: StatisticsProps) {
+  // const t = useTranslations('BookInfo');
   return (
-    <div className="flex flex-wrap items-center gap-2 max-lg:justify-between lg:gap-x-8">
+    <div className="flex flex-wrap items-center gap-2 gap-x-8">
 
       <div className="flex items-center gap-x-1">
         <EyeIcon className="text-primary-50" size={16} weight="bold" />
         <p className="text-[14px] leading-4 text-neutral-10">
           {viewCount ?? 0}
-          {' '}
-          <span className="lg:hidden">
-            {t('viewCount', { plural: viewCount ? 's' : '' })}
-          </span>
         </p>
       </div>
 
-      <div className="flex items-center gap-x-1 lg:hidden">
+      {/* <div className="flex items-center gap-x-1 lg:hidden">
         <HeartIcon className="text-yellow-40" size={16} weight="fill" />
         <p className="text-[14px] leading-4 text-neutral-10">
           {rating ?? 0}
@@ -110,16 +99,16 @@ function Statistics({ viewCount, rating, likeCount, shareCount }: StatisticsProp
             {t('rating', { plural: rating ? 's' : '' })}
           </span>
         </p>
-      </div>
+      </div> */}
 
-      <div className="flex items-center gap-x-1 max-lg:hidden">
+      <div className="flex items-center gap-x-1">
         <ThumbsUpIcon className="text-pink-40" size={16} weight="bold" />
         <p className="text-[14px] leading-4 text-neutral-10">
           {likeCount ?? 0}
         </p>
       </div>
 
-      <div className="flex items-center gap-1 max-lg:hidden">
+      <div className="flex items-center gap-x-1">
         <ShareFatIcon className="text-primary-50" size={16} weight="bold" />
         <p className="text-[14px] leading-4 text-neutral-20">
           {shareCount ?? 0}
@@ -201,7 +190,7 @@ export default function BookInfo(props: BookInfoProps) {
       )}
     >
       <CoverDetail
-        coverPath={props.coverPath}
+        cover={props.cover}
         topics={props.topics}
         children={props.children}
       />
@@ -209,7 +198,6 @@ export default function BookInfo(props: BookInfoProps) {
         viewCount={props.viewCount}
         likeCount={props.likeCount}
         shareCount={props.shareCount}
-        rating={props.rating}
       />
       <BottomButtons
         isLiked={props.isLiked}
