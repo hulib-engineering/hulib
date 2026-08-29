@@ -45,20 +45,28 @@ type StorySidePanelProps = {
   data: Story;
   isFavorite?: boolean;
   isPastStoryContent?: boolean;
+  floatingBooking: boolean;
 };
 
-function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () => void; userId: number | undefined }) {
+type BookMeetingProps = {
+  handleBookingClick: () => void;
+  userId: number | undefined;
+  floatingBooking: boolean;
+};
+
+function BookMeeting({ handleBookingClick, userId, floatingBooking }: BookMeetingProps) {
   const t = useTranslations('ExploreStory');
   const { status } = useSession();
 
   const disabledCondition = status === 'unauthenticated' || userId === undefined;
   const { data: bookedSessionsList, isLoading } = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId });
 
-  const max_lg = '';// 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4';
+  const max_lg = floatingBooking ? 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4' : '';
   const lg = 'lg:p-5';
 
   return (
     <div
+      id="booking-component"
       className={mergeClassnames(
         'w-auto flex flex-col items-center gap-5 overflow-hidden rounded-2xl bg-white shadow-sm border-2 border-primary-70 p-4',
         max_lg,
@@ -84,7 +92,7 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
   );
 }
 
-export default function StorySidePanel({ data }: StorySidePanelProps) {
+export default function StorySidePanel({ data, floatingBooking }: StorySidePanelProps) {
   const router = useRouter();
   const { data: session } = useSession();
   const pathname = usePathname();
@@ -356,6 +364,7 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
           <BookMeeting
             handleBookingClick={handleBookingClick}
             userId={data?.humanBook?.id}
+            floatingBooking={floatingBooking}
           />
         )}
 
