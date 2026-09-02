@@ -102,11 +102,14 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
 
       const containerRect = contentRef.current.getBoundingClientRect();
       const isDesktopViewport = window.matchMedia('(min-width: 1024px)').matches;
-      const resolvedBookWidth = Math.max(props.bookWidth ?? containerRect.width, 0);
-      // const pageWidth = isDesktopViewport ? resolvedBookWidth / 2 : resolvedBookWidth;
+      const resolvedBookWidth = props.bookWidth ?? containerRect.width;
+
+      if (resolvedBookWidth <= 0) {
+        return; // transient 0 during reflow — ignore, keep last valid size
+      }
+
       const pageWidth = isDesktopViewport ? resolvedBookWidth / 2 : resolvedBookWidth;
       const dynamicHeight = isDesktopViewport ? 600 : 440;
-      // console.log(isDesktop);
       setIsDesktop(isDesktopViewport);
       setFlipBookWidth(pageWidth);
       setFlipBookHeight(dynamicHeight);
