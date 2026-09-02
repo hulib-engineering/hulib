@@ -79,7 +79,6 @@ function CoverDetail({ cover, topics }: CoverDetailProps) {
 }
 
 function Statistics({ viewCount, likeCount, shareCount }: StatisticsProps) {
-  // const t = useTranslations('BookInfo');
   return (
     <div className="flex flex-wrap items-center gap-2 gap-x-8">
 
@@ -89,17 +88,6 @@ function Statistics({ viewCount, likeCount, shareCount }: StatisticsProps) {
           {viewCount ?? 0}
         </p>
       </div>
-
-      {/* <div className="flex items-center gap-x-1 lg:hidden">
-        <HeartIcon className="text-yellow-40" size={16} weight="fill" />
-        <p className="text-[14px] leading-4 text-neutral-10">
-          {rating ?? 0}
-          {' '}
-          <span className="lg:hidden">
-            {t('rating', { plural: rating ? 's' : '' })}
-          </span>
-        </p>
-      </div> */}
 
       <div className="flex items-center gap-x-1">
         <ThumbsUpIcon className="text-pink-40" size={16} weight="bold" />
