@@ -18,7 +18,7 @@ type PageProps = {
   showPageNumber?: boolean;
   mobileFooter?: ReactNode;
 };
-
+// TODO: try to fix book doesn't resize as window resizes
 export const Page = forwardRef<HTMLDivElement, PageProps>(
   ({
     page,
@@ -96,17 +96,20 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
 
   useEffect(() => {
     const updateDimensions = () => {
-      if (contentRef.current) {
-        const containerRect = contentRef.current.getBoundingClientRect();
-        const isDesktopViewport = window.matchMedia('(min-width: 1280px)').matches;
-        const resolvedBookWidth = Math.max(props.bookWidth ?? containerRect.width, 0);
-        const pageWidth = isDesktopViewport ? resolvedBookWidth / 2 : resolvedBookWidth;
-        const dynamicHeight = isDesktopViewport ? 600 : 440;
-
-        setIsDesktop(isDesktopViewport);
-        setFlipBookWidth(pageWidth);
-        setFlipBookHeight(dynamicHeight);
+      if (!contentRef.current) {
+        return;
       }
+
+      const containerRect = contentRef.current.getBoundingClientRect();
+      const isDesktopViewport = window.matchMedia('(min-width: 1024px)').matches;
+      const resolvedBookWidth = Math.max(props.bookWidth ?? containerRect.width, 0);
+      // const pageWidth = isDesktopViewport ? resolvedBookWidth / 2 : resolvedBookWidth;
+      const pageWidth = isDesktopViewport ? resolvedBookWidth / 2 : resolvedBookWidth;
+      const dynamicHeight = isDesktopViewport ? 600 : 440;
+      // console.log(isDesktop);
+      setIsDesktop(isDesktopViewport);
+      setFlipBookWidth(pageWidth);
+      setFlipBookHeight(dynamicHeight);
     };
 
     updateDimensions();
@@ -153,7 +156,7 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
     setIndex(e.data);
   };
   const pageStep = isDesktop ? 2 : 1;
-  const flippingTime = isDesktop ? 2400 : 1;
+  const flippingTime = isDesktop ? 400 : 1; // HERE
   const totalPages = pagesRender.length;
   const currentPage = totalPages === 0 ? 0 : Math.min(index + 1, totalPages);
   const hasEnoughPagesForDesktopNav = totalPages >= 3;
@@ -201,7 +204,7 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
     <div className="flex flex-col items-center gap-4 lg:gap-5">
       <div className="w-full" id="demoBlock">
         <div
-          className="book-page-padding relative z-50 flex size-full overflow-visible"
+          className="book-page-padding relative z-0 flex size-full overflow-visible"
           ref={contentRef}
         >
           <div
@@ -212,6 +215,7 @@ export const DetailedStory = (props: IDetailedStoryProps) => {
           <div className="relative">
             {/* @ts-ignore */}
             <HTMLFlipBook
+              key={isDesktop ? 'desktop' : 'mobile'}
               width={flipBookWidth}
               height={flipBookHeight}
               minWidth={flipBookWidth}

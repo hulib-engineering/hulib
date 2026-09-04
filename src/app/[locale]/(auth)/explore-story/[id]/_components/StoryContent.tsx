@@ -1,38 +1,28 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-
-import { mergeClassnames } from '@/components/core/private/utils';
+import CommentSection from './CommentSection';
 import { DetailedStory } from '@/features/stories/components/DetailedStory';
-import StoryReviews from '@/app/[locale]/(auth)/explore-story/[id]/_components/StoryReviews';
-import CommentInput from '@/app/[locale]/(auth)/explore-story/[id]/_components/CommentInput';
 
 type StoryContentProps = {
   abstract: string;
   bookWidth?: number;
-  storyId: number;
 };
 
-export default function StoryContent({ abstract, bookWidth, storyId }: StoryContentProps) {
-  const t = useTranslations('ExploreStory');
+type CommentProps = {
+  storyId: number;
+  comment: string;
+  setComment: React.Dispatch<React.SetStateAction<string>>;
+};
 
+export default function StoryContent({ abstract, bookWidth, storyId, comment, setComment }: StoryContentProps & CommentProps) {
   return (
-    <div className="flex min-w-0 flex-1 flex-col gap-y-8 xxl:w-[888px] xxl:max-w-[888px]">
+    <div className="flex min-w-0 flex-1 flex-col gap-y-8 lg:w-[888px] lg:max-w-[888px]">
       <DetailedStory
         abstract={abstract}
         bookWidth={bookWidth}
       />
-      <div
-        className={mergeClassnames(
-          'flex w-full flex-col gap-4 rounded-2xl bg-white p-5 shadow-sm',
-        )}
-        style={{ height: 'auto' }}
-      >
-        <h6 className="text-xl font-medium leading-7 text-neutral-20">
-          {t('review_title')}
-        </h6>
-        <CommentInput storyId={storyId} />
-        <StoryReviews />
+      <div className="max-lg:hidden">
+        <CommentSection storyId={storyId} comment={comment} setComment={setComment} />
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ import Loader from '@/components/core/loader/Loader';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { StoryCard } from '@/features/stories/components/StoryCard';
+import { StoryCard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/StoryCard';
 import ChipFilter from '@/layouts/webapp/ChipFilter';
 import { useInfiniteScroll } from '@/libs/hooks/useInfiniteScroll';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
@@ -88,8 +88,8 @@ export default function Index() {
   const storiesWithFavorites = useMemo(() => {
     return items.map((story: StoryType) => {
       const isFavorite
-        = favoriteStories
-          && favoriteStories?.some((favorite: any) => favorite.storyId === story.id);
+        = favoriteStories?.data
+          && favoriteStories.data.some((favorite: any) => favorite.storyId === story.id);
       return { ...story, isFavorite };
     });
   }, [items, favoriteStories]);

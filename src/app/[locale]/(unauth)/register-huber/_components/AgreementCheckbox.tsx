@@ -39,11 +39,11 @@ export default function AgreementCheckbox({ checked, onChange }: AgreementCheckb
         </div>
         <div className="leading-4">
           {/* 2.1 Upper text */}
-          <p className="text-[16px] font-medium text-[#171819]">
+          <p className="text-[14px] font-medium text-[#171819] sm:text-[16px]">
             {t('agreement')}
           </p>
           {/* 2.2 Lower text */}
-          <p className="mt-2.5 text-[14px] font-[300] text-[#171819]">
+          <p className="mt-2.5 text-[12px] font-[300] text-[#171819] sm:text-[14px]">
             {t('huber_responsibility')}
           </p>
         </div>

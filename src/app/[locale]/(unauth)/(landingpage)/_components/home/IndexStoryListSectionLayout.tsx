@@ -36,8 +36,8 @@ export const IndexStoryListSectionLayout = (props: Props) => {
   const storiesWithFav = useMemo(() => {
     return stories && stories?.data && stories?.data.map((story: StoryType) => {
       const isFavorite
-        = favoriteStories
-          && favoriteStories?.some((favorite: any) => favorite.storyId === story.id);
+        = favoriteStories?.data
+          && favoriteStories.data.some((favorite: any) => favorite.storyId === story.id);
       return { ...story, isFavorite };
     });
   }, [stories, favoriteStories]);

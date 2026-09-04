@@ -3,7 +3,7 @@ import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 import type { PaginatedResponse } from '../../type';
 
 import type { StoriesParams, Story } from './storiesType';
-
+// TODO: Isn't this easy to simplify - do so next time
 const getStories = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.query<PaginatedResponse<Story>, StoriesParams>({
     query: (params) => {
