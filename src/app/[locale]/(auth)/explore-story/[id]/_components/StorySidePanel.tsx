@@ -65,7 +65,7 @@ function BookMeeting({ handleBookingClick, userId, floatingBooking }: BookMeetin
   const { data: bookedSessionsList, isLoading } = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId });
 
   // Tailwind breakpoint CSS
-  const max_lg = floatingBooking && bottomNavHeight ? 'max-lg:absolute max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4' : '';
+  const max_lg = floatingBooking && bottomNavHeight ? 'max-lg:absolute max-lg:bottom-20 max-lg:left-0 z-[9999] max-lg:mx-4' : '';
   const max_lg_style = floatingBooking && bottomNavHeight
     ? { bottom: `${bottomNavHeight}px` }
     : undefined;
@@ -391,19 +391,6 @@ export default function StorySidePanel({ data, floatingBooking }: StorySidePanel
             <MessengerLogoIcon size={20} className="shrink-0" />
             <span className="mt-1">{t('lets_chat')}</span>
           </Button>
-
-          {/* For mobile screen only */}
-          {/*! storiesList?.data[0] ? <></>
-            : (
-                <div className="box-border flex w-full items-center gap-2 rounded-lg
-            border border-[#C7C9CB] bg-[#F0F5FF] p-2 lg:hidden"
-                >
-                  <BookOpen color="#0442BF" size={16} />
-                  <span className="flex-1 text-sm leading-4 text-black translate-y-[2px]">
-                    {storiesList?.data[0]?.title}
-                  </span>
-                </div>
-              ) */}
         </div>
       </div>
 
