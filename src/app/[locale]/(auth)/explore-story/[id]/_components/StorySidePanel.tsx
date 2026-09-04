@@ -1,13 +1,12 @@
 'use client';
 
 import {
+  BookOpen,
   CalendarDots,
-  Eye,
   FacebookLogo,
   InstagramLogo,
-  ShareFat,
+  MessengerLogoIcon,
   ThreadsLogo,
-  ThumbsUp,
 } from '@phosphor-icons/react';
 import { useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -15,15 +14,14 @@ import { useLocale, useTranslations } from 'next-intl';
 import * as React from 'react';
 
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
-import { useAppSelector } from '@/libs/hooks';
+import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 
 import Button from '@/components/core/button/Button';
-import { Chip } from '@/components/core/chip/Chip';
+
 import { mergeClassnames } from '@/components/core/private/utils';
-import { Cover } from '@/features/stories/components/Cover';
-import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
+
 import type { Topic } from '@/libs/services/modules/topics/topicType';
-import { useLikeStoryMutation, useShareStoryMutation } from '@/libs/services/modules/stories';
+import { useGetStoriesQuery, useLikeStoryMutation, useShareStoryMutation } from '@/libs/services/modules/stories';
 import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { copyToClipboard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/utils';
@@ -31,7 +29,10 @@ import { AppConfig } from '@/utils/AppConfig';
 import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/ShareModal';
 import AuthorBasicInfo from '@/components/author/AuthorBasicInfo';
 import type { User } from '@/features/users/types';
-import { useGetHuberBookedSessionsQuery, useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
+import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
+import BookInfo from '@/features/stories/components/BookInfo';
+
+import { openChat } from '@/libs/store/messenger';
 
 type StorySidePanelProps = {
   data: {
@@ -43,7 +44,10 @@ type StorySidePanelProps = {
     shareCount?: number;
     sharedUserIds?: string[];
     likedUserIds?: string[];
-    humanBook?: User;
+    humanBook: User;
+    storyReview?: {
+      rating?: number;
+    };
   };
 };
 
@@ -55,10 +59,15 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
   const { data: bookedSessionsList, isLoading }
   = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId }); // replace with a var of user's number of booked sessions if BE added that
 
+  const max_lg = '';// 'max-lg:absolute max-[425px]:bottom-10 max-lg:bottom-20 max-lg:left-0 z-[5] max-lg:mx-4';
+  const lg = 'lg:p-5';
+
   return (
     <div
       className={mergeClassnames(
-        'flex w-full flex-col items-center gap-y-5 overflow-hidden rounded-2xl bg-white p-5 shadow-sm border-2 border-primary-70',
+        'w-auto flex flex-col items-center gap-5 overflow-hidden rounded-2xl bg-white shadow-sm border-2 border-primary-70 p-4',
+        max_lg,
+        lg,
       )}
     >
       <p className="text-center text-base leading-6 text-neutral-20">{disabledCondition ? t('booking_cta_unauth') : t('booking_cta')}</p>
@@ -70,9 +79,12 @@ function BookMeeting({ handleBookingClick, userId }: { handleBookingClick: () =>
       >
         <span className="mt-1">{t('book_a_meeting')}</span>
       </Button>
-      <p className="text-center text-xs leading-[14px] text-neutral-20">
-        {t('booking_count', { bookingCount: `${(disabledCondition || isLoading) ? 0 : bookedSessionsList?.length}` })}
-      </p>
+      {disabledCondition ? <></>
+        : (
+            <p className="text-center text-xs leading-[14px] text-neutral-20">
+              {t('booking_count', { bookingCount: `${(disabledCondition || isLoading) ? 0 : bookedSessionsList?.length}` })}
+            </p>
+          )}
     </div>
   );
 }
@@ -88,8 +100,8 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
   const [handleUpdateLikeCount] = useLikeStoryMutation();
 
   // TODO: remove if storyDetailQuery API returns a number of published stories in humanbook
-  const { data: storiesList } = useGetHuberStoriesQuery(
-    { huberId: data?.humanBook?.id, publishedOnly: true },
+  const { data: storiesList } = useGetStoriesQuery(
+    { humanBookId: data?.humanBook?.id, publishStatus: 'published', type: 'most-popular' },
     { skip: !data?.humanBook?.id },
   );
 
@@ -110,6 +122,27 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
   const userId = useAppSelector(state => state.auth.userInfo?.id);
 
   const prevLikeCountRef = React.useRef(data?.likeCount);
+
+  const dispatch = useAppDispatch();
+  const handleOpenHuberChat = () => {
+    if (!requireAuth()) {
+      return;
+    }
+    if (!data?.humanBook?.id) {
+      return;
+    }
+
+    dispatch(
+      openChat({
+        id: data.humanBook.id.toString(),
+        name: data.humanBook.fullName,
+        avatarUrl: data.humanBook.photo?.path,
+        isOpen: true,
+        isMinimized: false,
+        unread: 0,
+      }),
+    );
+  };
 
   React.useEffect(() => {
     if (prevLikeCountRef.current !== data?.likeCount) {
@@ -239,89 +272,53 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
         shareOptions={shareOptions}
       />
 
-      <div className="flex w-full flex-col gap-y-5 xl:w-auto xxl:w-[336px] xxl:max-w-[336px] xxl:shrink-0">
-        <div
-          className={mergeClassnames(
-            'flex w-full flex-col items-center gap-y-4 overflow-hidden rounded-2xl bg-white px-4 py-6 shadow-sm',
-          )}
-        >
-          <div className="flex w-full flex-col gap-y-4">
-            <div className="flex max-h-[340px] w-full items-center justify-center">
-              <Cover src={data?.cover?.path ?? null} size="w-[226px] h-[340px]" />
-            </div>
-            {data?.topics?.length ? (
-              <div className="scrollbar-none hidden w-auto gap-2 overflow-x-auto scroll-smooth py-1 xl:flex">
-                {data.topics.map((topic: Topic) => (
-                  <Chip
-                    key={topic.id}
-                    as="span"
-                    className={mergeClassnames(
-                      'min-w-0 shrink-0 overflow-visible whitespace-nowrap rounded border h-[22px] py-1 px-2',
-                      'text-xs font-medium leading-[14px] ',
-                      getTopicBadgeClasses(topic.color),
-                    )}
-                  >
-                    {topic.name}
-                  </Chip>
-                ))}
-              </div>
-            ) : null}
-
-            <div className="mt-4 flex flex-wrap items-center gap-2 xxl:gap-x-8">
-              <div className="flex items-center gap-x-1">
-                <Eye className="text-primary-50" size={16} />
-                <p className="text-[14px] font-medium leading-4 text-neutral-10">
-                  {data?.viewCount ?? 0}
-                </p>
-              </div>
-              <div className="flex items-center gap-x-1">
-                <ThumbsUp className="text-pink-40" size={16} weight="fill" />
-                <p className="text-[14px] font-medium leading-4 text-neutral-10">
-                  {likeCount}
-                </p>
-              </div>
-              <div className="flex items-center gap-1">
-                <ShareFat className="text-primary-50" size={16} />
-                <p className="text-[14px] font-medium leading-4 text-neutral-20">
-                  {shareCount}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="flex w-full flex-col gap-2">
-            <Button
-              iconLeft={<ShareFat className="text-white" size={20} weight="bold" />}
-              onClick={handleClickShare}
-            >
-              {t('share')}
-            </Button>
-            <Button
-              variant="outline"
-              iconLeft={(
-                <ThumbsUp
-                  className={isLiked ? 'text-pink-40' : 'text-primary-50'}
-                  size={20}
-                  weight={isLiked ? 'fill' : 'bold'}
-                />
-              )}
-              onClick={clickLikeStory}
-            >
-              {t('like_button')}
-            </Button>
-          </div>
-        </div>
+      <div className="flex w-full flex-col gap-y-5 lg:w-[336px] lg:max-w-[336px] lg:shrink-0">
+        <BookInfo
+          coverPath={data?.cover?.path}
+          topics={data?.topics}
+          viewCount={data?.viewCount}
+          likeCount={likeCount}
+          shareCount={shareCount}
+          isLiked={isLiked}
+          handleClickShare={handleClickShare}
+          clickLikeStory={clickLikeStory}
+          rating={data?.storyReview?.rating}
+        />
 
         <BookMeeting
           handleBookingClick={handleBookingClick}
           userId={data?.humanBook?.id}
         />
 
-        <div className="w-full gap-y-3 overflow-hidden rounded-2xl bg-white p-5 shadow-sm">
+        <div className="flex w-full flex-col gap-y-3 overflow-hidden rounded-2xl bg-white p-5 shadow-sm">
           <AuthorBasicInfo
             humanBook={data?.humanBook}
             numStories={storiesList?.data?.length}
             onClickFunction={handleAuthorClick}
+            onClickHuberChat={handleOpenHuberChat}
           />
+
+          <Button
+            variant="outline"
+            className="box-border rounded-[100px] border border-[#C2C6CF] p-3 max-lg:hidden"
+            onClick={handleOpenHuberChat}
+          >
+            <MessengerLogoIcon size={20} className="shrink-0" />
+            <span className="mt-1">{t('lets_chat')}</span>
+          </Button>
+
+          {/* For mobile screen only */}
+          {!storiesList?.data[0] ? <></>
+            : (
+                <div className="box-border flex w-full items-center gap-2 rounded-lg
+            border border-[#C7C9CB] bg-[#F0F5FF] p-2 lg:hidden"
+                >
+                  <BookOpen color="#0442BF" size={16} />
+                  <span className="flex-1 text-sm leading-4 text-black translate-y-[2px]">
+                    {storiesList?.data[0]?.title}
+                  </span>
+                </div>
+              )}
         </div>
       </div>
     </>

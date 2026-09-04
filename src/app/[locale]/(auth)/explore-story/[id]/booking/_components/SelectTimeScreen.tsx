@@ -12,8 +12,6 @@ import Button from '@/components/core/button/Button';
 import { useRouter } from '@/libs/i18nNavigation';
 import { TimezoneSelect } from '@/components/TimezoneSelect';
 import BookingTimetable from '@/layouts/booking/BookingTimetable';
-// import { useAppDispatch } from '@/libs/hooks';
-// import { openChat } from '@/libs/store/messenger';
 import type { User } from '@/features/users/types';
 
 // import ScheduleBasicInfo from './SessionAttendeesInfo';
@@ -68,22 +66,8 @@ const AuthorName = ({ humanBook }: { humanBook: User }) => {
 export default function SelectTime({ humanBook, handleSelectTime, currentTz, setCurrentTz }: SelectTimeProps) {
   const router = useRouter();
   const t = useTranslations('Schedule.MainScreen');
-  // const dispatch = useAppDispatch();
 
   const [chosenDay, setChosenDay] = useState<Date>(new Date()); // store day clicked on calendar
-
-  /* const handleOpenHuberChat = () => {
-    dispatch(
-      openChat({
-        id: humanBookId,
-        name: humanBook.fullName,
-        avatarUrl: humanBook.photo?.path,
-        isOpen: true,
-        isMinimized: false,
-        unread: 0,
-
-    );
-  }; */
 
   return (
     <div className="flex flex-col gap-5">

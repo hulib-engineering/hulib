@@ -8,7 +8,7 @@ export default function Herobanner() {
   return (
     <div className="relative flex
       min-h-[160px] items-center
-      overflow-hidden bg-[#EEF2FF]
+      overflow-hidden bg-[#F0F5FF]
       max-[370px]:min-h-[200px] sm:rounded-2xl "
     >
       {/* 1. Mascot */}
@@ -32,7 +32,7 @@ export default function Herobanner() {
         {/* 2. Text Content */}
         <div className="flex flex-col gap-3 text-center sm:w-80 min-[950px]:w-[460px]">
           {/* 2.1 Upper text + Icon */}
-          <h2 className=" text-xl font-medium leading-7 text-black">
+          <h2 className="font-medium leading-7 text-black max-sm:text-[18px] sm:text-xl">
             {/* 2.1.1 Upper text */}
             {t('hero_title')}
 
@@ -47,7 +47,7 @@ export default function Herobanner() {
           </h2>
 
           {/* 2.2 Lower text */}
-          <p className="text-base leading-5 text-[#45484A]">
+          <p className="leading-5 text-[#45484A] max-sm:text-[14px] sm:text-base">
             {t('hero_description')}
           </p>
         </div>

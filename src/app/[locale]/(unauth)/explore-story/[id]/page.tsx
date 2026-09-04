@@ -17,6 +17,7 @@ import { PublishStatusEnum } from '@/libs/services/modules/stories/storiesType';
 
 import StorySidePanel from '@/app/[locale]/(auth)/explore-story/[id]/_components/StorySidePanel';
 import StoryContent from '@/app/[locale]/(auth)/explore-story/[id]/_components/StoryContent';
+import CommentSection from '@/app/[locale]/(auth)/explore-story/[id]/_components/CommentSection';
 
 export default function Index() {
   const router = useRouter();
@@ -28,7 +29,9 @@ export default function Index() {
 
   const storyId = React.useMemo(() => Number(params.id), [params.id]);
 
-  const { data, isLoading } = useGetStoryDetailQuery(storyId);
+  const { data, isLoading } = useGetStoryDetailQuery(storyId, { skip: !storyId });
+
+  const [comment, setComment] = React.useState('');
 
   const humanBookId = data?.humanBookId;
   const topics = data?.topics;
@@ -72,7 +75,7 @@ export default function Index() {
         return;
       }
 
-      const isDesktop = window.matchMedia('(min-width: 1280px)').matches;
+      const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
       if (!isDesktop) {
         setBookWidth((prev) => {
           if (prev === undefined) {
@@ -90,14 +93,15 @@ export default function Index() {
       const leftPadding = layoutRect.left;
       const rightPadding = window.innerWidth - layoutRect.right;
       const computedBookWidth = window.innerWidth - leftPadding - rightPadding - sidePanelRect.width - gap;
-      const isWideDesktop = window.matchMedia('(min-width: 1440px)').matches;
-      const cappedBookWidth = isWideDesktop ? Math.min(computedBookWidth, 888) : computedBookWidth;
+      // const isWideDesktop = window.matchMedia('(min-width: 1440px)').matches;
+      const cappedBookWidth = isDesktop ? 888 : computedBookWidth;
       const newWidth = Math.max(cappedBookWidth, 0);
 
       setBookWidth((prev) => {
         if (prev === newWidth) {
           return prev;
         }
+
         return newWidth;
       });
     };
@@ -121,23 +125,27 @@ export default function Index() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto w-full max-w-screen-sm py-6 xl:max-w-screen-2xl xl:px-28 xl:py-8">
+      <div className="mx-auto w-full max-w-screen-sm py-6 lg:max-w-screen-2xl lg:px-28 lg:py-8">
         <StoryDetailSkeleton />
       </div>
     );
   }
 
-  if (data && data?.publishStatus !== PublishStatusEnum.PUBLISHED) {
-    return redirect(`/explore-story/${data.id}/preview`);
-  }
-
-  if (data && data?.publishStatus === PublishStatusEnum.DELETED) {
+  if (!data) {
     return notFound();
   }
 
+  if (data?.publishStatus === PublishStatusEnum.DELETED) {
+    return notFound();
+  }
+
+  if (data?.publishStatus !== PublishStatusEnum.PUBLISHED) {
+    return redirect(`/explore-story/${data.id}/preview`);
+  }
+
   return (
-    <div className="mx-auto w-full py-6 xl:py-8">
-      <div className="flex flex-col gap-6 px-4 xl:gap-12 xl:px-0 xxl:mx-auto xxl:w-fit">
+    <div className="mx-auto w-full py-6 lg:overflow-x-auto lg:py-8">
+      <div className="flex flex-col gap-6 px-4 lg:mx-auto lg:w-fit lg:gap-12 lg:px-0">
         <div className="flex flex-col gap-2">
           <Button
             variant="ghost"
@@ -147,12 +155,14 @@ export default function Index() {
           />
           <div
             ref={storyLayoutRef}
-            className="flex flex-col gap-4 xl:flex-row xl:items-stretch xl:gap-8 xxl:justify-center xxl:gap-6"
+            className="flex flex-col gap-4 lg:flex-row lg:items-stretch lg:justify-center lg:gap-6 lg:gap-8"
           >
             <StoryContent
               abstract={data?.abstract || ''}
               bookWidth={bookWidth}
               storyId={storyId}
+              comment={comment}
+              setComment={setComment}
             />
             <div ref={sidePanelRef}>
               <StorySidePanel data={data} />
@@ -160,6 +170,13 @@ export default function Index() {
           </div>
         </div>
 
+        <div className="lg:hidden">
+          <CommentSection
+            storyId={storyId}
+            comment={comment}
+            setComment={setComment}
+          />
+        </div>
         <IndexStoryListSectionLayout
           title={t('similar_stories')}
           stories={storiesProps}

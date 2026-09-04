@@ -33,8 +33,8 @@ export default function MyFavoritesPanel() {
   const { data: favHubers, isLoading: isFavHubersLoading } = useGetMyFavoriteHubersQuery();
   const [removeMyFavorites, { isLoading: isRemovingMyFavorites }] = useRemoveMyFavoritesMutation();
   const [removeMyFavHubers, { isLoading: isRemovingMyFavHubers }] = useRemoveMyFavHubersMutation();
-  const hasStories = favStories?.length > 0;
-  const hasHubers = favHubers?.length > 0;
+  const hasStories = (favStories?.data?.length ?? 0) > 0;
+  const hasHubers = (favHubers?.data?.length ?? 0) > 0;
   const hasAnyFavorites = hasStories || hasHubers;
   const isLoading = isFavStoriesLoading || isFavHubersLoading;
 
@@ -88,7 +88,7 @@ export default function MyFavoritesPanel() {
       return type === 'story' ? <StoriesSkeleton /> : <HuberCardListSkeleton />;
     }
 
-    const list = type === 'story' ? favStories : favHubers;
+    const list = type === 'story' ? favStories?.data : favHubers?.data;
     const hasData = type === 'story' ? hasStories : hasHubers;
 
     if (!hasData) {

@@ -4,32 +4,13 @@ import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useMemo, useState } from 'react';
 
-import { IndexStoryListSectionLayout } from '@/components/home/IndexStoryListCommonLayout';
-import { HuberCard } from '@/components/hubers/HuberCard';
-import NoResultFound from '@/components/NoResultFound';
+import { HuberCardGrid } from '@/components/hubers/HuberCardGrid';
+import { HuberCardListSkeleton, StoriesSkeleton } from '@/components/loadingState/Skeletons';
+import SearchNotFound from '@/components/SearchNotFound';
 import { TopicChip } from '@/layouts/webapp/ChipFilter';
-import type { Huber as HuberType } from '@/libs/services/modules/huber/huberType';
 import { useGetSearchByKeywordQuery } from '@/libs/services/modules/stories';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
-
-const SearchHuberResults = ({ items }: { items: HuberType[] }) => {
-  if (items.length === 0) {
-    return undefined;
-  }
-
-  return (
-    <div className="flex flex-col gap-8 rounded-[20px] p-5 shadow-sm">
-      <h2 className="text-4xl font-medium leading-[44px] text-neutral-20">
-        Hubers
-      </h2>
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
-        {items?.map(huber => (
-          <HuberCard key={huber.id} {...huber} />
-        ))}
-      </div>
-    </div>
-  );
-};
+import { StoryCardGrid } from '@/components/home/StoryCardGrid';
 
 type TabType = 'all' | 'story' | 'huber';
 
@@ -39,11 +20,19 @@ export default function Index() {
 
   const t = useTranslations('Research');
 
-  const { data, isLoading } = useGetSearchByKeywordQuery({
-    keyword: qString || '',
-  }, {
-    skip: !qString || qString.length === 0,
-  });
+  const { data, isLoading, isFetching } = useGetSearchByKeywordQuery(
+    {
+      keyword: qString || '',
+    },
+    {
+      skip: !qString || qString.length === 0,
+    },
+  );
+
+  // Show loading on every new search round: first load (isLoading) and
+  // subsequent keyword changes while on the page (isFetching covers
+  // re-fetches of cached keywords, e.g. picking one from recent searches).
+  const isSearching = isLoading || isFetching;
 
   const [activeChip, setActiveChip] = useState<TabType>('all');
 
@@ -85,39 +74,55 @@ export default function Index() {
   }, [activeChip, data?.stories, data?.hubers, qString, t]);
 
   const renderSearchResults = useCallback(() => {
+    if (isSearching) {
+      switch (activeChip) {
+        case 'story':
+          return <StoriesSkeleton />;
+        case 'huber':
+          return <HuberCardListSkeleton />;
+        default:
+          return (
+            <>
+              <StoriesSkeleton />
+              <HuberCardListSkeleton />
+            </>
+          );
+      }
+    }
+
     const stories: Story[] = data?.stories ?? [];
     const hubers = data?.hubers ?? [];
 
     switch (activeChip) {
       case 'story':
         return stories.length > 0 ? (
-          <IndexStoryListSectionLayout
-            title="Stories"
-            stories={{ data: stories, hasNextPage: false }}
-          />
-        ) : <NoResultFound />;
+          <StoryCardGrid stories={stories} />
+        ) : (
+          <SearchNotFound />
+        );
       case 'huber':
-        return hubers.length > 0 ? <SearchHuberResults items={hubers} /> : <NoResultFound />;
+        return hubers.length > 0 ? (
+          <HuberCardGrid items={hubers} />
+        ) : (
+          <SearchNotFound />
+        );
       default:
-        return stories.length === 0 && hubers.length === 0 ? <NoResultFound />
-          : (
-              <>
-                {stories.length > 0 && (
-                  <IndexStoryListSectionLayout
-                    title="Stories"
-                    stories={{ data: stories, hasNextPage: false }}
-                    containerClassName="p-0"
-                  />
-                )}
-                <SearchHuberResults items={hubers} />
-              </>
-            );
+        return stories.length === 0 && hubers.length === 0 ? (
+          <SearchNotFound />
+        ) : (
+          <>
+            {stories.length > 0 && (
+              <StoryCardGrid stories={stories} />
+            )}
+            <HuberCardGrid items={hubers} />
+          </>
+        );
     }
-  }, [activeChip, data?.stories, data?.hubers]);
+  }, [activeChip, data?.stories, data?.hubers, isSearching]);
 
   return (
     <div className="mx-auto w-full py-12 lg:w-5/6">
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 px-4">
         <div className="scrollbar-hide flex w-full flex-nowrap items-center gap-2 overflow-x-auto py-2">
           {ResultTypeChips.map(chip => (
             <TopicChip
@@ -131,7 +136,7 @@ export default function Index() {
           ))}
         </div>
 
-        {qString && !isLoading && (
+        {qString && !isSearching && (
           <div className="font-medium leading-tight">{searchResultInfo}</div>
         )}
 
@@ -139,4 +144,4 @@ export default function Index() {
       </div>
     </div>
   );
-};
+}
