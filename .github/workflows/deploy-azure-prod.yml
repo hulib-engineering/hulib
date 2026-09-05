@@ -3,13 +3,15 @@ name: Deploy to Azure Prod
 on:
   push:
     branches: [main, azure-prod]
+  pull_request:
+    branches: [main, azure-prod]
 
 concurrency:
   group: deploy-azure-prod
   cancel-in-progress: true
 
 permissions:
-  id-token: write # required for Azure OIDC login
+  id-token: write
   contents: read
 
 env:
@@ -19,14 +21,81 @@ env:
   CONTAINER_APP_NAME: hulib-prod-web
 
 jobs:
-  build-and-deploy:
+  # =========================
+  # CI / Validation
+  # =========================
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate PR commits
+        if: github.event_name == 'pull_request'
+        run: |
+          npx commitlint \
+            --from ${{ github.event.pull_request.base.sha }} \
+            --to ${{ github.event.pull_request.head.sha }} \
+            --verbose
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run check:types
+
+      - name: Unit tests
+        run: npm run test -- --coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: Storybook tests
+        run: npm run test-storybook:ci
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 7
+
+  # =========================
+  # Build Docker image
+  # =========================
+  build-image:
+    name: Build Docker image
     runs-on: ubuntu-latest
     environment: azure-prod
 
-    steps:
-      - uses: actions/checkout@v4
+    # Do not build/deploy production from PRs.
+    if: github.event_name == 'push'
 
-      - uses: azure/login@v2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -56,9 +125,9 @@ jobs:
 
         run: |
           az acr build \
-            --registry "${{ env.ACR_NAME }}" \
-            --image "${{ env.IMAGE_NAME }}:${{ github.sha }}" \
-            --image "${{ env.IMAGE_NAME }}:prod" \
+            --registry "$ACR_NAME" \
+            --image "$IMAGE_NAME:${{ github.sha }}" \
+            --image "$IMAGE_NAME:prod" \
             --build-arg "NEXT_PUBLIC_REACT_APP_BACKEND_VERSION=$BACKEND_VERSION" \
             --build-arg "NEXT_PUBLIC_REACT_APP_BACKEND_ENDPOINT=$BACKEND_ENDPOINT" \
             --build-arg "NEXT_PUBLIC_REACT_APP_BACKEND_SOCKET_ENDPOINT=$BACKEND_SOCKET_ENDPOINT" \
@@ -80,9 +149,29 @@ jobs:
             --build-arg "NEXT_PUBLIC_FIREBASE_APP_ID=$FIREBASE_APP_ID" \
             .
 
-      - name: Deploy new image to Container App
+  # =========================
+  # Deploy
+  # =========================
+  deploy:
+    name: Deploy Container App
+    runs-on: ubuntu-latest
+    environment: azure-prod
+    needs: [validate, build-image]
+
+    # Deploy only after a push.
+    if: github.event_name == 'push'
+
+    steps:
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy new image
         run: |
           az containerapp update \
-            --name "${{ env.CONTAINER_APP_NAME }}" \
-            --resource-group "${{ env.RESOURCE_GROUP }}" \
-            --image "${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+            --name "$CONTAINER_APP_NAME" \
+            --resource-group "$RESOURCE_GROUP" \
+            --image "$ACR_NAME.azurecr.io/$IMAGE_NAME:${{ github.sha }}"
