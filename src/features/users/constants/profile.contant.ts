@@ -6,18 +6,21 @@ export const HUBER_OWN_TABS = [
   { value: 'stories', label: 'my_stories' },
   { value: 'my_favorite', label: 'my_favorite' },
   { value: 'my_feedback', label: 'my_feedback' },
+  { value: 'personal_info', label: 'personal_info' },
 ] as const;
 
 export const LIBER_OWN_TABS = [
   { value: 'about', label: 'about' },
   { value: 'stories', label: 'my_stories' },
   { value: 'my_favorite', label: 'my_favorite' },
+  { value: 'personal_info', label: 'personal_info' },
 ] as const;
 
 export const LIBER_VIEWER_TABS = [
   { value: 'about', label: 'about' },
   { value: 'stories', label: 'my_stories' },
   { value: 'my_favorite', label: 'my_favorite' },
+  { value: 'personal_info', label: 'personal_info' },
 ] as const;
 
 export const HUBER_VIEWER_TABS = [
@@ -25,6 +28,7 @@ export const HUBER_VIEWER_TABS = [
   { value: 'my_schedule', label: 'my_schedule' },
   { value: 'stories', label: 'my_stories' },
   { value: 'my_favorite', label: 'my_favorite' },
+  { value: 'personal_info', label: 'personal_info' },
 ] as const;
 
 export const VIEWER_TABS = LIBER_VIEWER_TABS;

@@ -14,7 +14,7 @@ import {
 } from '@/libs/services/modules/auth';
 import type { Topic } from '@/libs/services/modules/user/userType';
 
-const useProfileActions = () => {
+const useProfileActions = (skipAll = false) => {
   const tCommon = useTranslations('Common');
 
   const [updateProfile] = useUpdateProfileMutation();
@@ -111,6 +111,15 @@ const useProfileActions = () => {
       throw new Error(tCommon('update_failed'));
     }
   };
+
+  if (skipAll) {
+    return {
+      handleSaveText: async () => {},
+      handleSaveLearningEntry: async () => {},
+      handleSaveWorkEntry: async () => {},
+      handleSaveTopics: async () => {},
+    };
+  }
 
   return {
     handleSaveText,

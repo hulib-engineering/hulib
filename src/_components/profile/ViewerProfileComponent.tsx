@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import ViewerHero from './ViewerHero';
-import ViewerProfileContent from './ViewerProfileContent';
+import ProfileContent from './ProfileContent';
 import ReportModal from '@/layouts/profile/ReportModal';
 import type { TUserDetail } from '@/features/users/types';
 import { openChat } from '@/libs/store/messenger';
@@ -37,7 +37,7 @@ export default function ViewerProfileComponent({ userDetail }: Props) {
         onChatClick={handleOpenChatWindow}
         onReportClick={handleOpenReportModal}
       />
-      <ViewerProfileContent userDetail={userDetail} />
+      <ProfileContent userDetail={userDetail} mode="viewer" />
 
       <ReportModal open={isReportModalOpen} onClose={handleCloseReportModal} />
     </div>
