@@ -2,9 +2,11 @@
 // If you delete this file, remove `setupFilesAfterEnv` from `jest.config.ts`
 import '@testing-library/jest-dom';
 
-import ResizeObserver from 'resize-observer-polyfill';
-
-globalThis.ResizeObserver = ResizeObserver;
+globalThis.ResizeObserver = class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
 
 // Mock next-auth - complete mock
 jest.mock('next-auth/react', () => ({

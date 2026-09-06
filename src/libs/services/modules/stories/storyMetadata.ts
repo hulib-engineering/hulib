@@ -1,7 +1,6 @@
 import type { Story } from './storiesType';
+import { Env } from '@/libs/Env.mjs';
 import { AppConfig } from '@/utils/AppConfig';
-
-const SERVICE_KEY = 'hlb-93td6qrktpz6xrm4jj6dejgmffm4ya_pk';
 
 export async function getStoryDetailServer(id: string): Promise<Story | null> {
   try {
@@ -9,7 +8,7 @@ export async function getStoryDetailServer(id: string): Promise<Story | null> {
       `${AppConfig.api.endpoint}/${AppConfig.api.version}/stories/${id}`,
       {
         headers: {
-          'hulib-service-key': SERVICE_KEY,
+          'hulib-service-key': Env.NEXT_PUBLIC_HULIB_SERVICE_KEY,
         },
         cache: 'no-store',
       },
