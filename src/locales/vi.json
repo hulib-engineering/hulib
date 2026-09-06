@@ -1164,9 +1164,16 @@
       "present": "Hiện tại"
     },
     "full_name": "Họ và tên",
-    "gender": "Giới tính",
+    "full_name_placeholder": "Đinh Cao Nguyên Quỳnh",
+    "gender": {
+      "label": "Giới tính",
+      "placeholder": "Chọn giới tính",
+      "Male": "Nam",
+      "Female": "Nữ",
+      "Other": "Khác"
+    },
     "date_of_birth": "Ngày sinh",
-    "address": "Địa chỉ",
+    "address": "Địa chỉ (không bắt buộc)",
     "address_placeholder": "Nhập địa chỉ của bạn",
     "email": "Email",
     "phone_number": "Số điện thoại",

@@ -36,7 +36,7 @@ export default function LiberProfileComponent({ userDetail }: Props) {
     <div className="mx-auto flex w-full flex-1 flex-col gap-y-4 px-3 pt-3 md:px-0 lg:gap-5 lg:pb-12 xl:max-w-[1216px]">
       <LiberProfile userDetail={userDetail} handleEditAvatarClick={handleEditAvatarClick} />
       {hasNoStory && <BecomeHuberBanner />}
-      <ProfileContent userDetail={userDetail} mode="liber" />
+      <ProfileContent userDetail={userDetail} />
       <EditImageModal
         {...currentEditableImageData}
         open={isEditImageModalOpen}

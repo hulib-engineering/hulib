@@ -9,19 +9,21 @@ import { useProfileTab } from '@/features/users/hooks/useProfileTab';
 import { HUBER_OWN_TABS, LIBER_OWN_TABS } from '@/features/users/constants/profile.contant';
 import type { TUserDetail } from '@/features/users/types';
 import { buildUserData } from '@/features/users/utils/profile.util';
+import { Role } from '@/types/common';
 
 type HuberProfileContentProps = {
   userDetail: TUserDetail;
-  mode: 'liber' | 'huber' | 'viewer';
+  // mode: 'liber' | 'huber' | 'viewer';
+  isViewer?: boolean;
 };
 
-export default function ProfileContent({ userDetail, mode }: HuberProfileContentProps) {
-  const isHuber = mode === 'huber';
-  const isViewer = mode === 'viewer';
-  const isLiber = mode === 'liber';
+export default function ProfileContent({ userDetail, isViewer = false }: HuberProfileContentProps) {
+  const isHuber = userDetail.role?.id === Role.HUBER;
 
-  const { currentTab, setCurrentTab, topicsData, translatedTabs } = useProfileTab(isHuber ? HUBER_OWN_TABS : LIBER_OWN_TABS, isHuber);
-  const { handleSaveText, handleSaveLearningEntry, handleSaveWorkEntry, handleSaveTopics } = useProfileActions(isViewer);
+  const { currentTab, setCurrentTab, topicsData, translatedTabs } = useProfileTab(isHuber ? HUBER_OWN_TABS : LIBER_OWN_TABS, !isViewer && isHuber);
+  const { handleSaveText, handleSaveLearningEntry, handleSaveWorkEntry, handleSaveTopics } = useProfileActions(isViewer); // [N1]
+  // [N1]: if need to be able to skip handleSaveTopics as well: pass !isHuber or isLiber in as some sort of conditions as well - and also...
+  // ...modify the hook's internal (add some simple skip condition and return lines)
   const userData = buildUserData(userDetail);
 
   return (
@@ -43,24 +45,16 @@ export default function ProfileContent({ userDetail, mode }: HuberProfileContent
           topics={userDetail?.humanBookTopic}
           storyOwnerId={userDetail.id}
           showOthers={isViewer}
-          variant={isLiber ? 'liber' : 'huber'}
+          variant={isHuber ? 'huber' : 'liber'}
         />
       )}
       {currentTab === 'my_favorite' && <MyFavoritePanel />}
       {currentTab === 'my_schedule' && <HuberSchedulePanel huberId={userDetail.id} />}
       {currentTab === 'my_feedback' && <>My feedback</>}
-      {currentTab === 'personal_info' && (
-        <PersonalInformation
-          /* data={userData}
-          editable={true}
-          showTopics={isHuber}
-          availableTopics={topicsData?.data}
-          onSaveText={handleSaveText}
-          onSaveLearningEntry={handleSaveLearningEntry}
-          onSaveWorkEntry={handleSaveWorkEntry}
-          onSaveTopics={handleSaveTopics} */
-        />
-      )}
+      {/* TODO: Permit only Viewer users access to PersonalInformation
+      Also, add oncancel and onsuccess
+      */}
+      {currentTab === 'personal_info' && <PersonalInformation data={userDetail} />}
     </ControlOverview>
   );
 }

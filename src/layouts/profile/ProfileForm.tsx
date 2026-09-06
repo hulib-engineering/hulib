@@ -126,7 +126,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
               >
                 {({ open }) => (
                   <>
-                    <Dropdown.Select open={open} label={t('gender')}>
+                    <Dropdown.Select open={open} label={t('gender.label')}>
                       {value?.name}
                     </Dropdown.Select>
                     <Dropdown.Options>

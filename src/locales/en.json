@@ -1162,7 +1162,14 @@
       "present": "Present"
     },
     "full_name": "Full Name",
-    "gender": "Gender",
+    "full_name_placeholder": "Dinh Cao Nguyen Quynh",
+    "gender": {
+      "label": "Gender",
+      "placeholder": "Select gender",
+      "Male": "Male",
+      "Female": "Female",
+      "Other": "Other"
+    },
     "date_of_birth": "Date of birth",
     "address": "Address",
     "address_placeholder": "Enter your address",
