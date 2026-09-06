@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import React from 'react';
-import { Books, CalendarDotsIcon, HeartIcon, ThumbsUp, UserList } from '@phosphor-icons/react';
+import { BooksIcon, CalendarDotsIcon, HeartIcon, ThumbsUpIcon, UserListIcon } from '@phosphor-icons/react';
 
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -17,9 +17,9 @@ type ControlOverviewProps = {
 };
 
 const TAB_ICONS: Record<string, React.ElementType> = {
-  about: UserList,
-  stories: Books,
-  my_favorite: ThumbsUp,
+  about: UserListIcon,
+  stories: BooksIcon,
+  my_favorite: ThumbsUpIcon,
   my_feedback: HeartIcon,
   my_schedule: CalendarDotsIcon,
 };
