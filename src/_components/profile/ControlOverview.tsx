@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import React from 'react';
-import { BooksIcon, CalendarDotsIcon, HeartIcon, ThumbsUpIcon, UserListIcon } from '@phosphor-icons/react';
+import { BooksIcon, CalendarDotsIcon, HeartIcon, ThumbsUpIcon, UserGearIcon, UserListIcon } from '@phosphor-icons/react';
 
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -22,6 +22,7 @@ const TAB_ICONS: Record<string, React.ElementType> = {
   my_favorite: ThumbsUpIcon,
   my_feedback: HeartIcon,
   my_schedule: CalendarDotsIcon,
+  personal_info: UserGearIcon,
 };
 
 export const ControlOverview = ({

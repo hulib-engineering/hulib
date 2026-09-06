@@ -2,6 +2,7 @@ import { ControlOverview } from './ControlOverview';
 import HuberSchedulePanel from './HuberSchedulePanel';
 import MyFavoritePanel from './MyFavoritePanel';
 import MyAboutPanel from './MyAboutPanel';
+import PersonalInformation from './PersonalInformation';
 import MyStoriesPanel from '@/app/[locale]/(auth)/users/[id]/_components/MyStoriesPanel';
 import useProfileActions from '@/features/users/hooks/useProfileActions';
 import { useProfileTab } from '@/features/users/hooks/useProfileTab';
@@ -24,11 +25,11 @@ export default function ProfileContent({ userDetail, mode }: HuberProfileContent
   const userData = buildUserData(userDetail);
 
   return (
-    <ControlOverview className="p-2" currentTab={currentTab} onTabChange={setCurrentTab} tabs={translatedTabs}>
+    <ControlOverview className="max-lg:p-2" currentTab={currentTab} onTabChange={setCurrentTab} tabs={translatedTabs}>
       {currentTab === 'about' && (
         <MyAboutPanel
           data={userData}
-          editable={isViewer}
+          editable={!isViewer}
           showTopics={isHuber}
           availableTopics={topicsData?.data}
           onSaveText={handleSaveText}
@@ -48,7 +49,18 @@ export default function ProfileContent({ userDetail, mode }: HuberProfileContent
       {currentTab === 'my_favorite' && <MyFavoritePanel />}
       {currentTab === 'my_schedule' && <HuberSchedulePanel huberId={userDetail.id} />}
       {currentTab === 'my_feedback' && <>My feedback</>}
-      {currentTab === 'personal_info' && <>personal_info</>}
+      {currentTab === 'personal_info' && (
+        <PersonalInformation
+          /* data={userData}
+          editable={true}
+          showTopics={isHuber}
+          availableTopics={topicsData?.data}
+          onSaveText={handleSaveText}
+          onSaveLearningEntry={handleSaveLearningEntry}
+          onSaveWorkEntry={handleSaveWorkEntry}
+          onSaveTopics={handleSaveTopics} */
+        />
+      )}
     </ControlOverview>
   );
 }

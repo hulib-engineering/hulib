@@ -594,7 +594,8 @@
       "stories": "Stories",
       "my_favorite": "My Favorite",
       "my_schedule": "My Schedule",
-      "my_feedback": "My Feedback"
+      "my_feedback": "My Feedback",
+      "personal_info": "Personal Information"
     },
     "about_panel": {
       "title": "About",
@@ -653,6 +654,7 @@
     "my_favorite": "My Favorite",
     "my_schedule": "My Schedule",
     "my_feedback": "My Feedback",
+    "personal_info": "Personal Information",
     "no_own_stories_title": "You don't have any stories yet",
     "no_own_stories_body": "Share your stories, they might help more people than you think",
     "continue_finish_story": "Continue finishing",
