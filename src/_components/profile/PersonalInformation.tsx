@@ -69,9 +69,10 @@ function GenderSection({ control }: any) {
                     .map(({ value, label }) => ({ id: value, name: label }))
                     .map((gender, index) => (
                       <Dropdown.Option value={gender} key={index}>
-                        {({ selected, active }) => (
+                        {/* ({ selected, active }) => ( */}
+                        {selected => (
                           <MenuItem
-                            isActive={active}
+                            // isActive={active}
                             isSelected={selected}
                             data-testid={`test-${index}`}
                           >
