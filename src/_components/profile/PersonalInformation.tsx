@@ -45,7 +45,7 @@ function Name({ register, errors }: any) {
     </Form.Item>
   );
 }
-
+// TODO: Remove the damn 'any' for translations if possible
 function GenderSection({ control }: any) {
   const t = useTranslations('Common');
   return (
@@ -60,7 +60,7 @@ function GenderSection({ control }: any) {
                 <Dropdown.Select
                   open={open}
                   label={(<span className="font-medium">{t('gender.label')}</span>)}
-                  placeholder={t('gender.placeholder')} // I'm not even sure why does a required field even need a placeholder that will never appear - just put it here for the sake of whatever
+                  placeholder={t('gender.placeholder')}
                 >
                   {value?.name && <span className="font-normal text-black">{t(`gender.${value.name}` as any)}</span>}
                 </Dropdown.Select>
@@ -180,17 +180,26 @@ function GuardianSection({ register, errors }: any) {
   const phoneHintText = (fieldError: typeof errors.phoneNumber) =>
     fieldError?.message ? t(fieldError.message as any) : undefined;
   return (
-    <TextInput
-      id="parentPhoneNumber"
-      type="tel"
-      pattern={PHONE_NUMBER_REGEX.source}
-      placeholder={t('phone_number_placeholder')}
-      label={(<span className="font-medium">{t('guardian_phone_number')}</span>)}
-      {...register('parentPhoneNumber')}
-      required
-      isError={!!errors.parentPhoneNumber}
-      hintText={phoneHintText(errors.parentPhoneNumber)}
-    />
+    <>
+      <TextInput
+        id="parentEmail"
+        type="text"
+        placeholder={t('guardian_placeholder')}
+        label={(<span className="font-medium">{t('guardian_email' as any)}</span>)}
+        required
+      />
+      <TextInput
+        id="parentPhoneNumber"
+        type="tel"
+        pattern={PHONE_NUMBER_REGEX.source}
+        placeholder={t('guardian_placeholder')}
+        label={(<span className="font-medium">{t('guardian_phone_number')}</span>)}
+        {...register('parentPhoneNumber')}
+        required
+        isError={!!errors.parentPhoneNumber}
+        hintText={phoneHintText(errors.parentPhoneNumber)}
+      />
+    </>
   );
 }
 
