@@ -1,7 +1,9 @@
 'use client';
 import { CalendarDot, X } from '@phosphor-icons/react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { useAppSelector } from '@/libs/store/hooks';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 
@@ -11,6 +13,8 @@ type FBModal = | {
 
 export default function FirstBookCreatedModal(props: FBModal) {
   const tCommon = useTranslations('Common');
+  const router = useRouter();
+  const userInfo = useAppSelector(state => state.auth.userInfo);
   return (
     <div className="flex size-full max-h-[900px]
             flex-col items-center gap-20 rounded-2xl"
@@ -82,7 +86,7 @@ export default function FirstBookCreatedModal(props: FBModal) {
           </div>
           {/* 2. Button */}
           <Button
-            onClick={() => { }}
+            onClick={() => userInfo?.id && router.push(`/users/${userInfo.id}?tab=my_schedule`)}
             className="flex size-full max-w-[342px] items-center justify-center gap-2 rounded-full border border-solid border-[#0442BF]
                       px-4 font-[375] sm:max-w-[448px]"
             iconLeft={<CalendarDot size={20} />}
