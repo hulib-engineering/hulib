@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { z } from 'zod';
 
 import { isEmpty } from 'lodash';
@@ -24,11 +25,14 @@ import { calculateAge } from '@/utils/dateUtils';
 
 type IProfileFormProps = {
   data: User;
-  // onCancel: () => void;
-  // onSucceed: () => void;
+  onCancel: () => void;
+  onSucceed: () => void;
 };
+
+type TProfileForm = z.infer<typeof ProfileValidation>;
+
 // Extra: Find a weight to change the weight of the input text of the fields to 'medium'
-function Name({ register, errors }: any) {
+function Name({ register, errors }: { register: UseFormRegister<TProfileForm>; errors: FieldErrors<TProfileForm> }) {
   const t = useTranslations('Common');
   return (
     <Form.Item>
@@ -46,7 +50,7 @@ function Name({ register, errors }: any) {
   );
 }
 // TODO: Remove the damn 'any' for translations if possible
-function GenderSection({ control }: any) {
+function GenderSection({ control }: { control: Control<TProfileForm> }) {
   const t = useTranslations('Common');
   return (
     <Form.Item className="flex-1">
@@ -69,16 +73,14 @@ function GenderSection({ control }: any) {
                     .map(({ value, label }) => ({ id: value, name: label }))
                     .map((gender, index) => (
                       <Dropdown.Option value={gender} key={index}>
-                        {/* ({ selected, active }) => ( */}
-                        {selected => (
-                          <MenuItem
-                            // isActive={active}
-                            isSelected={selected}
-                            data-testid={`test-${index}`}
-                          >
-                            {t(`gender.${gender.name}` as any)}
-                          </MenuItem>
-                        )}
+                        {/* ({ selected, active }) => (
+                              <MenuItem isActive={active} isSelected={selected} data-testid={`test-${index}`}>
+                                {t(`gender.${gender.name}` as any)}
+                              </MenuItem>
+                            ) */}
+                        <MenuItem data-testid={`test-${index}`}>
+                          {t(`gender.${gender.name}` as any)}
+                        </MenuItem>
                       </Dropdown.Option>
                     ))}
                 </Dropdown.Options>
@@ -92,7 +94,7 @@ function GenderSection({ control }: any) {
   );
 }
 
-function BirthdaySection({ control }: any) {
+function BirthdaySection({ control }: { control: Control<TProfileForm> }) {
   const t = useTranslations('Common');
   return (
     <Form.Item className="flex-1">
@@ -114,7 +116,7 @@ function BirthdaySection({ control }: any) {
   );
 }
 
-function GenderBirthday({ control }: any) {
+function GenderBirthday({ control }: { control: Control<TProfileForm> }) {
   return (
     <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
       <GenderSection control={control} />
@@ -123,7 +125,7 @@ function GenderBirthday({ control }: any) {
   );
 }
 
-function AddressSection({ register, errors }: any) {
+function AddressSection({ register, errors }: { register: UseFormRegister<TProfileForm>; errors: FieldErrors<TProfileForm> }) {
   const t = useTranslations('Common');
   return (
     <Form.Item>
@@ -139,7 +141,7 @@ function AddressSection({ register, errors }: any) {
   );
 }
 
-function EmailSection({ register, errors }: any) {
+function EmailSection({ register, errors }: { register: UseFormRegister<TProfileForm>; errors: FieldErrors<TProfileForm> }) {
   const t = useTranslations('Common');
   return (
     <Form.Item>
@@ -157,7 +159,7 @@ function EmailSection({ register, errors }: any) {
   );
 }
 
-function PhoneNumberSection({ register, errors }: any) {
+function PhoneNumberSection({ register, errors }: { register: UseFormRegister<TProfileForm>; errors: FieldErrors<TProfileForm> }) {
   const t = useTranslations('Common');
   const phoneHintText = (fieldError: typeof errors.phoneNumber) =>
     fieldError?.message ? t(fieldError.message as any) : undefined;
@@ -176,7 +178,7 @@ function PhoneNumberSection({ register, errors }: any) {
   );
 }
 
-function GuardianSection({ register, errors }: any) {
+function GuardianSection({ register, errors }: { register: UseFormRegister<TProfileForm>; errors: FieldErrors<TProfileForm> }) {
   const t = useTranslations('Common');
   const phoneHintText = (fieldError: typeof errors.phoneNumber) =>
     fieldError?.message ? t(fieldError.message as any) : undefined;
@@ -184,10 +186,13 @@ function GuardianSection({ register, errors }: any) {
     <>
       <TextInput
         id="parentEmail"
-        type="text"
+        type="email"
         placeholder={t('guardian_placeholder')}
         label={(<span className="font-medium">{t('guardian_email' as any)}</span>)}
+        {...register('parentEmail')}
         required
+        isError={!!errors.parentEmail}
+        hintText={errors.parentEmail?.message}
       />
       <TextInput
         id="parentPhoneNumber"
@@ -204,16 +209,29 @@ function GuardianSection({ register, errors }: any) {
   );
 }
 
-function FormActionsSection({ isSubmitting, isLoading, isDirty, errors/* , onCancel */ }: any) {
+function FormActionsSection({
+  isSubmitting,
+  isLoading,
+  isDirty,
+  errors,
+  onCancel,
+}: {
+  isSubmitting: boolean;
+  isLoading: boolean;
+  isDirty: boolean;
+  errors: FieldErrors<TProfileForm>;
+  onCancel: () => void;
+}) {
   const t = useTranslations('Common');
   return (
     <div className="mt-3 flex items-center justify-end gap-3">
       <Button
+        type="button"
         variant="outline"
         size="lg"
         disabled={isSubmitting}
         className="w-[114px]"
-        // onClick={onCancel}
+        onClick={onCancel}
       >
         {t('cancel')}
       </Button>
@@ -230,7 +248,7 @@ function FormActionsSection({ isSubmitting, isLoading, isDirty, errors/* , onCan
   );
 }
 
-export default function PersonalInformation({ data/* , onCancel, onSucceed */ }: IProfileFormProps) {
+export default function PersonalInformation({ data, onCancel, onSucceed }: IProfileFormProps) {
   const t = useTranslations('Common');
 
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
@@ -244,6 +262,7 @@ export default function PersonalInformation({ data/* , onCancel, onSucceed */ }:
     setError,
     watch,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting, isDirty },
   } = useForm<z.infer<typeof ProfileValidation>>({
     resolver: zodResolver(ProfileValidation),
@@ -258,7 +277,7 @@ export default function PersonalInformation({ data/* , onCancel, onSucceed */ }:
       phoneNumber: data?.phoneNumber,
       address: data?.address ?? '',
       parentPhoneNumber: data?.parentPhoneNumber,
-      parentFullname: data?.parentFullname ?? '',
+      parentEmail: data?.parentEmail ?? '',
     },
   });
 
@@ -270,7 +289,7 @@ export default function PersonalInformation({ data/* , onCancel, onSucceed */ }:
     }
   }, [setValue, watch('birthday')]);
 
-  const handleUpdate = handleSubmit(async (values: any) => {
+  const handleUpdate = handleSubmit(async (values: TProfileForm) => {
     try {
       const { isUnderGuard, ...profilePatch } = values;
 
@@ -283,7 +302,7 @@ export default function PersonalInformation({ data/* , onCancel, onSucceed */ }:
 
       const response = await updateProfile({ ...profilePatch, gender: { id: values.gender?.id } }).unwrap();
       dispatch(setUserInfo(response));
-      // onSucceed();
+      onSucceed();
     } catch (error: any) {
       const fieldErrors = error?.data?.errors;
       if (fieldErrors && typeof fieldErrors === 'object') {
@@ -298,6 +317,11 @@ export default function PersonalInformation({ data/* , onCancel, onSucceed */ }:
       }
     }
   });
+
+  const handleCancel = () => {
+    reset();
+    onCancel();
+  };
 
   return (
     <Form className="flex w-full flex-col gap-3" onSubmit={handleUpdate}>
@@ -314,7 +338,7 @@ export default function PersonalInformation({ data/* , onCancel, onSucceed */ }:
         isLoading={isLoading}
         isDirty={isDirty}
         errors={errors}
-        // onCancel={onCancel}
+        onCancel={handleCancel}
       />
     </Form>
   );

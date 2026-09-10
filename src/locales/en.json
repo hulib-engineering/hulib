@@ -1179,6 +1179,7 @@
     "phone_number_invalid": "Phone number must start with + and include a country code, e.g. +84987654321",
     "guardian_name": "Your Guardian Name",
     "guardian_phone_number": "Your Guardian Phone Number",
+    "guardian_email": "Email giám hộ",
     "guardian_placeholder": "Required if you are under 18 years old",
     "parent_phone_number_required": "Please specify a parent phone number if you are under 18!",
     "not_provided": "Not provided",

@@ -26,6 +26,7 @@ export const ProfileValidation = z
     parentPhoneNumber: z.string().nullable().optional()
       .refine(value => !value || PHONE_NUMBER_REGEX.test(value), { message: PHONE_NUMBER_MESSAGE }),
     parentFullname: z.string().optional(),
+    parentEmail: z.string().trim().email().optional().or(z.literal('')),
   })
   .superRefine((values, context) => {
     if (
