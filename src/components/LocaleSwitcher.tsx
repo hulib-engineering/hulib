@@ -1,12 +1,14 @@
 'use client';
 
 import { useLocale } from 'next-intl';
+import { useSession } from 'next-auth/react';
 import type { JSX } from 'react';
 
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import Dropdown from '@/components/core/dropdown/Dropdown';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
+import { useUpdateMyLanguageMutation } from '@/libs/services/modules/user';
 
 const Locales = [
   {
@@ -40,9 +42,17 @@ const LocaleSwitcher = ({ className }: { className?: string }) => {
 
   const locale = useLocale();
 
+  const { data: session } = useSession();
+
+  const [updateMyLanguage] = useUpdateMyLanguageMutation();
+
   const handleChange = (value: { locale: string; flag: JSX.Element }) => {
     router.push(pathname, { locale: value.locale });
     router.refresh();
+
+    if (session && (value.locale === 'en' || value.locale === 'vi')) {
+      updateMyLanguage({ language: value.locale });
+    }
   };
 
   return (
