@@ -3,7 +3,7 @@ import { CalendarDot, X } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useAppSelector } from '@/libs/store/hooks';
+import { useAppSelector } from '@/libs/hooks';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 
