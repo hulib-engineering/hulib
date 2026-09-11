@@ -12,6 +12,7 @@ import { useAppSelector } from '@/libs/hooks';
 import { useCreateStoryReviewMutation } from '@/libs/services/modules/story-reviews';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import TextArea from '@/components/core/textArea/TextArea';
+import { setPostLoginRedirect } from '@/utils/authRedirect';
 
 type CommentProps = {
   storyId: number;
@@ -41,7 +42,8 @@ export default function CommentInput({ storyId, comment, setComment }: CommentPr
 
   const requireAuth = useCallback(() => {
     if (!session) {
-      router.push(`/auth/login?callbackUrl=${encodeURIComponent(pathname)}`);
+      setPostLoginRedirect(pathname);
+      router.push('/auth/login');
       return false;
     }
     return true;
@@ -89,7 +91,10 @@ export default function CommentInput({ storyId, comment, setComment }: CommentPr
             variant="ghost"
             size="lg"
             className="w-[144px]"
-            onClick={() => router.push('/auth/login')}
+            onClick={() => {
+              setPostLoginRedirect(pathname);
+              router.push('/auth/login');
+            }}
           >
             {tButton('button.sign_in')}
           </Button>
@@ -97,7 +102,10 @@ export default function CommentInput({ storyId, comment, setComment }: CommentPr
             variant="fill"
             size="lg"
             className="w-[144px]"
-            onClick={() => router.push('/auth/register')}
+            onClick={() => {
+              setPostLoginRedirect(pathname);
+              router.push('/auth/register');
+            }}
           >
             {tButton('button.sign_up')}
           </Button>
