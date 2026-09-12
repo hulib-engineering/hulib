@@ -13,16 +13,17 @@ import { signOut } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Modal from '@/components/Modal';
 import { mergeClassnames } from '@/components/core/private/utils';
 import StoryForm from '@/features/stories/components/StoryForm';
-import { useAppSelector } from '@/libs/hooks';
+import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { Env } from '@/libs/Env.mjs';
 import { Role } from '@/types/common';
 import { useGetUnseenNotificationCountQuery } from '@/libs/services/modules/notifications';
 import { Link, usePathname } from '@/libs/i18nNavigation';
+import { setBottomNavHeight } from '@/libs/store/uiState';
 
 const LogoIcon = ({ size = 24 }: { size?: number }) => (
   <svg
@@ -45,6 +46,9 @@ const MobileBottomNav = () => {
   const tMyProfile = useTranslations('MyProfile');
   const currentLocale = useLocale();
   const pathname = usePathname();
+
+  const navRef = useRef<HTMLElement>(null); // [MBN1] getting ref of mobilebottomnav for the sake of getting its height
+  const dispatch = useAppDispatch(); // [MBN1]
 
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -122,6 +126,12 @@ const MobileBottomNav = () => {
     closePopup();
     setIsCreateModalOpen(true);
   };
+
+  useEffect(() => {
+    if (navRef.current) {
+      dispatch(setBottomNavHeight(navRef.current.getBoundingClientRect().height));
+    }
+  }, [dispatch]); // [MBN1]
 
   return (
     <>
@@ -269,7 +279,7 @@ const MobileBottomNav = () => {
       </Modal>
 
       {/* Bottom Nav */}
-      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-90 bg-white lg:hidden">
+      <nav ref={navRef} className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-90 bg-white lg:hidden">
         <div className="flex size-full items-center justify-around px-4 py-3">
           {navItems.map(item => (
             item.href

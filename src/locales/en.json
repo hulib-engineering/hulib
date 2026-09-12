@@ -40,7 +40,8 @@
     "no_result": {
       "title": "No Result Found",
       "description": "We cannot find any result that matches your search. Please try search again."
-    }
+    },
+    "search_not_found": "No results found for what you're looking for"
   },
   "Footer": {
     "copyright": "© 2026 HuLib. All rights reserved.",
@@ -432,7 +433,11 @@
     "awaiting_stories_page": {
       "title": "Awaiting approval - Stories",
       "subtitle": "List of stories awaiting approval",
-      "empty_state": "You have a warm heart"
+      "empty_state": "You have a warm heart",
+      "filter_pending": "Pending",
+      "filter_published": "Published",
+      "filter_rejected": "Rejected",
+      "filter_deleted": "Deleted"
     },
     "tags_page": {
       "title": "Topic list",
@@ -561,7 +566,11 @@
     "passwords_match": "Passwords match",
     "resetting": "Resetting...",
     "back_to_login": "Back to login",
-    "submit": "Submit"
+    "submit": "Submit",
+    "email_already_exists": "Email already exists. Please use a different email",
+    "invalid_verification_code": "The verification code is not correct, please re-enter",
+    "terms_of_use": "Terms of Use",
+    "privacy_policy": "Privacy Policy"
   },
   "ForgotPassword": {
     "meta_title": "Forgot password",
@@ -581,9 +590,11 @@
     "delete_ava": "delete avatar",
     "tabs": {
       "about": "About",
-      "my_stories": "My Stories",
+      "my_stories": "My Books",
       "stories": "Stories",
-      "my_favorite": "My Favorite"
+      "my_favorite": "My Favorite",
+      "my_schedule": "My Schedule",
+      "my_feedback": "My Feedback"
     },
     "about_panel": {
       "title": "About",
@@ -638,11 +649,31 @@
     "confirm_information_accuracy": "I confirm that the information I provided is accurate to the best of my knowledge.",
     "submit_appeal": " Submit an Appeal",
     "about": "About",
-    "my_stories": "My Stories",
+    "my_stories": "My Books",
     "my_favorite": "My Favorite",
+    "my_schedule": "My Schedule",
+    "my_feedback": "My Feedback",
     "no_own_stories_title": "You don't have any stories yet",
     "no_own_stories_body": "Share your stories, they might help more people than you think",
+    "continue_finish_story": "Continue finishing",
     "joined_since": "Joined HuLib since {date}",
+    "become_huber_banner": "Create a new story to become a Huber",
+    "become_huber_star_title": "Complete your <strong>introduction</strong> and <strong>schedule</strong> to earn the \"Huber Star\" title",
+    "become_huber_star_progress": "Progress",
+    "profile_metrics": {
+      "stories_title": "Stories",
+      "stories_sub": "Shared",
+      "conversations_title": "Conversations",
+      "conversations_sub": "Accompanied",
+      "rating_title": "Rating",
+      "rating_sub": "({count} ratings)",
+      "followers_title": "Followers"
+    },
+    "feedback_panel": {
+      "no_feedback_title": "No feedback yet",
+      "no_feedback_body": "Feedback from your readers will appear here after they complete a reading session with you.",
+      "total_ratings": "{count} ratings"
+    },
     "liber_about": {
       "journey_title": "Experiences That Made Me Grow",
       "journey_placeholder": "Share experiences that helped you grow...",
@@ -733,9 +764,11 @@
     "share_story": "Share another story",
     "like_button": "Like",
     "like_error": "Failed to update like",
-    "booking_cta": "Your story might help another young person diícover that they never have to walk through life challenges alone. Before you begin, please review our e-stories guidelines.",
-    "book_a_meeting": "Book a Meeting",
-    "booking_count": "100 meetings have been booked from this story",
+    "lets_chat": "Let's chat",
+    "booking_cta": "If this story speaks to your heart, connect with the author for Free one-on-one conversations here.",
+    "booking_cta_unauth": "You’ll need to log in to book a meeting with this author.",
+    "book_a_meeting": "Connect 1-1",
+    "booking_count": "{bookingCount} meetings have been booked from this story",
     "author": "Author",
     "stories": "stories",
     "favorites": "favorites",
@@ -752,9 +785,11 @@
     "story": "Story",
     "is_deleted_successfully": "is deleted successfully",
     "read_all": "Read all",
+    "preview": "Preview",
     "edit": "Edit",
     "favorite": "Favorite",
     "confirm_delete_story": "Are you sure you want to delete story?",
+    "confirm_delete_book": "Are you sure you want to delete this book?",
     "confirm_remove_favorite": "Are you sure you want to remove this story from your favorite list?",
     "story_delete_warning": "This story will be deleted immediately.",
     "cannot_undo_action": "You can't undo this action.",
@@ -780,6 +815,7 @@
     "agreement": "I have read and agree to the community guidelines of Hulib",
     "huber_responsibility": "Huber is solely responsible for the accuracy and truthfulness of the information provided to Hulib.",
     "emergency_notice": "HuLib has the right to reject or request edits to content if the story does not meet the community criteria outlined above.",
+    "safety_warning": "If you see someone in a dangerous situation, please contact the appropriate emergency support service immediately.",
     "continue": "Continue",
     "hero_title": "Share your story with the community",
     "hero_description": "HuLib very much looks forward to reading and spreading your story to the community. Before you start creating a book, we have a few small notes to help build a positive, safe, and meaningful sharing space.",
@@ -818,7 +854,7 @@
     },
     "create_book_title": "Create your story",
     "success_create_book": "Write your success story",
-    "thanks_for_story": "Thanks for your story! HuLib will keep you informed when our process completes.",
+    "thanks_for_story": "Thanks for sharing your story 💙 HuLib will notify you once our review is complete within 24-48 hours.",
     "in_review": "In review",
     "back_to_profile": "Back to Profile",
     "create_new_book": "Create New Book",
@@ -834,7 +870,6 @@
     "declined": "Declined",
     "reason_for_rejection": "Reason for rejection",
     "back": "Back",
-    "new_book_icon_alt": "New book icon",
     "content_to_avoid": "Content to avoid"
   },
   "Time_slots": {
@@ -864,7 +899,41 @@
     "day_prompt_4": "Is setting aside just 30 minutes really that hard? 😢",
     "day_prompt_5": "Come on, is 30 minutes that tough to spare? 😢",
     "day_prompt_6": "Hey, are you really that busy on Saturday? 🤔",
-    "slots_message": "Amazing!!! You can meet {slots} Libers every {day}"
+    "slots_message": "Amazing!!! You can meet {slots} Libers every {day}",
+    "personal_time_tab": "Personal time",
+    "meeting_tab": "Meeting schedule",
+    "panel_description": "For each story, a Liber can request a direct conversation with you. Please select the time slots during the week when you are available to chat with Liber.",
+    "save_and_next": "Save & go to {day}",
+    "skip_day": "Skip {day}",
+    "edit": "Edit",
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "evening": "Night",
+    "save_schedule": "Save schedule",
+    "save_success": "Schedule saved successfully",
+    "status_updated_success": "Session updated successfully",
+    "meeting_empty_title": "You have no sessions yet",
+    "meeting_empty_description": "Explore the stories below, if you feel connected, book a session with the author!",
+    "filter_view_label": "View:",
+    "filter_all": "All types",
+    "filter_invitation": "Invitations",
+    "filter_my_request": "My requests",
+    "filter_done": "Done",
+    "filter_missed": "Missed",
+    "filter_no_results": "No sessions match this filter",
+    "status_right_now": "Right now!",
+    "status_invitation": "Invitation",
+    "status_my_request": "My request",
+    "status_done": "Done",
+    "status_missed": "Missed",
+    "time_label": "Time",
+    "meeting_with": "Meeting with",
+    "requested_by": "Requested by",
+    "send_to": "Send to",
+    "join": "Join",
+    "reject": "Reject",
+    "accept": "Accept",
+    "cancel_session": "Cancel"
   },
   "Meeting": {
     "survey_submitted_successfully": "Survey is submitted successfully. Hope you to have a good time with Huber",
@@ -996,8 +1065,8 @@
     "appeal": "Appeal"
   },
   "HuberCTA": {
-    "title": "Thanks for sharing your story 💙",
-    "subtitle": "HuLib will notify you once our review is complete within 24-48 hours.",
+    "title": "Share Your Story",
+    "subtitle": "Share your experiences, the lessons you've learned, or something meaningful you'd like to pass on. Your story could be the light that helps someone through a difficult day. Before you begin, please read our Story Guidelines.",
     "button_label": "Create new story"
   },
   "HomeStories": {
@@ -1030,6 +1099,8 @@
     "style": "Style",
     "cancel": "Cancel",
     "submit": "Submit",
+    "submit_create_book_mobile": "Confirm",
+    "submit_create_book_desktop": "Create book",
     "rejected": "Rejected",
     "in_review": "In review",
     "rejection_reason": "Rejection reason",
@@ -1116,9 +1187,11 @@
     "save": "Save",
     "not_found": "Not Found",
     "could_not_find_resource": "Could not find requested resource",
+    "no_results_found": "Could not find what you're looking for",
     "return_home": "Return Home",
     "view_more": "View more",
     "see_more": "See more",
+    "see_less": "Collapse",
     "back": "Back",
     "edit": "Edit",
     "delete": "Delete",
@@ -1132,6 +1205,9 @@
     "update_your_schedule": "Update Your Schedule",
     "update_schedule_description": "Update your schedule so others can chat with you directly.",
     "update_personal_schedule": "Update Personal Schedule",
+    "update_schedule_online": "Update your personal schedule so you can chat online with everyone.",
+    "edit_book_title": "Edit Book",
+    "edit_book_success": "Book edited successfully",
     "search_by_keyword": "Search by keyword",
     "change": "Change",
     "password_length": "Password has at least 8 characters.",
@@ -1140,6 +1216,8 @@
     "password_capital": "Password has a capital letter.",
     "password_match": "Passwords match.",
     "search_for_name": "Search for name",
+    "popular_search": "Popular search",
+    "recent_search": "Recent search",
     "notification_title": "Notification",
     "no_messages": "You have no conversations yet!",
     "select_topics": "Select topics",
@@ -1317,5 +1395,11 @@
       "reminder": "We are delighted to accompany you in the upcoming event! Before the event takes place, the organizers will send you a reminder email about the program. Please remember to check your inbox!",
       "close_button": "Gotchaaaa"
     }
+  },
+  "PersonalCalendarModal": {
+    "when_am_i_free": "When am I free?",
+    "description": "Pick some suitable time slots so people can chat with you directly.",
+    "i_am_busy": "I'm busy on {day}",
+    "update_later": "Update later"
   }
 }

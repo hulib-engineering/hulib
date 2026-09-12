@@ -38,7 +38,8 @@ type CalendarButton = {
   onChange: (date: Date) => void;
   chosenDay: Date; // Clicked day on the MiniCalendar
 };
-
+// NOTE: The group of buttons is made into 2 separate components because of how convoluted the conditions are - consider making them look simpler first
+// (if anybody wants to combine the 2 into one)
 function DefaultCalendarButton(
   { day, currentMonth, chosenDay, onChange, groupedReadingSessions }: CalendarButton & { groupedReadingSessions: GroupedReadingSessions },
 ) {
@@ -57,7 +58,7 @@ function DefaultCalendarButton(
       disabled={disabled}
       onClick={() => onChange(day)}
       className={mergeClassnames(
-        'transition-colors h-fit rounded-lg px-0 py-3 text-center text-sm leading-4',
+        'transition-colors h-fit rounded-lg px-0 py-3 text-center text-sm leading-4 font-normal',
         'text-neutral-70 disabled:text-neutral-70',
         isCurrentMonth && 'text-neutral-10',
         isToday && !disabled && 'border border-primary-60 focus:border-primary-60 bg-white',
@@ -90,7 +91,7 @@ function BookingCalendarButton(
       disabled={disabled}
       onClick={() => onChange(day)}
       className={mergeClassnames(
-        'transition-colors h-fit rounded-lg px-0 py-3 text-center text-sm leading-4',
+        'transition-colors h-fit rounded-lg px-0 py-3 text-center text-sm leading-4 font-normal',
         'text-neutral-70 disabled:text-neutral-70',
         isToday && !disabled && 'border border-primary-60 focus:border-primary-60 bg-white',
         isAvailable && 'text-primary-50',

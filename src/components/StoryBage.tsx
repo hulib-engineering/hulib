@@ -22,8 +22,8 @@ export const StoryBage = ({ status, rejectionReason, className }: StoryBageProps
     <div className={mergeClassnames('flex items-center gap-2 z-10', className)}>
       <span
         className={mergeClassnames(
-          'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-white',
-          isRejected ? 'bg-red-50' : 'bg-lavender-40',
+          'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold',
+          isRejected ? 'bg-red-50 text-white' : 'bg-orange-90 text-orange-40',
         )}
       >
         {isRejected ? t('rejected') : t('in_review')}

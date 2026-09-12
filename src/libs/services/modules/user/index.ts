@@ -11,11 +11,14 @@ import addHuberToMyFavorites from './addHuberToMyFavorites';
 import getMyFavoriteHubers from './getMyFavoriteHubers';
 import removeHuberFromMyFavorites from './removeHuberFromMyFavorites';
 import removeMyFavHubers from './removeMyFavHubers';
+import getUserFeedback from './getUserFeedback';
+import getUserFavorites from './getUserFavorites';
+import updateMyLanguage from './updateMyLanguage';
 
 import { api } from '@/libs/services/api';
 
 const authenticationApiWithTag = api.enhanceEndpoints?.({
-  addTagTypes: ['Users', 'FavoriteHuber'],
+  addTagTypes: ['Users', 'FavoriteHuber', 'UserFeedback'],
 });
 
 export const userApi = authenticationApiWithTag.injectEndpoints({
@@ -29,11 +32,14 @@ export const userApi = authenticationApiWithTag.injectEndpoints({
     addStoryToMyFavorites: addStoryToMyFavorites(build),
     removeStoryFromMyFavorites: removeStoryFromMyFavorites(build),
     getMyFavorites: getMyFavorites(build),
+    getUserFavorites: getUserFavorites(build),
     removeMyFavorites: removeMyFavorites(build),
     addHuberToMyFavorites: addHuberToMyFavorites(build),
     removeHuberFromMyFavorites: removeHuberFromMyFavorites(build),
     getMyFavoriteHubers: getMyFavoriteHubers(build),
     removeMyFavHubers: removeMyFavHubers(build),
+    getUserFeedback: getUserFeedback(build),
+    updateMyLanguage: updateMyLanguage(build),
   }),
   overrideExisting: false,
 });
@@ -47,9 +53,12 @@ export const {
   useAddStoryToMyFavoritesMutation,
   useRemoveStoryFromMyFavoritesMutation,
   useGetMyFavoritesQuery,
+  useGetUserFavoritesQuery,
   useRemoveMyFavoritesMutation,
   useAddHuberToMyFavoritesMutation,
   useRemoveHuberFromMyFavoritesMutation,
   useGetMyFavoriteHubersQuery,
   useRemoveMyFavHubersMutation,
+  useGetUserFeedbackQuery,
+  useUpdateMyLanguageMutation,
 }: any = userApi;
