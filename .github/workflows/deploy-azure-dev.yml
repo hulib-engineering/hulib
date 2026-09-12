@@ -87,6 +87,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: azure-dev
 
+    # Do not build/deploy dev from PRs (PR merge refs are rejected by the
+    # azure-dev environment branch protection rules).
+    if: github.event_name == 'push'
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -154,6 +158,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: azure-dev
     needs: [validate, build-image]
+
+    # Deploy only after a push.
+    if: github.event_name == 'push'
 
     steps:
       - name: Azure Login
