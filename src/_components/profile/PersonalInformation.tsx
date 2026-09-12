@@ -162,20 +162,20 @@ function EmailSection({ register, errors }: { register: UseFormRegister<TProfile
 
 function PhoneNumberSection({ register, errors }: { register: UseFormRegister<TProfileForm>; errors: FieldErrors<TProfileForm> }) {
   const t = useTranslations('Common');
-  const phoneHintText = (fieldError: typeof errors.phoneNumber) =>
-    fieldError?.message ? t(fieldError.message as any) : undefined;
   return (
-    <Form.Item>
-      <TextInput
-        type="tel"
-        pattern={PHONE_NUMBER_REGEX.source}
-        placeholder={t('phone_number_placeholder')}
-        label={(<span className="font-medium">{t('phone_number')}</span>)}
-        {...register('phoneNumber')}
-        isError={!!errors.phoneNumber}
-        hintText={phoneHintText(errors.phoneNumber)}
-      />
-    </Form.Item>
+    <>
+      <Form.Item>
+        <TextInput
+          type="tel"
+          pattern={PHONE_NUMBER_REGEX.source}
+          placeholder={t('phone_number_placeholder')}
+          label={(<span className="font-medium">{t('phone_number')}</span>)}
+          {...register('phoneNumber')}
+          isError={!!errors.phoneNumber}
+        />
+      </Form.Item>
+      {errors.phoneNumber && (<Alert>{t(errors.phoneNumber.message as any)}</Alert>)}
+    </>
   );
 }
 
@@ -187,7 +187,7 @@ function GuardianSection({ register, errors }: { register: UseFormRegister<TProf
         id="parentEmail"
         type="email"
         placeholder={t('guardian_placeholder')}
-        label={(<span className="font-medium">{t('guardian_email' as any)}</span>)}
+        label={(<span className="font-medium">{t('guardian_email')}</span>)}
         {...register('parentEmail')}
         isError={!!errors.parentEmail}
       />
