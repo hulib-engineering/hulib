@@ -22,6 +22,7 @@ import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { setUserInfo } from '@/libs/store/authentication';
 import { PHONE_NUMBER_MESSAGE, PHONE_NUMBER_REGEX, ProfileValidation } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
+import Alert from '@/components/Alert';
 
 type IProfileFormProps = {
   data: User;
@@ -180,8 +181,6 @@ function PhoneNumberSection({ register, errors }: { register: UseFormRegister<TP
 
 function GuardianSection({ register, errors }: { register: UseFormRegister<TProfileForm>; errors: FieldErrors<TProfileForm> }) {
   const t = useTranslations('Common');
-  const phoneHintText = (fieldError: typeof errors.phoneNumber) =>
-    fieldError?.message ? t(fieldError.message as any) : undefined;
   return (
     <>
       <TextInput
@@ -190,10 +189,9 @@ function GuardianSection({ register, errors }: { register: UseFormRegister<TProf
         placeholder={t('guardian_placeholder')}
         label={(<span className="font-medium">{t('guardian_email' as any)}</span>)}
         {...register('parentEmail')}
-        required
         isError={!!errors.parentEmail}
-        hintText={errors.parentEmail?.message}
       />
+      {errors.parentEmail && (<Alert>{t(errors.parentEmail.message as any)}</Alert>)}
       <TextInput
         id="parentPhoneNumber"
         type="tel"
@@ -201,10 +199,9 @@ function GuardianSection({ register, errors }: { register: UseFormRegister<TProf
         placeholder={t('guardian_placeholder')}
         label={(<span className="font-medium">{t('guardian_phone_number')}</span>)}
         {...register('parentPhoneNumber')}
-        required
         isError={!!errors.parentPhoneNumber}
-        hintText={phoneHintText(errors.parentPhoneNumber)}
       />
+      {errors.parentPhoneNumber && (<Alert>{t(errors.parentPhoneNumber.message as any)}</Alert>)}
     </>
   );
 }
@@ -266,6 +263,7 @@ export default function PersonalInformation({ data, onCancel, onSucceed }: IProf
     formState: { errors, isSubmitting, isDirty },
   } = useForm<z.infer<typeof ProfileValidation>>({
     resolver: zodResolver(ProfileValidation),
+    mode: 'onChange',
     defaultValues: {
       isUnderGuard: data?.birthday ? calculateAge(data.birthday) < 18 : false,
       fullName: data?.fullName ?? '',
