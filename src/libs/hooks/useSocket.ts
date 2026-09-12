@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Socket } from 'socket.io-client';
 
-import { acquireSocket, releaseSocket } from '@/libs/services/socket';
 import useAppSelector from './useAppSelector';
+import { acquireSocket, releaseSocket } from '@/libs/services/socket';
 
 type UseSocketOptions<TEvents> = {
   namespace: 'notification' | 'chat' | string;
@@ -59,6 +59,7 @@ export const useSocket = <TEvents = Record<string, any>>({
 
     const socketInstance = acquireSocket(namespace, accessToken);
     socketRef.current = socketInstance;
+    const boundHandlers = boundHandlersRef.current;
 
     const handleConnect = () => {
       setIsConnected(true);
@@ -78,8 +79,8 @@ export const useSocket = <TEvents = Record<string, any>>({
     return () => {
       socketInstance.off('connect', handleConnect);
       socketInstance.off('disconnect', handleDisconnect);
-      boundHandlersRef.current.forEach((handler, event) => socketInstance.off(event, handler));
-      boundHandlersRef.current.clear();
+      boundHandlers.forEach((handler, event) => socketInstance.off(event, handler));
+      boundHandlers.clear();
       releaseSocket(namespace);
       socketRef.current = null;
       setIsConnected(false);
