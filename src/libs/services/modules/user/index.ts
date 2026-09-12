@@ -13,6 +13,7 @@ import removeHuberFromMyFavorites from './removeHuberFromMyFavorites';
 import removeMyFavHubers from './removeMyFavHubers';
 import getUserFeedback from './getUserFeedback';
 import getUserFavorites from './getUserFavorites';
+import updateMyLanguage from './updateMyLanguage';
 
 import { api } from '@/libs/services/api';
 
@@ -38,6 +39,7 @@ export const userApi = authenticationApiWithTag.injectEndpoints({
     getMyFavoriteHubers: getMyFavoriteHubers(build),
     removeMyFavHubers: removeMyFavHubers(build),
     getUserFeedback: getUserFeedback(build),
+    updateMyLanguage: updateMyLanguage(build),
   }),
   overrideExisting: false,
 });
@@ -58,4 +60,5 @@ export const {
   useGetMyFavoriteHubersQuery,
   useRemoveMyFavHubersMutation,
   useGetUserFeedbackQuery,
+  useUpdateMyLanguageMutation,
 }: any = userApi;
