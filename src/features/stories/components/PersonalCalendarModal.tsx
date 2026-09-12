@@ -18,14 +18,39 @@ type PCModal = {
 
 type Day = (typeof DAYS)[number];
 
+const DAY_TO_FULL_KEY: Record<Day, 'day_full_0' | 'day_full_1' | 'day_full_2' | 'day_full_3' | 'day_full_4' | 'day_full_5' | 'day_full_6'> = {
+  Monday: 'day_full_1',
+  Tuesday: 'day_full_2',
+  Wednesday: 'day_full_3',
+  Thursday: 'day_full_4',
+  Friday: 'day_full_5',
+  Saturday: 'day_full_6',
+  Sunday: 'day_full_0',
+};
+
+const DAY_TO_SHORT_EN: Record<Day, 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun'> = {
+  Monday: 'Mon',
+  Tuesday: 'Tue',
+  Wednesday: 'Wed',
+  Thursday: 'Thu',
+  Friday: 'Fri',
+  Saturday: 'Sat',
+  Sunday: 'Sun',
+};
+
 type BottomButtonsType = {
   isDayPicked: (day: Day) => boolean;
   currentChosenDay: Day;
   nextDay: (day: Day) => Day;
+  onNextDay: () => void;
   onClose: () => void;
 };
 
 function BottomButtons(props: BottomButtonsType) {
+  const tSlots = useTranslations('Time_slots');
+  const t = useTranslations('PersonalCalendarModal');
+  const nextDayLabel = tSlots(DAY_TO_FULL_KEY[props.nextDay(props.currentChosenDay)]);
+  const currentDayLabel = tSlots(DAY_TO_FULL_KEY[props.currentChosenDay]);
   return (
     <div className="flex items-center justify-between gap-4">
       <Button
@@ -34,21 +59,18 @@ function BottomButtons(props: BottomButtonsType) {
 
         )}
         disabled={!props.isDayPicked(props.currentChosenDay)}
+        onClick={props.onNextDay}
       >
-        Lưu & qua
-        {' '}
-        {props.nextDay(props.currentChosenDay)}
+        {tSlots('save_and_next', { day: nextDayLabel })}
       </Button>
       <Button
         type="button"
         variant="ghost"
         className="max-sm:w-full"
-        onClick={props.onClose}
+        onClick={props.onNextDay}
         aria-label="Close"
       >
-        {props.nextDay(props.currentChosenDay)}
-        {' '}
-        tớ bận
+        {t('i_am_busy', { day: currentDayLabel })}
       </Button>
     </div>
   );
@@ -58,6 +80,9 @@ const MemoBottomButtons = memo(BottomButtons);
 function PersonalCalendar(props: PCModal) {
   /* TODO: Make it so the chosen timeslots will only be saved when pressed on the bottom left button - (for the current Day of Week).
   As of now they are still saved irregardless. */
+
+  const tSlots = useTranslations('Time_slots');
+  const t = useTranslations('PersonalCalendarModal');
 
   const [currentChosenDay, setCurrentChosenDay] = useState<Day>('Monday');
   const [timeSlotsByDay, setTimeSlotsByDay] = useState<
@@ -104,9 +129,9 @@ function PersonalCalendar(props: PCModal) {
     >
       {/* A Texts */}
       <div className="text-left">
-        <h6 className="mb-2 text-[20px] font-medium leading-6">Khi nào mình rảnh nhỉ?</h6>
-        <p className="text-[14px] font-light leading-4">
-          Chọn vài khung giờ phù hợp để bạn có thể trò chuyện trực tiếp với mọi người
+        <h6 className="mb-2 text-[20px] font-medium leading-7 text-neutral-1">{t('when_am_i_free')}</h6>
+        <p className="text-[14px] font-normal leading-4 text-neutral-10">
+          {t('description')}
         </p>
       </div>
 
@@ -124,17 +149,17 @@ function PersonalCalendar(props: PCModal) {
               variant="ghost"
               aria-pressed={day === currentChosenDay}
               className={mergeClassnames(
-                'flex-1 rounded-lg text-sm font-medium bg-[#F9F9F9]',
+                'flex-1 rounded-lg text-xs leading-[14px] font-normal bg-[#F9F9F9]',
                 day === currentChosenDay ? 'bg-[#CDDDFE] text-[#0442BF]' : 'text-gray-600',
               )}
               onClick={() => setCurrentChosenDay(day)}
             >
               <span>
                 <span className="sm:hidden">
-                  {day.slice(0, 3) /* This is for the English Days of Weeks - do figure out a way to abbreviate the Vietnamese version */}
+                  {DAY_TO_SHORT_EN[day]}
                 </span>
                 <span className="hidden sm:inline">
-                  {day}
+                  {tSlots(DAY_TO_FULL_KEY[day])}
                 </span>
                 {' '}
                 <CalendarCheck className={mergeClassnames(
@@ -156,7 +181,7 @@ function PersonalCalendar(props: PCModal) {
                   key={time}
                   variant="outline"
                   className={mergeClassnames(
-                    'border border-[#C2C6CF] text-gray-700 bg-white hover:bg-[#FFAB67] rounded-md',
+                    'text-sm leading-4 font-medium border border-[#C2C6CF] text-gray-700 bg-white hover:bg-[#FFAB67] rounded-md',
                     'active:text-gray-700',
                     timeSlotsByDay[currentChosenDay].has(time)
                     && 'bg-orange-50 text-white hover:bg-orange-50 focus:text-white active:text-white',
@@ -175,6 +200,7 @@ function PersonalCalendar(props: PCModal) {
           <MemoBottomButtons
             currentChosenDay={currentChosenDay}
             nextDay={nextDay}
+            onNextDay={() => setCurrentChosenDay(current => nextDay(current))}
             onClose={props.onClose}
             isDayPicked={isDayPicked}
           />
@@ -186,6 +212,7 @@ function PersonalCalendar(props: PCModal) {
         <MemoBottomButtons
           currentChosenDay={currentChosenDay}
           nextDay={nextDay}
+          onNextDay={() => setCurrentChosenDay(current => nextDay(current))}
           onClose={props.onClose}
           isDayPicked={isDayPicked}
         />
@@ -196,18 +223,19 @@ function PersonalCalendar(props: PCModal) {
 
 function Header(props: PCModal) {
   const tCommon = useTranslations('Common');
+  const t = useTranslations('PersonalCalendarModal');
 
   return (
     <div className="flex items-center justify-between border-b px-4 pb-2 pt-4 sm:px-8 sm:py-4">
-      <h3 className="sm:text-3xl">{tCommon('update_personal_schedule')}</h3>
+      <h3 className="text-xl leading-7 sm:text-3xl">{tCommon('update_personal_schedule')}</h3>
       <Button
         type="button"
         variant="ghost"
-        className=""
+        className="text-sm font-medium leading-4 sm:text-base"
         onClick={props.onClose}
         aria-label="Close"
       >
-        Cập nhật sau
+        {t('update_later')}
       </Button>
     </div>
   );

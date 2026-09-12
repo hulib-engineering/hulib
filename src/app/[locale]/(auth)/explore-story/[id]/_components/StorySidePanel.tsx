@@ -1,75 +1,127 @@
 'use client';
 
 import {
-  Books,
+  // BookOpen,
   CalendarDots,
-  Check,
-  Eye,
   FacebookLogo,
-  Heart,
   InstagramLogo,
-  ShareFat,
+  MessengerLogoIcon,
+  StarFour,
   ThreadsLogo,
-  ThumbsUp,
+  Trash,
+  X,
 } from '@phosphor-icons/react';
 import { useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 import * as React from 'react';
 
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
-import { useAppSelector } from '@/libs/hooks';
+import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 
-import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
-import { Chip } from '@/components/core/chip/Chip';
+import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { Cover } from '@/features/stories/components/Cover';
-import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
-import type { Topic } from '@/libs/services/modules/topics/topicType';
-import { useLikeStoryMutation, useShareStoryMutation } from '@/libs/services/modules/stories';
-import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
+import Modal from '@/components/Modal';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { copyToClipboard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/utils';
 import { AppConfig } from '@/utils/AppConfig';
 import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/ShareModal';
+import { setPostLoginRedirect } from '@/utils/authRedirect';
+import AuthorBasicInfo from '@/components/author/AuthorBasicInfo';
+import { useGetHuberBookedSessionsQuery } from '@/libs/services/modules/huber';
+import { useDeleteStoryMutation, useGetStoriesQuery, useLikeStoryMutation, useShareStoryMutation } from '@/libs/services/modules/stories';
+import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
+import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
+import BookInfo from '@/features/stories/components/BookInfo';
+import { StoryCard } from '@/features/stories/components/StoryCard';
+import StoryForm from '@/features/stories/components/StoryForm';
+import PersonalCalendarModal from '@/features/stories/components/PersonalCalendarModal';
+import type { Story } from '@/libs/services/modules/stories/storiesType';
+import { openChat } from '@/libs/store/messenger';
 
 type StorySidePanelProps = {
-  data: {
-    id: number;
-    likeCount?: number;
-    cover?: { path: string };
-    topics?: Topic[];
-    viewCount?: number;
-    shareCount?: number;
-    sharedUserIds?: string[];
-    likedUserIds?: string[];
-    humanBook?: {
-      id: string | number;
-      fullName: string;
-      photo?: { path: string };
-      countTopics?: number;
-      rating?: number;
-    };
-  };
+  data: Story;
+  isFavorite?: boolean;
+  isPastStoryContent?: boolean;
+  floatingBooking: boolean;
 };
 
-// Note: Anybody who works on this file may want to consider replacing the last component with <AuthorBasicInfo> instead
-// (components/author/AuthorBasicInfo)                                                      <--|
+type BookMeetingProps = {
+  handleBookingClick: () => void;
+  userId: number | undefined;
+  floatingBooking: boolean;
+};
 
-export default function StorySidePanel({ data }: StorySidePanelProps) {
+function BookMeeting({ handleBookingClick, userId, floatingBooking }: BookMeetingProps) {
+  const t = useTranslations('ExploreStory');
+
+  const { status } = useSession();
+  const bottomNavHeight = useAppSelector(state => state.uiState.bottomNavHeight);
+
+  const disabledCondition = status === 'unauthenticated' || userId === undefined;
+
+  const { data: bookedSessionsList, isLoading } = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId });
+
+  // Tailwind breakpoint CSS
+  const max_lg = floatingBooking && bottomNavHeight ? 'max-lg:absolute max-lg:bottom-20 max-lg:left-0 z-[9999] max-lg:mx-4' : '';
+  const max_lg_style = floatingBooking && bottomNavHeight
+    ? { bottom: `${bottomNavHeight}px` }
+    : undefined;
+  const lg = 'lg:p-5';
+
+  return (
+    <div
+      className={mergeClassnames(
+        'w-auto flex flex-col items-center gap-5 overflow-hidden rounded-2xl bg-white shadow-sm border-2 border-primary-70 p-4',
+        max_lg,
+        lg,
+      )}
+      style={max_lg_style}
+    >
+      <p className="text-center text-base leading-6 text-neutral-20">{disabledCondition ? t('booking_cta_unauth') : t('booking_cta')}</p>
+      <Button
+        onClick={handleBookingClick}
+        disabled={disabledCondition}
+        iconLeft={<CalendarDots className={mergeClassnames(!disabledCondition && 'text-white')} size={20} weight="bold" />}
+        className={mergeClassnames('w-full', !disabledCondition && 'border border-primary-80 bg-gradient-to-b from-blue-40 to-lavender-40 text-white hover:opacity-95')}
+      >
+        <span className="mt-1">{t('book_a_meeting')}</span>
+      </Button>
+      {disabledCondition ? <></>
+        : (
+            <p className="text-center text-xs leading-[14px] text-neutral-20">
+              {t('booking_count', { bookingCount: `${(disabledCondition || isLoading) ? 0 : bookedSessionsList?.length}` })}
+            </p>
+          )}
+    </div>
+  );
+}
+
+export default function StorySidePanel({ data, floatingBooking }: StorySidePanelProps) {
   const router = useRouter();
   const { data: session } = useSession();
   const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslations('ExploreStory');
+  const tCommon = useTranslations('Common');
+  const tHuber = useTranslations('Huber');
 
   const [shareStory] = useShareStoryMutation();
   const [handleUpdateLikeCount] = useLikeStoryMutation();
+  const [deleteStory, { isLoading: isDeletingStory }] = useDeleteStoryMutation();
+
+  // TODO: remove if storyDetailQuery API returns a number of published stories in humanbook
+  const { data: storiesList } = useGetStoriesQuery(
+    { humanBookId: data?.humanBook?.id, publishStatus: 'published', type: 'most-popular' },
+    { skip: !data?.humanBook?.id },
+  );
 
   const requireAuth = React.useCallback(() => {
     if (!session) {
-      router.push(`/auth/login?callbackUrl=${encodeURIComponent(pathname)}`);
+      setPostLoginRedirect(pathname);
+      router.push('/auth/login');
       return false;
     }
     return true;
@@ -80,10 +132,53 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
   const [likeCount, setLikeCount] = React.useState(data?.likeCount ?? 0);
   const [shareCount, setShareCount] = React.useState(data?.shareCount ?? 0);
   const [isShareModalOpen, setIsShareModalOpen] = React.useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+  const [isDeleteSuccessModalOpen, setIsDeleteSuccessModalOpen] = React.useState(false);
+  const [isEditSuccessModalOpen, setIsEditSuccessModalOpen] = React.useState(false);
+  const [isPersonalCalendarModalOpen, setIsPersonalCalendarModalOpen] = React.useState(false);
 
   const userId = useAppSelector(state => state.auth.userInfo?.id);
+  const isOwner = !!userId && !!data?.humanBook?.id && Number(userId) === Number(data.humanBook.id);
+
+  const { data: timeslotsData } = useGetTimeslotsByHuberQuery(
+    { id: data?.humanBook?.id as number },
+    { skip: !isOwner || !data?.humanBook?.id },
+  );
+  const hasTimeslots = React.useMemo(() => {
+    const raw = timeslotsData as unknown;
+    if (Array.isArray(raw)) {
+      return raw.length > 0;
+    }
+    if (raw && typeof raw === 'object' && 'data' in (raw as any)) {
+      const arr = (raw as any).data;
+      return Array.isArray(arr) && arr.length > 0;
+    }
+    return false;
+  }, [timeslotsData]);
 
   const prevLikeCountRef = React.useRef(data?.likeCount);
+
+  const dispatch = useAppDispatch();
+  const handleOpenHuberChat = () => {
+    if (!requireAuth()) {
+      return;
+    }
+    if (!data?.humanBook?.id) {
+      return;
+    }
+
+    dispatch(
+      openChat({
+        id: data.humanBook.id.toString(),
+        name: data.humanBook.fullName,
+        avatarUrl: data.humanBook.photo?.path,
+        isOpen: true,
+        isMinimized: false,
+        unread: 0,
+      }),
+    );
+  };
 
   React.useEffect(() => {
     if (prevLikeCountRef.current !== data?.likeCount) {
@@ -205,6 +300,34 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
     router.push(`${data?.id}_${data?.humanBook?.id}/booking`);
   }, [requireAuth, router, data?.id, data?.humanBook?.id]);
 
+  const handleDelete = React.useCallback(async () => {
+    try {
+      await deleteStory(data.id).unwrap();
+      setIsDeleteModalOpen(false);
+      setIsDeleteSuccessModalOpen(true);
+    } catch {
+      pushError(t('error_contact_admin'));
+    }
+  }, [deleteStory, data.id, t]);
+
+  const handleCloseDeleteSuccessModal = React.useCallback(() => {
+    setIsDeleteSuccessModalOpen(false);
+    if (data?.humanBook?.id) {
+      router.push(`/users/${data.humanBook.id}?tab=stories`);
+    } else {
+      router.push('/');
+    }
+  }, [router, data?.humanBook?.id]);
+
+  const handleCloseEditSuccessModal = React.useCallback(() => {
+    setIsEditSuccessModalOpen(false);
+  }, []);
+
+  const handleEditSuccess = React.useCallback(() => {
+    setIsEditModalOpen(false);
+    setIsEditSuccessModalOpen(true);
+  }, []);
+
   return (
     <>
       <ShareModal
@@ -213,140 +336,211 @@ export default function StorySidePanel({ data }: StorySidePanelProps) {
         shareOptions={shareOptions}
       />
 
-      <div className="flex w-full flex-col gap-y-5 xl:w-auto xxl:w-[336px] xxl:max-w-[336px] xxl:shrink-0">
-        <div
-          className={mergeClassnames(
-            'flex w-full flex-col items-center gap-y-4 overflow-hidden rounded-2xl bg-white px-4 py-6 shadow-sm',
-          )}
-        >
-          <div className="flex w-full flex-col gap-y-4">
-            <div className="flex max-h-[340px] w-full items-center justify-center">
-              <Cover src={data?.cover?.path ?? null} size="w-[226px] h-[340px]" />
-            </div>
-            {data?.topics?.length ? (
-              <div className="scrollbar-none hidden w-auto gap-2 overflow-x-auto scroll-smooth py-1 xl:flex">
-                {data.topics.map((topic: Topic) => (
-                  <Chip
-                    key={topic.id}
-                    as="span"
-                    className={mergeClassnames(
-                      'min-w-0 shrink-0 overflow-visible whitespace-nowrap rounded border h-[22px] py-1 px-2',
-                      'text-xs font-medium leading-[14px] ',
-                      getTopicBadgeClasses(topic.color),
-                    )}
-                  >
-                    {topic.name}
-                  </Chip>
-                ))}
-              </div>
-            ) : null}
+      <div className="flex w-full flex-col gap-y-5 lg:w-[336px] lg:max-w-[336px] lg:shrink-0">
+        <BookInfo
+          cover={data?.cover}
+          topics={data?.topics}
+          viewCount={data?.viewCount}
+          likeCount={likeCount}
+          shareCount={shareCount}
+          isLiked={isLiked}
+          isOwner={isOwner}
+          handleClickShare={handleClickShare}
+          clickLikeStory={clickLikeStory}
+          onEdit={() => setIsEditModalOpen(true)}
+          onDelete={() => setIsDeleteModalOpen(true)}
+        />
 
-            <div className="mt-4 flex flex-wrap items-center gap-2 xxl:gap-x-8">
-              <div className="flex items-center gap-x-1">
-                <Eye className="text-primary-50" size={16} />
-                <p className="text-[14px] font-medium leading-4 text-neutral-10">
-                  {data?.viewCount ?? 0}
-                </p>
+        {isOwner ? (
+          !hasTimeslots && (
+            <div className="flex w-full flex-col items-start gap-4 rounded-2xl bg-[#faf7fc] p-5 shadow-sm">
+              <div className="flex items-start gap-2">
+                <StarFour className="shrink-0 text-[#0858fa]" size={20} weight="fill" />
+                <p className="text-sm leading-5 text-[#0858fa]">{tCommon('update_schedule_online')}</p>
               </div>
-              <div className="flex items-center gap-x-1">
-                <ThumbsUp className="text-pink-40" size={16} weight="fill" />
-                <p className="text-[14px] font-medium leading-4 text-neutral-10">
-                  {likeCount}
-                </p>
-              </div>
-              <div className="flex items-center gap-1">
-                <ShareFat className="text-primary-50" size={16} />
-                <p className="text-[14px] font-medium leading-4 text-neutral-20">
-                  {shareCount}
-                </p>
-              </div>
+              <Button
+                iconLeft={<CalendarDots className="text-white" size={20} weight="bold" />}
+                onClick={() => setIsPersonalCalendarModalOpen(true)}
+                className="w-full"
+              >
+                {tCommon('update_personal_schedule')}
+              </Button>
             </div>
-          </div>
-          <div className="flex w-full flex-col gap-2">
-            <Button
-              iconLeft={<ShareFat className="text-white" size={20} weight="bold" />}
-              onClick={handleClickShare}
-            >
-              {t('share')}
-            </Button>
-            <Button
-              variant="outline"
-              iconLeft={(
-                <ThumbsUp
-                  className={isLiked ? 'text-pink-40' : 'text-primary-50'}
-                  size={20}
-                  weight={isLiked ? 'fill' : 'bold'}
-                />
-              )}
-              onClick={clickLikeStory}
-            >
-              {t('like_button')}
-            </Button>
-          </div>
-        </div>
+          )
+        ) : (
+          <BookMeeting
+            handleBookingClick={handleBookingClick}
+            userId={data?.humanBook?.id}
+            floatingBooking={floatingBooking}
+          />
+        )}
 
-        <div
-          className={mergeClassnames(
-            'flex w-full flex-col items-center gap-y-5 overflow-hidden rounded-2xl bg-white p-5 shadow-sm border-2 border-primary-70',
-          )}
-        >
-          <p className="text-center text-base leading-6 text-neutral-20">{t('booking_cta')}</p>
+        <div className="flex w-full flex-col gap-y-3 overflow-hidden rounded-2xl bg-white p-5 shadow-sm">
+          <AuthorBasicInfo
+            humanBook={data?.humanBook}
+            numStories={storiesList?.data?.length}
+            onClickFunction={handleAuthorClick}
+            onClickHuberChat={handleOpenHuberChat}
+          />
+
           <Button
-            onClick={handleBookingClick}
-            iconLeft={<CalendarDots className="text-white" size={20} weight="bold" />}
-            className="w-full border border-primary-80 bg-gradient-to-b from-blue-40 to-lavender-40 text-white hover:opacity-95"
+            variant="outline"
+            className="box-border rounded-[100px] border border-[#C2C6CF] p-3 max-lg:hidden"
+            onClick={handleOpenHuberChat}
           >
-            {t('book_a_meeting')}
+            <MessengerLogoIcon size={20} className="shrink-0" />
+            <span className="mt-1">{t('lets_chat')}</span>
           </Button>
-          <p className="text-center text-xs leading-[14px] text-neutral-20">{t('booking_count')}</p>
-        </div>
-
-        <div
-          className={mergeClassnames(
-            'flex w-full flex-col gap-y-3 overflow-hidden rounded-2xl bg-white p-5 shadow-sm',
-          )}
-        >
-          <p className="text-sm font-medium leading-4 text-neutral-50">{t('author')}</p>
-          <button
-            type="button"
-            className="flex items-center gap-1 lg:gap-2"
-            onClick={handleAuthorClick}
-          >
-            <div className="relative">
-              <Avatar
-                imageUrl={data?.humanBook?.photo?.path}
-                name={data?.humanBook?.fullName}
-                className="size-9"
-              />
-              <div className="absolute left-6 top-5 flex items-center justify-center rounded-full bg-lavender-80 p-0.5">
-                <div className="flex items-center justify-center rounded-full bg-gradient-to-b from-blue-50 to-lavender-40 p-0.5">
-                  <Check size={8} weight="bold" className="text-lavender-80" />
-                </div>
-              </div>
-            </div>
-
-            <span className="line-clamp-1 text-[18px] font-medium leading-7 text-primary-50 hover:cursor-pointer hover:underline">
-              {data?.humanBook?.fullName}
-            </span>
-          </button>
-          <div className="flex flex-wrap justify-between gap-2">
-            <div className="flex items-center gap-1">
-              <Books className="text-neutral-20" size={16} weight="fill" />
-              <p className="text-[14px] font-medium leading-4 text-neutral-20">
-                {data?.humanBook?.countTopics ?? 0}
-              </p>
-              <p className="text-[14px] font-normal leading-4 text-neutral-10">{t('stories')}</p>
-            </div>
-            <div className="flex items-center gap-1">
-              <Heart className="text-pink-40" size={16} weight="fill" />
-              <p className="text-[14px] font-medium leading-4 text-neutral-20">
-                {data?.humanBook?.rating ?? 0}
-              </p>
-              <p className="text-[14px] font-normal leading-4 text-neutral-10">{t('favorites')}</p>
-            </div>
-          </div>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      <Modal open={isEditModalOpen} disableClosingTrigger onClose={() => setIsEditModalOpen(false)}>
+        <Modal.Backdrop />
+        <Modal.Panel className="w-full shadow-none lg:w-5/6 lg:max-w-6xl">
+          <StoryForm
+            type="edit"
+            story={data as unknown as Story}
+            onSucceed={handleEditSuccess}
+            onCancel={() => setIsEditModalOpen(false)}
+          />
+        </Modal.Panel>
+      </Modal>
+
+      {/* Edit Success Modal */}
+      <Modal open={isEditSuccessModalOpen} onClose={handleCloseEditSuccessModal}>
+        <Modal.Backdrop />
+        <Modal.Panel className="w-full max-w-xl bg-neutral-98 shadow-none">
+          <div className="flex flex-col items-center justify-center">
+            <div className="flex w-full items-center justify-end px-4 pt-4">
+              <IconButton variant="ghost" size="lg" aria-label={tCommon('cancel') as string} onClick={handleCloseEditSuccessModal}>
+                <X className="text-[#343330]" size={20} />
+              </IconButton>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-5 px-6 pb-6">
+              <div className="rounded-full bg-[#D9FDEE] p-1">
+                <Image
+                  alt="Check icon"
+                  src="/assets/icons/check-fill-circle.svg"
+                  width={48}
+                  height={48}
+                  className="size-12 object-cover"
+                />
+              </div>
+              <h6 className="text-center text-xl font-bold text-neutral-10">
+                {tCommon('edit_book_success')}
+              </h6>
+              <p className="text-center text-sm leading-5 text-neutral-40">
+                {tHuber('thanks_for_story')}
+              </p>
+              <div className="flex w-full gap-3">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  fullWidth
+                  onClick={() => {
+                    handleCloseEditSuccessModal();
+                    if (data?.humanBook?.id) {
+                      router.push(`/users/${data.humanBook.id}?tab=stories`);
+                    }
+                  }}
+                >
+                  {tHuber('back_to_profile')}
+                </Button>
+                <Button
+                  size="lg"
+                  fullWidth
+                  onClick={() => {
+                    handleCloseEditSuccessModal();
+                    router.push('/');
+                  }}
+                >
+                  {tHuber('create_new_book')}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Modal.Panel>
+      </Modal>
+
+      {/* Delete Confirm Modal - Figma 16331 */}
+      <Modal open={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)}>
+        <Modal.Backdrop />
+        <Modal.Panel className="w-full max-w-xl px-1 py-5 shadow-none lg:px-5">
+          <div className="flex flex-col items-center justify-center gap-6">
+            <div className="flex w-full justify-end px-4">
+              <IconButton variant="ghost" size="lg" aria-label={tCommon('cancel') as string} onClick={() => setIsDeleteModalOpen(false)}>
+                <X className="text-[#2e3032]" size={20} />
+              </IconButton>
+            </div>
+            <h4 className="px-4 text-center text-[28px] font-medium leading-9 text-[#ee0038] lg:px-0">
+              {t('confirm_delete_book')}
+            </h4>
+            <StoryCard data={data as unknown as Story} withoutActions />
+            <p className="px-4 text-center text-sm leading-5 text-[#171819] lg:px-0">
+              {t('story_delete_warning')}
+              <br />
+              {t('cannot_undo_action')}
+            </p>
+            <div className="flex w-full px-4 lg:px-0">
+              <Button
+                variant="outline"
+                size="lg"
+                fullWidth
+                iconLeft={<Trash className="text-primary-50" size={20} weight="bold" />}
+                disabled={isDeletingStory}
+                animation={isDeletingStory ? 'progress' : undefined}
+                onClick={handleDelete}
+              >
+                {tCommon('delete')}
+              </Button>
+            </div>
+          </div>
+        </Modal.Panel>
+      </Modal>
+
+      {/* Delete Success Modal */}
+      <Modal open={isDeleteSuccessModalOpen} onClose={handleCloseDeleteSuccessModal}>
+        <Modal.Backdrop />
+        <Modal.Panel className="w-full max-w-xl bg-neutral-98 shadow-none">
+          <div className="flex flex-col items-center justify-center">
+            <div className="flex w-full items-center justify-end px-4 pt-4">
+              <IconButton variant="ghost" size="lg" aria-label={tCommon('cancel') as string} onClick={handleCloseDeleteSuccessModal}>
+                <X className="text-[#343330]" size={20} />
+              </IconButton>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-5 px-6 pb-6">
+              <div className="rounded-full bg-[#D9FDEE] p-1">
+                <Image
+                  alt="Check icon"
+                  src="/assets/icons/check-fill-circle.svg"
+                  width={48}
+                  height={48}
+                  className="size-12 object-cover"
+                />
+              </div>
+              <h6 className="text-center text-xl font-bold text-neutral-10">
+                {t('story')}
+                {' "'}
+                <span className="text-primary-60">{(data as any)?.title}</span>
+                {'" '}
+                {t('is_deleted_successfully')}
+              </h6>
+              <Button size="lg" fullWidth onClick={handleCloseDeleteSuccessModal}>
+                {tHuber('back_to_profile')}
+              </Button>
+            </div>
+          </div>
+        </Modal.Panel>
+      </Modal>
+
+      {/* Personal Calendar Modal */}
+      <Modal open={isPersonalCalendarModalOpen} onClose={() => setIsPersonalCalendarModalOpen(false)}>
+        <Modal.Backdrop />
+        <Modal.Panel className="w-full shadow-none lg:w-5/6 lg:max-w-6xl">
+          <PersonalCalendarModal onClose={() => setIsPersonalCalendarModalOpen(false)} />
+        </Modal.Panel>
+      </Modal>
     </>
   );
 }

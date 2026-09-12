@@ -1,17 +1,18 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CaretDown, PencilSimple } from '@phosphor-icons/react';
+import { ArrowLeft, BookOpen, CaretDown, PencilSimple, Plus } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
+// import 'swiper/css';
 import type { z } from 'zod';
 
 import { CustomCoverModal } from './CustomCoverModal';
 import { useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
+import IconButton from '@/components/core/iconButton/IconButton';
 import Combobox, { getChipColor } from '@/components/core/combobox/Combobox';
 import Form from '@/components/core/form/Form';
 // import MenuItem from '@/components/core/menuItem/MenuItem';
@@ -89,7 +90,7 @@ export default function StoryForm(props: IStoryFormProps) {
   // });
   const { data: relatedTopics } = useGetRelatedTopicsQuery(
     Number(props.type === 'edit' && props.story.id),
-    { skip: props.type !== 'edit' || props.story.topics?.length > 0 },
+    { skip: props.type !== 'edit' || (props.story.topics?.length ?? 0) > 0 },
   );
   const [uploadCover] = useUploadMutation();
   const [createStory] = useCreateStoryMutation();
@@ -153,6 +154,7 @@ export default function StoryForm(props: IStoryFormProps) {
     },
   });
   const title = watch('title') || '';
+  const abstract = watch('abstract') || '';
 
   const [selectedCoverSample, setSelectedCoverSample] = useState<CoverPresetAsset>(
     COVER_PRESET_ASSETS[0],
@@ -164,6 +166,9 @@ export default function StoryForm(props: IStoryFormProps) {
   const [isCustomCoverModalOpen, setIsCustomCoverModalOpen] = useState(false);
   const [currentCoverIndex, setCurrentCoverIndex] = useState(0);
   const [selectedTopics, setSelectedTopics] = useState<TFilter[]>(storyRelatedTopics);
+  const isFormValid = Boolean(
+    title.trim() && abstract.trim() && selectedTopics.length > 0,
+  );
   // const queriedTopicOptions = filter(topicQuery, topicOptions || []);
   // const queriedTopicOptions = topicOptions;
   const sortTopicsByPriority = (topics: { label: string; value: string; id: number }[]) => {
@@ -270,7 +275,7 @@ export default function StoryForm(props: IStoryFormProps) {
           cover: { id: uploadedCoverId },
           publishStatus: 'draft',
         }).unwrap();
-        pushSuccess('Story edited successfully');
+        pushSuccess(t('edit_book_success'));
         props.onSucceed();
       }
     } catch (error: any) {
@@ -282,6 +287,14 @@ export default function StoryForm(props: IStoryFormProps) {
     <div className="flex flex-col gap-6 rounded-[20px] bg-white
       max-[955px]:mt-2 min-[955px]:p-5"
     >
+      {props.type === 'edit' && (
+        <div className="flex items-center gap-3 px-4 pt-2 min-[955px]:px-0 min-[955px]:pt-0">
+          <IconButton variant="ghost" size="lg" onClick={props.onCancel} aria-label={t('back') as string}>
+            <ArrowLeft size={20} />
+          </IconButton>
+          <h2 className="text-2xl font-medium leading-9 text-black">{t('edit_book_title')}</h2>
+        </div>
+      )}
       <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <div className="flex flex-col gap-4 min-[955px]:flex-row
           min-[955px]:items-stretch min-[955px]:gap-6"
@@ -518,9 +531,20 @@ export default function StoryForm(props: IStoryFormProps) {
                 size="lg"
                 className="w-full min-[955px]:w-[300px]"
                 animation={isSubmitting && 'progress'}
-                disabled={isSubmitting}
+                disabled={isSubmitting || !isFormValid}
+                iconLeft={props.type === 'edit' ? undefined : <BookOpen size={20} />}
+                iconRight={props.type === 'edit' ? undefined : <Plus size={20} />}
               >
-                {t('submit')}
+                {props.type === 'edit' ? t('confirm') : (
+                  <>
+                    <span className="min-[955px]:hidden">
+                      {t('submit_create_book_mobile')}
+                    </span>
+                    <span className="hidden min-[955px]:inline">
+                      {t('submit_create_book_desktop')}
+                    </span>
+                  </>
+                )}
               </Button>
             </div>
           </div>

@@ -67,13 +67,20 @@ const Step1Form = ({
 
   const handleFormSubmit = handleSubmit(async (data) => {
     try {
-      await checkEmail({ email: data.email }).unwrap();
+      const result = await checkEmail({ email: data.email }).unwrap();
+      if (!result?.emailAvailable) {
+        setError('email', {
+          type: 'custom',
+          message: t('email_already_exists'),
+        });
+        return;
+      }
       onSubmit(data);
     } catch (error: any) {
       if (error?.data?.errors?.email === 'emailAlreadyExists') {
         setError('email', {
           type: 'custom',
-          message: 'Email already exists. Please use a different email',
+          message: t('email_already_exists'),
         });
       } else {
         pushError(`Error: ${error.message}`);
@@ -259,7 +266,7 @@ const Step2Form = ({
             onClick={() => handleClick('term_of_service')}
             className="font-medium leading-tight tracking-tight text-primary-50 underline"
           >
-            Terms of Use
+            {t('terms_of_use')}
           </button>
           {` ${t('accept_pp_and_tac.second')} `}
           <button
@@ -267,7 +274,7 @@ const Step2Form = ({
             onClick={() => handleClick('privacy_policy')}
             className="font-medium leading-tight tracking-tight text-primary-50 underline"
           >
-            Privacy Policy
+            {t('privacy_policy')}
           </button>
           .
         </p>
@@ -328,7 +335,7 @@ const Step3Form = (props: IStep3FormProps) => {
       if (verificationCode !== currentVerificationCode) {
         setError('verificationCode', {
           type: 'unverified',
-          message: 'The verification code is not correct, please re - enter',
+          message: t('invalid_verification_code'),
         });
       } else {
         clearErrors('verificationCode');

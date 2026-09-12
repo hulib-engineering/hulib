@@ -30,22 +30,25 @@ function Topics({ topics }: { topics: Topic[] }) {
   const t = useTranslations('Schedule.HoverCard');
 
   return (
-    <Section title={t('topics')} row>
-      <div className="flex flex-wrap gap-2">
-        {topics?.map((t: Topic) => (
-          <div
-            key={t?.id}
-            className={mergeClassnames(
-              'py-2 px-3 rounded-2xl border',
-              'text-xs font-medium leading-[14px]',
-              getTopicBadgeClasses(t?.color),
-            )}
-          >
-            {t?.name}
-          </div>
-        ))}
-      </div>
-    </Section>
+    !topics?.length ? <></>
+      : (
+          <Section title={t('topics')} row>
+            <div className="flex flex-wrap gap-2">
+              {topics?.map((t: Topic) => (
+                <div
+                  key={t?.id}
+                  className={mergeClassnames(
+                    'py-2 px-3 rounded-2xl border',
+                    'text-xs font-medium leading-[14px]',
+                    getTopicBadgeClasses(t?.color),
+                  )}
+                >
+                  {t?.name}
+                </div>
+              ))}
+            </div>
+          </Section>
+        )
   );
 }
 
@@ -96,7 +99,6 @@ export default function AuthorQuickView({ humanBook }: { humanBook: User }) {
   // 2nd API call - as the API call on parent component (which gets user's info) doesn't return list of stories (or at least their titles)
   // | remove if the 1st API call return response of stories list (or at least their titles)
 
-  // Do add 'isLoading' to const {} if need to add loading for the hover card
   const { data: storiesList } = useGetHuberStoriesQuery(
     { huberId: humanBook.id, publishedOnly: true },
     { skip: !humanBook.id },
@@ -112,9 +114,9 @@ export default function AuthorQuickView({ humanBook }: { humanBook: User }) {
       max-lg:top-full max-lg:mt-8 lg:left-full lg:ml-2"
     >
       <AuthorBasicInfo
-        avatarSize="2xl"
         humanBook={humanBook}
-        stories={storiesList}
+        numStories={storiesList?.data?.length}
+        type="hovercard"
       />
       <MaturingExperiences bio={humanBook.bio} />
       <Topics topics={humanBook.sharingTopics} />

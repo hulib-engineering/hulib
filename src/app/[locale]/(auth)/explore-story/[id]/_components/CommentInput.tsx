@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
@@ -11,16 +11,30 @@ import Avatar from '@/components/core/avatar/Avatar';
 import { useAppSelector } from '@/libs/hooks';
 import { useCreateStoryReviewMutation } from '@/libs/services/modules/story-reviews';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import TextArea from '@/components/core/textArea/TextArea';
+import { setPostLoginRedirect } from '@/utils/authRedirect';
 
-type CommentInputProps = {
+type CommentProps = {
   storyId: number;
+  comment: string;
+  setComment: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function CommentInput({ storyId }: CommentInputProps) {
+export default function CommentInput({ storyId, comment, setComment }: CommentProps) {
   const t = useTranslations('ExploreStory');
   const tButton = useTranslations('LandingPage');
 
-  const [comment, setComment] = useState('');
+  const ref = useRef<HTMLTextAreaElement>(null);
+
+  const resize = () => {
+    const el = ref.current;
+    if (!el) {
+      return;
+    }
+    el.style.height = 'auto';
+    el.style.height = `${el.scrollHeight + 5}px`;
+  };
+
   const router = useRouter();
   const { data: session } = useSession();
   const pathname = usePathname();
@@ -28,7 +42,8 @@ export default function CommentInput({ storyId }: CommentInputProps) {
 
   const requireAuth = useCallback(() => {
     if (!session) {
-      router.push(`/auth/login?callbackUrl=${encodeURIComponent(pathname)}`);
+      setPostLoginRedirect(pathname);
+      router.push('/auth/login');
       return false;
     }
     return true;
@@ -57,6 +72,9 @@ export default function CommentInput({ storyId }: CommentInputProps) {
         userId: id,
       });
       setComment('');
+      if (ref.current) {
+        ref.current.style.height = 'auto';
+      }
       pushSuccess(t('comment_submitted'));
     } catch {
       pushError(t('comment_error'));
@@ -65,7 +83,7 @@ export default function CommentInput({ storyId }: CommentInputProps) {
 
   if (!session) {
     return (
-      <div className="flex flex-col items-center justify-between gap-y-3 rounded-xl bg-primary-98 p-4 py-6 xxl:flex-row">
+      <div className="flex flex-col items-center justify-between gap-y-3 rounded-xl bg-primary-98 p-4 py-6 max-sm:items-end xxl:flex-row">
         <span className="text-center">{t('comment_login_prompt')}</span>
 
         <div className="flex items-center gap-2 xxl:gap-3">
@@ -73,7 +91,10 @@ export default function CommentInput({ storyId }: CommentInputProps) {
             variant="ghost"
             size="lg"
             className="w-[144px]"
-            onClick={() => router.push('/auth/login')}
+            onClick={() => {
+              setPostLoginRedirect(pathname);
+              router.push('/auth/login');
+            }}
           >
             {tButton('button.sign_in')}
           </Button>
@@ -81,7 +102,10 @@ export default function CommentInput({ storyId }: CommentInputProps) {
             variant="fill"
             size="lg"
             className="w-[144px]"
-            onClick={() => router.push('/auth/register')}
+            onClick={() => {
+              setPostLoginRedirect(pathname);
+              router.push('/auth/register');
+            }}
           >
             {tButton('button.sign_up')}
           </Button>
@@ -95,7 +119,7 @@ export default function CommentInput({ storyId }: CommentInputProps) {
       <h6 className="text-base font-medium leading-6 text-neutral-20">
         {t('comment_title')}
       </h6>
-      <div className="flex items-center gap-3">
+      <div className="flex items-start gap-3">
         {avatarUrl
           ? (
               <Avatar imageUrl={avatarUrl} className="size-10 shrink-0" />
@@ -106,12 +130,15 @@ export default function CommentInput({ storyId }: CommentInputProps) {
                 {...genConfig(fullName ?? String(id ?? 'huber'))}
               />
             )}
-        <input
-          type="text"
+        <TextArea
           value={comment}
+          ref={ref}
+          onInput={resize}
           onChange={e => setComment(e.target.value)}
           placeholder={t('comment_placeholder')}
-          className="flex-1 rounded-2xl border border-neutral-90 bg-neutral-98 px-4 py-2.5 text-sm text-neutral-20 placeholder:text-neutral-40 focus:outline-none"
+          className="max-h-[300px] flex-1 resize-none rounded-2xl border border-neutral-90 bg-neutral-98
+          px-4 py-2.5 text-sm text-neutral-20
+          placeholder:text-neutral-40 focus:outline-none"
         />
       </div>
       <div className="flex justify-end">

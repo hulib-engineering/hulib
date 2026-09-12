@@ -62,15 +62,15 @@ export const poppins = localFont({
       style: 'italic',
     },
     {
-      path: './fonts/SVN-Poppins-Medium.otf',
+      path: './fonts/DesignerVN-Poppins-Regular.ttf',
       weight: '400',
       style: 'normal',
     },
-    {
-      path: './fonts/SVN-Poppins-MediumItalic.otf',
+    /* {
+      path: './fonts/SVN-Poppins-RegularItalic.otf',
       weight: '400',
       style: 'italic',
-    },
+    }, */
     {
       path: './fonts/SVN-Poppins-Medium.otf',
       weight: '500',
@@ -81,6 +81,7 @@ export const poppins = localFont({
       weight: '500',
       style: 'italic',
     },
+    /* TODO: should be semibold instead
     {
       path: './fonts/SVN-Poppins-Bold.otf',
       weight: '600',
@@ -90,7 +91,7 @@ export const poppins = localFont({
       path: './fonts/SVN-Poppins-BoldItalic.otf',
       weight: '600',
       style: 'italic',
-    },
+    }, */
     {
       path: './fonts/SVN-Poppins-Bold.otf',
       weight: '700',
@@ -102,22 +103,22 @@ export const poppins = localFont({
       style: 'italic',
     },
     {
-      path: './fonts/SVN-Poppins-Bold.otf',
+      path: './fonts/SVN-Poppins-ExtraBold.otf',
       weight: '800',
       style: 'normal',
     },
     {
-      path: './fonts/SVN-Poppins-BoldItalic.otf',
+      path: './fonts/SVN-Poppins-ExtraBoldItalic.otf',
       weight: '800',
       style: 'italic',
     },
     {
-      path: './fonts/SVN-Poppins-Bold.otf',
+      path: './fonts/SVN-Poppins-Black.otf',
       weight: '900',
       style: 'normal',
     },
     {
-      path: './fonts/SVN-Poppins-BoldItalic.otf',
+      path: './fonts/SVN-Poppins-BlackItalic.otf',
       weight: '900',
       style: 'italic',
     },

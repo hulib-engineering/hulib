@@ -40,7 +40,8 @@
     "no_result": {
       "title": "Không tìm thấy kết quả",
       "description": "Chúng tôi không tìm thấy kết quả nào phù hợp với tìm kiếm của bạn. Vui lòng thử tìm kiếm lại."
-    }
+    },
+    "search_not_found": "Không có kết quả bạn cần tìm"
   },
   "Footer": {
     "copyright": "© 2026 HuLib. Đã đăng ký bản quyền.",
@@ -432,7 +433,11 @@
     "awaiting_stories_page": {
       "title": "Chờ phê duyệt - Câu chuyện",
       "subtitle": "Danh sách câu chuyện đang chờ phê duyệt",
-      "empty_state": "Bạn có một trái tim ấm áp"
+      "empty_state": "Bạn có một trái tim ấm áp",
+      "filter_pending": "Chờ duyệt",
+      "filter_published": "Đã xuất bản",
+      "filter_rejected": "Bị từ chối",
+      "filter_deleted": "Đã xoá"
     },
     "tags_page": {
       "title": "Danh sách chủ đề",
@@ -561,7 +566,11 @@
     "passwords_match": "Mật khẩu trùng khớp",
     "resetting": "Đang đặt lại...",
     "back_to_login": "Quay lại Đăng nhập",
-    "submit": "Gửi"
+    "submit": "Gửi",
+    "email_already_exists": "Email đã tồn tại. Vui lòng sử dụng email khác",
+    "invalid_verification_code": "Mã xác minh không chính xác, vui lòng nhập lại",
+    "terms_of_use": "Điều khoản sử dụng",
+    "privacy_policy": "Chính sách bảo mật"
   },
   "ForgotPassword": {
     "meta_title": "Quên mật khẩu",
@@ -581,9 +590,11 @@
     "delete_ava": "xoá ảnh đại diện",
     "tabs": {
       "about": "Giới thiệu",
-      "my_stories": "Câu chuyện của tôi",
+      "my_stories": "Sách của tôi",
       "stories": "Câu chuyện",
-      "my_favorite": "Yêu thích"
+      "my_favorite": "Yêu thích",
+      "my_schedule": "Lịch của tôi",
+      "my_feedback": "Đánh giá của tôi"
     },
     "about_panel": {
       "title": "Giới thiệu",
@@ -638,11 +649,31 @@
     "confirm_information_accuracy": "Tôi xác nhận rằng thông tin tôi cung cấp là chính xác theo hiểu biết của tôi.",
     "submit_appeal": "Gửi khiếu nại",
     "about": "Giới thiệu",
-    "my_stories": "Truyện của tôi",
+    "my_stories": "Sách của tôi",
     "my_favorite": "Sách yêu thích",
     "no_own_stories_title": "Bạn chưa có câu chuyện nào",
     "no_own_stories_body": "Chia sẻ những câu chuyện của bạn, biết đâu nó sẽ giúp ích được cho nhiều người",
+    "continue_finish_story": "Tiếp tục hoàn thành",
+    "my_schedule": "Lịch của tôi",
+    "my_feedback": "Đánh giá của tôi",
     "joined_since": "Tham gia Hulib {date}",
+    "become_huber_banner": "Tạo câu chuyện mới để trở thành Huber",
+    "become_huber_star_title": "Hoàn thiện phần <strong>giới thiệu</strong> và <strong>lịch trình</strong> để đạt danh hiệu \"Huber Sao\"",
+    "become_huber_star_progress": "Tiến độ",
+    "profile_metrics": {
+      "stories_title": "Câu chuyện",
+      "stories_sub": "Đã chia sẻ",
+      "conversations_title": "Cuộc trò chuyện",
+      "conversations_sub": "Đã đồng hành",
+      "rating_title": "Đánh giá",
+      "rating_sub": "({count} đánh giá)",
+      "followers_title": "Người theo dõi"
+    },
+    "feedback_panel": {
+      "no_feedback_title": "Chưa có đánh giá nào",
+      "no_feedback_body": "Đánh giá từ độc giả sẽ xuất hiện ở đây sau khi họ hoàn thành buổi đọc cùng bạn.",
+      "total_ratings": "{count} đánh giá"
+    },
     "liber_about": {
       "journey_title": "Những trải nghiệm giúp tớ trưởng thành",
       "journey_placeholder": "Chia sẻ những trải nghiệm đã giúp bạn trưởng thành...",
@@ -719,7 +750,7 @@
   },
   "ExploreStory": {
     "description": "Tìm thấy câu chuyện dành riêng cho bạn\n",
-    "ratings": "Đánh giá",
+    "ratings": "đánh giá",
     "read_story": "Đọc truyện",
     "similar_stories": "Những câu chuyện tương tự",
     "story_added_to_favorites": "Thêm vào danh sách yêu thích thành công",
@@ -733,9 +764,11 @@
     "share_story": "Chia sẽ thêm",
     "like_button": "Thích",
     "like_error": "Thất bại",
-    "booking_cta": "Nếu câu chuyện này chạm đến bạn, hãy kết nối cùng tác giả qua một buổi trò chuyện tại đây nhé",
-    "book_a_meeting": "Book a Meeting",
-    "booking_count": "Đã có 100 cuộc hẹn từ câu chuyện này",
+    "lets_chat": "Tám xíu nha",
+    "booking_cta": "Nếu câu chuyện này chạm đến bạn, hãy kết nối cùng tác giả qua cuộc trò chuyện 1-1 Miễn Phí đây nha",
+    "booking_cta_unauth": "Bạn cần đăng nhập để có thể đặt hẹn gặp gỡ trực tuyến với tác giả",
+    "book_a_meeting": "Kết nối 1-1",
+    "booking_count": "Đã có {bookingCount} cuộc hẹn từ câu chuyện này",
     "author": "Tác giả",
     "stories": "câu chuyện",
     "favorites": "yêu thích",
@@ -752,9 +785,11 @@
     "story": "Câu chuyện",
     "is_deleted_successfully": "đã được xóa thành công",
     "read_all": "Đọc tất cả",
+    "preview": "Xem trước",
     "edit": "Chỉnh sửa",
     "favorite": "Yêu thích",
     "confirm_delete_story": "Bạn có chắc chắn muốn xóa câu chuyện này không?",
+    "confirm_delete_book": "Bạn có chắc chắn muốn xóa cuốn sách này không?",
     "confirm_remove_favorite": "Bạn có chắc chắn muốn xóa câu chuyện này khỏi danh sách yêu thích không?",
     "story_delete_warning": "Câu chuyện sẽ bị xóa ngay lập tức.",
     "cannot_undo_action": "Bạn không thể hoàn tác hành động này.",
@@ -780,6 +815,7 @@
     "agreement": "Mình đã đọc và đồng ý với các nguyên tắc cộng đồng của Hulib",
     "huber_responsibility": "Huber tự chịu trách nhiệm về tính trung thực của các thông tin cung cấp cho Hulib.",
     "emergency_notice": "HuLib có quyền từ chối hoặc yêu cầu chỉnh sửa nội dung nếu câu chuyện chưa đáp ứng các tiêu chí cộng đồng nêu trên.",
+    "safety_warning": "Nếu bạn thấy ai đang trong tình huống nguy hiểm vui lòng liên hệ ngay dịch vụ hỗ trợ khẩn cấp phù hợp.",
     "continue": "Tiếp tục",
     "hero_title": "Hướng dẫn tạo sách",
     "hero_description": "HuLib rất mong chờ được đọc và lan tỏa câu chuyện của bạn đến cộng đồng. Trước khi bắt đầu tạo sách, tụi mình có một vài lưu ý nhỏ để cùng xây dựng một không gian chia sẻ tích cực, an toàn và ý nghĩa nhé.",
@@ -816,12 +852,12 @@
         "rules": "Sau khi được duyệt, Huber sẽ có thử thách tự nguyện để cập nhật thời gian rảnh của mình trên nền tảng (tối thiểu 30 phút mỗi tuần). Thông qua đó, câu chuyện của bạn có thể tiếp cận nhiều Liber hơn — các bạn trẻ trải qua hoàn cảnh tương tự hoặc đang mắc kẹt trong một vấn đề nào đó và tìm thấy sự liên kết từ cuốn sách của bạn."
       }
     },
-    "create_book_title": "Tạo câu chuyện",
-    "success_create_book": "Viết câu chuyện thành công",
-    "thanks_for_story": "Cảm ơn bạn đã chia sẻ câu chuyện! HuLib sẽ giữ bạn được thông báo khi quá trình của chúng tôi hoàn thành.",
+    "create_book_title": "Tạo sách",
+    "success_create_book": "Tạo sách thành công",
+    "thanks_for_story": "Sách của bạn đang được đội ngũ HuLib xem xét và sẽ có kết quả trong vòng 24 giờ tới.",
     "in_review": "Đang xem xét",
     "back_to_profile": "Quay về trang cá nhân",
-    "create_new_book": "Tạo câu chuyện mới",
+    "create_new_book": "Tạo sách mới",
     "hearts": "Trái tim",
     "approve_huber_failed": "Không thể duyệt Huber. Vui lòng thử lại.",
     "waiting_for_approval": "Đang chờ duyệt",
@@ -834,7 +870,6 @@
     "declined": "Đã từ chối",
     "back": "Trở lại",
     "reason_for_rejection": "Lý do từ chối",
-    "new_book_icon_alt": "Biểu tượng sách mới",
     "content_to_avoid": "Nội dung cần tránh"
   },
   "Time_slots": {
@@ -864,7 +899,41 @@
     "day_prompt_4": "Dành ra 30 phút khó vậy sao? 😢",
     "day_prompt_5": "Thôi nào, 30 phút cũng khó à? 😢",
     "day_prompt_6": "Bạn thực sự bận vào thứ Bảy à? 🤔",
-    "slots_message": "Tuyệt vời!!! Bạn có thể gặp {slots} Libers mỗi {day}"
+    "slots_message": "Tuyệt vời!!! Bạn có thể gặp {slots} Libers mỗi {day}",
+    "personal_time_tab": "Giờ cá nhân",
+    "meeting_tab": "Lịch trò chuyện",
+    "panel_description": "Với mỗi câu chuyện, một Liber có thể yêu cầu trò chuyện trực tiếp với bạn. Hãy chọn khung giờ trong tuần bạn rảnh để trò chuyện với Liber.",
+    "save_and_next": "Lưu & chuyển sang {day}",
+    "skip_day": "Bỏ qua {day}",
+    "edit": "Chỉnh sửa",
+    "morning": "Buổi sáng",
+    "afternoon": "Buổi chiều",
+    "evening": "Buổi tối",
+    "save_schedule": "Lưu lịch",
+    "save_success": "Lưu lịch thành công",
+    "status_updated_success": "Cập nhật phiên thành công",
+    "meeting_empty_title": "Bạn chưa có phiên nào",
+    "meeting_empty_description": "Khám phá những câu chuyện bên dưới, nếu bạn thấy kết nối, hãy đặt phiên với tác giả!",
+    "filter_view_label": "Xem:",
+    "filter_all": "Tất cả loại",
+    "filter_invitation": "Lời mời",
+    "filter_my_request": "Yêu cầu của tôi",
+    "filter_done": "Đã xong",
+    "filter_missed": "Bỏ lỡ",
+    "filter_no_results": "Không có phiên nào phù hợp với bộ lọc",
+    "status_right_now": "Ngay bây giờ!",
+    "status_invitation": "Lời mời",
+    "status_my_request": "Yêu cầu của tôi",
+    "status_done": "Đã xong",
+    "status_missed": "Bỏ lỡ",
+    "time_label": "Thời gian",
+    "meeting_with": "Họp với",
+    "requested_by": "Được yêu cầu bởi",
+    "send_to": "Gửi đến",
+    "join": "Tham gia",
+    "reject": "Từ chối",
+    "accept": "Chấp nhận",
+    "cancel_session": "Hủy"
   },
   "Meeting": {
     "survey_submitted_successfully": "Khảo sát đã được gửi thành công. Chúc bạn có thời gian vui vẻ với Huber",
@@ -996,8 +1065,8 @@
     "appeal": "Khiếu nại"
   },
   "HuberCTA": {
-    "title": "Cảm ơn bạn đã chia sẻ câu chuyện 💙",
-    "subtitle": "HuLib sẽ thông báo cho bạn khi quá trình duyệt hoàn tất trong 24–48 giờ nha.",
+    "title": "Chia sẻ câu chuyện của bạn",
+    "subtitle": "Hãy chia sẽ trải nghiệm, bài học, hoặc điều bạn muốn lan tỏa. Biết đâu câu chuyện của bạn sẽ giúp ai đó bớt cô đơn. Đọc story guidelines trước khi bắt đầu nhé.",
     "button_label": "Tạo sách mới"
   },
   "HomeStories": {
@@ -1032,6 +1101,8 @@
     "back": "Quay lại",
     "cancel": "Huỷ bỏ",
     "submit": "Hoàn thành",
+    "submit_create_book_mobile": "Xác nhận",
+    "submit_create_book_desktop": "Tạo sách",
     "rejected": "Từ chối",
     "in_review": "Đang xem xét",
     "rejection_reason": "Lý do từ chối",
@@ -1118,9 +1189,11 @@
     "save": "Lưu",
     "not_found": "Không tìm thấy",
     "could_not_find_resource": "Không thể tìm thấy tài nguyên được yêu cầu",
+    "no_results_found": "Không có kết quả bạn cần tìm",
     "return_home": "Quay lại trang chủ",
     "view_more": "Xem thêm",
     "see_more": "Xem thêm",
+    "see_less": "Thu gọn",
     "edit": "Chỉnh sửa",
     "delete": "Xóa",
     "delete_success": "Xóa thành công",
@@ -1132,6 +1205,9 @@
     "update_your_schedule": " Cập nhật lịch của bạn",
     "update_schedule_description": "Cập nhật lịch của bạn để mọi người có thể trò chuyện trực tiếp với bạn",
     "update_personal_schedule": " Cập nhật lịch cá nhân",
+    "update_schedule_online": "Cập nhật lịch cá nhân để có thể trò chuyện trực tuyến với mọi người",
+    "edit_book_title": "Chỉnh sửa sách",
+    "edit_book_success": "Chỉnh sửa sách thành công",
     "all": "Tất cả",
     "search_by_keyword": "Tìm kiếm theo từ khóa",
     "change": "Đổi",
@@ -1141,6 +1217,8 @@
     "password_capital": "Mật khẩu phải chứa chữ cái viết hoa.",
     "password_match": "Mật khẩu nhập lại phải trùng khớp.",
     "search_for_name": "Tìm theo tên",
+    "popular_search": "Tìm kiếm phổ biến",
+    "recent_search": "Lần tìm gần đây",
     "notification_title": "Thông báo",
     "no_messages": "Bạn chưa có cuộc trò chuyện nào.",
     "invalid": "Không hợp lệ",
@@ -1317,5 +1395,11 @@
       "reminder": "Chúng tôi rất vui khi được đồng hành cùng bạn trong sự kiện sắp tới! Vào trước ngày diễn ra sự kiện BTC sẽ gửi một email nhắc nhở bạn về chương trình, mong bạn sẽ để ý check mail nhé!",
       "close_button": "Gotchaaaa"
     }
+  },
+  "PersonalCalendarModal": {
+    "when_am_i_free": "Khi nào mình rảnh nhỉ?",
+    "description": "Chọn vài khung giờ phù hợp để bạn có thể trò chuyện trực tiếp với mọi người",
+    "i_am_busy": "{day} tớ bận",
+    "update_later": "Cập nhật sau"
   }
 }

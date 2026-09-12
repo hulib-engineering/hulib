@@ -1,4 +1,5 @@
 'use client';
+import { BookOpen, Plus } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 
 type ContinueButtonProps = {
@@ -11,6 +12,7 @@ export default function ContinueButton({ canContinue, onContinue }: ContinueButt
 
   return (
     <button
+      type="button"
       onClick={onContinue}
       disabled={!canContinue}
       className={`shrink-0 rounded-full px-8 py-3 text-sm font-semibold transition-colors
@@ -19,7 +21,9 @@ export default function ContinueButton({ canContinue, onContinue }: ContinueButt
       : 'bg-[#E3E4E5] text-[#ABAEB1]'
     } h-[44px] max-sm:w-full sm:w-[250px]`}
     >
+      <BookOpen size={20} className="mr-2 inline-block" />
       {t('continue')}
+      <Plus size={20} className="ml-2 inline-block" />
     </button>
   );
 }
