@@ -356,6 +356,10 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     }
   });
 
+  function handleCloseCCModal() {
+    setIsOpenConfirmCodeModal(false);
+  }
+
   return (
     <>
       <Form className="flex w-full flex-col gap-3" onSubmit={handleUpdate}>
@@ -376,7 +380,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
         />
       </Form>
 
-      <Modal open={isOpenConfirmCodeModal} onClose={() => {}}>
+      <Modal open={isOpenConfirmCodeModal} onClose={handleCloseCCModal}>
         <CodeConfirmationModal email={getValues('email')} />
       </Modal>
     </>
