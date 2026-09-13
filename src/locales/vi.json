@@ -1163,7 +1163,7 @@
       "at": "tại",
       "present": "Hiện tại"
     },
-    "full_name": "Họ và tên",
+    "full_name": "Họ và tên (bút danh)",
     "full_name_placeholder": "Đinh Cao Nguyên Quỳnh",
     "gender": {
       "label": "Giới tính",
@@ -1176,6 +1176,9 @@
     "address": "Địa chỉ (không bắt buộc)",
     "address_placeholder": "Số nhà, tên đường, phường, thành phố",
     "email": "Email",
+    "email_required": "Bắt buộc",
+    "email_invalid": "Email không hợp lệ",
+    "email_valid": "Khi đổi sang email mới, tụi mình sẽ gửi 1 mã xác nhận đến địa chỉ email đó. Bạn cần nhập mã này để hoàn tất thay đổi.",
     "phone_number": "Số điện thoại (không bắt buộc)",
     "phone_number_placeholder": "Số điện thoại của bạn",
     "phone_number_invalid": "Số điện thoại phải bắt đầu bằng + và có mã quốc gia, ví dụ +84987654321",

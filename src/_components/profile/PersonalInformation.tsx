@@ -20,7 +20,7 @@ import { useAppDispatch } from '@/libs/hooks';
 import type { User } from '@/libs/services/modules/auth';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { setUserInfo } from '@/libs/store/authentication';
-import { PHONE_NUMBER_MESSAGE, PHONE_NUMBER_REGEX, ProfileValidation } from '@/validations/ProfileValidation';
+import { PHONE_NUMBER_REGEX, ProfileValidation, VALIDATION_MESSAGES } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
 import Alert from '@/components/Alert';
 
@@ -94,7 +94,7 @@ function GenderSection({ control }: { control: Control<TProfileForm> }) {
     </Form.Item>
   );
 }
-
+// TODO: give birthday section minicalendar
 function BirthdaySection({ control }: { control: Control<TProfileForm> }) {
   const t = useTranslations('Common');
   return (
@@ -145,18 +145,21 @@ function AddressSection({ register, errors }: { register: UseFormRegister<TProfi
 function EmailSection({ register, errors }: { register: UseFormRegister<TProfileForm>; errors: FieldErrors<TProfileForm> }) {
   const t = useTranslations('Common');
   return (
-    <Form.Item>
-      <TextInput
-        id="email"
-        type="email"
-        label={(<span className="font-medium">{t('email')}</span>)}
-        disabled
-        {...register('email')}
-        isError={!!errors.email}
-        hintText={errors.email?.message}
-        required
-      />
-    </Form.Item>
+    <>
+      <Form.Item>
+        <TextInput
+          id="email"
+          type="email"
+          label={(<span className="font-medium">{t('email')}</span>)}
+          {...register('email')}
+          isError={!!errors.email}
+          required
+        />
+      </Form.Item>
+      {errors.email
+        ? <Alert>{t(errors.email.message as any)}</Alert>
+        : <Alert variant="info">{t('email_valid')}</Alert>}
+    </>
   );
 }
 
@@ -317,7 +320,7 @@ export default function PersonalInformation({ data, onCancel, onSucceed }: IProf
         Object.keys(fieldErrors).forEach((field) => {
           setError(field as keyof z.infer<typeof ProfileValidation>, {
             type: 'server',
-            message: PHONE_NUMBER_MESSAGE,
+            message: VALIDATION_MESSAGES.PHONE_NUMBER,
           });
         });
       } else {
