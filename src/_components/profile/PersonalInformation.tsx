@@ -187,7 +187,12 @@ function GuardianSection({ register, errors }: { register: UseFormRegister<TProf
         id="parentEmail"
         type="email"
         placeholder={t('guardian_placeholder')}
-        label={(<span className="font-medium">{t('guardian_email')}</span>)}
+        label={(
+          <p className="font-medium">
+            {t('guardian_email')}
+            <span className="font-normal text-red-50">*</span>
+          </p>
+        )}
         {...register('parentEmail')}
         isError={!!errors.parentEmail}
       />
@@ -197,7 +202,12 @@ function GuardianSection({ register, errors }: { register: UseFormRegister<TProf
         type="tel"
         pattern={PHONE_NUMBER_REGEX.source}
         placeholder={t('guardian_placeholder')}
-        label={(<span className="font-medium">{t('guardian_phone_number')}</span>)}
+        label={(
+          <p className="font-medium">
+            {t('guardian_phone_number')}
+            <span className="font-normal text-red-50">*</span>
+          </p>
+        )}
         {...register('parentPhoneNumber')}
         isError={!!errors.parentPhoneNumber}
       />
