@@ -52,7 +52,7 @@ export default function ProfileContent({ userDetail, isViewer = false }: HuberPr
       {currentTab === 'my_favorite' && <MyFavoritePanel />}
       {currentTab === 'my_schedule' && <HuberSchedulePanel huberId={userDetail.id} />}
       {currentTab === 'my_feedback' && <>My feedback</>}
-      {currentTab === 'personal_info' && <PersonalInformation data={userDetail} onCancel={() => {}} onSucceed={() => {}} />}
+      {currentTab === 'personal_info' && <PersonalInformation data={userDetail} />}
     </ControlOverview>
   );
 }

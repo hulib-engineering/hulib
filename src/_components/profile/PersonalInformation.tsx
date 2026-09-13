@@ -2,12 +2,13 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { z } from 'zod';
 
 import { isEmpty } from 'lodash';
+import Image from 'next/image';
 import Button from '@/components/core/button/Button';
 // import { CustomDatePicker } from '@/components/CustomDatePicker';
 import { pushError } from '@/components/CustomToastifyContainer';
@@ -23,11 +24,10 @@ import { setUserInfo } from '@/libs/store/authentication';
 import { PHONE_NUMBER_REGEX, ProfileValidation, VALIDATION_MESSAGES } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
 import Alert from '@/components/Alert';
+import Modal from '@/components/Modal';
 
 type IProfileFormProps = {
   data: User;
-  onCancel: () => void;
-  onSucceed: () => void;
 };
 
 type TProfileForm = z.infer<typeof ProfileValidation>;
@@ -258,10 +258,36 @@ function FormActionsSection({
   );
 }
 
-export default function PersonalInformation({ data, onCancel, onSucceed }: IProfileFormProps) {
+function CodeConfirmationModal({ email }: { email: string }) {
+  const t = useTranslations('Common');
+  return (
+    <>
+      <Modal.Backdrop />
+      <Modal.Panel
+        className="h-[872px] w-[480px]
+        "
+      >
+        <div className="flex flex-col items-center gap-2 px-6">
+          <Image src="/assets/images/users/mail_icon.png" alt="A Mail Icon" width={112.5} height={99} />
+          <h1 className="text-[28px] font-medium text-primary-50">{t('email_confirm_title')}</h1>
+          <p className="text-center">
+            {t.rich('email_confirm_description', {
+              email,
+              bold: chunks => <span className="font-extrabold">{chunks}</span>,
+              br: () => <br />,
+            })}
+          </p>
+        </div>
+      </Modal.Panel>
+    </>
+  );
+}
+
+export default function PersonalInformation({ data }: IProfileFormProps) {
   const t = useTranslations('Common');
 
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+  const [isOpenConfirmCodeModal, setIsOpenConfirmCodeModal] = useState(false);// TODO: default 'false'
 
   const dispatch = useAppDispatch();
 
@@ -271,6 +297,7 @@ export default function PersonalInformation({ data, onCancel, onSucceed }: IProf
     setValue,
     setError,
     watch,
+    getValues,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting, isDirty },
@@ -313,7 +340,7 @@ export default function PersonalInformation({ data, onCancel, onSucceed }: IProf
 
       const response = await updateProfile({ ...profilePatch, gender: { id: values.gender?.id } }).unwrap();
       dispatch(setUserInfo(response));
-      onSucceed();
+      setIsOpenConfirmCodeModal(true);
     } catch (error: any) {
       const fieldErrors = error?.data?.errors;
       if (fieldErrors && typeof fieldErrors === 'object') {
@@ -329,28 +356,29 @@ export default function PersonalInformation({ data, onCancel, onSucceed }: IProf
     }
   });
 
-  const handleCancel = () => {
-    reset();
-    onCancel();
-  };
-
   return (
-    <Form className="flex w-full flex-col gap-3" onSubmit={handleUpdate}>
-      <Name register={register} errors={errors} />
-      <GenderBirthday control={control} />
-      <AddressSection register={register} errors={errors} />
-      <EmailSection register={register} errors={errors} />
-      <PhoneNumberSection register={register} errors={errors} />
-      {watch('isUnderGuard') && (
-        <GuardianSection register={register} errors={errors} />
-      )}
-      <FormActionsSection
-        isSubmitting={isSubmitting}
-        isLoading={isLoading}
-        isDirty={isDirty}
-        errors={errors}
-        onCancel={handleCancel}
-      />
-    </Form>
+    <>
+      <Form className="flex w-full flex-col gap-3" onSubmit={handleUpdate}>
+        <Name register={register} errors={errors} />
+        <GenderBirthday control={control} />
+        <AddressSection register={register} errors={errors} />
+        <EmailSection register={register} errors={errors} />
+        <PhoneNumberSection register={register} errors={errors} />
+        {watch('isUnderGuard') && (
+          <GuardianSection register={register} errors={errors} />
+        )}
+        <FormActionsSection
+          isSubmitting={isSubmitting}
+          isLoading={isLoading}
+          isDirty={isDirty}
+          errors={errors}
+          onCancel={reset}
+        />
+      </Form>
+
+      <Modal open={isOpenConfirmCodeModal} onClose={() => {}}>
+        <CodeConfirmationModal email={getValues('email')} />
+      </Modal>
+    </>
   );
 };

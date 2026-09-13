@@ -1179,6 +1179,8 @@
     "email_required": "Bắt buộc",
     "email_invalid": "Email không hợp lệ",
     "email_valid": "Khi đổi sang email mới, tụi mình sẽ gửi 1 mã xác nhận đến địa chỉ email đó. Bạn cần nhập mã này để hoàn tất thay đổi.",
+    "email_confirm_title": "Xác nhận email mới",
+    "email_confirm_description": "Chúng mình đã gửi mã xác nhận gồm 4 chữ số tới email <bold>{email}</bold>.<br></br>Bạn vui lòng kiểm tra hòm thư và nhập mã xác nhận tại đây.",
     "phone_number": "Số điện thoại (không bắt buộc)",
     "phone_number_placeholder": "Số điện thoại của bạn",
     "phone_number_invalid": "Số điện thoại phải bắt đầu bằng + và có mã quốc gia, ví dụ +84987654321",
