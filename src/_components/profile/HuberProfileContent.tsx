@@ -2,6 +2,7 @@ import { ControlOverview } from './ControlOverview';
 import HuberSchedulePanel from './HuberSchedulePanel';
 import MyFavoritePanel from './MyFavoritePanel';
 import MyAboutPanel from './MyAboutPanel';
+import MyFeedbackPanel from './MyFeedbackPanel';
 import MyStoriesPanel from '@/app/[locale]/(auth)/users/[id]/_components/MyStoriesPanel';
 import useProfileActions from '@/features/users/hooks/useProfileActions';
 import { useProfileTab } from '@/features/users/hooks/useProfileTab';
@@ -41,7 +42,7 @@ export default function HuberProfileContent({ userDetail }: HuberProfileContentP
       )}
       {currentTab === 'my_favorite' && <MyFavoritePanel />}
       {currentTab === 'my_schedule' && <HuberSchedulePanel huberId={userDetail.id} />}
-      {currentTab === 'my_feedback' && <>My feedback</>}
+      {currentTab === 'my_feedback' && <MyFeedbackPanel huberId={userDetail.id} />}
     </ControlOverview>
   );
 }
