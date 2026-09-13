@@ -35,7 +35,6 @@ export default async function middleware(request: NextRequest) {
   // Skip API routes, Next.js internals, and static files
   if (
     pathname.startsWith('/api')
-    || pathname.startsWith('/monitoring')
     || pathname.startsWith('/_next')
     || pathname.match(/\.(jpg|jpeg|png|gif|svg|ico|css|js|map|json)$/)
   ) {
@@ -109,5 +108,5 @@ export default async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next|_vercel|monitoring|.*\\..*).*)'],
+  matcher: ['/((?!_next|_vercel|.*\\..*).*)'],
 };
