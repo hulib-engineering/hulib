@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
+import type { Control, FieldErrors, SubmitHandler, UseFormRegister } from 'react-hook-form';
 import type { z } from 'zod';
 
 import { isEmpty } from 'lodash';
@@ -21,10 +21,12 @@ import { useAppDispatch } from '@/libs/hooks';
 import type { User } from '@/libs/services/modules/auth';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { setUserInfo } from '@/libs/store/authentication';
-import { PHONE_NUMBER_REGEX, ProfileValidation, VALIDATION_MESSAGES } from '@/validations/ProfileValidation';
+import { EmailChangeValidation, PHONE_NUMBER_REGEX, ProfileValidation, VALIDATION_MESSAGES } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
 import Alert from '@/components/Alert';
 import Modal from '@/components/Modal';
+import AuthCode from '@/components/core/authCode/AuthCode';
+import Hint from '@/components/Hint';
 
 type IProfileFormProps = {
   data: User;
@@ -258,15 +260,74 @@ function FormActionsSection({
   );
 }
 
-function CodeConfirmationModal({ email }: { email: string }) {
+function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess: () => void }) {
   const t = useTranslations('Common');
+  // MOCK-UP DATA, REMOVE THE ENTIRE THING ONCE BE IS AVAILABLES
+  // BEGIN ---
+  const MOCK_VALID_CODE = '1234';
+
+  function useConfirmEmailMutation() {
+    const [isLoading, setIsLoading] = useState(false);
+
+    const confirmEmail = async ({ email, code }: { email: string; code: string }) => {
+      setIsLoading(true);
+      await new Promise(resolve => setTimeout(resolve, 800));
+      setIsLoading(false);
+
+      if (code !== MOCK_VALID_CODE) {
+        const error = new Error('Invalid verification code') as Error & {
+          data: { errors: { code: string } };
+        };
+        error.data = { errors: { code: 'invalidCode' } };
+        throw error;
+      }
+
+      return { email, verified: true };
+    };
+
+    return [confirmEmail, { isLoading }] as const;
+  }
+  // END ---
+  const [confirmEmail, { isLoading: isConfirming }] = useConfirmEmailMutation(); // mock-up function
+
+  const {
+    control,
+    handleSubmit,
+    clearErrors,
+    setError,
+    formState: { errors },
+  } = useForm<z.infer<typeof EmailChangeValidation>>({
+    resolver: zodResolver(EmailChangeValidation),
+    defaultValues: {
+      verificationCode: '',
+    },
+  });
+
+  const handleAuthCodeSubmit: SubmitHandler<
+    z.infer<typeof EmailChangeValidation>
+  > = async ({ verificationCode }) => {
+    if (verificationCode.length !== 4) {
+      return;
+    }
+
+    clearErrors('verificationCode');
+    try {
+      const result = await confirmEmail({ email, code: verificationCode });
+      if (result) {
+        onSuccess();
+      }
+    } catch (_error: any) {
+      setError('verificationCode', {
+        type: 'unverified',
+        message: 'mock_up_error', // t('invalid_verification_code'),
+      });
+    }
+  };
+
   return (
     <>
       <Modal.Backdrop />
-      <Modal.Panel
-        className="h-[872px] w-[480px]
-        "
-      >
+      <Modal.Panel className="h-[872px] w-[480px]">
         <div className="flex flex-col items-center gap-2 px-6">
           <Image src="/assets/images/users/mail_icon.png" alt="A Mail Icon" width={112.5} height={99} />
           <h1 className="text-[28px] font-medium text-primary-50">{t('email_confirm_title')}</h1>
@@ -277,6 +338,38 @@ function CodeConfirmationModal({ email }: { email: string }) {
               br: () => <br />,
             })}
           </p>
+
+          <Form
+            onSubmit={handleSubmit(handleAuthCodeSubmit)}
+            className="flex w-full flex-col items-center justify-center gap-4"
+          >
+            <Form.Item>
+              <Controller
+                name="verificationCode"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <AuthCode
+                      {...field}
+                      length={4}
+                      size="sm"
+                      disabled={isConfirming}
+                      onChange={(value) => {
+                        field.onChange(value);
+                        if (value.length === 4) {
+                          handleAuthCodeSubmit({ verificationCode: value });
+                        }
+                      }}
+                      className="justify-center"
+                    />
+                    <Hint error className="mt-3">
+                      {errors.verificationCode?.message}
+                    </Hint>
+                  </>
+                )}
+              />
+            </Form.Item>
+          </Form>
         </div>
       </Modal.Panel>
     </>
@@ -381,7 +474,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
       </Form>
 
       <Modal open={isOpenConfirmCodeModal} onClose={handleCloseCCModal}>
-        <CodeConfirmationModal email={getValues('email')} />
+        <CodeConfirmationModal email={getValues('email')} onSuccess={handleCloseCCModal} />
       </Modal>
     </>
   );

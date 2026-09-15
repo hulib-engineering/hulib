@@ -67,3 +67,7 @@ export const EducationValidation = z.object({
   type: z.string().optional(),
   isPublic: z.boolean().optional(),
 });
+
+export const EmailChangeValidation = z.object({
+  verificationCode: z.string().trim().length(4),
+});
