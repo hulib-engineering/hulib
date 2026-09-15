@@ -37,6 +37,8 @@ export const Env = createEnv({
   },
   // You need to destructure all the keys manually
   runtimeEnv: {
+    // Right-hand side is the real process.env source; left-hand keys are
+    // the Env.* names the rest of the app already uses, unchanged.
     CLIENT_EMAIL: process.env.CLIENT_EMAIL,
     CLIENT_ID: process.env.CLIENT_ID,
     PRIVATE_KEY: process.env.PRIVATE_KEY,
