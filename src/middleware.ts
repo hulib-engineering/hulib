@@ -6,6 +6,8 @@ import createMiddleware from 'next-intl/middleware';
 import { AppConfig } from './utils/AppConfig';
 import { POST_LOGIN_REDIRECT_COOKIE } from './utils/authRedirect';
 
+const SENTRY_TUNNEL_ROUTE = '/monitoring';
+
 const SOCIAL_CRAWLER_PATTERNS = [
   'facebookexternalhit',
   'Facebot',
@@ -36,6 +38,7 @@ export default async function middleware(request: NextRequest) {
   if (
     pathname.startsWith('/api')
     || pathname.startsWith('/_next')
+    || pathname === SENTRY_TUNNEL_ROUTE
     || pathname.match(/\.(jpg|jpeg|png|gif|svg|ico|css|js|map|json)$/)
   ) {
     return NextResponse.next();
@@ -108,5 +111,5 @@ export default async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next|_vercel|.*\\..*).*)'],
+  matcher: ['/((?!api|_next|_vercel|monitoring|.*\\..*).*)'],
 };
