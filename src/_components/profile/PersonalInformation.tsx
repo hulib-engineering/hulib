@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { X } from '@phosphor-icons/react';
 import Button from '@/components/core/button/Button';
 // import { CustomDatePicker } from '@/components/CustomDatePicker';
-import { pushError } from '@/components/CustomToastifyContainer';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import Dropdown from '@/components/core/dropdown/Dropdown';
 import Form from '@/components/core/form/Form';
 import MenuItem from '@/components/core/menuItem/MenuItem';
@@ -264,7 +264,7 @@ function FormActionsSection({
 // TODO: Refactor the modal component
 function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess: () => void }) {
   const t = useTranslations('Common');
-  // MOCK-UP DATA, REMOVE THE ENTIRE THING ONCE BE IS AVAILABLES
+  // MOCK-UP DATA, REMOVE THE ENTIRE THING ONCE BE API ENDPOINTS ARE AVAILABLE
   // BEGIN ---
   const MOCK_VALID_CODE = '1234';
 
@@ -331,6 +331,7 @@ function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess:
       const result = await confirmEmail({ email, code: verificationCode });
       if (result) {
         onSuccess();
+        pushSuccess(t('verified'));
       }
     } catch (_error: any) {
       setError('verificationCode', {
@@ -419,7 +420,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
   const t = useTranslations('Common');
 
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
-  const [isOpenConfirmCodeModal, setIsOpenConfirmCodeModal] = useState(false);// TODO: default 'false'
+  const [isOpenConfirmCodeModal, setIsOpenConfirmCodeModal] = useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -472,6 +473,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
 
       const response = await updateProfile({ ...profilePatch, gender: { id: values.gender?.id } }).unwrap();
       dispatch(setUserInfo(response));
+      pushSuccess(t('update_successfully'));
       setIsOpenConfirmCodeModal(true);
     } catch (error: any) {
       const fieldErrors = error?.data?.errors;
@@ -482,6 +484,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
             message: VALIDATION_MESSAGES.PHONE_NUMBER,
           });
         });
+        pushError(t('update_failed'));
       } else {
         pushError(t(error.message));
       }

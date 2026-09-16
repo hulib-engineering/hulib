@@ -1186,6 +1186,7 @@
     "phone_number_invalid": "Số điện thoại phải bắt đầu bằng + và có mã quốc gia, ví dụ +84987654321",
     "guardian_name": "Tên người giám hộ",
     "guardian_phone_number": "Số điện thoại người giám hộ",
+    "guardian_phone_number_invalid": "Số điện thoại giám hộ phải bắt đầu bằng + và có mã quốc gia, ví dụ +84987654321",
     "guardian_email": "Email giám hộ",
     "guardian_placeholder": "Bắt buộc nếu bạn dưới 18 tuổi",
     "parent_phone_number_required": "Vui lòng cung cấp số điện thoại người giám hộ nếu bạn dưới 18 tuổi!",

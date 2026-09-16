@@ -4,6 +4,7 @@ export const PHONE_NUMBER_REGEX = /^\+[1-9]\d{1,3}[ -]?\d{6,14}$/;
 export const VALIDATION_MESSAGES = {
   PHONE_NUMBER: 'phone_number_invalid',
   PARENT_PHONE_NUMBER_REQUIRED: 'parent_phone_number_required',
+  GUARDIAN_PHONE_NUMBER: 'guardian_phone_number_invalid',
   EMAIL_REQUIRED: 'email_required',
   EMAIL_INVALID: 'email_invalid',
 };
@@ -28,7 +29,7 @@ export const ProfileValidation = z
     address: z.string(),
     isUnderGuard: z.boolean(),
     parentPhoneNumber: z.string().nullable().optional()
-      .refine(value => !value || PHONE_NUMBER_REGEX.test(value), { message: VALIDATION_MESSAGES.PHONE_NUMBER }),
+      .refine(value => !value || PHONE_NUMBER_REGEX.test(value), { message: VALIDATION_MESSAGES.GUARDIAN_PHONE_NUMBER }),
     parentEmail: z.string().trim().optional().or(z.literal(''))
       .refine(value => !value || z.string().email().safeParse(value).success, { message: VALIDATION_MESSAGES.EMAIL_INVALID }),
     parentFullname: z.string().optional(),
