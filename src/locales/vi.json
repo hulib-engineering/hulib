@@ -1189,6 +1189,8 @@
     "guardian_email": "Email giám hộ",
     "guardian_placeholder": "Bắt buộc nếu bạn dưới 18 tuổi",
     "parent_phone_number_required": "Vui lòng cung cấp số điện thoại người giám hộ nếu bạn dưới 18 tuổi!",
+    "invalid_verification_code": "Sai mã xác nhận, vui lòng nhập lại",
+    "resend_otp": "Gửi lại mã xác nhận",
     "not_provided": "Chưa cung cấp",
     "contact_information": "Thông tin liên hệ",
     "topic": "Chủ đề",

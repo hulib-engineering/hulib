@@ -1187,6 +1187,8 @@
     "guardian_email": "Guadian email",
     "guardian_placeholder": "Required if you are under 18 years old",
     "parent_phone_number_required": "Please specify a parent phone number if you are under 18!",
+    "invalid_verification_code": "Wrong confirmation codes, please enter again",
+    "resend_otp": "Resend confirmation codes",
     "not_provided": "Not provided",
     "contact_information": "Contact Information",
     "topic": "Topic",

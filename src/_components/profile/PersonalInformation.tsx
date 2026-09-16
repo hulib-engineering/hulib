@@ -9,6 +9,8 @@ import type { z } from 'zod';
 
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import Link from 'next/link';
+import { X } from '@phosphor-icons/react';
 import Button from '@/components/core/button/Button';
 // import { CustomDatePicker } from '@/components/CustomDatePicker';
 import { pushError } from '@/components/CustomToastifyContainer';
@@ -259,7 +261,7 @@ function FormActionsSection({
     </div>
   );
 }
-
+// TODO: Refactor the modal component
 function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess: () => void }) {
   const t = useTranslations('Common');
   // MOCK-UP DATA, REMOVE THE ENTIRE THING ONCE BE IS AVAILABLES
@@ -287,8 +289,22 @@ function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess:
 
     return [confirmEmail, { isLoading }] as const;
   }
+
+  function useResendOTPMutation() {
+    const [isLoading, setIsLoading] = useState(false);
+
+    const resendOTP = async ({ email }: { email: string }) => {
+      setIsLoading(true);
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setIsLoading(false);
+      return { email, code: MOCK_VALID_CODE };
+    };
+
+    return [resendOTP, { isLoading }] as const;
+  }
   // END ---
   const [confirmEmail, { isLoading: isConfirming }] = useConfirmEmailMutation(); // mock-up function
+  const [resendOTP] = useResendOTPMutation(); // mock-up function
 
   const {
     control,
@@ -319,15 +335,33 @@ function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess:
     } catch (_error: any) {
       setError('verificationCode', {
         type: 'unverified',
-        message: 'mock_up_error', // t('invalid_verification_code'),
+        message: t('invalid_verification_code'),
       });
+    }
+  };
+
+  const handleResendOTP = async () => {
+    try {
+      const result = await resendOTP({ email });
+      if (result) {
+        console.log('succeeded'); // blank code, fill in with actual resent confirm codes
+      }
+    } catch (error: any) {
+      if (error && error?.data && error?.data?.errors) {
+        pushError(`Error: ${JSON.stringify(error?.data?.errors)}`);
+        return;
+      }
+      pushError(`Error: ${error.message}`);
     }
   };
 
   return (
     <>
       <Modal.Backdrop />
-      <Modal.Panel className="h-[872px] w-[480px]">
+      <Modal.Panel className="relative h-[872px] w-[480px] pt-14">
+        <Button variant="ghost" type="button" onClick={onSuccess} className="absolute right-5 top-5">
+          <X size={20} />
+        </Button>
         <div className="flex flex-col items-center gap-2 px-6">
           <Image src="/assets/images/users/mail_icon.png" alt="A Mail Icon" width={112.5} height={99} />
           <h1 className="text-[28px] font-medium text-primary-50">{t('email_confirm_title')}</h1>
@@ -341,7 +375,7 @@ function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess:
 
           <Form
             onSubmit={handleSubmit(handleAuthCodeSubmit)}
-            className="flex w-full flex-col items-center justify-center gap-4"
+            className="mt-6 flex w-full flex-col items-center justify-center gap-4"
           >
             <Form.Item>
               <Controller
@@ -362,8 +396,13 @@ function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess:
                       }}
                       className="justify-center"
                     />
-                    <Hint error className="mt-3">
+                    <Hint error className="mt-5 flex flex-col justify-center">
                       {errors.verificationCode?.message}
+                      {errors.verificationCode?.message && (
+                        <Link href="#" onClick={handleResendOTP} className="font-medium text-red-50 underline">
+                          {t('resend_otp')}
+                        </Link>
+                      )}
                     </Hint>
                   </>
                 )}
