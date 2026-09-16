@@ -237,6 +237,8 @@ function FormActionsSection({
   onCancel: () => void;
 }) {
   const t = useTranslations('Common');
+  // Note: There's a bug after the user submitted the form, the user can still revert field data back to what it was before update by pressing 'Cancel'
+  // I don't think this bug is worth fixing, if not mentioning it's ironically could be useful for the users though
   return (
     <div className="mt-3 flex items-center justify-end gap-3">
       <Button
@@ -445,24 +447,35 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
         ? { id: data.gender.id, name: genders[data.gender.id - 1]?.label }
         : { id: 3, name: 'Other' },
       birthday: data?.birthday ?? new Date().toLocaleDateString(),
-      phoneNumber: data?.phoneNumber,
+      phoneNumber: data?.phoneNumber ?? null,
       address: data?.address ?? '',
-      parentPhoneNumber: data?.parentPhoneNumber,
+      parentPhoneNumber: data?.parentPhoneNumber ?? null,
       parentEmail: data?.parentEmail ?? '',
     },
   });
 
   useEffect(() => {
-    if (watch('birthday')) {
-      const age = calculateAge(watch('birthday'));
-      // if age < 18 -> under guard
-      setValue('isUnderGuard', age < 18);
+    const birthday = watch('birthday');
+    if (birthday) {
+      const age = calculateAge(birthday);
+      const underGuard = age < 18;
+      setValue('isUnderGuard', underGuard);
+
+      if (!underGuard) {
+        setValue('parentPhoneNumber', null, { shouldDirty: true, shouldValidate: true });
+        setValue('parentEmail', '', { shouldDirty: true, shouldValidate: true });
+      }
     }
   }, [setValue, watch('birthday')]);
 
   const handleUpdate = handleSubmit(async (values: TProfileForm) => {
     try {
       const { isUnderGuard, ...profilePatch } = values;
+
+      if (!isUnderGuard) {
+        profilePatch.parentPhoneNumber = null;
+        profilePatch.parentEmail = '';
+      }
 
       if (!profilePatch.phoneNumber) {
         profilePatch.phoneNumber = null;
