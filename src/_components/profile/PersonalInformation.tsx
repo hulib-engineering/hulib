@@ -30,6 +30,17 @@ import Modal from '@/components/Modal';
 import AuthCode from '@/components/core/authCode/AuthCode';
 import Hint from '@/components/Hint';
 
+type DEBUGGINGSectionProps = {
+  register: UseFormRegister<TProfileForm>;
+  errors: FieldErrors<TProfileForm>;
+  DEBUGGING: boolean;
+};
+
+type SectionProps = {
+  register: UseFormRegister<TProfileForm>;
+  errors: FieldErrors<TProfileForm>;
+};
+
 type IProfileFormProps = {
   data: User;
 };
@@ -37,7 +48,7 @@ type IProfileFormProps = {
 type TProfileForm = z.infer<typeof ProfileValidation>;
 
 // Extra: Find a weight to change the weight of the input text of the fields to 'medium'
-function Name({ register, errors }: { register: UseFormRegister<TProfileForm>; errors: FieldErrors<TProfileForm> }) {
+function Name({ register, errors }: SectionProps) {
   const t = useTranslations('Common');
   return (
     <Form.Item>
@@ -130,7 +141,7 @@ function GenderBirthday({ control }: { control: Control<TProfileForm> }) {
   );
 }
 
-function AddressSection({ register, errors }: { register: UseFormRegister<TProfileForm>; errors: FieldErrors<TProfileForm> }) {
+function AddressSection({ register, errors }: SectionProps) {
   const t = useTranslations('Common');
   return (
     <Form.Item>
@@ -146,7 +157,7 @@ function AddressSection({ register, errors }: { register: UseFormRegister<TProfi
   );
 }
 
-function EmailSection({ register, errors }: { register: UseFormRegister<TProfileForm>; errors: FieldErrors<TProfileForm> }) {
+function EmailSection({ register, errors, DEBUGGING = false }: DEBUGGINGSectionProps) {
   const t = useTranslations('Common');
   return (
     <>
@@ -158,6 +169,7 @@ function EmailSection({ register, errors }: { register: UseFormRegister<TProfile
           {...register('email')}
           isError={!!errors.email}
           required
+          disabled={!DEBUGGING}
         />
       </Form.Item>
       {errors.email
@@ -167,7 +179,7 @@ function EmailSection({ register, errors }: { register: UseFormRegister<TProfile
   );
 }
 
-function PhoneNumberSection({ register, errors }: { register: UseFormRegister<TProfileForm>; errors: FieldErrors<TProfileForm> }) {
+function PhoneNumberSection({ register, errors }: SectionProps) {
   const t = useTranslations('Common');
   return (
     <>
@@ -186,7 +198,7 @@ function PhoneNumberSection({ register, errors }: { register: UseFormRegister<TP
   );
 }
 
-function GuardianSection({ register, errors }: { register: UseFormRegister<TProfileForm>; errors: FieldErrors<TProfileForm> }) {
+function GuardianSection({ register, errors }: SectionProps) {
   const t = useTranslations('Common');
   return (
     <>
@@ -419,6 +431,7 @@ function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess:
 }
 
 export default function PersonalInformation({ data }: IProfileFormProps) {
+  const DEBUGGING = false; // SET THIS FLAG TO TRUE TO SEE THE REMAINING UI
   const t = useTranslations('Common');
 
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
@@ -455,6 +468,9 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
   });
 
   useEffect(() => {
+    if (!DEBUGGING) {
+      return;
+    }
     const birthday = watch('birthday');
     if (birthday) {
       const age = calculateAge(birthday);
@@ -514,7 +530,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
         <Name register={register} errors={errors} />
         <GenderBirthday control={control} />
         <AddressSection register={register} errors={errors} />
-        <EmailSection register={register} errors={errors} />
+        <EmailSection register={register} errors={errors} DEBUGGING={DEBUGGING} />
         <PhoneNumberSection register={register} errors={errors} />
         {watch('isUnderGuard') && (
           <GuardianSection register={register} errors={errors} />
@@ -528,9 +544,11 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
         />
       </Form>
 
-      <Modal open={isOpenConfirmCodeModal} onClose={handleCloseCCModal}>
-        <CodeConfirmationModal email={getValues('email')} onSuccess={handleCloseCCModal} />
-      </Modal>
+      {DEBUGGING && (
+        <Modal open={isOpenConfirmCodeModal} onClose={handleCloseCCModal}>
+          <CodeConfirmationModal email={getValues('email')} onSuccess={handleCloseCCModal} />
+        </Modal>
+      )}
     </>
   );
 };
