@@ -15,8 +15,7 @@ export default function RegisterHuberSuccess() {
   const { data: story, isLoading } = useGetStoryDetailQuery(Number(storyId), {
     skip: !storyId,
   });
-  // const userId = useAppSelector(state => state.auth.userInfo?.id);
-  console.log('Data', story);
+  // `cons`t userId = useAppSelector(state => state.auth.userInfo?.id);
   return (
     <div className="min-h-screen bg-white">
       <BackButtonHeader />

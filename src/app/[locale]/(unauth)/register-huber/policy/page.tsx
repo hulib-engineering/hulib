@@ -24,10 +24,8 @@ export default function RegisterAsHuberPage() {
 
   return (
     <div className="flex flex-col sm:mb-8 sm:gap-6">
-      {/* PAGE HEADER */}
       <BackButtonHeader />
 
-      {/* PAGE CONTENT */}
       <div className="flex flex-col
         gap-4 max-sm:max-h-[calc(100vh-120px)]
         max-sm:overflow-y-auto
