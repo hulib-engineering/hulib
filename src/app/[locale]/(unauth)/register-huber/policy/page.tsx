@@ -33,15 +33,12 @@ export default function RegisterAsHuberPage() {
         max-sm:overflow-y-auto
         max-sm:pb-[180px] sm:gap-8 sm:px-24"
       >
-        {/* Hero banner */}
         <HeroBanner />
         <MobileSafetyWarning />
-        {/* Rules grid */}
         <RulesGrid />
-        {/* Restricted content */}
         <RestrictedContent />
 
-        {/*  Normal UI */}
+        {/* AgreementCheckbox, EmergencyNotice, ContinueButton - Desktop */}
         <div className="flex flex-col gap-4 max-sm:hidden">
           <AgreementCheckbox checked={agreed} onChange={setAgreed} />
           <div className="flex h-full items-center justify-between gap-4">
@@ -50,7 +47,7 @@ export default function RegisterAsHuberPage() {
           </div>
         </div>
 
-        {/*  Responsive mobile UI */}
+        {/* AgreementCheckbox, EmergencyNotice, ContinueButton - Mobile */}
         <div className="sm:hidden">
           <EmergencyNotice />
           <div
