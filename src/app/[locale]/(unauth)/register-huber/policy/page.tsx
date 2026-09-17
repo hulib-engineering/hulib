@@ -7,7 +7,7 @@ import EmergencyNotice from '../_components/EmergencyNotice';
 import ContinueButton from '../_components/ContinueButton';
 import HeroBanner from '../_components/Herobanner';
 import RulesGrid from '../_components/Rulesgrid';
-import BackButton from '../_components/BackButton';
+import BackButtonHeader from '../_components/BackButtonHeader';
 import RestrictedContent from '../_components/RestrictedContent';
 import MobileSafetyWarning from '../_components/MobileSafetyWarning';
 import { useRouter } from '@/libs/i18nNavigation';
@@ -25,7 +25,7 @@ export default function RegisterAsHuberPage() {
   return (
     <div className="flex flex-col sm:mb-8 sm:gap-6">
       {/* PAGE HEADER */}
-      <BackButton />
+      <BackButtonHeader />
 
       {/* PAGE CONTENT */}
       <div className="flex flex-col

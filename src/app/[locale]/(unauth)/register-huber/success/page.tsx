@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import BackButton from '../_components/BackButton';
+import BackButtonHeader from '../_components/BackButtonHeader';
 import { useRouter } from '@/libs/i18nNavigation';
 import { useGetStoryDetailQuery } from '@/libs/services/modules/stories';
 
@@ -19,7 +19,7 @@ export default function RegisterHuberSuccess() {
   console.log('Data', story);
   return (
     <div className="min-h-screen bg-white">
-      <BackButton />
+      <BackButtonHeader />
 
       <div
         className="flex flex-col items-center
