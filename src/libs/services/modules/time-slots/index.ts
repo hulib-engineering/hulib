@@ -5,7 +5,7 @@ import getTimeslotsByHuber from './getTimeslotsByHuber';
 import { api } from '@/libs/services/api';
 
 const apiWithTag = api.enhanceEndpoints?.({
-  addTagTypes: ['Timeslot'],
+  addTagTypes: ['Timeslot', 'TimeSlotHuber'],
 });
 
 export const timeslotApi = apiWithTag.injectEndpoints({
