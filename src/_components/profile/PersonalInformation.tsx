@@ -87,14 +87,9 @@ function GenderSection({ control }: { control: Control<TProfileForm> }) {
                 <Dropdown.Options>
                   {genders
                     .map(({ value, label }) => ({ id: value, name: label }))
-                    .map((gender, index) => (
-                      <Dropdown.Option value={gender} key={index}>
-                        {/* ({ selected, active }) => (
-                              <MenuItem isActive={active} isSelected={selected} data-testid={`test-${index}`}>
-                                {t(`gender.${gender.name}` as any)}
-                              </MenuItem>
-                            ) */}
-                        <MenuItem data-testid={`test-${index}`}>
+                    .map(gender => (
+                      <Dropdown.Option value={gender} key={gender.id}>
+                        <MenuItem data-testid={`test-${gender.id}`}>
                           {t(`gender.${gender.name}` as any)}
                         </MenuItem>
                       </Dropdown.Option>
