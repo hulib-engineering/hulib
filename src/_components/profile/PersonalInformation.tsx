@@ -115,6 +115,7 @@ function BirthdaySection({ control }: { control: Control<TProfileForm> }) {
         render={({ field, fieldState: { error } }) => (
           <TextInput
             type="date"
+            max="9999-12-31"
             label={<span className="font-medium">{t('date_of_birth')}</span>}
             {...field}
             isError={!!error}
