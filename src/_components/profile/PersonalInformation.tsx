@@ -355,11 +355,12 @@ function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess:
     }
   };
 
+  // add to or modify this function once BE has the endpoint
   const handleResendOTP = async () => {
     try {
       const result = await resendOTP({ email });
       if (result) {
-        console.log('succeeded'); // blank code, fill in with actual resent confirm codes
+        pushSuccess(t('verified_resent_OTP'));
       }
     } catch (error: any) {
       if (error && error?.data && error?.data?.errors) {
@@ -431,7 +432,7 @@ function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess:
 }
 
 export default function PersonalInformation({ data }: IProfileFormProps) {
-  const DEBUGGING = false; // SET THIS FLAG TO TRUE TO SEE THE REMAINING UI
+  const DEBUGGING = true; // SET THIS FLAG TO TRUE TO SEE THE REMAINING UI
   const t = useTranslations('Common');
 
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
