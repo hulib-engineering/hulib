@@ -427,7 +427,7 @@ function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess:
 }
 
 export default function PersonalInformation({ data }: IProfileFormProps) {
-  const DEBUGGING = true; // SET THIS FLAG TO TRUE TO SEE THE REMAINING UI
+  const DEBUGGING = false; // SET THIS FLAG TO TRUE TO SEE THE REMAINING UI
   const t = useTranslations('Common');
 
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
@@ -463,22 +463,21 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     },
   });
 
+  const birthday = watch('birthday');
+
   useEffect(() => {
-    if (!DEBUGGING) {
+    if (!birthday) {
       return;
     }
-    const birthday = watch('birthday');
-    if (birthday) {
-      const age = calculateAge(birthday);
-      const underGuard = age < 18;
-      setValue('isUnderGuard', underGuard);
+    const age = calculateAge(birthday);
+    const underGuard = age < 18 && DEBUGGING;
+    setValue('isUnderGuard', underGuard, { shouldDirty: true, shouldValidate: true });
 
-      if (!underGuard) {
-        setValue('parentPhoneNumber', null, { shouldDirty: true, shouldValidate: true });
-        setValue('parentEmail', '', { shouldDirty: true, shouldValidate: true });
-      }
+    if (!underGuard) {
+      setValue('parentPhoneNumber', null, { shouldDirty: true, shouldValidate: true });
+      setValue('parentEmail', '', { shouldDirty: true, shouldValidate: true });
     }
-  }, [setValue, watch('birthday')]);
+  }, [birthday, setValue, calculateAge, DEBUGGING]);
 
   const handleUpdate = handleSubmit(async (values: TProfileForm) => {
     try {

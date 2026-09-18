@@ -1185,7 +1185,7 @@
     "guardian_name": "Your Guardian Name",
     "guardian_phone_number": "Your Guardian Phone Number",
     "guardian_phone_number_invalid": "Guardian phone number must start with + and include a country code, e.g. +84987654321",
-    "guardian_email": "Guadian email",
+    "guardian_email": "Guardian email",
     "guardian_placeholder": "Required if you are under 18 years old",
     "parent_phone_number_required": "Please specify a parent phone number if you are under 18!",
     "invalid_verification_code": "Wrong confirmation codes, please enter again",
