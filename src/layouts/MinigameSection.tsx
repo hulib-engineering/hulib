@@ -80,8 +80,9 @@ const MinigameSection = () => {
   const [flippable, setFlippable] = useState(true);
 
   useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
     const drawCards = () => {
-      setTimeout(() => {
+      timer = setTimeout(() => {
         const randomList = [...GameCards, ...GameCards]
           .map((card, index) => ({ ...card, id: index }))
           .sort(() => 0.5 - Math.random());
@@ -94,6 +95,8 @@ const MinigameSection = () => {
     };
 
     drawCards();
+
+    return () => clearTimeout(timer);
   }, []);
   useEffect(() => {
     const removeSelection = () => {
@@ -109,11 +112,12 @@ const MinigameSection = () => {
         dispatch(handleGuess(firstCard.imgUrl));
         removeSelection();
       } else {
-        setTimeout(() => {
-          removeSelection();
-        }, 1000);
+        const timer = setTimeout(removeSelection, 1000);
+        return () => clearTimeout(timer);
       }
     }
+
+    return undefined;
   }, [firstCard, secondCard]);
 
   const handlePick = (item: IGameCardProps) => {

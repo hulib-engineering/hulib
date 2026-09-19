@@ -203,7 +203,9 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
     },
   });
 
-  emitRef.current = emit;
+  useEffect(() => {
+    emitRef.current = emit;
+  }, [emit]);
 
   const messageContainerRef = useRef<HTMLDivElement>(null);
 

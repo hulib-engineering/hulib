@@ -527,6 +527,11 @@
     "new_user": "Bạn mới đến Hulib?",
     "register": "Đăng ký",
     "log_in": "Đăng nhập",
+    "validation": {
+      "email_invalid": "Địa chỉ email không hợp lệ",
+      "email_required": "Vui lòng nhập địa chỉ email",
+      "password_required": "Vui lòng nhập mật khẩu"
+    },
     "with_gg": "với Google"
   },
   "SignUp": {
@@ -730,8 +735,11 @@
       "title": "Đăng ký huber"
     },
     "validation": {
+      "bio_required": "Vui lòng nhập phần giới thiệu",
       "invalid_url": "Liên kết URL không hợp lệ. Kiểm tra liên kết và thử lại",
-      "time_slots_required": "Vui lòng chọn ít nhất một khung giờ"
+      "terms_required": "Vui lòng đồng ý với quy tắc cộng đồng",
+      "time_slots_required": "Vui lòng chọn ít nhất một khung giờ",
+      "topics_required": "Vui lòng chọn ít nhất một chủ đề"
     },
     "bio": {
       "text": "Tiểu sử",

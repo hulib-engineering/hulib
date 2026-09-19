@@ -80,7 +80,7 @@ const TextInputPassword = forwardRef<HTMLInputElement, TextInputPasswordProps>(
     if (inputSize === Size.LARGE) {
       return (
         <Container {...containerProps}>
-          <Inner bgColor={backgroundColor}>
+          <Inner $bgColor={backgroundColor}>
             <Input
               // @ts-ignore
               size={inputSize}

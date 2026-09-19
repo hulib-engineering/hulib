@@ -64,11 +64,11 @@ const ResetPasswordForm = () => {
   const t = useTranslations('SignUp');
 
   const pageURL = useMemo(() => {
-    return new URL(window.location.href);
+    return typeof window === 'undefined' ? null : new URL(window.location.href);
   }, []);
 
   const hash = useMemo(() => {
-    return pageURL.searchParams.get('hash');
+    return pageURL?.searchParams.get('hash') ?? null;
   }, [pageURL]);
 
   const {

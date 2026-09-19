@@ -134,10 +134,6 @@ const baseQueryWithInterceptor = async (
     }
   }
 
-  if (result.error && result.error.status === 422) {
-    return result;
-  }
-
   if (result.error) {
     // 304 Not Modified = treat is treated as error by the server, so we need to return null
     const rawError = result.error as any;
@@ -148,12 +144,12 @@ const baseQueryWithInterceptor = async (
     if (isNotModifiedStatus) {
       return { data: null };
     }
-
-    const error = new Error('error_contact_admin');
-    (error as any).status = result.error.status;
-    throw error;
   }
 
+  // Return errors instead of throwing: throwing from a baseQuery escapes RTK
+  // Query's error channel, so a failed query surfaces as an uncaught rejection
+  // rather than `isError` on the hook. Returning keeps `.unwrap()` rejecting
+  // for mutations while letting queries handle errors normally.
   return result;
 };
 
