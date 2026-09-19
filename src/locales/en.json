@@ -527,6 +527,11 @@
     "or": "Or",
     "new_user": "New to HuLib?",
     "register": "Create an account",
+    "validation": {
+      "email_invalid": "Please enter a valid email address",
+      "email_required": "Please enter your email address",
+      "password_required": "Please enter your password"
+    },
     "with_gg": "with Google"
   },
   "SignUp": {
@@ -730,8 +735,11 @@
       "title": "Register as a Huber"
     },
     "validation": {
+      "bio_required": "Please enter your bio",
       "invalid_url": "Invalid URL link. Check link and try again",
-      "time_slots_required": "Please select at least one time slot"
+      "terms_required": "Please accept the community guidelines",
+      "time_slots_required": "Please select at least one time slot",
+      "topics_required": "Please select at least one topic"
     },
     "bio": {
       "text": "Bio",

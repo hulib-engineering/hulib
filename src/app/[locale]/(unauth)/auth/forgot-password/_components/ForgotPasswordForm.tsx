@@ -96,11 +96,22 @@ const ForgotPasswordForm = () => {
   const onHandleSubmit = handleSubmit(async (data) => {
     if (isValid) {
       try {
+        // Deliberate: always show the success screen, whether the backend
+        // returns 200 or 422 (unknown email). Revealing which addresses exist
+        // would allow account enumeration.
+        //
+        // Do NOT add `.unwrap()` here — without it the promise resolves with
+        // `{ error }` instead of rejecting, which is what keeps the response
+        // identical for both cases.
         await forgotPassword({ email: data.email });
         setInputEmail(data.email);
         setSubmitSuccess(true);
       } catch (error: any) {
+        // Only reachable on a network-level failure. Still show success to
+        // keep the anti-enumeration behaviour consistent.
         console.error(error);
+        setInputEmail(data.email);
+        setSubmitSuccess(true);
       }
     }
   });

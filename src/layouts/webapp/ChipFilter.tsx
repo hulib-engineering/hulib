@@ -70,14 +70,9 @@ export default function ChipFilter({
     }
   };
   const handleAllClick = () => {
-    if (onChange) {
-      // If already "all selected" → clear, otherwise select all
-      if (values.length === allTopicIds.length) {
-        onChange([]);
-      } else {
-        onChange(allTopicIds);
-      }
-    }
+    // An empty selection already means "all" (see `isAllActive`), so clear the
+    // filter instead of listing every topic id in the URL.
+    onChange?.([]);
   };
 
   if (isLoading) {

@@ -3,9 +3,11 @@
 import { CaretCircleRight } from '@phosphor-icons/react';
 import React, { useMemo } from 'react';
 import { useSession } from 'next-auth/react';
+
 import { useTranslations } from 'next-intl';
 
 import { StoryCard } from './StoryCard';
+import { useSkipUserScopedQuery } from '@/libs/hooks';
 import { useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
@@ -29,8 +31,10 @@ export const IndexStoryListSectionLayout = (props: Props) => {
 
   const router = useRouter();
   const { data: session } = useSession();
+  // Also skip for admins (403 on user-scoped endpoints) and until the role is known.
+  const skipFavourites = useSkipUserScopedQuery();
   const { data: favoriteStories } = useGetMyFavoritesQuery(undefined, {
-    skip: !session,
+    skip: !session || skipFavourites,
   });
 
   const storiesWithFav = useMemo(() => {

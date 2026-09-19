@@ -4,3 +4,4 @@ export { default as useDeviceType } from './useDeviceType';
 export { default as useDebounce } from './useDebounce';
 export { useMobile } from './useMobile';
 export { useRequireAuth } from './useRequireAuth';
+export { useIsAdmin, useSkipUserScopedQuery } from './useIsAdmin';
