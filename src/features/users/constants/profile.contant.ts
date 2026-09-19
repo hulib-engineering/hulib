@@ -6,12 +6,14 @@ export const HUBER_OWN_TABS = [
   { value: 'stories', label: 'my_stories' },
   { value: 'my_favorite', label: 'my_favorite' },
   { value: 'my_feedback', label: 'my_feedback' },
+  { value: 'personal_info', label: 'personal_info' },
 ] as const;
 
 export const LIBER_OWN_TABS = [
   { value: 'about', label: 'about' },
   { value: 'stories', label: 'my_stories' },
   { value: 'my_favorite', label: 'my_favorite' },
+  { value: 'personal_info', label: 'personal_info' },
 ] as const;
 
 export const LIBER_VIEWER_TABS = [
@@ -28,6 +30,11 @@ export const HUBER_VIEWER_TABS = [
 ] as const;
 
 export const VIEWER_TABS = LIBER_VIEWER_TABS;
+
+export const TAB_SETS = {
+  huber: { own: HUBER_OWN_TABS, viewer: HUBER_VIEWER_TABS },
+  liber: { own: LIBER_OWN_TABS, viewer: LIBER_VIEWER_TABS },
+} as const;
 
 export const CARD_CLASS: Record<CardVariant, string> = {
   right_now: 'border-4 border-primary-70 bg-white shadow-[0px_0px_8.8px_0px_rgba(8,_88,_250,_1)]',

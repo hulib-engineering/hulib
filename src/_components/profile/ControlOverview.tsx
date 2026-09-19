@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import React from 'react';
-import { Books, CalendarDotsIcon, HeartIcon, ThumbsUp, UserList } from '@phosphor-icons/react';
+import { BooksIcon, CalendarDotsIcon, HeartIcon, ThumbsUpIcon, UserGearIcon, UserListIcon } from '@phosphor-icons/react';
 
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -17,11 +17,12 @@ type ControlOverviewProps = {
 };
 
 const TAB_ICONS: Record<string, React.ElementType> = {
-  about: UserList,
-  stories: Books,
-  my_favorite: ThumbsUp,
+  about: UserListIcon,
+  stories: BooksIcon,
+  my_favorite: ThumbsUpIcon,
   my_feedback: HeartIcon,
   my_schedule: CalendarDotsIcon,
+  personal_info: UserGearIcon,
 };
 
 export const ControlOverview = ({
@@ -85,7 +86,7 @@ export const ControlOverview = ({
         })}
       </nav>
 
-      <div className="min-w-0 flex-1 pt-4 lg:p-5">
+      <div className="min-w-0 flex-1 p-5 lg:px-8">
         {children}
       </div>
     </div>
