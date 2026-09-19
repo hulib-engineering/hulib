@@ -465,23 +465,15 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
   });
 
   const birthday = watch('birthday');
-  const [prevBirthday, setPrevBirthday] = useState(birthday);
 
   useEffect(() => {
-    if (!birthday || birthday === prevBirthday) {
+    if (!birthday) {
       return;
     }
-    setPrevBirthday(birthday);
-
     const age = calculateAge(birthday);
     const underGuard = age < 18;
     setValue('isUnderGuard', underGuard, { shouldDirty: true, shouldValidate: true });
-
-    if (!underGuard) {
-      setValue('parentPhoneNumber', null, { shouldDirty: true, shouldValidate: true });
-      setValue('parentEmail', '', { shouldDirty: true, shouldValidate: true });
-    }
-  }, [birthday, prevBirthday, setValue]);
+  }, [birthday, setValue]);
 
   const handleUpdate = handleSubmit(async (values: TProfileForm) => {
     try {
