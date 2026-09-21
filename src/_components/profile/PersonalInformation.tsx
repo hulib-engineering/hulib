@@ -456,7 +456,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
       gender: data?.gender && data?.gender?.id
         ? { id: data.gender.id, name: genders[data.gender.id - 1]?.label }
         : { id: 3, name: 'Other' },
-      birthday: data?.birthday ?? new Date().toLocaleDateString(),
+      birthday: data?.birthday ?? new Date().toISOString().slice(0, 10),
       phoneNumber: data?.phoneNumber ?? null,
       address: data?.address ?? '',
       parentPhoneNumber: data?.parentPhoneNumber ?? null,
