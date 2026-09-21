@@ -23,7 +23,7 @@ export default function ContactSection({ data, editable }: { data: User; editabl
         value: data?.fullName || t('not_provided'),
       },
       {
-        title: t('gender'),
+        title: t('gender.label'),
         value:
           GenderName[data?.gender?.id as Gender] || t('not_provided'),
       },
