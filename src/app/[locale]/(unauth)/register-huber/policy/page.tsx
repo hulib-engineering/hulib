@@ -7,7 +7,7 @@ import EmergencyNotice from '../_components/EmergencyNotice';
 import ContinueButton from '../_components/ContinueButton';
 import HeroBanner from '../_components/Herobanner';
 import RulesGrid from '../_components/Rulesgrid';
-import BackButton from '../_components/BackButton';
+import BackButtonHeader from '../_components/BackButtonHeader';
 import RestrictedContent from '../_components/RestrictedContent';
 import MobileSafetyWarning from '../_components/MobileSafetyWarning';
 import { useRouter } from '@/libs/i18nNavigation';
@@ -24,24 +24,19 @@ export default function RegisterAsHuberPage() {
 
   return (
     <div className="flex flex-col sm:mb-8 sm:gap-6">
-      {/* PAGE HEADER */}
-      <BackButton />
+      <BackButtonHeader />
 
-      {/* PAGE CONTENT */}
       <div className="flex flex-col
         gap-4 max-sm:max-h-[calc(100vh-120px)]
         max-sm:overflow-y-auto
         max-sm:pb-[180px] sm:gap-8 sm:px-24"
       >
-        {/* Hero banner */}
         <HeroBanner />
         <MobileSafetyWarning />
-        {/* Rules grid */}
         <RulesGrid />
-        {/* Restricted content */}
         <RestrictedContent />
 
-        {/*  Normal UI */}
+        {/* AgreementCheckbox, EmergencyNotice, ContinueButton - Desktop */}
         <div className="flex flex-col gap-4 max-sm:hidden">
           <AgreementCheckbox checked={agreed} onChange={setAgreed} />
           <div className="flex h-full items-center justify-between gap-4">
@@ -50,7 +45,7 @@ export default function RegisterAsHuberPage() {
           </div>
         </div>
 
-        {/*  Responsive mobile UI */}
+        {/* AgreementCheckbox, EmergencyNotice, ContinueButton - Mobile */}
         <div className="sm:hidden">
           <EmergencyNotice />
           <div
