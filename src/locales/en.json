@@ -1176,7 +1176,7 @@
     "email": "Email",
     "email_required": "Required",
     "email_invalid": "Invalid email",
-    "email_valid": "You will receive a confirmation code once email changed. Which must be entered to complete email change.",
+    "email_valid": "When you change to a new email address, we’ll send a verification code to that email. Enter the code to complete the change.",
     "email_confirm_title": "Confirm new email",
     "email_confirm_description": "We have sent the 4-digit confirmation codes to the email <bold>{email}</bold>.<br></br>Please check your inbox and enter your confirmation codes here.",
     "phone_number": "Phone Number (not required)",
