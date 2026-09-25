@@ -49,7 +49,17 @@ export const getGMTOffset = (date: Date = new Date()): string => {
   return `GMT${sign}${offsetHours}${offsetMins ? `:${String(offsetMins).padStart(2, '0')}` : ''}`;
 };
 
-export const REFERENCE_MONDAY = new Date('1970-01-05T00:00:00Z'); // neutral anchor Monday UTC
+// Anchor Monday 00:00 UTC of the current week. Weekly slots are converted with today's offsets:
+// a 1970 anchor uses historical ones (e.g. Asia/Ho_Chi_Minh was UTC+8), shifting slots by an hour
+// against the booking flow, which converts real dates.
+// ponytail: in DST zones, slots can be off by 1h during the week a DST switch happens; fix by storing
+// slots with an IANA timezone instead of fixed UTC if DST markets matter.
+const today = new Date();
+export const REFERENCE_MONDAY = new Date(Date.UTC(
+  today.getUTCFullYear(),
+  today.getUTCMonth(),
+  today.getUTCDate() - ((today.getUTCDay() + 6) % 7),
+));
 
 const formatOffset = (timeZone: string) => {
   const now = new Date();
