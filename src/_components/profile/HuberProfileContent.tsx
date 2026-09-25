@@ -40,7 +40,7 @@ export default function HuberProfileContent({ userDetail }: HuberProfileContentP
         />
       )}
       {currentTab === 'my_favorite' && <MyFavoritePanel />}
-      {currentTab === 'my_schedule' && <HuberSchedulePanel huberId={userDetail.id} />}
+      {currentTab === 'my_schedule' && <HuberSchedulePanel huberId={userDetail.id} isOwner />}
       {currentTab === 'my_feedback' && <>My feedback</>}
     </ControlOverview>
   );
