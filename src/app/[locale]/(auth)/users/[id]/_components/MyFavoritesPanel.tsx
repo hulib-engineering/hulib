@@ -12,6 +12,7 @@ import Modal from '@/components/Modal';
 import { StoryCard } from '@/features/stories/components/StoryCard';
 import { HuberCardListSkeleton, StoriesSkeleton } from '@/components/loadingState/Skeletons';
 import { TopicChip } from '@/layouts/webapp/ChipFilter';
+import { useSkipUserScopedQuery } from '@/libs/hooks';
 import type { Huber } from '@/libs/services/modules/huber/huberType';
 import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
 import {
@@ -29,8 +30,10 @@ export default function MyFavoritesPanel() {
   const tExplore = useTranslations('ExploreStory');
   const tMyFavorites = useTranslations('MyFavorites');
 
-  const { data: favStories, isLoading: isFavStoriesLoading } = useGetMyFavoritesQuery();
-  const { data: favHubers, isLoading: isFavHubersLoading } = useGetMyFavoriteHubersQuery();
+  // Admin tokens get a 403 on user-scoped favourites endpoints.
+  const skipFavourites = useSkipUserScopedQuery();
+  const { data: favStories, isLoading: isFavStoriesLoading } = useGetMyFavoritesQuery(undefined, { skip: skipFavourites });
+  const { data: favHubers, isLoading: isFavHubersLoading } = useGetMyFavoriteHubersQuery(undefined, { skip: skipFavourites });
   const [removeMyFavorites, { isLoading: isRemovingMyFavorites }] = useRemoveMyFavoritesMutation();
   const [removeMyFavHubers, { isLoading: isRemovingMyFavHubers }] = useRemoveMyFavHubersMutation();
   const hasStories = (favStories?.data?.length ?? 0) > 0;

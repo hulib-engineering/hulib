@@ -25,12 +25,12 @@ const useDeviceType = (breakPoint: BreakPoint = {}) => {
       return 'desktop';
     };
 
-    setDeviceType(updateDeviceType());
-    window.addEventListener('resize', () => setDeviceType(updateDeviceType()));
+    const handleResize = () => setDeviceType(updateDeviceType());
 
-    return () =>
-      window.removeEventListener('resize', () =>
-        setDeviceType(updateDeviceType()));
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
   }, [mobile, desktop]);
 
   return { deviceType };

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
-import { useRouter } from '@/libs/i18nNavigation';
+import { Link, useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -25,6 +25,8 @@ const HuberCard = (
   },
 ) => {
   const router = useRouter();
+
+  const profileHref = `${props.showAdminControls ? '/admin' : ''}/users/${props.id}`;
 
   const tCommon = useTranslations('Common');
   const t = useTranslations('Huber');
@@ -162,10 +164,13 @@ const HuberCard = (
         <div className="flex w-full items-center justify-between gap-1">
           {!props.awaiting ? (
             <>
+              {/* Rendered as a real <a> so cmd/ctrl+click, "open in new tab"
+                  and keyboard navigation work. */}
               <Button
+                as={Link}
+                href={profileHref}
                 fullWidth
                 className="hidden lg:flex"
-                onClick={() => router.push(`${props.showAdminControls ? '/admin' : ''}/users/${props.id}`)}
               >
                 <span className="flex items-center gap-2">
                   <CaretCircleRight className="text-xl" />
@@ -173,10 +178,11 @@ const HuberCard = (
                 </span>
               </Button>
               <Button
+                as={Link}
+                href={profileHref}
                 variant="soft"
                 fullWidth
                 className="lg:hidden"
-                onClick={() => router.push(`${props.showAdminControls ? '/admin' : ''}/users/${props.id}`)}
               >
                 <span className="flex items-center gap-2">
                   <CaretCircleRight className="text-xl" />
