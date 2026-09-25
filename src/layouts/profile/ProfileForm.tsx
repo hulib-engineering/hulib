@@ -19,7 +19,7 @@ import { useAppDispatch } from '@/libs/hooks';
 import type { User } from '@/libs/services/modules/auth';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { setUserInfo } from '@/libs/store/authentication';
-import { PHONE_NUMBER_MESSAGE, PHONE_NUMBER_REGEX, ProfileValidation } from '@/validations/ProfileValidation';
+import { PHONE_NUMBER_REGEX, ProfileValidation, VALIDATION_MESSAGES } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
 
 type IProfileFormProps = {
@@ -88,7 +88,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
         Object.keys(fieldErrors).forEach((field) => {
           setError(field as keyof z.infer<typeof ProfileValidation>, {
             type: 'server',
-            message: PHONE_NUMBER_MESSAGE,
+            message: VALIDATION_MESSAGES.PHONE_NUMBER,
           });
         });
       } else {
@@ -126,7 +126,7 @@ export default function ProfileForm({ data, onCancel, onSucceed }: IProfileFormP
               >
                 {({ open }) => (
                   <>
-                    <Dropdown.Select open={open} label={t('gender')}>
+                    <Dropdown.Select open={open} label={t('gender.label')}>
                       {value?.name}
                     </Dropdown.Select>
                     <Dropdown.Options>

@@ -42,6 +42,7 @@ export type User = {
   address?: string;
   parentPhoneNumber?: string;
   parentFullname?: string;
+  parentEmail?: string;
   photo?: { id: string; path: string };
   sharingTopics?: Topic[];
   hasSeenHuberOnboarding: boolean;

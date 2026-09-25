@@ -137,6 +137,30 @@ npm run commit
 
 One of the benefits of using Conventional Commits is that it allows us to automatically generate a `CHANGELOG` file. It also allows us to automatically determine the next version number based on the types of commits that are included in a release.
 
+### AI-First Workflow
+
+Feature work on this repo is driven by an AI-first flow (same as `hulib-services`). The AI agent (default: `opencode`, recorded in `.ai/models.md`) is triggered by keywords in the request and follows the skill files under `.ai/skills/`.
+
+**Flow order:**
+
+| Step | Trigger | Skill | Output |
+| ---- | ------- | ----- | ------ |
+| 0 | `brainstorm-issue` / `new-task` | `.ai/skills/write-issue.md` | GitHub issue (with optional `design=` UI screenshots) |
+| 1 | `plan issue=<n>` | `.ai/skills/pull-and-plan.md` | Branch from `develop` + `docs/plans/plan-<issue>.md` |
+| 2 | `implement plan=...` | `.ai/skills/implement-plan.md` | Code, one commit per sub-task + `docs/results/result-<issue>.md` |
+| 3 | `verify issue=<n>` (optional) | `.ai/skills/verify-ui.md` | Screenshot proof vs design reference |
+| 4 | `pr issue=<n>` | `.ai/skills/create-pr.md` | PR against `develop`, `Closes #<issue>` |
+
+**Turning a UI design into a task:** paste the screenshot/photo path with `design=` (e.g. `brainstorm-issue background=... requirement=... design=./mockups/settings.png`). The image is stored in `.ai/references/<issue>/`, and `plan` / `implement` treat it as the ground truth the UI must match; the PR then shows design vs implemented side by side.
+
+**Artifacts**
+
+- Design screenshots & UI verify captures: `.ai/references/<issue>/`
+- Plans: `docs/plans/plan-<issue>.md`
+- Results: `docs/results/result-<issue>.md`
+
+**Branch & commit rules for AI-flow work** (documented in `AGENTS.md`, not in a hook): work branches are `<type>/<issue>-<slug>` forked from `develop`; every commit message carries `#<issue>` and follows Conventional Commits (commitlint, see below). Lint/typecheck/i18n gates must pass before a PR.
+
 ### Testing
 
 All unit tests are located with the source code inside the same directory. So, it makes it easier to find them. The project uses Jest and React Testing Library for unit testing. You can run the tests with:

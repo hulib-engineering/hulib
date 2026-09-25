@@ -1,6 +1,56 @@
-# HuLib — Agent
+# HuLib — Agent (FE)
 
-Last updated: 2026-06-06
+Last updated: 2026-09-23
+
+## AI-First Workflow
+
+This repo uses the same AI workflow as `hulib-services` (backend). Default model/tool is recorded in `.ai/models.md`.
+
+Skills are triggered by **keyword detection** in the user's message (no native slash commands). If a trigger keyword appears, STOP, open the matching file in `.ai/skills/<name>.md`, and follow it exactly with the provided args (`background=`, `requirement=`, `design=`, `issue=`, `plan=`, ...). Do not improvise outside the skill.
+
+| Keyword | Skill file |
+| ---- | ---- |
+| `brainstorm-issue` / `new-task` | `.ai/skills/write-issue.md` |
+| `plan` | `.ai/skills/pull-and-plan.md` |
+| `implement` | `.ai/skills/implement-plan.md` |
+| `verify` / `verify-ui` / `screenshot` | `.ai/skills/verify-ui.md` |
+| `pr` / `submit` | `.ai/skills/create-pr.md` |
+
+### AI flow (order)
+
+0. `brainstorm-issue` → GitHub issue (step 0, `write-issue`)
+1. `plan` → branch from `develop` + `docs/plans/plan-<issue>.md`
+2. `implement` → one commit per sub-task + `docs/results/result-<issue>.md`
+3. `verify` → optional screenshot check against the design reference
+4. `pr` → PR against `develop`, `Closes #<issue>`
+
+### Artifacts
+
+- GitHub issues (created/edited via `gh`)
+- Design screenshots + UI verify captures: `.ai/references/<issue>/` (committed on the branch, shown in the PR)
+- Plans: `docs/plans/plan-<issue>.md`
+- Results: `docs/results/result-<issue>.md`
+- Branch naming: `<type>/<issue>-<kebab-slug>` forked from `develop`
+
+### Commit flow
+
+Each AI-flow commit must comply with the real lint config that the Git hooks run — never bypass with `--no-verify`:
+
+- **Commit message** (`.husky/commit-msg` → `npx commitlint --edit`, config `commitlint.config.ts`)
+  - Must be a Conventional Commit: `<type>: <description>`, type is one of `build` / `chore` / `ci` / `docs` / `feat` / `fix` / `perf` / `refactor` / `revert` / `style` / `test`.
+  - Header up to 100 chars. `Merge ...` commits are ignored (allowed).
+- **Content** (`.husky/pre-commit` → `lint-staged.config.js`, non-concurrent)
+  - All staged files: `eslint --fix` then `eslint`.
+  - `**/*.ts?(x)`: `npm run check:types`.
+- **Branch name** (AI-flow rule — documented here, NOT a hook): work branches are `<type>/<issue>-<slug>` forked from `develop`, e.g. `fix/379-notification-create`. Base/backup/dependabot branches (e.g. `develop`, `main`, `azure-*`, `release/*`, `backup-*`, `dependabot/*`) are exempt. Enforcement is followed by the AI during `plan` (see `.ai/skills/pull-and-plan.md`), not by Git.
+
+**Trigger carry-over:** every commit message in a flow step carries the issue reference `#<issue>` and uses `<type>: <sub-task description>` (e.g. `feat: add cover preview (#412)`). The next skill in the flow (`plan` / `implement` / `pr`) resolves from the message, and each commit can be traced back to its task.
+
+Pre-PR gates (real commands, reflected in `.ai/skills/implement-plan.md`): `npm run lint`, `npm run check:types`, `npm run check:i18n`, `npm run test`, plus `npm run test-storybook:ci` when a story changed.
+
+---
+
+# HuLib — Agent (repo guide)
 
 ## What is HuLib?
 

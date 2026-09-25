@@ -8,7 +8,6 @@ import {
 } from '@phosphor-icons/react';
 import { mergeClassnames } from '../core/private/utils';
 import AuthorBasicInfo from './AuthorBasicInfo';
-// import type { AuthorBasicInfoProps } from './private/types';
 import Section from '@/components/Section';
 // import { Chip } from '@/components/core/chip/Chip';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
