@@ -2,6 +2,7 @@
 
 import { memo, useCallback, useState } from 'react';
 import { CalendarCheck } from '@phosphor-icons/react';
+import { format, parse } from 'date-fns';
 import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -11,6 +12,7 @@ import {
 } from '@/libs/constants/date';
 import { useCreateTimeslotsMutation } from '@/libs/services/modules/time-slots';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import { convertTimeSlotToUtc } from '@/utils/convertTimeSlotToUtc';
 
 // import IconButton from '@/components/core/iconButton/IconButton';
 
@@ -38,6 +40,16 @@ const DAY_TO_SHORT_EN: Record<Day, 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat'
   Friday: 'Fri',
   Saturday: 'Sat',
   Sunday: 'Sun',
+};
+
+const DAY_OF_WEEK: Record<Day, number> = {
+  Monday: 1,
+  Tuesday: 2,
+  Wednesday: 3,
+  Thursday: 4,
+  Friday: 5,
+  Saturday: 6,
+  Sunday: 0,
 };
 
 type BottomButtonsType = {
@@ -99,15 +111,6 @@ function PersonalCalendar(_props: PCModal) {
     Sunday: new Set(),
   });
   const [createTimeslots, { isLoading: isCreating }] = useCreateTimeslotsMutation();
-  const dayOfWeekMap: Record<Day, number> = {
-    Monday: 1,
-    Tuesday: 2,
-    Wednesday: 3,
-    Thursday: 4,
-    Friday: 5,
-    Saturday: 6,
-    Sunday: 0,
-  };
 
   const toggleTimeSlot = useCallback((slot: string) => {
     setTimeSlotsByDay((prev) => {
@@ -135,15 +138,17 @@ function PersonalCalendar(_props: PCModal) {
   );
 
   const handleSaveAndNext = useCallback(async () => {
-    const slots = timeSlotsByDay[currentChosenDay];
-    if (slots.size > 0) {
+    if (timeSlotsByDay[currentChosenDay].size > 0) {
+      // Backend replaces the whole week on every POST, so always send every picked day.
+      // Slots are displayed as "6:00 AM" local time; the API expects "HH:mm" in UTC.
+      const timeSlots = DAYS.flatMap(day =>
+        Array.from(timeSlotsByDay[day], time => convertTimeSlotToUtc({
+          dayOfWeek: DAY_OF_WEEK[day],
+          startTime: format(parse(time, 'h:mm a', new Date()), 'HH:mm'),
+        })),
+      );
       try {
-        await createTimeslots({
-          timeSlots: Array.from(slots).map(time => ({
-            dayOfWeek: dayOfWeekMap[currentChosenDay],
-            startTime: time,
-          })),
-        }).unwrap();
+        await createTimeslots({ timeSlots }).unwrap();
         pushSuccess(tSlots('save_success'));
       } catch {
         pushError(tCommon('error_contact_admin'));
@@ -151,7 +156,7 @@ function PersonalCalendar(_props: PCModal) {
       }
     }
     setCurrentChosenDay(current => nextDay(current));
-  }, [currentChosenDay, timeSlotsByDay, createTimeslots, nextDay, tSlots]);
+  }, [currentChosenDay, timeSlotsByDay, createTimeslots, nextDay, tSlots, tCommon]);
 
   const handleSkip = useCallback(() => {
     setCurrentChosenDay(current => nextDay(current));

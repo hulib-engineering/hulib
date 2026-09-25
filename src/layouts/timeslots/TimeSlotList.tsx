@@ -65,7 +65,7 @@ export default function TimeSlotList() {
       // Build UTC datetime relative to anchor
       const [hours, minutes] = slot.startTime.split(':').map(Number);
 
-      const anchorWeekday = REFERENCE_MONDAY.getDay();
+      const anchorWeekday = REFERENCE_MONDAY.getUTCDay();
       const diff = (slot.dayOfWeek - anchorWeekday + 7) % 7; // how many days to move
       const utcDate = new Date(Date.UTC(
         REFERENCE_MONDAY.getUTCFullYear(),
