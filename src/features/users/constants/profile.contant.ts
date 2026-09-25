@@ -26,6 +26,7 @@ export const HUBER_VIEWER_TABS = [
   { value: 'about', label: 'about' },
   { value: 'my_schedule', label: 'my_schedule' },
   { value: 'stories', label: 'my_stories' },
+  { value: 'my_feedback', label: 'huber_feedback' },
   { value: 'my_favorite', label: 'my_favorite' },
 ] as const;
 

@@ -594,7 +594,8 @@
       "stories": "Câu chuyện",
       "my_favorite": "Yêu thích",
       "my_schedule": "Lịch của tôi",
-      "my_feedback": "Đánh giá của tôi",
+      "my_feedback": "Đánh giá về tôi",
+      "huber_feedback": "Đánh giá về Huber",
       "personal_info": "Thông tin cá nhân"
     },
     "about_panel": {
@@ -656,7 +657,8 @@
     "no_own_stories_body": "Chia sẻ những câu chuyện của bạn, biết đâu nó sẽ giúp ích được cho nhiều người",
     "continue_finish_story": "Tiếp tục hoàn thành",
     "my_schedule": "Lịch của tôi",
-    "my_feedback": "Đánh giá của tôi",
+    "my_feedback": "Đánh giá về tôi",
+    "huber_feedback": "Đánh giá về Huber",
     "personal_info": "Thông tin cá nhân",
     "joined_since": "Tham gia Hulib {date}",
     "become_huber_banner": "Tạo câu chuyện mới để trở thành Huber",
