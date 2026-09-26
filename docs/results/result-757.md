@@ -44,28 +44,30 @@ Because a `<button>` may not contain another `<button>`, the "Cập nhật ngay"
 
 ## Gates
 
+Re-run after a clean `node_modules` reinstall (the original install was missing its `.bin` shims plus `@types/react`, `@phosphor-icons/react`, `@reduxjs/toolkit`, `@playwright/test` and `@lingual/i18n-check`, which made every gate unrunnable).
+
 | Gate | Result |
 | ----- | ------ |
-| `npm run check:types` | **Could not run.** `node_modules/.bin/` is missing, so npm resolves `tsc` to an unrelated global binary from a Yarn bin directory that reports `moduleResolution: "bundler"` as invalid. Run directly via `node node_modules/typescript/bin/tsc --noEmit` (TypeScript 5.9.3) instead — see the delta below. |
-| `npm run lint` | **Could not run.** `node_modules/eslint` is 8.57.1 while the repo uses flat config (ESLint 9), and `@eslint/eslintrc` is absent, so `eslint` aborts on startup. |
-| `npm run check:i18n` | **Could not run.** `@lingual/i18n-check` is declared in `package.json` but is not installed. Substituted a manual recursive key-parity diff of `en.json` against `vi.json`: **1089 keys each, 0 missing, 0 extra**. Both new keys are referenced in source, so neither is an orphan. |
-| `npm run test` | Not run — `node_modules` is incomplete (see below). No test files were added or changed. |
+| `npm run check:types` | **PASS** — clean, zero errors, using the project's own TypeScript 5.9.3. |
+| `npm run lint` (branch files) | **PASS** — 0 errors on all 5 changed source files. 1 pre-existing `react/no-array-index-key` warning on `my-schedule/page.tsx:229` (the Combobox `key={index}`), unrelated to this change. |
+| `npm run lint` (whole repo) | 3247 error-level findings, **all pre-existing and none in this branch's files** — 3099 `yaml/indent`, 55 `yaml/quotes`, 42 `style/eol-last`, 42 `test/padding-around-all`, 6 `style/no-multiple-empty-lines`, 3 `yaml/plain-scalar`. These all come from leftover `.playwright-mcp/*.yml` artifacts (git-excluded, untracked) plus test files; zero in `src/`. |
+| `npm run check:i18n` | **PASS** — runs after the reinstall. Corroborated by a manual recursive key-parity diff: 1089 keys each in `en.json` / `vi.json`, 0 missing, 0 extra, and both new keys referenced in source. |
+| `npm run test` | Not run — no test files were added or changed, and the suite is minimal (1 file) per the repo README. |
 | `npm run test-storybook:ci` | Not applicable — no story was added (by decision, see plan). |
-| Dev server / screenshot | Not possible — `node_modules` is missing `@types/react`, `@phosphor-icons/react`, `@reduxjs/toolkit/query` and `@playwright/test`, so the app cannot build or serve. |
+| Manual browser check | **Outstanding** — see the section above. |
 
-### Typecheck delta (the one gate that could be approximated)
+### Typecheck progression
 
-A normalised before/after diff of `node node_modules/typescript/bin/tsc --noEmit` against a clean `origin/develop` baseline, with line/column stripped so results are comparable:
+Before the reinstall, a normalised before/after diff of `tsc --noEmit` against a clean `origin/develop` baseline (line/column stripped) was used to approximate the gate, since only a stray global `tsc` was resolvable:
 
 - **Zero** new errors in any pre-existing file.
 - The two expected `TS2741 Property '[NotificationType.TIMESLOT_REMINDER]' is missing` errors in `config.tsx` and `registry.tsx` appeared after the enum addition and are **resolved** by the config/registry entries.
-- The new component contributes only repo-wide environment noise that every existing `.tsx` also produces: 12× `TS7026` (no `JSX.IntrinsicElements`, because `@types/react` is missing), 1× `TS7016` (no declaration file for `react`), 1× `TS2307` (cannot find `@phosphor-icons/react`). No genuine type error in the new code.
+- The new component contributed only repo-wide missing-`@types/react` noise (`TS7026`/`TS2307`), which disappeared entirely once the dependencies were installed.
 
 ## Notes / follow-up
 
-- **Toolchain is broken and was not repaired.** `node_modules` is missing its `.bin` shim directory plus `@types/react`, `@phosphor-icons/react`, `@reduxjs/toolkit`, `@playwright/test` and `@lingual/i18n-check`. A pre-existing `git stash` list (`lint-staged automatic backup` × 4) suggests a previous interrupted `lint-staged` run. Run `npm install` before trusting any gate, and re-run all of the above.
-- **All ten commits were made with `--no-verify`**, at the user's explicit instruction, because the pre-commit hook cannot start without a `lint-staged` shim. This bypassed ESLint and `check:types` entirely, so **the committed code has not been linted or typechecked by the real toolchain.** Please run `npm install && npm run lint && npm run check:types` and fix anything that surfaces.
-- One lint error was caught by hand instead: the new file originally had a bare `import React from 'react'`, which `unused-imports/no-unused-imports` would have flagged. `SystemNotification.tsx`, the closest structural analogue, has no React import. Removed in `c54149da`. Treat this as a sample, not a substitute for a real lint run — other style issues may remain.
+- **The broken `node_modules` was the reason every early commit used `--no-verify`.** The pre-commit hook could not start without a `lint-staged` shim, so ESLint and `check:types` were bypassed. This was resolved by a clean reinstall; the final commit and the gates above ran through the real toolchain with hooks enabled. Only the intermediate commits remain unverified by lint, and they are superseded by later commits on the same branch.
+- One lint error was caught by hand while the toolchain was broken: the new file originally had a bare `import React from 'react'`, which `unused-imports/no-unused-imports` would have flagged. `SystemNotification.tsx`, the closest structural analogue, has no React import. Removed in `c54149da`. The real lint run afterwards confirmed the branch files are clean.
 - **Sub-tasks 3, 4 and 6 landed as one commit** (`8f281cf2`) because they all live in the single new file and cannot be split without committing a knowingly broken intermediate state. Sub-tasks 1, 2, 5 and 7 are separate commits.
 - **No timestamp on the card, per explicit decision.** The spec's frame is 88px = 48 + 8 + 32 and the card is 120px = 88 + 32, leaving no room for a date row. This card is therefore the only notification card without a visible created-at date. If a date is wanted, the card grows to ~142px and the design no longer matches.
 - **The icon is 56px below `xl` and 72px at `xl` and above.** The spec's 662px card is a desktop width, and a fixed 72px icon at 320px leaves little room for the CTA. This matches the existing convention at `DefaultNotification.tsx:121` (`size="xl" className="xl:!size-[72px]"`). Note the original motivation (a 14px "Update personal schedule" label overflowing the `whitespace-nowrap` `Button`) no longer applies now that the label is "Update now", but the responsive sizing was kept for consistency with the sibling cards.
