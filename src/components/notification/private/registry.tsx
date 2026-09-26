@@ -4,6 +4,7 @@ import DefaultNotificationCard from '@/components/notification/styles/DefaultNot
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
 import InformativeNotificationCard from '@/components/notification/styles/InformativeNotification';
 import SystemNotificationCard from '@/components/notification/styles/SystemNotification';
+import TimeSlotReminderNotificationCard from '@/components/notification/styles/TimeSlotReminderNotification';
 
 type NotificationComponentProps = {
   notification: Notification;
@@ -33,6 +34,6 @@ export const notificationRegistry: Record<
   [NotificationType.SESSION_COMPLETION]: SystemNotificationCard,
   [NotificationType.USER_APPEAL]: DefaultNotificationCard,
   [NotificationType.APPEAL_RESPONSE]: DefaultNotificationCard,
-  [NotificationType.TIMESLOT_REMINDER]: DefaultNotificationCard,
+  [NotificationType.TIMESLOT_REMINDER]: TimeSlotReminderNotificationCard,
   [NotificationType.OTHER]: SystemNotificationCard,
 };
