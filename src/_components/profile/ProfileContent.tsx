@@ -50,16 +50,16 @@ export default function ProfileContent({ userDetail, isViewer = false }: HuberPr
           variant={isHuber ? 'huber' : 'liber'}
         />
       )}
-      {currentTab === 'my_favorite'
+      {currentTab === 'favorite'
       && (
         <MyFavoritePanel
           userId={isViewer ? userDetail.id : undefined}
           readOnly={isViewer}
         />
       )}
-      {currentTab === 'my_schedule' && <HuberSchedulePanel huberId={userDetail.id} />}
+      {currentTab === 'schedule' && <HuberSchedulePanel huberId={userDetail.id} />}
       {currentTab === 'personal_info' && <PersonalInformation data={userDetail} />}
-      {currentTab === 'my_feedback' && <MyFeedbackPanel huberId={userDetail.id} />}
+      {currentTab === 'feedback' && <MyFeedbackPanel huberId={userDetail.id} />}
     </ControlOverview>
   );
 }

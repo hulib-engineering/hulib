@@ -2,32 +2,32 @@ import type { CardVariant } from '../types/profile';
 
 export const HUBER_OWN_TABS = [
   { value: 'about', label: 'about' },
-  { value: 'my_schedule', label: 'my_schedule' },
+  { value: 'schedule', label: 'my_schedule' },
   { value: 'stories', label: 'my_stories' },
-  { value: 'my_favorite', label: 'my_favorite' },
-  { value: 'my_feedback', label: 'my_feedback' },
+  { value: 'favorite', label: 'my_favorite' },
+  { value: 'feedback', label: 'my_feedback' },
   { value: 'personal_info', label: 'personal_info' },
 ] as const;
 
 export const LIBER_OWN_TABS = [
   { value: 'about', label: 'about' },
   { value: 'stories', label: 'my_stories' },
-  { value: 'my_favorite', label: 'my_favorite' },
+  { value: 'favorite', label: 'my_favorite' },
   { value: 'personal_info', label: 'personal_info' },
 ] as const;
 
 export const LIBER_VIEWER_TABS = [
   { value: 'about', label: 'about' },
-  { value: 'stories', label: 'my_stories' },
-  { value: 'my_favorite', label: 'my_favorite' },
+  { value: 'stories', label: 'liber_stories' },
+  { value: 'favorite', label: 'liber_favorite' },
 ] as const;
 
 export const HUBER_VIEWER_TABS = [
   { value: 'about', label: 'about' },
-  { value: 'my_schedule', label: 'my_schedule' },
-  { value: 'stories', label: 'my_stories' },
-  { value: 'my_feedback', label: 'huber_feedback' },
-  { value: 'my_favorite', label: 'my_favorite' },
+  { value: 'schedule', label: 'huber_schedule' },
+  { value: 'stories', label: 'huber_stories' },
+  { value: 'feedback', label: 'huber_feedback' },
+  { value: 'favorite', label: 'huber_favorite' },
 ] as const;
 
 export const VIEWER_TABS = LIBER_VIEWER_TABS;
