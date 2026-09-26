@@ -192,6 +192,6 @@ export const notificationConfig: NotificationConfig = {
     getMessage: t => (
       <>{t('time_slot_reminder_message')}</>
     ),
-    route: () => '/my-schedule',
+    route: (_relatedEntityId, roleId) => (roleId === Role.HUBER ? '/my-schedule?tab=timeslots' : '/my-schedule'),
   },
 };

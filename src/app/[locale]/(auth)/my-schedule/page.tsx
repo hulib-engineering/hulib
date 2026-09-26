@@ -3,6 +3,7 @@
 import { ArrowLeft, CalendarDot, CaretDown, MapPinArea } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import * as React from 'react';
 import { useCallback, useState } from 'react';
 
@@ -59,11 +60,14 @@ export default function Index() {
 
   const user = useAppSelector(state => state.auth.userInfo);
   const isHuber = user?.role?.name === 'Huber';
+  const searchParams = useSearchParams();
   const upcomingParticipant = hasUpcomingEvent
     ? (isHuber ? upcomingEvents[0].reader : upcomingEvents[0].humanBook)
     : undefined;
 
-  const [showMobileTimeslotRegistration, setShowMobileTimeslotRegistration] = useState(false);
+  const [showMobileTimeslotRegistration, setShowMobileTimeslotRegistration] = useState(
+    () => searchParams.get('tab') === 'timeslots',
+  );
   const [selectedSlots, setSelectedSlots] = useState<{ dayOfWeek: number; startTime: string }[]>([]);
   const [dateInWeekView, setDateInWeekView] = useState<Date>(new Date());
   const [filterQuery, setFilterQuery] = useState<string>('');
