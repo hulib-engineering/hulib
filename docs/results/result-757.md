@@ -5,15 +5,24 @@ What changed
 - `src/components/notification/private/types.ts`: added `TIMESLOT_REMINDER = 'timeSlotReminder'` to the `NotificationType` enum.
 - `src/components/notification/private/config.tsx`: added the `notificationConfig` entry — a fixed `getMessage` (no interpolation, no `relatedEntity` access) and a role-aware `route` that sends Hubers to `/my-schedule?tab=timeslots` and everyone else to `/my-schedule`.
 - `src/components/notification/private/registry.tsx`: registered `TimeSlotReminderNotificationCard` for the new type.
-- `src/components/notification/styles/TimeSlotReminderNotification.tsx` (new): the card itself — 72px calendar badge, message, full-width pill CTA, unread leaf.
+- `src/components/notification/styles/TimeSlotReminderNotification.tsx` (new): the card itself — a 72px calendar icon, message, full-width pill CTA, unread leaf.
 - `src/app/[locale]/(auth)/my-schedule/page.tsx`: seeded the existing `showMobileTimeslotRegistration` state from `useSearchParams().get('tab') === 'timeslots'` so the deep-link opens the timeslot editor.
 - `src/locales/en.json`, `src/locales/vi.json`: added `time_slot_reminder_message` and `time_slot_reminder_cta` under `notifications`.
 
 Visual verification
 
-- reference: **none available** — `.ai/references/` did not exist and the design screenshot pasted into the issue could not be read (this model has no image input). The issue was therefore created text-only and the Figma spec dump in the issue is the provisional ground truth.
-- implemented: **none** — no screenshot was captured. `/notifications` is behind the auth guard in `src/middleware.ts`, there is no public equivalent, and the local dev server could not be started (see Notes). No screenshot was faked.
-- **Needs manual UI check.** Compare the rendered card against the Figma spec before merging.
+- reference: `.ai/references/757/design-01.png` — supplied late, as `.ai/temp/757a.png`, after the code was first written.
+- implemented: **no screenshot** — `/notifications` is behind the auth guard in `src/middleware.ts`, there is no public equivalent, and the local dev server could not be started (see Gates). No screenshot was faked.
+- **Still needs a manual UI check** in a browser against `.ai/references/757/design-01.png`.
+
+### Corrections made after the design reference arrived
+
+Comparing the rendered code against `design-01.png` exposed two real defects, both caused by the earlier text-only issue (the screenshot could not be read when the issue was written). Fixed in `fbd4f35a`:
+
+1. **The circular badge was wrong and has been removed.** The card wrapped the icon in a `rounded-full border-2 border-primary-50 bg-primary-98` circle. The design shows a plain solid-blue calendar glyph with no circle, no border and no tinted background. The circle came from the Figma **`logo` node, which the spec marks `display: none`** — the hidden node was implemented instead of the visible `CalendarPlus` node. The wrapper `div` is kept purely for layout and responsive sizing (`size-14 xl:size-[72px]`), and the icon now fills it via `size="100%"`.
+2. **The CTA label was wrong.** It read "Update personal schedule" / "Cập nhật lịch cá nhân"; the design reads **"Update now" / "Cập nhật ngay"**. The spec's own `Button` label width of 107px was consistent with the shorter string. Both locale files updated.
+
+Side effect: the shorter label removed the 320px overflow risk that motivated the responsive badge sizing in the first place, though the `size-14 xl:size-[72px]` sizing was kept because it still matches the other notification cards.
 
 What was done
 
@@ -23,7 +32,7 @@ Layout was derived directly from the spec's box arithmetic and lands on the spec
 
 The `Button` primitive turned out to match the spec without arbitrary values — `variant="fill"` supplies `bg-primary-50` (`#0442BF`), `size="sm"` supplies `h-8` (32px) and `text-sm` (14px), and `rounded-full` with `font-medium` is baked into the common styles. Only the 1px same-colour border and the `text-primary-98` label colour were added. No `hover:` utility was passed in `className`, which would have suppressed the built-in hover overlay (`Button.tsx:42`).
 
-The badge deliberately does not reuse `Avatar`: `Avatar` has no 72px size, and with no `imageUrl` it renders a generated identicon. It uses `CalendarPlus` from `@phosphor-icons/react` (already a dependency, previously unused) in a plain `div`, following the badge precedent in `SystemNotification.tsx:38`.
+The badge deliberately does not reuse `Avatar`: `Avatar` has no 72px size, and with no `imageUrl` it renders a generated identicon. It uses `CalendarPlus` from `@phosphor-icons/react` (already a dependency, previously unused) in a plain `div`, following the badge precedent in `SystemNotification.tsx:38`. Per `design-01.png` the icon is a bare solid glyph — the surrounding circle, border and tinted background that the Figma `logo` node described are deliberately **not** rendered, because that node is `display: none` in the spec.
 
 The card root is a `div`, not a `button`, so the CTA button is the only interactive element. The passed `onClick` is invoked from the button handler, which is what triggers `markAsSeen` in `NotificationItemRenderer.tsx:34` — the card does not call `useNotificationActions` itself, avoiding a double PATCH.
 
