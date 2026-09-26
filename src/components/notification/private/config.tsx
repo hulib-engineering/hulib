@@ -188,4 +188,10 @@ export const notificationConfig: NotificationConfig = {
       <>{m.relatedEntity?.status === 'accepted' ? t('appeal_accepted') : t('appeal_rejected')}</>
     ),
   },
+  [NotificationType.TIMESLOT_REMINDER]: {
+    getMessage: t => (
+      <>{t('time_slot_reminder_message')}</>
+    ),
+    route: (_relatedEntityId, roleId) => (roleId === Role.HUBER ? '/my-schedule?tab=timeslots' : '/my-schedule'),
+  },
 };

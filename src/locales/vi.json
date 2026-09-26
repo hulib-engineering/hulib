@@ -1066,6 +1066,8 @@
     "user_appeal": "Khiếu nại báo cáo người dùng #{id}",
     "appeal_accepted": "Yêu cầu khiếu nại của bạn đã được chấp nhận, tài khoản của bạn sẽ không bị cảnh cáo. Cảm ơn bạn đã làm rõ sự việc.",
     "appeal_rejected": "Sau khi xem xét khiếu nại của bạn, chúng tôi quyết định giữ nguyên cảnh cáo. Vui lòng lưu ý rằng tài khoản của bạn sẽ bị cấm nếu nhận đủ 3 báo cáo.",
+    "time_slot_reminder_message": "Cập nhật lịch cá nhân để có những buổi trò chuyện trực tuyến thật ý nghĩa.",
+    "time_slot_reminder_cta": "Cập nhật ngay",
     "now": "Ngay bây giờ",
     "join_now": "Tham gia ngay",
     "feedback": "Phản hồi",
