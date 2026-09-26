@@ -1,8 +1,6 @@
 'use client';
-
-import { Star } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
-
+import Image from 'next/image';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
 
 type MyFeedbackPanelProps = {
@@ -23,14 +21,9 @@ export default function MyFeedbackPanel({ huberId: _huberId }: MyFeedbackPanelPr
 
   if (!feedbackList || feedbackList.length === 0) {
     return (
-      <div className="flex min-h-[320px] flex-col items-center justify-center gap-4 rounded-2xl border border-neutral-90 bg-white p-6 text-center shadow-sm">
-        <div className="bg-primary-95 flex size-14 items-center justify-center rounded-full text-primary-50">
-          <Star size={28} weight="fill" />
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="text-base font-semibold text-neutral-10">{tCommon('feedback_empty_title')}</p>
-          <p className="max-w-sm text-sm leading-5 text-neutral-40">{tCommon('feedback_empty_description')}</p>
-        </div>
+      <div className="flex min-h-[320px] flex-col items-center gap-4 rounded-2xl text-center">
+        <Image src="/assets/icons/profile/feedback/heart.svg" alt="heart" height={120} width={116} />
+        <p className="text-lg font-medium text-primary-50">{tCommon('feedback_empty')}</p>
       </div>
     );
   }
