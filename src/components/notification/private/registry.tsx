@@ -33,5 +33,6 @@ export const notificationRegistry: Record<
   [NotificationType.SESSION_COMPLETION]: SystemNotificationCard,
   [NotificationType.USER_APPEAL]: DefaultNotificationCard,
   [NotificationType.APPEAL_RESPONSE]: DefaultNotificationCard,
+  [NotificationType.TIMESLOT_REMINDER]: DefaultNotificationCard,
   [NotificationType.OTHER]: SystemNotificationCard,
 };
