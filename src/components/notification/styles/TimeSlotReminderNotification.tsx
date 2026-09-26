@@ -39,8 +39,8 @@ export default function TimeSlotReminderNotificationCard({ notification, onClick
 
   return (
     <div className="flex w-full items-start gap-3 rounded-lg bg-white px-5 py-4">
-      <div className="flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-primary-50 bg-primary-98 xl:size-[72px]">
-        <CalendarPlus className="text-primary-60" size={36} weight="fill" />
+      <div className="flex size-14 shrink-0 items-center justify-center xl:size-[72px]">
+        <CalendarPlus className="text-primary-60" size="100%" weight="fill" />
       </div>
       <div className="flex flex-1 items-start gap-3">
         <div className="flex flex-1 flex-col gap-2">
