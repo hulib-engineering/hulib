@@ -1054,6 +1054,8 @@
     "user_appeal": "User appeal report #{id}",
     "appeal_accepted": "Your appeal request is accepted, your account does not receive warning. Thank you for clarifying the situation.",
     "appeal_rejected": "After reviewing your appeal, we've decided to keep the warning. Please be careful that your account will be ban if you receive 3 reports.",
+    "time_slot_reminder_message": "Update your personal schedule to have more meaningful online conversations.",
+    "time_slot_reminder_cta": "Update personal schedule",
     "now": "Now",
     "join_now": "Join now",
     "feedback": "Feedback",

@@ -24,5 +24,6 @@ export enum NotificationType {
   SESSION_COMPLETION = 'sessionFinish',
   USER_APPEAL = 'userAppeal',
   APPEAL_RESPONSE = 'appealResponse',
+  TIMESLOT_REMINDER = 'timeSlotReminder',
   OTHER = 'other',
 }
