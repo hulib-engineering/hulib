@@ -3,14 +3,14 @@
 Trigger keyword: `pr` / `submit`
 Args: issue=<number>
 
-This is step 4 of the FE AI flow. Runs after implement-plan wrote `docs/results/result-<issue>.md` (and optionally after verify-ui).
+This is the final step of the FE AI flow. Runs after implement-plan wrote `docs/results/result-<issue>.md`.
 
-AI flow (FE): 0 write-issue → 1 pull-and-plan → 2 implement-plan → 3 verify-ui (optional) → 4 create-pr
+AI flow (FE): 0 write-issue → 1 pull-and-plan → 2 implement-plan → 3 create-pr
 
 ## Steps
 
 1. Read `docs/plans/plan-<issue>.md` and `docs/results/result-<issue>.md`.
-2. Collect screenshot pairs under `.ai/references/<issue>/` — `design-*.png` (expected) vs `verify-*.png` (implemented). They are committed on the branch, so reference them with relative markdown paths in the PR body.
+2. Do not attach screenshots. Design and verify images are not stored in the repo, so the PR body must instead **name the routes that need a manual browser check** and state which gates could not run.
 3. Push the branch: `git push -u origin <current-branch>`.
 4. Create the PR: `gh pr create --base develop --head <branch> --title "<type>: <short description>" --body-file <pr body temp file>` (PR title generally matches the issue title).
 5. Make sure the body contains `Closes #<issue>` so the issue auto-closes on merge.
@@ -29,9 +29,9 @@ AI flow (FE): 0 write-issue → 1 pull-and-plan → 2 implement-plan → 3 verif
 
 ### UI changes
 
-* ![design](.ai/references/<issue>/design-01.png) — expected
-* ![implemented](.ai/references/<issue>/verify-01.png) — implemented
-* List any route that needs manual checking (auth-gated screens).
+* Describe the visual change in words (sizes, tokens, copy).
+* List every route that needs a manual browser check, flagging auth-gated screens.
+* State that visual verification is manual and was not performed by the AI.
 
 ### Changes
 
@@ -44,7 +44,7 @@ AI flow (FE): 0 write-issue → 1 pull-and-plan → 2 implement-plan → 3 verif
 
 ### Responsive
 
-* Breakpoints verified: <desktop / tablet / mobile>
+* Breakpoints addressed: <desktop / tablet / mobile>. Say "by code review only" if no browser check was possible.
 
 ### i18n
 
@@ -55,7 +55,7 @@ AI flow (FE): 0 write-issue → 1 pull-and-plan → 2 implement-plan → 3 verif
 * Unit tests: <describe>
 * Storybook tests: <describe>
 * E2E/`npm run test:e2e`: <describe>
-* Manual / visual: <describe — reference the verify-*.png captures>
+* Manual / visual: <required — list the routes and what to confirm in a browser>
 
 ### Notes
 
@@ -65,11 +65,13 @@ AI flow (FE): 0 write-issue → 1 pull-and-plan → 2 implement-plan → 3 verif
 
 ### Checklist
 
+Leave a box unchecked and say why whenever a gate could not run. Never tick a gate that did not execute.
+
 * [ ] `npm run lint` passes
 * [ ] `npm run check:types` passes
 * [ ] `npm run check:i18n` passes (if keys changed)
 * [ ] Storybook story updated if component UI changed
-* [ ] Screenshots attached under UI changes
+* [ ] Manual browser check done by a developer
 * [ ] No unrelated changes
 
 Closes #<issue>
