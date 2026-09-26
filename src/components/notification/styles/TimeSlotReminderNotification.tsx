@@ -7,7 +7,7 @@ import { notificationConfig } from '../private/config';
 import { NotificationType } from '../private/types';
 import { useRouter } from '@/libs/i18nNavigation';
 
-import Button from '@/components/core/button/Button';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { useAppSelector } from '@/libs/hooks';
 import { Role } from '@/types/common';
 
@@ -21,7 +21,7 @@ export default function TimeSlotReminderNotificationCard({ notification, onClick
   const userInfo = useAppSelector(state => state.auth.userInfo);
   const roleId = userInfo?.role?.id ?? Role.LIBER;
 
-  const handleCtaClick = () => {
+  const handleClick = () => {
     if (onClick) {
       onClick();
     }
@@ -38,7 +38,14 @@ export default function TimeSlotReminderNotificationCard({ notification, onClick
   }
 
   return (
-    <div className="flex w-full items-start gap-3 rounded-lg bg-white px-5 py-4">
+    <button
+      type="button"
+      className={mergeClassnames(
+        'flex w-full items-start gap-3 rounded-lg bg-white px-5 py-4 text-left transition-colors delay-300 hover:bg-primary-98',
+        !notification.seen && 'bg-primary-90 xl:bg-white',
+      )}
+      onClick={handleClick}
+    >
       <div className="flex size-14 shrink-0 items-center justify-center xl:size-[72px]">
         <CalendarPlus className="text-primary-60" size="100%" weight="fill" />
       </div>
@@ -47,15 +54,9 @@ export default function TimeSlotReminderNotificationCard({ notification, onClick
           <p className="line-clamp-2 text-sm font-medium leading-5 tracking-[0.015em] text-neutral-10 xl:text-base xl:leading-6 xl:tracking-[0.005em]">
             {cfg.getMessage(t, notification, roleId)}
           </p>
-          <Button
-            variant="fill"
-            size="sm"
-            fullWidth
-            className="border border-primary-50 text-primary-98"
-            onClick={handleCtaClick}
-          >
+          <span className="flex h-8 w-full items-center justify-center rounded-full border border-primary-50 bg-primary-50 px-3 text-sm font-medium text-primary-98">
             {t('time_slot_reminder_cta')}
-          </Button>
+          </span>
         </div>
         <div className="flex size-4 shrink-0 items-center justify-center xl:size-6">
           {!notification.seen && (
@@ -69,6 +70,6 @@ export default function TimeSlotReminderNotificationCard({ notification, onClick
           )}
         </div>
       </div>
-    </div>
+    </button>
   );
 }
