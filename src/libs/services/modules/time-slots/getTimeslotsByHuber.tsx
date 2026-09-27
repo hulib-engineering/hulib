@@ -15,7 +15,10 @@ const getTimeslotsByHuber = (
 ) =>
   build.query<PaginatedResponse<TimeSlot[]>, { id: number }>({
     query: params => `time-slots/huber/${params.id}`,
-    providesTags: [{ type: 'TimeSlotHuber' }],
+    providesTags: [
+      { type: 'Timeslot', id: 'LIST' },
+      { type: 'TimeSlotHuber', id: 'LIST' },
+    ],
   });
 
 export default getTimeslotsByHuber;

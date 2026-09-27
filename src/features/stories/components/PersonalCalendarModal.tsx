@@ -2,6 +2,7 @@
 
 import { memo, useCallback, useState } from 'react';
 import { CalendarCheck } from '@phosphor-icons/react';
+import { format, parse } from 'date-fns';
 import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -9,6 +10,13 @@ import {
   DAYS_OF_WEEK as DAYS,
   TIME_SLOTS,
 } from '@/libs/constants/date';
+import { useAppSelector } from '@/libs/hooks';
+import type { GroupingTimeslots } from '@/libs/hooks/useTimeslotGrouping';
+import { useTimeslotGrouping } from '@/libs/hooks/useTimeslotGrouping';
+import { useCreateTimeslotsMutation, useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
+import Loading from '@/app/[locale]/loading';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import { convertTimeSlotToUtc } from '@/utils/convertTimeSlotToUtc';
 
 // import IconButton from '@/components/core/iconButton/IconButton';
 
@@ -17,6 +25,10 @@ type PCModal = {
 };
 
 type Day = (typeof DAYS)[number];
+
+type PersonalCalendarProps = PCModal & {
+  savedSlots: GroupingTimeslots;
+};
 
 const DAY_TO_FULL_KEY: Record<Day, 'day_full_0' | 'day_full_1' | 'day_full_2' | 'day_full_3' | 'day_full_4' | 'day_full_5' | 'day_full_6'> = {
   Monday: 'day_full_1',
@@ -38,12 +50,23 @@ const DAY_TO_SHORT_EN: Record<Day, 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat'
   Sunday: 'Sun',
 };
 
+const DAY_OF_WEEK: Record<Day, number> = {
+  Monday: 1,
+  Tuesday: 2,
+  Wednesday: 3,
+  Thursday: 4,
+  Friday: 5,
+  Saturday: 6,
+  Sunday: 0,
+};
+
 type BottomButtonsType = {
   isDayPicked: (day: Day) => boolean;
   currentChosenDay: Day;
   nextDay: (day: Day) => Day;
-  onNextDay: () => void;
-  onClose: () => void;
+  onSaveAndNext: () => void;
+  onSkip: () => void;
+  isSaving?: boolean;
 };
 
 function BottomButtons(props: BottomButtonsType) {
@@ -58,8 +81,9 @@ function BottomButtons(props: BottomButtonsType) {
           'w-full max-w-lg rounded-full',
 
         )}
-        disabled={!props.isDayPicked(props.currentChosenDay)}
-        onClick={props.onNextDay}
+        disabled={!props.isDayPicked(props.currentChosenDay) || props.isSaving}
+        animation={props.isSaving ? 'progress' : undefined}
+        onClick={props.onSaveAndNext}
       >
         {tSlots('save_and_next', { day: nextDayLabel })}
       </Button>
@@ -67,7 +91,7 @@ function BottomButtons(props: BottomButtonsType) {
         type="button"
         variant="ghost"
         className="max-sm:w-full"
-        onClick={props.onNextDay}
+        onClick={props.onSkip}
         aria-label="Close"
       >
         {t('i_am_busy', { day: currentDayLabel })}
@@ -77,25 +101,21 @@ function BottomButtons(props: BottomButtonsType) {
 };
 const MemoBottomButtons = memo(BottomButtons);
 
-function PersonalCalendar(props: PCModal) {
-  /* TODO: Make it so the chosen timeslots will only be saved when pressed on the bottom left button - (for the current Day of Week).
-  As of now they are still saved irregardless. */
+// Saved slots come grouped by local weekday as "HH:mm"; the grid works with "h:mm a" per Day.
+const toSlotsByDay = (saved: GroupingTimeslots) => Object.fromEntries(DAYS.map(day => [
+  day,
+  new Set(Object.values(saved[DAY_OF_WEEK[day]] ?? {}).flat().map(time => format(parse(time, 'HH:mm', new Date()), 'h:mm a'))),
+])) as Record<Day, Set<string>>;
 
+function PersonalCalendar({ savedSlots }: PersonalCalendarProps) {
   const tSlots = useTranslations('Time_slots');
   const t = useTranslations('PersonalCalendarModal');
+  const tCommon = useTranslations('Common');
 
   const [currentChosenDay, setCurrentChosenDay] = useState<Day>('Monday');
-  const [timeSlotsByDay, setTimeSlotsByDay] = useState<
-    Record<Day, Set<string>>
-  >({
-    Monday: new Set(),
-    Tuesday: new Set(),
-    Wednesday: new Set(),
-    Thursday: new Set(),
-    Friday: new Set(),
-    Saturday: new Set(),
-    Sunday: new Set(),
-  });
+  // Backend replaces the whole week on save, so start from the saved schedule to avoid wiping other days.
+  const [timeSlotsByDay, setTimeSlotsByDay] = useState(() => toSlotsByDay(savedSlots));
+  const [createTimeslots, { isLoading: isCreating }] = useCreateTimeslotsMutation();
 
   const toggleTimeSlot = useCallback((slot: string) => {
     setTimeSlotsByDay((prev) => {
@@ -121,6 +141,31 @@ function PersonalCalendar(props: PCModal) {
     (day: Day) => timeSlotsByDay[day].size > 0,
     [timeSlotsByDay],
   );
+
+  const handleSaveAndNext = useCallback(async () => {
+    if (timeSlotsByDay[currentChosenDay].size > 0) {
+      // Backend replaces the whole week on every POST, so always send every picked day.
+      // Slots are displayed as "6:00 AM" local time; the API expects "HH:mm" in UTC.
+      const timeSlots = DAYS.flatMap(day =>
+        Array.from(timeSlotsByDay[day], time => convertTimeSlotToUtc({
+          dayOfWeek: DAY_OF_WEEK[day],
+          startTime: format(parse(time, 'h:mm a', new Date()), 'HH:mm'),
+        })),
+      );
+      try {
+        await createTimeslots({ timeSlots }).unwrap();
+        pushSuccess(tSlots('save_success'));
+      } catch {
+        pushError(tCommon('error_contact_admin'));
+        return;
+      }
+    }
+    setCurrentChosenDay(current => nextDay(current));
+  }, [currentChosenDay, timeSlotsByDay, createTimeslots, nextDay, tSlots, tCommon]);
+
+  const handleSkip = useCallback(() => {
+    setCurrentChosenDay(current => nextDay(current));
+  }, [nextDay]);
 
   return (
     <div
@@ -200,9 +245,10 @@ function PersonalCalendar(props: PCModal) {
           <MemoBottomButtons
             currentChosenDay={currentChosenDay}
             nextDay={nextDay}
-            onNextDay={() => setCurrentChosenDay(current => nextDay(current))}
-            onClose={props.onClose}
+            onSaveAndNext={handleSaveAndNext}
+            onSkip={handleSkip}
             isDayPicked={isDayPicked}
+            isSaving={isCreating}
           />
         </div>
       </div>
@@ -212,9 +258,10 @@ function PersonalCalendar(props: PCModal) {
         <MemoBottomButtons
           currentChosenDay={currentChosenDay}
           nextDay={nextDay}
-          onNextDay={() => setCurrentChosenDay(current => nextDay(current))}
-          onClose={props.onClose}
+          onSaveAndNext={handleSaveAndNext}
+          onSkip={handleSkip}
           isDayPicked={isDayPicked}
+          isSaving={isCreating}
         />
       </div>
     </div>
@@ -242,10 +289,18 @@ function Header(props: PCModal) {
 }
 
 export default function PersonalCalendarModal(props: PCModal) {
+  const tCommon = useTranslations('Common');
+  const userId = useAppSelector(state => state.auth.userInfo?.id);
+  const { data, isLoading, isError } = useGetTimeslotsByHuberQuery({ id: Number(userId) }, { skip: !userId });
+  const savedSlots = useTimeslotGrouping(data);
+
   return (
     <div className="flex size-full max-h-[900px] flex-col rounded-2xl bg-white shadow-lg">
       <Header {...props} />
-      <PersonalCalendar {...props} />
+      {isLoading && <Loading />}
+      {/* Saving without the current schedule would overwrite it, so don't render the editor on error. */}
+      {isError && <p className="p-6 text-center text-sm text-neutral-40">{tCommon('error_contact_admin')}</p>}
+      {!isLoading && !isError && <PersonalCalendar {...props} savedSlots={savedSlots} />}
     </div>
   );
 }
