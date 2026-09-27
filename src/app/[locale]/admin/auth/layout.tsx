@@ -2,6 +2,7 @@
 
 import { SessionProvider } from 'next-auth/react';
 import type { ReactNode } from 'react';
+import AuthSessionSync from '@/components/AuthSessionSync';
 
 export default function Layout({
   children, // will be a page or nested layout
@@ -9,6 +10,9 @@ export default function Layout({
   children: ReactNode;
 }) {
   return (
-    <SessionProvider>{children}</SessionProvider>
+    <SessionProvider>
+      <AuthSessionSync />
+      {children}
+    </SessionProvider>
   );
 }

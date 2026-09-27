@@ -7,6 +7,14 @@ import type { ProfileValidation } from '@/validations/ProfileValidation';
 import type { StatusEnum } from '@/types/common';
 
 type SliceState = {
+  accessToken: string;
+  // True once AuthSessionSync has observed a resolved (non-"loading") NextAuth
+  // session status at least once — including the logged-out case, where
+  // accessToken stays '' forever. Without this flag, prepareHeaders in
+  // src/libs/services/api.ts can't tell "not hydrated yet" apart from
+  // "hydrated, genuinely anonymous", and would call getSession() on every
+  // single request on public/anonymous pages.
+  isSessionHydrated: boolean;
   avatarId: string;
   avatarUrl: string;
   userInfo: z.infer<typeof ProfileValidation> & {
@@ -19,11 +27,19 @@ type SliceState = {
 
 const slice = createSlice({
   name: 'auth',
-  initialState: { avatarUrl: '', avatarId: '', userInfo: {} } as SliceState,
+  initialState: { accessToken: '', isSessionHydrated: false, avatarUrl: '', avatarId: '', userInfo: {} } as SliceState,
   reducers: {
-    refreshAccessToken: (_state, action) => {
+    // Cache of the NextAuth session's accessToken, kept in sync by AuthSessionSync.
+    // RTK Query reads it from here instead of calling next-auth's getSession() on every request.
+    setAccessToken: (state, action) => {
+      state.accessToken = action.payload ?? '';
+      state.isSessionHydrated = true;
+    },
+    refreshAccessToken: (state, action) => {
       const accessToken = action.payload;
       localStorage.setItem('access_token', accessToken);
+      state.accessToken = accessToken ?? '';
+      state.isSessionHydrated = true;
     },
     logout: (state) => {
       localStorage.clear();
@@ -35,6 +51,8 @@ const slice = createSlice({
       state.userInfo = {} as SliceState['userInfo'];
       state.avatarUrl = '';
       state.avatarId = '';
+      state.accessToken = '';
+      state.isSessionHydrated = true;
       // Sign out and redirect to the login page
       signOut({ callbackUrl: '/auth/login' });
     },
@@ -51,7 +69,7 @@ const slice = createSlice({
   },
 });
 
-export const { logout, refreshAccessToken, setAvatarUrl, setUserInfo }
+export const { logout, refreshAccessToken, setAccessToken, setAvatarUrl, setUserInfo }
   = slice.actions;
 
 export default slice.reducer;

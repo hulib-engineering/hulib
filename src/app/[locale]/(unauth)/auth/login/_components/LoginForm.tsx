@@ -10,6 +10,7 @@ import type { z } from 'zod';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/libs/i18nNavigation';
 
+import AuthSessionSync from '@/components/AuthSessionSync';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import Checkbox from '@/components/core/checkbox/Checkbox';
@@ -20,6 +21,7 @@ import type { EmailLoginResponse } from '@/libs/services/modules/auth';
 import { useLoginAsManagerMutation } from '@/libs/services/modules/auth';
 import { LoginValidation } from '@/validations/LoginValidation';
 import TextInput from '@/components/core/textInput-v1/TextInput';
+import { consumePostLoginRedirect } from '@/utils/authRedirect';
 
 const LoginForm = () => {
   const t = useTranslations('SignIn');
@@ -56,11 +58,12 @@ const LoginForm = () => {
         });
         // save access token to session
         await update({ accessToken: result.token });
+        const redirectTo = consumePostLoginRedirect('/');
         await signIn('credentials', {
           id: result.user.id,
           accessToken: result.token,
           role: result.user.role.name,
-          callbackUrl: `${window.location.origin}/`,
+          callbackUrl: `${window.location.origin}${redirectTo}`,
         });
       }
     } catch {
@@ -146,12 +149,12 @@ const LoginForm = () => {
         <SocialButton
           variant="google"
           className="w-full"
-          onClick={() => signIn('google', { callbackUrl: '/' })}
+          onClick={() => signIn('google', { callbackUrl: consumePostLoginRedirect('/') })}
         />
         {/* <SocialButton
           iconUrl={FacebookIcon}
           className="w-full"
-          onClick={() => signIn('facebook', { callbackUrl: '/' })}
+          onClick={() => signIn('facebook', { callbackUrl: consumePostLoginRedirect('/') })}
         >
           Log in with Facebook
         </SocialButton> */}
@@ -168,6 +171,7 @@ const LoginForm = () => {
 
 export const LoginWithSession = () => (
   <SessionProvider>
+    <AuthSessionSync />
     <LoginForm />
   </SessionProvider>
 );

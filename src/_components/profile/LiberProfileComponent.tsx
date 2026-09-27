@@ -3,7 +3,7 @@
 import { useCallback, useState } from 'react';
 import BecomeHuberBanner from './BecomeHuberBanner';
 import LiberProfile from './LiberHero';
-import LiberProfileContent from './LiberProfileContent';
+import ProfileContent from './ProfileContent';
 import { useGetHuberStoriesQuery } from '@/libs/services/modules/huber';
 import type { TUserDetail } from '@/features/users/types';
 import EditImageModal from '@/layouts/profile/EditImageModal';
@@ -36,7 +36,7 @@ export default function LiberProfileComponent({ userDetail }: Props) {
     <div className="mx-auto flex w-full flex-1 flex-col gap-y-4 px-3 pt-3 md:px-0 lg:gap-5 lg:pb-12 xl:max-w-[1216px]">
       <LiberProfile userDetail={userDetail} handleEditAvatarClick={handleEditAvatarClick} />
       {hasNoStory && <BecomeHuberBanner />}
-      <LiberProfileContent userDetail={userDetail} />
+      <ProfileContent userDetail={userDetail} />
       <EditImageModal
         {...currentEditableImageData}
         open={isEditImageModalOpen}

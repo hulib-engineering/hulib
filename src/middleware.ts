@@ -4,6 +4,10 @@ import { getToken } from 'next-auth/jwt';
 import createMiddleware from 'next-intl/middleware';
 
 import { AppConfig } from './utils/AppConfig';
+import { ROLE_NAME, Role } from './types/common';
+import { POST_LOGIN_REDIRECT_COOKIE } from './utils/authRedirect';
+
+const SENTRY_TUNNEL_ROUTE = '/monitoring';
 
 const SOCIAL_CRAWLER_PATTERNS = [
   'facebookexternalhit',
@@ -35,6 +39,7 @@ export default async function middleware(request: NextRequest) {
   if (
     pathname.startsWith('/api')
     || pathname.startsWith('/_next')
+    || pathname === SENTRY_TUNNEL_ROUTE
     || pathname.match(/\.(jpg|jpeg|png|gif|svg|ico|css|js|map|json)$/)
   ) {
     return NextResponse.next();
@@ -86,13 +91,18 @@ export default async function middleware(request: NextRequest) {
   const isAdminPage = pathname.includes('/admin');
   const loginPath = isAdminPage ? '/admin/auth/login' : '/auth/login';
 
-  // Not logged in → redirect to the right login
+  // Not logged in → redirect to the right login, remembering where to return
   if (!token) {
-    return NextResponse.redirect(new URL(loginPath, request.url));
+    const redirectResponse = NextResponse.redirect(new URL(loginPath, request.url));
+    redirectResponse.cookies.set(POST_LOGIN_REDIRECT_COOKIE, pathname + request.nextUrl.search, {
+      maxAge: 600,
+      path: '/',
+    });
+    return redirectResponse;
   }
 
-  // Role checks
-  const isAdmin = token.role === 'Admin';
+  // Role checks — backend returns the role name with inconsistent casing (`admin` vs `Admin`)
+  const isAdmin = String(token.role ?? '').toLowerCase() === ROLE_NAME[Role.ADMIN].toLowerCase();
 
   if (!isAdmin && isAdminPage) {
     return NextResponse.redirect(new URL('/admin/auth/login', request.url));
@@ -102,5 +112,5 @@ export default async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next|_vercel|.*\\..*).*)'],
+  matcher: ['/((?!api|_next|_vercel|monitoring|.*\\..*).*)'],
 };

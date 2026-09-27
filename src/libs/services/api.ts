@@ -3,19 +3,48 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Mutex } from 'async-mutex';
 import { getSession } from 'next-auth/react';
 
+import type { RootState } from '../store';
 import { logout, refreshAccessToken } from '../store/authentication';
 import { AppConfig } from '@/utils/AppConfig';
 
+// Dedupe concurrent getSession() calls: a page can fire many RTK Query
+// requests in the same tick before AuthSessionSync has hydrated the store,
+// and each one hitting prepareHeaders would otherwise trigger its own
+// /api/auth/session fetch. They share this single in-flight promise instead.
+let inflightSessionPromise: ReturnType<typeof getSession> | null = null;
+function getSessionDeduped() {
+  if (!inflightSessionPromise) {
+    inflightSessionPromise = getSession().finally(() => {
+      inflightSessionPromise = null;
+    });
+  }
+  return inflightSessionPromise;
+}
+
 const baseQuery = fetchBaseQuery({
   baseUrl: `${AppConfig.api.endpoint}/${AppConfig.api.version}/`,
-  prepareHeaders: async (headers) => {
+  prepareHeaders: async (headers, { getState }) => {
     // By default, if we have a token in the resto, let's use that for authenticated requests
     headers.set('hulib-service-key', 'hlb-93td6qrktpz6xrm4jj6dejgmffm4ya_pk');
 
-    const session: any = await getSession();
+    // AuthSessionSync keeps this in Redux, so the common case is a synchronous
+    // read with no network call at all. isSessionHydrated (not accessToken
+    // presence) gates the fallback below, since an anonymous/public page has
+    // a real, permanently empty accessToken — checking truthiness alone would
+    // hit getSession() on every single request on those pages forever.
+    const { accessToken: cachedAccessToken, isSessionHydrated } = (getState() as RootState).auth;
+    let accessToken = cachedAccessToken;
 
-    if (session) {
-      headers.set('Authorization', `Bearer ${session.accessToken}`);
+    // Fallback for the brief window before AuthSessionSync's first effect has
+    // run (e.g. the very first request(s) right after page load) — only hits
+    // next-auth's getSession() (a real network call) until the store is hydrated.
+    if (!isSessionHydrated) {
+      const session: any = await getSessionDeduped();
+      accessToken = session?.accessToken;
+    }
+
+    if (accessToken) {
+      headers.set('Authorization', `Bearer ${accessToken}`);
     }
 
     return headers;

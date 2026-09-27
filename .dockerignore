@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+.github
+.storybook
+.playwright-mcp
+.playwright-simulate
+.serena
+.idea
+.vscode
+test-results
+tests
+coverage
+*.log
+.env.local
+.env*.local

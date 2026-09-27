@@ -32,7 +32,7 @@ export default function MyAboutPanel({
   const t = useTranslations('MyProfile');
 
   return (
-    <div className="flex flex-col gap-4 rounded-xl bg-white px-3 py-4 sm:px-6 sm:py-5 lg:px-8">
+    <div className="flex flex-col gap-4 rounded-xl bg-white">
       <LiberAboutSection
         title={t('liber_about.journey_title')}
         placeholder={t('liber_about.journey_placeholder')}

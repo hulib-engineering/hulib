@@ -5,6 +5,7 @@ import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
 import * as React from 'react';
 import { poppins } from '@/styles/fonts';
+import AuthSessionSync from '@/components/AuthSessionSync';
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -34,6 +35,7 @@ const AdminTemplate = (props: WithChildren) => {
 
   return (
     <SessionProvider>
+      <AuthSessionSync />
       <div
         className={mergeClassnames(
           poppins.className,

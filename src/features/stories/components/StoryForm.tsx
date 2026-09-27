@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
+// import 'swiper/css';
 import type { z } from 'zod';
 
 import { CustomCoverModal } from './CustomCoverModal';
@@ -90,7 +90,7 @@ export default function StoryForm(props: IStoryFormProps) {
   // });
   const { data: relatedTopics } = useGetRelatedTopicsQuery(
     Number(props.type === 'edit' && props.story.id),
-    { skip: props.type !== 'edit' || props.story.topics?.length > 0 },
+    { skip: props.type !== 'edit' || (props.story.topics?.length ?? 0) > 0 },
   );
   const [uploadCover] = useUploadMutation();
   const [createStory] = useCreateStoryMutation();

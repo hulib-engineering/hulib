@@ -1,5 +1,7 @@
 import { Warning } from '@phosphor-icons/react';
 
+// TODO: Remove this component and use Hint.tsx in components folder instead
+
 export default function TimeslotWarning() {
   return (
     <div

@@ -3,7 +3,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import BecomeHuberStar from './BecomeHuberStar';
 import HuberProfile from './HuberHero';
-import HuberProfileContent from '@/_components/profile/HuberProfileContent';
+import ProfileContent from '@/_components/profile/ProfileContent';
 import type { TUserDetail } from '@/features/users/types';
 import EditImageModal from '@/layouts/profile/EditImageModal';
 import { useGetMyFavoritesQuery } from '@/libs/services/modules/user';
@@ -67,7 +67,7 @@ export default function HuberProfileComponent({ userDetail }: Props) {
         onCreateStoryClick={() => setIsCreateStoryModalOpen(true)}
       />
       {!isHuberStar && <BecomeHuberStar current={huberStarProgress} />}
-      <HuberProfileContent userDetail={userDetail} />
+      <ProfileContent userDetail={userDetail} />
       <EditImageModal
         {...currentEditableImageData}
         open={isEditImageModalOpen}

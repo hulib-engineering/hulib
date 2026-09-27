@@ -65,7 +65,7 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
   if (isAuthenticated && !personalInfoError) {
     return (
       <div className={mergeClassnames(poppins.className, 'relative antialiased h-screen flex flex-col')}>
-        <div className="flex size-full flex-col">
+        <div className="flex size-full flex-col overflow-hidden">
           <Header />
           <main className={mergeClassnames('flex-1 overflow-x-hidden bg-neutral-98', !pathname.includes('messages') && 'overflow-y-auto pb-14 lg:pb-0')}>
             <div className={mergeClassnames('bg-neutral-98', pathname.includes('messages') ? 'h-full' : 'min-h-[calc(100vh-410px)]')}>

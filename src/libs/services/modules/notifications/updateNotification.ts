@@ -15,6 +15,7 @@ const updateNotification = (
     invalidatesTags: (_result, _error, { id }) => [
       { type: 'Notification', id },
       { type: 'Notification', id: 'LIST' },
+      { type: 'Notification', id: 'UNSEEN_COUNT' },
     ],
   });
 

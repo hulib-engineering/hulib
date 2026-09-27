@@ -1,7 +1,7 @@
 'use client';
 
 import type { IconProps } from '@phosphor-icons/react';
-import { BookmarksSimple, Books, UserList } from '@phosphor-icons/react';
+import { BookmarksSimpleIcon, BooksIcon, UserListIcon } from '@phosphor-icons/react';
 import type { ComponentType, ReactNode } from 'react';
 
 import MenuItem from '@/components/core/menuItem/MenuItem';
@@ -24,19 +24,19 @@ const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     type: 'storiesToPublish',
     label: 'Story management',
     href: '/admin/awaiting-stories',
-    icon: Books,
+    icon: BooksIcon,
   },
   {
     type: 'users',
     label: 'User management',
     href: '/admin/users',
-    icon: UserList,
+    icon: UserListIcon,
   },
   {
     type: 'nameTags',
     label: 'Tag management',
     href: '/admin/tags',
-    icon: BookmarksSimple,
+    icon: BookmarksSimpleIcon,
   },
 ];
 
