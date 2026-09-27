@@ -4,6 +4,7 @@ import { getToken } from 'next-auth/jwt';
 import createMiddleware from 'next-intl/middleware';
 
 import { AppConfig } from './utils/AppConfig';
+import { ROLE_NAME, Role } from './types/common';
 import { POST_LOGIN_REDIRECT_COOKIE } from './utils/authRedirect';
 
 const SENTRY_TUNNEL_ROUTE = '/monitoring';
@@ -100,8 +101,8 @@ export default async function middleware(request: NextRequest) {
     return redirectResponse;
   }
 
-  // Role checks
-  const isAdmin = token.role === 'Admin';
+  // Role checks — backend returns the role name with inconsistent casing (`admin` vs `Admin`)
+  const isAdmin = String(token.role ?? '').toLowerCase() === ROLE_NAME[Role.ADMIN].toLowerCase();
 
   if (!isAdmin && isAdminPage) {
     return NextResponse.redirect(new URL('/admin/auth/login', request.url));
