@@ -19,9 +19,9 @@ type ControlOverviewProps = {
 const TAB_ICONS: Record<string, React.ElementType> = {
   about: UserListIcon,
   stories: BooksIcon,
-  my_favorite: ThumbsUpIcon,
-  my_feedback: HeartIcon,
-  my_schedule: CalendarDotsIcon,
+  favorite: ThumbsUpIcon,
+  feedback: HeartIcon,
+  schedule: CalendarDotsIcon,
   personal_info: UserGearIcon,
 };
 

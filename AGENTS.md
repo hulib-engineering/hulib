@@ -13,7 +13,6 @@ Skills are triggered by **keyword detection** in the user's message (no native s
 | `brainstorm-issue` / `new-task` | `.ai/skills/write-issue.md` |
 | `plan` | `.ai/skills/pull-and-plan.md` |
 | `implement` | `.ai/skills/implement-plan.md` |
-| `verify` / `verify-ui` / `screenshot` | `.ai/skills/verify-ui.md` |
 | `pr` / `submit` | `.ai/skills/create-pr.md` |
 
 ### AI flow (order)
@@ -21,16 +20,17 @@ Skills are triggered by **keyword detection** in the user's message (no native s
 0. `brainstorm-issue` → GitHub issue (step 0, `write-issue`)
 1. `plan` → branch from `develop` + `docs/plans/plan-<issue>.md`
 2. `implement` → one commit per sub-task + `docs/results/result-<issue>.md`
-3. `verify` → optional screenshot check against the design reference
-4. `pr` → PR against `develop`, `Closes #<issue>`
+3. `pr` → PR against `develop`, `Closes #<issue>`
+
+**Visual verification is NOT part of this flow.** The AI does not capture screenshots, does not run the dev server for visual checks, and does not commit design or verify images. The developer checks the UI manually in a browser before merging. If the AI cannot see a design, it must say so and implement from the written spec, then flag the card as unverified in the result doc and the PR.
 
 ### Artifacts
 
 - GitHub issues (created/edited via `gh`)
-- Design screenshots + UI verify captures: `.ai/references/<issue>/` (committed on the branch, shown in the PR)
 - Plans: `docs/plans/plan-<issue>.md`
 - Results: `docs/results/result-<issue>.md`
 - Branch naming: `<type>/<issue>-<kebab-slug>` forked from `develop`
+- Design images are **never committed**. Share them in chat or keep them in a gitignored local folder such as `.ai/temp/`.
 
 ### Commit flow
 

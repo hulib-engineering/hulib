@@ -3,6 +3,7 @@ import HuberSchedulePanel from './HuberSchedulePanel';
 import MyFavoritePanel from './MyFavoritePanel';
 import MyAboutPanel from './MyAboutPanel';
 import PersonalInformation from './PersonalInformation';
+import MyFeedbackPanel from './MyFeedbackPanel';
 import MyStoriesPanel from '@/app/[locale]/(auth)/users/[id]/_components/MyStoriesPanel';
 import useProfileActions from '@/features/users/hooks/useProfileActions';
 import { useProfileTab } from '@/features/users/hooks/useProfileTab';
@@ -49,16 +50,16 @@ export default function ProfileContent({ userDetail, isViewer = false }: HuberPr
           variant={isHuber ? 'huber' : 'liber'}
         />
       )}
-      {currentTab === 'my_favorite'
+      {currentTab === 'favorite'
       && (
         <MyFavoritePanel
           userId={isViewer ? userDetail.id : undefined}
           readOnly={isViewer}
         />
       )}
-      {currentTab === 'my_schedule' && <HuberSchedulePanel huberId={userDetail.id} />}
-      {currentTab === 'my_feedback' && <>My feedback</>}
+      {currentTab === 'schedule' && <HuberSchedulePanel huberId={userDetail.id} />}
       {currentTab === 'personal_info' && <PersonalInformation data={userDetail} />}
+      {currentTab === 'feedback' && <MyFeedbackPanel huberId={userDetail.id} />}
     </ControlOverview>
   );
 }
