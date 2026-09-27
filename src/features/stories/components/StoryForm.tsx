@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, BookOpen, CaretDown, PencilSimple, Plus } from '@phosphor-icons/react';
+import { ArrowLeft, CaretDown, PencilSimple } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -568,8 +568,6 @@ export default function StoryForm(props: IStoryFormProps) {
                 className="w-full min-[955px]:w-[300px]"
                 animation={isSubmitting && 'progress'}
                 disabled={isSubmitting || !isFormValid}
-                iconLeft={props.type === 'edit' ? undefined : <BookOpen size={20} />}
-                iconRight={props.type === 'edit' ? undefined : <Plus size={20} />}
               >
                 {props.type === 'edit' ? t('confirm') : (
                   <>
