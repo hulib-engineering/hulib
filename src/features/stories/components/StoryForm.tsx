@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import 'swiper/css';
 import type { z } from 'zod';
+import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 import { CustomCoverModal } from './CustomCoverModal';
 import { useRouter } from '@/libs/i18nNavigation';
@@ -77,6 +78,177 @@ type IStoryFormProps = | {
   onSucceed: () => void;
 };
 
+type TopicsFieldProps = {
+  selectedTopics: TFilter[];
+  setSelectedTopics: React.Dispatch<React.SetStateAction<TFilter[]>>;
+};
+
+type CommonFieldProps = {
+  register: UseFormRegister<z.infer<typeof StoriesValidation>>;
+  errors: FieldErrors<z.infer<typeof StoriesValidation>>;
+};
+// Note: the above Props type is being used for both TitleField and StoryContentField
+// if something added that make the passed-in props for both no longer identical => separate the props type into 2 separate ones
+
+function TitleField({ register, errors }: CommonFieldProps) {
+  const t = useTranslations('Common');
+
+  return (
+    <Form.Item className="max-[955px]:px-4">
+      <TextInput
+        {...register('title')}
+        type="text"
+        placeholder={t('placeholder_title')}
+        label={(
+          <p className="text-sm leading-4 text-neutral-10">
+            {t('title')}
+            <span className="text-red-50">*</span>
+          </p>
+        )}
+        isError={!!errors.title}
+        maxLength={32}
+        hintText={errors.title?.message || (errors.title && 'Required')}
+      />
+    </Form.Item>
+  );
+}
+
+function StoryContentField({ register, errors }: CommonFieldProps) {
+  const t = useTranslations('Common');
+
+  return (
+    <Form.Item className="max-[955px]:px-4">
+      <Label className="mb-2">
+        {t('content')}
+        <span className="text-red-50">*</span>
+      </Label>
+      <TextArea
+        {...register('abstract')}
+        rows={9}
+        error={!!errors.abstract}
+        placeholder={t('placeholder_content')}
+        size="sm"
+      />
+      {errors.abstract && (
+        <p className="mt-1 text-xs text-red-500">
+          {errors.abstract.message || 'Required'}
+        </p>
+      )}
+    </Form.Item>
+  );
+}
+
+function TopicsField(props: TopicsFieldProps) {
+  const t = useTranslations('Common');
+  const [topicQuery, setTopicQuery] = useState('');
+
+  const { data: topicsData } = useGetTopicsQuery({
+    name: topicQuery || undefined, // search theo query nếu có
+    limit: 50,
+  });
+
+  const topicOptions = useMemo(
+    () =>
+      (topicsData?.data ?? []).map((topic: Topic) => ({
+        label: topic.name,
+        value: topic.id.toString(),
+        id: topic.id,
+      })),
+    [topicsData],
+  );
+
+  const handleRemoveTopic = useCallback(
+    (index: unknown) => {
+      props.setSelectedTopics(props.selectedTopics.filter(({ id }) => id !== index));
+    },
+    [props.selectedTopics],
+  );
+
+  const sortTopicsByPriority = (topics: { label: string; value: string; id: number }[]) => {
+    return [...topics].sort((a, b) => {
+      const aIsPriority = a.label.toLowerCase().startsWith(PRIORITY_TOPIC_KEYWORD);
+      const bIsPriority = b.label.toLowerCase().startsWith(PRIORITY_TOPIC_KEYWORD);
+      if (aIsPriority && !bIsPriority) {
+        return -1;
+      }
+      if (!aIsPriority && bIsPriority) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+  const queriedTopicOptions = sortTopicsByPriority(topicOptions);
+
+  return (
+    <Form.Item className="max-[955px]:px-4">
+      <Combobox
+        // @ts-ignore
+        by="id"
+        value={props.selectedTopics}
+        onChange={value => props.setSelectedTopics(value as TFilter[])}
+        onQueryChange={setTopicQuery}
+        onClear={handleRemoveTopic}
+        className="w-full"
+        multiple
+        size="lg"
+      >
+        {({ open }) => (
+          <>
+            <Combobox.VisualMultiSelect
+              open={open}
+              label={(
+                <p className="text-sm leading-4 text-neutral-10">
+                  {t('topics')}
+                  <span className="text-red-50">*</span>
+                </p>
+              )}
+              placeholder={props.selectedTopics.length > 0 ? undefined : t('select_topics')}
+              className="border-neutral-90"
+              inputClassname="px-0 font-normal leading-4"
+              displayValue={({ label }) => label}
+            >
+              <CaretDown />
+            </Combobox.VisualMultiSelect>
+            <Combobox.Transition>
+              <Combobox.Options className="z-50 flex flex-wrap gap-2 p-1">
+                {queriedTopicOptions.length === 0 && topicQuery !== '' ? (
+                  <div className="relative cursor-default select-none text-neutral-40">
+                    Nothing found.
+                  </div>
+                ) : (
+                  queriedTopicOptions.map((filter: any) => {
+                    const color = getChipColor(filter.id);
+                    return (
+                      <Combobox.Option value={filter} key={filter.id}>
+                        {({ selected, active }) => (
+                          <span
+                            className={mergeClassnames(
+                              'inline-flex cursor-pointer select-none items-center rounded-full border px-4 py-2 text-sm font-semibold transition-opacity',
+                              selected && 'opacity-100',
+                              active && 'opacity-90',
+                            )}
+                            style={{
+                              backgroundColor: color.bg,
+                              color: color.text,
+                              borderColor: color.border,
+                            }}
+                          >
+                            {filter.label}
+                          </span>
+                        )}
+                      </Combobox.Option>
+                    );
+                  })
+                )}
+              </Combobox.Options>
+            </Combobox.Transition>
+          </>
+        )}
+      </Combobox>
+    </Form.Item>
+  );
+}
+
 export default function StoryForm(props: IStoryFormProps) {
   let swiperRef: any = null;
   const router = useRouter();
@@ -105,23 +277,6 @@ export default function StoryForm(props: IStoryFormProps) {
   //     })),
   //   [me],
   // );
-
-  const [topicQuery, setTopicQuery] = useState('');
-
-  const { data: topicsData } = useGetTopicsQuery({
-    name: topicQuery || undefined, // search theo query nếu có
-    limit: 50,
-  });
-
-  const topicOptions = useMemo(
-    () =>
-      (topicsData?.data ?? []).map((topic: Topic) => ({
-        label: topic.name,
-        value: topic.id.toString(),
-        id: topic.id,
-      })),
-    [topicsData],
-  );
 
   const storyTopicsFromProps = props.type === 'edit' ? props.story.topics : undefined;
   const storyRelatedTopics = useMemo(() => {
@@ -171,20 +326,6 @@ export default function StoryForm(props: IStoryFormProps) {
   );
   // const queriedTopicOptions = filter(topicQuery, topicOptions || []);
   // const queriedTopicOptions = topicOptions;
-  const sortTopicsByPriority = (topics: { label: string; value: string; id: number }[]) => {
-    return [...topics].sort((a, b) => {
-      const aIsPriority = a.label.toLowerCase().startsWith(PRIORITY_TOPIC_KEYWORD);
-      const bIsPriority = b.label.toLowerCase().startsWith(PRIORITY_TOPIC_KEYWORD);
-      if (aIsPriority && !bIsPriority) {
-        return -1;
-      }
-      if (!aIsPriority && bIsPriority) {
-        return 1;
-      }
-      return 0;
-    });
-  };
-  const queriedTopicOptions = sortTopicsByPriority(topicOptions);
 
   useEffect(() => {
     setValue('topics', selectedTopics.map(topic => ({ id: topic.id.toString() })));
@@ -220,13 +361,6 @@ export default function StoryForm(props: IStoryFormProps) {
     }
     return getDefaultCustomization(cover);
   }, [coverCustomization, selectedCoverSample]);
-
-  const handleRemoveTopic = useCallback(
-    (index: unknown) => {
-      setSelectedTopics(selectedTopics.filter(({ id }) => id !== index));
-    },
-    [selectedTopics],
-  );
 
   const rasterizeAndUploadCover = async (): Promise<string | undefined> => {
     try {
@@ -308,7 +442,7 @@ export default function StoryForm(props: IStoryFormProps) {
             </p>
 
             <div className="flex flex-1 rounded-2xl
-            border border-neutral-90 bg-neutral-98 p-5"
+              border border-neutral-90 bg-neutral-98 p-5"
             >
               {/* Desktop */}
               <div className="hidden w-full cursor-pointer flex-col gap-4 min-[955px]:flex">
@@ -352,108 +486,10 @@ export default function StoryForm(props: IStoryFormProps) {
 
           {/* Cột phải */}
           <div className="flex flex-1 flex-col gap-6">
-            <Form.Item className="max-[955px]:px-4">
-              <TextInput
-                {...register('title')}
-                type="text"
-                placeholder={t('placeholder_title')}
-                label={(
-                  <p className="text-sm leading-4 text-neutral-10">
-                    {t('title')}
-                    <span className="text-red-50">*</span>
-                  </p>
-                )}
-                isError={!!errors.title}
-                maxLength={32}
-                hintText={errors.title?.message || (errors.title && 'Required')}
-              />
-            </Form.Item>
+            <TitleField register={register} errors={errors} />
+            <TopicsField selectedTopics={selectedTopics} setSelectedTopics={setSelectedTopics} />
+            <StoryContentField register={register} errors={errors} />
 
-            <Form.Item className="max-[955px]:px-4">
-              <Combobox
-                // @ts-ignore
-                by="id"
-                value={selectedTopics}
-                onChange={value => setSelectedTopics(value as TFilter[])}
-                onQueryChange={setTopicQuery}
-                onClear={handleRemoveTopic}
-                className="w-full"
-                multiple
-                size="lg"
-              >
-                {({ open }) => (
-                  <>
-                    <Combobox.VisualMultiSelect
-                      open={open}
-                      label={(
-                        <p className="text-sm leading-4 text-neutral-10">
-                          {t('topics')}
-                          <span className="text-red-50">*</span>
-                        </p>
-                      )}
-                      placeholder={selectedTopics.length > 0 ? undefined : t('select_topics')}
-                      className="border-neutral-90"
-                      inputClassname="px-0 font-normal leading-4"
-                      displayValue={({ label }) => label}
-                    >
-                      <CaretDown />
-                    </Combobox.VisualMultiSelect>
-                    <Combobox.Transition>
-                      <Combobox.Options className="z-50 flex flex-wrap gap-2 p-1">
-                        {queriedTopicOptions.length === 0 && topicQuery !== '' ? (
-                          <div className="relative cursor-default select-none text-neutral-40">
-                            Nothing found.
-                          </div>
-                        ) : (
-                          queriedTopicOptions.map((filter: any) => {
-                            const color = getChipColor(filter.id);
-                            return (
-                              <Combobox.Option value={filter} key={filter.id}>
-                                {({ selected, active }) => (
-                                  <span
-                                    className={mergeClassnames(
-                                      'inline-flex cursor-pointer select-none items-center rounded-full border px-4 py-2 text-sm font-semibold transition-opacity',
-                                      selected && 'opacity-100',
-                                      active && 'opacity-90',
-                                    )}
-                                    style={{
-                                      backgroundColor: color.bg,
-                                      color: color.text,
-                                      borderColor: color.border,
-                                    }}
-                                  >
-                                    {filter.label}
-                                  </span>
-                                )}
-                              </Combobox.Option>
-                            );
-                          })
-                        )}
-                      </Combobox.Options>
-                    </Combobox.Transition>
-                  </>
-                )}
-              </Combobox>
-            </Form.Item>
-
-            <Form.Item className="max-[955px]:px-4">
-              <Label className="mb-2">
-                {t('content')}
-                <span className="text-red-50">*</span>
-              </Label>
-              <TextArea
-                {...register('abstract')}
-                rows={9}
-                error={!!errors.abstract}
-                placeholder={t('placeholder_content')}
-                size="sm"
-              />
-              {errors.abstract && (
-                <p className="mt-1 text-xs text-red-500">
-                  {errors.abstract.message || 'Required'}
-                </p>
-              )}
-            </Form.Item>
             {/* Gần dưới cùng */}
             <div className="flex flex-1 flex-col px-4 pb-24 min-[955px]:hidden">
               <p className="mb-2 text-sm font-medium text-black">
@@ -463,7 +499,7 @@ export default function StoryForm(props: IStoryFormProps) {
               </p>
 
               <div className="flex flex-1 rounded-2xl
-            border border-neutral-90 bg-neutral-98 p-5"
+                border border-neutral-90 bg-neutral-98 p-5"
               >
                 {/* Mobile */}
                 <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-5">
@@ -519,12 +555,12 @@ export default function StoryForm(props: IStoryFormProps) {
               </div>
             </div>
             <div className="z-40 flex
-            w-full
-            bg-white
-            max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
-            max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
-            min-[955px]:mt-auto
-            min-[955px]:justify-end"
+              w-full
+              bg-white
+              max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
+              max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
+              min-[955px]:mt-auto
+              min-[955px]:justify-end"
             >
               <Button
                 type="submit"
