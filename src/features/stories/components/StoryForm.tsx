@@ -88,35 +88,42 @@ type SubmitButtonProps = {
   isSubmitting: boolean;
   isFormValid: boolean;
   type: 'create' | 'create-first' | 'edit';
+  saveDraft: () => void;
 };
 
-function SubmitButton({ isSubmitting, isFormValid, type }: SubmitButtonProps) {
+function SubmitButton({ isSubmitting, isFormValid, type, saveDraft }: SubmitButtonProps) {
   const t = useTranslations('Common');
 
   return (
-    <div className="z-40 flex w-full bg-white
+    <div className="flex flex-row">
+      {/* Draft saving */}
+      <Button variant="outline" className="px-6" onClick={saveDraft}>Lưu bản nháp</Button>
+
+      {/* Submit */}
+      <div className="z-40 flex w-full bg-white
       max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
       max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
       min-[955px]:justify-end"
-    >
-      <Button
-        type="submit"
-        size="lg"
-        className="w-full min-[955px]:w-[300px]"
-        animation={isSubmitting && 'progress'}
-        disabled={isSubmitting || !isFormValid}
       >
-        {type === 'edit' ? t('confirm') : (
-          <>
-            <span className="min-[955px]:hidden">
-              {t('submit_create_book_mobile')}
-            </span>
-            <span className="hidden min-[955px]:inline">
-              {t('submit_create_book_desktop')}
-            </span>
-          </>
-        )}
-      </Button>
+        <Button
+          type="submit"
+          size="lg"
+          className="w-full min-[955px]:w-[300px]"
+          animation={isSubmitting && 'progress'}
+          disabled={isSubmitting || !isFormValid}
+        >
+          {type === 'edit' ? t('confirm') : (
+            <>
+              <span className="min-[955px]:hidden">
+                {t('submit_create_book_mobile')}
+              </span>
+              <span className="hidden min-[955px]:inline">
+                {t('submit_create_book_desktop')}
+              </span>
+            </>
+          )}
+        </Button>
+      </div>
     </div>
   );
 }
@@ -288,6 +295,20 @@ export default function StoryForm(props: IStoryFormProps) {
       pushError(t(error?.message || 'error_contact_admin'));
     }
   };
+
+  type Draft = { cover: string; title: string; topics: string; content: string };
+
+  function saveDraft() {
+    function getDrafts(): Draft[] {
+      const raw = localStorage.getItem('draft');
+      return raw ? JSON.parse(raw) : [];
+    }
+    const list = getDrafts();
+    list.push({ cover: 'cover', title: 'title', topics: 'topics', content: 'content' });
+    localStorage.setItem('draft', JSON.stringify(list));
+
+    pushSuccess('Bản nháp đã được lưu thành công', 'Lưu bản nháp thành công');
+  }
   // CHANGE: Changed 'xl' and 'lg' breakpoints to 'sm' or 'md'.
   return (
     <div className="flex flex-col gap-6 rounded-[20px] bg-white
@@ -414,7 +435,7 @@ export default function StoryForm(props: IStoryFormProps) {
                 </div>
               </div>
             </div>
-            <SubmitButton isSubmitting={isSubmitting} isFormValid={isFormValid} type={props.type} />
+            <SubmitButton isSubmitting={isSubmitting} isFormValid={isFormValid} type={props.type} saveDraft={saveDraft} />
           </div>
 
         </div>
