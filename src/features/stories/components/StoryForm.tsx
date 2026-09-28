@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Swiper, SwiperSlide } from 'swiper/react';
-// import 'swiper/css';
+import 'swiper/css';
 import type { z } from 'zod';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 
