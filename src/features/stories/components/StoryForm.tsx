@@ -249,6 +249,55 @@ function TopicsField(props: TopicsFieldProps) {
   );
 }
 
+function CoverPickerTitle() {
+  const t = useTranslations('Common');
+
+  return (
+    <p className="mb-2 text-sm">
+      {t('cover_picture')}
+      {' '}
+      <span className="text-red-50">*</span>
+    </p>
+  );
+}
+
+type SubmitButtonProps = {
+  isSubmitting: any;
+  isFormValid: any;
+  type: string;
+};
+
+function SubmitButton({ isSubmitting, isFormValid, type }: SubmitButtonProps) {
+  const t = useTranslations('Common');
+
+  return (
+    <div className="z-40 flex w-full bg-white
+      max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
+      max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
+      min-[955px]:justify-end"
+    >
+      <Button
+        type="submit"
+        size="lg"
+        className="w-full min-[955px]:w-[300px]"
+        animation={isSubmitting && 'progress'}
+        disabled={isSubmitting || !isFormValid}
+      >
+        {type === 'edit' ? t('confirm') : (
+          <>
+            <span className="min-[955px]:hidden">
+              {t('submit_create_book_mobile')}
+            </span>
+            <span className="hidden min-[955px]:inline">
+              {t('submit_create_book_desktop')}
+            </span>
+          </>
+        )}
+      </Button>
+    </div>
+  );
+}
+
 export default function StoryForm(props: IStoryFormProps) {
   let swiperRef: any = null;
   const router = useRouter();
@@ -435,11 +484,7 @@ export default function StoryForm(props: IStoryFormProps) {
         >
           {/* Cột trái */}
           <div className="flex flex-1 flex-col max-[955px]:hidden">
-            <p className="mb-2 text-sm font-medium text-black">
-              {t('cover_picture')}
-              {' '}
-              <span className="text-red-50">*</span>
-            </p>
+            <CoverPickerTitle />
 
             <div className="flex flex-1 rounded-2xl
               border border-neutral-90 bg-neutral-98 p-5"
@@ -492,12 +537,7 @@ export default function StoryForm(props: IStoryFormProps) {
 
             {/* Gần dưới cùng */}
             <div className="flex flex-1 flex-col px-4 pb-24 min-[955px]:hidden">
-              <p className="mb-2 text-sm font-medium text-black">
-                {t('cover_picture')}
-                {' '}
-                <span className="text-red-50">*</span>
-              </p>
-
+              <CoverPickerTitle />
               <div className="flex flex-1 rounded-2xl
                 border border-neutral-90 bg-neutral-98 p-5"
               >
@@ -554,33 +594,7 @@ export default function StoryForm(props: IStoryFormProps) {
                 </div>
               </div>
             </div>
-            <div className="z-40 flex
-              w-full
-              bg-white
-              max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
-              max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
-              min-[955px]:mt-auto
-              min-[955px]:justify-end"
-            >
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full min-[955px]:w-[300px]"
-                animation={isSubmitting && 'progress'}
-                disabled={isSubmitting || !isFormValid}
-              >
-                {props.type === 'edit' ? t('confirm') : (
-                  <>
-                    <span className="min-[955px]:hidden">
-                      {t('submit_create_book_mobile')}
-                    </span>
-                    <span className="hidden min-[955px]:inline">
-                      {t('submit_create_book_desktop')}
-                    </span>
-                  </>
-                )}
-              </Button>
-            </div>
+            <SubmitButton isSubmitting={isSubmitting} isFormValid={isFormValid} type={props.type} />
           </div>
 
         </div>
