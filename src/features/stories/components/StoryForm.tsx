@@ -95,35 +95,34 @@ function SubmitButton({ isSubmitting, isFormValid, type, saveDraft }: SubmitButt
   const t = useTranslations('Common');
 
   return (
-    <div className="flex flex-row">
+
+    <div className="z-40 flex w-full flex-row bg-white
+        max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
+        max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
+        min-[955px]:justify-end"
+    >
       {/* Draft saving */}
       <Button variant="outline" className="px-6" onClick={saveDraft}>Lưu bản nháp</Button>
 
       {/* Submit */}
-      <div className="z-40 flex w-full bg-white
-      max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
-      max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
-      min-[955px]:justify-end"
+      <Button
+        type="submit"
+        size="lg"
+        className="w-full min-[955px]:w-[300px]"
+        animation={isSubmitting && 'progress'}
+        disabled={isSubmitting || !isFormValid}
       >
-        <Button
-          type="submit"
-          size="lg"
-          className="w-full min-[955px]:w-[300px]"
-          animation={isSubmitting && 'progress'}
-          disabled={isSubmitting || !isFormValid}
-        >
-          {type === 'edit' ? t('confirm') : (
-            <>
-              <span className="min-[955px]:hidden">
-                {t('submit_create_book_mobile')}
-              </span>
-              <span className="hidden min-[955px]:inline">
-                {t('submit_create_book_desktop')}
-              </span>
-            </>
-          )}
-        </Button>
-      </div>
+        {type === 'edit' ? t('confirm') : (
+          <>
+            <span className="min-[955px]:hidden">
+              {t('submit_create_book_mobile')}
+            </span>
+            <span className="hidden min-[955px]:inline">
+              {t('submit_create_book_desktop')}
+            </span>
+          </>
+        )}
+      </Button>
     </div>
   );
 }
@@ -308,6 +307,8 @@ export default function StoryForm(props: IStoryFormProps) {
     localStorage.setItem('draft', JSON.stringify(list));
 
     pushSuccess('Bản nháp đã được lưu thành công', 'Lưu bản nháp thành công');
+    // console.log(userInfo.id);
+    // TODO: redirect user to http://localhost:3000/users/60?tab=stories
   }
   // CHANGE: Changed 'xl' and 'lg' breakpoints to 'sm' or 'md'.
   return (
@@ -323,7 +324,9 @@ export default function StoryForm(props: IStoryFormProps) {
         </div>
       )}
       <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-        <div className="grid grid-cols-1 gap-4 min-[955px]:grid-cols-2 min-[955px]:items-start min-[955px]:gap-6">
+        <div className="flex flex-col gap-4 min-[955px]:flex-row
+          min-[955px]:items-start min-[955px]:gap-6"
+        >
           {/* Cột trái */}
           <div className="flex flex-1 flex-col max-[955px]:hidden">
             <CoverPickerTitle />
