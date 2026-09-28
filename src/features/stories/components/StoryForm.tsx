@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, CaretDown, PencilSimple } from '@phosphor-icons/react';
+import { ArrowLeftIcon, CaretDownIcon, PencilSimpleIcon } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -207,7 +207,7 @@ function TopicsField(props: TopicsFieldProps) {
               inputClassname="px-0 font-normal leading-4"
               displayValue={({ label }) => label}
             >
-              <CaretDown />
+              <CaretDownIcon />
             </Combobox.VisualMultiSelect>
             <Combobox.Transition>
               <Combobox.Options className="z-50 flex flex-wrap gap-2 p-1">
@@ -262,9 +262,9 @@ function CoverPickerTitle() {
 }
 
 type SubmitButtonProps = {
-  isSubmitting: any;
-  isFormValid: any;
-  type: string;
+  isSubmitting: boolean;
+  isFormValid: boolean;
+  type: 'create' | 'create-first' | 'edit';
 };
 
 function SubmitButton({ isSubmitting, isFormValid, type }: SubmitButtonProps) {
@@ -473,19 +473,16 @@ export default function StoryForm(props: IStoryFormProps) {
       {props.type === 'edit' && (
         <div className="flex items-center gap-3 px-4 pt-2 min-[955px]:px-0 min-[955px]:pt-0">
           <IconButton variant="ghost" size="lg" onClick={props.onCancel} aria-label={t('back') as string}>
-            <ArrowLeft size={20} />
+            <ArrowLeftIcon size={20} />
           </IconButton>
           <h2 className="text-2xl font-medium leading-9 text-black">{t('edit_book_title')}</h2>
         </div>
       )}
       <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-        <div className="flex flex-col gap-4 min-[955px]:flex-row
-          min-[955px]:items-stretch min-[955px]:gap-6"
-        >
+        <div className="grid grid-cols-1 gap-4 min-[955px]:grid-cols-2 min-[955px]:items-start min-[955px]:gap-6">
           {/* Cột trái */}
           <div className="flex flex-1 flex-col max-[955px]:hidden">
             <CoverPickerTitle />
-
             <div className="flex flex-1 rounded-2xl
               border border-neutral-90 bg-neutral-98 p-5"
             >
@@ -510,7 +507,7 @@ export default function StoryForm(props: IStoryFormProps) {
                         <Button
                           onClick={() => setIsCustomCoverModalOpen(true)}
                           className="bg-primary-90 text-primary-50 hover:text-white"
-                          iconRight={<PencilSimple size={16} />}
+                          iconRight={<PencilSimpleIcon size={16} />}
                         >
                           {t('custom')}
                         </Button>
@@ -586,7 +583,7 @@ export default function StoryForm(props: IStoryFormProps) {
                     variant="soft"
                     size="sm"
                     className="w-[180px]"
-                    iconRight={<PencilSimple size={16} />}
+                    iconRight={<PencilSimpleIcon size={16} />}
                     onClick={() => setIsCustomCoverModalOpen(true)}
                   >
                     {t('custom')}
