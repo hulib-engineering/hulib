@@ -1,13 +1,16 @@
-import { CaretDownIcon } from '@phosphor-icons/react';
+import { CaretDownIcon, InfoIcon } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import React, { useCallback, useMemo, useState } from 'react';
 import type { z } from 'zod';
+
 import Combobox, { getChipColor } from '@/components/core/combobox/Combobox';
 import TextArea from '@/components/core/textArea/TextArea';
 import TextInput from '@/components/core/textInput-v1/TextInput';
 import Label from '@/components/Label';
 import Form from '@/components/core/form/Form';
+import Tooltip from '@/components/core/tooltip/Tooltip';
+import Button from '@/components/core/button/Button';
 
 import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import { PRIORITY_TOPIC_KEYWORD } from '@/features/stories/constants';
@@ -185,5 +188,69 @@ export function TopicsField(props: TopicsFieldProps) {
         )}
       </Combobox>
     </Form.Item>
+  );
+}
+
+type SubmitAndDraftButtonProps = {
+  isSubmitting: boolean;
+  isFormValid: boolean;
+  type: 'create' | 'create-first' | 'edit';
+  saveDraft: () => void;
+};
+
+function DraftTooltip() {
+  return (
+    <Tooltip>
+      <Tooltip.Trigger>
+        <InfoIcon className="relative max-[955px]:hidden" size={24} />
+      </Tooltip.Trigger>
+      <Tooltip.Content
+        position="top-center"
+        className="z-[99] max-w-[300px] rounded-lg bg-neutral-10 p-2"
+      >
+        <div className="flex flex-col gap-1 text-neutral-98">
+          Nếu chưa thể hoàn thành câu chuyện ngay, bạn có thể lưu bản nháp và quay lại hoàn thành sau
+        </div>
+      </Tooltip.Content>
+    </Tooltip>
+  );
+}
+
+export function SubmitAndDraftButton({ isSubmitting, isFormValid, type, saveDraft }: SubmitAndDraftButtonProps) {
+  const t = useTranslations('Common');
+
+  return (
+
+    <div className="z-40 flex w-full flex-row gap-2 bg-white
+        max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
+        max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
+        min-[955px]:justify-between"
+    >
+      {/* Draft saving */}
+      <div className="flex flex-row items-center gap-2">
+        <Button variant="outline" className="px-6" onClick={saveDraft}>Lưu bản nháp</Button>
+        <DraftTooltip />
+      </div>
+
+      {/* Submit */}
+      <Button
+        type="submit"
+        size="lg"
+        className="w-full min-[955px]:w-[300px]"
+        animation={isSubmitting && 'progress'}
+        disabled={isSubmitting || !isFormValid}
+      >
+        {type === 'edit' ? t('confirm') : (
+          <>
+            <span className="min-[955px]:hidden">
+              {t('submit_create_book_mobile')}
+            </span>
+            <span className="hidden min-[955px]:inline">
+              {t('submit_create_book_desktop')}
+            </span>
+          </>
+        )}
+      </Button>
+    </div>
   );
 }

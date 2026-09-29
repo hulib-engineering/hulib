@@ -10,7 +10,7 @@ import 'swiper/css';
 import type { z } from 'zod';
 
 import { CustomCoverModal } from './CustomCoverModal';
-import { StoryContentField, TitleField, TopicsField } from './_StoryForm/Fields';
+import { StoryContentField, SubmitAndDraftButton, TitleField, TopicsField } from './_StoryForm/FieldsAndButton';
 import { useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -81,49 +81,6 @@ function CoverPickerTitle() {
       {' '}
       <span className="text-red-50">*</span>
     </p>
-  );
-}
-
-type SubmitButtonProps = {
-  isSubmitting: boolean;
-  isFormValid: boolean;
-  type: 'create' | 'create-first' | 'edit';
-  saveDraft: () => void;
-};
-
-function SubmitButton({ isSubmitting, isFormValid, type, saveDraft }: SubmitButtonProps) {
-  const t = useTranslations('Common');
-
-  return (
-
-    <div className="z-40 flex w-full flex-row bg-white
-        max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
-        max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
-        min-[955px]:justify-end"
-    >
-      {/* Draft saving */}
-      <Button variant="outline" className="px-6" onClick={saveDraft}>Lưu bản nháp</Button>
-
-      {/* Submit */}
-      <Button
-        type="submit"
-        size="lg"
-        className="w-full min-[955px]:w-[300px]"
-        animation={isSubmitting && 'progress'}
-        disabled={isSubmitting || !isFormValid}
-      >
-        {type === 'edit' ? t('confirm') : (
-          <>
-            <span className="min-[955px]:hidden">
-              {t('submit_create_book_mobile')}
-            </span>
-            <span className="hidden min-[955px]:inline">
-              {t('submit_create_book_desktop')}
-            </span>
-          </>
-        )}
-      </Button>
-    </div>
   );
 }
 
@@ -438,7 +395,7 @@ export default function StoryForm(props: IStoryFormProps) {
                 </div>
               </div>
             </div>
-            <SubmitButton isSubmitting={isSubmitting} isFormValid={isFormValid} type={props.type} saveDraft={saveDraft} />
+            <SubmitAndDraftButton isSubmitting={isSubmitting} isFormValid={isFormValid} type={props.type} saveDraft={saveDraft} />
           </div>
 
         </div>
