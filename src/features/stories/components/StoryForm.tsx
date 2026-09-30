@@ -264,10 +264,8 @@ export default function StoryForm(props: IStoryFormProps) {
     localStorage.setItem('draft', JSON.stringify(list));
 
     pushSuccess('Bản nháp đã được lưu thành công', 'Lưu bản nháp thành công');
-    // await new Promise(resolve => setTimeout(resolve, 3000));
     router.push(`/users/${userInfo.id}?tab=stories`);
-    // console.log(userInfo.id);
-    // TODO: redirect user to http://localhost:3000/users/60?tab=stories
+    // Note: if the following is more fitting: make the page redirects only once the toast is gone
   }
   // CHANGE: Changed 'xl' and 'lg' breakpoints to 'sm' or 'md'.
   return (
