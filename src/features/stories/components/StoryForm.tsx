@@ -254,7 +254,7 @@ export default function StoryForm(props: IStoryFormProps) {
 
   type Draft = { cover: string; title: string; topics: string; content: string };
 
-  function saveDraft() {
+  async function saveDraft() {
     function getDrafts(): Draft[] {
       const raw = localStorage.getItem('draft');
       return raw ? JSON.parse(raw) : [];
@@ -264,6 +264,8 @@ export default function StoryForm(props: IStoryFormProps) {
     localStorage.setItem('draft', JSON.stringify(list));
 
     pushSuccess('Bản nháp đã được lưu thành công', 'Lưu bản nháp thành công');
+    // await new Promise(resolve => setTimeout(resolve, 3000));
+    router.push(`/users/${userInfo.id}?tab=stories`);
     // console.log(userInfo.id);
     // TODO: redirect user to http://localhost:3000/users/60?tab=stories
   }
