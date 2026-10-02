@@ -11,7 +11,7 @@ import type { z } from 'zod';
 
 import { CustomCoverModal } from './CustomCoverModal';
 import { StoryContentField, SubmitAndDraftButton, TitleField, TopicsField } from './_StoryForm/FieldsAndButton';
-import { useRouter } from '@/libs/i18nNavigation';
+import { usePathname, useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import Form from '@/components/core/form/Form';
@@ -89,7 +89,7 @@ export default function StoryForm(props: IStoryFormProps) {
   const router = useRouter();
   const t = useTranslations('Common');
   // const tProfile = useTranslations('MyProfile');
-
+  const pathname = usePathname();
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
   // const { data: me } = useGetPersonalInfoQuery(undefined, {
@@ -252,20 +252,44 @@ export default function StoryForm(props: IStoryFormProps) {
     }
   };
 
-  type Draft = { cover: string; title: string; topics: string; content: string };
-
   async function saveDraft() {
-    function getDrafts(): Draft[] {
+    const object = JSON.stringify([{
+      id: 0,
+      abstract: 'content',
+      title: 'test title',
+      cover: {
+        path: '',
+      },
+      topics: [{ name: 'sussy' }],
+      humanBook: {
+        fullName: 'nguyen',
+        photo: {
+          path: '',
+        },
+      },
+      rating: 0,
+      storyReview: {},
+      publishStatus: 'draft',
+    }]);
+    // type Draft = { cover: string; title: string; topics: string; content: string };
+
+    /* function getDrafts(): Draft[] {
       const raw = localStorage.getItem('draft');
       return raw ? JSON.parse(raw) : [];
     }
-    const list = getDrafts();
-    list.push({ cover: 'cover', title: 'title', topics: 'topics', content: 'content' });
-    localStorage.setItem('draft', JSON.stringify(list));
+    //const list = getDrafts();
+    //list.push({ cover: 'cover', title: 'title', topics: 'topics', content: 'content' }); */
+    localStorage.setItem('draft', object);
+    // localStorage.setItem(`draft-body:${Date.now()}`, 'content');
+    // localStorage.setItem('draft', JSON.stringify(list));
 
     pushSuccess('Bản nháp đã được lưu thành công', 'Lưu bản nháp thành công');
-    router.push(`/users/${userInfo.id}?tab=stories`);
-    // Note: if the following is more fitting: make the page redirects only once the toast is gone
+
+    const userProfile = `/users/${userInfo.id}?tab=stories`;
+    if (!pathname.includes(userProfile)) {
+      router.push(userProfile);
+      // Note: if the following is more fitting: make the page redirects only once the toast is gone
+    }
   }
   // CHANGE: Changed 'xl' and 'lg' breakpoints to 'sm' or 'md'.
   return (

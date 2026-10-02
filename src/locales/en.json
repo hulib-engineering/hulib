@@ -1119,6 +1119,7 @@
     "submit_create_book_desktop": "Create book",
     "rejected": "Rejected",
     "in_review": "In review",
+    "draft": "Draft",
     "rejection_reason": "Rejection reason",
     "approve": "Approve",
     "report": "Report",
