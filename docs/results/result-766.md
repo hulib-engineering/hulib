@@ -12,13 +12,16 @@ What changed
 - `src/components/notification/private/registry.tsx`: both new types resolve to the shared card.
 - `src/components/notification/private/config.tsx`: added an optional `messageKey` field (narrowed to literals so `t.rich` stays type-checked) for cards that render their own copy; converted `SESSION_MISS` to that form and dropped its `title`.
 - `src/components/notification/styles/SessionOutcomeNotification.tsx`: new card shared by both new types — single rich-text line, no title, no CTA, no reason box; `disabled-meeting-icon.svg` avatar; creation timestamp footer.
-- `src/components/notification/styles/InformativeNotification.tsx`: `SESSION_MISS` now renders locale-aware copy with the time range highlighted, the title line is suppressed, the CTA is `fullWidth`, and the icon uses `rounded-2xl` instead of `rounded-none`.
-- `src/utils/dateUtils.ts`: added `formatSessionDateLabel` — "05 tháng 2, 2025" (vi) / "05 February 2025" (en), replacing `toLocaleDateString`'s "05/02/2025".
+- `src/components/notification/styles/InformativeNotification.tsx`: `SESSION_MISS` renders locale-aware copy with the time range highlighted, the title line is suppressed, the CTA is `fullWidth`, the icon uses `rounded-2xl` instead of `rounded-none`, the background is pinned pink whether read or unread, the icon sits top-left rather than vertically centred, and the reason modal is `MissedReasonModal`.
+- `src/utils/dateUtils.ts`: added `formatSessionDateLabel` — "05 tháng 2, 2025" (vi) / "05 February 2025" (en), replacing `toLocaleDateString`'s "05/02/2025"; and `formatSessionDateWithWeekday` — "Wed, 18 February, 2026" (en) / "Thứ 4, 18 tháng 2, 2026" (vi) for the reason modal.
 - `src/locales/en.json`, `src/locales/vi.json`: rewrote `session_miss` with `<hl>`; added `huber_no_show_reading_session` and `auto_cancel_reading_session`; removed `session_miss_title` from both.
 - `src/components/notification/styles/SessionOutcomeNotification.stories.tsx`: stories for both new types in en and vi, plus a seen/full-width variant.
 - `src/app/[locale]/(auth)/my-schedule/[id]/page.tsx`: **new per-session deep link** (scope added after planning). Fetches via `useGetReadingSessionByIdQuery`, renders `SessionDetailCard` with the session's real status, plus a "book this story again" action when the status is `canceled`. Reached by clicking either new card's row, keyed off `relatedEntity.id`.
 - `src/components/notification/styles/SessionOutcomeNotification.tsx`: row click now navigates to `/my-schedule/[id]`. `relatedEntity.sessionUrl` is deliberately never used — for these outcomes the room is already finished.
-- `src/locales/en.json`, `src/locales/vi.json`: added `Common.loading` and `Common.book_again`.
+- `src/locales/en.json`, `src/locales/vi.json`: added `Common.loading`, `Common.book_again`, `Common.close`, and a `Schedule.missed_reason` block.
+- `src/utils/dateUtils.ts`: added `formatSessionDateLabel` and `formatSessionDateWithWeekday`.
+- `src/components/notification/styles/MissedReasonModal.tsx`: **new modal** for capturing the reason on a missed session, replacing `SessionDetailCard` in this one flow. Deliberately a separate component: `SessionDetailCard` is shared with `MobileSessionList` (3 call sites) and `SessionPopover`, which render a different layout, so restyling it for this design would have changed the schedule views too. Submits `note` against the session — the same field and mutation the old shared card used, so existing reasons keep working.
+- `src/components/notification/styles/InformativeNotification.tsx`: `SESSION_MISS` copy rewritten, background pinned pink whether read or unread, icon moved to the top-left (`align="start"`), modal swapped.
 - `docs/plans/plan-766.md`: the plan, updated with sub-task 6.
 
 Backend contract confirmed after implementation:
@@ -43,9 +46,15 @@ Needs manual UI check
 
 Nothing below was verified in a browser or by pixel comparison. All of it is code-level checked against the plan's spec values only.
 
+Copy after the later revision: *"Bạn đã không tham gia cuộc họp hôm nay **(06:00–06:30, 02 tháng 10, 2026)**. Hy vọng mọi chuyện đều ổn. Bạn có thể chia sẻ lý do bỏ lỡ buổi trò chuyện hôm nay không?"*
+
+The reason modal is a brand-new component and the highest-risk item in this branch — it has never been rendered anywhere.
+
 - `/{locale}/notifications` and the header popover: `autoCancelReadingSession` and `huberNoShowReadingSession` render as a single line with the time range bold blue and the Huber name bold, no title, no CTA, no reason box.
 - The auto-cancel card must show the **Huber's** name (`Tran Thanh Thao`), not the sender. `relatedEntity.humanBook.fullName` is confirmed populated and the `sender` fallback was removed, so this should hold — but confirm visually.
 - `missReadingSession`: no title line; body reads `11:00–11:30` with an en-dash and `05 tháng 2, 2025` (vi) / `05 February 2025` (en); the `Chia sẻ lý do` bar spans the full content column.
+- `/{locale}/notifications` — miss card has no title line, bold blue range, full-width `Chia sẻ lý do`, pink background, icon top-left
+- **The reason modal, opened from that CTA** — highest risk here; it has never been rendered. Confirm the summary card, red "Missed" pill, blue time block, avatar with its check badge, textarea focus ring, and that "Hoàn tất" persists the reason and closes. Also confirm it renders from the notification payload alone after a page refresh.
 - The miss icon renders as a rounded square, not a circle (it is an `Avatar` whose base class is `rounded-full`, so this depends on the `rounded-2xl` override actually winning).
 - Breakpoints `sm` (640px), `md` (768px), `xl` (1280px): confirm the full-width CTA does not overflow the 480px `NotificationPopover`.
 - Vietnamese copy for all three types.
