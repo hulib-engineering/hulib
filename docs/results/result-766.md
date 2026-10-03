@@ -16,7 +16,10 @@ What changed
 - `src/utils/dateUtils.ts`: added `formatSessionDateLabel` — "05 tháng 2, 2025" (vi) / "05 February 2025" (en), replacing `toLocaleDateString`'s "05/02/2025".
 - `src/locales/en.json`, `src/locales/vi.json`: rewrote `session_miss` with `<hl>`; added `huber_no_show_reading_session` and `auto_cancel_reading_session`; removed `session_miss_title` from both.
 - `src/components/notification/styles/SessionOutcomeNotification.stories.tsx`: stories for both new types in en and vi, plus a seen/full-width variant.
-- `docs/plans/plan-766.md`: the plan.
+- `src/app/[locale]/(auth)/my-schedule/[id]/page.tsx`: **new per-session deep link** (scope added after planning). Fetches via `useGetReadingSessionByIdQuery`, renders `SessionDetailCard` with the session's real status, plus a "book this story again" action when the status is `canceled`. Reached by clicking either new card's row, keyed off `relatedEntity.id`.
+- `src/components/notification/styles/SessionOutcomeNotification.tsx`: row click now navigates to `/my-schedule/[id]`. `relatedEntity.sessionUrl` is deliberately never used — for these outcomes the room is already finished.
+- `src/locales/en.json`, `src/locales/vi.json`: added `Common.loading` and `Common.book_again`.
+- `docs/plans/plan-766.md`: the plan, updated with sub-task 6.
 
 Backend contract confirmed after implementation:
 
@@ -31,7 +34,7 @@ Gates
 
 - `npm run check:types`: pass (exit 0).
 - `npm run lint`: fail (exit 1) — **pre-existing**. 3247 errors on `origin/develop` before any of this work; the repo-wide output is byte-identical apart from my files, which are clean. I verified my files individually with `npx eslint` (exit 0).
-- `npm run check:i18n`: fail (exit 1) — **pre-existing**. Output is byte-identical to the `origin/develop` baseline (invalid tags and unused keys, all in the ignored `Index` namespace plus one `MeetingDecisionModal` key). None of my new keys are reported.
+- `npm run check:i18n`: fail (exit 1) — **pre-existing**. Output is byte-identical to the `origin/develop` baseline (invalid tags and unused keys, all in the ignored `Index` namespace plus one `MeetingDecisionModal` key). None of my new keys are reported. This work actually cleared one pre-existing finding by putting `Common.could_not_find_resource` to use.
 - `npm run test`: fail (exit 1) — **pre-existing**. Jest picks up Playwright specs under `.playwright-simulate/tests/` and they fail with "Playwright Test needs to be invoked via 'npx playwright test'". The one real Jest suite (`BaseTemplate.test.tsx`) passes.
 - `npm run test-storybook:ci`: **could not run.** The script is `start-server-and-test serve-storybook http://127.0.0.1:6006 test-storybook`, but no `test-storybook` script exists in `package.json`, so the gate cannot pass as written. I ran its two halves separately: `npm run storybook:build` succeeds (exit 0) and compiles `SessionOutcomeNotification-stories` into its iframe bundle; the `test-storybook` browser run was skipped at your instruction (Playwright browsers are not installed locally).
 - Commit hooks: sub-task 5 was committed with the real hooks (lint-staged eslint + `check:types`, commitlint) and passed. Sub-tasks 1-4 were committed with `--no-verify` at your instruction; `check:types` and `eslint` were run manually for each and both were clean.
@@ -47,6 +50,8 @@ Nothing below was verified in a browser or by pixel comparison. All of it is cod
 - Breakpoints `sm` (640px), `md` (768px), `xl` (1280px): confirm the full-width CTA does not overflow the 480px `NotificationPopover`.
 - Vietnamese copy for all three types.
 - Joining a real session confirms the `/attend` stamp lands and that a failing stamp is invisible in the meeting UI.
+- **`/{locale}/my-schedule/[id]`** — new page. From an auto-cancel card, the row click must land here showing `canceled` and a "book this story again" action; from a huber no-show card, it must land here with the reason form open. Back button returns to `/my-schedule`. Nothing may route to `sessionUrl`.
+- **New runtime risk from the router dependency.** `SessionOutcomeNotificationCard` now calls `useRouter` from `@/libs/i18nNavigation`, so the story needs App Router context to render. The build succeeds, but the story has not been run in a browser (see `test-storybook:ci` below), so this is unverified.
 
 What was done
 
@@ -56,8 +61,10 @@ On the notification side, `huberNoShowReadingSession` and `autoCancelReadingSess
 
 Notes / follow-up
 
-- **`huberNoShowReadingSession` copy is a placeholder and needs product sign-off.** No design and no agreed wording were supplied. What shipped is an invitation to report a possible glitch on our side, which is a guess. Replace before merge if real copy exists.
+- **`huberNoShowReadingSession` copy is a placeholder and needs product sign-off.** No design and no agreed wording were supplied. What shipped is an invitation to report a possible glitch on our side, which is a guess. Three non-accusatory options are drafted in #768 for product to pick; do not merge without a decision.
 - **Unconfirmed backend contract: the Huber name on auto-cancel.** The card reads `relatedEntity.humanBook?.fullName` and falls back to `sender.fullName`. On an auto-cancel the sender is likely a system or admin account, so if `humanBook` is not populated the card will render the wrong name. Worth one confirmation with `hulib-services`.
+- **The row on the rebuilt `missReadingSession` card still opens a modal**, unlike the two new cards which now navigate. Left as-is because it is pre-existing behaviour and out of scope, but the two are now inconsistent — worth deciding whether the miss card should also deep-link to `/my-schedule/[id]`.
+- **Nested `<button>` in the miss card is still there.** `NotificationRow.tsx:45` renders the row as a `<button>` and the `Chia sẻ lý do` CTA is another `<button>` inside it. Invalid HTML, poor for screen readers, and the click bubbles so the reason modal opens twice. Pre-existing, and fixing it means changing `NotificationRow`, which affects every notification card. Left alone deliberately and flagged for a decision.
 - **`/attend` has no time guard, so an early joiner counts as attendance.** The endpoint stamps on any call — joining 10 minutes before `startedAt` marks the session attended, which weakens the no-show signal the whole flow depends on. A BE guard rejecting stamps before `startedAt` minus a grace window (15 min suggested) is the fix; filed with the backend, small PR.
 - **Both new types remain visually unverified.** They were built from the written spec on the #764 card's structure, not from a design. `huberNoShowReadingSession` in particular has no reference at all.
 - **Body text weight may not match.** It is `font-medium` per #764, but both reference images read heavier. Expect to adjust after a real browser look.
