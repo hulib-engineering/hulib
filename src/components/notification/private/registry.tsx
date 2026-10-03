@@ -5,6 +5,7 @@ import type { Notification } from '@/libs/services/modules/notifications/notific
 import InformativeNotificationCard from '@/components/notification/styles/InformativeNotification';
 import MeetingRequestNotificationCard from '@/components/notification/styles/MeetingRequestNotification';
 import SessionDecisionNotificationCard from '@/components/notification/styles/SessionDecisionNotification';
+import SessionOutcomeNotificationCard from '@/components/notification/styles/SessionOutcomeNotification';
 import SystemNotificationCard from '@/components/notification/styles/SystemNotification';
 import UpdateTimeSlotReminderNotificationCard from '@/components/notification/styles/UpdateTimeSlotReminderNotification';
 
@@ -33,6 +34,8 @@ export const notificationRegistry: Record<
   [NotificationType.SESSION_REJECTION]: SessionDecisionNotificationCard,
   [NotificationType.SESSION_APPROVAL]: SessionDecisionNotificationCard,
   [NotificationType.SESSION_MISS]: InformativeNotificationCard,
+  [NotificationType.HUBER_NO_SHOW]: SessionOutcomeNotificationCard,
+  [NotificationType.SESSION_AUTO_CANCELLATION]: SessionOutcomeNotificationCard,
   [NotificationType.SESSION_CANCELLATION]: InformativeNotificationCard,
   [NotificationType.SESSION_COMPLETION]: SystemNotificationCard,
   [NotificationType.USER_APPEAL]: DefaultNotificationCard,

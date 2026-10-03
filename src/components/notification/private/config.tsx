@@ -16,11 +16,22 @@ const senderNameMessage = strongMessage();
 
 type TFunction = ReturnType<typeof useTranslations<'notifications'>>;
 
+/**
+ * Keys for cards that render their own copy (see `SessionOutcomeNotification`). Narrowed to
+ * literals so `t.rich` stays type-checked against `en.json`.
+ */
+type SelfRenderedMessageKey = 'huber_no_show_reading_session' | 'auto_cancel_reading_session';
+
 type NotificationConfig = {
   [_K in NotificationType]: {
     getMessage: (t: TFunction, m: Notification, roleId?: number) => ReactNode;
     route?: (relatedEntityId: number, roleId?: number) => string;
     title?: ReactNode | ((t: TFunction) => ReactNode);
+    /**
+     * For cards that render the copy themselves instead of via `getMessage`, so they can own
+     * the viewer locale that `getMessage` has no access to. `getMessage` becomes a no-op.
+     */
+    messageKey?: SelfRenderedMessageKey;
   };
 };
 
@@ -178,6 +189,23 @@ export const notificationConfig: NotificationConfig = {
       );
     },
     title: (t: TFunction) => <span className="text-orange-50">{t('session_miss_title')}</span>,
+  },
+  /**
+   * The Huber-side counterpart of SESSION_MISS. Copy is keyed off the notification type and
+   * deliberately not `extraNote`: the backend pre-renders an English message there, which would
+   * leak English copy into the Vietnamese card.
+   */
+  [NotificationType.HUBER_NO_SHOW]: {
+    getMessage: () => null,
+    messageKey: 'huber_no_show_reading_session',
+  },
+  /**
+   * Auto-cancelled because the Huber never approved or rejected — distinct from
+   * SESSION_CANCELLATION, which is a Liber-initiated cancellation that carries a reason.
+   */
+  [NotificationType.SESSION_AUTO_CANCELLATION]: {
+    getMessage: () => null,
+    messageKey: 'auto_cancel_reading_session',
   },
   [NotificationType.USER_APPEAL]: {
     getMessage: (t, m) => (

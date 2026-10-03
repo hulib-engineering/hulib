@@ -169,6 +169,24 @@ export const formatNotificationTimestamp = (value: string | number | Date | unde
   return format(toApiWallClock(parsed), 'EEE d MMM HH:mm', { locale: isVi ? vi : enUS });
 };
 
+/**
+ * Calendar-day label used inside session notification bodies — "05 tháng 2, 2025" (vi) /
+ * "05 February 2025" (en). Unlike `toLocaleDateString` this spells the month out and drops
+ * the weekday, which is what the session notification designs call for.
+ *
+ * Rendered on the same UTC basis as `formatMeetingDateLabel`, so the card reads exactly as
+ * the API reported it. `startedAt` arrives pre-validated, so `format` cannot throw here.
+ */
+export const formatSessionDateLabel = (value: string | number | Date | undefined | null, locales: string): string => {
+  const parsed = toDate(value);
+  if (!parsed) {
+    return '';
+  }
+  const isVi = locales === 'vi';
+
+  return format(toApiWallClock(parsed), isVi ? 'dd \'tháng\' M, yyyy' : 'dd MMMM yyyy', { locale: isVi ? vi : enUS });
+};
+
 export const getGMTOffset = (date: Date = new Date()): string => {
   const offsetMinutes = date.getTimezoneOffset(); // in minutes, opposite sign
   const offsetHours = Math.floor(Math.abs(offsetMinutes) / 60);
