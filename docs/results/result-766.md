@@ -1,0 +1,57 @@
+Result: feat: session no-show and auto-cancel notification cards + attendance stamp
+
+Issue: #766
+Branch: feat/766-session-no-show-notifications
+
+What changed
+
+- `src/libs/services/modules/reading-session/attendReadingSession.ts`: new RTK Query mutation for `POST /reading-sessions/:id/attend`. No body; inherits the shared `fetchBaseQuery` Bearer header.
+- `src/libs/services/modules/reading-session/index.ts`: registered the endpoint and exported `useAttendReadingSessionMutation`.
+- `src/layouts/reading/AgoraMeeting.tsx`: fires the attendance stamp immediately after `agoraClient.join(...)` resolves. Wrapped in its own `try/catch` so a failed stamp cannot block or break the call, and no toast is shown. Not keyed on the Agora UID. `sessionId` and the mutation trigger were added to the effect deps to clear a new `exhaustive-deps` warning.
+- `src/components/notification/private/types.ts`: added `HUBER_NO_SHOW = 'huberNoShowReadingSession'` and `SESSION_AUTO_CANCELLATION = 'autoCancelReadingSession'`.
+- `src/components/notification/private/registry.tsx`: both new types resolve to the shared card.
+- `src/components/notification/private/config.tsx`: added an optional `messageKey` field (narrowed to literals so `t.rich` stays type-checked) for cards that render their own copy; converted `SESSION_MISS` to that form and dropped its `title`.
+- `src/components/notification/styles/SessionOutcomeNotification.tsx`: new card shared by both new types — single rich-text line, no title, no CTA, no reason box; `disabled-meeting-icon.svg` avatar; creation timestamp footer.
+- `src/components/notification/styles/InformativeNotification.tsx`: `SESSION_MISS` now renders locale-aware copy with the time range highlighted, the title line is suppressed, the CTA is `fullWidth`, and the icon uses `rounded-2xl` instead of `rounded-none`.
+- `src/utils/dateUtils.ts`: added `formatSessionDateLabel` — "05 tháng 2, 2025" (vi) / "05 February 2025" (en), replacing `toLocaleDateString`'s "05/02/2025".
+- `src/locales/en.json`, `src/locales/vi.json`: rewrote `session_miss` with `<hl>`; added `huber_no_show_reading_session` and `auto_cancel_reading_session`; removed `session_miss_title` from both.
+- `src/components/notification/styles/SessionOutcomeNotification.stories.tsx`: stories for both new types in en and vi, plus a seen/full-width variant.
+- `docs/plans/plan-766.md`: the plan.
+
+Gates
+
+- `npm run check:types`: pass (exit 0).
+- `npm run lint`: fail (exit 1) — **pre-existing**. 3247 errors on `origin/develop` before any of this work; the repo-wide output is byte-identical apart from my files, which are clean. I verified my files individually with `npx eslint` (exit 0).
+- `npm run check:i18n`: fail (exit 1) — **pre-existing**. Output is byte-identical to the `origin/develop` baseline (invalid tags and unused keys, all in the ignored `Index` namespace plus one `MeetingDecisionModal` key). None of my new keys are reported.
+- `npm run test`: fail (exit 1) — **pre-existing**. Jest picks up Playwright specs under `.playwright-simulate/tests/` and they fail with "Playwright Test needs to be invoked via 'npx playwright test'". The one real Jest suite (`BaseTemplate.test.tsx`) passes.
+- `npm run test-storybook:ci`: **could not run.** The script is `start-server-and-test serve-storybook http://127.0.0.1:6006 test-storybook`, but no `test-storybook` script exists in `package.json`, so the gate cannot pass as written. I ran its two halves separately: `npm run storybook:build` succeeds (exit 0) and compiles `SessionOutcomeNotification-stories` into its iframe bundle; the `test-storybook` browser run was skipped at your instruction (Playwright browsers are not installed locally).
+- Commit hooks: sub-task 5 was committed with the real hooks (lint-staged eslint + `check:types`, commitlint) and passed. Sub-tasks 1-4 were committed with `--no-verify` at your instruction; `check:types` and `eslint` were run manually for each and both were clean.
+
+Needs manual UI check
+
+Nothing below was verified in a browser or by pixel comparison. All of it is code-level checked against the plan's spec values only.
+
+- `/{locale}/notifications` and the header popover: `autoCancelReadingSession` and `huberNoShowReadingSession` render as a single line with the time range bold blue and the Huber name bold, no title, no CTA, no reason box.
+- The auto-cancel card must show the **Huber's** name (`Tran Thanh Thao`), not the sender. If the backend leaves `relatedEntity.humanBook` unpopulated on auto-cancel, the fallback renders the sender and this will be wrong.
+- `missReadingSession`: no title line; body reads `11:00–11:30` with an en-dash and `05 tháng 2, 2025` (vi) / `05 February 2025` (en); the `Chia sẻ lý do` bar spans the full content column.
+- The miss icon renders as a rounded square, not a circle (it is an `Avatar` whose base class is `rounded-full`, so this depends on the `rounded-2xl` override actually winning).
+- Breakpoints `sm` (640px), `md` (768px), `xl` (1280px): confirm the full-width CTA does not overflow the 480px `NotificationPopover`.
+- Vietnamese copy for all three types.
+- Joining a real session confirms the `/attend` stamp lands and that a failing stamp is invisible in the meeting UI.
+
+What was done
+
+The client now tells the backend that a participant actually showed up. Right after the Agora join resolves, `AgoraMeeting` posts to `/reading-sessions/:id/attend`. It is fire-and-forget: failures are swallowed so they can never interrupt a live call, and the participant is derived from the JWT rather than the Agora UID, since every token we issue uses uid 0. This is what stops the post-meeting cron from marking every approved session as unattended and accusing innocent hubers of a no-show.
+
+On the notification side, `huberNoShowReadingSession` and `autoCancelReadingSession` are new. They are structurally identical — one line of rich text, nothing to click — so they share a single new card that differs only in message key. The existing reader-facing `missReadingSession` card was rebuilt to match its design: the orange heading is gone, the session time and date are now bold blue in a spelled-out-month format instead of `05/02/2025`, and the "share the reason" button became a full-width bar. All three types key their copy off `type.name` and deliberately ignore `extraNote`, which carries a pre-rendered English message that would otherwise leak English into the Vietnamese card.
+
+Notes / follow-up
+
+- **`huberNoShowReadingSession` copy is a placeholder and needs product sign-off.** No design and no agreed wording were supplied. What shipped is an invitation to report a possible glitch on our side, which is a guess. Replace before merge if real copy exists.
+- **Unconfirmed backend contract: the Huber name on auto-cancel.** The card reads `relatedEntity.humanBook?.fullName` and falls back to `sender.fullName`. On an auto-cancel the sender is likely a system or admin account, so if `humanBook` is not populated the card will render the wrong name. Worth one confirmation with `hulib-services`.
+- **Both new types remain visually unverified.** They were built from the written spec on the #764 card's structure, not from a design. `huberNoShowReadingSession` in particular has no reference at all.
+- **Body text weight may not match.** It is `font-medium` per #764, but both reference images read heavier. Expect to adjust after a real browser look.
+- **No story for the rebuilt `missReadingSession` card.** `InformativeNotificationCard` pulls in the Redux-backed `SessionDetailCard`, the i18n router and a Modal, so a standalone story would need most of the app tree. It is covered only by typecheck. The new `SessionOutcomeNotificationCard` does have stories.
+- **`test-storybook:ci` is broken independently of this work** — it calls a `test-storybook` script that does not exist. Worth fixing separately so the gate can actually protect future stories.
+- **Deploy order still matters.** `npx prisma migrate deploy` must run on the backend first, otherwise `/attend` errors and the cron query fails. Frontend deployment does not unblock this.
+- The separator is rendered without spaces around the en-dash (`11:00–11:30`), following the design. Note #764's existing session-decision keys use a trailing space (`11:00– 11:30`), so the two styles now coexist in the same list.
