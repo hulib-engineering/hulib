@@ -255,12 +255,12 @@ export default function StoryForm(props: IStoryFormProps) {
   async function saveDraft() {
     const object = JSON.stringify([{
       id: 0,
-      abstract: 'content',
-      title: 'test title',
+      abstract,
+      title,
       cover: {
         path: '',
       },
-      topics: [{ name: 'sussy' }],
+      topics: selectedTopics.map(topic => ({ name: topic.label })),
       humanBook: {
         fullName: 'nguyen',
         photo: {
@@ -360,7 +360,6 @@ export default function StoryForm(props: IStoryFormProps) {
             <TopicsField selectedTopics={selectedTopics} setSelectedTopics={setSelectedTopics} />
             <StoryContentField register={register} errors={errors} />
 
-            {/* Gần dưới cùng */}
             <div className="flex flex-1 flex-col px-4 pb-24 min-[955px]:hidden">
               <CoverPickerTitle />
               <div className="flex flex-1 rounded-2xl

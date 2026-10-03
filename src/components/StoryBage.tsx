@@ -24,7 +24,7 @@ export const StoryBage = ({ status, rejectionReason, className }: StoryBageProps
       return 'bg-red-50 text-white';
     }
     if (isDraft) {
-      return 'bg-neutral-90 text-neutral-40';
+      return 'bg-neutral-90 text-neutral-40 border-neutral-40';
     }
     return 'bg-orange-90 text-orange-40';
   };
@@ -43,7 +43,7 @@ export const StoryBage = ({ status, rejectionReason, className }: StoryBageProps
     <div className={mergeClassnames('flex items-center gap-2 z-10', className)}>
       <span
         className={mergeClassnames(
-          'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold',
+          'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium border',
           getBadgeStyles(),
         )}
       >

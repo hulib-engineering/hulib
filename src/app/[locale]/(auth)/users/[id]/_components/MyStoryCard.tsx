@@ -47,6 +47,7 @@ export default function MyStoryCard({ data }: MyStoryCardProps) {
 
   const handleOpenStory = () => {
     router.push(`/explore-story/${data.id}${isPublished ? '' : '/preview'}`);
+    // TODO: add push for draft
   };
 
   return (

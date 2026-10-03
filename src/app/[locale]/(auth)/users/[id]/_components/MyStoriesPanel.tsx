@@ -79,7 +79,7 @@ export default function MyStoriesPanel({
   const filteredStories = selectedTopicId === 'all'
     ? storyItems
     : storyItems.filter((story: TStory) => story.topics?.some(topic => topic.id === selectedTopicId));
-  // console.log(filteredStories); // TODO: use as reference tomorrow
+  console.log(filteredStories); // TODO: use as reference tomorrow
   const isEmpty = storyItems.length === 0;
   const isHuberOwnStories = !showOthers && variant === 'huber';
 
