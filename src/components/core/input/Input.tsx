@@ -14,6 +14,18 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       error: inputError,
       disabled: inputDisabled,
       id,
+      // Styling-only props: pulled out so they never reach the DOM node.
+      bgColor: _bgColor,
+      isRtl: _isRtl,
+      isLabel: _isLabel,
+      isPassword: _isPassword,
+      isFirst: _isFirst,
+      isSharpLeftSide: _isSharpLeftSide,
+      isSharpRightSide: _isSharpRightSide,
+      isSharpTopSide: _isSharpTopSide,
+      isSharpBottomSide: _isSharpBottomSide,
+      isTopBottomBorderHidden: _isTopBottomBorderHidden,
+      isSideBorderHidden: _isSideBorderHidden,
       ...rest
     },
     ref,

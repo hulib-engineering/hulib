@@ -6,6 +6,7 @@ import HuberProfile from './HuberHero';
 import ProfileContent from '@/_components/profile/ProfileContent';
 import type { TUserDetail } from '@/features/users/types';
 import EditImageModal from '@/layouts/profile/EditImageModal';
+import { useSkipUserScopedQuery } from '@/libs/hooks';
 import { useGetMyFavoritesQuery } from '@/libs/services/modules/user';
 import { useGetTimeslotsQuery } from '@/libs/services/modules/time-slots';
 import Modal from '@/components/Modal';
@@ -23,7 +24,9 @@ export default function HuberProfileComponent({ userDetail }: Props) {
   const [isFirstBookModalOpen, setIsFirstBookModalOpen] = useState(false);
 
   const { data: timeslotsData } = useGetTimeslotsQuery();
-  const { data: favoritesData } = useGetMyFavoritesQuery({ limit: 1 });
+  // Admin tokens get a 403 on user-scoped favourites endpoints.
+  const skipFavourites = useSkipUserScopedQuery();
+  const { data: favoritesData } = useGetMyFavoritesQuery({ limit: 1 }, { skip: skipFavourites });
 
   const huberStarProgress = useMemo(() => {
     let count = 0;

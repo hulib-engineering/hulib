@@ -1,7 +1,9 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
+
 import React, { useMemo } from 'react';
+import { useSkipUserScopedQuery } from '@/libs/hooks';
 import { StoryCard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/StoryCard';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { useGetMyFavoritesQuery } from '@/libs/services/modules/user';
@@ -15,8 +17,10 @@ type IStoryCardGridProps = {
 
 const StoryCardGrid = ({ stories, className, storyCardClassName }: IStoryCardGridProps) => {
   const { data: session } = useSession();
+  // Also skip for admins (403 on user-scoped endpoints) and until the role is known.
+  const skipFavourites = useSkipUserScopedQuery();
   const { data: favoriteStories } = useGetMyFavoritesQuery(undefined, {
-    skip: !session,
+    skip: !session || skipFavourites,
   });
 
   const storiesWithFav = useMemo(() => {

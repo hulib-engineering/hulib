@@ -5,7 +5,6 @@ import Cookies from 'js-cookie';
 import { SessionProvider, signIn, useSession } from 'next-auth/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import type { z } from 'zod';
 
 import { useTranslations } from 'next-intl';
 import { Link } from '@/libs/i18nNavigation';
@@ -19,6 +18,7 @@ import Label from '@/components/Label';
 import SocialButton from '@/components/SocialButton';
 import type { EmailLoginResponse } from '@/libs/services/modules/auth';
 import { useLoginAsManagerMutation } from '@/libs/services/modules/auth';
+import type { LoginValues } from '@/validations/LoginValidation';
 import { LoginValidation } from '@/validations/LoginValidation';
 import TextInput from '@/components/core/textInput-v1/TextInput';
 import { consumePostLoginRedirect } from '@/utils/authRedirect';
@@ -30,8 +30,8 @@ const LoginForm = () => {
 
   const [login] = useLoginAsManagerMutation();
 
-  const form = useForm<z.infer<typeof LoginValidation>>({
-    resolver: zodResolver(LoginValidation),
+  const form = useForm<LoginValues>({
+    resolver: zodResolver(LoginValidation(t)),
     defaultValues: {
       email: '',
       password: '',
@@ -45,7 +45,7 @@ const LoginForm = () => {
     formState: { isSubmitting },
   } = form;
 
-  const handleFormSubmit = async (data: z.infer<typeof LoginValidation>) => {
+  const handleFormSubmit = async (data: LoginValues) => {
     try {
       const result = (await login({
         email: data.email,

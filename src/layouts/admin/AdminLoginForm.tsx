@@ -7,19 +7,21 @@ import { signIn, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import type { z } from 'zod';
 
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 import TextInput from '@/components/core/textInput-v1/TextInput';
 import type { EmailLoginResponse } from '@/libs/services/modules/auth';
 import { useLoginAsManagerMutation } from '@/libs/services/modules/auth';
+import type { LoginValues } from '@/validations/LoginValidation';
 import { LoginValidation } from '@/validations/LoginValidation';
 import { consumePostLoginRedirect } from '@/utils/authRedirect';
 
 export default function AdminLoginForm() {
   const { update } = useSession();
   const t = useTranslations('Admin');
+  // Validation copy is shared with the public login form.
+  const tSignIn = useTranslations('SignIn');
 
   const [login] = useLoginAsManagerMutation();
 
@@ -28,8 +30,8 @@ export default function AdminLoginForm() {
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<z.infer<typeof LoginValidation>>({
-    resolver: zodResolver(LoginValidation),
+  } = useForm<LoginValues>({
+    resolver: zodResolver(LoginValidation(tSignIn)),
     defaultValues: {
       email: '',
       password: '',
@@ -38,7 +40,7 @@ export default function AdminLoginForm() {
 
   // const [rememberMe, setRememberMe] = useState(false);
 
-  const handleFormSubmit = async (data: z.infer<typeof LoginValidation>) => {
+  const handleFormSubmit = async (data: LoginValues) => {
     try {
       const result = (await login({
         email: data.email,

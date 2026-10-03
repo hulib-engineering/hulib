@@ -82,7 +82,7 @@ const TextInputBasic = forwardRef<HTMLInputElement, TextInputXSandSmProps>(
         )}
         {icon ? (
           <Inner
-            bgColor={backgroundColor}
+            $bgColor={backgroundColor}
             className={mergeClassnames(
               'flex items-center !rounded-2xl border border-neutral-90 px-3 py-0.5',
               'focus-within:border-2 focus-within:border-primary-50 focus-within:shadow-focus-input focus-within:bg-white focus-within:outline focus-within:outline-2 focus-within:outline-offset-[-2px] focus-within:outline-primary-50',

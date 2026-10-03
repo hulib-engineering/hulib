@@ -122,9 +122,12 @@ export default function MiniCalendar({ onChange, type, huberId, chosenDay }: Mon
   const end = endOfWeek(monthEnd, { weekStartsOn: 0 });
   const days = eachDayOfInterval({ start, end });
 
-  const { data: timeSlots } = useGetTimeslotsByHuberQuery({
-    id: huberId,
-  });
+  const { data: timeSlots } = useGetTimeslotsByHuberQuery(
+    { id: huberId as number },
+    // huberId is optional: /my-schedule renders this calendar without one.
+    // Without the guard the query fires as `time-slots/huber/undefined` -> 500.
+    { skip: !huberId },
+  );
   const groupingTimeslots = useTimeslotGrouping(timeSlots);
 
   const { data } = useGetReadingSessionsQuery({

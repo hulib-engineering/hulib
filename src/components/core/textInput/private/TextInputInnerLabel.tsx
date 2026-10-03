@@ -66,7 +66,7 @@ const TextInputInnerLabel = forwardRef<HTMLInputElement, TextInputMediumProps>(
     };
     return (
       <Container {...containerProps}>
-        <Inner bgColor={backgroundColor}>
+        <Inner $bgColor={backgroundColor}>
           <Input
             // @ts-ignore
             size={inputSize}

@@ -21,6 +21,7 @@ import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { StoryCard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/StoryCard';
 import ChipFilter from '@/layouts/webapp/ChipFilter';
+import { useSkipUserScopedQuery } from '@/libs/hooks';
 import { useInfiniteScroll } from '@/libs/hooks/useInfiniteScroll';
 import { useGetStoriesQuery } from '@/libs/services/modules/stories';
 import type { Story as StoryType } from '@/libs/services/modules/stories/storiesType';
@@ -35,6 +36,7 @@ export default function Index() {
 
   const t = useTranslations('ExploreStory');
   const tCommon = useTranslations('Common');
+  const skipFavourites = useSkipUserScopedQuery();
 
   const [page, setPage] = useState(1);
   const [filterBy, setFilterBy] = useState<number[]>(topicIds?.map(id => Number(id)) ?? []);
@@ -54,7 +56,10 @@ export default function Index() {
       ...orderBy === 'favorites' ? [{ orderBy: 'favorite', order: 'DESC' }] : [],
     ],
   });
-  const { data: favoriteStories } = useGetMyFavoritesQuery();
+  // Admin tokens get a 403 on user-scoped favourites endpoints.
+  const { data: favoriteStories } = useGetMyFavoritesQuery(undefined, {
+    skip: skipFavourites,
+  });
 
   const hasNextPage
     = stories?.meta?.currentPage && stories?.meta?.totalPages
@@ -166,7 +171,10 @@ export default function Index() {
             onChange={value => setOrderBy(value as unknown as string)}
           >
             <Dropdown.Trigger aria-label="Dropdown trigger">
+              {/* `as="div"`: Dropdown.Trigger already renders a <button>, and a
+                  nested <button> is invalid HTML (hydration mismatch). */}
               <IconButton
+                as="div"
                 variant="outline"
                 size="lg"
                 className="w-11 shrink-0"

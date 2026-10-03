@@ -1,7 +1,6 @@
 'use client';
 
 import { ArrowRight } from '@phosphor-icons/react';
-import Image from 'next/image';
 import type { Session } from 'next-auth';
 import { getSession, signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
@@ -65,16 +64,6 @@ const HumanBookBanner = () => {
             <ArrowRight size={20} color="#fff" />
           </Link>
         </div>
-        <div className="hidden shrink-0 lg:block">
-          <Image
-            src="/assets/images/banners/banner.png"
-            alt="banner"
-            width={404}
-            height={64}
-            loading="lazy"
-          />
-        </div>
-
         <div
           className={`${
             isUserLoggedIn && !isUserLoggedInButTokenHasExpired

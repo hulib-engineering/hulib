@@ -23,7 +23,10 @@ export const TimezoneSelect = ({ value, onChange }: ITimezoneSelectProps) => {
   return (
     <Dropdown value={selected} onChange={value => setSelected(value as string)}>
       <Dropdown.Trigger aria-label="Dropdown trigger">
+        {/* `as="div"`: Dropdown.Trigger already renders a <button>, and a
+            nested <button> is invalid HTML (hydration mismatch). */}
         <Button
+          as="div"
           variant="ghost"
           size="sm"
           iconLeft={<GlobeIcon weight="bold" />}

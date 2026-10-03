@@ -11,6 +11,7 @@ import { HuberCardListSkeleton } from '@/components/loadingState/Skeletons';
 import ChipFilter from '@/layouts/webapp/ChipFilter';
 import { useGetHubersQuery } from '@/libs/services/modules/huber';
 import type { Huber as HuberType } from '@/libs/services/modules/huber/huberType';
+import { useSkipUserScopedQuery } from '@/libs/hooks';
 import { useInfiniteScroll } from '@/libs/hooks/useInfiniteScroll';
 import { useGetMyFavoriteHubersQuery } from '@/libs/services/modules/user';
 
@@ -20,6 +21,7 @@ export default function Index() {
 
   const t = useTranslations('Huber');
   const tCommon = useTranslations('Common');
+  const skipFavourites = useSkipUserScopedQuery();
 
   const [page, setPage] = useState(1);
   const [filterBy, setFilterBy] = useState<number[]>([]);
@@ -30,7 +32,10 @@ export default function Index() {
     limit: 8,
     topicIds: filterBy.length > 0 ? filterBy : undefined,
   });
-  const { data: favoriteHubers, isLoading: isLoadingFavoriteHubers } = useGetMyFavoriteHubersQuery();
+  // Admin tokens get a 403 on user-scoped favourites endpoints.
+  const { data: favoriteHubers, isLoading: isLoadingFavoriteHubers } = useGetMyFavoriteHubersQuery(undefined, {
+    skip: skipFavourites,
+  });
   const hasNextPage
     = hubers?.meta?.currentPage && hubers?.meta?.totalPages
       ? hubers.meta.currentPage < hubers.meta.totalPages
