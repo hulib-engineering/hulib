@@ -1,54 +1,34 @@
-import { useEffect, useState } from 'react';
-import { get, getMany, keys } from 'idb-keyval';
+import { useCallback, useEffect, useState } from 'react';
+import { del, delMany, get, getMany, keys } from 'idb-keyval';
 
-import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
+import type { Story } from '@/libs/services/modules/stories/storiesType';
 import type { FileType } from '@/libs/services/modules/files/fileType';
 
-export type draftStory = Pick<
-  TStory,
-  | 'id'
-  | 'title'
-  | 'abstract'
-  | 'cover'
-  | 'humanBook'
-  | 'publishStatus'
-  | 'topics'
-  | 'rejectionReason'
-  | 'likeCount'
-  | 'viewCount'
-  | 'shareCount'
-  | 'highlightTitle'
-  | 'highlightAbstract'
->;
-
 // What saveDraft writes: same as draftStory, but the cover is a Blob instead of { path }.
-export type StoredDraft = Omit<draftStory, 'cover'> & { coverBlob?: Blob };
-
+export type StoredDraft = Omit<Story, 'cover'> & { coverBlob?: Blob };
 const DRAFT_KEY_PREFIX = 'draft-';
-
 export const draftKey = (id: number | string) => `${DRAFT_KEY_PREFIX}${id}`;
 
-// Raw record (with Blob). Usable outside React, e.g. in handlers.
 export async function getStoredDraft(id: number | string): Promise<StoredDraft | undefined> {
   return get<StoredDraft>(draftKey(id));
 }
 
-function toDraftStory(item: StoredDraft, urls: string[]): draftStory {
+function toDraftStory(item: StoredDraft, urls: string[]): Story {
   const { coverBlob, ...rest } = item;
   const url = coverBlob ? URL.createObjectURL(coverBlob) : '';
   if (url) {
     urls.push(url);
   }
-  return { ...rest, cover: { path: url } as FileType } as draftStory;
+  return { ...rest, cover: { path: url } as FileType } as Story;
 }
 
 type UseDraftStories = {
-  draftStories: draftStory[];
+  draftStories: Story[];
   isLoading: boolean;
 };
 
 export function useDraftStories(): UseDraftStories {
-  const [draftStories, setDraftStories] = useState<draftStory[]>([]);
+  const [draftStories, setDraftStories] = useState<Story[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -86,12 +66,12 @@ export function useDraftStories(): UseDraftStories {
 }
 
 type UseDraftStory = {
-  draftStory: draftStory | undefined;
+  draft: Story | undefined;
   isLoading: boolean;
 };
 
 export function useDraftStory(id?: number | string): UseDraftStory {
-  const [draft, setDraft] = useState<draftStory>();
+  const [draft, setDraft] = useState<Story>();
   const [isLoading, setIsLoading] = useState(id !== undefined);
 
   useEffect(() => {
@@ -125,5 +105,57 @@ export function useDraftStory(id?: number | string): UseDraftStory {
     };
   }, [id]);
 
-  return { draftStory: draft, isLoading };
+  return { draft, isLoading };
+}
+
+type UseDeleteDraft = {
+  deleteDraft: (id: number | string) => Promise<boolean>;
+  isLoading: boolean;
+};
+
+export function useDeleteDraft(): UseDeleteDraft {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const deleteDraft = useCallback(async (id: number | string) => {
+    console.log(id);
+    setIsLoading(true);
+    try {
+      await del(draftKey(id));
+      return true;
+    } catch (err) {
+      console.error('Draft delete failed', err);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  return { deleteDraft, isLoading };
+}
+
+type UseDeleteAllDrafts = {
+  deleteAllDrafts: () => Promise<boolean>;
+  isLoading: boolean;
+};
+
+export function useDeleteAllDrafts(): UseDeleteAllDrafts {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const deleteAllDrafts = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const draftKeys = (await keys()).filter(
+        (k): k is string => typeof k === 'string' && k.startsWith(DRAFT_KEY_PREFIX),
+      );
+      await delMany(draftKeys);
+      return true;
+    } catch (err) {
+      console.error('Draft delete failed', err);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  return { deleteAllDrafts, isLoading };
 }

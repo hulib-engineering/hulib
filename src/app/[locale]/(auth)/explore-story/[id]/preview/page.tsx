@@ -28,9 +28,9 @@ import {
 } from '@/libs/services/modules/stories';
 import { PublishStatusEnum } from '@/libs/services/modules/stories/storiesType';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
+import { useDeleteDraft, useDraftStory } from '@/utils/loadDraft'; // TODO: rename the file 'loadDraft' to 'draftUtils' or something more fitting
 
-export default function Index() {
-  const { id } = useParams();
+function Default({ id }: { id: string }) {
   const router = useRouter();
 
   const t = useTranslations('ExploreStory');
@@ -225,4 +225,176 @@ export default function Index() {
       </Modal>
     </div>
   );
+}
+
+function Draft({ id }: { id: string }) {
+  const router = useRouter();
+
+  const t = useTranslations('ExploreStory');
+  const tCommon = useTranslations('Common');
+
+  const { draft: data, isLoading } = useDraftStory(id);
+  const { deleteDraft, isLoading: isDeletingDraft } = useDeleteDraft();
+
+  const userInfo = useAppSelector(state => state.auth.userInfo);
+
+  const [isDeleteSuccessModalOpen, setIsDeleteSuccessModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleDelete = async () => {
+    try {
+      await deleteDraft(id);
+      setIsDeleteSuccessModalOpen(true);
+    } catch {
+      pushError('Error deleting story');
+    }
+  };
+  const handleCloseDeleteSuccessModal = () => {
+    setIsDeleteSuccessModalOpen(false);
+    router.push(`/users/${userInfo.id}?tab=stories`);
+  };
+
+  if (isLoading || isDeletingDraft) {
+    return (
+      <div className="mx-auto w-full max-w-screen-sm py-8 lg:max-w-screen-xl">
+        <StoryDetailSkeleton />
+      </div>
+    );
+  }
+
+  if (!data) {
+    return redirect(`/users/${userInfo.id}?tab=stories`);
+  }
+
+  return (
+    <div className="mx-auto w-full max-w-screen-sm py-8 lg:max-w-screen-xl">
+      <div className="flex flex-col gap-2">
+        <Button
+          variant="ghost"
+          size="lg"
+          iconLeft={<ArrowLeft />}
+          className="w-fit text-black"
+          onClick={() => router.back()}
+        >
+          {tCommon('back')}
+        </Button>
+        {!isEditing ? (
+          <div className="flex flex-col gap-8 lg:flex-row">
+            <div className="flex-1">
+              <DetailedStory
+                title={data?.title || ''}
+                cover={data?.humanBook?.photo?.path ?? '/assets/images/landing/half-title-illus.png'}
+                authorName={data?.humanBook?.fullName || ''}
+                abstract={data?.abstract || ''}
+              />
+            </div>
+            <div className="size-full overflow-hidden rounded-2xl bg-white p-6 lg:max-w-[268px]">
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-col">
+                    <h5 className="text-2xl font-medium leading-9 text-primary-10">{data?.title}</h5>
+                    <p className="font-medium text-primary-60">
+                      (
+                      {t('draft')}
+                      )
+                    </p>
+                  </div>
+                  <div className="flex w-full snap-x snap-mandatory gap-2 overflow-x-auto scroll-smooth">
+                    {(data.topics ?? []).map((topic: Topic) => (
+                      <Chip
+                        key={topic.id}
+                        className={mergeClassnames(
+                          'h-fit snap-start overflow-visible rounded-2xl border p-2 text-xs leading-[14px]',
+                          getTopicBadgeClasses(topic.color),
+                        )}
+                      >
+                        {topic.name}
+                      </Chip>
+                    ))}
+                  </div>
+                </div>
+                <Cover src={data?.cover?.path ?? DEFAULT_STORY_COVER_ASSET} />
+                <div className="flex flex-col gap-3">
+                  <Button
+                    size="lg"
+                    fullWidth
+                    onClick={() => setIsEditing(true)}
+                  >
+                    {tCommon('edit')}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    fullWidth
+                    disabled={isDeletingDraft}
+                    animation={isDeletingDraft && 'progress'}
+                    onClick={handleDelete}
+                  >
+                    {tCommon('delete')}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="rounded-[20px] bg-white">
+            <StoryForm
+              type="edit"
+              story={data}
+              onSucceed={() => setIsEditing(false)}
+              onCancel={() => setIsEditing(false)}
+            />
+          </div>
+        )}
+      </div>
+      {/* Delete Story/Remove Story From My Favorites Modal */}
+      <Modal
+        open={isDeleteSuccessModalOpen}
+        onClose={handleCloseDeleteSuccessModal}
+      >
+        <Modal.Backdrop />
+        <Modal.Panel className="w-full max-w-xl bg-neutral-98 shadow-none">
+          <div className="flex flex-col items-center justify-center">
+            {/* Modal Header */}
+            <div className="flex w-full items-center justify-end px-4 pt-4">
+              <X className="cursor-pointer text-2xl text-[#343330]" onClick={handleCloseDeleteSuccessModal} />
+            </div>
+
+            {/* Modal Body */}
+            <div className="flex flex-col items-center justify-center gap-5 px-6 pb-6">
+              <div className="rounded-full bg-[#D9FDEE] p-1 text-[#32D583]">
+                <Image
+                  alt="Check icon"
+                  src="/assets/icons/check-fill-circle.svg"
+                  width={48}
+                  height={48}
+                  className="size-12 object-cover"
+                />
+              </div>
+              <h6 className="text-center text-xl font-bold text-neutral-10">
+                {t('story')}
+                {' '}
+                “
+                <span className="text-primary-60">{data?.title}</span>
+                ”
+                {' '}
+                {t('is_deleted_successfully')}
+              </h6>
+            </div>
+          </div>
+        </Modal.Panel>
+      </Modal>
+    </div>
+  );
+}
+
+export default function Index() {
+  const { id } = useParams<{ id: string }>();
+  const rawId = String(id ?? '');
+
+  if (rawId.startsWith('draft-')) {
+    return <Draft id={rawId.slice('draft-'.length)} />;
+  }
+
+  return <Default id={id} />;
 }

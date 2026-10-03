@@ -46,6 +46,10 @@ export default function MyStoryCard({ data }: MyStoryCardProps) {
   const remainingTopicsCount = Math.max((data.topics?.length ?? 0) - visibleTopics.length, 0);
 
   const handleOpenStory = () => {
+    if (isDraft) {
+      router.push(`/explore-story/draft-${data.id}/preview`);
+      return;
+    }
     router.push(`/explore-story/${data.id}${isPublished ? '' : '/preview'}`);
     // TODO: add push for draft
   };

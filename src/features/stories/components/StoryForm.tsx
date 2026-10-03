@@ -19,7 +19,7 @@ import Form from '@/components/core/form/Form';
 // import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import type { TFilter } from '@/layouts/scheduling/BigCalendar';
+import type { TFilter } from '@/layouts/scheduling/BigCalendar'; // TODO: check again to see why some topics state/lists use this type - which is very weird
 import { useAppSelector } from '@/libs/hooks';
 import { useUploadMutation } from '@/libs/services/modules/files';
 // import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
@@ -256,13 +256,13 @@ export default function StoryForm(props: IStoryFormProps) {
   async function saveDraft() {
     try {
       const coverBlob = await rasterizeCoverElement(COVER_EXPORT_ELEMENT_ID);
-
-      await set(`draft-${crypto.randomUUID()}`, {
-        id: 0,
+      const id = crypto.randomUUID();
+      await set(`draft-${id}`, {
+        id,
         abstract,
         title,
         coverBlob,
-        topics: selectedTopics.map(topic => ({ name: topic.label })),
+        topics: selectedTopics.map(topic => ({ id: topic.id, name: topic.label })),
         humanBook: { fullName: userInfo.fullName, photo: { path: '' } },
         rating: 0,
         storyReview: {},
@@ -280,7 +280,7 @@ export default function StoryForm(props: IStoryFormProps) {
       router.push(userProfile);
     }
   }
-  // CHANGE: Changed 'xl' and 'lg' breakpoints to 'sm' or 'md'.
+
   return (
     <div className="flex flex-col gap-6 rounded-[20px] bg-white
       max-[955px]:mt-2 min-[955px]:p-5"
