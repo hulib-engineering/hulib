@@ -1285,7 +1285,12 @@
     "sent_sticker": "Đã gửi một nhãn dán",
     "happy_new_year": "Chúc mừng năm mới",
     "meeting_request": "Yêu cầu cuộc họp",
-    "reason_for_warning": "Lý do cảnh cáo"
+    "reason_for_warning": "Lý do cảnh cáo",
+    "draft_tooltip": "Nếu chưa thể hoàn thành câu chuyện ngay, bạn có thể lưu bản nháp và quay lại hoàn thành sau",
+    "story_create_success": "Tạo câu chuyện thành công",
+    "draft_create_success": "Bản nháp đã được lưu thành công",
+    "draft_create_success_title": "Lưu bản nháp thành công",
+    "save_draft": "Lưu bản nháp"
   },
   "feedback_form": {
     "session_feedback": "Phản hồi cho buổi học",

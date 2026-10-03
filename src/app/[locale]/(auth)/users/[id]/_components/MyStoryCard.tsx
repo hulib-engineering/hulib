@@ -1,6 +1,6 @@
 'use client';
 
-import { Eye, ShareFat, ThumbsUp } from '@phosphor-icons/react';
+import { EyeIcon, ShareFatIcon, ThumbsUpIcon } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 
 import Avatar from '@/components/core/avatar/Avatar';
@@ -14,25 +14,8 @@ import { useRouter } from '@/libs/i18nNavigation';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
 import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
 
-type TStory = Pick<
-  Story,
-  | 'id'
-  | 'title'
-  | 'abstract'
-  | 'cover'
-  | 'humanBook'
-  | 'publishStatus'
-  | 'topics'
-  | 'rejectionReason'
-  | 'likeCount'
-  | 'viewCount'
-  | 'shareCount'
-  | 'highlightTitle'
-  | 'highlightAbstract'
->;
-
 type MyStoryCardProps = {
-  data: TStory;
+  data: Story;
 };
 
 export default function MyStoryCard({ data }: MyStoryCardProps) {
@@ -51,7 +34,6 @@ export default function MyStoryCard({ data }: MyStoryCardProps) {
       return;
     }
     router.push(`/explore-story/${data.id}${isPublished ? '' : '/preview'}`);
-    // TODO: add push for draft
   };
 
   return (
@@ -115,15 +97,15 @@ export default function MyStoryCard({ data }: MyStoryCardProps) {
           {isDraft ?? (
             <>
               <div className="flex items-center gap-1">
-                <ThumbsUp size={16} weight="fill" className="text-pink-40" />
+                <ThumbsUpIcon size={16} weight="fill" className="text-pink-40" />
                 <span className="text-sm font-medium text-neutral-20">{data.likeCount ?? 0}</span>
               </div>
               <div className="flex items-center gap-1">
-                <Eye size={16} className="text-primary-50" />
+                <EyeIcon size={16} className="text-primary-50" />
                 <span className="text-sm font-medium text-neutral-20">{data.viewCount ?? 0}</span>
               </div>
               <div className="flex items-center gap-1">
-                <ShareFat size={16} className="text-primary-50" />
+                <ShareFatIcon size={16} className="text-primary-50" />
                 <span className="text-sm font-medium text-neutral-20">{data.shareCount ?? 0}</span>
               </div>
             </>

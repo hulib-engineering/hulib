@@ -1285,7 +1285,12 @@
     "sent_sticker": "Sent a sticker",
     "happy_new_year": "Happy New Year",
     "meeting_request": "Meeting request",
-    "reason_for_warning": "Reason for warning"
+    "reason_for_warning": "Reason for warning",
+    "draft_tooltip": "You can save your story as a draft and return later, if it's not possible to complete it yet",
+    "story_create_success": "Story created successfully",
+    "draft_create_success": "Draft saved successfully",
+    "draft_create_success_title": "Draft Saved Successfully",
+    "save_draft": "Save draft"
   },
   "feedback_form": {
     "session_feedback": "Feedback for the session",

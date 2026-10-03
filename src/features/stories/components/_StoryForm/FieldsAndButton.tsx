@@ -199,6 +199,7 @@ type SubmitAndDraftButtonProps = {
 };
 
 function DraftTooltip() {
+  const t = useTranslations('Common');
   return (
     <Tooltip>
       <Tooltip.Trigger>
@@ -206,10 +207,10 @@ function DraftTooltip() {
       </Tooltip.Trigger>
       <Tooltip.Content
         position="top-center"
-        className="z-[99] max-w-[300px] rounded-lg bg-neutral-10 p-2"
+        className="z-[9999] max-w-[300px] rounded-lg bg-neutral-10 p-2"
       >
         <div className="flex flex-col gap-1 text-neutral-98">
-          Nếu chưa thể hoàn thành câu chuyện ngay, bạn có thể lưu bản nháp và quay lại hoàn thành sau
+          {t('draft_tooltip')}
         </div>
       </Tooltip.Content>
     </Tooltip>
@@ -220,7 +221,6 @@ export function SubmitAndDraftButton({ isSubmitting, isFormValid, type, saveDraf
   const t = useTranslations('Common');
 
   return (
-
     <div className="z-40 flex w-full flex-row gap-2 bg-white
         max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
         max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
@@ -228,7 +228,7 @@ export function SubmitAndDraftButton({ isSubmitting, isFormValid, type, saveDraf
     >
       {/* Draft saving */}
       <div className="flex flex-row items-center gap-2">
-        <Button variant="outline" className="px-6" onClick={saveDraft}>Lưu bản nháp</Button>
+        <Button variant="outline" className="px-6" onClick={saveDraft}>{t('save_draft')}</Button>
         <DraftTooltip />
       </div>
 

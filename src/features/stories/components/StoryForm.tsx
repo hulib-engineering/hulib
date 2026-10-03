@@ -89,13 +89,10 @@ export default function StoryForm(props: IStoryFormProps) {
   let swiperRef: any = null;
   const router = useRouter();
   const t = useTranslations('Common');
-  // const tProfile = useTranslations('MyProfile');
+
   const pathname = usePathname();
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
-  // const { data: me } = useGetPersonalInfoQuery(undefined, {
-  //   skip: !userInfo?.id,
-  // });
   const { data: relatedTopics } = useGetRelatedTopicsQuery(
     Number(props.type === 'edit' && props.story.id),
     { skip: props.type !== 'edit' || (props.story.topics?.length ?? 0) > 0 },
@@ -103,16 +100,6 @@ export default function StoryForm(props: IStoryFormProps) {
   const [uploadCover] = useUploadMutation();
   const [createStory] = useCreateStoryMutation();
   const [editStory] = useUpdateStoryMutation();
-
-  // const topicOptions = useMemo(
-  //   () =>
-  //     (me?.sharingTopics ?? []).map((topic: Topic) => ({
-  //       label: topic.name,
-  //       value: topic.id.toString(),
-  //       id: topic.id,
-  //     })),
-  //   [me],
-  // );
 
   const storyTopicsFromProps = props.type === 'edit' ? props.story.topics : undefined;
   const storyRelatedTopics = useMemo(() => {
@@ -228,7 +215,7 @@ export default function StoryForm(props: IStoryFormProps) {
           publishStatus: 'draft',
         }).unwrap();
 
-        pushSuccess('Story created successfully');
+        pushSuccess(t('story_create_success'));
         router.push(`/register-huber/success?storyId=${result.id}`);
         props.onSucceed();
       } else {
@@ -273,7 +260,7 @@ export default function StoryForm(props: IStoryFormProps) {
       pushError(t('error_contact_admin'));
       return;
     }
-    pushSuccess('Bản nháp đã được lưu thành công', 'Lưu bản nháp thành công');
+    pushSuccess(t('draft_create_success'), t('draft_create_success_title'));
 
     const userProfile = `/users/${userInfo.id}?tab=stories`;
     if (!pathname.includes(userProfile)) {
@@ -298,7 +285,7 @@ export default function StoryForm(props: IStoryFormProps) {
           min-[955px]:items-start min-[955px]:gap-6"
         >
           {/* Cột trái */}
-          <div className="flex flex-1 flex-col max-[955px]:hidden">
+          <div className="flex max-w-[600px] flex-1 flex-col max-[955px]:hidden">
             <CoverPickerTitle />
             <div className="flex flex-1 rounded-2xl
               border border-neutral-90 bg-neutral-98 p-5"
@@ -344,7 +331,7 @@ export default function StoryForm(props: IStoryFormProps) {
           </div>
 
           {/* Cột phải */}
-          <div className="flex flex-1 flex-col gap-6">
+          <div className="flex min-w-0 flex-1 flex-col gap-6">
             <TitleField register={register} errors={errors} />
             <TopicsField selectedTopics={selectedTopics} setSelectedTopics={setSelectedTopics} />
             <StoryContentField register={register} errors={errors} />

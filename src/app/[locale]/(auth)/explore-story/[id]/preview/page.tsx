@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, X } from '@phosphor-icons/react';
+import { ArrowLeftIcon, XIcon } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { notFound, useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
@@ -77,14 +77,14 @@ function Default({ id }: { id: string }) {
   if (data && data?.publishStatus === PublishStatusEnum.DELETED) {
     return notFound();
   }
-
+  // TODO: maybe clean the draft portions here if the Default component truly doesn't need draft codes
   return (
     <div className="mx-auto w-full max-w-screen-sm py-8 lg:max-w-screen-xl">
       <div className="flex flex-col gap-2">
         <Button
           variant="ghost"
           size="lg"
-          iconLeft={<ArrowLeft />}
+          iconLeft={<ArrowLeftIcon />}
           className="w-fit text-black"
           onClick={() => router.back()}
         >
@@ -196,7 +196,7 @@ function Default({ id }: { id: string }) {
           <div className="flex flex-col items-center justify-center">
             {/* Modal Header */}
             <div className="flex w-full items-center justify-end px-4 pt-4">
-              <X className="cursor-pointer text-2xl text-[#343330]" onClick={handleCloseDeleteSuccessModal} />
+              <XIcon className="cursor-pointer text-2xl text-[#343330]" onClick={handleCloseDeleteSuccessModal} />
             </div>
 
             {/* Modal Body */}
@@ -272,7 +272,7 @@ function Draft({ id }: { id: string }) {
         <Button
           variant="ghost"
           size="lg"
-          iconLeft={<ArrowLeft />}
+          iconLeft={<ArrowLeftIcon />}
           className="w-fit text-black"
           onClick={() => router.back()}
         >
@@ -357,7 +357,7 @@ function Draft({ id }: { id: string }) {
           <div className="flex flex-col items-center justify-center">
             {/* Modal Header */}
             <div className="flex w-full items-center justify-end px-4 pt-4">
-              <X className="cursor-pointer text-2xl text-[#343330]" onClick={handleCloseDeleteSuccessModal} />
+              <XIcon className="cursor-pointer text-2xl text-[#343330]" onClick={handleCloseDeleteSuccessModal} />
             </div>
 
             {/* Modal Body */}

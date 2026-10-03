@@ -59,7 +59,7 @@ export default function MyStoriesPanel({
     .filter((topic: Topic, index: number, source: Topic[]) => source.findIndex(item => item.id === topic.id) === index);
 
   const { draftStories } = useDraftStories();
-  console.log(draftStories);
+
   const filteredStories = selectedTopicId === 'all'
     ? storyItems
     : storyItems.filter((story: TStory) => story.topics?.some(topic => topic.id === selectedTopicId));
