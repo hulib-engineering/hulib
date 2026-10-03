@@ -99,7 +99,12 @@ export default function InformativeNotificationCard({ notification, showExtras, 
                 ? '/assets/icons/disabled-meeting-icon.svg' : notification.sender.id === 1
                   ? '/assets/images/admin-ava.png'
                   : notification.sender.photo?.path}
-              name={notification.sender.fullName}
+              // Session-outcome cards are rendered from the session relation, not the sender:
+              // on those notifications `sender` is the admin/system account. Inert today (these
+              // types always pass an icon), but it keeps a system name out of the DOM.
+              name={[NotificationType.SESSION_MISS, NotificationType.SESSION_CANCELLATION].includes(notification.type.name as NotificationType)
+                ? notification.relatedEntity?.humanBook?.fullName ?? ''
+                : notification.sender.fullName}
               size="xl"
               className={mergeClassnames(
                 showExtras && 'xl:!size-[72px]',

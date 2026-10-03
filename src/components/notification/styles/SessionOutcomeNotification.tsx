@@ -40,9 +40,10 @@ export default function SessionOutcomeNotificationCard({ notification, onClick }
   };
 
   const { startedAt, startTime, endTime } = resolveSessionTimeRange(session);
-  // On an auto-cancel the sender is the system/admin account, so the Huber has to be read off
-  // the session relation; `sender` is only a fallback for payloads that omit it.
-  const huberName = session?.humanBook?.fullName ?? notification.sender?.fullName ?? '';
+  // `sender` is the admin/system account on these notifications, so the Huber must come from
+  // the session relation — there is deliberately no `sender` fallback, which would print a
+  // system name in the copy.
+  const huberName = session?.humanBook?.fullName ?? '';
 
   return (
     <NotificationRow
