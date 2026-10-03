@@ -26,7 +26,8 @@ export default function Notifications() {
       notification.type.name === NotificationType.SESSION_REQUEST && isPendingSessionStatus(notification.relatedEntity?.sessionStatus)) || [];
   }, [data]);
   const otherNotifications: Notification[] = useMemo(() => data?.data.filter((notification: Notification) =>
-    notification.type.name !== NotificationType.SESSION_REQUEST) || [], [data]);
+    notification.type.name !== NotificationType.SESSION_REQUEST
+    || !isPendingSessionStatus(notification.relatedEntity?.sessionStatus)) || [], [data]);
 
   const handeLoadNextPage = () => {
     if (data?.hasNextPage && !isLoading) {
