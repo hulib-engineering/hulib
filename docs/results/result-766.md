@@ -18,6 +18,15 @@ What changed
 - `src/components/notification/styles/SessionOutcomeNotification.stories.tsx`: stories for both new types in en and vi, plus a seen/full-width variant.
 - `docs/plans/plan-766.md`: the plan.
 
+Backend contract confirmed after implementation:
+
+- The Huber name is `relatedEntity.humanBook.fullName`, populated by the find-all select (`notifications.service.ts:161-166`). The `sender.fullName` fallback was **removed** — `sender` is the admin account on these notifications and would have printed a system name in the card copy. Same change applied to the `SESSION_MISS` avatar.
+- `relatedEntity.reader.fullName` is populated and available for `huberNoShowReadingSession` if product later wants the card to name the reader. Not used by the current copy.
+- One missed session sends exactly two notifications: `missReadingSession` to the reader, `huberNoShowReadingSession` to the Huber. The 3-type map is correct.
+- `startedAt` is a full ISO DateTime (`2025-02-05T01:00:00.000Z`), parsed before formatting. `startTime` / `endTime` are `@IsString()` with no format validation, so the defensive `formatSessionTime` handling stays.
+- `extraNote` is safe to ignore — nothing depends on it exclusively.
+- `relatedEntity.rejectReason` is exposed on auto-cancel but not rendered; it is an audit field and the design shows no reason box.
+
 Gates
 
 - `npm run check:types`: pass (exit 0).
@@ -32,7 +41,7 @@ Needs manual UI check
 Nothing below was verified in a browser or by pixel comparison. All of it is code-level checked against the plan's spec values only.
 
 - `/{locale}/notifications` and the header popover: `autoCancelReadingSession` and `huberNoShowReadingSession` render as a single line with the time range bold blue and the Huber name bold, no title, no CTA, no reason box.
-- The auto-cancel card must show the **Huber's** name (`Tran Thanh Thao`), not the sender. If the backend leaves `relatedEntity.humanBook` unpopulated on auto-cancel, the fallback renders the sender and this will be wrong.
+- The auto-cancel card must show the **Huber's** name (`Tran Thanh Thao`), not the sender. `relatedEntity.humanBook.fullName` is confirmed populated and the `sender` fallback was removed, so this should hold — but confirm visually.
 - `missReadingSession`: no title line; body reads `11:00–11:30` with an en-dash and `05 tháng 2, 2025` (vi) / `05 February 2025` (en); the `Chia sẻ lý do` bar spans the full content column.
 - The miss icon renders as a rounded square, not a circle (it is an `Avatar` whose base class is `rounded-full`, so this depends on the `rounded-2xl` override actually winning).
 - Breakpoints `sm` (640px), `md` (768px), `xl` (1280px): confirm the full-width CTA does not overflow the 480px `NotificationPopover`.
@@ -49,9 +58,10 @@ Notes / follow-up
 
 - **`huberNoShowReadingSession` copy is a placeholder and needs product sign-off.** No design and no agreed wording were supplied. What shipped is an invitation to report a possible glitch on our side, which is a guess. Replace before merge if real copy exists.
 - **Unconfirmed backend contract: the Huber name on auto-cancel.** The card reads `relatedEntity.humanBook?.fullName` and falls back to `sender.fullName`. On an auto-cancel the sender is likely a system or admin account, so if `humanBook` is not populated the card will render the wrong name. Worth one confirmation with `hulib-services`.
+- **`/attend` has no time guard, so an early joiner counts as attendance.** The endpoint stamps on any call — joining 10 minutes before `startedAt` marks the session attended, which weakens the no-show signal the whole flow depends on. A BE guard rejecting stamps before `startedAt` minus a grace window (15 min suggested) is the fix; filed with the backend, small PR.
 - **Both new types remain visually unverified.** They were built from the written spec on the #764 card's structure, not from a design. `huberNoShowReadingSession` in particular has no reference at all.
 - **Body text weight may not match.** It is `font-medium` per #764, but both reference images read heavier. Expect to adjust after a real browser look.
 - **No story for the rebuilt `missReadingSession` card.** `InformativeNotificationCard` pulls in the Redux-backed `SessionDetailCard`, the i18n router and a Modal, so a standalone story would need most of the app tree. It is covered only by typecheck. The new `SessionOutcomeNotificationCard` does have stories.
-- **`test-storybook:ci` is broken independently of this work** — it calls a `test-storybook` script that does not exist. Worth fixing separately so the gate can actually protect future stories.
+- **`test-storybook:ci` is broken independently of this work** — it calls a `test-storybook` script that does not exist, so the gate can never pass and CI has likely been no-op'ing. Tracked in #767.
 - **Deploy order still matters.** `npx prisma migrate deploy` must run on the backend first, otherwise `/attend` errors and the cron query fails. Frontend deployment does not unblock this.
 - The separator is rendered without spaces around the en-dash (`11:00–11:30`), following the design. Note #764's existing session-decision keys use a trailing space (`11:00– 11:30`), so the two styles now coexist in the same list.
