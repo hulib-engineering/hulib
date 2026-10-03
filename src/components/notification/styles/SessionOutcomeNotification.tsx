@@ -6,6 +6,7 @@ import type { INotificationItemRendererProps } from '../NotificationItemRenderer
 import NotificationRow from '../NotificationRow';
 import { notificationConfig } from '../private/config';
 import { NotificationType } from '../private/types';
+import { useRouter } from '@/libs/i18nNavigation';
 import { formatNotificationTimestamp, formatSessionDateLabel, formatSessionTime, resolveSessionTimeRange } from '@/utils/dateUtils';
 import { customMessage, strongMessage } from '@/utils/i18NRichTextUtils';
 
@@ -23,12 +24,17 @@ const timeRangeMessage = customMessage('font-bold text-primary-60');
  * The copy is rendered here rather than through `cfg.getMessage` because the session date has
  * to follow the viewer's locale, which `getMessage` is not given.
  *
+ * The row navigates to the per-session page rather than the generic schedule list: the reader
+ * needs to see the session was cancelled, and the Huber needs to reach the reason form. Keyed
+ * off `relatedEntity.id`, never `sessionUrl` — the room is already finished for these outcomes.
+ *
  * `extraNote` is deliberately ignored: the backend sends a pre-rendered English message there,
  * and rendering it would drop English copy into the Vietnamese card.
  */
 export default function SessionOutcomeNotificationCard({ notification, onClick }: INotificationItemRendererProps) {
   const locale = useLocale();
   const t = useTranslations('notifications');
+  const router = useRouter();
 
   const cfg = notificationConfig[notification.type.name as NotificationType] ?? notificationConfig[NotificationType.OTHER];
   const session = notification.relatedEntity;
@@ -36,6 +42,12 @@ export default function SessionOutcomeNotificationCard({ notification, onClick }
   const handleClick = () => {
     if (onClick) {
       onClick();
+    }
+    // `relatedEntity.id`, not `relatedEntityId` (the notification's own FK) and never
+    // `sessionUrl` — see the note above.
+    const sessionId = notification.relatedEntity?.id;
+    if (sessionId) {
+      router.push(`/my-schedule/${sessionId}`);
     }
   };
 
