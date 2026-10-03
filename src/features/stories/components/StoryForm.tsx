@@ -43,6 +43,7 @@ import {
   rasterizeCoverElement,
   uploadCoverBlob,
 } from '@/features/stories/utils';
+import { useDraftId } from '@/libs/hooks/useDraftId';
 
 // const filter = (
 //   query: string,
@@ -91,6 +92,7 @@ export default function StoryForm(props: IStoryFormProps) {
   const t = useTranslations('Common');
 
   const pathname = usePathname();
+  const draftId = useDraftId();
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
   const { data: relatedTopics } = useGetRelatedTopicsQuery(
@@ -243,9 +245,9 @@ export default function StoryForm(props: IStoryFormProps) {
   async function saveDraft() {
     try {
       const coverBlob = await rasterizeCoverElement(COVER_EXPORT_ELEMENT_ID);
-      const id = crypto.randomUUID();
-      await set(`draft-${id}`, {
-        id,
+
+      await set(`draft-${draftId}`, {
+        id: draftId,
         abstract,
         title,
         coverBlob,
