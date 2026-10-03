@@ -257,7 +257,7 @@ export default function StoryForm(props: IStoryFormProps) {
     try {
       const coverBlob = await rasterizeCoverElement(COVER_EXPORT_ELEMENT_ID);
 
-      await set('draft', [{
+      await set(`draft-${crypto.randomUUID()}`, {
         id: 0,
         abstract,
         title,
@@ -267,7 +267,7 @@ export default function StoryForm(props: IStoryFormProps) {
         rating: 0,
         storyReview: {},
         publishStatus: 'draft',
-      }]);
+      });
     } catch (err) {
       console.error('Draft save failed', err);
       pushError(t('error_contact_admin'));
