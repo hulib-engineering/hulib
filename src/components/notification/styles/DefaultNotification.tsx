@@ -4,16 +4,15 @@ import { useLocale, useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
+import NotificationRow from '../NotificationRow';
 import { notificationConfig } from '../private/config';
-import { NotificationType, isPendingSessionStatus } from '../private/types';
+import { NotificationType } from '../private/types';
 import { Link, useRouter } from '@/libs/i18nNavigation';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import { mergeClassnames } from '@/components/core/private/utils';
-import Modal from '@/components/Modal';
 import HandleAppealModal from '@/layouts/admin/HandleAppealModal';
 import HandleReportModal from '@/layouts/admin/HandleReportModal';
-import SessionDetailCard from '@/layouts/scheduling/SessionDetailCard';
 import { useAppSelector } from '@/libs/hooks';
 import { Role } from '@/types/common';
 import { toLocaleDateString } from '@/utils/dateUtils';
@@ -30,7 +29,6 @@ export default function DefaultNotificationCard({ notification, onClick }: INoti
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
-  const [isSessionRequestModalOpen, setIsSessionRequestModalOpen] = useState(false);
   const [isHandleReportModalOpen, setIsHandleReportModalOpen] = useState(false);
   const [isHandleAppealModalOpen, setIsHandleAppealModalOpen] = useState(false);
 
@@ -73,10 +71,6 @@ export default function DefaultNotificationCard({ notification, onClick }: INoti
     if (onClick) {
       onClick();
     }
-    if (notification.type.name === NotificationType.SESSION_REQUEST) {
-      setIsSessionRequestModalOpen(true);
-      return;
-    }
     if (notification.type.name === NotificationType.HUBER_REPORT) {
       setIsHandleReportModalOpen(true);
       return;
@@ -93,25 +87,24 @@ export default function DefaultNotificationCard({ notification, onClick }: INoti
     }
   };
 
-  if (!notification || (notification.type.name === NotificationType.SESSION_REQUEST && !isPendingSessionStatus(notification.relatedEntity?.sessionStatus))) {
+  if (!notification) {
     return undefined;
   }
 
   return (
     <>
-      <button
-        type="button"
+      <NotificationRow
+        onClick={handleClick}
+        seen={notification.seen}
+        unseenIcon={renderUnseenIcon()}
         className={mergeClassnames(
-          'flex w-full items-start gap-3 rounded-lg bg-white py-4 px-5 text-left transition-colors delay-300 hover:bg-primary-98',
           ([NotificationType.HUBER_REPORT, NotificationType.USER_APPEAL].includes(notification.type.name as NotificationType)
             || (notification.type.name === NotificationType.APPEAL_RESPONSE && notification.relatedEntity?.status === 'rejected'))
           && 'hover:bg-red-90',
           !notification.seen && (notification.type.name === NotificationType.APPEAL_RESPONSE && notification.relatedEntity?.status !== 'rejected' ? 'bg-green-90' : 'bg-red-98'),
           !notification.seen && 'xl:bg-white',
         )}
-        onClick={handleClick}
-      >
-        <div className={mergeClassnames(notification.type.name === NotificationType.SESSION_REQUEST && 'relative')}>
+        avatar={(
           <Avatar
             imageUrl={notification.sender.id === 1
               ? '/assets/images/admin-ava.png'
@@ -120,87 +113,48 @@ export default function DefaultNotificationCard({ notification, onClick }: INoti
             size="xl"
             className="xl:!size-[72px]"
           />
-          {notification.type.name === NotificationType.SESSION_REQUEST && (
-            <div className="absolute bottom-0 right-0">
-              <Image
-                src="/assets/icons/meeting-icon.svg"
-                width={24}
-                height={24}
-                alt="Meeting icon"
-                className="size-6 object-cover object-center"
-              />
-            </div>
-          )}
+        )}
+      >
+        <div className="flex items-center justify-between">
+          <p
+            className={mergeClassnames(
+              'text-sm font-medium leading-5 tracking-[0.015em] text-neutral-10',
+              'xl:text-base xl:leading-6 xl:tracking-[0.005em]',
+              notification.type.name !== NotificationType.APPEAL_RESPONSE && 'line-clamp-2',
+            )}
+          >
+            {cfg.getMessage(t, notification, userInfo?.role?.id ?? Role.LIBER)}
+          </p>
         </div>
-        <div className="flex flex-1 items-start gap-3">
-          <div className="flex flex-1 flex-col gap-1">
-            <div className="flex items-center justify-between">
-              <p
-                className={mergeClassnames(
-                  'text-sm font-medium leading-5 tracking-[0.015em] text-neutral-10',
-                  'xl:text-base xl:leading-6 xl:tracking-[0.005em]',
-                  notification.type.name !== NotificationType.APPEAL_RESPONSE && 'line-clamp-2',
-                )}
-              >
-                {cfg.getMessage(t, notification, userInfo?.role?.id ?? Role.LIBER)}
-              </p>
-              {notification.type.name === NotificationType.SESSION_REQUEST && (
-                <Link href="#" className="text-sm font-medium text-primary-60 underline" onClick={() => setIsSessionRequestModalOpen(true)}>
-                  Detail
-                </Link>
-              )}
-            </div>
-            {![NotificationType.USER_APPEAL, NotificationType.APPEAL_RESPONSE].includes(notification.type.name as NotificationType) && (
-              <div className="flex items-start justify-between xl:items-center">
-                <p className="text-xs font-normal leading-[14px] text-neutral-10 xl:text-sm xl:leading-[22px] xl:tracking-[0.015em]">
-                  {toLocaleDateString(notification.createdAt, locale === 'en' ? 'en-GB' : 'vi-VI')}
+        {![NotificationType.USER_APPEAL, NotificationType.APPEAL_RESPONSE].includes(notification.type.name as NotificationType) && (
+          <div className="flex items-start justify-between xl:items-center">
+            <p className="text-xs font-normal leading-[14px] text-neutral-10 xl:text-sm xl:leading-[22px] xl:tracking-[0.015em]">
+              {toLocaleDateString(notification.createdAt, locale === 'en' ? 'en-GB' : 'vi-VI')}
+            </p>
+            {STORY_INTERACTION_TYPES.includes(notification.type.name as NotificationType) && (
+              <div className="flex items-center gap-5 text-sm font-medium leading-4 text-primary-60 xl:leading-5 xl:tracking-[0.015em]">
+                <p>
+                  {notification.type.name === NotificationType.STORY_REACTION
+                    ? t('like_count', { count: notification.relatedEntity?.likeCount ?? 0 })
+                    : notification.type.name === NotificationType.STORY_REVIEW
+                      ? t('rating_count', { count: notification.relatedEntity?.numOfRatings ?? 0 })
+                      : t('share_count', { count: notification.relatedEntity?.shareCount ?? 0 })}
                 </p>
-                {STORY_INTERACTION_TYPES.includes(notification.type.name as NotificationType) && (
-                  <div className="flex items-center gap-5 text-sm font-medium leading-4 text-primary-60 xl:leading-5 xl:tracking-[0.015em]">
-                    <p>
-                      {notification.type.name === NotificationType.STORY_REACTION
-                        ? t('like_count', { count: notification.relatedEntity?.likeCount ?? 0 })
-                        : notification.type.name === NotificationType.STORY_REVIEW
-                          ? t('rating_count', { count: notification.relatedEntity?.numOfRatings ?? 0 })
-                          : t('share_count', { count: notification.relatedEntity?.shareCount ?? 0 })}
-                    </p>
-                  </div>
-                )}
               </div>
             )}
-            {[NotificationType.HUBER_REPORT, NotificationType.USER_APPEAL].includes(notification.type.name as NotificationType) && (
-              <Link
-                href="#"
-                className="text-sm font-medium text-primary-60 underline"
-                onClick={() => notification.type.name === NotificationType.HUBER_REPORT
-                  ? setIsHandleReportModalOpen(true) : setIsHandleAppealModalOpen(true)}
-              >
-                See detail
-              </Link>
-            )}
           </div>
-          <div className="flex size-4 shrink-0 items-center justify-center xl:size-6">
-            {!notification.seen && renderUnseenIcon()}
-          </div>
-        </div>
-      </button>
-
-      {/* Session request detail modal */}
-      {notification.type.name === NotificationType.SESSION_REQUEST && (
-        <Modal open={isSessionRequestModalOpen} onClose={() => setIsSessionRequestModalOpen(false)}>
-          <Modal.Backdrop />
-          <Modal.Panel className="w-fit">
-            <SessionDetailCard
-              session={{
-                ...(notification.relatedEntity ?? {}),
-                story: { ...(notification.relatedEntity?.story ?? {}), title: notification.relatedEntity?.storyTitle },
-              }}
-              expandByDefault
-              className="sm:w-[463px]"
-            />
-          </Modal.Panel>
-        </Modal>
-      )}
+        )}
+        {[NotificationType.HUBER_REPORT, NotificationType.USER_APPEAL].includes(notification.type.name as NotificationType) && (
+          <Link
+            href="#"
+            className="text-sm font-medium text-primary-60 underline"
+            onClick={() => notification.type.name === NotificationType.HUBER_REPORT
+              ? setIsHandleReportModalOpen(true) : setIsHandleAppealModalOpen(true)}
+          >
+            See detail
+          </Link>
+        )}
+      </NotificationRow>
 
       {/* Handle report modal */}
       {notification.type.name === NotificationType.HUBER_REPORT && (

@@ -49,7 +49,10 @@ const updateReadingSession = (
         rejectReason,
       }),
     }),
-    invalidatesTags: [{ type: 'ReadingSession' }],
+    // Also invalidates the notifications list: accepting/rejecting a session request
+    // must make the now-decided sessionRequest notification disappear for the Huber,
+    // since that action never arrives back as a separate push/refetch trigger otherwise.
+    invalidatesTags: [{ type: 'ReadingSession' }, { type: 'Notification', id: 'LIST' }],
   });
 
 export default updateReadingSession;
