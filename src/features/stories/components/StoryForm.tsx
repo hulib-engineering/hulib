@@ -268,6 +268,7 @@ export default function StoryForm(props: IStoryFormProps) {
     if (!pathname.includes(userProfile)) {
       router.push(userProfile);
     }
+    window.location.reload();
   }
 
   return (
