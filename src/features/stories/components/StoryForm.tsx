@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import type { z } from 'zod';
+import { set } from 'idb-keyval';
 
 import { CustomCoverModal } from './CustomCoverModal';
 import { StoryContentField, SubmitAndDraftButton, TitleField, TopicsField } from './_StoryForm/FieldsAndButton';
@@ -253,42 +254,30 @@ export default function StoryForm(props: IStoryFormProps) {
   };
 
   async function saveDraft() {
-    const object = JSON.stringify([{
-      id: 0,
-      abstract,
-      title,
-      cover: {
-        path: '',
-      },
-      topics: selectedTopics.map(topic => ({ name: topic.label })),
-      humanBook: {
-        fullName: 'nguyen',
-        photo: {
-          path: '',
-        },
-      },
-      rating: 0,
-      storyReview: {},
-      publishStatus: 'draft',
-    }]);
-    // type Draft = { cover: string; title: string; topics: string; content: string };
+    try {
+      const coverBlob = await rasterizeCoverElement(COVER_EXPORT_ELEMENT_ID);
 
-    /* function getDrafts(): Draft[] {
-      const raw = localStorage.getItem('draft');
-      return raw ? JSON.parse(raw) : [];
+      await set('draft', [{
+        id: 0,
+        abstract,
+        title,
+        coverBlob,
+        topics: selectedTopics.map(topic => ({ name: topic.label })),
+        humanBook: { fullName: userInfo.fullName, photo: { path: '' } },
+        rating: 0,
+        storyReview: {},
+        publishStatus: 'draft',
+      }]);
+    } catch (err) {
+      console.error('Draft save failed', err);
+      pushError(t('error_contact_admin'));
+      return;
     }
-    //const list = getDrafts();
-    //list.push({ cover: 'cover', title: 'title', topics: 'topics', content: 'content' }); */
-    localStorage.setItem('draft', object);
-    // localStorage.setItem(`draft-body:${Date.now()}`, 'content');
-    // localStorage.setItem('draft', JSON.stringify(list));
-
     pushSuccess('Bản nháp đã được lưu thành công', 'Lưu bản nháp thành công');
 
     const userProfile = `/users/${userInfo.id}?tab=stories`;
     if (!pathname.includes(userProfile)) {
       router.push(userProfile);
-      // Note: if the following is more fitting: make the page redirects only once the toast is gone
     }
   }
   // CHANGE: Changed 'xl' and 'lg' breakpoints to 'sm' or 'md'.

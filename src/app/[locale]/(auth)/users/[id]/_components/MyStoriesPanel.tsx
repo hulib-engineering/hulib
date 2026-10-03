@@ -16,23 +16,7 @@ import type { Story as TStory } from '@/libs/services/modules/stories/storiesTyp
 import type { Topic } from '@/libs/services/modules/user/userType';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
-
-type draftStory = Pick<
-  TStory,
-  | 'id'
-  | 'title'
-  | 'abstract'
-  | 'cover'
-  | 'humanBook'
-  | 'publishStatus'
-  | 'topics'
-  | 'rejectionReason'
-  | 'likeCount'
-  | 'viewCount'
-  | 'shareCount'
-  | 'highlightTitle'
-  | 'highlightAbstract'
->;
+import { useDraftStories } from '@/utils/loadDraft';
 
 type TTopic = {
   userId: number;
@@ -73,13 +57,11 @@ export default function MyStoriesPanel({
     ? topics.map(item => item.topic)
     : storyItems.flatMap((story: TStory) => story.topics ?? []) as Topic[])
     .filter((topic: Topic, index: number, source: Topic[]) => source.findIndex(item => item.id === topic.id) === index);
-  const rawDraft = localStorage.getItem('draft');
-  const draftStories: draftStory[] = rawDraft ? JSON.parse(rawDraft) : [];
 
+  const { draftStories } = useDraftStories();
   const filteredStories = selectedTopicId === 'all'
     ? storyItems
     : storyItems.filter((story: TStory) => story.topics?.some(topic => topic.id === selectedTopicId));
-  console.log(filteredStories); // TODO: use as reference tomorrow
   const isEmpty = storyItems.length === 0;
   const isHuberOwnStories = !showOthers && variant === 'huber';
 
