@@ -29,7 +29,7 @@ import { Env } from '@/libs/Env.mjs';
 import { useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
 import { useStartCloudRecordingMutation } from '@/libs/services/modules/agora';
-import { useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
+import { useAttendReadingSessionMutation, useGetReadingSessionByIdQuery } from '@/libs/services/modules/reading-session';
 
 export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?: { resourceId: string; sid: string; uid: string }) => void }) {
   const urlParams = useSearchParams();
@@ -43,6 +43,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
     skip: !sessionId,
   });
   const [startRecording] = useStartCloudRecordingMutation();
+  const [attendReadingSession] = useAttendReadingSessionMutation();
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
@@ -131,6 +132,17 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
         });
 
         await agoraClient.join(Env.NEXT_PUBLIC_AGORA_APP_ID, channel, token, 0);
+
+        // Stamp attendance only once the Agora join actually resolved: the backend marks a
+        // session missed when the Huber's column is still empty ~30min after the meeting ends,
+        // so failing to reach this line must not count as attendance. Fire-and-forget and
+        // silent — a stamp failure must never interrupt the call. The endpoint is idempotent,
+        // and the attendee is derived from the JWT, not the Agora UID (all tokens use uid 0).
+        try {
+          await attendReadingSession(sessionId).unwrap();
+        } catch {
+          // Intentionally swallowed, see above.
+        }
 
         // Create microphone and camera tracking
         tracks = await AgoraRTC.createMicrophoneAndCameraTracks();
