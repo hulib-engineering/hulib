@@ -183,10 +183,33 @@ export default function InformativeNotificationCard({ notification, showExtras, 
         {notification.type.name === NotificationType.SESSION_REJECTION && (
           <Button size="sm" onClick={() => router.push('/explore-story')}>{t('explore_other_stories')}</Button>
         )}
+        {/* `stopPropagation` is load-bearing: these buttons sit inside `NotificationRow`, which
+            is itself a `<button>`. Without it the click bubbles to the row's `handleClick`,
+            which invokes the `onClick` prop — `close` in the header popover — unmounting the
+            panel and the modal with it. It also stops the modal being opened twice. */}
         {notification.type.name === NotificationType.SESSION_MISS && (
-          <Button size="sm" fullWidth onClick={() => setIsShareReasonModalOpen(true)}>{t('share_reason')}</Button>)}
+          <Button
+            size="sm"
+            fullWidth
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsShareReasonModalOpen(true);
+            }}
+          >
+            {t('share_reason')}
+          </Button>
+        )}
         {notification.type.name === NotificationType.HUBER_WARNING && (
-          <Button size="sm" onClick={() => setIsShareReasonModalOpen(true)}>{t('appeal')}</Button>)}
+          <Button
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsShareReasonModalOpen(true);
+            }}
+          >
+            {t('appeal')}
+          </Button>
+        )}
       </NotificationRow>
 
       {/* Share missing session reason modal */}
