@@ -169,6 +169,50 @@ export const formatNotificationTimestamp = (value: string | number | Date | unde
   return format(toApiWallClock(parsed), 'EEE d MMM HH:mm', { locale: isVi ? vi : enUS });
 };
 
+/**
+ * Calendar-day label used inside session notification bodies — "05 tháng 2, 2025" (vi) /
+ * "05 February 2025" (en). Unlike `toLocaleDateString` this spells the month out and drops
+ * the weekday, which is what the session notification designs call for.
+ *
+ * Rendered on the same UTC basis as `formatMeetingDateLabel`, so the card reads exactly as
+ * the API reported it. `startedAt` arrives pre-validated, so `format` cannot throw here.
+ */
+export const formatSessionDateLabel = (value: string | number | Date | undefined | null, locales: string): string => {
+  const parsed = toDate(value);
+  if (!parsed) {
+    return '';
+  }
+  const isVi = locales === 'vi';
+
+  return format(toApiWallClock(parsed), isVi ? 'dd \'tháng\' M, yyyy' : 'dd MMMM yyyy', { locale: isVi ? vi : enUS });
+};
+
+/**
+ * Weekday + spelled-out-month label — "Tue, 18 February, 2026" (en) / "Thứ 3, 18 tháng 2,
+ * 2026" (vi). Used by the missed-session reason modal, which leads with the weekday so the
+ * reader can place the session in time without opening their calendar.
+ *
+ * Vietnamese uses the colloquial numbered weekday ("Thứ 2".."Thứ 7") rather than date-fns'
+ * spelled-out EEEE ("Thứ Ba"), so it is built manually — same approach as
+ * `formatMeetingDateLabel`. The UTC basis is preserved via `toApiWallClock`, so the day
+ * cannot drift by one either side of midnight.
+ */
+export const formatSessionDateWithWeekday = (value: string | number | Date | undefined | null, locales: string): string => {
+  const parsed = toDate(value);
+  if (!parsed) {
+    return '';
+  }
+  const date = toApiWallClock(parsed);
+
+  if (locales === 'vi') {
+    const day = date.getDay();
+    const weekday = day === 0 ? 'Chủ Nhật' : `Thứ ${day + 1}`;
+    return `${weekday}, ${format(date, 'dd \'tháng\' M, yyyy', { locale: vi })}`;
+  }
+
+  return format(date, 'EEE, dd MMMM, yyyy', { locale: enUS });
+};
+
 export const getGMTOffset = (date: Date = new Date()): string => {
   const offsetMinutes = date.getTimezoneOffset(); // in minutes, opposite sign
   const offsetHours = Math.floor(Math.abs(offsetMinutes) / 60);
