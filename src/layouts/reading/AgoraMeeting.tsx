@@ -220,7 +220,7 @@ export default function AgoraMeeting({ onEndCall }: { onEndCall: (recordedInfo?:
       agoraClient.leave();
       setTracksReady(false);
     };
-  }, [ready, channel, token, isVibing]);
+  }, [ready, channel, token, isVibing, sessionId, attendReadingSession]);
 
   const isHuber
     = Number(userInfo.id) === Number(readingSession?.humanBook?.id);
