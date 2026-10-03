@@ -1066,7 +1066,6 @@
     "session_cancellation": "Chúng tôi muốn thông báo rằng Liber {name} đã hủy cuộc họp ({startTime} đến {endTime}, {date}). Lý do:",
     "session_cancellation_title": "Cuộc họp đã bị hủy",
     "session_miss": "Bạn đã không tham gia cuộc họp hôm nay <hl>({startTime}–{endTime}, {date})</hl>. Nếu có thể, chúng mình rất muốn biết điều gì đã khiến bạn bỏ lỡ buổi trò chuyện hôm nay để chúng mình có thể cải thiện trải nghiệm cho mọi người.",
-    "session_miss_title": "Cuộc họp không được tham gia!",
     "huber_no_show_reading_session": "Chúng mình không thể xác nhận bạn đã tham gia cuộc họp <hl>({startTime}–{endTime}, {date})</hl>. Nếu bạn đã tham gia, có thể đã xảy ra sự cố từ phía chúng tôi — hãy cho chúng mình biết nhé.",
     "auto_cancel_reading_session": "Rất tiếc! Yêu cầu cuộc họp <hl>({startTime}–{endTime}, {date})</hl> của bạn đã bị hủy tự động vì <b>{name}</b> chưa phản hồi.",
     "user_appeal": "Khiếu nại báo cáo người dùng #{id}",

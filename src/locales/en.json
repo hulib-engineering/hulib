@@ -1066,7 +1066,6 @@
     "session_cancellation": "We want you to notify that Liber {name} has canceled the meeting ({startTime} to {endTime}, {date}). Reason:",
     "session_cancellation_title": "The meeting is canceled",
     "session_miss": "You didn't join today's meeting <hl>({startTime}–{endTime}, {date})</hl>. If you can, we'd really like to know what made you miss today's conversation, so we can improve the experience for everyone.",
-    "session_miss_title": "Meeting not attended !",
     "huber_no_show_reading_session": "We couldn't confirm your participation in the meeting <hl>({startTime}–{endTime}, {date})</hl>. If you were there, something may have gone wrong on our side — please let us know.",
     "auto_cancel_reading_session": "Sorry! Your meeting request <hl>({startTime}–{endTime}, {date})</hl> has been auto cancelled because <b>{name}</b> has not responded yet.",
     "user_appeal": "User appeal report #{id}",

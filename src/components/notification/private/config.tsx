@@ -20,7 +20,7 @@ type TFunction = ReturnType<typeof useTranslations<'notifications'>>;
  * Keys for cards that render their own copy (see `SessionOutcomeNotification`). Narrowed to
  * literals so `t.rich` stays type-checked against `en.json`.
  */
-type SelfRenderedMessageKey = 'huber_no_show_reading_session' | 'auto_cancel_reading_session';
+type SelfRenderedMessageKey = 'session_miss' | 'huber_no_show_reading_session' | 'auto_cancel_reading_session';
 
 type NotificationConfig = {
   [_K in NotificationType]: {
@@ -175,20 +175,11 @@ export const notificationConfig: NotificationConfig = {
     title: (t: TFunction) => <span className="text-red-60">{t('session_cancellation_title')}</span>,
   },
   [NotificationType.SESSION_MISS]: {
-    getMessage: (t, m) => {
-      const date = toLocaleDateString(m.relatedEntity?.startedAt, 'en-GB');
-      return (
-        <>
-          {t.rich('session_miss', {
-            startTime: m.relatedEntity?.startTime ?? '',
-            endTime: m.relatedEntity?.endTime ?? '',
-            date,
-            hl: senderNameMessage,
-          })}
-        </>
-      );
-    },
-    title: (t: TFunction) => <span className="text-orange-50">{t('session_miss_title')}</span>,
+    // Rendered by `InformativeNotificationCard` itself so the session date can follow the
+    // viewer's locale, which `getMessage` is not given. No `title`: the design is a single
+    // message with no heading.
+    getMessage: () => null,
+    messageKey: 'session_miss',
   },
   /**
    * The Huber-side counterpart of SESSION_MISS. Copy is keyed off the notification type and

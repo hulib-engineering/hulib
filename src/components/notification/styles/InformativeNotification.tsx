@@ -15,7 +15,10 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import Modal from '@/components/Modal';
 import AppealToReportModal from '@/layouts/profile/AppealToReportModal';
 import SessionDetailCard from '@/layouts/scheduling/SessionDetailCard';
-import { toLocaleDateString } from '@/utils/dateUtils';
+import { formatSessionDateLabel, formatSessionTime, resolveSessionTimeRange, toLocaleDateString } from '@/utils/dateUtils';
+import { customMessage } from '@/utils/i18NRichTextUtils';
+
+const timeRangeMessage = customMessage('font-bold text-primary-60');
 
 export default function InformativeNotificationCard({ notification, showExtras, onClick }: INotificationItemRendererProps) {
   const cfg = notificationConfig[notification.type.name as NotificationType] ?? notificationConfig[NotificationType.OTHER];
@@ -47,6 +50,23 @@ export default function InformativeNotificationCard({ notification, showExtras, 
   if (!notification) {
     return undefined;
   }
+
+  const type = notification.type.name as NotificationType;
+  const title = typeof cfg.title === 'function' ? cfg.title(t) : cfg.title;
+  const isSessionMiss = type === NotificationType.SESSION_MISS;
+
+  // SESSION_MISS renders its own copy so the session date follows the viewer locale and the
+  // time range can be highlighted — `getMessage` has neither. `extraNote` is deliberately
+  // ignored: the backend pre-renders an English message there.
+  const { startedAt, startTime, endTime } = resolveSessionTimeRange(notification.relatedEntity);
+  const message = isSessionMiss
+    ? t.rich('session_miss', {
+        startTime: formatSessionTime(startTime, locale),
+        endTime: formatSessionTime(endTime, locale),
+        date: formatSessionDateLabel(startedAt, locale),
+        hl: timeRangeMessage,
+      })
+    : cfg.getMessage(t, notification);
 
   return (
     <>
@@ -83,8 +103,11 @@ export default function InformativeNotificationCard({ notification, showExtras, 
               size="xl"
               className={mergeClassnames(
                 showExtras && 'xl:!size-[72px]',
-                [NotificationType.SESSION_MISS, NotificationType.SESSION_CANCELLATION].includes(notification.type.name as NotificationType)
-                && 'rounded-none',
+                // The disabled-meeting icon is drawn on a rounded square in the design, so
+                // SESSION_MISS overrides Avatar's `rounded-full`. SESSION_CANCELLATION keeps
+                // its existing square corners.
+                type === NotificationType.SESSION_MISS ? 'rounded-2xl'
+                  : type === NotificationType.SESSION_CANCELLATION ? 'rounded-none' : '',
               )}
             />
             {notification.type.name === NotificationType.SESSION_CANCELLATION && (
@@ -95,8 +118,10 @@ export default function InformativeNotificationCard({ notification, showExtras, 
           </div>
         )}
       >
-        <p className="line-clamp-2 font-bold">{typeof cfg.title === 'function' ? cfg.title(t) : cfg.title}</p>
-        <p className="font-medium">{cfg.getMessage(t, notification)}</p>
+        {title && <p className="line-clamp-2 font-bold">{title}</p>}
+        <p className={mergeClassnames('font-medium', isSessionMiss && 'text-base leading-6 tracking-[0.005em] text-neutral-10')}>
+          {message}
+        </p>
         {![NotificationType.SESSION_APPROVAL, NotificationType.SESSION_MISS, NotificationType.HUBER_WARNING]
           .includes(notification.type.name as NotificationType) && (
           <p
@@ -150,7 +175,7 @@ export default function InformativeNotificationCard({ notification, showExtras, 
           <Button size="sm" onClick={() => router.push('/explore-story')}>{t('explore_other_stories')}</Button>
         )}
         {notification.type.name === NotificationType.SESSION_MISS && (
-          <Button size="sm" onClick={() => setIsShareReasonModalOpen(true)}>{t('share_reason')}</Button>)}
+          <Button size="sm" fullWidth onClick={() => setIsShareReasonModalOpen(true)}>{t('share_reason')}</Button>)}
         {notification.type.name === NotificationType.HUBER_WARNING && (
           <Button size="sm" onClick={() => setIsShareReasonModalOpen(true)}>{t('appeal')}</Button>)}
       </NotificationRow>
