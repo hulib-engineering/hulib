@@ -168,10 +168,11 @@ export const notificationConfig: NotificationConfig = {
       const date = toLocaleDateString(m.relatedEntity?.startedAt, 'en-GB');
       return (
         <>
-          {t('session_miss', {
+          {t.rich('session_miss', {
             startTime: m.relatedEntity?.startTime ?? '',
             endTime: m.relatedEntity?.endTime ?? '',
             date,
+            hl: senderNameMessage,
           })}
         </>
       );
