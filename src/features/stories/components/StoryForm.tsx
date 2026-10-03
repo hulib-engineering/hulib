@@ -243,6 +243,25 @@ export default function StoryForm(props: IStoryFormProps) {
   };
 
   async function saveDraft() {
+    /*
+      CAUTIONARY NOTES:
+      Since making changes to schema of indexdb could make users who already stored keys to encounter errors, do...
+
+      1. LEAVE IT INTACT. Don't change the DB name, store name, or key prefix ('draft-').
+         Renaming any of them orphans every draft users already have.
+
+      2. DON'T CHANGE THE SHAPE OF A DRAFT (add, remove, rename, retype a field) unless
+         you also handle old records. There is NO migration layer yet, so existing
+         'draft-*' records in users' browsers keep their old shape forever.
+         If you must change it, pick one:
+         a. Backward compatible: make every reader tolerate missing or old fields
+            (optional chaining, defaults). Prefer additive changes only.
+         b. Add migrations: introduce a schemaVersion on records, upgrade old ones on read,
+            and skip or delete records that fail validation.
+
+      3. If users could get stuck because of old records, consider adding a button in the
+         frontend that calls useDeleteAllDrafts so they can wipe their drafts themselves.
+    */
     try {
       const coverBlob = await rasterizeCoverElement(COVER_EXPORT_ELEMENT_ID);
 
