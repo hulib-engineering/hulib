@@ -187,6 +187,32 @@ export const formatSessionDateLabel = (value: string | number | Date | undefined
   return format(toApiWallClock(parsed), isVi ? 'dd \'tháng\' M, yyyy' : 'dd MMMM yyyy', { locale: isVi ? vi : enUS });
 };
 
+/**
+ * Weekday + spelled-out-month label — "Tue, 18 February, 2026" (en) / "Thứ 3, 18 tháng 2,
+ * 2026" (vi). Used by the missed-session reason modal, which leads with the weekday so the
+ * reader can place the session in time without opening their calendar.
+ *
+ * Vietnamese uses the colloquial numbered weekday ("Thứ 2".."Thứ 7") rather than date-fns'
+ * spelled-out EEEE ("Thứ Ba"), so it is built manually — same approach as
+ * `formatMeetingDateLabel`. The UTC basis is preserved via `toApiWallClock`, so the day
+ * cannot drift by one either side of midnight.
+ */
+export const formatSessionDateWithWeekday = (value: string | number | Date | undefined | null, locales: string): string => {
+  const parsed = toDate(value);
+  if (!parsed) {
+    return '';
+  }
+  const date = toApiWallClock(parsed);
+
+  if (locales === 'vi') {
+    const day = date.getDay();
+    const weekday = day === 0 ? 'Chủ Nhật' : `Thứ ${day + 1}`;
+    return `${weekday}, ${format(date, 'dd \'tháng\' M, yyyy', { locale: vi })}`;
+  }
+
+  return format(date, 'EEE, dd MMMM, yyyy', { locale: enUS });
+};
+
 export const getGMTOffset = (date: Date = new Date()): string => {
   const offsetMinutes = date.getTimezoneOffset(); // in minutes, opposite sign
   const offsetHours = Math.floor(Math.abs(offsetMinutes) / 60);

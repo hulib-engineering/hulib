@@ -12,9 +12,8 @@ import { useRouter } from '@/libs/i18nNavigation';
 import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
-import Modal from '@/components/Modal';
 import AppealToReportModal from '@/layouts/profile/AppealToReportModal';
-import SessionDetailCard from '@/layouts/scheduling/SessionDetailCard';
+import MissedReasonModal from '@/components/notification/styles/MissedReasonModal';
 import { formatSessionDateLabel, formatSessionTime, resolveSessionTimeRange, toLocaleDateString } from '@/utils/dateUtils';
 import { customMessage } from '@/utils/i18NRichTextUtils';
 
@@ -73,7 +72,7 @@ export default function InformativeNotificationCard({ notification, showExtras, 
       <NotificationRow
         onClick={handleClick}
         seen={notification.seen}
-        align="center"
+        align={isSessionMiss ? 'start' : 'center'}
         unseenIcon={notification.type.name !== NotificationType.HUBER_WARNING
           ? (
               <Image
@@ -86,10 +85,15 @@ export default function InformativeNotificationCard({ notification, showExtras, 
             )
           : <Warning className="text-xl text-orange-50" />}
         className={mergeClassnames(
-          [NotificationType.SESSION_MISS, NotificationType.HUBER_WARNING].includes(notification.type.name as NotificationType)
-          && 'hover:bg-orange-90',
-          !notification.seen && (![NotificationType.SESSION_MISS, NotificationType.HUBER_WARNING].includes(notification.type.name as NotificationType) ? 'bg-green-90' : 'bg-orange-98'),
-          !notification.seen && 'xl:bg-white',
+          // SESSION_MISS keeps the pink tint whether or not it has been read — the design
+          // treats it as an outstanding action, not just an unread dot.
+          isSessionMiss
+            ? 'bg-red-98 hover:bg-red-90'
+            : mergeClassnames(
+                notification.type.name === NotificationType.HUBER_WARNING && 'hover:bg-orange-90',
+                !notification.seen && (notification.type.name === NotificationType.HUBER_WARNING ? 'bg-orange-98' : 'bg-green-90'),
+                !notification.seen && 'xl:bg-white',
+              ),
         )}
         contentClassName="flex flex-1 flex-col gap-2"
         avatar={(
@@ -186,20 +190,12 @@ export default function InformativeNotificationCard({ notification, showExtras, 
       </NotificationRow>
 
       {/* Share missing session reason modal */}
-      {notification.type.name === NotificationType.SESSION_MISS && (
-        <Modal open={isShareReasonModalOpen} onClose={() => setIsShareReasonModalOpen(false)}>
-          <Modal.Backdrop />
-          <Modal.Panel className="w-fit">
-            <SessionDetailCard
-              session={{
-                ...(notification.relatedEntity ?? {}),
-                story: { ...(notification.relatedEntity?.story ?? {}), title: notification.relatedEntity?.storyTitle },
-              }}
-              expandByDefault
-              sharingMissingReason
-            />
-          </Modal.Panel>
-        </Modal>
+      {isSessionMiss && (
+        <MissedReasonModal
+          session={notification.relatedEntity ?? {}}
+          open={isShareReasonModalOpen}
+          onClose={() => setIsShareReasonModalOpen(false)}
+        />
       )}
 
       {/* Appeal a moderation modal */}
