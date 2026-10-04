@@ -11,7 +11,7 @@ import type { z } from 'zod';
 
 import { CustomCoverModal } from './CustomCoverModal';
 import { StoryContentField, SubmitAndDraftButton, TitleField, TopicsField } from './_StoryForm/FieldsAndButton';
-import { set } from '@/libs/idbStore';
+import { del, set } from '@/libs/idbStore';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
@@ -73,6 +73,11 @@ type IStoryFormProps = | {
   story: Story;
   onCancel: () => void;
   onSucceed: () => void;
+} | {
+  type: 'edit-draft';
+  story: Story;
+  onCancel: () => void;
+  onSucceed: () => void;
 };
 
 function CoverPickerTitle() {
@@ -104,9 +109,11 @@ export default function StoryForm(props: IStoryFormProps) {
   const [createStory] = useCreateStoryMutation();
   const [editStory] = useUpdateStoryMutation();
 
-  const storyTopicsFromProps = props.type === 'edit' ? props.story.topics : undefined;
+  const isEditOrDraftMode = props.type === 'edit' || props.type === 'edit-draft';
+
+  const storyTopicsFromProps = isEditOrDraftMode ? props.story.topics : undefined;
   const storyRelatedTopics = useMemo(() => {
-    if (props.type === 'edit') {
+    if (isEditOrDraftMode) {
       const storyTopics: Topic[] = storyTopicsFromProps && storyTopicsFromProps.length > 0
         ? storyTopicsFromProps : (relatedTopics ?? []);
       return storyTopics?.map(topic => ({
@@ -127,11 +134,11 @@ export default function StoryForm(props: IStoryFormProps) {
   } = useForm<z.infer<typeof StoriesValidation>>({
     resolver: zodResolver(StoriesValidation),
     defaultValues: {
-      title: props.type === 'edit' ? props.story.title : '',
-      abstract: props.type === 'edit' ? props.story.abstract : '',
+      title: isEditOrDraftMode ? props.story.title : '',
+      abstract: isEditOrDraftMode ? props.story.abstract : '',
       topics: (props.type === 'edit' && storyRelatedTopics?.length > 0)
         ? storyRelatedTopics?.map(topic => ({ id: topic.id.toString() })) : [],
-      cover: { id: '' },
+      cover: { id: '' }, // TODO (minor priority): make it pick the cover of current draft story
     },
   });
   const title = watch('title') || '';
@@ -219,6 +226,13 @@ export default function StoryForm(props: IStoryFormProps) {
         }).unwrap();
 
         pushSuccess(t('story_create_success'));
+        if (props.type === 'edit-draft') {
+          try {
+            await del(`draft-${draftId}`);
+          } catch (err) {
+            console.error('Draft cleanup failed', err);
+          }
+        }
         router.push(`/register-huber/success?storyId=${result.id}`);
         props.onSucceed();
       } else {
