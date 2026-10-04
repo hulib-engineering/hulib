@@ -44,6 +44,7 @@ import {
   uploadCoverBlob,
 } from '@/features/stories/utils';
 import { useDraftId } from '@/libs/hooks/useDraftId';
+import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
 
 // const filter = (
 //   query: string,
@@ -214,7 +215,7 @@ export default function StoryForm(props: IStoryFormProps) {
           ...formValues,
           humanBook: { id: userInfo?.id },
           cover: { id: uploadedCoverId },
-          publishStatus: 'draft',
+          publishStatus: 'pending',
         }).unwrap();
 
         pushSuccess(t('story_create_success'));
@@ -226,13 +227,17 @@ export default function StoryForm(props: IStoryFormProps) {
           return;
         }
 
+        const nextPublishStatus = props.story.publishStatus === StoryPublishStatus.PUBLISHED
+          ? StoryPublishStatus.PUBLISHED
+          : StoryPublishStatus.PENDING;
+
         await editStory({
           title: formValues.title,
           abstract: formValues.abstract,
           topics: selectedTopicIds,
           id: props.story.id,
           cover: { id: uploadedCoverId },
-          publishStatus: 'draft',
+          publishStatus: nextPublishStatus,
         }).unwrap();
         pushSuccess(t('edit_book_success'));
         props.onSucceed();
