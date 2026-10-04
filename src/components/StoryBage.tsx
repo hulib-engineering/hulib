@@ -18,6 +18,7 @@ export const StoryBage = ({ status, rejectionReason, className }: StoryBageProps
 
   const isRejected = status === StoryPublishStatus.REJECTED;
   const isDraft = status === StoryPublishStatus.DRAFT;
+  // const isDeleted = status === StoryPublishStatus.DELETED;
 
   function getBadgeStyles() {
     if (isRejected) {
