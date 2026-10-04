@@ -388,7 +388,7 @@ function Draft({ id }: { id: string }) {
   );
 }
 
-export default function Index() {
+/* export default function Index() {
   const { id } = useParams<{ id: string }>();
   const rawId = String(id ?? '');
 
@@ -396,5 +396,28 @@ export default function Index() {
     return <Draft id={rawId.slice('draft-'.length)} />;
   }
 
-  return <Default id={id} />;
+  return <Default id={rawId.slice('draft-'.length)} />;
+} */
+
+// Note: The following ancestor function/component is meant to be used as a temporary solution (or permanent) due to some publishStatus issue from the BE part
+// what it resolved: waiting for approval stories can't be edited due to the draft flow
+// If BE resolved the issue somehow (by making the newly created stories while waiting for approval having status 'Pending', instead of 'draft'):
+// ...consider just using the commented out code above instead for reduced complexity
+
+const INT_ID_REGEX = /^\d{1,10}$/;
+const UUID_REGEX
+  = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+export default function Index() {
+  const { id } = useParams<{ id: string }>();
+  const rawId = String(id ?? '');
+  const cleanId = rawId.replace(/^draft-/, '');
+
+  if (UUID_REGEX.test(cleanId)) {
+    return <Draft id={cleanId} />;
+  }
+  if (INT_ID_REGEX.test(cleanId)) {
+    return <Default id={cleanId} />;
+  }
+  return notFound();
 }
