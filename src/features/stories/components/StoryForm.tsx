@@ -8,10 +8,10 @@ import { useForm } from 'react-hook-form';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import type { z } from 'zod';
-import { set } from 'idb-keyval';
 
 import { CustomCoverModal } from './CustomCoverModal';
 import { StoryContentField, SubmitAndDraftButton, TitleField, TopicsField } from './_StoryForm/FieldsAndButton';
+import { set } from '@/libs/idbStore';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';

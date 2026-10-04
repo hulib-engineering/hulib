@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { del, delMany, get, getMany, keys } from 'idb-keyval';
+import { del, delMany, get, getMany, keys } from '@/libs/idbStore';
 
 import type { Story } from '@/libs/services/modules/stories/storiesType';
 import type { FileType } from '@/libs/services/modules/files/fileType';
