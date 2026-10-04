@@ -46,7 +46,7 @@ export default function MyStoryCard({ data }: MyStoryCardProps) {
       )}
     >
       <div className="flex min-w-0 flex-1 flex-col pr-4">
-        {data?.publishStatus && (
+        {!isPublished && (
           <StoryBage
             status={data.publishStatus}
             rejectionReason={data.rejectionReason}
@@ -94,7 +94,7 @@ export default function MyStoryCard({ data }: MyStoryCardProps) {
         </div>
 
         <div className="mt-auto flex items-center justify-between gap-3 pt-4">
-          {isDraft ?? (
+          {isPublished && (
             <>
               <div className="flex items-center gap-1">
                 <ThumbsUpIcon size={16} weight="fill" className="text-pink-40" />
