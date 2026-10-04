@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { InfoIcon } from '@phosphor-icons/react';
 import { mergeClassnames } from '@/components/core/private/utils';
 import Popover from '@/components/core/popover/Popover';
-import type { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
+import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
 
 type StoryBageProps = {
   status: StoryPublishStatus;
@@ -16,17 +16,38 @@ type StoryBageProps = {
 export const StoryBage = ({ status, rejectionReason, className }: StoryBageProps) => {
   const t = useTranslations('Common');
 
-  const isRejected = status === 'rejected';
+  const isRejected = status === StoryPublishStatus.REJECTED;
+  const isDraft = status === StoryPublishStatus.DRAFT;
+
+  function getBadgeStyles() {
+    if (isRejected) {
+      return 'bg-red-50 text-white';
+    }
+    if (isDraft) {
+      return 'bg-neutral-90 text-neutral-40 border-neutral-40';
+    }
+    return 'bg-orange-90 text-orange-40';
+  };
+
+  function displayingText() {
+    if (isRejected) {
+      return t('rejected');
+    }
+    if (isDraft) {
+      return t('draft');
+    }
+    return t('in_review');
+  }
 
   return (
     <div className={mergeClassnames('flex items-center gap-2 z-10', className)}>
       <span
         className={mergeClassnames(
-          'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold',
-          isRejected ? 'bg-red-50 text-white' : 'bg-orange-90 text-orange-40',
+          'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium border',
+          getBadgeStyles(),
         )}
       >
-        {isRejected ? t('rejected') : t('in_review')}
+        {displayingText()}
       </span>
 
       {isRejected && (

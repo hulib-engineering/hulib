@@ -1,27 +1,25 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, BookOpen, CaretDown, PencilSimple, Plus } from '@phosphor-icons/react';
+import { ArrowLeftIcon, PencilSimpleIcon } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Swiper, SwiperSlide } from 'swiper/react';
-// import 'swiper/css';
+import 'swiper/css';
 import type { z } from 'zod';
+import { set } from 'idb-keyval';
 
 import { CustomCoverModal } from './CustomCoverModal';
-import { useRouter } from '@/libs/i18nNavigation';
+import { StoryContentField, SubmitAndDraftButton, TitleField, TopicsField } from './_StoryForm/FieldsAndButton';
+import { usePathname, useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
-import Combobox, { getChipColor } from '@/components/core/combobox/Combobox';
 import Form from '@/components/core/form/Form';
 // import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
-import TextArea from '@/components/core/textArea/TextArea';
-import TextInput from '@/components/core/textInput-v1/TextInput';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import Label from '@/components/Label';
-import type { TFilter } from '@/layouts/scheduling/BigCalendar';
+import type { TFilter } from '@/layouts/scheduling/BigCalendar'; // TODO: check again to see why some topics state/lists use this type - which is very weird
 import { useAppSelector } from '@/libs/hooks';
 import { useUploadMutation } from '@/libs/services/modules/files';
 // import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
@@ -31,7 +29,6 @@ import {
   useUpdateStoryMutation,
 } from '@/libs/services/modules/stories';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
-import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 import { StoriesValidation } from '@/validations/StoriesValidation';
 import { CustomCoverBuilder } from '@/features/stories/components/CustomCoverBuilder';
@@ -40,13 +37,13 @@ import type { CoverPresetAsset } from '@/features/stories/constants';
 import {
   COVER_EXPORT_ELEMENT_ID,
   COVER_PRESET_ASSETS,
-  PRIORITY_TOPIC_KEYWORD,
 } from '@/features/stories/constants';
 import {
   getDefaultCustomization,
   rasterizeCoverElement,
   uploadCoverBlob,
 } from '@/features/stories/utils';
+import { useDraftId } from '@/libs/hooks/useDraftId';
 
 // const filter = (
 //   query: string,
@@ -77,17 +74,27 @@ type IStoryFormProps = | {
   onSucceed: () => void;
 };
 
+function CoverPickerTitle() {
+  const t = useTranslations('Common');
+
+  return (
+    <p className="mb-2 text-sm">
+      {t('cover_picture')}
+      {' '}
+      <span className="text-red-50">*</span>
+    </p>
+  );
+}
+
 export default function StoryForm(props: IStoryFormProps) {
   let swiperRef: any = null;
   const router = useRouter();
   const t = useTranslations('Common');
-  // const tProfile = useTranslations('MyProfile');
 
+  const pathname = usePathname();
+  const draftId = useDraftId();
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
-  // const { data: me } = useGetPersonalInfoQuery(undefined, {
-  //   skip: !userInfo?.id,
-  // });
   const { data: relatedTopics } = useGetRelatedTopicsQuery(
     Number(props.type === 'edit' && props.story.id),
     { skip: props.type !== 'edit' || (props.story.topics?.length ?? 0) > 0 },
@@ -95,33 +102,6 @@ export default function StoryForm(props: IStoryFormProps) {
   const [uploadCover] = useUploadMutation();
   const [createStory] = useCreateStoryMutation();
   const [editStory] = useUpdateStoryMutation();
-
-  // const topicOptions = useMemo(
-  //   () =>
-  //     (me?.sharingTopics ?? []).map((topic: Topic) => ({
-  //       label: topic.name,
-  //       value: topic.id.toString(),
-  //       id: topic.id,
-  //     })),
-  //   [me],
-  // );
-
-  const [topicQuery, setTopicQuery] = useState('');
-
-  const { data: topicsData } = useGetTopicsQuery({
-    name: topicQuery || undefined, // search theo query nếu có
-    limit: 50,
-  });
-
-  const topicOptions = useMemo(
-    () =>
-      (topicsData?.data ?? []).map((topic: Topic) => ({
-        label: topic.name,
-        value: topic.id.toString(),
-        id: topic.id,
-      })),
-    [topicsData],
-  );
 
   const storyTopicsFromProps = props.type === 'edit' ? props.story.topics : undefined;
   const storyRelatedTopics = useMemo(() => {
@@ -171,20 +151,6 @@ export default function StoryForm(props: IStoryFormProps) {
   );
   // const queriedTopicOptions = filter(topicQuery, topicOptions || []);
   // const queriedTopicOptions = topicOptions;
-  const sortTopicsByPriority = (topics: { label: string; value: string; id: number }[]) => {
-    return [...topics].sort((a, b) => {
-      const aIsPriority = a.label.toLowerCase().startsWith(PRIORITY_TOPIC_KEYWORD);
-      const bIsPriority = b.label.toLowerCase().startsWith(PRIORITY_TOPIC_KEYWORD);
-      if (aIsPriority && !bIsPriority) {
-        return -1;
-      }
-      if (!aIsPriority && bIsPriority) {
-        return 1;
-      }
-      return 0;
-    });
-  };
-  const queriedTopicOptions = sortTopicsByPriority(topicOptions);
 
   useEffect(() => {
     setValue('topics', selectedTopics.map(topic => ({ id: topic.id.toString() })));
@@ -221,13 +187,6 @@ export default function StoryForm(props: IStoryFormProps) {
     return getDefaultCustomization(cover);
   }, [coverCustomization, selectedCoverSample]);
 
-  const handleRemoveTopic = useCallback(
-    (index: unknown) => {
-      setSelectedTopics(selectedTopics.filter(({ id }) => id !== index));
-    },
-    [selectedTopics],
-  );
-
   const rasterizeAndUploadCover = async (): Promise<string | undefined> => {
     try {
       const blob = await rasterizeCoverElement(COVER_EXPORT_ELEMENT_ID);
@@ -258,7 +217,7 @@ export default function StoryForm(props: IStoryFormProps) {
           publishStatus: 'draft',
         }).unwrap();
 
-        pushSuccess('Story created successfully');
+        pushSuccess(t('story_create_success'));
         router.push(`/register-huber/success?storyId=${result.id}`);
         props.onSucceed();
       } else {
@@ -282,7 +241,55 @@ export default function StoryForm(props: IStoryFormProps) {
       pushError(t(error?.message || 'error_contact_admin'));
     }
   };
-  // CHANGE: Changed 'xl' and 'lg' breakpoints to 'sm' or 'md'.
+
+  async function saveDraft() {
+    /*
+      CAUTIONARY NOTES:
+      Since making changes to schema of indexdb could make users who already stored keys to encounter errors, do...
+
+      1. LEAVE IT INTACT. Don't change the DB name, store name, or key prefix ('draft-').
+         Renaming any of them orphans every draft users already have.
+
+      2. DON'T CHANGE THE SHAPE OF A DRAFT (add, remove, rename, retype a field) unless
+         you also handle old records. There is NO migration layer yet, so existing
+         'draft-*' records in users' browsers keep their old shape forever.
+         If you must change it, pick one:
+         a. Backward compatible: make every reader tolerate missing or old fields
+            (optional chaining, defaults). Prefer additive changes only.
+         b. Add migrations: introduce a schemaVersion on records, upgrade old ones on read,
+            and skip or delete records that fail validation.
+
+      3. If users could get stuck because of old records, consider adding a button in the
+         frontend that calls useDeleteAllDrafts so they can wipe their drafts themselves.
+    */
+    try {
+      const coverBlob = await rasterizeCoverElement(COVER_EXPORT_ELEMENT_ID);
+
+      await set(`draft-${draftId}`, {
+        id: draftId,
+        abstract,
+        title,
+        coverBlob,
+        topics: selectedTopics.map(topic => ({ id: topic.id, name: topic.label })),
+        humanBook: { fullName: userInfo.fullName, photo: { path: '' } },
+        rating: 0,
+        storyReview: {},
+        publishStatus: 'draft',
+      });
+    } catch (err) {
+      console.error('Draft save failed', err);
+      pushError(t('error_contact_admin'));
+      return;
+    }
+    pushSuccess(t('draft_create_success'), t('draft_create_success_title'));
+
+    const userProfile = `/users/${userInfo.id}?tab=stories`;
+    if (!pathname.includes(userProfile)) {
+      router.push(userProfile);
+    }
+    window.location.reload();
+  }
+
   return (
     <div className="flex flex-col gap-6 rounded-[20px] bg-white
       max-[955px]:mt-2 min-[955px]:p-5"
@@ -290,25 +297,20 @@ export default function StoryForm(props: IStoryFormProps) {
       {props.type === 'edit' && (
         <div className="flex items-center gap-3 px-4 pt-2 min-[955px]:px-0 min-[955px]:pt-0">
           <IconButton variant="ghost" size="lg" onClick={props.onCancel} aria-label={t('back') as string}>
-            <ArrowLeft size={20} />
+            <ArrowLeftIcon size={20} />
           </IconButton>
           <h2 className="text-2xl font-medium leading-9 text-black">{t('edit_book_title')}</h2>
         </div>
       )}
       <Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <div className="flex flex-col gap-4 min-[955px]:flex-row
-          min-[955px]:items-stretch min-[955px]:gap-6"
+          min-[955px]:items-start min-[955px]:gap-6"
         >
           {/* Cột trái */}
-          <div className="flex flex-1 flex-col max-[955px]:hidden">
-            <p className="mb-2 text-sm font-medium text-black">
-              {t('cover_picture')}
-              {' '}
-              <span className="text-red-50">*</span>
-            </p>
-
+          <div className="flex max-w-[600px] flex-1 flex-col max-[955px]:hidden">
+            <CoverPickerTitle />
             <div className="flex flex-1 rounded-2xl
-            border border-neutral-90 bg-neutral-98 p-5"
+              border border-neutral-90 bg-neutral-98 p-5"
             >
               {/* Desktop */}
               <div className="hidden w-full cursor-pointer flex-col gap-4 min-[955px]:flex">
@@ -331,7 +333,7 @@ export default function StoryForm(props: IStoryFormProps) {
                         <Button
                           onClick={() => setIsCustomCoverModalOpen(true)}
                           className="bg-primary-90 text-primary-50 hover:text-white"
-                          iconRight={<PencilSimple size={16} />}
+                          iconRight={<PencilSimpleIcon size={16} />}
                         >
                           {t('custom')}
                         </Button>
@@ -351,119 +353,15 @@ export default function StoryForm(props: IStoryFormProps) {
           </div>
 
           {/* Cột phải */}
-          <div className="flex flex-1 flex-col gap-6">
-            <Form.Item className="max-[955px]:px-4">
-              <TextInput
-                {...register('title')}
-                type="text"
-                placeholder={t('placeholder_title')}
-                label={(
-                  <p className="text-sm leading-4 text-neutral-10">
-                    {t('title')}
-                    <span className="text-red-50">*</span>
-                  </p>
-                )}
-                isError={!!errors.title}
-                maxLength={32}
-                hintText={errors.title?.message || (errors.title && 'Required')}
-              />
-            </Form.Item>
+          <div className="flex min-w-0 flex-1 flex-col gap-6">
+            <TitleField register={register} errors={errors} />
+            <TopicsField selectedTopics={selectedTopics} setSelectedTopics={setSelectedTopics} />
+            <StoryContentField register={register} errors={errors} />
 
-            <Form.Item className="max-[955px]:px-4">
-              <Combobox
-                // @ts-ignore
-                by="id"
-                value={selectedTopics}
-                onChange={value => setSelectedTopics(value as TFilter[])}
-                onQueryChange={setTopicQuery}
-                onClear={handleRemoveTopic}
-                className="w-full"
-                multiple
-                size="lg"
-              >
-                {({ open }) => (
-                  <>
-                    <Combobox.VisualMultiSelect
-                      open={open}
-                      label={(
-                        <p className="text-sm leading-4 text-neutral-10">
-                          {t('topics')}
-                          <span className="text-red-50">*</span>
-                        </p>
-                      )}
-                      placeholder={selectedTopics.length > 0 ? undefined : t('select_topics')}
-                      className="border-neutral-90"
-                      inputClassname="px-0 font-normal leading-4"
-                      displayValue={({ label }) => label}
-                    >
-                      <CaretDown />
-                    </Combobox.VisualMultiSelect>
-                    <Combobox.Transition>
-                      <Combobox.Options className="z-50 flex flex-wrap gap-2 p-1">
-                        {queriedTopicOptions.length === 0 && topicQuery !== '' ? (
-                          <div className="relative cursor-default select-none text-neutral-40">
-                            Nothing found.
-                          </div>
-                        ) : (
-                          queriedTopicOptions.map((filter: any) => {
-                            const color = getChipColor(filter.id);
-                            return (
-                              <Combobox.Option value={filter} key={filter.id}>
-                                {({ selected, active }) => (
-                                  <span
-                                    className={mergeClassnames(
-                                      'inline-flex cursor-pointer select-none items-center rounded-full border px-4 py-2 text-sm font-semibold transition-opacity',
-                                      selected && 'opacity-100',
-                                      active && 'opacity-90',
-                                    )}
-                                    style={{
-                                      backgroundColor: color.bg,
-                                      color: color.text,
-                                      borderColor: color.border,
-                                    }}
-                                  >
-                                    {filter.label}
-                                  </span>
-                                )}
-                              </Combobox.Option>
-                            );
-                          })
-                        )}
-                      </Combobox.Options>
-                    </Combobox.Transition>
-                  </>
-                )}
-              </Combobox>
-            </Form.Item>
-
-            <Form.Item className="max-[955px]:px-4">
-              <Label className="mb-2">
-                {t('content')}
-                <span className="text-red-50">*</span>
-              </Label>
-              <TextArea
-                {...register('abstract')}
-                rows={9}
-                error={!!errors.abstract}
-                placeholder={t('placeholder_content')}
-                size="sm"
-              />
-              {errors.abstract && (
-                <p className="mt-1 text-xs text-red-500">
-                  {errors.abstract.message || 'Required'}
-                </p>
-              )}
-            </Form.Item>
-            {/* Gần dưới cùng */}
             <div className="flex flex-1 flex-col px-4 pb-24 min-[955px]:hidden">
-              <p className="mb-2 text-sm font-medium text-black">
-                {t('cover_picture')}
-                {' '}
-                <span className="text-red-50">*</span>
-              </p>
-
+              <CoverPickerTitle />
               <div className="flex flex-1 rounded-2xl
-            border border-neutral-90 bg-neutral-98 p-5"
+                border border-neutral-90 bg-neutral-98 p-5"
               >
                 {/* Mobile */}
                 <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-5">
@@ -510,7 +408,7 @@ export default function StoryForm(props: IStoryFormProps) {
                     variant="soft"
                     size="sm"
                     className="w-[180px]"
-                    iconRight={<PencilSimple size={16} />}
+                    iconRight={<PencilSimpleIcon size={16} />}
                     onClick={() => setIsCustomCoverModalOpen(true)}
                   >
                     {t('custom')}
@@ -518,35 +416,7 @@ export default function StoryForm(props: IStoryFormProps) {
                 </div>
               </div>
             </div>
-            <div className="z-40 flex
-            w-full
-            bg-white
-            max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
-            max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
-            min-[955px]:mt-auto
-            min-[955px]:justify-end"
-            >
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full min-[955px]:w-[300px]"
-                animation={isSubmitting && 'progress'}
-                disabled={isSubmitting || !isFormValid}
-                iconLeft={props.type === 'edit' ? undefined : <BookOpen size={20} />}
-                iconRight={props.type === 'edit' ? undefined : <Plus size={20} />}
-              >
-                {props.type === 'edit' ? t('confirm') : (
-                  <>
-                    <span className="min-[955px]:hidden">
-                      {t('submit_create_book_mobile')}
-                    </span>
-                    <span className="hidden min-[955px]:inline">
-                      {t('submit_create_book_desktop')}
-                    </span>
-                  </>
-                )}
-              </Button>
-            </div>
+            <SubmitAndDraftButton isSubmitting={isSubmitting} isFormValid={isFormValid} type={props.type} saveDraft={saveDraft} />
           </div>
 
         </div>

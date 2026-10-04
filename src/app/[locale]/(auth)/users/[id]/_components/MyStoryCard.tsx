@@ -1,6 +1,6 @@
 'use client';
 
-import { Eye, ShareFat, ThumbsUp } from '@phosphor-icons/react';
+import { EyeIcon, ShareFatIcon, ThumbsUpIcon } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 
 import Avatar from '@/components/core/avatar/Avatar';
@@ -11,11 +11,11 @@ import { StoryBage } from '@/components/StoryBage';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
 import AnimatedCover from '@/features/stories/components/AnimatedCover';
 import { useRouter } from '@/libs/i18nNavigation';
-import type { Story as TStory } from '@/libs/services/modules/stories/storiesType';
+import type { Story } from '@/libs/services/modules/stories/storiesType';
 import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType';
 
 type MyStoryCardProps = {
-  data: TStory;
+  data: Story;
 };
 
 export default function MyStoryCard({ data }: MyStoryCardProps) {
@@ -24,10 +24,15 @@ export default function MyStoryCard({ data }: MyStoryCardProps) {
   const tMyProfile = useTranslations('MyProfile');
 
   const isPublished = data.publishStatus === StoryPublishStatus.PUBLISHED;
+  const isDraft = data.publishStatus === StoryPublishStatus.DRAFT;
   const visibleTopics = data.topics?.slice(0, 1) ?? [];
   const remainingTopicsCount = Math.max((data.topics?.length ?? 0) - visibleTopics.length, 0);
 
   const handleOpenStory = () => {
+    if (isDraft) {
+      router.push(`/explore-story/draft-${data.id}/preview`);
+      return;
+    }
     router.push(`/explore-story/${data.id}${isPublished ? '' : '/preview'}`);
   };
 
@@ -41,7 +46,7 @@ export default function MyStoryCard({ data }: MyStoryCardProps) {
       )}
     >
       <div className="flex min-w-0 flex-1 flex-col pr-4">
-        {!isPublished && (
+        {data?.publishStatus && (
           <StoryBage
             status={data.publishStatus}
             rejectionReason={data.rejectionReason}
@@ -89,18 +94,22 @@ export default function MyStoryCard({ data }: MyStoryCardProps) {
         </div>
 
         <div className="mt-auto flex items-center justify-between gap-3 pt-4">
-          <div className="flex items-center gap-1">
-            <ThumbsUp size={16} weight="fill" className="text-pink-40" />
-            <span className="text-sm font-medium text-neutral-20">{data.likeCount ?? 0}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Eye size={16} className="text-primary-50" />
-            <span className="text-sm font-medium text-neutral-20">{data.viewCount ?? 0}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <ShareFat size={16} className="text-primary-50" />
-            <span className="text-sm font-medium text-neutral-20">{data.shareCount ?? 0}</span>
-          </div>
+          {isDraft ?? (
+            <>
+              <div className="flex items-center gap-1">
+                <ThumbsUpIcon size={16} weight="fill" className="text-pink-40" />
+                <span className="text-sm font-medium text-neutral-20">{data.likeCount ?? 0}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <EyeIcon size={16} className="text-primary-50" />
+                <span className="text-sm font-medium text-neutral-20">{data.viewCount ?? 0}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <ShareFatIcon size={16} className="text-primary-50" />
+                <span className="text-sm font-medium text-neutral-20">{data.shareCount ?? 0}</span>
+              </div>
+            </>
+          )}
         </div>
 
         <Button
@@ -129,8 +138,8 @@ export default function MyStoryCard({ data }: MyStoryCardProps) {
           title={data.title ?? ''}
           authorName={data.humanBook?.fullName ?? ''}
           coverUrl={data.cover?.path || ''}
-          highlightTitle={data.highlightTitle}
-          highlightAbstract={data.highlightAbstract}
+          highlightTitle={data.highlightTitle ?? ''}
+          highlightAbstract={data.highlightAbstract ?? ''}
           isPublished={isPublished}
           onClick={handleOpenStory}
         />

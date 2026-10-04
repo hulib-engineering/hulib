@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react';
+'use client';
 
+import type { ReactNode } from 'react';
 import { MainTemplate } from '@/templates/MainTemplate';
 
 export default function Layout({

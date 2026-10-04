@@ -127,20 +127,21 @@ const mappedType = {
 
 type ICustomMessageProps = {
   message: string;
+  title?: string;
   toastProps?: ToastProps;
 };
 
-const CustomMessage = ({ message, toastProps }: ICustomMessageProps) => (
+const CustomMessage = ({ message, title, toastProps }: ICustomMessageProps) => (
   <div>
     <div className="text-base font-bold capitalize text-blue-darker">
-      {mappedType[toastProps?.type || 'default']}
+      {title ?? mappedType[toastProps?.type || 'default']}
     </div>
     <div className="text-xs font-normal text-gray-500">{message}</div>
   </div>
 );
 
-export const pushInfo = (message: string) =>
-  toast.info(<CustomMessage message={message} />, {
+export const pushInfo = (message: string, title?: string) =>
+  toast.info(<CustomMessage message={message} title={title} />, {
     icon: InfoIcon,
     className: mergeClassnames(
       'flex items-center px-4 py-3 bg-white rounded-lg overflow-hidden',
@@ -149,8 +150,8 @@ export const pushInfo = (message: string) =>
     ),
   });
 
-export const pushSuccess = (message: string) =>
-  toast.success(<CustomMessage message={message} />, {
+export const pushSuccess = (message: string, title?: string) =>
+  toast.success(<CustomMessage message={message} title={title} />, {
     icon: SuccessIcon,
     className: mergeClassnames(
       'flex items-center px-4 py-3 bg-white rounded-lg overflow-hidden',
@@ -159,8 +160,8 @@ export const pushSuccess = (message: string) =>
     ),
   });
 
-export const pushError = (message: string) =>
-  toast.error(<CustomMessage message={message} />, {
+export const pushError = (message: string, title?: string) =>
+  toast.error(<CustomMessage message={message} title={title} />, {
     icon: ErrorIcon,
     className: mergeClassnames(
       'flex items-center px-4 py-3 bg-white rounded-lg overflow-hidden',
@@ -169,8 +170,8 @@ export const pushError = (message: string) =>
     ),
   });
 
-export const pushWarning = (message: string) =>
-  toast.warning(<CustomMessage message={message} />, {
+export const pushWarning = (message: string, title?: string) =>
+  toast.warning(<CustomMessage message={message} title={title} />, {
     icon: WarningIcon,
     className: mergeClassnames(
       'flex items-center px-4 py-3 bg-white rounded-lg overflow-hidden',
