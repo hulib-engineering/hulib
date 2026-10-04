@@ -6,6 +6,25 @@ export function isPendingSessionStatus(sessionStatus?: string | null) {
   return sessionStatus?.toLowerCase() === StatusEnum.Pending.toLowerCase();
 }
 
+export function isApprovedSessionStatus(sessionStatus?: string | null) {
+  return sessionStatus?.toLowerCase() === StatusEnum.Approved.toLowerCase();
+}
+
+export function isRejectedSessionStatus(sessionStatus?: string | null) {
+  return sessionStatus?.toLowerCase() === StatusEnum.Rejected.toLowerCase();
+}
+
+/**
+ * True once a session request has been accepted or declined.
+ *
+ * The backend reports those decisions on the *same* `sessionRequest` payload — only
+ * `relatedEntity.sessionStatus` distinguishes them — so the notification type alone cannot
+ * tell a fresh request apart from an accepted or declined one.
+ */
+export function isDecidedSessionStatus(sessionStatus?: string | null) {
+  return isApprovedSessionStatus(sessionStatus) || isRejectedSessionStatus(sessionStatus);
+}
+
 export enum NotificationType {
   SESSION_REQUEST = 'sessionRequest',
   ACCOUNT_UPGRADE = 'account',
@@ -21,9 +40,20 @@ export enum NotificationType {
   SESSION_APPROVAL = 'approveReadingSession',
   SESSION_CANCELLATION = 'cancelReadingSession',
   SESSION_MISS = 'missReadingSession',
+  /**
+   * Sent to the *Huber* when the post-meeting cron finds their attendance column still empty.
+   * Distinct from SESSION_MISS, which is the reader-facing "you didn't join" message.
+   */
+  HUBER_NO_SHOW = 'huberNoShowReadingSession',
+  /**
+   * Sent to the reader when the session was auto-cancelled because the Huber never
+   * approved or rejected it. Distinct from SESSION_CANCELLATION, which is a
+   * Liber-initiated cancellation carrying a mandatory reason.
+   */
+  SESSION_AUTO_CANCELLATION = 'autoCancelReadingSession',
   SESSION_COMPLETION = 'sessionFinish',
   USER_APPEAL = 'userAppeal',
   APPEAL_RESPONSE = 'appealResponse',
-  TIMESLOT_REMINDER = 'timeSlotReminder',
   OTHER = 'other',
+  UPDATE_TIME_SLOT_REMINDER = 'updateTimeSlotReminder',
 }

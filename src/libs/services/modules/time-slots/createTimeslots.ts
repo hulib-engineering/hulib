@@ -16,7 +16,10 @@ const createTimeslots = (build: EndpointBuilder<BaseQueryFn, string, string>) =>
       method: 'POST',
       body,
     }),
-    invalidatesTags: [{ type: 'Timeslot', id: 'LIST' }],
+    invalidatesTags: [
+      { type: 'Timeslot', id: 'LIST' },
+      { type: 'TimeSlotHuber', id: 'LIST' },
+    ],
   });
 
 export default createTimeslots;

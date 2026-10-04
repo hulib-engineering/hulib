@@ -47,7 +47,7 @@ export default function UserProfileClient({ userId }: Props) {
   }
 
   const roleId = userDetail?.role?.id;
-  const roleView = notMe ? 'viewer' : roleId === Role.LIBER ? 'liber' : 'huber';
+  const roleView = notMe ? 'viewer' : roleId === Role.HUBER ? 'huber' : 'liber';
 
   return (
     <>
