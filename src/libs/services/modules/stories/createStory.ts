@@ -12,6 +12,7 @@ type CreateStoryRequest = {
   humanBook: {
     id: number;
   };
+  publishStatus: string; // NOTE: This is something BE was supposed to create for the story rather than FE providing - once BE resolved the issue, this one should be removed
 };
 
 type CreateStoryResponse = {} & Story;

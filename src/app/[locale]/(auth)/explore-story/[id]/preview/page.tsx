@@ -339,7 +339,7 @@ function Draft({ id }: { id: string }) {
         ) : (
           <div className="rounded-[20px] bg-white">
             <StoryForm
-              type="edit"
+              type="edit-draft"
               story={data}
               onSucceed={() => setIsEditing(false)}
               onCancel={() => setIsEditing(false)}

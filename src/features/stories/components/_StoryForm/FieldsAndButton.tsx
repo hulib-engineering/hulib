@@ -194,7 +194,7 @@ export function TopicsField(props: TopicsFieldProps) {
 type SubmitAndDraftButtonProps = {
   isSubmitting: boolean;
   isFormValid: boolean;
-  type: 'create' | 'create-first' | 'edit';
+  type: 'create' | 'create-first' | 'edit' | 'edit-draft';
   saveDraft: () => void;
 };
 
