@@ -2,14 +2,14 @@
 
 import {
   // BookOpen,
-  CalendarDots,
-  FacebookLogo,
-  InstagramLogo,
+  CalendarDotsIcon,
+  FacebookLogoIcon,
+  InstagramLogoIcon,
   MessengerLogoIcon,
-  StarFour,
-  ThreadsLogo,
-  Trash,
-  X,
+  StarFourIcon,
+  ThreadsLogoIcon,
+  TrashIcon,
+  XIcon,
 } from '@phosphor-icons/react';
 import { useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -17,6 +17,7 @@ import Image from 'next/image';
 
 import * as React from 'react';
 
+import MyStoryCard from '../../../users/[id]/_components/MyStoryCard';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 
@@ -35,7 +36,6 @@ import { useDeleteStoryMutation, useGetStoriesQuery, useLikeStoryMutation, useSh
 import { ChangeCountEnum } from '@/libs/services/modules/stories/updateLikeCountStory';
 import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
 import BookInfo from '@/features/stories/components/BookInfo';
-import { StoryCard } from '@/features/stories/components/StoryCard';
 import StoryForm from '@/features/stories/components/StoryForm';
 import PersonalCalendarModal from '@/features/stories/components/PersonalCalendarModal';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
@@ -84,7 +84,7 @@ function BookMeeting({ handleBookingClick, userId, floatingBooking }: BookMeetin
       <Button
         onClick={handleBookingClick}
         disabled={disabledCondition}
-        iconLeft={<CalendarDots className={mergeClassnames(!disabledCondition && 'text-white')} size={20} weight="bold" />}
+        iconLeft={<CalendarDotsIcon className={mergeClassnames(!disabledCondition && 'text-white')} size={20} weight="bold" />}
         className={mergeClassnames('w-full', !disabledCondition && 'border border-primary-80 bg-gradient-to-b from-blue-40 to-lavender-40 text-white hover:opacity-95')}
       >
         <span className="mt-1">{t('book_a_meeting')}</span>
@@ -214,12 +214,12 @@ export default function StorySidePanel({ data, floatingBooking }: StorySidePanel
 
   const shareOptions = React.useMemo(() => [
     {
-      icon: FacebookLogo,
+      icon: FacebookLogoIcon,
       label: 'Facebook',
       url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(storyUrl)}`,
     },
-    { icon: InstagramLogo, label: 'Instagram', url: 'https://www.instagram.com/' },
-    { icon: ThreadsLogo, label: 'Threads', url: 'https://www.threads.net/' },
+    { icon: InstagramLogoIcon, label: 'Instagram', url: 'https://www.instagram.com/' },
+    { icon: ThreadsLogoIcon, label: 'Threads', url: 'https://www.threads.net/' },
   ], [storyUrl]);
 
   const clickLikeStory = React.useCallback(async () => {
@@ -355,11 +355,11 @@ export default function StorySidePanel({ data, floatingBooking }: StorySidePanel
           !hasTimeslots && (
             <div className="flex w-full flex-col items-start gap-4 rounded-2xl bg-[#faf7fc] p-5 shadow-sm">
               <div className="flex items-start gap-2">
-                <StarFour className="shrink-0 text-[#0858fa]" size={20} weight="fill" />
+                <StarFourIcon className="shrink-0 text-[#0858fa]" size={20} weight="fill" />
                 <p className="text-sm leading-5 text-[#0858fa]">{tCommon('update_schedule_online')}</p>
               </div>
               <Button
-                iconLeft={<CalendarDots className="text-white" size={20} weight="bold" />}
+                iconLeft={<CalendarDotsIcon className="text-white" size={20} weight="bold" />}
                 onClick={() => setIsPersonalCalendarModalOpen(true)}
                 className="w-full"
               >
@@ -414,7 +414,7 @@ export default function StorySidePanel({ data, floatingBooking }: StorySidePanel
           <div className="flex flex-col items-center justify-center">
             <div className="flex w-full items-center justify-end px-4 pt-4">
               <IconButton variant="ghost" size="lg" aria-label={tCommon('cancel') as string} onClick={handleCloseEditSuccessModal}>
-                <X className="text-[#343330]" size={20} />
+                <XIcon className="text-[#343330]" size={20} />
               </IconButton>
             </div>
             <div className="flex flex-col items-center justify-center gap-5 px-6 pb-6">
@@ -466,34 +466,38 @@ export default function StorySidePanel({ data, floatingBooking }: StorySidePanel
       {/* Delete Confirm Modal - Figma 16331 */}
       <Modal open={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)}>
         <Modal.Backdrop />
-        <Modal.Panel className="w-full max-w-xl px-1 py-5 shadow-none lg:px-5">
+        <Modal.Panel className="w-full max-w-6xl px-1 py-5 shadow-none lg:px-5">
           <div className="flex flex-col items-center justify-center gap-6">
             <div className="flex w-full justify-end px-4">
               <IconButton variant="ghost" size="lg" aria-label={tCommon('cancel') as string} onClick={() => setIsDeleteModalOpen(false)}>
-                <X className="text-[#2e3032]" size={20} />
+                <XIcon className="text-[#2e3032]" size={20} />
               </IconButton>
             </div>
-            <h4 className="px-4 text-center text-[28px] font-medium leading-9 text-[#ee0038] lg:px-0">
-              {t('confirm_delete_book')}
-            </h4>
-            <StoryCard data={data as unknown as Story} withoutActions />
-            <p className="px-4 text-center text-sm leading-5 text-[#171819] lg:px-0">
-              {t('story_delete_warning')}
-              <br />
-              {t('cannot_undo_action')}
-            </p>
-            <div className="flex w-full px-4 lg:px-0">
-              <Button
-                variant="outline"
-                size="lg"
-                fullWidth
-                iconLeft={<Trash className="text-primary-50" size={20} weight="bold" />}
-                disabled={isDeletingStory}
-                animation={isDeletingStory ? 'progress' : undefined}
-                onClick={handleDelete}
-              >
-                {tCommon('delete')}
-              </Button>
+            <div className="flex max-w-md flex-col gap-8">
+              <h4 className="px-4 text-center text-[28px] font-medium leading-9 text-[#ee0038] lg:px-0">
+                {t('confirm_delete_book')}
+              </h4>
+              <MyStoryCard data={data} deleteMode />
+              <p className="px-4 text-center text-sm leading-5 text-[#171819] lg:px-0">
+                {t('story_delete_warning')}
+                <br />
+                {t('cannot_undo_action')}
+              </p>
+              <div className="flex w-full px-4 lg:px-0">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  fullWidth
+                  disabled={isDeletingStory}
+                  animation={isDeletingStory ? 'progress' : undefined}
+                  onClick={handleDelete}
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <TrashIcon className="text-primary-50" size={20} weight="bold" />
+                    {tCommon('delete')}
+                  </span>
+                </Button>
+              </div>
             </div>
           </div>
         </Modal.Panel>
@@ -506,7 +510,7 @@ export default function StorySidePanel({ data, floatingBooking }: StorySidePanel
           <div className="flex flex-col items-center justify-center">
             <div className="flex w-full items-center justify-end px-4 pt-4">
               <IconButton variant="ghost" size="lg" aria-label={tCommon('cancel') as string} onClick={handleCloseDeleteSuccessModal}>
-                <X className="text-[#343330]" size={20} />
+                <XIcon className="text-[#343330]" size={20} />
               </IconButton>
             </div>
             <div className="flex flex-col items-center justify-center gap-5 px-6 pb-6">
