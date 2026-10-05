@@ -16,9 +16,10 @@ import { StoryPublishStatus } from '@/libs/services/modules/stories/storiesType'
 
 type MyStoryCardProps = {
   data: Story;
+  deleteMode?: boolean;
 };
 
-export default function MyStoryCard({ data }: MyStoryCardProps) {
+export default function MyStoryCard({ data, deleteMode = false }: MyStoryCardProps) {
   const router = useRouter();
   const tExploreStory = useTranslations('ExploreStory');
   const tMyProfile = useTranslations('MyProfile');
@@ -112,13 +113,16 @@ export default function MyStoryCard({ data }: MyStoryCardProps) {
           )}
         </div>
 
-        <Button
-          size="lg"
-          className="mt-4 rounded-full bg-primary-50 py-3 text-sm font-semibold"
-          onClick={handleOpenStory}
-        >
-          {isPublished ? tExploreStory('read_all') : tMyProfile('continue_finish_story')}
-        </Button>
+        {!deleteMode
+        && (
+          <Button
+            size="lg"
+            className="mt-4 rounded-full bg-primary-50 py-3 text-sm font-semibold"
+            onClick={handleOpenStory}
+          >
+            {isPublished ? tExploreStory('read_all') : tMyProfile('continue_finish_story')}
+          </Button>
+        )}
       </div>
 
       <div
