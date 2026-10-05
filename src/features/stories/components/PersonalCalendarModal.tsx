@@ -26,7 +26,7 @@ type PCModal = {
 
 type Day = (typeof DAYS)[number];
 
-type PersonalCalendarProps = PCModal & {
+type PersonalCalendarProps = {
   savedSlots: GroupingTimeslots;
 };
 
@@ -77,10 +77,7 @@ function BottomButtons(props: BottomButtonsType) {
   return (
     <div className="flex items-center justify-between gap-4">
       <Button
-        className={mergeClassnames(
-          'w-full max-w-lg rounded-full',
-
-        )}
+        className="w-full max-w-lg rounded-full max-sm:text-sm"
         disabled={!props.isDayPicked(props.currentChosenDay) || props.isSaving}
         animation={props.isSaving ? 'progress' : undefined}
         onClick={props.onSaveAndNext}
@@ -90,7 +87,7 @@ function BottomButtons(props: BottomButtonsType) {
       <Button
         type="button"
         variant="ghost"
-        className="max-sm:w-full"
+        className="shrink-0 max-sm:text-sm"
         onClick={props.onSkip}
         aria-label="Close"
       >
@@ -109,7 +106,6 @@ const toSlotsByDay = (saved: GroupingTimeslots) => Object.fromEntries(DAYS.map(d
 
 function PersonalCalendar({ savedSlots }: PersonalCalendarProps) {
   const tSlots = useTranslations('Time_slots');
-  const t = useTranslations('PersonalCalendarModal');
   const tCommon = useTranslations('Common');
 
   const [currentChosenDay, setCurrentChosenDay] = useState<Day>('Monday');
@@ -168,18 +164,7 @@ function PersonalCalendar({ savedSlots }: PersonalCalendarProps) {
   }, [nextDay]);
 
   return (
-    <div
-      className="flex h-full flex-col items-center gap-6 px-2 pb-20
-        pt-6 *:w-full *:max-w-[780px]"
-    >
-      {/* A Texts */}
-      <div className="text-left">
-        <h6 className="mb-2 text-[20px] font-medium leading-7 text-neutral-1">{t('when_am_i_free')}</h6>
-        <p className="text-[14px] font-normal leading-4 text-neutral-10">
-          {t('description')}
-        </p>
-      </div>
-
+    <div className="flex flex-col gap-6">
       {/* B Personal Calendar bg-[#F9F9F9] */}
       <div className="w-full rounded-2xl
         p-2 shadow-[0px_4px_5px_0px_#1C1E211A,0px_0px_4px_0px_#0F0F100F]
@@ -206,12 +191,8 @@ function PersonalCalendar({ savedSlots }: PersonalCalendarProps) {
                 <span className="hidden sm:inline">
                   {tSlots(DAY_TO_FULL_KEY[day])}
                 </span>
-                {' '}
-                <CalendarCheck className={mergeClassnames(
-                  'inline mb-0.5',
-                  /* conditions that will make the icon 'hidden' or not */
-                )}
-                />
+                {/* Mobile-only marker for days that already have slots */}
+                {isDayPicked(day) && <CalendarCheck className="mb-0.5 ml-0.5 inline sm:hidden" />}
               </span>
             </Button>
           ))}
@@ -220,7 +201,7 @@ function PersonalCalendar({ savedSlots }: PersonalCalendarProps) {
         {/* 2. Time Slots Grid */}
         <div className="flex flex-col gap-2 rounded-xl bg-[#F9F9F9] p-2 sm:mb-8 sm:gap-4 sm:p-4">
           {(['morning', 'afternoon', 'evening'] as const).map(period => (
-            <div key={period} className="grid grid-cols-4 gap-1 rounded-xl bg-white p-3 sm:grid-cols-6">
+            <div key={period} className="grid grid-cols-4 gap-1 rounded-xl bg-white p-3 sm:grid-cols-6 lg:grid-cols-7">
               {TIME_SLOTS[period].map((time: string) => (
                 <Button
                   key={time}
@@ -288,19 +269,38 @@ function Header(props: PCModal) {
   );
 }
 
-export default function PersonalCalendarModal(props: PCModal) {
+// Editor for the logged-in Huber's weekly slots; used inline on the profile and inside the modal.
+export function PersonalCalendarEditor() {
   const tCommon = useTranslations('Common');
   const userId = useAppSelector(state => state.auth.userInfo?.id);
   const { data, isLoading, isError } = useGetTimeslotsByHuberQuery({ id: Number(userId) }, { skip: !userId });
   const savedSlots = useTimeslotGrouping(data);
 
+  if (isLoading) {
+    return <Loading />;
+  }
+  // Saving without the current schedule would overwrite it, so don't render the editor on error.
+  if (isError) {
+    return <p className="p-6 text-center text-sm text-neutral-40">{tCommon('error_contact_admin')}</p>;
+  }
+  return <PersonalCalendar savedSlots={savedSlots} />;
+}
+
+export default function PersonalCalendarModal(props: PCModal) {
+  const t = useTranslations('PersonalCalendarModal');
+
   return (
     <div className="flex size-full max-h-[900px] flex-col rounded-2xl bg-white shadow-lg">
       <Header {...props} />
-      {isLoading && <Loading />}
-      {/* Saving without the current schedule would overwrite it, so don't render the editor on error. */}
-      {isError && <p className="p-6 text-center text-sm text-neutral-40">{tCommon('error_contact_admin')}</p>}
-      {!isLoading && !isError && <PersonalCalendar {...props} savedSlots={savedSlots} />}
+      <div className="flex h-full flex-col items-center gap-6 px-2 pb-20 pt-6 *:w-full *:max-w-[780px]">
+        <div className="text-left">
+          <h6 className="mb-2 text-[20px] font-medium leading-7 text-neutral-1">{t('when_am_i_free')}</h6>
+          <p className="text-[14px] font-normal leading-4 text-neutral-10">
+            {t('description')}
+          </p>
+        </div>
+        <PersonalCalendarEditor />
+      </div>
     </div>
   );
 }
