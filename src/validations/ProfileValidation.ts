@@ -30,8 +30,8 @@ export const ProfileValidation = z
     isUnderGuard: z.boolean(),
     parentPhoneNumber: z.string().nullable().optional()
       .refine(value => !value || PHONE_NUMBER_REGEX.test(value), { message: VALIDATION_MESSAGES.GUARDIAN_PHONE_NUMBER }),
-    parentEmail: z.string().trim().optional().or(z.literal(''))
-      .refine(value => !value || z.string().email().safeParse(value).success, { message: VALIDATION_MESSAGES.EMAIL_INVALID }),
+    /* parentEmail: z.string().trim().optional().or(z.literal(''))
+      .refine(value => !value || z.string().email().safeParse(value).success, { message: VALIDATION_MESSAGES.EMAIL_INVALID }), */
     parentFullname: z.string().optional(),
   })
   .superRefine((values, context) => {
@@ -43,13 +43,13 @@ export const ProfileValidation = z
           path: ['parentPhoneNumber'],
         });
       }
-      if (!values.parentEmail || values.parentEmail.length <= 0) {
+      /* if (!values.parentEmail || values.parentEmail.length <= 0) {
         context.addIssue({
           code: z.ZodIssueCode.custom,
           message: 'guardian_placeholder',
           path: ['parentEmail'],
         });
-      }
+      } */
     }
   });
 

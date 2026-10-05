@@ -2,15 +2,13 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import type { Control, FieldErrors, SubmitHandler, UseFormRegister } from 'react-hook-form';
+import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { z } from 'zod';
 
 import { isEmpty } from 'lodash';
-import Image from 'next/image';
-import Link from 'next/link';
-import { X } from '@phosphor-icons/react';
+
 import Button from '@/components/core/button/Button';
 // import { CustomDatePicker } from '@/components/CustomDatePicker';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
@@ -23,18 +21,10 @@ import { useAppDispatch } from '@/libs/hooks';
 import type { User } from '@/libs/services/modules/auth';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { setUserInfo } from '@/libs/store/authentication';
-import { EmailChangeValidation, PHONE_NUMBER_REGEX, ProfileValidation, VALIDATION_MESSAGES } from '@/validations/ProfileValidation';
+import { PHONE_NUMBER_REGEX, ProfileValidation, VALIDATION_MESSAGES } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
 import Alert from '@/components/Alert';
-import Modal from '@/components/Modal';
-import AuthCode from '@/components/core/authCode/AuthCode';
-import Hint from '@/components/Hint';
-
-type DEBUGGINGSectionProps = {
-  register: UseFormRegister<TProfileForm>;
-  errors: FieldErrors<TProfileForm>;
-  DEBUGGING: boolean;
-};
+// import { CodeConfirmationModal } from '@/_components/profile/PersonalInfoOTPModal' Note: Reuse if OTP modal still needed
 
 type SectionProps = {
   register: UseFormRegister<TProfileForm>;
@@ -153,7 +143,7 @@ function AddressSection({ register, errors }: SectionProps) {
   );
 }
 
-function EmailSection({ register, errors, DEBUGGING = false }: DEBUGGINGSectionProps) {
+function EmailSection({ register, errors }: SectionProps) {
   const t = useTranslations('Common');
   return (
     <>
@@ -165,7 +155,7 @@ function EmailSection({ register, errors, DEBUGGING = false }: DEBUGGINGSectionP
           {...register('email')}
           isError={!!errors.email}
           required
-          disabled={!DEBUGGING}
+          disabled
         />
       </Form.Item>
       {errors.email
@@ -198,20 +188,6 @@ function GuardianSection({ register, errors }: SectionProps) {
   const t = useTranslations('Common');
   return (
     <>
-      <TextInput
-        id="parentEmail"
-        type="email"
-        placeholder={t('guardian_placeholder')}
-        label={(
-          <p className="font-medium">
-            {t('guardian_email')}
-            <span className="font-normal text-red-50">*</span>
-          </p>
-        )}
-        {...register('parentEmail')}
-        isError={!!errors.parentEmail}
-      />
-      {errors.parentEmail && (<Alert>{t(errors.parentEmail.message as any)}</Alert>)}
       <TextInput
         id="parentPhoneNumber"
         type="tel"
@@ -271,168 +247,12 @@ function FormActionsSection({
     </div>
   );
 }
-// TODO: Refactor the modal component
-function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess: () => void }) {
-  const t = useTranslations('Common');
-  // MOCK-UP DATA, REMOVE THE ENTIRE THING ONCE BE API ENDPOINTS ARE AVAILABLE
-  // BEGIN ---
-  const MOCK_VALID_CODE = '1234';
-
-  function useConfirmEmailMutation() {
-    const [isLoading, setIsLoading] = useState(false);
-
-    const confirmEmail = async ({ email, code }: { email: string; code: string }) => {
-      setIsLoading(true);
-      await new Promise(resolve => setTimeout(resolve, 800));
-      setIsLoading(false);
-
-      if (code !== MOCK_VALID_CODE) {
-        const error = new Error('Invalid verification code') as Error & {
-          data: { errors: { code: string } };
-        };
-        error.data = { errors: { code: 'invalidCode' } };
-        throw error;
-      }
-
-      return { email, verified: true };
-    };
-
-    return [confirmEmail, { isLoading }] as const;
-  }
-
-  function useResendOTPMutation() {
-    const [isLoading, setIsLoading] = useState(false);
-
-    const resendOTP = async ({ email }: { email: string }) => {
-      setIsLoading(true);
-      await new Promise(resolve => setTimeout(resolve, 500));
-      setIsLoading(false);
-      return { email, code: MOCK_VALID_CODE };
-    };
-
-    return [resendOTP, { isLoading }] as const;
-  }
-  // END ---
-  const [confirmEmail, { isLoading: isConfirming }] = useConfirmEmailMutation(); // mock-up function
-  const [resendOTP] = useResendOTPMutation(); // mock-up function
-
-  const {
-    control,
-    handleSubmit,
-    clearErrors,
-    setError,
-    formState: { errors },
-  } = useForm<z.infer<typeof EmailChangeValidation>>({
-    resolver: zodResolver(EmailChangeValidation),
-    defaultValues: {
-      verificationCode: '',
-    },
-  });
-
-  const handleAuthCodeSubmit: SubmitHandler<
-    z.infer<typeof EmailChangeValidation>
-  > = async ({ verificationCode }) => {
-    if (verificationCode.length !== 4) {
-      return;
-    }
-
-    clearErrors('verificationCode');
-    try {
-      const result = await confirmEmail({ email, code: verificationCode });
-      if (result) {
-        onSuccess();
-        pushSuccess(t('verified'));
-      }
-    } catch (_error: any) {
-      setError('verificationCode', {
-        type: 'unverified',
-        message: t('invalid_verification_code'),
-      });
-    }
-  };
-
-  // add to or modify this function once BE has the endpoint
-  const handleResendOTP = async () => {
-    try {
-      const result = await resendOTP({ email });
-      if (result) {
-        pushSuccess(t('verified_resent_OTP'));
-      }
-    } catch (error: any) {
-      if (error && error?.data && error?.data?.errors) {
-        pushError(`Error: ${JSON.stringify(error?.data?.errors)}`);
-        return;
-      }
-      pushError(`Error: ${error.message}`);
-    }
-  };
-
-  return (
-    <>
-      <Modal.Backdrop />
-      <Modal.Panel className="relative h-[872px] w-[480px] pt-14">
-        <Button variant="ghost" type="button" onClick={onSuccess} className="absolute right-5 top-5">
-          <X size={20} />
-        </Button>
-        <div className="flex flex-col items-center gap-2 px-6">
-          <Image src="/assets/images/users/mail_icon.png" alt="A Mail Icon" width={112.5} height={99} />
-          <h1 className="text-[28px] font-medium text-primary-50">{t('email_confirm_title')}</h1>
-          <p className="text-center">
-            {t.rich('email_confirm_description', {
-              email,
-              bold: chunks => <span className="font-extrabold">{chunks}</span>,
-              br: () => <br />,
-            })}
-          </p>
-
-          <Form
-            onSubmit={handleSubmit(handleAuthCodeSubmit)}
-            className="mt-6 flex w-full flex-col items-center justify-center gap-4"
-          >
-            <Form.Item>
-              <Controller
-                name="verificationCode"
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <AuthCode
-                      {...field}
-                      length={4}
-                      size="sm"
-                      disabled={isConfirming}
-                      onChange={(value) => {
-                        field.onChange(value);
-                        if (value.length === 4) {
-                          handleAuthCodeSubmit({ verificationCode: value });
-                        }
-                      }}
-                      className="justify-center"
-                    />
-                    <Hint error className="mt-5 flex flex-col justify-center">
-                      {errors.verificationCode?.message}
-                      {errors.verificationCode?.message && (
-                        <Link href="#" onClick={handleResendOTP} className="font-medium text-red-50 underline">
-                          {t('resend_otp')}
-                        </Link>
-                      )}
-                    </Hint>
-                  </>
-                )}
-              />
-            </Form.Item>
-          </Form>
-        </div>
-      </Modal.Panel>
-    </>
-  );
-}
 
 export default function PersonalInformation({ data }: IProfileFormProps) {
-  const DEBUGGING = false; // SET THIS FLAG TO TRUE TO SEE THE REMAINING UI
   const t = useTranslations('Common');
 
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
-  const [isOpenConfirmCodeModal, setIsOpenConfirmCodeModal] = useState(false);
+  // const [isOpenConfirmCodeModal, setIsOpenConfirmCodeModal] = useState(false); || Note: Reuse if need an otp modal again
 
   const dispatch = useAppDispatch();
 
@@ -442,7 +262,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     setValue,
     setError,
     watch,
-    getValues,
+    // getValues, Note: Reuse if need an otp modal again
     handleSubmit,
     reset,
     formState: { errors, isSubmitting, isDirty },
@@ -460,7 +280,6 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
       phoneNumber: data?.phoneNumber ?? null,
       address: data?.address ?? '',
       parentPhoneNumber: data?.parentPhoneNumber ?? null,
-      parentEmail: data?.parentEmail ?? '',
     },
   });
 
@@ -481,7 +300,6 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
 
       if (!isUnderGuard) {
         profilePatch.parentPhoneNumber = null;
-        profilePatch.parentEmail = '';
       }
 
       if (!profilePatch.phoneNumber) {
@@ -494,7 +312,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
       const response = await updateProfile({ ...profilePatch, gender: { id: values.gender?.id } }).unwrap();
       dispatch(setUserInfo(response));
       pushSuccess(t('update_successfully'));
-      setIsOpenConfirmCodeModal(true);
+      // setIsOpenConfirmCodeModal(true); Note: Reuse if need an otp modal again
     } catch (error: any) {
       const fieldErrors = error?.data?.errors;
       if (fieldErrors && typeof fieldErrors === 'object') {
@@ -511,21 +329,15 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     }
   });
 
-  function handleCloseCCModal() {
-    setIsOpenConfirmCodeModal(false);
-  }
-
   return (
     <>
       <Form className="flex w-full flex-col gap-3" onSubmit={handleUpdate}>
         <Name register={register} errors={errors} />
         <GenderBirthday control={control} />
         <AddressSection register={register} errors={errors} />
-        <EmailSection register={register} errors={errors} DEBUGGING={DEBUGGING} />
+        <EmailSection register={register} errors={errors} />
         <PhoneNumberSection register={register} errors={errors} />
-        {watch('isUnderGuard') && (
-          <GuardianSection register={register} errors={errors} />
-        )}
+        <GuardianSection register={register} errors={errors} />
         <FormActionsSection
           isSubmitting={isSubmitting}
           isLoading={isLoading}
@@ -535,11 +347,11 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
         />
       </Form>
 
-      {DEBUGGING && (
+      {/* Note: Reuse if need an otp modal again
         <Modal open={isOpenConfirmCodeModal} onClose={handleCloseCCModal}>
-          <CodeConfirmationModal email={getValues('email')} onSuccess={handleCloseCCModal} />
+          <CodeConfirmationModal email={getValues('email')} onSuccess={() => setIsOpenConfirmCodeModal(false)} />
         </Modal>
-      )}
+      */}
     </>
   );
 };
