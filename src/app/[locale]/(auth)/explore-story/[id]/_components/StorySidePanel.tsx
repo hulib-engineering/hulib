@@ -62,7 +62,7 @@ function BookMeeting({ handleBookingClick, userId, floatingBooking }: BookMeetin
 
   const disabledCondition = status === 'unauthenticated' || userId === undefined;
 
-  const { data: bookedSessionsList, isLoading } = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId });
+  const { data: bookedSessionsList = [], isLoading } = useGetHuberBookedSessionsQuery({ id: userId }, { skip: !userId });
 
   // Tailwind breakpoint CSS
   const max_lg = floatingBooking && bottomNavHeight ? 'max-lg:absolute max-lg:bottom-20 max-lg:left-0 z-[9999] max-lg:mx-4' : '';
@@ -89,10 +89,10 @@ function BookMeeting({ handleBookingClick, userId, floatingBooking }: BookMeetin
       >
         <span className="mt-1">{t('book_a_meeting')}</span>
       </Button>
-      {disabledCondition ? <></>
+      {(disabledCondition || isLoading) ? <></>
         : (
             <p className="text-center text-xs leading-[14px] text-neutral-20">
-              {t('booking_count', { bookingCount: `${(disabledCondition || isLoading) ? 0 : bookedSessionsList?.length}` })}
+              {t('booking_count', { bookingCount: `${!bookedSessionsList.length ? 0 : bookedSessionsList.length}` })}
             </p>
           )}
     </div>
@@ -114,7 +114,7 @@ export default function StorySidePanel({ data, floatingBooking }: StorySidePanel
 
   // TODO: remove if storyDetailQuery API returns a number of published stories in humanbook
   const { data: storiesList } = useGetStoriesQuery(
-    { humanBookId: data?.humanBook?.id, publishStatus: 'published', type: 'most-popular' },
+    { humanBookId: data?.humanBook?.id, publishStatus: 'published' },
     { skip: !data?.humanBook?.id },
   );
 
