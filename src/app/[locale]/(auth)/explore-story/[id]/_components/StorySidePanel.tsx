@@ -114,7 +114,7 @@ export default function StorySidePanel({ data, floatingBooking }: StorySidePanel
 
   // TODO: remove if storyDetailQuery API returns a number of published stories in humanbook
   const { data: storiesList } = useGetStoriesQuery(
-    { humanBookId: data?.humanBook?.id, publishStatus: 'published', type: 'most-popular' },
+    { humanBookId: data?.humanBook?.id, publishStatus: 'published' },
     { skip: !data?.humanBook?.id },
   );
 
