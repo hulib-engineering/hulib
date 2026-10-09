@@ -1037,7 +1037,37 @@
     "meeting_with": "Cuộc hẹn với",
     "meeting_schedule": "Lịch hẹn",
     "view": "Xem",
-    "type_of_meeting": "Loại cuộc hẹn"
+    "type_of_meeting": "Loại cuộc hẹn",
+    "meeting_list": {
+      "title": "Lịch meeting",
+      "send_to": "Gửi tới",
+      "join": "Tham gia",
+      "time_label": "Thời gian",
+      "filter": {
+        "all": "Tất cả",
+        "right_now": "Đang diễn ra",
+        "upcoming": "Sắp tới",
+        "requests": "Yêu cầu",
+        "done": "Đã xong",
+        "missed": "Bỏ lỡ"
+      },
+      "badge": {
+        "right_now": "Đang diễn ra!",
+        "time_left": "Còn {days} ngày {hours} giờ",
+        "my_request": "Yêu cầu của tôi",
+        "invitation": "Lời mời"
+      },
+      "empty": {
+        "title": "Chưa có cuộc họp nào",
+        "description": "Khi một Liber gửi yêu cầu trò chuyện với bạn, hoặc bạn gửi yêu cầu, nó sẽ xuất hiện ở đây."
+      },
+      "success": {
+        "updated": "Cập nhật cuộc họp thành công"
+      },
+      "error": {
+        "updated": "Không thể cập nhật cuộc họp. Vui lòng thử lại."
+      }
+    }
   },
   "notifications": {
     "title": "Thông báo",
