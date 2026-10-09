@@ -3,41 +3,39 @@
 import { Plus, SealCheck } from '@phosphor-icons/react';
 import { useState } from 'react';
 
-import type { WorkEntry, WorkEntryFormValues } from '../../features/users/types/profile';
-import WorkEntryForm from './WorkEntryForm';
-import WorkItem from './WorkItem';
+import LearningEntryForm from './LearningEntryForm';
+import LearningItem from './LearningItem';
+import type { LearningEntry, LearningEntryFormValues } from '@/features/users/types/profile';
 import { mergeClassnames } from '@/components/core/private/utils';
 import IconButton from '@/components/core/iconButton/IconButton';
 
-type LiberWorkSectionProps = {
+type LiberLearningPathSectionProps = {
   title: string;
-  entries?: WorkEntry[];
+  entries?: LearningEntry[];
   editable?: boolean;
-  onSave?: (values: WorkEntryFormValues, editingId?: number) => Promise<void> | void;
+  onSave?: (values: LearningEntryFormValues, editingId?: number | string) => Promise<void> | void;
 };
 
-export type { LiberWorkSectionProps };
-
-export default function MyWorkSection({
+export default function LiberLearningPathSection({
   title,
   entries = [],
   editable = false,
   onSave,
-}: LiberWorkSectionProps) {
+}: LiberLearningPathSectionProps) {
   const [isAdding, setIsAdding] = useState(false);
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<number | string | null>(null);
 
   const hasContent = entries.length > 0;
   const isEditing = isAdding || editingId !== null;
 
-  const handleStartEdit = (id?: number) => setEditingId(id ?? null);
+  const handleStartEdit = (id?: number | string) => setEditingId(id ?? null);
 
-  const handleAddSave = async (values: WorkEntryFormValues) => {
+  const handleAddSave = async (values: LearningEntryFormValues) => {
     await onSave?.(values);
     setIsAdding(false);
   };
 
-  const handleEditSave = (id: number) => async (values: WorkEntryFormValues) => {
+  const handleEditSave = (id: number | string) => async (values: LearningEntryFormValues) => {
     await onSave?.(values, id);
     setEditingId(null);
   };
@@ -75,7 +73,7 @@ export default function MyWorkSection({
           {entries.map(entry => (
             editingId === entry.id
               ? (
-                  <WorkEntryForm
+                  <LearningEntryForm
                     key={entry.id}
                     defaultValues={entry}
                     onSave={handleEditSave(entry.id!)}
@@ -83,7 +81,7 @@ export default function MyWorkSection({
                   />
                 )
               : (
-                  <WorkItem
+                  <LearningItem
                     key={entry.id}
                     entry={entry}
                     editable={editable && !isEditing}
@@ -95,7 +93,7 @@ export default function MyWorkSection({
       )}
 
       {isAdding && (
-        <WorkEntryForm
+        <LearningEntryForm
           onSave={handleAddSave}
           onCancel={handleCancelAdd}
         />

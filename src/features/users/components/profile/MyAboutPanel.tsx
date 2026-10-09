@@ -2,11 +2,11 @@
 
 import { useTranslations } from 'next-intl';
 
-import type { LearningEntryFormValues, LiberAboutData, WorkEntryFormValues } from '../../features/users/types/profile';
 import LiberAboutSection from './MyAboutSection';
 import LiberLearningPathSection from './MyLearningPathSection';
 import MyWorkSection from './MyWorkSection';
 import MyTopicsSection from './MyTopicsSection';
+import type { LearningEntryFormValues, LiberAboutData, WorkEntryFormValues } from '@/features/users/types/profile';
 
 type LiberAboutPanelProps = {
   data?: LiberAboutData;

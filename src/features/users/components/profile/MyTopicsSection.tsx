@@ -5,8 +5,8 @@ import { useTranslations } from 'next-intl';
 import { type CSSProperties, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import type { Topic } from '../../features/users/types/profile';
 import TopicChip from './TopicChip';
+import type { Topic } from '@/features/users/types/profile';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 

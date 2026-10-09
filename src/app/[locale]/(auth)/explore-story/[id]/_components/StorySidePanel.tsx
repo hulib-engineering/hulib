@@ -17,7 +17,7 @@ import Image from 'next/image';
 
 import * as React from 'react';
 
-import MyStoryCard from '../../../users/[id]/_components/MyStoryCard';
+import MyStoryCard from '@/features/users/components/stories/MyStoryCard';
 import { usePathname, useRouter } from '@/libs/i18nNavigation';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 

@@ -3,39 +3,41 @@
 import { Plus, SealCheck } from '@phosphor-icons/react';
 import { useState } from 'react';
 
-import type { LearningEntry, LearningEntryFormValues } from '../../features/users/types/profile';
-import LearningEntryForm from './LearningEntryForm';
-import LearningItem from './LearningItem';
+import WorkEntryForm from './WorkEntryForm';
+import WorkItem from './WorkItem';
+import type { WorkEntry, WorkEntryFormValues } from '@/features/users/types/profile';
 import { mergeClassnames } from '@/components/core/private/utils';
 import IconButton from '@/components/core/iconButton/IconButton';
 
-type LiberLearningPathSectionProps = {
+type LiberWorkSectionProps = {
   title: string;
-  entries?: LearningEntry[];
+  entries?: WorkEntry[];
   editable?: boolean;
-  onSave?: (values: LearningEntryFormValues, editingId?: number | string) => Promise<void> | void;
+  onSave?: (values: WorkEntryFormValues, editingId?: number) => Promise<void> | void;
 };
 
-export default function LiberLearningPathSection({
+export type { LiberWorkSectionProps };
+
+export default function MyWorkSection({
   title,
   entries = [],
   editable = false,
   onSave,
-}: LiberLearningPathSectionProps) {
+}: LiberWorkSectionProps) {
   const [isAdding, setIsAdding] = useState(false);
-  const [editingId, setEditingId] = useState<number | string | null>(null);
+  const [editingId, setEditingId] = useState<number | null>(null);
 
   const hasContent = entries.length > 0;
   const isEditing = isAdding || editingId !== null;
 
-  const handleStartEdit = (id?: number | string) => setEditingId(id ?? null);
+  const handleStartEdit = (id?: number) => setEditingId(id ?? null);
 
-  const handleAddSave = async (values: LearningEntryFormValues) => {
+  const handleAddSave = async (values: WorkEntryFormValues) => {
     await onSave?.(values);
     setIsAdding(false);
   };
 
-  const handleEditSave = (id: number | string) => async (values: LearningEntryFormValues) => {
+  const handleEditSave = (id: number) => async (values: WorkEntryFormValues) => {
     await onSave?.(values, id);
     setEditingId(null);
   };
@@ -73,7 +75,7 @@ export default function LiberLearningPathSection({
           {entries.map(entry => (
             editingId === entry.id
               ? (
-                  <LearningEntryForm
+                  <WorkEntryForm
                     key={entry.id}
                     defaultValues={entry}
                     onSave={handleEditSave(entry.id!)}
@@ -81,7 +83,7 @@ export default function LiberLearningPathSection({
                   />
                 )
               : (
-                  <LearningItem
+                  <WorkItem
                     key={entry.id}
                     entry={entry}
                     editable={editable && !isEditing}
@@ -93,7 +95,7 @@ export default function LiberLearningPathSection({
       )}
 
       {isAdding && (
-        <LearningEntryForm
+        <WorkEntryForm
           onSave={handleAddSave}
           onCancel={handleCancelAdd}
         />

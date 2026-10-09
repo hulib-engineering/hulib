@@ -2,8 +2,8 @@ import { useTranslations } from 'next-intl';
 import { skipToken } from '@reduxjs/toolkit/query';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { ConfirmModal } from '../../components/ConfirmModal';
 import { MyFavoriteEmpty } from './MyFavoriteEmpty';
+import { ConfirmModal } from '@/components/ConfirmModal';
 import { pushSuccess } from '@/components/CustomToastifyContainer';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
 import {
