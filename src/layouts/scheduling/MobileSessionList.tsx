@@ -11,6 +11,7 @@ import type { FC, ReactNode } from 'react';
 import React, { useMemo, useState } from 'react';
 
 import { mergeClassnames } from '@/components/core/private/utils';
+import { isApprovedSessionStatus, isPendingSessionStatus } from '@/components/notification/private/types';
 import SessionDetailCard from '@/layouts/scheduling/SessionDetailCard';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
@@ -52,6 +53,10 @@ const Tabs: FC<ITabsProps> = ({ tabs, activeTab, onTabChange }) => (
   </div>
 );
 
+const isUpcomingStatus = (session: ReadingSession) =>
+  isApprovedSessionStatus(session.sessionStatus)
+  || isPendingSessionStatus(session.sessionStatus);
+
 const categorizeSessions = (sessions: ReadingSession[]): CategorizedSessions => {
   const now = new Date();
   const todayEnd = endOfDay(now);
@@ -60,8 +65,7 @@ const categorizeSessions = (sessions: ReadingSession[]): CategorizedSessions => 
     const sessionDate = new Date(session.startedAt);
     return (
       isSameDay(sessionDate, now)
-      && (session.sessionStatus === StatusEnum.Approved
-        || session.sessionStatus === StatusEnum.Pending)
+      && isUpcomingStatus(session)
     );
   });
 
@@ -69,8 +73,7 @@ const categorizeSessions = (sessions: ReadingSession[]): CategorizedSessions => 
     const sessionDate = new Date(session.startedAt);
     return (
       isAfter(sessionDate, todayEnd)
-      && (session.sessionStatus === StatusEnum.Approved
-        || session.sessionStatus === StatusEnum.Pending)
+      && isUpcomingStatus(session)
     );
   });
 
@@ -107,7 +110,7 @@ const filterSessionsByTab = (
       case 'huber':
         return !isCurrentUserReader;
       case 'waiting':
-        return session.sessionStatus === StatusEnum.Pending;
+        return isPendingSessionStatus(session.sessionStatus);
       case 'all':
       default:
         return true;
@@ -127,8 +130,7 @@ const getTabCount = (
     const sessionDate = new Date(session.startedAt);
     return (
       isAfter(sessionDate, todayEnd)
-      && (session.sessionStatus === StatusEnum.Approved
-        || session.sessionStatus === StatusEnum.Pending)
+      && isUpcomingStatus(session)
     );
   });
 
