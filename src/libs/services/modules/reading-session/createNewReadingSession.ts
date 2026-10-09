@@ -41,6 +41,9 @@ export type ReadingSession = {
   endedAt: string;
   startTime: string;
   endTime: string;
+  /** Set by `POST /reading-sessions/:id/attend`. Both stay null until the meeting happens. */
+  huberJoinedAt?: string | null;
+  readerJoinedAt?: string | null;
   feedbacks: FeedBack[];
 };
 
