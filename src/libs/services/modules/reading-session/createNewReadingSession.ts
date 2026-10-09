@@ -22,7 +22,12 @@ export type StatusType =
   | 'unInitialized'
   | 'missed';
 
-type User = Omit<z.infer<typeof ProfileValidation>, 'isUnderGuard'> & { id: string; photo?: { path: string } };
+type User = Omit<z.infer<typeof ProfileValidation>, 'isUnderGuard'> & {
+  id: string;
+  photo?: { path: string };
+  /** Returned by the backend via `basicUserInclude`; the card renders the role as a chip. */
+  role?: { id: number; name: string };
+};
 export type ReadingSession = {
   id: string;
   humanBookId: string;

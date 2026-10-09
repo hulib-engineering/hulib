@@ -57,7 +57,14 @@ export default function ProfileContent({ userDetail, isViewer = false }: HuberPr
           readOnly={isViewer}
         />
       )}
-      {currentTab === 'schedule' && <HuberSchedulePanel huberId={userDetail.id} isOwner={!isViewer} />}
+      {currentTab === 'schedule'
+      && (
+        <HuberSchedulePanel
+          huberId={userDetail.id}
+          isOwner={!isViewer}
+          canManageSlots={isHuber}
+        />
+      )}
       {currentTab === 'personal_info' && <PersonalInformation data={userDetail} />}
       {currentTab === 'feedback' && <MyFeedbackPanel huberId={userDetail.id} />}
     </ControlOverview>

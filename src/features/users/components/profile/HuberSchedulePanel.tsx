@@ -10,22 +10,30 @@ import { DAY_KEYS } from '@/libs/constants/date';
 import { useTimeslotGrouping } from '@/libs/hooks/useTimeslotGrouping';
 import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
 import { PersonalCalendarEditor } from '@/features/stories/components/PersonalCalendarModal';
+import MeetingCardGrid from '@/features/users/features/schedule/components/MeetingCardGrid';
 
 type HuberSchedulePanelProps = {
   huberId: number;
   isOwner?: boolean;
+  /** True only for a Huber viewing their own profile; Libers have no availability slots. */
+  canManageSlots?: boolean;
 };
 
 const PERIODS = ['morning', 'afternoon', 'evening'] as const;
 
-function OwnerSchedule() {
+function OwnerSchedule({ canManageSlots }: { canManageSlots: boolean }) {
   const tTimeslot = useTranslations('Time_slots');
-  const tCommon = useTranslations('Common');
   const [tab, setTab] = React.useState<'personal' | 'meeting'>('personal');
   const tabs = [
     { value: 'personal', label: tTimeslot('personal_time_tab') },
     { value: 'meeting', label: tTimeslot('meeting_tab') },
   ] as const;
+
+  // Availability slots belong to the Huber who is being read. A Liber has no slots of
+  // their own to publish, so they go straight to the meeting list.
+  if (!canManageSlots) {
+    return <MeetingCardGrid />;
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -55,14 +63,7 @@ function OwnerSchedule() {
             </>
           )
         : (
-            // Meeting empty state (Figma 16223-48000 desktop, 17162-75066 mobile)
-            <div className="flex min-h-[280px] flex-col items-center justify-center gap-3 rounded-2xl border border-neutral-90 bg-white p-6 text-center shadow-sm">
-              <div className="bg-primary-95 flex size-14 items-center justify-center rounded-full text-primary-50">
-                <CalendarDots size={28} weight="bold" />
-              </div>
-              <p className="text-base font-semibold text-neutral-10">{tCommon('meeting_empty_title')}</p>
-              <p className="max-w-sm text-sm leading-5 text-neutral-40">{tCommon('meeting_empty_description')}</p>
-            </div>
+            <MeetingCardGrid />
           )}
     </div>
   );
@@ -150,6 +151,6 @@ function ViewerSchedule({ huberId }: { huberId: number }) {
   );
 }
 
-export default function HuberSchedulePanel({ huberId, isOwner = false }: HuberSchedulePanelProps) {
-  return isOwner ? <OwnerSchedule /> : <ViewerSchedule huberId={huberId} />;
+export default function HuberSchedulePanel({ huberId, isOwner = false, canManageSlots = false }: HuberSchedulePanelProps) {
+  return isOwner ? <OwnerSchedule canManageSlots={canManageSlots} /> : <ViewerSchedule huberId={huberId} />;
 }
