@@ -258,6 +258,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     register,
     setValue,
     setError,
+    trigger,
     watch,
     // getValues, Note: Reuse if need an otp modal again
     handleSubmit,
@@ -289,7 +290,8 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     const age = calculateAge(birthday);
     const underGuard = age < 18;
     setValue('isUnderGuard', underGuard, { shouldDirty: true, shouldValidate: true });
-  }, [birthday, setValue]);
+    trigger('parentPhoneNumber');
+  }, [birthday, setValue, trigger]);
 
   const handleUpdate = handleSubmit(async (values: TProfileForm) => {
     try {
