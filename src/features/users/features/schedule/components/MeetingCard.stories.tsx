@@ -22,7 +22,7 @@ const withProviders = (locale: 'en' | 'vi', messages: typeof enMessages) => (
   const Wrapper = ({ children }: { children: ReactNode }) => (
     <Provider store={store}>
       <NextIntlClientProvider locale={locale} messages={messages}>
-        <div className="w-[380px] bg-neutral-98 p-2">
+        <div className="w-[304px] bg-neutral-98 p-2">
           {children}
         </div>
       </NextIntlClientProvider>
@@ -124,6 +124,20 @@ export const MyRequest: Story = {
 
 export const Done: Story = {
   args: { card: makeCard('done', { session: { ...session, sessionStatus: 'finished' } }), now: NOW },
+};
+
+/**
+ * A Liber counterpart renders the orange "Liber" chip instead of the blue verified tick —
+ * the design's done card shows exactly that pairing.
+ */
+export const DoneWithLiberCounterpart: Story = {
+  args: {
+    card: makeCard('done', {
+      session: { ...session, sessionStatus: 'finished' },
+      counterpart: { id: 9, fullName: 'Persephone', photo: { path: '' }, role: { id: 3, name: 'Liber' } } as any,
+    }),
+    now: NOW,
+  },
 };
 
 export const Missed: Story = {

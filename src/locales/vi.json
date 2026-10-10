@@ -1039,7 +1039,6 @@
     "view": "Xem",
     "type_of_meeting": "Loại cuộc hẹn",
     "meeting_list": {
-      "title": "Lịch meeting",
       "send_to": "Gửi tới",
       "join": "Tham gia",
       "time_label": "Thời gian",

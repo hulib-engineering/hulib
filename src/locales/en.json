@@ -1039,7 +1039,6 @@
     "view": "View",
     "type_of_meeting": "Type of meeting",
     "meeting_list": {
-      "title": "Meeting schedule",
       "send_to": "Send to",
       "join": "Join",
       "time_label": "Time",
