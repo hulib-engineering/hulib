@@ -4,8 +4,8 @@ import { CaretDown } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import React, { useMemo, useState } from 'react';
 
-import type { ScheduleCounts, ScheduleFilter } from '../types';
-import { SCHEDULE_FILTERS } from '../types';
+import type { ScheduleCounts, ScheduleFilter, ScheduleFilterOption } from '../types';
+import { FILTER_LABEL_KEY, SCHEDULE_FILTERS } from '../types';
 import Combobox from '@/components/core/combobox/Combobox';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -22,13 +22,22 @@ export default function ScheduleHeader({ counts, filters, onFiltersChange }: Sch
 
   const [query, setQuery] = useState('');
 
-  const options = useMemo(
+  // The combobox stores whole option objects and matches them by reference, so `options`
+  // must be memoised and `selected` must be drawn from it rather than rebuilt — otherwise a
+  // selected chip is a different object from its row in the list and toggling misbehaves.
+  const options: ScheduleFilterOption[] = useMemo(
     () => SCHEDULE_FILTERS.map(value => ({
+      id: value,
       value,
-      label: t(`filter.${value}`),
+      label: t(`filter.${FILTER_LABEL_KEY[value]}`),
       count: counts[value] ?? 0,
     })),
     [counts, t],
+  );
+
+  const selected = useMemo(
+    () => options.filter(option => filters.includes(option.value)),
+    [options, filters],
   );
 
   const visibleOptions = useMemo(() => {
@@ -39,7 +48,10 @@ export default function ScheduleHeader({ counts, filters, onFiltersChange }: Sch
     return options.filter(option => option.label.toLowerCase().includes(needle));
   }, [options, query]);
 
-  const onRemove = (id: unknown) => onFiltersChange(filters.filter(value => value !== id));
+  // `Combobox.VisualMultiSelect` passes the removed chip's `id`, not its index or value.
+  const onRemove = (id?: number | string) => {
+    onFiltersChange(filters.filter(value => value !== id));
+  };
 
   return (
     <div className="flex flex-col gap-3 pb-4">
@@ -52,8 +64,11 @@ export default function ScheduleHeader({ counts, filters, onFiltersChange }: Sch
             :
           </span>
           <Combobox
-            value={filters}
-            onChange={value => onFiltersChange(value as ScheduleFilter[])}
+            value={selected}
+            onChange={(value) => {
+              const next = value as ScheduleFilterOption[];
+              onFiltersChange(next.length ? next.map(option => option.value) : []);
+            }}
             onQueryChange={setQuery}
             onClear={onRemove}
             className="w-full max-w-[220px]"
@@ -68,7 +83,7 @@ export default function ScheduleHeader({ counts, filters, onFiltersChange }: Sch
                   placeholder={tSchedule('type_of_meeting')}
                   className={mergeClassnames(
                     'rounded-lg border-[0.5px] border-neutral-70',
-                    filters.length > 0 ? 'p-1' : 'py-1 pl-4 pr-2',
+                    selected.length > 0 ? 'p-1' : 'py-1 pl-4 pr-2',
                   )}
                   inputClassname="p-0 font-normal leading-5"
                   displayValue={({ label }) => label}

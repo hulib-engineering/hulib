@@ -1,7 +1,7 @@
 'use client';
 
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 
 import IconButton from '@/components/core/iconButton/IconButton';
 import Pagination from '@/components/core/pagination/Pagination';
@@ -11,8 +11,6 @@ import MeetingCard from '@/features/users/features/schedule/components/MeetingCa
 import ScheduleEmptyState from '@/features/users/features/schedule/components/ScheduleEmptyState';
 import ScheduleHeader from '@/features/users/features/schedule/components/ScheduleHeader';
 import { useScheduleMeetings } from '@/features/users/features/schedule/hooks/useScheduleMeetings';
-import type { ScheduleFilter } from '@/features/users/features/schedule/types';
-import { applyFilters } from '@/features/users/features/schedule/utils/filters';
 
 /** Dims the grid mid-fetch so a page change does not flash stale cards at full opacity. */
 const gridClassName = (isFetching: boolean) => mergeClassnames(
@@ -28,11 +26,9 @@ export default function MeetingCardGrid() {
     isFetching,
     currentPage,
     totalPages,
-    setCurrentPage,
+    filters,
+    setFilters,
   } = useScheduleMeetings();
-  const [filters, setFilters] = useState<ScheduleFilter[]>([]);
-
-  const visibleCards = useMemo(() => applyFilters(cards, filters), [cards, filters]);
 
   if (isLoading) {
     return <StoriesSkeleton />;
@@ -42,11 +38,11 @@ export default function MeetingCardGrid() {
     <div className="flex flex-col gap-6">
       <ScheduleHeader counts={counts} filters={filters} onFiltersChange={setFilters} />
 
-      {visibleCards.length === 0
+      {cards.length === 0
         ? <ScheduleEmptyState />
         : (
             <div className={gridClassName(isFetching)}>
-              {visibleCards.map(card => (
+              {cards.map(card => (
                 <MeetingCard key={card.session.id} card={card} />
               ))}
             </div>
@@ -56,7 +52,7 @@ export default function MeetingCardGrid() {
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage - 1}
-          setCurrentPage={page => setCurrentPage(page + 1)}
+          setCurrentPage={page => page + 1}
         >
           <Pagination.PrevButton as="div">
             {({ disabled }) => (

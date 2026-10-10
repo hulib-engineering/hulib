@@ -1044,8 +1044,7 @@
       "time_label": "Time",
       "filter": {
         "all": "All",
-        "right_now": "Right now",
-        "upcoming": "Upcoming",
+        "approved": "Approved",
         "requests": "Requests",
         "done": "Done",
         "missed": "Missed"

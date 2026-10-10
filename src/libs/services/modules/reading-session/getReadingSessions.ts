@@ -2,11 +2,21 @@ import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
 import type { ReadingSession, StatusType } from './createNewReadingSession';
 
+/** Per-status totals across every page, plus the unfiltered total under `all`. */
+export type ReadingSessionCounts = {
+  all: number;
+  approved: number;
+  pending: number;
+  finished: number;
+  missed: number;
+};
+
 export type ReadingSessionMeta = {
   totalItems: number;
   itemsPerPage: number;
   totalPages: number;
   currentPage: number;
+  counts?: Partial<ReadingSessionCounts>;
 };
 
 export type ReadingSessionListResponse = {

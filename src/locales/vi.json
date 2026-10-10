@@ -1044,8 +1044,7 @@
       "time_label": "Thời gian",
       "filter": {
         "all": "Tất cả",
-        "right_now": "Đang diễn ra",
-        "upcoming": "Sắp tới",
+        "approved": "Đã duyệt",
         "requests": "Yêu cầu",
         "done": "Đã xong",
         "missed": "Bỏ lỡ"
