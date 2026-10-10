@@ -33,12 +33,22 @@ export default function MyWorkSection({
   const handleStartEdit = (id?: number) => setEditingId(id ?? null);
 
   const handleAddSave = async (values: WorkEntryFormValues) => {
-    await onSave?.(values);
+    try {
+      await onSave?.(values);
+    } catch {
+      // `onSave` has already reported the failure through a toast; keep the
+      // form open so the user can correct the input.
+      return;
+    }
     setIsAdding(false);
   };
 
   const handleEditSave = (id: number) => async (values: WorkEntryFormValues) => {
-    await onSave?.(values, id);
+    try {
+      await onSave?.(values, id);
+    } catch {
+      return;
+    }
     setEditingId(null);
   };
 

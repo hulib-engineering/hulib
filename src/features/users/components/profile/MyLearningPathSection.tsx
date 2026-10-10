@@ -31,12 +31,21 @@ export default function LiberLearningPathSection({
   const handleStartEdit = (id?: number | string) => setEditingId(id ?? null);
 
   const handleAddSave = async (values: LearningEntryFormValues) => {
-    await onSave?.(values);
+    try {
+      await onSave?.(values);
+    } catch {
+      // Already reported through a toast — keep the form open.
+      return;
+    }
     setIsAdding(false);
   };
 
   const handleEditSave = (id: number | string) => async (values: LearningEntryFormValues) => {
-    await onSave?.(values, id);
+    try {
+      await onSave?.(values, id);
+    } catch {
+      return;
+    }
     setEditingId(null);
   };
 
