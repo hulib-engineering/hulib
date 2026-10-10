@@ -80,6 +80,8 @@ export default function MyTopicsSection({
       await onSave?.(draft);
       setIsEditing(false);
       setDropOpen(false);
+    } catch {
+      // Already reported through a toast — keep the editor open.
     } finally {
       setIsSaving(false);
     }

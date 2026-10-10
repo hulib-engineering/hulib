@@ -37,6 +37,8 @@ export default function LiberAboutSection({
     try {
       await onSave?.(draft);
       setIsEditing(false);
+    } catch {
+      // Already reported through a toast — keep the editor open.
     } finally {
       setIsSaving(false);
     }
