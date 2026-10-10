@@ -149,8 +149,17 @@ const baseQueryWithInterceptor = async (
       return { data: null };
     }
 
+    // `error_contact_admin` doubles as the sentinel `utils/apiError.ts` looks
+    // for, so the literal here and GENERIC_ERROR_KEY there must stay in sync.
     const error = new Error('error_contact_admin');
     (error as any).status = result.error.status;
+    // The backend payload is kept on `.data` so callers can surface the real
+    // reason via `getApiErrorMessage` / `pushApiError`. `message` stays the
+    // i18n key: ~70 call sites do `pushError(t(error.message))` and would
+    // start printing raw English if this changed.
+    if (rawError.data !== undefined) {
+      (error as any).data = rawError.data;
+    }
     throw error;
   }
 
