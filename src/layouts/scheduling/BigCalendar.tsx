@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Calendar, Views, dateFnsLocalizer } from 'react-big-calendar';
 import { format, getDay, parse, startOfWeek } from 'date-fns';
 import { enUS } from 'date-fns/locale';
@@ -56,10 +56,14 @@ export default function BigCalendar({ dateInWeekView = new Date(), statusFilters
   };
   const { startedAt, endedAt } = getCurrentWeekRange(dateInWeekView);
 
-  const { data: readingSessions, isLoading } = useGetReadingSessionsQuery({
+  const { data: readingSessionsResponse, isLoading } = useGetReadingSessionsQuery({
     startedAt,
     endedAt,
   });
+  const readingSessions = useMemo(
+    () => readingSessionsResponse?.data ?? [],
+    [readingSessionsResponse],
+  );
 
   const filterEvents = (events: IEvent[], selectedStatuses: string[]) => {
     if (selectedStatuses.length === 0) {

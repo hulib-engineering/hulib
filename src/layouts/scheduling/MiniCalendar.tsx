@@ -127,16 +127,17 @@ export default function MiniCalendar({ onChange, type, huberId, chosenDay }: Mon
   });
   const groupingTimeslots = useTimeslotGrouping(timeSlots);
 
-  const { data } = useGetReadingSessionsQuery({
+  const { data: readingSessionsResponse } = useGetReadingSessionsQuery({
     startedAt: monthStartDate.toISOString(),
     endedAt: monthEndDate.toISOString(),
   });
+  const readingSessions = useMemo(() => readingSessionsResponse?.data ?? [], [readingSessionsResponse]);
 
   const groupedReadingSessions = useMemo(() => {
-    if (!data) {
+    if (!readingSessions?.length) {
       return {};
     }
-    return data.reduce((acc: GroupedReadingSessions, session: ReadingSession) => {
+    return readingSessions.reduce((acc: GroupedReadingSessions, session: ReadingSession) => {
       const dateKey = new Date(session.startedAt).toLocaleDateString();
 
       if (!acc[dateKey]) {
@@ -147,7 +148,7 @@ export default function MiniCalendar({ onChange, type, huberId, chosenDay }: Mon
 
       return acc;
     }, {} as GroupedReadingSessions);
-  }, [data]);
+  }, [readingSessions]);
 
   return (
     <div className="flex flex-col gap-1 rounded-lg bg-white px-4 py-2 shadow-sm lg:max-w-[25rem] xl:px-2">

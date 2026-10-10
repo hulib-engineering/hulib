@@ -1,17 +1,29 @@
 import type { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 
-import type { StatusType } from './createNewReadingSession';
+import type { ReadingSession, StatusType } from './createNewReadingSession';
+
+export type ReadingSessionMeta = {
+  totalItems: number;
+  itemsPerPage: number;
+  totalPages: number;
+  currentPage: number;
+};
+
+export type ReadingSessionListResponse = {
+  data: ReadingSession[];
+  meta: ReadingSessionMeta;
+};
 
 type GetReadingSessionsParams = {
   upcoming?: boolean;
   /**
-   * Page size. The backend only paginates when `limit` **and** `offset` are both present
-   * (`reading-sessions.service.ts` derives `page` from `offset / limit`), so omitting
-   * `offset` returns the full unpaginated set.
+   * Page size. The backend returns at most `maxItemsPerPage` per response regardless of what
+   * is asked for, and reports the real page size in `meta.itemsPerPage` — so a caller that
+   * wants "everything" still has to follow `meta.totalPages`.
    */
   limit?: number;
-  /** Row offset. The backend reads `offset`, not `page`. */
-  offset?: number;
+  /** 1-based page number. */
+  page?: number;
   startedAt?: string;
   endedAt?: string;
   sessionStatuses?: StatusType[];
@@ -41,13 +53,13 @@ const paramsSerializer = (params: Record<string, unknown>) => {
 const getReadingSessions = (
   build: EndpointBuilder<BaseQueryFn, string, string>,
 ) =>
-  build.query<any, GetReadingSessionsParams>({
+  build.query<ReadingSessionListResponse, GetReadingSessionsParams>({
     query: params => ({
       url: 'reading-sessions',
       params: {
         upcoming: params?.upcoming || undefined,
         limit: params?.limit || 100,
-        offset: params?.offset || undefined,
+        page: params?.page || 1,
         startedAt: params?.startedAt || undefined,
         endedAt: params?.endedAt || undefined,
         sessionStatuses: params?.sessionStatuses?.length

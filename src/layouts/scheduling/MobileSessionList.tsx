@@ -179,7 +179,11 @@ export default function MobileSessionList() {
   // User info
   const userId = useAppSelector(state => state.auth.userInfo?.id);
 
-  const { data: readingSessions, isLoading } = useGetReadingSessionsQuery({});
+  const { data: readingSessionsResponse, isLoading } = useGetReadingSessionsQuery({});
+  const readingSessions = useMemo(
+    () => readingSessionsResponse?.data ?? [],
+    [readingSessionsResponse],
+  );
 
   const [activeTab, setActiveTab] = useState<TabType>('all');
 

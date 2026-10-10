@@ -8,7 +8,7 @@ import { isViewerLiber, resolveCounterpart, resolveVariant } from '../utils/vari
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 import { useAppSelector } from '@/libs/hooks';
 
-export const PAGE_SIZE = 8;
+export const PAGE_SIZE = 12;
 
 export type UseScheduleMeetingsResult = {
   cards: MeetingCardModel[];
@@ -27,18 +27,20 @@ export type UseScheduleMeetingsResult = {
  * sessions where the caller is either the human book or the reader, so a Liber and a Huber
  * see the same payload and differ only in how `resolveVariant` labels each pending session.
  *
- * Pagination is server-side because the backend supports `limit`/`offset`. Note that the
- * header's "Type of meeting" filter is still client-side, so both it and the per-option
- * counts describe the current page rather than the whole history.
+ * Pagination is server-side, driven by `meta.totalPages`. Note that the header's
+ * "Type of meeting" filter is still client-side, so both it and the per-option counts
+ * describe the current page rather than the whole history.
  */
 export function useScheduleMeetings(): UseScheduleMeetingsResult {
   const viewerId = useAppSelector(state => state.auth.userInfo?.id);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data: sessions, isLoading, isFetching } = useGetReadingSessionsQuery({
+  const { data, isLoading, isFetching } = useGetReadingSessionsQuery({
     limit: PAGE_SIZE,
-    offset: (currentPage - 1) * PAGE_SIZE,
+    page: currentPage,
   });
+
+  const sessions = data?.data;
 
   const cards = useMemo<MeetingCardModel[]>(() => {
     if (!Array.isArray(sessions)) {
@@ -69,18 +71,13 @@ export function useScheduleMeetings(): UseScheduleMeetingsResult {
 
   const counts = useMemo(() => countByFilter(cards), [cards]);
 
-  // The response is a bare array with no total, so a short page means we are on the last one.
-  // A full page is ambiguous (there may be nothing after it), so keep one extra page alive
-  // and let the next fetch come back empty.
-  const totalPages = cards.length < PAGE_SIZE ? currentPage : currentPage + 1;
-
   return {
     cards,
     counts,
     isLoading,
     isFetching,
     currentPage,
-    totalPages,
+    totalPages: data?.meta?.totalPages ?? 1,
     setCurrentPage,
   };
 }
