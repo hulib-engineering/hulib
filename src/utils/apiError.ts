@@ -41,11 +41,18 @@ const toText = (value: unknown): string | null => {
   return null;
 };
 
+/** The message a wrapper object carries, or `undefined` if it is not a wrapper. */
+const wrapperDetail = (value: Record<string, unknown>): unknown => {
+  const { fieldErrors, errors, message } = value as FieldErrorLike;
+  return fieldErrors ?? errors ?? message;
+};
+
 /**
- * Flattens one `errors` value into lines. Handles the array form
+ * Flattens one field error value into lines. Handles the array form
  * (`['too short', 'invalid']`), the per-field wrapper form
- * (`{ fieldErrors: [...] }`), and plain strings. Anything else yields no line
- * rather than being stringified into `[object Object]`.
+ * (`{ fieldErrors: [...] }`), and plain strings. A plain object with none of
+ * those keys is not a message, so it yields no line rather than being
+ * stringified into `[object Object]`.
  */
 const linesFromValue = (value: unknown): string[] => {
   if (Array.isArray(value)) {
@@ -53,13 +60,30 @@ const linesFromValue = (value: unknown): string[] => {
   }
 
   if (isRecord(value)) {
-    const { fieldErrors, errors, message } = value as FieldErrorLike;
-    const nested = fieldErrors ?? errors ?? message;
+    const nested = wrapperDetail(value);
     return nested === undefined ? [] : linesFromValue(nested);
   }
 
   const text = toText(value);
   return text ? [text] : [];
+};
+
+/**
+ * The `errors` slot is either a map of field name to message
+ * (`{ company: '...' }`) or a single wrapper (`{ fieldErrors: [...] }`,
+ * `{ message: '...' }`, or an array of either). Both shapes occur in the wild,
+ * so the map form is only assumed once the wrapper keys are ruled out.
+ */
+const linesFromErrors = (errors: unknown): string[] => {
+  if (isRecord(errors)) {
+    const nested = wrapperDetail(errors);
+    if (nested !== undefined) {
+      return linesFromValue(nested);
+    }
+    return Object.values(errors).flatMap(linesFromValue);
+  }
+
+  return linesFromValue(errors);
 };
 
 const joinLines = (lines: string[]): string | null => {
@@ -80,7 +104,7 @@ export function getApiErrorMessage(error: unknown): string | null {
   const data = isRecord(error.data) ? error.data : undefined;
 
   if (data) {
-    const fromErrors = joinLines(linesFromValue(data.errors));
+    const fromErrors = joinLines(linesFromErrors(data.errors));
     if (fromErrors) {
       return fromErrors;
     }
