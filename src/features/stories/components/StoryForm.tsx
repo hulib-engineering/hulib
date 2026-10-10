@@ -303,10 +303,11 @@ export default function StoryForm(props: IStoryFormProps) {
     pushSuccess(t('draft_create_success'), t('draft_create_success_title'));
 
     const userProfile = `/users/${userInfo.id}?tab=stories`;
-    if (!pathname.includes(userProfile)) {
-      router.push(userProfile);
+    router.push(userProfile);
+
+    if (pathname.includes(`/users/${userInfo.id}`)) {
+      window.location.reload();
     }
-    window.location.reload();
   }
 
   return (
