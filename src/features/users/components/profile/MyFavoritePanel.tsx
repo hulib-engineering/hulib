@@ -2,8 +2,8 @@ import { useTranslations } from 'next-intl';
 import { skipToken } from '@reduxjs/toolkit/query';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-import { ConfirmModal } from '../../components/ConfirmModal';
 import { MyFavoriteEmpty } from './MyFavoriteEmpty';
+import { ConfirmModal } from '@/components/ConfirmModal';
 import Button from '@/components/core/button/Button';
 import Checkbox from '@/components/core/checkbox/Checkbox';
 import { mergeClassnames } from '@/components/core/private/utils';

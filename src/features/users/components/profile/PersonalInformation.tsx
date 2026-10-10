@@ -24,7 +24,7 @@ import { setUserInfo } from '@/libs/store/authentication';
 import { PHONE_NUMBER_REGEX, ProfileValidation, VALIDATION_MESSAGES } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
 import Alert from '@/components/Alert';
-// import { CodeConfirmationModal } from '@/_components/profile/PersonalInfoOTPModal' Note: Reuse if OTP modal still needed
+// import { CodeConfirmationModal } from './PersonalInfoOTPModal' Note: Reuse if OTP modal still needed
 
 type SectionProps = {
   register: UseFormRegister<TProfileForm>;

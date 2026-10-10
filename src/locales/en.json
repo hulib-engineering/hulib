@@ -1037,7 +1037,35 @@
     "meeting_with": "Meeting with",
     "meeting_schedule": "Meeting schedule",
     "view": "View",
-    "type_of_meeting": "Type of meeting"
+    "type_of_meeting": "Type of meeting",
+    "meeting_list": {
+      "send_to": "Send to",
+      "join": "Join",
+      "time_label": "Time",
+      "filter": {
+        "all": "All",
+        "approved": "Approved",
+        "requests": "Requests",
+        "done": "Done",
+        "missed": "Missed"
+      },
+      "badge": {
+        "right_now": "Right now!",
+        "time_left": "{days}d {hours}h left",
+        "my_request": "My request",
+        "invitation": "Invitation"
+      },
+      "empty": {
+        "title": "No meetings yet",
+        "description": "Once a Liber requests a conversation with you, or you request one, it will show up here."
+      },
+      "success": {
+        "updated": "Meeting updated successfully"
+      },
+      "error": {
+        "updated": "Failed to update the meeting. Please try again."
+      }
+    }
   },
   "notifications": {
     "title": "Notifications",

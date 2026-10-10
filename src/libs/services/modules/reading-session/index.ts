@@ -5,6 +5,12 @@ import getReadingSessionById from './getReadingSessionById';
 import getReadingSessions from './getReadingSessions';
 import updateReadingSession from './updateReadingSession';
 
+export type {
+  ReadingSessionListResponse,
+  ReadingSessionMeta,
+  ReadingSessionCounts,
+} from './getReadingSessions';
+
 const apiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['ReadingSession'],
 });

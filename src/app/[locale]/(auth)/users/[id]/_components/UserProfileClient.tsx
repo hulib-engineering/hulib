@@ -7,9 +7,9 @@ import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 
 import Loading from '@/app/[locale]/loading';
 import { Role } from '@/types/common';
-import HuberProfileComponent from '@/_components/profile/HuberProfileComponent';
-import LiberProfileComponent from '@/_components/profile/LiberProfileComponent';
-import ViewerProfileComponent from '@/_components/profile/ViewerProfileComponent';
+import HuberProfileComponent from '@/features/users/components/profile/HuberProfileComponent';
+import LiberProfileComponent from '@/features/users/components/profile/LiberProfileComponent';
+import ViewerProfileComponent from '@/features/users/components/profile/ViewerProfileComponent';
 
 type Props = {
   userId: string;

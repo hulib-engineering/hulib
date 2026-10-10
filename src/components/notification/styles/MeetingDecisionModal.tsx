@@ -6,7 +6,6 @@ import Avatar from '@/components/core/avatar/Avatar';
 import Button from '@/components/core/button/Button';
 import Modal from '@/components/Modal';
 import { ROLE_NAME, Role } from '@/types/common';
-import type { Notification } from '@/libs/services/modules/notifications/notificationType';
 import { formatMeetingDateLabel, formatSessionTime, resolveSessionTimeRange } from '@/utils/dateUtils';
 
 type MeetingDecisionType = 'accept' | 'reject';
@@ -14,10 +13,15 @@ type MeetingDecisionType = 'accept' | 'reject';
 type MeetingDecisionModalProps = {
   open: boolean;
   type: MeetingDecisionType;
-  session: Notification['relatedEntity'];
+  /**
+   * Either a notification's loosely-typed `relatedEntity` or a real `ReadingSession` — the
+   * schedule card grid reuses this modal and has the full record at hand. Only
+   * `startedAt` / `startTime` / `endTime` are read, and all three are optional on both shapes.
+   */
+  session: any;
   // Optional: the modal is mounted before a notification is chosen (the popover keeps it
   // mounted with `notification: null`), and the render below already guards with `sender?.`.
-  sender?: Notification['sender'];
+  sender?: any;
   isLoading?: boolean;
   onConfirm: (reason?: string) => void;
   onClose: () => void;
