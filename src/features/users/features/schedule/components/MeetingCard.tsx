@@ -175,15 +175,18 @@ export default function MeetingCard({ card, now = new Date() }: MeetingCardProps
 
       <div className="flex w-full flex-col gap-2">
         {(variant === 'right_now' || variant === 'upcoming') && (
+          // The icon is a child, not the `iconLeft` prop: on a `fullWidth` Button that prop
+          // renders absolutely positioned at the button's left edge, which detaches it from
+          // the label. As a child it stays inline, and `size="sm"` supplies the 6px gap.
           <Button
             size="sm"
             fullWidth
             disabled={!canJoin}
             className="text-primary-98 enabled:hover:bg-primary-40"
-            iconLeft={<VideoCamera className="text-primary-98" />}
             onClick={() => session.sessionUrl && router.push(session.sessionUrl)}
           >
-            {t('join')}
+            <VideoCamera className="size-4 shrink-0 text-primary-98" />
+            <span>{t('join')}</span>
           </Button>
         )}
         {variant === 'invitation' && (
@@ -206,10 +209,10 @@ export default function MeetingCard({ card, now = new Date() }: MeetingCardProps
             variant="outline"
             size="sm"
             fullWidth
-            iconLeft={<Trash />}
             onClick={() => setIsDeleteOpen(true)}
           >
-            {tCommon('delete')}
+            <Trash className="size-4 shrink-0" />
+            <span>{tCommon('delete')}</span>
           </Button>
         )}
       </div>
