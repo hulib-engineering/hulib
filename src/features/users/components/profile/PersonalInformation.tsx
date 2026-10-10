@@ -190,13 +190,10 @@ function GuardianSection({ register, errors }: SectionProps) {
     <>
       <TextInput
         id="parentPhoneNumber"
-        type="tel"
-        pattern={PHONE_NUMBER_REGEX.source}
         placeholder={t('guardian_placeholder')}
         label={(
           <p className="font-medium">
             {t('guardian_phone_number')}
-            <span className="font-normal text-red-50">*</span>
           </p>
         )}
         {...register('parentPhoneNumber')}
@@ -261,6 +258,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     register,
     setValue,
     setError,
+    trigger,
     watch,
     // getValues, Note: Reuse if need an otp modal again
     handleSubmit,
@@ -292,7 +290,8 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     const age = calculateAge(birthday);
     const underGuard = age < 18;
     setValue('isUnderGuard', underGuard, { shouldDirty: true, shouldValidate: true });
-  }, [birthday, setValue]);
+    trigger('parentPhoneNumber');
+  }, [birthday, setValue, trigger]);
 
   const handleUpdate = handleSubmit(async (values: TProfileForm) => {
     try {
@@ -343,7 +342,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
           isLoading={isLoading}
           isDirty={isDirty}
           errors={errors}
-          onCancel={reset}
+          onCancel={() => reset()}
         />
       </Form>
 
