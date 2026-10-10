@@ -138,7 +138,8 @@ const CustomMessage = ({ message, title, toastProps }: ICustomMessageProps) => (
     <div className="text-base font-bold capitalize text-blue-darker">
       {title ?? mappedType[toastProps?.type || 'default']}
     </div>
-    <div className="text-xs font-normal text-gray-500">{message}</div>
+    {/* Multi-field validation errors arrive newline-joined, one field per line. */}
+    <div className="whitespace-pre-line text-xs font-normal text-gray-500">{message}</div>
   </div>
 );
 
