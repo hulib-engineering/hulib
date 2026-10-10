@@ -44,13 +44,7 @@ export default function ScheduleHeader({ counts, filters, onFiltersChange }: Sch
   return (
     <div className="flex flex-col gap-3 pb-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center justify-center gap-2 sm:justify-start">
-          {counts.requests > 0 && (
-            <span className="flex h-5 min-w-5 items-center justify-center rounded-lg bg-red-50 px-1.5 text-xs font-medium leading-4 text-white">
-              {counts.requests}
-            </span>
-          )}
-        </div>
+        <div className="hidden sm:block" />
 
         <div className="flex items-center justify-center gap-2 sm:justify-end">
           <span className="text-sm font-medium text-neutral-20">
