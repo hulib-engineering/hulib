@@ -45,6 +45,16 @@ The pre-commit hook runs `eslint --fix` + `npm run check:types` on every commit.
 - Never run the same gate twice. If `npm run check:types` already passed after the last sub-task, do not run it again before the final commit — just commit. Track which gates have run so nothing is repeated.
 - If a gate fails, fix it and commit that fix with `--no-verify`, then re-run **only** the gate that failed, once.
 
+## Merge commits and commitlint
+
+CI runs `commitlint` over every commit in the branch, and `commitlint.config.ts` ignores only subjects starting with `Merge ` (capital M, space — Git's own convention). Anything else must be a valid Conventional Commit.
+
+- A subject like `merge: resolve develop into <branch> (#779)` **fails CI** with `type must be one of [build, chore, ci, docs, feat, fix, perf, refactor, revert, style, test]`. Use `chore: merge develop into <branch> (#779)`.
+- `merge`, `Merge branch`, and `merge:` are all invalid or ignored differently — verify with `npx commitlint` before pushing a merge.
+- **Check the branch before amending.** `git branch --show-current` first. Amending while on `develop` rewrites `develop`'s history, not the feature branch's. Recover with `git reset --hard origin/develop`.
+- After amending a merge commit, push with `git push --force-with-lease`.
+- If a rename on this branch collides with an edit `develop` made to the same file, keep **develop's content at this branch's new path**, and verify the merged body really matches develop's version (normalise line endings before diffing — a CRLF/LF mismatch makes identical files look wholly different).
+
 ## Output format (docs/results/result-<issue>.md)
 
 ```
