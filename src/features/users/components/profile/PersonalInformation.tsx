@@ -190,13 +190,10 @@ function GuardianSection({ register, errors }: SectionProps) {
     <>
       <TextInput
         id="parentPhoneNumber"
-        type="tel"
-        pattern={PHONE_NUMBER_REGEX.source}
         placeholder={t('guardian_placeholder')}
         label={(
           <p className="font-medium">
             {t('guardian_phone_number')}
-            <span className="font-normal text-red-50">*</span>
           </p>
         )}
         {...register('parentPhoneNumber')}
