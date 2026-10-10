@@ -1,7 +1,9 @@
+import type { Id } from 'react-toastify';
 import type { ToastProps } from 'node_modules/react-toastify/dist/types';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 import { mergeClassnames } from '@/components/core/private/utils';
+import { getApiErrorMessage } from '@/utils/apiError';
 
 const InfoIcon = () => (
   <svg
@@ -179,6 +181,17 @@ export const pushWarning = (message: string, title?: string) =>
       'before:[background:radial-gradient(50%_50%_at_50%_50%,rgba(255,212,38,0.11)_0%,rgba(255,212,38,0)_100%)]',
     ),
   });
+
+/**
+ * Shows the backend's own wording for a failed request, falling back to
+ * `fallback` — an **already translated** string, since this module cannot reach
+ * the i18n instance. Pass `t('error_contact_admin')` from the caller.
+ *
+ * Multi-field validation errors arrive newline-joined from `getApiErrorMessage`
+ * and are rendered one field per line by `CustomMessage`.
+ */
+export const pushApiError = (error: unknown, fallback: string): Id =>
+  pushError(getApiErrorMessage(error) ?? fallback);
 
 const CustomToastifyContainer = () => (
   <ToastContainer
