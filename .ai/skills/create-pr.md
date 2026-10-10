@@ -13,7 +13,12 @@ AI flow (FE): 0 write-issue → 1 pull-and-plan → 2 implement-plan → 3 creat
 2. Do not attach screenshots. Design and verify images are not stored in the repo, so the PR body must instead **name the routes that need a manual browser check** and state which gates could not run.
 3. Push the branch: `git push -u origin <current-branch>`.
 4. Create the PR: `gh pr create --base develop --head <branch> --title "<type>: <short description>" --body-file <pr body temp file>` (PR title generally matches the issue title).
-5. Make sure the body contains `Closes #<issue>` so the issue auto-closes on merge.
+5. **Link the issue in the PR body — this is mandatory, not optional.** The body must contain the line `Closes #<issue>` as the final line so GitHub auto-closes the issue on merge. Omitting it leaves the issue open forever.
+   - Use `gh pr create --body-file <file>` and confirm the line survived into the rendered body.
+   - After creating, verify the link actually landed rather than assuming:
+     `gh pr view <pr> --json body,closingIssuesReferences -q '.body | contains("Closes #<issue>")'`
+     must print `true`, and `closingIssuesReferences` must list the issue number.
+   - A PR that does not close its issue is an incomplete step 3. Fix it before reporting done.
 6. Output the PR URL to the user.
 
 ## Output format (PR body)
@@ -67,12 +72,13 @@ AI flow (FE): 0 write-issue → 1 pull-and-plan → 2 implement-plan → 3 creat
 
 Leave a box unchecked and say why whenever a gate could not run. Never tick a gate that did not execute.
 
-* [ ] `npm run lint` passes
-* [ ] `npm run check:types` passes
-* [ ] `npm run check:i18n` passes (if keys changed)
-* [ ] Storybook story updated if component UI changed
-* [ ] Manual browser check done by a developer
-* [ ] No unrelated changes
+- [ ] `npm run lint` passes
+- [ ] `npm run check:types` passes
+- [ ] `npm run check:i18n` passes (if keys changed)
+- [ ] Storybook story updated if component UI changed
+- [ ] Manual browser check done by a developer
+- [ ] No unrelated changes
+- [ ] PR body ends with `Closes #<issue>` and `closingIssuesReferences` confirms it
 
 Closes #<issue>
 ```
