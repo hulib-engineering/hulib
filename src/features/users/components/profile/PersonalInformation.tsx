@@ -342,7 +342,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
           isLoading={isLoading}
           isDirty={isDirty}
           errors={errors}
-          onCancel={reset}
+          onCancel={() => reset()}
         />
       </Form>
 
