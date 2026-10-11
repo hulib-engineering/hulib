@@ -4,7 +4,7 @@ import { BookOpenText, CheckCircleIcon, CircleIcon, User } from '@phosphor-icons
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import NiceAvatar, { genConfig } from 'react-nice-avatar';
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from '@/libs/i18nNavigation';
 
 import type { Huber as THuber } from '@/libs/services/modules/huber/huberType';
@@ -12,6 +12,7 @@ import { Chip } from '@/components/core/chip/Chip';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { HuberVerificationStatus } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/constants';
 import { getTopicBadgeClasses } from '@/features/admin/utils/getTopicBadgeClasses';
+import { safeImageSrc } from '@/utils/safeImageSrc';
 
 const RecommendedHuberCard = ({
   id,
@@ -30,6 +31,10 @@ const RecommendedHuberCard = ({
   const visibleTopics = sharingTopics?.slice(0, 1) ?? [];
   const remainingTopicsCount = Math.max((sharingTopics?.length ?? 0) - visibleTopics.length, 0);
 
+  // Image guard
+  const [imgFailed, setImgFailed] = useState(false);
+  const avatarSrc = safeImageSrc(photo?.path);
+
   return (
     <div
       className="flex w-[247px] cursor-pointer flex-col gap-1.5 pb-2 text-left"
@@ -39,14 +44,15 @@ const RecommendedHuberCard = ({
         className="h-[247px] w-[247px]"
         onClick={() => router.push(profilePath)}
       >
-        {photo?.path ? (
+        {avatarSrc && !imgFailed ? (
           <Image
-            src={photo.path}
+            src={avatarSrc}
             alt={fullName ?? 'Huber Avatar'}
             width={247}
             height={247}
             className="aspect-square h-[247px] w-[247px] rounded-[28px] object-fill"
             unoptimized
+            onError={() => setImgFailed(true)}
             onClick={() => router.push(profilePath)}
           />
         ) : (
