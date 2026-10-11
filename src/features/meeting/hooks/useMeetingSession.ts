@@ -4,7 +4,7 @@ import AgoraRTC from 'agora-rtc-sdk-ng';
 import type {
   IAgoraRTCClient,
   IAgoraRTCRemoteUser,
-  ILocalVideoTrack,
+  ILocalTrack,
   IMicrophoneAudioTrack,
   ICameraVideoTrack,
   IRemoteAudioTrack,
@@ -250,15 +250,15 @@ export function useMeetingSession({
     // render, held in `attendRef` instead) or on any session-derived value.
   }, [channel, token, sessionId, publishExistingRemoteTracks]);
 
-  /** Publishes an additional local track, used by screen share. */
-  const publishTrack = useCallback(async (track: ILocalVideoTrack) => {
-    if (!client) {
+  /** Publishes additional local tracks, used by screen share (video + optional system audio). */
+  const publishTrack = useCallback(async (...tracks: ILocalTrack[]) => {
+    if (!client || tracks.length === 0) {
       return;
     }
-    await client.publish([track]);
+    await client.publish(tracks);
   }, [client]);
 
-  const unpublishTrack = useCallback(async (track: ILocalVideoTrack) => {
+  const unpublishTrack = useCallback(async (track: ILocalTrack) => {
     if (!client) {
       return;
     }
