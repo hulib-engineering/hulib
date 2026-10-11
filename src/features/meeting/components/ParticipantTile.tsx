@@ -4,11 +4,11 @@ import type { RefObject } from 'react';
 import { Microphone, MicrophoneSlash, VideoCamera, VideoCameraSlash } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 
+import type { MeetingParticipant } from '../types';
 import Avatar from '@/components/core/avatar/Avatar';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { ReactionAnimation } from '@/components/meeting/ReactionAnimation';
-import type { MeetingParticipant } from '../types';
 
 /** Shared stacking token — see the note in `docs/results/result-792.md` about z-index. */
 export const TILE_OVERLAY_Z = 'z-10';
@@ -94,7 +94,7 @@ export function ParticipantTile({
         <IconButton
           variant="outline"
           size="lg"
-          aria-label={t('toggle_mic')}
+          aria-label={isMicOn ? t('toggle_mic') : t('turn_on_mic')}
           className={mergeClassnames(
             'bg-white text-primary-60 backdrop-blur-[15px]',
             isCompact ? 'h-7 p-1.5' : 'h-11 p-2.5',
@@ -108,7 +108,7 @@ export function ParticipantTile({
         <IconButton
           variant="outline"
           size="lg"
-          aria-label={t('toggle_camera')}
+          aria-label={isCameraOn ? t('toggle_camera') : t('turn_on_camera')}
           className={mergeClassnames(
             'bg-white text-primary-60 backdrop-blur-[15px]',
             isCompact ? 'h-7 p-1.5' : 'h-11 p-2.5',
@@ -129,7 +129,7 @@ export function ParticipantTile({
           />
           {isWaiting && (
             <h6 className="text-center text-xl font-medium text-white">
-              {t('waiting_for_partner')}
+              {t('waiting')}
             </h6>
           )}
         </div>

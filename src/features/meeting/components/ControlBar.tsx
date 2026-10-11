@@ -91,7 +91,7 @@ export function ControlBar({
           <IconButton
             variant="outline"
             size="lg"
-            aria-label={t('share_screen')}
+            aria-label={isSharingScreen ? t('stop_sharing') : t('share_screen')}
             className={mergeClassnames(
               '!size-11 border-primary-60 p-2.5 text-primary-60',
               isSharingScreen && 'ring-2 ring-primary-60',

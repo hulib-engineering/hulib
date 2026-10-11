@@ -3,9 +3,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { pushError } from '@/components/CustomToastifyContainer';
-import { useStartCloudRecordingMutation, useStopCloudRecordingMutation } from '@/libs/services/modules/agora';
 import type { CloudRecordingInfo } from '../types';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import { useStartCloudRecordingMutation, useStopCloudRecordingMutation } from '@/libs/services/modules/agora';
 
 type UseMeetingRecordingOptions = {
   channel: string;
@@ -57,6 +57,7 @@ export function useMeetingRecording({
       recordingInfoRef.current = data;
       setIsRecording(true);
       setStartedAt(Date.now());
+      pushSuccess(t('recording_started'));
     } catch {
       // Previously a hard-coded English string; now localized like every other failure.
       pushError(t('recording_start_failed'));
@@ -71,6 +72,7 @@ export function useMeetingRecording({
 
     try {
       await stopRecording({ channel: channelRef.current, ...info }).unwrap();
+      pushSuccess(t('recording_stopped'));
       return info;
     } catch {
       pushError(t('recording_stop_failed'));

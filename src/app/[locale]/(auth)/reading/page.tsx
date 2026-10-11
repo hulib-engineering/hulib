@@ -17,7 +17,7 @@ import Loading from '@/app/[locale]/loading';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { StatusEnum } from '@/types/common';
 import { useStopCloudRecordingMutation } from '@/libs/services/modules/agora';
-import { readAgoraToken } from '@/features/meeting/hooks/useMeetingSession';
+import { readAgoraToken } from '@/features/meeting/utils/agoraToken';
 
 // The meeting room touches `window` and the Agora SDK on mount, so it must not
 // be server-rendered.

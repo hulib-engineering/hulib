@@ -1,4 +1,4 @@
-import { readAgoraToken } from './useMeetingSession';
+import { readAgoraToken } from './agoraToken';
 
 describe('readAgoraToken', () => {
   it('repairs "+" that the query string decoded into spaces', () => {

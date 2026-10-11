@@ -5,10 +5,6 @@ import type { ICameraVideoTrack, IRemoteAudioTrack, IRemoteVideoTrack } from 'ag
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
-import { mergeClassnames } from '@/components/core/private/utils';
-import Popover from '@/components/core/popover/Popover';
-import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
 import type { MeetingParticipant } from '../types';
 import { useMeetingSession } from '../hooks/useMeetingSession';
 import { useMeetingDevices } from '../hooks/useMeetingDevices';
@@ -17,12 +13,17 @@ import { useMeetingSocket } from '../hooks/useMeetingSocket';
 import { useScreenShare } from '../hooks/useScreenShare';
 import { resolveLayoutMode } from '../utils/layout';
 import { ControlBar } from './ControlBar';
+import { DeviceStatusBanner } from './DeviceStatusBanner';
 import { EndCallConfirmModal } from './EndCallConfirmModal';
 import { ParticipantTile } from './ParticipantTile';
 import { ReconnectingOverlay } from './ReconnectingOverlay';
 import { RecordingBadge } from './RecordingBadge';
 import { RecordingConsentModal } from './RecordingConsentModal';
 import { ScreenSharePicker } from './ScreenSharePicker';
+import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
+import Popover from '@/components/core/popover/Popover';
+import { mergeClassnames } from '@/components/core/private/utils';
+import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 
 export type MeetingShellProps = {
   channel: string;
@@ -229,6 +230,18 @@ export function MeetingShell({
     }
   }, [session.error, t]);
 
+  // Announce arrivals and departures once each.
+  const wasJoinedRef = useRef(false);
+  useEffect(() => {
+    if (session.hasParticipantJoined && !wasJoinedRef.current) {
+      wasJoinedRef.current = true;
+      pushSuccess(t('participant_joined'));
+    } else if (!session.hasParticipantJoined && wasJoinedRef.current) {
+      wasJoinedRef.current = false;
+      pushSuccess(t('participant_left'));
+    }
+  }, [session.hasParticipantJoined, t]);
+
   const renderStage = () => {
     if (screenShare.isSharing) {
       return (
@@ -296,7 +309,7 @@ export function MeetingShell({
 
             <button
               type="button"
-              aria-label={t('open_chat')}
+              aria-label={isChatOpen ? t('close_chat') : t('open_chat')}
               className="hidden xl:block"
               onClick={() => setIsChatOpen(open => !open)}
             >
@@ -310,6 +323,13 @@ export function MeetingShell({
         {/* Spotlight stage, or the shared screen in rail mode. */}
         <div className="relative h-[612px] xl:h-[732px]">
           {renderStage()}
+
+          <div className="absolute left-1/2 top-4 z-20 -translate-x-1/2">
+            <DeviceStatusBanner
+              micPermission={devices.micPermission}
+              cameraPermission={devices.cameraPermission}
+            />
+          </div>
 
           {/* Local user is picture-in-picture over the stage when not sharing. */}
           {!screenShare.isSharing && (
@@ -334,13 +354,7 @@ export function MeetingShell({
             onToggleMic={devices.toggleMic}
             onToggleCamera={devices.toggleCamera}
             onEndCall={() => setIsEndCallOpen(true)}
-            onShareScreen={() => {
-              if (screenShare.isSharing) {
-                void screenShare.stop();
-              } else {
-                screenShare.openPicker();
-              }
-            }}
+            onShareScreen={screenShare.isSharing ? screenShare.stop : screenShare.openPicker}
             onReact={handleReact}
           >
             {screenShare.isPickerOpen && (

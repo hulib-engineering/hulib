@@ -4,17 +4,17 @@ import AgoraRTC from 'agora-rtc-sdk-ng';
 import type {
   IAgoraRTCClient,
   IAgoraRTCRemoteUser,
+  ICameraVideoTrack,
   ILocalTrack,
   IMicrophoneAudioTrack,
-  ICameraVideoTrack,
   IRemoteAudioTrack,
   IRemoteVideoTrack,
 } from 'agora-rtc-sdk-ng';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import type { MeetingConnectionState, MeetingError } from '../types';
 import { Env } from '@/libs/Env.mjs';
 import { useAttendReadingSessionMutation } from '@/libs/services/modules/reading-session';
-import type { MeetingConnectionState, MeetingError } from '../types';
 
 /** Maps Agora's uppercase connection states onto the room's own vocabulary. */
 const CONNECTION_STATE_MAP: Record<string, MeetingConnectionState> = {
@@ -30,7 +30,7 @@ type UseMeetingSessionOptions = {
   /**
    * The RTC token minted by the backend and delivered through `sessionUrl`.
    *
-   * Callers MUST pass the value with `+` restored — see `readAgoraToken` below.
+   * Callers MUST pass the value with `+` restored — see `utils/agoraToken`.
    */
   token: string;
   /** Session id used for the attendance stamp. `undefined` skips the stamp. */
@@ -42,19 +42,6 @@ type UseMeetingSessionOptions = {
   /** Called with the remote audio track, which must be played without a container. */
   onRemoteAudioTrack?: (track: IRemoteAudioTrack) => void;
 };
-
-/**
- * Reads the Agora token out of a query string.
- *
- * `+` in a query string decodes to a space, so the backend's token comes back
- * mangled and has to be repaired before `join()`. Dropping this repair breaks
- * every join in production and fails silently, so it lives here with a comment
- * rather than inline.
- */
-export function readAgoraToken(search: string): string {
-  const raw = new URLSearchParams(search).get('token') ?? '';
-  return raw.replace(/ /g, '+');
-}
 
 /**
  * Owns the Agora client lifecycle for the 1:1 reading room.

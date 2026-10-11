@@ -27,6 +27,7 @@ describe('formatDuration', () => {
 describe('elapsedSecondsSince', () => {
   it('returns whole seconds since the start timestamp', () => {
     const start = 1_700_000_000_000;
+
     expect(elapsedSecondsSince(start, start)).toBe(0);
     expect(elapsedSecondsSince(start, start + 1_000)).toBe(1);
     expect(elapsedSecondsSince(start, start + 90_500)).toBe(90);
@@ -34,6 +35,7 @@ describe('elapsedSecondsSince', () => {
 
   it('never returns a negative value when the clock moves backwards', () => {
     const start = 1_700_000_000_000;
+
     expect(elapsedSecondsSince(start, start - 5_000)).toBe(0);
   });
 });
