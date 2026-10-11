@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useRef } from 'react';
 
 import { ParticipantTile } from './ParticipantTile';
 
@@ -64,8 +63,5 @@ export const CompactRailTile: Story = {
 };
 
 export const ReactionPlaying: Story = {
-  render: function Render(args) {
-    const ref = useRef<HTMLDivElement>(null);
-    return <ParticipantTile {...args} videoRef={ref} isReactionShown />;
-  },
+  args: { participant: remote, isReactionShown: true },
 };

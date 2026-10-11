@@ -292,6 +292,8 @@ export function useMeetingSession({
     isJoined,
     micTrack,
     cameraTrack,
+    /** Lets screen share swap in a freshly recreated camera track. */
+    setCameraTrack,
     /** Ref-tracked so screen share can re-publish the camera it tore down. */
     localCameraRef,
     isMicOn,

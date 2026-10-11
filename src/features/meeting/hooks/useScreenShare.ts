@@ -1,7 +1,7 @@
 'use client';
 
 import AgoraRTC from 'agora-rtc-sdk-ng';
-import type { ICameraVideoTrack, ILocalTrack, ILocalVideoTrack } from 'agora-rtc-sdk-ng';
+import type { ICameraVideoTrack, ILocalAudioTrack, ILocalTrack, ILocalVideoTrack } from 'agora-rtc-sdk-ng';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { ScreenShareSource, ScreenShareStatus } from '../types';
@@ -39,7 +39,7 @@ export function useScreenShare({
   const [includeAudio, setIncludeAudio] = useState(false);
 
   const screenTrackRef = useRef<ILocalVideoTrack | null>(null);
-  const screenAudioTrackRef = useRef<ILocalTrack | null>(null);
+  const screenAudioTrackRef = useRef<ILocalAudioTrack | null>(null);
   // The camera's on/off state from before sharing, so stopping restores what the
   // user actually had rather than forcing the camera on.
   const cameraWasOnRef = useRef(true);
@@ -118,7 +118,7 @@ export function useScreenShare({
       const screenTrack = AgoraRTC.createCustomVideoTrack({ mediaStreamTrack: mediaTrack });
       screenTrackRef.current = screenTrack;
 
-      const tracksToPublish: ILocalVideoTrack[] = [screenTrack];
+      const tracksToPublish: ILocalTrack[] = [screenTrack];
 
       // System audio captured by getDisplayMedia has to be published as its own
       // Agora track, otherwise the "Include system audio" option is silently a no-op.
