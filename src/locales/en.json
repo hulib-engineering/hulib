@@ -1432,6 +1432,7 @@
       "stop_sharing": "Stop sharing",
       "share_failed": "Could not start sharing your screen",
       "no_sources_available": "No screen available to share",
+      "cancel": "Cancel",
       "screen_source": "Screen",
       "window_source": "Window",
       "recording_started": "Recording started",
