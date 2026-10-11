@@ -20,7 +20,7 @@ type HuberFeedback = {
 };
 // Note: uncomment the below for mock up data
 const MOCK_HUBER_FEEDBACK: HuberFeedback[] = [
-  /* {
+  {
     id: 1,
     userName: 'Emily Carter',
     userAvatar: '',
@@ -51,7 +51,7 @@ const MOCK_HUBER_FEEDBACK: HuberFeedback[] = [
     rating: 3,
     createdAt: '2024-03-11T18:22:00Z',
     content: 'Good overall, but there were a few delays along the way.',
-  }, */
+  },
 ];
 
 // Mimics RTK Query's { data, isLoading } shape — swap for the real hook later
@@ -100,7 +100,7 @@ export default function MyFeedbackPanel({ huberId }: MyFeedbackPanelProps) {
   }
 
   return (
-    <div className="flex flex-col gap-6 px-5">
+    <div className="flex flex-col gap-6 lg:px-5">
       {feedbackList.map((item: any) => (
         <div key={item.id} className="border-b">
           <div className="flex flex-row gap-2">
