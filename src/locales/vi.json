@@ -1407,23 +1407,25 @@
   },
   "Reading": {
     "PreSurvey": {
-      "title": "Chúng tôi quan tâm đến hạnh phúc của bạn",
-      "subtitle": "Trước khi cuộc gặp gỡ diễn ra, chúng mình muốn gửi đến bạn cuộc khảo sát về mood chung của bạn dưới đây.<br></br> Bài khảo sát chỉ mất khoảng 15s nhưng những thông tin bạn cung cấp là rất có ý nghĩa với tụi mình.",
+      "title": "Ở đây tụi mình quan tâm đến sức khoẻ tinh thần của bạn",
+      "subtitle": "Trước khi bắt đầu buổi trò chuyện hôm nay, bạn chia sẻ với tụi mình một chút về cảm xúc của mình qua khảo sát nhỏ này nhé.<br></br> Khảo sát này chỉ mất khoảng 15 giây thôi, nhưng những chia sẻ của bạn sẽ rất hữu ích với tụi mình.",
       "back": "Quay lại",
       "skip": "Bỏ qua",
       "submit": "Xác nhận",
       "questions": {
-        "quest_1": "1. Hôm nay tâm trạng của bạn thế nào nhỉ?",
-        "quest_2": "2. Bạn thấy câu chuyện đồng cảm với câu chuyện ở mức độ nảo nhỉ?",
-        "quest_3": "3. Bạn thấy hứng thú với Huber ở mức độ nào nhỉ?",
-        "quest_4": "4. Bạn nghĩ buổi đọc này sẽ giúp ích cho bạn chứ?"
+        "quest_1": "1. Hôm nay của bạn thế nào?",
+        "quest_2": "2. Câu chuyện này \"chạm\" đến bạn ở mức nào?",
+        "quest_3": "3. Thông tin của Huber này có phù hợp với điều bạn quan tâm không?",
+        "quest_4": "4. Bạn có cảm thấy lo lắng khi tương tác với Huber này không?"
       },
-      "not_good": "Không tốt",
+      "not_good": "Không ổn chút nào",
       "very_good": "Rất tốt",
-      "not_relevant": "Không hợp",
-      "very_relevant": "Rất hợp",
-      "not_helpful": "Không có ích",
-      "very_helpful": "Rất có ích"
+      "not_touched": "Chưa chạm đến mình",
+      "very_touched": "Chạm lắm",
+      "not_relevant": "Không phù hợp lắm",
+      "very_relevant": "Rất phù hợp",
+      "least_concerned": "Không lo",
+      "most_concerned": "Rất lo"
     },
     "AgoraMeeting": {
       "meeting_topic": "Đề tài",
