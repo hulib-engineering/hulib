@@ -5,7 +5,6 @@ import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
-import { isEmpty } from 'lodash';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
@@ -79,9 +78,9 @@ export const ReviewItem = ({ onDelete, isDeleting, ...storyReview }: ReviewItemP
     };
   }, [showMenu]);
 
-  if (isEmpty(storyReview.comment.trim())) {
+  /* if (isEmpty(storyReview.comment.trim())) {
     return;
-  }
+  } */
 
   return (
     <div className="flex flex-col gap-4 p-4 shadow-[inset_0_-0.5px_0_0_#E3E5EB]">
