@@ -15,6 +15,8 @@ import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
 
+import { useAppSelector } from '@/libs/hooks';
+
 type BottomButtonsProps = {
   isLiked?: boolean;
   isOwner?: boolean;
@@ -26,7 +28,10 @@ type BottomButtonsProps = {
 
 type StatisticsProps = Pick<Story, 'viewCount' | 'likeCount' | 'shareCount'>;
 
-type CornerButtonsProps = Pick<BottomButtonsProps, 'onDelete'>;
+type CornerButtonsProps = {
+  isOwner?: boolean;
+  onDelete?: () => void;
+};
 
 type CoverDetailProps = Pick<Story, 'cover' | 'topics'> &
   CornerButtonsProps & {
@@ -35,24 +40,32 @@ type CoverDetailProps = Pick<Story, 'cover' | 'topics'> &
 
 type BookInfoProps = BottomButtonsProps & StatisticsProps & CoverDetailProps;
 
-function CornerButtons({ onDelete }: CornerButtonsProps) {
+function CornerButtons({ onDelete, isOwner }: CornerButtonsProps) {
   // TODO: add buttons and their conditions
   // e.g. mode = 'default' means there will be 2 edit and delete buttons
   // mode = 'storypagemobile' or something like that will have the bookmark button
   // Add 'lg' back to 'lg:hidden' when there's a clear flow of the bookmark feature
 
+  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const isAdmin = userInfo?.role?.name === 'admin';
+
   return (
-    <Button
-      variant="outline"
-      className="right-1 top-1 size-[44px] rounded-full"
-      onClick={onDelete}
-    >
-      <TrashIcon className="shrink-0 text-[#2e3032]" size={20} weight="bold" />
-    </Button>
+    <>
+      {(isAdmin || isOwner)
+      && (
+        <Button
+          variant="outline"
+          className="right-1 top-1 size-[44px] rounded-full"
+          onClick={onDelete}
+        >
+          <TrashIcon className="shrink-0 text-[#2e3032]" size={20} weight="bold" />
+        </Button>
+      )}
+    </>
   );
 }
 
-function CoverDetail({ cover, topics, onDelete }: CoverDetailProps) {
+function CoverDetail({ cover, topics, onDelete, isOwner }: CoverDetailProps) {
   return (
     <div className="relative flex w-full flex-col gap-y-4">
       <div className="flex max-h-[340px] w-full items-center justify-center">
@@ -60,7 +73,7 @@ function CoverDetail({ cover, topics, onDelete }: CoverDetailProps) {
       </div>
       {onDelete ? (
         <div className="absolute right-0 top-0 -translate-y-5 translate-x-5">
-          <CornerButtons onDelete={onDelete} />
+          <CornerButtons onDelete={onDelete} isOwner={isOwner} />
         </div>
       ) : null}
       {topics?.length ? (
@@ -124,23 +137,21 @@ function BottomButtons({
   if (isOwner) {
     return (
       <div className="flex w-full flex-col gap-2">
-        <div className="flex w-full gap-2">
-          <Button
-            iconLeft={<ShareFatIcon className="text-white" size={20} weight="bold" />}
-            onClick={handleClickShare}
-            className="flex-1"
-          >
-            {t('share')}
-          </Button>
-          <Button
-            variant="outline"
-            iconLeft={<NotePencilIcon className="text-primary-50" size={20} weight="bold" />}
-            onClick={onEdit}
-            className="flex-1"
-          >
-            {t('edit')}
-          </Button>
-        </div>
+        <Button
+          iconLeft={<ShareFatIcon className="text-white" size={20} weight="bold" />}
+          onClick={handleClickShare}
+          className="flex-1"
+        >
+          {t('share')}
+        </Button>
+        <Button
+          variant="outline"
+          iconLeft={<NotePencilIcon className="text-primary-50" size={20} weight="bold" />}
+          onClick={onEdit}
+          className="flex-1"
+        >
+          {t('edit')}
+        </Button>
       </div>
     );
   }
@@ -182,6 +193,7 @@ export default function BookInfo(props: BookInfoProps) {
         cover={props.cover}
         topics={props.topics}
         onDelete={props.onDelete}
+        isOwner={props.isOwner}
       />
       <Statistics
         viewCount={props.viewCount}
