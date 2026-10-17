@@ -1265,7 +1265,7 @@
     "guardian_name": "Your Guardian Name",
     "guardian_phone_number": "Emergency Contact Email / Phone Number",
     "guardian_placeholder": "Required if you are under 18 years old",
-    "guardian_required_1": "Please provide this information if you are under 18 years old. It will be used in case of an emergency. We are committed to protecting your information and will never use it for commercial purposes or disclose it to others.",
+    "guardian_required_1": "If you’re under 18, please provide this information for use in an emergency. We keep your information confidential and do not use it for commercial purposes.",
     "guardian_required_2": "Security and Privacy",
     "invalid_verification_code": "Wrong confirmation codes, please enter again",
     "resend_otp": "Resend confirmation codes",
