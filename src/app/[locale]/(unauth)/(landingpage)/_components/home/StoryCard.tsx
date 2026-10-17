@@ -1,6 +1,6 @@
 'use client';
 
-import { Eye, ShareFat, ThumbsUp } from '@phosphor-icons/react';
+import { EyeIcon, ShareFatIcon, ThumbsUpIcon } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { useRouter } from '@/libs/i18nNavigation';
@@ -154,19 +154,19 @@ export const StoryCard = ({ data, className, outletClassName, isShowReadAll = tr
             </div>
             <div className="mt-auto flex items-center justify-between gap-1 pt-2 lg:gap-5 lg:pt-3">
               <div className="flex items-center gap-1">
-                <ThumbsUp className="text-pink-40" size={16} weight="fill" />
+                <ThumbsUpIcon className="text-pink-40" size={16} weight="fill" />
                 <p className="text-[14px] font-medium leading-4 text-neutral-20">
                   {likeCount}
                 </p>
               </div>
               <div className="flex items-center gap-1">
-                <Eye className="text-primary-50" size={16} />
+                <EyeIcon className="text-primary-50" size={16} />
                 <p className="text-[14px] font-medium leading-4 text-neutral-20">
                   {data?.viewCount ?? 0}
                 </p>
               </div>
               <div className="flex items-center gap-1">
-                <ShareFat className="text-primary-50" size={16} />
+                <ShareFatIcon className="text-primary-50" size={16} />
                 <p className="text-[14px] font-medium leading-4 text-neutral-20">
                   {data?.shareCount ?? 0}
                 </p>
@@ -220,7 +220,7 @@ export const StoryCard = ({ data, className, outletClassName, isShowReadAll = tr
             onClick={handleClickFavorite}
             aria-label="Like story"
           >
-            <ThumbsUp
+            <ThumbsUpIcon
               className={isLiked ? 'text-orange-50' : 'text-primary-50'}
               size={20}
               weight={isLiked ? 'fill' : 'bold'}
