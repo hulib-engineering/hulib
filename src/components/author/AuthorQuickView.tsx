@@ -117,7 +117,7 @@ export default function AuthorQuickView({ humanBook }: { humanBook: User }) {
     { huberId: humanBook.id, publishedOnly: true },
     { skip: !humanBook.id },
   );
-  console.log(humanBook);
+
   return (
     // (remove 'hidden') <- for easier debugging
     //
