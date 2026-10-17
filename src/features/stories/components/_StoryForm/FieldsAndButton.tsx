@@ -16,6 +16,7 @@ import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import { PRIORITY_TOPIC_KEYWORD } from '@/features/stories/constants';
 import type { StoriesValidation } from '@/validations/StoriesValidation';
 import { mergeClassnames } from '@/components/core/private/utils';
+import { useAppSelector } from '@/libs/hooks';
 
 import type { TFilter } from '@/layouts/scheduling/BigCalendar'; // Note: What? how come this type is in this sort of place?
 import type { Topic } from '@/libs/services/modules/topics/topicType';
@@ -219,12 +220,16 @@ function DraftTooltip() {
 
 export function SubmitAndDraftButton({ isSubmitting, isFormValid, type, saveDraft }: SubmitAndDraftButtonProps) {
   const t = useTranslations('Common');
+  const bottomNavHeight = useAppSelector(state => state.uiState.bottomNavHeight);
+  const style = bottomNavHeight ? { bottom: `${bottomNavHeight}px` } : undefined;
 
   return (
-    <div className="z-40 flex w-full flex-row gap-2 bg-white
+    <div
+      className="z-40 flex w-full flex-row gap-2 bg-white
         max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
         max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
         min-[955px]:justify-between"
+      style={style}
     >
       {/* Draft saving */}
       <div className="flex flex-row items-center gap-2">

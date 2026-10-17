@@ -378,7 +378,7 @@ export default function StoryForm(props: IStoryFormProps) {
             <TopicsField selectedTopics={selectedTopics} setSelectedTopics={setSelectedTopics} />
             <StoryContentField register={register} errors={errors} />
 
-            <div className="flex flex-1 flex-col px-4 pb-24 min-[955px]:hidden">
+            <div className="flex flex-1 flex-col px-4 min-[955px]:hidden">
               <CoverPickerTitle />
               <div className="flex flex-1 rounded-2xl
                 border border-neutral-90 bg-neutral-98 p-5"
