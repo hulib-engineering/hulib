@@ -19,7 +19,7 @@ type HuberFeedback = {
   content: string;
 };
 // Note: uncomment the below for mock up data
-const MOCK_HUBER_FEEDBACK: HuberFeedback[] = [
+const MOCK_HUBER_FEEDBACK: HuberFeedback[] = [/*
   {
     id: 1,
     userName: 'Emily Carter',
@@ -52,7 +52,7 @@ const MOCK_HUBER_FEEDBACK: HuberFeedback[] = [
     createdAt: '2024-03-11T18:22:00Z',
     content: 'Good overall, but there were a few delays along the way.',
   },
-];
+*/];
 
 // Mimics RTK Query's { data, isLoading } shape — swap for the real hook later
 const useMockHuberFeedbackQuery = (
