@@ -2,10 +2,11 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { z } from 'zod';
+import Link from 'next/link';
 
 import { isEmpty } from 'lodash';
 
@@ -24,7 +25,9 @@ import { setUserInfo } from '@/libs/store/authentication';
 import { PHONE_NUMBER_REGEX, ProfileValidation, VALIDATION_MESSAGES } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
 import Alert from '@/components/Alert';
+
 // import { CodeConfirmationModal } from './PersonalInfoOTPModal' Note: Reuse if OTP modal still needed
+import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
 
 type SectionProps = {
   register: UseFormRegister<TProfileForm>;
@@ -186,20 +189,45 @@ function PhoneNumberSection({ register, errors }: SectionProps) {
 
 function GuardianSection({ register, errors }: SectionProps) {
   const t = useTranslations('Common');
+  const message = errors.parentPhoneNumber?.message;
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+
   return (
     <>
       <TextInput
         id="parentPhoneNumber"
         placeholder={t('guardian_placeholder')}
-        label={(
-          <p className="font-medium">
-            {t('guardian_phone_number')}
-          </p>
-        )}
+        label={<p className="font-medium">{t('guardian_phone_number')}</p>}
         {...register('parentPhoneNumber')}
         isError={!!errors.parentPhoneNumber}
       />
-      {errors.parentPhoneNumber && (<Alert>{t(errors.parentPhoneNumber.message as any)}</Alert>)}
+      {errors.parentPhoneNumber && (
+        <Alert>
+          {message === VALIDATION_MESSAGES.PARENT_REQUIRED ? (
+            <>
+              {t('guardian_required_1')}
+              {' '}
+              <Link
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsPrivacyOpen(true);
+                }}
+                className="italic underline"
+              >
+                {t('guardian_required_2')}
+              </Link>
+            </>
+          ) : (
+            t(message as any)
+          )}
+        </Alert>
+      )}
+
+      <PrivacyPolicyModal
+        open={isPrivacyOpen}
+        onClose={() => setIsPrivacyOpen(false)}
+      />
     </>
   );
 }
