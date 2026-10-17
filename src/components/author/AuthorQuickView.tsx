@@ -2,9 +2,9 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import {
-  BookOpen,
-  // GraduationCapIcon,
-  // BagIcon,
+  BagIcon,
+  BookOpenIcon,
+  GraduationCapIcon,
 } from '@phosphor-icons/react';
 import { mergeClassnames } from '../core/private/utils';
 import AuthorBasicInfo from './AuthorBasicInfo';
@@ -51,28 +51,43 @@ function Topics({ topics }: { topics: Topic[] }) {
   );
 }
 
-/* TODO: finish this once there's works and education data to test
-function About() {
-  const t = useTranslations('Schedule.HoverCard');
-  return (
-    // Top is Work - Bottom is Education
-    <Section title={t('about')}>
-      <div className="flex h-[22px] items-start gap-2">
-        <GraduationCapIcon size={20} color="#0442BF" />
-        <span className="whitespace-nowrap text-sm leading-[22px] tracking-[0.015em] text-[#2E3032]">
-          {}
-        </span>
-      </div>
+type AboutProps = {
+  work: string | undefined;
+  education: string | undefined;
+};
 
-      <div className="flex h-[22px] items-start gap-2">
-        <BagIcon size={20} color="#0442BF" />
-        <span className="whitespace-nowrap text-sm leading-[22px] tracking-[0.015em] text-[#2E3032]">
-          {}
-        </span>
-      </div>
+function About({ work, education }: AboutProps) {
+  const t = useTranslations('Schedule.HoverCard');
+
+  if (work === undefined && education === undefined) {
+    return;
+  }
+  // TODO: ask for clarification whether education will show institution or major
+  // MORE IMPORTANTLY: given that a user can enter as many jobs and education items as wanted, what should determine what's to be displayed at all?
+  return (
+    <Section title={t('about')}>
+      {work
+      && (
+        <div className="flex h-[22px] items-start gap-2">
+          <GraduationCapIcon size={20} color="#0442BF" />
+          <span className="whitespace-nowrap text-sm leading-[22px] tracking-[0.015em] text-[#2E3032]">
+            {work}
+          </span>
+        </div>
+      )}
+
+      {education
+      && (
+        <div className="flex h-[22px] items-start gap-2">
+          <BagIcon size={20} color="#0442BF" />
+          <span className="whitespace-nowrap text-sm leading-[22px] tracking-[0.015em] text-[#2E3032]">
+            {education}
+          </span>
+        </div>
+      )}
     </Section>
   );
-} */
+}
 
 // Design note: only 2 stories will be shown at max -- according to the designer
 function Stories({ stories }: { stories: GetHuberStoriesResponse }) {
@@ -84,7 +99,7 @@ function Stories({ stories }: { stories: GetHuberStoriesResponse }) {
           key={story.id}
           className="box-border flex w-full items-center gap-2 rounded-lg border border-[#C7C9CB] bg-[#F0F5FF] p-2"
         >
-          <BookOpen color="#0442BF" size={16} />
+          <BookOpenIcon color="#0442BF" size={16} />
           <span className="flex-1 text-sm leading-4 text-black translate-y-[2px]">
             {story.title}
           </span>
@@ -102,7 +117,7 @@ export default function AuthorQuickView({ humanBook }: { humanBook: User }) {
     { huberId: humanBook.id, publishedOnly: true },
     { skip: !humanBook.id },
   );
-
+  console.log(humanBook);
   return (
     // (remove 'hidden') <- for easier debugging
     //
@@ -119,7 +134,7 @@ export default function AuthorQuickView({ humanBook }: { humanBook: User }) {
       />
       <MaturingExperiences bio={humanBook.bio} />
       <Topics topics={humanBook.sharingTopics} />
-      {/* <About /> */}
+      <About work={humanBook?.works[0]?.position} education={humanBook?.educations[0]?.major} />
       <Stories stories={storiesList} />
     </div>
   );
