@@ -1,6 +1,6 @@
 'use client';
 
-import { CircleNotch } from '@phosphor-icons/react';
+import { CircleNotchIcon } from '@phosphor-icons/react';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
@@ -10,9 +10,9 @@ import Button from '@/components/core/button/Button';
 import Checkbox from '@/components/core/checkbox/Checkbox';
 import Dropdown from '@/components/core/dropdown/Dropdown';
 import Form from '@/components/core/form/Form';
-import InsetInput from '@/components/core/insetInput/InsetInput';
 import MenuItem from '@/components/core/menuItem/MenuItem';
 import { CustomDatePicker } from '@/components/CustomDatePicker';
+import Input from '@/components/core/input/Input';
 
 type LearningEntryFormProps = {
   defaultValues?: Partial<LearningEntryFormValues>;
@@ -71,23 +71,26 @@ const LearningEntryForm = ({ defaultValues, onSave, onCancel }: LearningEntryFor
         />
 
         <Form.Item>
-          <InsetInput
-            id="learning-name"
-            placeholder={t('liber_about.education_name_placeholder')}
-            {...register('name')}
-          >
-            <InsetInput.Label>{t('liber_about.education_name_label')}</InsetInput.Label>
-          </InsetInput>
+          <Form.Label>{t('liber_about.education_name_label')}</Form.Label>
+          <Form.Control>
+            <Input
+              className="focus:input-active focus-visible:input-active rounded-md"
+              placeholder={t('liber_about.education_name_placeholder')}
+              {...register('name')}
+            />
+          </Form.Control>
         </Form.Item>
 
         <Form.Item>
-          <InsetInput
-            id="learning-organization"
-            placeholder={t('liber_about.education_org_placeholder')}
-            {...register('organization')}
-          >
-            <InsetInput.Label>{t('liber_about.education_org_label')}</InsetInput.Label>
-          </InsetInput>
+          <Form.Label>{t('liber_about.education_org_label')}</Form.Label>
+          <Form.Control>
+            <Input
+              className="focus:input-active focus-visible:input-active rounded-md"
+              placeholder={t('liber_about.education_org_placeholder')}
+              {...register('organization')}
+            >
+            </Input>
+          </Form.Control>
         </Form.Item>
 
         <fieldset className="flex flex-wrap items-center gap-3">
@@ -130,7 +133,7 @@ const LearningEntryForm = ({ defaultValues, onSave, onCancel }: LearningEntryFor
           </Button>
           <Button size="sm" type="submit" disabled={isSubmitting}>
             {isSubmitting
-              ? <CircleNotch weight="bold" size={16} className="animate-spin" />
+              ? <CircleNotchIcon weight="bold" size={16} className="animate-spin" />
               : t('liber_about.save')}
           </Button>
         </div>

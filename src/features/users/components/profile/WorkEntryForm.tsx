@@ -1,6 +1,6 @@
 'use client';
 
-import { CircleNotch } from '@phosphor-icons/react';
+import { CircleNotchIcon } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -8,8 +8,8 @@ import { Controller, useForm } from 'react-hook-form';
 import type { WorkEntryFormValues } from '@/features/users/types/profile';
 import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
-import InsetInput from '@/components/core/insetInput/InsetInput';
 import { CustomDatePicker } from '@/components/CustomDatePicker';
+import Input from '@/components/core/input/Input';
 
 type WorkEntryFormProps = {
   defaultValues?: Partial<WorkEntryFormValues>;
@@ -32,23 +32,23 @@ const WorkEntryForm = ({ defaultValues, onSave, onCancel }: WorkEntryFormProps) 
     <div className="flex flex-col gap-4 rounded-xl bg-white p-4">
       <Form className="flex flex-col gap-4" onSubmit={handleSubmit(onSave)}>
         <Form.Item>
-          <InsetInput
-            id="work-position"
+          <Form.Label>{t('liber_about.work_position_label')}</Form.Label>
+          <Input
+            className="focus:input-active focus-visible:input-active rounded-md"
             placeholder={t('liber_about.work_position_placeholder')}
             {...register('position')}
           >
-            <InsetInput.Label>{t('liber_about.work_position_label')}</InsetInput.Label>
-          </InsetInput>
+          </Input>
         </Form.Item>
 
         <Form.Item>
-          <InsetInput
-            id="work-company"
+          <Form.Label>{t('liber_about.work_company_label')}</Form.Label>
+          <Input
+            className="focus:input-active focus-visible:input-active rounded-md"
             placeholder={t('liber_about.work_company_placeholder')}
             {...register('company')}
           >
-            <InsetInput.Label>{t('liber_about.work_company_label')}</InsetInput.Label>
-          </InsetInput>
+          </Input>
         </Form.Item>
 
         <fieldset className="flex flex-wrap items-center gap-3">
@@ -80,7 +80,7 @@ const WorkEntryForm = ({ defaultValues, onSave, onCancel }: WorkEntryFormProps) 
           </Button>
           <Button size="sm" type="submit" disabled={isSubmitting}>
             {isSubmitting
-              ? <CircleNotch weight="bold" size={16} className="animate-spin" />
+              ? <CircleNotchIcon weight="bold" size={16} className="animate-spin" />
               : t('liber_about.save')}
           </Button>
         </div>
