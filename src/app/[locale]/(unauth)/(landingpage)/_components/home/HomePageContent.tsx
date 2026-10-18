@@ -3,6 +3,7 @@ import Banner from './Banner';
 import { NewestStoryList } from './NewestStoryList';
 import { MostPopularStoryList } from './MostPopularStoryList';
 import { HuberCardListSkeleton, StoriesSkeleton } from '@/components/loadingState/Skeletons';
+import ContinueBookCard from '@/features/users/components/landingpage/ContinueBookCard';
 
 const RecommendedHuberList = dynamic(
   () => import('./RecommendedHuberList'),
@@ -24,6 +25,8 @@ export default function HomePageContent() {
     <div className="mx-auto w-full bg-neutral-98 py-6 xl:w-[1216px] xl:py-8">
       <div className="flex flex-col gap-6">
         <Banner />
+        {' '}
+        <ContinueBookCard />
         <NewestStoryList />
         <MostPopularStoryList />
         <RecommendedHuberList />
