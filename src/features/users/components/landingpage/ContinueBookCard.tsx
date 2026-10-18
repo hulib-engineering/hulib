@@ -5,15 +5,17 @@ import {
   BookOpenIcon,
   XIcon,
 } from '@phosphor-icons/react';
+import { useTranslations } from 'next-intl';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
+import { useDraftStories } from '@/utils/loadDraft';
+import type { Story } from '@/libs/services/modules/stories/storiesType';
 
-export default function ContinueBookCard({
-  title = 'Bạn có cuốn sách cần hoàn thành !',
-  ctaLabel = 'Tiếp tục hoàn thành',
-}) {
-  const [hasDraftPopup, setHasDraftPopup] = useState(false);
-  const bookTitle = ['Cứ làm đi biết đâu thất bại', 'Cứ làm đi biết đâu thất bại 2', 'Cứ làm đi biết đâu thất bại 3'];
+export default function ContinueBookCard() {
+  const t = useTranslations('ContinueBookCard');
+
+  const { draftStories } = useDraftStories();
+  const [hasDraftPopup, setHasDraftPopup] = useState(!!draftStories);
 
   if (!hasDraftPopup) {
     return;
@@ -29,21 +31,20 @@ export default function ContinueBookCard({
         className="flex min-h-[172px]
         flex-col gap-4 rounded-md
         border-2 border-primary-60 bg-white p-4 "
-        aria-label={title}
       >
-        <h2 className="font-bold">{title}</h2>
+        <h2 className="font-bold">{t('title')}</h2>
 
-        {bookTitle.map((title: string) => (
+        {draftStories.map((draft: Story) => (
           <div
-            key={title}
+            key={draft.id}
             className="flex flex-row items-center gap-2 rounded-md bg-neutral-90 p-2 font-medium"
           >
             <BookOpenIcon size={24} color="#0858FA" />
-            <span className="mt-1">{title}</span>
+            <span className="mt-1">{draft.title}</span>
           </div>
         ))}
 
-        <Button>{ctaLabel}</Button>
+        <Button>{t('button')}</Button>
       </div>
 
       <IconButton variant="outline" className="size-[32px] shrink-0" onClick={() => setHasDraftPopup(false)} aria-label="close">
