@@ -63,6 +63,10 @@
     "join_our_social_community": "THAM GIA CỘNG ĐỒNG XÃ HỘI CỦA CHÚNG TÔI",
     "copy_right": "Bản quyền © 2026 Trang web HuLib. Mọi quyền được bảo lưu."
   },
+  "ContinueBookCard": {
+    "title": "Bạn có cuốn sách cần hoàn thành!",
+    "button": "Tiếp tục hoàn thành"
+  },
   "Index": {
     "meta_title": "HuLib | Trang chủ",
     "meta_description": "Mỗi người đều có câu chuyện riêng. HuLib tạo không gian an toàn nơi các bạn trẻ được đồng hành trên hành trình của mình.",

@@ -1,6 +1,5 @@
-// Must match idb-keyval defaults so existing drafts stay readable. Do NOT change.
-const DB_NAME = 'keyval-store';
-const STORE_NAME = 'keyval';
+const DB_NAME = 'hulib';
+const STORE_NAME = 'draft';
 const DB_VERSION = 1;
 
 let dbPromise: Promise<IDBDatabase> | undefined;

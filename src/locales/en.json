@@ -63,6 +63,10 @@
     "join_our_social_community": "JOIN OUR SOCIAL COMMUNITY",
     "copy_right": "Copyright © 2026 HuLib Website. All rights reserved."
   },
+  "ContinueBookCard": {
+    "title": "You have an unfinished book!",
+    "button": "Finish your book"
+  },
   "Index": {
     "meta_title": "HuLib | Landing Page",
     "meta_description": "Everyone has a story. At HuLib, we foster a caring community where no one has to walk their journey alone.",

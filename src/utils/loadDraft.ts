@@ -26,7 +26,8 @@ type UseDraftStories = {
   draftStories: Story[];
   isLoading: boolean;
 };
-
+// NOTE: consider adding some "skip by username" or "skip by uid" feature if needed
+// ...if you want to skip by id, then the draft feature should have a uid added to saving feature as well
 export function useDraftStories(): UseDraftStories {
   const [draftStories, setDraftStories] = useState<Story[]>([]);
   const [isLoading, setIsLoading] = useState(true);
