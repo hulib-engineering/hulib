@@ -704,6 +704,7 @@
       "education_type_vocational": "Vocational, short courses, trade school",
       "education_type_university": "College, University & Postgraduate",
       "education_type_life_experience": "Life school, real-world experience",
+      "education_type_high_school": "High school",
       "education_name_label": "Name",
       "education_name_placeholder": "Enter major / course name / role",
       "education_org_label": "Organization",

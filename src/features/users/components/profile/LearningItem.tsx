@@ -1,11 +1,12 @@
 'use client';
 
 import {
-  Certificate,
-  GlobeHemisphereWest,
-  GraduationCap,
-  PencilSimple,
-  UserSwitch,
+  BackpackIcon,
+  CertificateIcon,
+  GlobeHemisphereWestIcon,
+  GraduationCapIcon,
+  PencilSimpleIcon,
+  UserSwitchIcon,
 } from '@phosphor-icons/react';
 import { useLocale, useTranslations } from 'next-intl';
 import React from 'react';
@@ -22,19 +23,24 @@ type TypeConfig = {
 
 const TYPE_CONFIG: Record<LearningType, TypeConfig> = {
   vocational: {
-    renderIcon: () => <Certificate weight="duotone" size={24} />,
+    renderIcon: () => <CertificateIcon weight="duotone" size={24} />,
     bgClass: 'bg-[#C9ECFF]',
     textClass: 'text-[#009BEE]',
   },
   university: {
-    renderIcon: () => <GraduationCap weight="duotone" size={24} />,
+    renderIcon: () => <GraduationCapIcon weight="duotone" size={24} />,
     bgClass: 'bg-primary-90',
     textClass: 'text-primary-60',
   },
   life_experience: {
-    renderIcon: () => <UserSwitch weight="duotone" size={24} />,
+    renderIcon: () => <UserSwitchIcon weight="duotone" size={24} />,
     bgClass: 'bg-pink-90',
     textClass: 'text-pink-40',
+  },
+  high_school: {
+    renderIcon: () => <BackpackIcon weight="duotone" size={24} />,
+    bgClass: 'bg-yellow-90',
+    textClass: 'text-yellow-40',
   },
 };
 
@@ -75,7 +81,7 @@ export default function LearningItem({ entry, editable, onEdit }: LearningItemPr
             {entry.name}
           </span>
           {entry.isPublic && (
-            <GlobeHemisphereWest weight="bold" className="size-5 text-primary-60" />
+            <GlobeHemisphereWestIcon weight="bold" className="size-5 text-primary-60" />
           )}
         </div>
         <span className="text-sm leading-[22px] tracking-[0.015em] text-neutral-20">
@@ -89,7 +95,7 @@ export default function LearningItem({ entry, editable, onEdit }: LearningItemPr
           type="button"
           onClick={() => onEdit(entry.id)}
         >
-          <PencilSimple weight="bold" />
+          <PencilSimpleIcon weight="bold" />
         </IconButton>
       )}
     </div>
