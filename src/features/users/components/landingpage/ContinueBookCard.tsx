@@ -10,11 +10,15 @@ import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { useDraftStories } from '@/utils/loadDraft';
 import type { Story } from '@/libs/services/modules/stories/storiesType';
+import useAppSelector from '@/libs/hooks/useAppSelector';
 
 export default function ContinueBookCard() {
   const t = useTranslations('ContinueBookCard');
 
-  const { draftStories, isLoading } = useDraftStories();
+  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const { draftStories, isLoading } = useDraftStories(userInfo.id);
+
+  console.log(draftStories);
   const [hasDraftPopup, setHasDraftPopup] = useState(true);
 
   if (isLoading || !hasDraftPopup || draftStories.length === 0) {

@@ -286,6 +286,7 @@ export default function StoryForm(props: IStoryFormProps) {
 
       await set(`draft-${draftId}`, {
         id: draftId,
+        uid: userInfo.id,
         abstract,
         title,
         coverBlob,

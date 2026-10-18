@@ -5,7 +5,7 @@ import type { Story } from '@/libs/services/modules/stories/storiesType';
 import type { FileType } from '@/libs/services/modules/files/fileType';
 
 // What saveDraft writes: same as draftStory, but the cover is a Blob instead of { path }.
-export type StoredDraft = Omit<Story, 'cover'> & { coverBlob?: Blob };
+export type StoredDraft = Omit<Story, 'cover'> & { coverBlob?: Blob; uid?: string };
 const DRAFT_KEY_PREFIX = 'draft-';
 export const draftKey = (id: number | string) => `${DRAFT_KEY_PREFIX}${id}`;
 
@@ -26,15 +26,22 @@ type UseDraftStories = {
   draftStories: Story[];
   isLoading: boolean;
 };
-// NOTE: consider adding some "skip by username" or "skip by uid" feature if needed
-// ...if you want to skip by id, then the draft feature should have a uid added to saving feature as well
-export function useDraftStories(): UseDraftStories {
+
+export function useDraftStories(uid?: string): UseDraftStories {
   const [draftStories, setDraftStories] = useState<Story[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (!uid) {
+      setDraftStories([]);
+      setIsLoading(false);
+      return;
+    }
+
     let cancelled = false;
     const urls: string[] = [];
+
+    setIsLoading(true);
 
     (async () => {
       const draftKeys = (await keys()).filter(
@@ -46,7 +53,7 @@ export function useDraftStories(): UseDraftStories {
       }
       setDraftStories(
         stored
-          .filter((item): item is StoredDraft => item !== undefined)
+          .filter((item): item is StoredDraft => item !== undefined && item.uid === uid)
           .map(item => toDraftStory(item, urls)),
       );
     })()
@@ -61,7 +68,7 @@ export function useDraftStories(): UseDraftStories {
       cancelled = true;
       urls.forEach(url => URL.revokeObjectURL(url));
     };
-  }, []);
+  }, [uid]);
 
   return { draftStories, isLoading };
 }
