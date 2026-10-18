@@ -63,16 +63,21 @@ export default function MyStoriesPanel({
   const filteredStories = selectedTopicId === 'all'
     ? storyItems
     : storyItems.filter((story: TStory) => story.topics?.some(topic => topic.id === selectedTopicId));
-  const isEmpty = storyItems.length === 0;
+  const isEmpty = storyItems.length === 0 && draftStories.length === 0;
   const isHuberOwnStories = !showOthers && variant === 'huber';
+  if (isLoading) {
+    return <StoriesSkeleton />;
+  }
+
+  if (!isLoading && isEmpty) {
+    if (showOthers) {
+      return <StoriesOthersEmptyState />;
+    }
+    return <MyStoriesEmptyState onCreateClick={() => setIsCreateModalOpen(true)} />;
+  }
 
   return (
     <div className="lg:px-0">
-      {isLoading && <StoriesSkeleton />}
-      {!isLoading && isEmpty && showOthers && <StoriesOthersEmptyState />}
-      {!isLoading && isEmpty && !showOthers && (
-        <MyStoriesEmptyState onCreateClick={() => setIsCreateModalOpen(true)} />
-      )}
       {!isLoading && !isEmpty && (
         <div className="flex flex-col gap-6">
           {isHuberOwnStories && topicFilters.length > 0 && (
