@@ -1,6 +1,6 @@
 'use client';
 
-import { Plus, SealCheck } from '@phosphor-icons/react';
+import { PlusIcon, SealCheckIcon } from '@phosphor-icons/react';
 import { useState } from 'react';
 
 import WorkEntryForm from './WorkEntryForm';
@@ -65,7 +65,7 @@ export default function MyWorkSection({
         <div className="flex items-center gap-2.5">
           <h3 className="text-xl font-medium leading-7 tracking-tight text-neutral-10">{title}</h3>
           {hasContent && !isEditing && (
-            <SealCheck weight="fill" className="size-6 text-primary-60" />
+            <SealCheckIcon weight="fill" className="size-6 text-primary-60" />
           )}
         </div>
         {editable && !isEditing && (
@@ -75,7 +75,7 @@ export default function MyWorkSection({
             type="button"
             onClick={() => setIsAdding(true)}
           >
-            <Plus weight="bold" />
+            <PlusIcon weight="bold" />
           </IconButton>
         )}
       </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { CircleNotch, PencilSimple, Plus, SealCheck } from '@phosphor-icons/react';
+import { CircleNotchIcon, PencilSimpleIcon, PlusIcon, SealCheckIcon } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -70,7 +70,7 @@ export default function LiberAboutSection({
           </Button>
           <Button size="sm" type="button" onClick={handleSave} disabled={isSaving}>
             {isSaving
-              ? <CircleNotch weight="bold" size={16} className="animate-spin" />
+              ? <CircleNotchIcon weight="bold" size={16} className="animate-spin" />
               : t('liber_about.save')}
           </Button>
         </div>
@@ -83,18 +83,18 @@ export default function LiberAboutSection({
       <div className="flex items-center justify-between">
         <div className="flex max-w-[85%] items-center md:max-w-none md:gap-2.5">
           <h3 className="max-w-[90%] text-xl font-medium leading-7 tracking-tight text-neutral-10 md:max-w-none">{title}</h3>
-          {hasContent && <SealCheck weight="fill" className="size-6 text-primary-60" />}
+          {hasContent && <SealCheckIcon weight="fill" className="size-6 text-primary-60" />}
         </div>
         {editable && (
           hasContent
             ? (
                 <IconButton variant="outline" size="sm" type="button" onClick={handleEdit}>
-                  <PencilSimple weight="bold" />
+                  <PencilSimpleIcon weight="bold" />
                 </IconButton>
               )
             : (
                 <IconButton variant="soft" size="sm" type="button" onClick={handleEdit}>
-                  <Plus weight="bold" />
+                  <PlusIcon weight="bold" />
                 </IconButton>
               )
         )}
