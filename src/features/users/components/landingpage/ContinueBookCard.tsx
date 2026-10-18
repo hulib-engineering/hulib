@@ -6,6 +6,7 @@ import {
   XIcon,
 } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { useDraftStories } from '@/utils/loadDraft';
@@ -15,15 +16,18 @@ import useAppSelector from '@/libs/hooks/useAppSelector';
 export default function ContinueBookCard() {
   const t = useTranslations('ContinueBookCard');
 
+  const router = useRouter();
   const userInfo = useAppSelector(state => state.auth.userInfo);
+
   const { draftStories, isLoading } = useDraftStories(userInfo.id);
 
-  console.log(draftStories);
   const [hasDraftPopup, setHasDraftPopup] = useState(true);
 
   if (isLoading || !hasDraftPopup || draftStories.length === 0) {
-    return;
+    return null;
   }
+
+  const userProfile = `/users/${userInfo.id}?tab=stories`;
 
   // TODO: change tailwind codes to calculate top nav bar height, then replace top-[100px] with it
   return (
@@ -47,7 +51,7 @@ export default function ContinueBookCard() {
           </div>
         ))}
 
-        <Button>{t('button')}</Button>
+        <Button onClick={() => router.push(userProfile)}>{t('button')}</Button>
       </div>
 
       <IconButton variant="outline" className="size-[32px] shrink-0" onClick={() => setHasDraftPopup(false)} aria-label="close">
