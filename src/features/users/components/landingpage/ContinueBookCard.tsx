@@ -14,10 +14,10 @@ import type { Story } from '@/libs/services/modules/stories/storiesType';
 export default function ContinueBookCard() {
   const t = useTranslations('ContinueBookCard');
 
-  const { draftStories } = useDraftStories();
-  const [hasDraftPopup, setHasDraftPopup] = useState(!!draftStories);
+  const { draftStories, isLoading } = useDraftStories();
+  const [hasDraftPopup, setHasDraftPopup] = useState(true);
 
-  if (!hasDraftPopup) {
+  if (isLoading || !hasDraftPopup || draftStories.length === 0) {
     return;
   }
 
@@ -28,8 +28,7 @@ export default function ContinueBookCard() {
       flex flex-col items-center gap-1 lg:right-[92px]"
     >
       <div
-        className="flex min-h-[172px]
-        flex-col gap-4 rounded-md
+        className="flex flex-col gap-4 rounded-md
         border-2 border-primary-60 bg-white p-4 "
       >
         <h2 className="font-bold">{t('title')}</h2>
