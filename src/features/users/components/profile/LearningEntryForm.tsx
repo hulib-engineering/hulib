@@ -37,6 +37,7 @@ const LearningEntryForm = ({ defaultValues, onSave, onCancel }: LearningEntryFor
     vocational: t('liber_about.education_type_vocational'),
     university: t('liber_about.education_type_university'),
     life_experience: t('liber_about.education_type_life_experience'),
+    high_school: t('liber_about.education_type_high_school'),
   };
   const TYPE_ENTRIES = Object.entries(TYPE_LABELS) as [LearningType, string][];
 
