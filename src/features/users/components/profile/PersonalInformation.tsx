@@ -28,6 +28,7 @@ import Alert from '@/components/Alert';
 
 // import { CodeConfirmationModal } from './PersonalInfoOTPModal' Note: Reuse if OTP modal still needed
 import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
+import PhoneCodeSelect from '@/components/PhoneCodeByCountryDropdown';
 
 type SectionProps = {
   register: UseFormRegister<TProfileForm>;
@@ -194,13 +195,29 @@ function GuardianSection({ register, errors }: SectionProps) {
 
   return (
     <>
-      <TextInput
-        id="parentPhoneNumber"
-        placeholder={t('guardian_placeholder')}
-        label={<p className="font-medium">{t('guardian_phone_number')}</p>}
-        {...register('parentPhoneNumber')}
-        isError={!!errors.parentPhoneNumber}
-      />
+      <Form.Item>
+        <label
+          htmlFor="parentPhoneNumber"
+          className="block pb-2 text-sm font-medium leading-4 text-neutral-10"
+        >
+          {t('guardian_phone_number')}
+        </label>
+
+        <div className="relative">
+          <div className="absolute left-2 top-1/2 z-10 -translate-y-1/2">
+            <PhoneCodeSelect />
+          </div>
+          <TextInput
+            id="parentPhoneNumber"
+            type="tel"
+            className="pl-28"
+            placeholder={t('guardian_placeholder')}
+            {...register('parentPhoneNumber')}
+            isError={!!errors.parentPhoneNumber}
+          />
+        </div>
+      </Form.Item>
+
       {errors.parentPhoneNumber && (
         <Alert>
           {message === VALIDATION_MESSAGES.PARENT_REQUIRED ? (
