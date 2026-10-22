@@ -171,14 +171,15 @@ export default function StoryForm(props: IStoryFormProps) {
     setValue('cover', { id: '' }, { shouldDirty: true });
   }, [setValue]);
 
-  const handleSwipeAndSelectCover = (swiper: any) => {
+  const handleSwipeAndSelectCover = useCallback((swiper: any) => {
     const index = swiper.activeIndex;
     setCurrentCoverIndex(index);
+
     const cover = COVER_PRESET_ASSETS[index];
     if (cover) {
       handleSelectPreset(cover);
     }
-  };
+  }, [handleSelectPreset]);
 
   const handleCustomCoverDone = useCallback((payload: {
     customization: CoverCustomization;

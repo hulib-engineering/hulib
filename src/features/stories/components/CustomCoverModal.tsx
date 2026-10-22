@@ -1,8 +1,8 @@
 import {
-  Minus,
-  PaintBrushBroad,
-  Plus,
-  TextAUnderline,
+  MinusIcon,
+  PaintBrushBroadIcon,
+  PlusIcon,
+  TextAUnderlineIcon,
 } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
@@ -185,7 +185,7 @@ export const CustomCoverModal = ({
                       onClick={() => adjustFontSize(-TITLE_FONT_SIZE_STEP)}
                       className="flex size-5 items-center justify-center text-primary-10"
                     >
-                      <Minus size={20} weight="bold" />
+                      <MinusIcon size={20} weight="bold" />
                     </button>
                     <span className="min-w-6 text-center text-base font-medium leading-5 text-primary-10">
                       {customization.titleFontSize}
@@ -196,13 +196,13 @@ export const CustomCoverModal = ({
                       onClick={() => adjustFontSize(TITLE_FONT_SIZE_STEP)}
                       className="flex size-5 items-center justify-center text-primary-10"
                     >
-                      <Plus size={20} weight="bold" />
+                      <PlusIcon size={20} weight="bold" />
                     </button>
                   </div>
                 </div>
 
                 <ColorPicker
-                  icon={TextAUnderline}
+                  icon={TextAUnderlineIcon}
                   colors={TEXT_COLORS}
                   value={customization.titleColor}
                   ariaLabel={t('cover_text_color')}
@@ -223,7 +223,7 @@ export const CustomCoverModal = ({
                 </div>
 
                 <ColorPicker
-                  icon={PaintBrushBroad}
+                  icon={PaintBrushBroadIcon}
                   colors={BACKGROUND_COLORS}
                   value={customization.backgroundColor}
                   ariaLabel={t('cover_background_color')}
