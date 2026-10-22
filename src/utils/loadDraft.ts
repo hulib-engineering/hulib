@@ -27,42 +27,53 @@ type UseDraftStories = {
   isLoading: boolean;
 };
 
-export function useDraftStories(uid?: string): UseDraftStories {
+export function useDraftStories(uid?: string | number | null): UseDraftStories {
   const [draftStories, setDraftStories] = useState<Story[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const normalizedUid = uid == null ? undefined : String(uid);
 
   useEffect(() => {
-    if (!uid) {
-      setDraftStories([]);
-      setIsLoading(false);
-      return;
-    }
-
     let cancelled = false;
     const urls: string[] = [];
 
     setIsLoading(true);
 
-    (async () => {
-      const draftKeys = (await keys()).filter(
-        (k): k is string => typeof k === 'string' && k.startsWith(DRAFT_KEY_PREFIX),
-      );
-      const stored = await getMany<StoredDraft>(draftKeys);
-      if (cancelled) {
-        return;
-      }
-      setDraftStories(
-        stored
-          .filter((item): item is StoredDraft => item !== undefined && item.uid === uid)
-          .map(item => toDraftStory(item, urls)),
-      );
-    })()
-      .catch(err => console.error('Draft load failed', err))
-      .finally(() => {
+    async function loadDrafts() {
+      try {
+        const draftKeys = (await keys()).filter(
+          (key): key is string =>
+            typeof key === 'string'
+            && key.startsWith(DRAFT_KEY_PREFIX),
+        );
+
+        const stored = await getMany<StoredDraft>(draftKeys);
+
+        if (cancelled) {
+          return;
+        }
+
+        const stories = stored
+          .filter(
+            (item): item is StoredDraft =>
+              item !== undefined
+              && (
+                normalizedUid === undefined
+                || String(item.uid) === normalizedUid
+              ),
+          )
+          .map(item => toDraftStory(item, urls));
+
+        setDraftStories(stories);
+      } catch (error) {
+        console.error('Draft load failed:', error);
+      } finally {
         if (!cancelled) {
           setIsLoading(false);
         }
-      });
+      }
+    }
+
+    void loadDrafts();
 
     return () => {
       cancelled = true;
@@ -125,7 +136,6 @@ export function useDeleteDraft(): UseDeleteDraft {
   const [isLoading, setIsLoading] = useState(false);
 
   const deleteDraft = useCallback(async (id: number | string) => {
-    console.log(id);
     setIsLoading(true);
     try {
       await del(draftKey(id));
