@@ -135,6 +135,7 @@ export default function MyStoriesPanel({
                 type="create"
                 onSucceed={handleCreateSuccess}
                 onCancel={() => setIsCreateModalOpen(false)}
+                isSubmitAndDraftButtonFloating
               />
             </Modal.Panel>
           </Modal>

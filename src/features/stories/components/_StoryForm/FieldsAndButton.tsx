@@ -197,6 +197,7 @@ type SubmitAndDraftButtonProps = {
   isFormValid: boolean;
   type: 'create' | 'create-first' | 'edit' | 'edit-draft';
   saveDraft: () => void;
+  isFloating?: boolean;
 };
 
 function DraftTooltip() {
@@ -218,17 +219,22 @@ function DraftTooltip() {
   );
 }
 
-export function SubmitAndDraftButton({ isSubmitting, isFormValid, type, saveDraft }: SubmitAndDraftButtonProps) {
+export function SubmitAndDraftButton({
+  isSubmitting,
+  isFormValid,
+  type,
+  saveDraft,
+  isFloating = false,
+}: SubmitAndDraftButtonProps) {
   const t = useTranslations('Common');
   const bottomNavHeight = useAppSelector(state => state.uiState.bottomNavHeight);
   const style = bottomNavHeight ? { bottom: `${bottomNavHeight}px` } : undefined;
 
+  const normalScreenCSS = 'max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]';
+
   return (
     <div
-      className="z-40 flex w-full flex-row gap-2 bg-white
-        max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
-        max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
-        min-[955px]:justify-between"
+      className={mergeClassnames('z-40 flex w-full flex-row gap-2 bg-white max-[955px]:p-4 min-[955px]:justify-between', isFloating ? '' : normalScreenCSS)}
       style={style}
     >
       {/* Draft saving */}

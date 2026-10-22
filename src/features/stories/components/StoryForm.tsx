@@ -64,20 +64,24 @@ type IStoryFormProps = | {
   type: 'create';
   onCancel: () => void;
   onSucceed: () => void;
+  isSubmitAndDraftButtonFloating?: boolean;
 } | {
   type: 'create-first';
   onBack: () => void;
   onSucceed: () => void;
+  isSubmitAndDraftButtonFloating?: boolean;
 } | {
   type: 'edit';
   story: Story;
   onCancel: () => void;
   onSucceed: () => void;
+  isSubmitAndDraftButtonFloating?: boolean;
 } | {
   type: 'edit-draft';
   story: Story;
   onCancel: () => void;
   onSucceed: () => void;
+  isSubmitAndDraftButtonFloating?: boolean;
 };
 
 function CoverPickerTitle() {
@@ -93,6 +97,8 @@ function CoverPickerTitle() {
 }
 
 export default function StoryForm(props: IStoryFormProps) {
+  const isSubmitAndDraftButtonFloating = props.isSubmitAndDraftButtonFloating ?? false;
+
   let swiperRef: any = null;
   const router = useRouter();
   const t = useTranslations('Common');
@@ -438,7 +444,13 @@ export default function StoryForm(props: IStoryFormProps) {
                 </div>
               </div>
             </div>
-            <SubmitAndDraftButton isSubmitting={isSubmitting} isFormValid={isFormValid} type={props.type} saveDraft={saveDraft} />
+            <SubmitAndDraftButton
+              isSubmitting={isSubmitting}
+              isFormValid={isFormValid}
+              type={props.type}
+              saveDraft={saveDraft}
+              isFloating={isSubmitAndDraftButtonFloating}
+            />
           </div>
 
         </div>
