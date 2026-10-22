@@ -58,7 +58,7 @@ export default function MyStoriesPanel({
     : storyItems.flatMap((story: TStory) => story.topics ?? []) as Topic[])
     .filter((topic: Topic, index: number, source: Topic[]) => source.findIndex(item => item.id === topic.id) === index);
 
-  const { draftStories } = useDraftStories();
+  const { draftStories } = useDraftStories(storyOwnerId);
 
   const filteredStories = selectedTopicId === 'all'
     ? storyItems
