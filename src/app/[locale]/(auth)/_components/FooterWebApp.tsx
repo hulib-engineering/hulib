@@ -54,7 +54,6 @@ const FooterWebApp = () => {
   const [currentModalRef, setCurrentModalRef] = useState('');
   const bottomNavHeight: number | undefined = useAppSelector(state => state.uiState.bottomNavHeight);
   const floatingButtonHeight = useAppSelector(state => state.uiState.floatingButtonHeight);
-  console.log(bottomNavHeight, floatingButtonHeight);
 
   const handleClick = (modalName: string) => {
     setIsModalOpen(true);
