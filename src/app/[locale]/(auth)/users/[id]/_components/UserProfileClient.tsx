@@ -1,15 +1,23 @@
 'use client';
 
 import { notFound } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { useAppSelector } from '@/libs/hooks';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 
 import Loading from '@/app/[locale]/loading';
 import { Role } from '@/types/common';
-import HuberProfileComponent from '@/features/users/components/profile/HuberProfileComponent';
-import LiberProfileComponent from '@/features/users/components/profile/LiberProfileComponent';
-import ViewerProfileComponent from '@/features/users/components/profile/ViewerProfileComponent';
+
+const HuberProfileComponent = dynamic(
+  () => import('@/features/users/components/profile/HuberProfileComponent'),
+);
+const LiberProfileComponent = dynamic(
+  () => import('@/features/users/components/profile/LiberProfileComponent'),
+);
+const ViewerProfileComponent = dynamic(
+  () => import('@/features/users/components/profile/ViewerProfileComponent'),
+);
 
 type Props = {
   userId: string;

@@ -1,7 +1,7 @@
 import { CaretDownIcon, InfoIcon } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { z } from 'zod';
 
 import Combobox, { getChipColor } from '@/components/core/combobox/Combobox';
@@ -16,10 +16,11 @@ import { useGetTopicsQuery } from '@/libs/services/modules/topics';
 import { PRIORITY_TOPIC_KEYWORD } from '@/features/stories/constants';
 import type { StoriesValidation } from '@/validations/StoriesValidation';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { useAppSelector } from '@/libs/hooks';
+import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 
 import type { TFilter } from '@/layouts/scheduling/BigCalendar'; // Note: What? how come this type is in this sort of place?
 import type { Topic } from '@/libs/services/modules/topics/topicType';
+import { setFloatingButtonHeight } from '@/libs/store/uiState';
 
 type CommonFieldProps = {
   register: UseFormRegister<z.infer<typeof StoriesValidation>>;
@@ -197,6 +198,7 @@ type SubmitAndDraftButtonProps = {
   isFormValid: boolean;
   type: 'create' | 'create-first' | 'edit' | 'edit-draft';
   saveDraft: () => void;
+  isFloating?: boolean;
 };
 
 function DraftTooltip() {
@@ -218,17 +220,37 @@ function DraftTooltip() {
   );
 }
 
-export function SubmitAndDraftButton({ isSubmitting, isFormValid, type, saveDraft }: SubmitAndDraftButtonProps) {
+export function SubmitAndDraftButton({
+  isSubmitting,
+  isFormValid,
+  type,
+  saveDraft,
+  isFloating = false,
+}: SubmitAndDraftButtonProps) {
   const t = useTranslations('Common');
+
+  const dispatch = useAppDispatch();
+
+  const floatingButtonRef = useRef<HTMLDivElement>(null);
   const bottomNavHeight = useAppSelector(state => state.uiState.bottomNavHeight);
   const style = bottomNavHeight ? { bottom: `${bottomNavHeight}px` } : undefined;
 
+  const floatingCSS = 'max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]';
+  // TODO: fix issue of floatingButtonHeight still remain when user press return button from edit page
+  useEffect(() => {
+    if (isFloating === false) {
+      return;
+    }
+
+    if (floatingButtonRef.current) {
+      dispatch(setFloatingButtonHeight(floatingButtonRef.current.getBoundingClientRect().height));
+    }
+  }, [dispatch, isFloating]);
+
   return (
     <div
-      className="z-40 flex w-full flex-row gap-2 bg-white
-        max-[955px]:fixed max-[955px]:bottom-0 max-[955px]:rounded-t-2xl
-        max-[955px]:p-4 max-[955px]:shadow-[0_0_4px_rgba(15,15,16,0.06)]
-        min-[955px]:justify-between"
+      ref={floatingButtonRef}
+      className={mergeClassnames('z-40 flex w-full flex-row gap-2 bg-white max-[955px]:p-4 min-[955px]:justify-between', isFloating ? floatingCSS : '')}
       style={style}
     >
       {/* Draft saving */}

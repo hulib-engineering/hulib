@@ -64,20 +64,18 @@ type IStoryFormProps = | {
   type: 'create';
   onCancel: () => void;
   onSucceed: () => void;
+  isSubmitAndDraftButtonFloating?: boolean;
 } | {
   type: 'create-first';
   onBack: () => void;
   onSucceed: () => void;
+  isSubmitAndDraftButtonFloating?: boolean;
 } | {
-  type: 'edit';
+  type: 'edit' | 'edit-draft';
   story: Story;
   onCancel: () => void;
   onSucceed: () => void;
-} | {
-  type: 'edit-draft';
-  story: Story;
-  onCancel: () => void;
-  onSucceed: () => void;
+  isSubmitAndDraftButtonFloating?: boolean;
 };
 
 function CoverPickerTitle() {
@@ -93,6 +91,8 @@ function CoverPickerTitle() {
 }
 
 export default function StoryForm(props: IStoryFormProps) {
+  const isSubmitAndDraftButtonFloating = props.isSubmitAndDraftButtonFloating ?? true;
+
   let swiperRef: any = null;
   const router = useRouter();
   const t = useTranslations('Common');
@@ -123,7 +123,7 @@ export default function StoryForm(props: IStoryFormProps) {
       }));
     }
     return [];
-  }, [props.type, relatedTopics, storyTopicsFromProps]);
+  }, [props.type, relatedTopics, storyTopicsFromProps, isEditOrDraftMode]);
 
   const {
     register,
@@ -171,14 +171,15 @@ export default function StoryForm(props: IStoryFormProps) {
     setValue('cover', { id: '' }, { shouldDirty: true });
   }, [setValue]);
 
-  const handleSwipeAndSelectCover = (swiper: any) => {
+  const handleSwipeAndSelectCover = useCallback((swiper: any) => {
     const index = swiper.activeIndex;
     setCurrentCoverIndex(index);
+
     const cover = COVER_PRESET_ASSETS[index];
     if (cover) {
       handleSelectPreset(cover);
     }
-  };
+  }, [handleSelectPreset]);
 
   const handleCustomCoverDone = useCallback((payload: {
     customization: CoverCustomization;
@@ -437,7 +438,13 @@ export default function StoryForm(props: IStoryFormProps) {
                 </div>
               </div>
             </div>
-            <SubmitAndDraftButton isSubmitting={isSubmitting} isFormValid={isFormValid} type={props.type} saveDraft={saveDraft} />
+            <SubmitAndDraftButton
+              isSubmitting={isSubmitting}
+              isFormValid={isFormValid}
+              type={props.type}
+              saveDraft={saveDraft}
+              isFloating={isSubmitAndDraftButtonFloating}
+            />
           </div>
 
         </div>
