@@ -23,7 +23,7 @@ export default function ContinueBookCard() {
 
   const [hasDraftPopup, setHasDraftPopup] = useState(true);
 
-  if (isLoading || !hasDraftPopup || draftStories.length === 0) {
+  if (isLoading || !hasDraftPopup || draftStories.length === 0 || userInfo.id === undefined) {
     return null;
   }
 
