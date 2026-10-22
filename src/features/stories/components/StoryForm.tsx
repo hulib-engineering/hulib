@@ -71,13 +71,7 @@ type IStoryFormProps = | {
   onSucceed: () => void;
   isSubmitAndDraftButtonFloating?: boolean;
 } | {
-  type: 'edit';
-  story: Story;
-  onCancel: () => void;
-  onSucceed: () => void;
-  isSubmitAndDraftButtonFloating?: boolean;
-} | {
-  type: 'edit-draft';
+  type: 'edit' | 'edit-draft';
   story: Story;
   onCancel: () => void;
   onSucceed: () => void;
