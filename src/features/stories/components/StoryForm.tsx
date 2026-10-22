@@ -91,7 +91,7 @@ function CoverPickerTitle() {
 }
 
 export default function StoryForm(props: IStoryFormProps) {
-  const isSubmitAndDraftButtonFloating = props.isSubmitAndDraftButtonFloating ?? false;
+  const isSubmitAndDraftButtonFloating = props.isSubmitAndDraftButtonFloating ?? true;
 
   let swiperRef: any = null;
   const router = useRouter();
@@ -123,7 +123,7 @@ export default function StoryForm(props: IStoryFormProps) {
       }));
     }
     return [];
-  }, [props.type, relatedTopics, storyTopicsFromProps]);
+  }, [props.type, relatedTopics, storyTopicsFromProps, isEditOrDraftMode]);
 
   const {
     register,

@@ -299,10 +299,9 @@ const MobileBottomNav = () => {
                       {item.icon}
                     </div>
                     <span
-                      className={`text-[10px] font-medium leading-3 ${
-                        isActive(item.href)
-                          ? 'text-primary-50'
-                          : 'text-neutral-30'
+                      className={`text-[10px] font-medium leading-3 ${isActive(item.href)
+                        ? 'text-primary-50'
+                        : 'text-neutral-30'
                       }`}
                     >
                       {item.label}

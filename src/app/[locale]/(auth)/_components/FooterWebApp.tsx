@@ -10,7 +10,7 @@ import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
 import { Link } from '@/libs/i18nNavigation';
 import TermOfUseModal from '@/components/TermOfUseModal';
 import { Env } from '@/libs/Env.mjs';
-import { useDeviceType } from '@/libs/hooks';
+import { useAppSelector, useDeviceType } from '@/libs/hooks';
 
 const socialLinks = [
   {
@@ -52,6 +52,9 @@ const FooterWebApp = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentModalRef, setCurrentModalRef] = useState('');
+  const bottomNavHeight: number | undefined = useAppSelector(state => state.uiState.bottomNavHeight);
+  const floatingButtonHeight = useAppSelector(state => state.uiState.floatingButtonHeight);
+  console.log(bottomNavHeight, floatingButtonHeight);
 
   const handleClick = (modalName: string) => {
     setIsModalOpen(true);
@@ -354,6 +357,8 @@ const FooterWebApp = () => {
           onClose={() => setIsModalOpen(false)}
         />
       )}
+
+      <div style={{ height: `${(bottomNavHeight ?? 0) + (floatingButtonHeight ?? 0)}px` }}></div>
     </>
   );
 };
