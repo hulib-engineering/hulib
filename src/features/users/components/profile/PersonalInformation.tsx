@@ -41,7 +41,6 @@ type IProfileFormProps = {
 
 type TProfileForm = z.infer<typeof ProfileValidation>;
 
-// Extra: Find a weight to change the weight of the input text of the fields to 'medium'
 function Name({ register, errors }: SectionProps) {
   const t = useTranslations('Common');
   return (
@@ -188,7 +187,7 @@ function PhoneNumberSection({ register, errors }: SectionProps) {
   );
 }
 
-function GuardianSection({ register, errors }: SectionProps) {
+function GuardianSection({ register, errors, setValue, watch }: any /* SectionProps */) {
   const t = useTranslations('Common');
   const message = errors.parentPhoneNumber?.message;
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
@@ -205,7 +204,11 @@ function GuardianSection({ register, errors }: SectionProps) {
 
         <div className="relative">
           <div className="absolute left-2 top-1/2 z-10 -translate-y-1/2">
-            <PhoneCodeSelect />
+            <PhoneCodeSelect
+              register={register}
+              setValue={setValue}
+              watch={watch}
+            />
           </div>
           <TextInput
             id="parentPhoneNumber"
@@ -297,6 +300,11 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
   // const [isOpenConfirmCodeModal, setIsOpenConfirmCodeModal] = useState(false); || Note: Reuse if need an otp modal again
 
   const dispatch = useAppDispatch();
+  const parentFieldPickerDefault
+    = (data?.parentPhoneNumber === null || data?.parentPhoneNumber === undefined)
+      ? 'Email'
+      : data.parentPhoneNumber.startsWith('+84')
+        ? '+84' : '+1';
 
   const {
     control,
@@ -305,7 +313,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     setError,
     trigger,
     watch,
-    // getValues, Note: Reuse if need an otp modal again
+    // getValues, for OTP
     handleSubmit,
     reset,
     formState: { errors, isSubmitting, isDirty },
@@ -323,6 +331,8 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
       phoneNumber: data?.phoneNumber ?? null,
       address: data?.address ?? '',
       parentPhoneNumber: data?.parentPhoneNumber ?? null,
+      parentEmail: data?.parentEmail ?? null,
+      parentFieldPicker: parentFieldPickerDefault,
     },
   });
 
@@ -332,25 +342,23 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     if (!birthday) {
       return;
     }
-    const age = calculateAge(birthday);
-    const underGuard = age < 18;
+    const underGuard = calculateAge(birthday) < 18;
     setValue('isUnderGuard', underGuard, { shouldDirty: true, shouldValidate: true });
-    trigger('parentPhoneNumber');
+    void trigger(['parentPhoneNumber', 'parentEmail']);
   }, [birthday, setValue, trigger]);
 
   const handleUpdate = handleSubmit(async (values: TProfileForm) => {
     try {
       const { isUnderGuard, ...profilePatch } = values;
 
-      if (!isUnderGuard) {
-        profilePatch.parentPhoneNumber = null;
-      }
-
       if (!profilePatch.phoneNumber) {
         profilePatch.phoneNumber = null;
       }
-      if (!profilePatch.parentPhoneNumber) {
+      if (!profilePatch.parentPhoneNumber || profilePatch.parentFieldPicker === 'Email') {
         profilePatch.parentPhoneNumber = null;
+      }
+      if (!profilePatch.parentEmail || profilePatch.parentFieldPicker !== 'Email') {
+        profilePatch.parentEmail = null;
       }
 
       const response = await updateProfile({ ...profilePatch, gender: { id: values.gender?.id } }).unwrap();
@@ -381,7 +389,12 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
         <AddressSection register={register} errors={errors} />
         <EmailSection register={register} errors={errors} />
         <PhoneNumberSection register={register} errors={errors} />
-        <GuardianSection register={register} errors={errors} />
+        <GuardianSection
+          register={register}
+          errors={errors}
+          watch={watch}
+          setValue={setValue}
+        />
         <FormActionsSection
           isSubmitting={isSubmitting}
           isLoading={isLoading}

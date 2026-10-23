@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import * as Select from '@radix-ui/react-select';
 import { CaretDownIcon, EnvelopeSimpleIcon } from '@phosphor-icons/react';
 
@@ -34,11 +33,15 @@ const CODES = [
   { value: '+1', flag: <UsFlag /> },
 ];
 
-export default function PhoneCodeSelect() {
-  const [value, setValue] = useState('+84');
-
+export default function PhoneCodeSelect({ register, setValue, watch }: any) {
   return (
-    <Select.Root value={value} onValueChange={setValue}>
+    <Select.Root
+      value={watch('parentFieldPicker')}
+      onValueChange={value =>
+        setValue('parentFieldPicker', value, {
+          shouldDirty: true,
+        })}
+    >
       <Select.Trigger
         aria-label="Country code"
         className="flex h-8 items-center gap-1 rounded-lg border border-neutral-20 bg-white px-2 text-sm outline-none data-[state=open]:border-blue-50"
@@ -59,6 +62,7 @@ export default function PhoneCodeSelect() {
           <Select.Viewport>
             {CODES.map(c => (
               <Select.Item
+                {...register('parentFieldPicker')}
                 key={c.value}
                 value={c.value}
                 className="data-[highlighted]:bg-blue-5 flex cursor-pointer items-center rounded-md p-2 text-sm outline-none"
