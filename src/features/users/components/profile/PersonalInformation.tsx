@@ -41,7 +41,6 @@ type IProfileFormProps = {
 
 type TProfileForm = z.infer<typeof ProfileValidation>;
 
-// Extra: Find a weight to change the weight of the input text of the fields to 'medium'
 function Name({ register, errors }: SectionProps) {
   const t = useTranslations('Common');
   return (
@@ -332,8 +331,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     if (!birthday) {
       return;
     }
-    const age = calculateAge(birthday);
-    const underGuard = age < 18;
+    const underGuard = calculateAge(birthday) < 18;
     setValue('isUnderGuard', underGuard, { shouldDirty: true, shouldValidate: true });
     trigger('parentPhoneNumber');
   }, [birthday, setValue, trigger]);
@@ -341,10 +339,6 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
   const handleUpdate = handleSubmit(async (values: TProfileForm) => {
     try {
       const { isUnderGuard, ...profilePatch } = values;
-
-      if (!isUnderGuard) {
-        profilePatch.parentPhoneNumber = null;
-      }
 
       if (!profilePatch.phoneNumber) {
         profilePatch.phoneNumber = null;
