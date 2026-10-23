@@ -8,7 +8,6 @@ import { useState } from 'react';
 import type { z } from 'zod';
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { isEmpty } from 'lodash';
 import { useRouter } from '@/libs/i18nNavigation';
 import Button from '@/components/core/button/Button';
 import RatingScale from '@/components/meeting/RatingScale';
@@ -18,10 +17,10 @@ import { useUpdateReadingSessionMutation } from '@/libs/services/modules/reading
 import Alert from '@/components/meeting/Alert';
 
 const SurveyQuestions = [
-  { title: 'quest_1', level: 'good' },
-  { title: 'quest_2', level: 'relevant' },
-  { title: 'quest_3', level: 'relevant' },
-  { title: 'quest_4', level: 'helpful' },
+  { title: 'quest_1', left: 'not_good', right: 'very_good' },
+  { title: 'quest_2', left: 'not_touched', right: 'very_touched' },
+  { title: 'quest_3', left: 'not_relevant', right: 'very_relevant' },
+  { title: 'quest_4', left: 'least_concerned', right: 'most_concerned' },
 ] as const;
 
 export default function PreSurvey({ sessionId, onFinish }: { sessionId: number; onFinish: () => void }) {
@@ -32,7 +31,8 @@ export default function PreSurvey({ sessionId, onFinish }: { sessionId: number; 
   const [updateReadingSession]
     = useUpdateReadingSessionMutation();
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const { control, handleSubmit, formState: { isValid } } = useForm({
+    mode: 'onChange',
     resolver: zodResolver(SurveyValidation),
     defaultValues: {
       answers: Array.from({ length: 4 }, (_, index) => ({ answer: 0, questionId: index })),
@@ -78,12 +78,12 @@ export default function PreSurvey({ sessionId, onFinish }: { sessionId: number; 
               variant="ghost"
               size="lg"
               iconLeft={<ArrowLeft />}
-              className="text-black"
+              className="text-[14px] text-black"
               onClick={() => router.back()}
             >
               {t('back')}
             </Button>
-            <Button variant="ghost" size="lg" iconRight={<ArrowRight />}>{t('skip')}</Button>
+            <Button variant="ghost" size="lg" iconRight={<ArrowRight />} className="text-[14px]" onClick={onFinish}>{t('skip')}</Button>
           </div>
           <div className="flex flex-col gap-7 xl:gap-6">
             {/* Header Section */}
@@ -95,19 +95,19 @@ export default function PreSurvey({ sessionId, onFinish }: { sessionId: number; 
                 height={28}
                 className="h-7 w-[22px] object-cover"
               />
-              <h5 className="text-center text-xl font-medium text-black xl:text-2xl">
+              <h5 className="text-center text-[20px] font-medium text-black xxl:text-[24px]">
                 {t('title')}
               </h5>
             </div>
-            <p className="leading-5">{t.rich('subtitle', { br: newLineMessage() })}</p>
+            <p className="text-[14px] leading-5">{t.rich('subtitle', { br: newLineMessage() })}</p>
             {/* Survey Form */}
             <div className="flex flex-col gap-8 xl:gap-7">
               {SurveyQuestions.map((question, index) => (
                 <RatingScale<z.infer<typeof SurveyValidation>>
-                  key={index}
+                  key={question.title}
                   question={t(`questions.${question.title}`)}
-                  leftLabel={t(`not_${question.level}`)}
-                  rightLabel={t(`very_${question.level}`)}
+                  leftLabel={t(question.left)}
+                  rightLabel={t(question.right)}
                   name={`answers.${index}.answer`}
                   control={control}
                 />
@@ -118,9 +118,9 @@ export default function PreSurvey({ sessionId, onFinish }: { sessionId: number; 
           {/* Submit Button */}
           <Button
             onClick={handleSubmitSurvey}
-            disabled={!isEmpty(errors) || isSubmitting}
+            disabled={!isValid || isSubmitting}
             animation={isSubmitting && 'progress'}
-            className="w-full text-sm sm:text-base"
+            className="w-full text-[14px]"
           >
             {t('submit')}
           </Button>

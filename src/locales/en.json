@@ -63,6 +63,10 @@
     "join_our_social_community": "JOIN OUR SOCIAL COMMUNITY",
     "copy_right": "Copyright © 2026 HuLib Website. All rights reserved."
   },
+  "ContinueBookCard": {
+    "title": "You have an unfinished book!",
+    "button": "Finish your book"
+  },
   "Index": {
     "meta_title": "HuLib | Landing Page",
     "meta_description": "Everyone has a story. At HuLib, we foster a caring community where no one has to walk their journey alone.",
@@ -200,36 +204,41 @@
     "news_title": "Events - News",
     "news_info": {
       "index_0": {
+        "location": "Online – Webapp",
+        "heading": "Storytelling Competition “Nhat Lai Khoanh Khac” - Season 2",
+        "content": "🌱 Thank you all for joining us in collecting pieces of our memories, and congratulations to the stories that have been recognized! 🥳"
+      },
+      "index_1": {
         "location": "United Nations Headquarters, New York, U.S",
         "heading": "ECOSOC World Youth Forum 2026",
         "content": "“Xin Chao” from Central Vietnam 🇻🇳💙 HuLib is proud that our Founder, Uyen Nguyen was nominated under UNESCO x SEVENTEEN – #GoingTogether for Youth Creativity & Well-being 🌍, representing 100 youth-led projects around the world 🤝"
       },
-      "index_1": {
+      "index_2": {
         "location": "Da Nang, Viet Nam",
         "heading": "Workshop “Hiểu mình, thương mình”",
         "content": "Last Saturday was truly special. A day full of emotions, everyone came with their own story and together, we were heard."
       },
-      "index_2": {
+      "index_3": {
         "location": "Ho Chi Minh City, Vietnam",
         "heading": "Exhibition - VietFuture Awards 2025",
         "content": "A milestone in HuLib’s journey, spreading the message of well-being and mental health."
       },
-      "index_3": {
+      "index_4": {
         "location": "Online",
         "heading": "Event “Tôi là ai giữa ngã ba đường”",
         "content": "May this event give you the courage to move forward with confidence and heart."
       },
-      "index_4": {
+      "index_5": {
         "location": "Online",
         "heading": "Story Competition “Nhặc lại khoảnh khắc”",
         "content": "Not just a contest but a space for us to pause, reflect, and appreciate our experiences. Happiness and sadness come together to create incredible journeys."
       },
-      "index_5": {
+      "index_6": {
         "location": "Online",
         "heading": "Event “Tiếng chuông tỉnh thức”",
         "content": "No one enjoys toxic relationships. The event reminds us to love ourself, and create our own happiness before expecting it from others."
       },
-      "index_6": {
+      "index_7": {
         "location": "Online",
         "heading": "Event “Đi học, đi làm - hướng nào dễ hơn”",
         "content": "Sharing was truly meaningful. Going in the right direction is important, but optimism and perseverance are key to success."
@@ -704,6 +713,7 @@
       "education_type_vocational": "Vocational, short courses, trade school",
       "education_type_university": "College, University & Postgraduate",
       "education_type_life_experience": "Life school, real-world experience",
+      "education_type_high_school": "High school",
       "education_name_label": "Name",
       "education_name_placeholder": "Enter major / course name / role",
       "education_org_label": "Organization",
@@ -1265,7 +1275,7 @@
     "guardian_name": "Your Guardian Name",
     "guardian_phone_number": "Emergency Contact Email / Phone Number",
     "guardian_placeholder": "Required if you are under 18 years old",
-    "guardian_required_1": "Please provide this information if you are under 18 years old. It will be used in case of an emergency. We are committed to protecting your information and will never use it for commercial purposes or disclose it to others.",
+    "guardian_required_1": "If you’re under 18, please provide this information for use in an emergency. We keep your information confidential and do not use it for commercial purposes.",
     "guardian_required_2": "Security and Privacy",
     "invalid_verification_code": "Wrong confirmation codes, please enter again",
     "resend_otp": "Resend confirmation codes",
@@ -1407,14 +1417,16 @@
         "quest_1": "1. How are you feeling today?",
         "quest_2": "2. How relevant does the story to your problem?",
         "quest_3": "3. How relevant does the Huber's profile to your interest?",
-        "quest_4": "4. How helpful do you think this session will be for you?"
+        "quest_4": "4. Do you concern about the interaction between you and the Huber?"
       },
       "not_good": "Not good",
       "very_good": "Very good",
+      "not_touched": "Not touched",
+      "very_touched": "Very touched",
       "not_relevant": "Not relevant",
       "very_relevant": "Very relevant",
-      "not_helpful": "Not helpful",
-      "very_helpful": "Very helpful"
+      "least_concerned": "Least concerned",
+      "most_concerned": "Most concerned"
     },
     "AgoraMeeting": {
       "meeting_topic": "Meeting topic",

@@ -7,7 +7,7 @@ import LiberLearningPathSection from './MyLearningPathSection';
 import MyWorkSection from './MyWorkSection';
 import MyTopicsSection from './MyTopicsSection';
 import type { LearningEntryFormValues, LiberAboutData, WorkEntryFormValues } from '@/features/users/types/profile';
-
+// TODO: Create a common custom gradient Seal Check component for the icon
 type LiberAboutPanelProps = {
   data?: LiberAboutData;
   editable?: boolean;

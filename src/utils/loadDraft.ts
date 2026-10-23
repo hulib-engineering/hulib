@@ -5,7 +5,7 @@ import type { Story } from '@/libs/services/modules/stories/storiesType';
 import type { FileType } from '@/libs/services/modules/files/fileType';
 
 // What saveDraft writes: same as draftStory, but the cover is a Blob instead of { path }.
-export type StoredDraft = Omit<Story, 'cover'> & { coverBlob?: Blob };
+export type StoredDraft = Omit<Story, 'cover'> & { coverBlob?: Blob; uid?: string };
 const DRAFT_KEY_PREFIX = 'draft-';
 export const draftKey = (id: number | string) => `${DRAFT_KEY_PREFIX}${id}`;
 
@@ -27,40 +27,59 @@ type UseDraftStories = {
   isLoading: boolean;
 };
 
-export function useDraftStories(): UseDraftStories {
+export function useDraftStories(uid?: string | number | null): UseDraftStories {
   const [draftStories, setDraftStories] = useState<Story[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const normalizedUid = uid == null ? undefined : String(uid);
 
   useEffect(() => {
     let cancelled = false;
     const urls: string[] = [];
 
-    (async () => {
-      const draftKeys = (await keys()).filter(
-        (k): k is string => typeof k === 'string' && k.startsWith(DRAFT_KEY_PREFIX),
-      );
-      const stored = await getMany<StoredDraft>(draftKeys);
-      if (cancelled) {
-        return;
-      }
-      setDraftStories(
-        stored
-          .filter((item): item is StoredDraft => item !== undefined)
-          .map(item => toDraftStory(item, urls)),
-      );
-    })()
-      .catch(err => console.error('Draft load failed', err))
-      .finally(() => {
+    setIsLoading(true);
+
+    async function loadDrafts() {
+      try {
+        const draftKeys = (await keys()).filter(
+          (key): key is string =>
+            typeof key === 'string'
+            && key.startsWith(DRAFT_KEY_PREFIX),
+        );
+
+        const stored = await getMany<StoredDraft>(draftKeys);
+
+        if (cancelled) {
+          return;
+        }
+
+        const stories = stored
+          .filter(
+            (item): item is StoredDraft =>
+              item !== undefined
+              && (
+                normalizedUid === undefined
+                || String(item.uid) === normalizedUid
+              ),
+          )
+          .map(item => toDraftStory(item, urls));
+
+        setDraftStories(stories);
+      } catch (error) {
+        console.error('Draft load failed:', error);
+      } finally {
         if (!cancelled) {
           setIsLoading(false);
         }
-      });
+      }
+    }
+
+    void loadDrafts();
 
     return () => {
       cancelled = true;
       urls.forEach(url => URL.revokeObjectURL(url));
     };
-  }, []);
+  }, [uid]);
 
   return { draftStories, isLoading };
 }
@@ -117,7 +136,6 @@ export function useDeleteDraft(): UseDeleteDraft {
   const [isLoading, setIsLoading] = useState(false);
 
   const deleteDraft = useCallback(async (id: number | string) => {
-    console.log(id);
     setIsLoading(true);
     try {
       await del(draftKey(id));

@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const PHONE_NUMBER_REGEX = /^\+[1-9]\d{1,3}[ -]?\d{6,14}$/;
 export const VALIDATION_MESSAGES = {
   PHONE_NUMBER: 'phone_number_invalid', // remove this once BE modified away parent field
-  PARENT_PHONE_NUMBER_REQUIRED: 'guardian_required_1',
+  PARENT_REQUIRED: 'guardian_required',
   EMAIL_REQUIRED: 'email_required',
   EMAIL_INVALID: 'email_invalid',
 };
@@ -13,7 +13,7 @@ export const DateOfBirthFieldsetValidation = z.object({
   month: z.number().min(1).max(12),
   year: z.number().min(1),
 });
-
+// TODO: add parent email format check and maybe parent phone number as well
 export const ProfileValidation = z
   .object({
     fullName: z.string().trim().min(1),
@@ -28,14 +28,16 @@ export const ProfileValidation = z
     address: z.string(),
     isUnderGuard: z.boolean(),
     parentPhoneNumber: z.string().nullable().optional(),
+    parentEmail: z.string().nullable().optional(),
     parentFullname: z.string().optional(),
+    parentFieldPicker: z.string().trim().min(1),
   })
   .superRefine((values, context) => {
     if (values.isUnderGuard) {
       if (!values.parentPhoneNumber || values.parentPhoneNumber.length <= 0) {
         context.addIssue({
           code: z.ZodIssueCode.custom,
-          message: VALIDATION_MESSAGES.PARENT_PHONE_NUMBER_REQUIRED,
+          message: VALIDATION_MESSAGES.PARENT_REQUIRED,
           path: ['parentPhoneNumber'],
         });
       }

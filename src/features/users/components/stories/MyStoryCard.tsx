@@ -135,7 +135,7 @@ export default function MyStoryCard({ data, deleteMode = false }: MyStoryCardPro
             handleOpenStory();
           }
         }}
-        className="relative flex h-[260px] w-[184px] shrink-0 items-center justify-center overflow-visible rounded-2xl"
+        className="relative z-50 flex h-[260px] w-[184px] shrink-0 items-center justify-center overflow-visible rounded-2xl"
       >
         <AnimatedCover
           abstract={data.abstract ?? ''}

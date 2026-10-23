@@ -2,10 +2,11 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { z } from 'zod';
+import Link from 'next/link';
 
 import { isEmpty } from 'lodash';
 
@@ -24,7 +25,10 @@ import { setUserInfo } from '@/libs/store/authentication';
 import { PHONE_NUMBER_REGEX, ProfileValidation, VALIDATION_MESSAGES } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
 import Alert from '@/components/Alert';
+
 // import { CodeConfirmationModal } from './PersonalInfoOTPModal' Note: Reuse if OTP modal still needed
+import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
+import PhoneCodeSelect from '@/components/PhoneCodeByCountryDropdown';
 
 type SectionProps = {
   register: UseFormRegister<TProfileForm>;
@@ -37,7 +41,6 @@ type IProfileFormProps = {
 
 type TProfileForm = z.infer<typeof ProfileValidation>;
 
-// Extra: Find a weight to change the weight of the input text of the fields to 'medium'
 function Name({ register, errors }: SectionProps) {
   const t = useTranslations('Common');
   return (
@@ -184,22 +187,67 @@ function PhoneNumberSection({ register, errors }: SectionProps) {
   );
 }
 
-function GuardianSection({ register, errors }: SectionProps) {
+function GuardianSection({ register, errors, setValue, watch }: any /* SectionProps */) {
   const t = useTranslations('Common');
+  const message = errors.parentPhoneNumber?.message;
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+
   return (
     <>
-      <TextInput
-        id="parentPhoneNumber"
-        placeholder={t('guardian_placeholder')}
-        label={(
-          <p className="font-medium">
-            {t('guardian_phone_number')}
-          </p>
-        )}
-        {...register('parentPhoneNumber')}
-        isError={!!errors.parentPhoneNumber}
+      <Form.Item>
+        <label
+          htmlFor="parentPhoneNumber"
+          className="block pb-2 text-sm font-medium leading-4 text-neutral-10"
+        >
+          {t('guardian_phone_number')}
+        </label>
+
+        <div className="relative">
+          <div className="absolute left-2 top-1/2 z-10 -translate-y-1/2">
+            <PhoneCodeSelect
+              register={register}
+              setValue={setValue}
+              watch={watch}
+            />
+          </div>
+          <TextInput
+            id="parentPhoneNumber"
+            type="tel"
+            className="pl-28"
+            placeholder={t('guardian_placeholder')}
+            {...register('parentPhoneNumber')}
+            isError={!!errors.parentPhoneNumber}
+          />
+        </div>
+      </Form.Item>
+
+      {errors.parentPhoneNumber && (
+        <Alert>
+          {message === VALIDATION_MESSAGES.PARENT_REQUIRED ? (
+            <>
+              {t('guardian_required_1')}
+              {' '}
+              <Link
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsPrivacyOpen(true);
+                }}
+                className="italic underline"
+              >
+                {t('guardian_required_2')}
+              </Link>
+            </>
+          ) : (
+            t(message as any)
+          )}
+        </Alert>
+      )}
+
+      <PrivacyPolicyModal
+        open={isPrivacyOpen}
+        onClose={() => setIsPrivacyOpen(false)}
       />
-      {errors.parentPhoneNumber && (<Alert>{t(errors.parentPhoneNumber.message as any)}</Alert>)}
     </>
   );
 }
@@ -252,6 +300,11 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
   // const [isOpenConfirmCodeModal, setIsOpenConfirmCodeModal] = useState(false); || Note: Reuse if need an otp modal again
 
   const dispatch = useAppDispatch();
+  const parentFieldPickerDefault
+    = (data?.parentPhoneNumber === null || data?.parentPhoneNumber === undefined)
+      ? 'Email'
+      : data.parentPhoneNumber.startsWith('+84')
+        ? '+84' : '+1';
 
   const {
     control,
@@ -260,7 +313,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     setError,
     trigger,
     watch,
-    // getValues, Note: Reuse if need an otp modal again
+    // getValues, for OTP
     handleSubmit,
     reset,
     formState: { errors, isSubmitting, isDirty },
@@ -278,6 +331,8 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
       phoneNumber: data?.phoneNumber ?? null,
       address: data?.address ?? '',
       parentPhoneNumber: data?.parentPhoneNumber ?? null,
+      parentEmail: data?.parentEmail ?? null,
+      parentFieldPicker: parentFieldPickerDefault,
     },
   });
 
@@ -287,25 +342,23 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     if (!birthday) {
       return;
     }
-    const age = calculateAge(birthday);
-    const underGuard = age < 18;
+    const underGuard = calculateAge(birthday) < 18;
     setValue('isUnderGuard', underGuard, { shouldDirty: true, shouldValidate: true });
-    trigger('parentPhoneNumber');
+    void trigger(['parentPhoneNumber', 'parentEmail']);
   }, [birthday, setValue, trigger]);
 
   const handleUpdate = handleSubmit(async (values: TProfileForm) => {
     try {
       const { isUnderGuard, ...profilePatch } = values;
 
-      if (!isUnderGuard) {
-        profilePatch.parentPhoneNumber = null;
-      }
-
       if (!profilePatch.phoneNumber) {
         profilePatch.phoneNumber = null;
       }
-      if (!profilePatch.parentPhoneNumber) {
+      if (!profilePatch.parentPhoneNumber || profilePatch.parentFieldPicker === 'Email') {
         profilePatch.parentPhoneNumber = null;
+      }
+      if (!profilePatch.parentEmail || profilePatch.parentFieldPicker !== 'Email') {
+        profilePatch.parentEmail = null;
       }
 
       const response = await updateProfile({ ...profilePatch, gender: { id: values.gender?.id } }).unwrap();
@@ -336,7 +389,12 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
         <AddressSection register={register} errors={errors} />
         <EmailSection register={register} errors={errors} />
         <PhoneNumberSection register={register} errors={errors} />
-        <GuardianSection register={register} errors={errors} />
+        <GuardianSection
+          register={register}
+          errors={errors}
+          watch={watch}
+          setValue={setValue}
+        />
         <FormActionsSection
           isSubmitting={isSubmitting}
           isLoading={isLoading}
