@@ -21,6 +21,7 @@ import { RecordingBadge } from './RecordingBadge';
 import { RecordingConsentModal } from './RecordingConsentModal';
 import { ScreenSharePicker } from './ScreenSharePicker';
 import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
+import ChatInCall from '@/layouts/reading/ChatInCall';
 import Popover from '@/components/core/popover/Popover';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
@@ -70,6 +71,7 @@ export function MeetingShell({
   const remoteVideoTrackRef = useRef<IRemoteVideoTrack | null>(null);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [isEndCallOpen, setIsEndCallOpen] = useState(false);
   const [isEnding, setIsEnding] = useState(false);
   const [isLocalReactionShown, setIsLocalReactionShown] = useState(false);
@@ -121,7 +123,6 @@ export function MeetingShell({
 
   const meetingSocket = useMeetingSocket({
     remoteParticipantId: remoteParticipant.id,
-    isChatOpen,
   });
 
   /** Unpublishes the camera before sharing; returns the track so it can be released. */
@@ -169,6 +170,20 @@ export function MeetingShell({
 
   const layoutMode = resolveLayoutMode(screenShare.isSharing);
 
+  // Spotlight and rail mount the same tracks into different DOM containers, so
+  // a track has to be re-attached after the swap or its tile goes black.
+  useEffect(() => {
+    const localTrack = localVideoTrackRef.current;
+    if (localTrack && localVideoRef.current) {
+      localTrack.play(localVideoRef.current);
+    }
+
+    const remoteTrack = remoteVideoTrackRef.current;
+    if (remoteTrack && remoteVideoRef.current) {
+      remoteTrack.play(remoteVideoRef.current);
+    }
+  }, [layoutMode]);
+
   const localParticipant: MeetingParticipant = useMemo(() => ({
     id: localUser.id,
     name: localUser.name,
@@ -188,6 +203,12 @@ export function MeetingShell({
     isMicOn: session.remoteMicOn,
     isCameraOn: session.remoteCameraOn,
   }), [remoteParticipant, isViewerLiber, session.remoteMicOn, session.remoteCameraOn]);
+
+  /** `ChatInCall` addresses peers by numeric id; a missing id still has to be a number. */
+  const chatParticipantId = useMemo(
+    () => Number(remoteParticipant.id ?? 0),
+    [remoteParticipant.id],
+  );
 
   const handleReact = useCallback(() => {
     meetingSocket.sendReaction();
@@ -275,13 +296,17 @@ export function MeetingShell({
   return (
     <div
       className={mergeClassnames(
-        'mx-0 my-2 flex items-stretch justify-center gap-6 xl:m-6',
-        layoutMode === 'rail' && 'xl:pr-[280px]',
+        // `size-full` is load-bearing: without an explicit width the shell
+        // shrink-to-fits to its content, collapsing the room into a narrow
+        // phone-shaped card on wide desktop viewports.
+        'mx-0 my-2 flex size-full items-stretch justify-center gap-6 xl:m-6',
       )}
     >
       <div
         className={mergeClassnames(
-          'flex size-full flex-col gap-4 rounded-[40px] bg-[#FFFFFF] p-4 shadow-popover',
+          // `min-w-0` lets the card shrink so the rail can sit flush against the
+          // right edge instead of pushing into a reserved gutter.
+          'flex size-full min-w-0 flex-col gap-4 rounded-[40px] rounded-tl-none bg-[#FFFFFF] p-4 shadow-popover',
           'xl:rounded-tl-[40px]',
         )}
       >
@@ -299,12 +324,25 @@ export function MeetingShell({
           </div>
 
           <div className="flex flex-1 justify-end">
+            {/* Below `xl` the chat is a popover; at `xl` and up it docks beside the card. */}
             <Popover position="bottom-end" className="xl:hidden">
               <Popover.Trigger>
-                <HeaderIconButtonWithBadge badge={meetingSocket.unreadCount}>
+                <HeaderIconButtonWithBadge badge={unreadCount}>
                   <Chat className="text-[28px] text-primary-60" />
                 </HeaderIconButtonWithBadge>
               </Popover.Trigger>
+              <Popover.Panel className="mt-2 h-[612px] w-[301px] rounded-none bg-transparent p-0">
+                {({ close }) => (
+                  <ChatInCall
+                    participantId={chatParticipantId}
+                    participantAvatarUrl={remoteParticipant.avatarUrl}
+                    participantName={remoteParticipant.name}
+                    isShow
+                    onClose={close}
+                    onUnreadCountChange={setUnreadCount}
+                  />
+                )}
+              </Popover.Panel>
             </Popover>
 
             <button
@@ -313,7 +351,7 @@ export function MeetingShell({
               className="hidden xl:block"
               onClick={() => setIsChatOpen(open => !open)}
             >
-              <HeaderIconButtonWithBadge badge={meetingSocket.unreadCount} open={isChatOpen}>
+              <HeaderIconButtonWithBadge badge={unreadCount} open={isChatOpen}>
                 <Chat className="text-[28px] text-primary-60" />
               </HeaderIconButtonWithBadge>
             </button>
@@ -375,17 +413,30 @@ export function MeetingShell({
 
       {/* Rail: both participants stack outside the card while a screen is shared. */}
       {layoutMode === 'rail' && (
-        <div className="hidden flex-col gap-4 xl:flex">
+        <div className="hidden shrink-0 flex-col gap-4 xl:flex">
           <div className="h-[181px] w-[248px] overflow-hidden rounded-3xl">
             {renderLocalTile(true)}
           </div>
           <div className="h-[181px] w-[248px] overflow-hidden rounded-3xl">
             <ParticipantTile
+              videoRef={remoteVideoRef}
               participant={remoteTileParticipant}
               isCompact
             />
           </div>
         </div>
+      )}
+
+      {/* Docked chat: a flex sibling that the card shrinks to make room for. */}
+      {isChatOpen && (
+        <ChatInCall
+          participantId={chatParticipantId}
+          participantAvatarUrl={remoteParticipant.avatarUrl}
+          participantName={remoteParticipant.name}
+          isShow
+          onClose={() => setIsChatOpen(false)}
+          onUnreadCountChange={setUnreadCount}
+        />
       )}
 
       <RecordingConsentModal
