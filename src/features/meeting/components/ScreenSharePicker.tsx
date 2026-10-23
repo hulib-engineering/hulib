@@ -2,9 +2,9 @@
 
 import { useTranslations } from 'next-intl';
 
+import type { ScreenShareSource } from '../types';
 import Checkbox from '@/components/core/checkbox/Checkbox';
 import { mergeClassnames } from '@/components/core/private/utils';
-import type { ScreenShareSource } from '../types';
 
 export type ScreenSharePickerProps = {
   sources: ScreenShareSource[];

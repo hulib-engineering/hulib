@@ -11,7 +11,7 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import { ReactionAnimation } from '@/components/meeting/ReactionAnimation';
 
 /** Shared stacking token — see the note in `docs/results/result-792.md` about z-index. */
-export const TILE_OVERLAY_Z = 'z-10';
+const TILE_OVERLAY_Z = 'z-10';
 
 export type ParticipantTileProps = {
   /** Container the Agora video track is mounted into. */

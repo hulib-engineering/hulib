@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import { Chip } from '@/components/core/chip/Chip';
 import { elapsedSecondsSince, formatDuration } from '../utils/formatDuration';
+import { Chip } from '@/components/core/chip/Chip';
 
 export type RecordingBadgeProps = {
   /** Epoch ms at which the recording actually started. */

@@ -2,8 +2,8 @@
 
 import { useTranslations } from 'next-intl';
 
-import { mergeClassnames } from '@/components/core/private/utils';
 import type { MeetingConnectionState } from '../types';
+import { mergeClassnames } from '@/components/core/private/utils';
 
 export type ReconnectingOverlayProps = {
   connectionState: MeetingConnectionState;

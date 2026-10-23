@@ -1,5 +1,4 @@
-import { isRailViewport, resolveLayoutMode } from './layout';
-import { MEETING_RAIL_BREAKPOINT } from './layout';
+import { MEETING_RAIL_BREAKPOINT, isRailViewport, resolveLayoutMode } from './layout';
 
 describe('resolveLayoutMode', () => {
   it('uses spotlight when nothing is being shared', () => {
