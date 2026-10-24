@@ -29,6 +29,7 @@ import Alert from '@/components/Alert';
 // import { CodeConfirmationModal } from './PersonalInfoOTPModal' Note: Reuse if OTP modal still needed
 import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
 import PhoneCodeSelect from '@/components/PhoneCodeByCountryDropdown';
+import { detectPhoneCountry } from '@/utils/detectPhoneCountry';
 
 type SectionProps = {
   register: UseFormRegister<TProfileForm>;
@@ -210,14 +211,24 @@ function GuardianSection({ register, errors, setValue, watch }: any /* SectionPr
               watch={watch}
             />
           </div>
-          <TextInput
-            id="parentPhoneNumber"
-            type="tel"
-            className="pl-28"
-            placeholder={t('guardian_placeholder')}
-            {...register('parentPhoneNumber')}
-            isError={!!errors.parentPhoneNumber}
-          />
+          {watch('countryCode') === 'email'
+            ? (
+                <TextInput
+                  className="pl-28"
+                  placeholder={t('guardian_placeholder')}
+                  {...register('parentEmail')}
+                  isError={!!errors.parentEmail}
+                />
+              )
+            : (
+                <TextInput
+                  type="tel"
+                  className="pl-28"
+                  placeholder={t('guardian_placeholder')}
+                  {...register('parentPhoneNumber')}
+                  isError={!!errors.parentPhoneNumber}
+                />
+              )}
         </div>
       </Form.Item>
 
@@ -300,11 +311,6 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
   // const [isOpenConfirmCodeModal, setIsOpenConfirmCodeModal] = useState(false); || Note: Reuse if need an otp modal again
 
   const dispatch = useAppDispatch();
-  const parentFieldPickerDefault
-    = (data?.parentPhoneNumber === null || data?.parentPhoneNumber === undefined)
-      ? 'Email'
-      : data.parentPhoneNumber.startsWith('+84')
-        ? '+84' : '+1';
 
   const {
     control,
@@ -332,7 +338,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
       address: data?.address ?? '',
       parentPhoneNumber: data?.parentPhoneNumber ?? null,
       parentEmail: data?.parentEmail ?? null,
-      parentFieldPicker: parentFieldPickerDefault,
+      countryCode: detectPhoneCountry(data?.parentPhoneNumber),
     },
   });
 
@@ -350,17 +356,15 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
   const handleUpdate = handleSubmit(async (values: TProfileForm) => {
     try {
       const { isUnderGuard, ...profilePatch } = values;
-
       if (!profilePatch.phoneNumber) {
         profilePatch.phoneNumber = null;
       }
-      if (!profilePatch.parentPhoneNumber || profilePatch.parentFieldPicker === 'Email') {
+      if (!profilePatch.parentPhoneNumber || profilePatch.countryCode === 'email') {
         profilePatch.parentPhoneNumber = null;
       }
-      if (!profilePatch.parentEmail || profilePatch.parentFieldPicker !== 'Email') {
+      if (!profilePatch.parentEmail || profilePatch.countryCode !== 'email') {
         profilePatch.parentEmail = null;
       }
-
       const response = await updateProfile({ ...profilePatch, gender: { id: values.gender?.id } }).unwrap();
       dispatch(setUserInfo(response));
       pushSuccess(t('update_successfully'));

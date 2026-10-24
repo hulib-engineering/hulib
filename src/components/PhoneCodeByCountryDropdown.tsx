@@ -28,17 +28,17 @@ const UsFlag = () => (
 );
 
 const CODES = [
-  { value: 'Email', flag: <EnvelopeSimpleIcon color="#0442BF" size={20} /> },
-  { value: '+84', flag: <VnFlag /> },
-  { value: '+1', flag: <UsFlag /> },
+  { value: 'email', label: 'Email', flag: <EnvelopeSimpleIcon color="#0442BF" size={20} /> },
+  { value: 'VN', label: '+84', flag: <VnFlag /> },
+  { value: 'US', label: '+1', flag: <UsFlag /> },
 ];
 
 export default function PhoneCodeSelect({ register, setValue, watch }: any) {
   return (
     <Select.Root
-      value={watch('parentFieldPicker')}
+      value={watch('countryCode')}
       onValueChange={value =>
-        setValue('parentFieldPicker', value, {
+        setValue('countryCode', value, {
           shouldDirty: true,
         })}
     >
@@ -62,7 +62,7 @@ export default function PhoneCodeSelect({ register, setValue, watch }: any) {
           <Select.Viewport>
             {CODES.map(c => (
               <Select.Item
-                {...register('parentFieldPicker')}
+                {...register('countryCode')}
                 key={c.value}
                 value={c.value}
                 className="data-[highlighted]:bg-blue-5 flex cursor-pointer items-center rounded-md p-2 text-sm outline-none"
@@ -70,7 +70,7 @@ export default function PhoneCodeSelect({ register, setValue, watch }: any) {
                 <Select.ItemText>
                   <span className="flex items-center gap-2">
                     {c.flag}
-                    {c.value}
+                    {c.label}
                   </span>
                 </Select.ItemText>
               </Select.Item>

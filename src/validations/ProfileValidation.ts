@@ -13,7 +13,7 @@ export const DateOfBirthFieldsetValidation = z.object({
   month: z.number().min(1).max(12),
   year: z.number().min(1),
 });
-// TODO: add parent email format check and maybe parent phone number as well
+
 export const ProfileValidation = z
   .object({
     fullName: z.string().trim().min(1),
@@ -30,7 +30,7 @@ export const ProfileValidation = z
     parentPhoneNumber: z.string().nullable().optional(),
     parentEmail: z.string().nullable().optional(),
     parentFullname: z.string().optional(),
-    parentFieldPicker: z.string().trim().min(1),
+    countryCode: z.string().nullable(),
   })
   .superRefine((values, context) => {
     if (values.isUnderGuard) {
