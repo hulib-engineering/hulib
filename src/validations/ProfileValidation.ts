@@ -30,7 +30,7 @@ export const ProfileValidation = z
     parentPhoneNumber: z.string().nullable().optional(),
     parentEmail: z.string().nullable().optional(),
     parentFullname: z.string().optional(),
-    parentFieldPicker: z.string().trim().min(1),
+    countryCode: z.string().nullable(),
   })
   .superRefine((values, context) => {
     if (values.isUnderGuard) {
