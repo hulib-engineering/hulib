@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const PHONE_NUMBER_REGEX = /^\+[1-9]\d{1,3}[ -]?\d{6,14}$/;
+export const PHONE_NUMBER_REGEX = /^\+?\d{7,15}$/;
 export const VALIDATION_MESSAGES = {
   PHONE_NUMBER: 'phone_number_invalid', // remove this once BE modified away parent field
   PARENT_REQUIRED: 'guardian_required',
