@@ -28,7 +28,13 @@ export const ProfileValidation = z
     address: z.string(),
     isUnderGuard: z.boolean(),
     parentPhoneNumber: z.string().nullable().optional(),
-    parentEmail: z.string().nullable().optional(),
+    parentEmail: z
+      .string()
+      .trim()
+      .email({ message: VALIDATION_MESSAGES.EMAIL_INVALID })
+      .nullable()
+      .optional()
+      .or(z.literal('')),
     parentFullname: z.string().optional(),
     countryCode: z.string().nullable(),
   })
