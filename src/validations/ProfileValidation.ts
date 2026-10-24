@@ -13,7 +13,7 @@ export const DateOfBirthFieldsetValidation = z.object({
   month: z.number().min(1).max(12),
   year: z.number().min(1),
 });
-// TODO: add parent email format check and maybe parent phone number as well
+
 export const ProfileValidation = z
   .object({
     fullName: z.string().trim().min(1),

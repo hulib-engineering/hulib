@@ -211,14 +211,24 @@ function GuardianSection({ register, errors, setValue, watch }: any /* SectionPr
               watch={watch}
             />
           </div>
-          <TextInput
-            id="parentPhoneNumber"
-            type="tel"
-            className="pl-28"
-            placeholder={t('guardian_placeholder')}
-            {...register('parentPhoneNumber')}
-            isError={!!errors.parentPhoneNumber}
-          />
+          {watch('countryCode') === 'email'
+            ? (
+                <TextInput
+                  className="pl-28"
+                  placeholder={t('guardian_placeholder')}
+                  {...register('parentEmail')}
+                  isError={!!errors.parentEmail}
+                />
+              )
+            : (
+                <TextInput
+                  type="tel"
+                  className="pl-28"
+                  placeholder={t('guardian_placeholder')}
+                  {...register('parentPhoneNumber')}
+                  isError={!!errors.parentPhoneNumber}
+                />
+              )}
         </div>
       </Form.Item>
 
@@ -346,7 +356,6 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
   const handleUpdate = handleSubmit(async (values: TProfileForm) => {
     try {
       const { isUnderGuard, ...profilePatch } = values;
-
       if (!profilePatch.phoneNumber) {
         profilePatch.phoneNumber = null;
       }
