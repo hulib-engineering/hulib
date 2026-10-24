@@ -7,6 +7,7 @@ import { Controller, useForm } from 'react-hook-form';
 import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
 import type { z } from 'zod';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 import { isEmpty } from 'lodash';
 
@@ -25,11 +26,14 @@ import { setUserInfo } from '@/libs/store/authentication';
 import { PHONE_NUMBER_REGEX, ProfileValidation, VALIDATION_MESSAGES } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
 import Alert from '@/components/Alert';
-
-// import { CodeConfirmationModal } from './PersonalInfoOTPModal' Note: Reuse if OTP modal still needed
-import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
 import PhoneCodeSelect from '@/components/PhoneCodeByCountryDropdown';
 import { detectPhoneCountry } from '@/utils/detectPhoneCountry';
+import Modal from '@/components/Modal';
+import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
+
+const CodeConfirmationModal = dynamic(
+  () => import('./PersonalInfoOTPModal'),
+); // TODO: use some state to trigger this from the layout instead
 
 type SectionProps = {
   register: UseFormRegister<TProfileForm>;
@@ -59,7 +63,7 @@ function Name({ register, errors }: SectionProps) {
     </Form.Item>
   );
 }
-// TODO: Remove the damn 'any' for translations if possible
+
 function GenderSection({ control }: { control: Control<TProfileForm> }) {
   const t = useTranslations('Common');
   return (
@@ -159,7 +163,6 @@ function EmailSection({ register, errors }: SectionProps) {
           {...register('email')}
           isError={!!errors.email}
           required
-          disabled
         />
       </Form.Item>
       {errors.email
@@ -254,6 +257,7 @@ function GuardianSection({ register, errors, setValue, watch }: any /* SectionPr
           )}
         </Alert>
       )}
+      {errors.parentEmail && (<Alert>{t(errors.parentEmail.message as any)}</Alert>)}
 
       <PrivacyPolicyModal
         open={isPrivacyOpen}
@@ -308,7 +312,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
   const t = useTranslations('Common');
 
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
-  // const [isOpenConfirmCodeModal, setIsOpenConfirmCodeModal] = useState(false); || Note: Reuse if need an otp modal again
+  const [isOpenConfirmCodeModal, setIsOpenConfirmCodeModal] = useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -319,7 +323,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     setError,
     trigger,
     watch,
-    // getValues, for OTP
+    getValues,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting, isDirty },
@@ -368,7 +372,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
       const response = await updateProfile({ ...profilePatch, gender: { id: values.gender?.id } }).unwrap();
       dispatch(setUserInfo(response));
       pushSuccess(t('update_successfully'));
-      // setIsOpenConfirmCodeModal(true); Note: Reuse if need an otp modal again
+      setIsOpenConfirmCodeModal(true);
     } catch (error: any) {
       const fieldErrors = error?.data?.errors;
       if (fieldErrors && typeof fieldErrors === 'object') {
@@ -408,11 +412,9 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
         />
       </Form>
 
-      {/* Note: Reuse if need an otp modal again
-        <Modal open={isOpenConfirmCodeModal} onClose={handleCloseCCModal}>
-          <CodeConfirmationModal email={getValues('email')} onSuccess={() => setIsOpenConfirmCodeModal(false)} />
-        </Modal>
-      */}
+      <Modal open={isOpenConfirmCodeModal} onClose={() => setIsOpenConfirmCodeModal(false)}>
+        <CodeConfirmationModal email={getValues('email')} onSuccess={() => setIsOpenConfirmCodeModal(false)} />
+      </Modal>
     </>
   );
 };
