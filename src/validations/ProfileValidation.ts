@@ -2,7 +2,8 @@ import { z } from 'zod';
 
 export const PHONE_NUMBER_REGEX = /^\+?\d{7,15}$/;
 export const VALIDATION_MESSAGES = {
-  PHONE_NUMBER: 'phone_number_invalid', // remove this once BE modified away parent field
+  PHONE_NUMBER: 'phone_number_invalid',
+  PARENT_PHONE_NUMBER: 'parent_phone_number_invalid',
   PARENT_REQUIRED: 'guardian_required',
   EMAIL_REQUIRED: 'email_required',
   EMAIL_INVALID: 'email_invalid',
@@ -27,7 +28,9 @@ export const ProfileValidation = z
       .refine(value => !value || PHONE_NUMBER_REGEX.test(value), { message: VALIDATION_MESSAGES.PHONE_NUMBER }),
     address: z.string(),
     isUnderGuard: z.boolean(),
-    parentPhoneNumber: z.string().nullable().optional(),
+    parentPhoneNumber: z.string()
+      .nullable()
+      .optional(),
     parentEmail: z
       .string()
       .trim()

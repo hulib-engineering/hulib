@@ -29,11 +29,20 @@ import Alert from '@/components/Alert';
 import PhoneCodeSelect from '@/components/PhoneCodeByCountryDropdown';
 import { detectPhoneCountry } from '@/utils/detectPhoneCountry';
 import Modal from '@/components/Modal';
-import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
+import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';// TODO: use some state to trigger this from the layout instead
 
 const CodeConfirmationModal = dynamic(
   () => import('./PersonalInfoOTPModal'),
-); // TODO: use some state to trigger this from the layout instead
+);
+
+const SERVER_ERROR_MESSAGES = {
+  email: VALIDATION_MESSAGES.EMAIL_INVALID,
+  phoneNumber: VALIDATION_MESSAGES.PHONE_NUMBER,
+  parentPhoneNumber: VALIDATION_MESSAGES.PARENT_PHONE_NUMBER,
+  parentEmail: VALIDATION_MESSAGES.EMAIL_INVALID,
+} as const;
+
+type ServerErrorField = keyof typeof SERVER_ERROR_MESSAGES;
 
 type SectionProps = {
   register: UseFormRegister<TProfileForm>;
@@ -326,7 +335,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     getValues,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting, isDirty },
+    formState: { errors, isSubmitting, isDirty, dirtyFields },
   } = useForm<z.infer<typeof ProfileValidation>>({
     resolver: zodResolver(ProfileValidation),
     mode: 'onChange',
@@ -359,7 +368,9 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
 
   const handleUpdate = handleSubmit(async (values: TProfileForm) => {
     try {
+      const isEmailChanged = !!dirtyFields.email;
       const { isUnderGuard, ...profilePatch } = values;
+
       if (!profilePatch.phoneNumber) {
         profilePatch.phoneNumber = null;
       }
@@ -369,22 +380,29 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
       if (!profilePatch.parentEmail || profilePatch.countryCode !== 'email') {
         profilePatch.parentEmail = null;
       }
+
       const response = await updateProfile({ ...profilePatch, gender: { id: values.gender?.id } }).unwrap();
       dispatch(setUserInfo(response));
       pushSuccess(t('update_successfully'));
-      setIsOpenConfirmCodeModal(true);
+
+      if (isEmailChanged) {
+        setIsOpenConfirmCodeModal(true);
+      }
     } catch (error: any) {
       const fieldErrors = error?.data?.errors;
+
       if (fieldErrors && typeof fieldErrors === 'object') {
         Object.keys(fieldErrors).forEach((field) => {
-          setError(field as keyof z.infer<typeof ProfileValidation>, {
-            type: 'server',
-            message: VALIDATION_MESSAGES.PHONE_NUMBER,
-          });
+          if (field in SERVER_ERROR_MESSAGES) {
+            setError(field as ServerErrorField, {
+              type: 'server',
+              message: SERVER_ERROR_MESSAGES[field as ServerErrorField],
+            });
+          }
         });
         pushError(t('update_failed'));
       } else {
-        pushError(t(error.message));
+        pushError(t(error?.message ?? 'update_failed'));
       }
     }
   });
