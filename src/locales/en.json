@@ -63,6 +63,10 @@
     "join_our_social_community": "JOIN OUR SOCIAL COMMUNITY",
     "copy_right": "Copyright © 2026 HuLib Website. All rights reserved."
   },
+  "ContinueBookCard": {
+    "title": "You have an unfinished book!",
+    "button": "Finish your book"
+  },
   "Index": {
     "meta_title": "HuLib | Landing Page",
     "meta_description": "Everyone has a story. At HuLib, we foster a caring community where no one has to walk their journey alone.",
@@ -200,36 +204,41 @@
     "news_title": "Events - News",
     "news_info": {
       "index_0": {
+        "location": "Online – Webapp",
+        "heading": "Storytelling Competition “Nhat Lai Khoanh Khac” - Season 2",
+        "content": "🌱 Thank you all for joining us in collecting pieces of our memories, and congratulations to the stories that have been recognized! 🥳"
+      },
+      "index_1": {
         "location": "United Nations Headquarters, New York, U.S",
         "heading": "ECOSOC World Youth Forum 2026",
         "content": "“Xin Chao” from Central Vietnam 🇻🇳💙 HuLib is proud that our Founder, Uyen Nguyen was nominated under UNESCO x SEVENTEEN – #GoingTogether for Youth Creativity & Well-being 🌍, representing 100 youth-led projects around the world 🤝"
       },
-      "index_1": {
+      "index_2": {
         "location": "Da Nang, Viet Nam",
         "heading": "Workshop “Hiểu mình, thương mình”",
         "content": "Last Saturday was truly special. A day full of emotions, everyone came with their own story and together, we were heard."
       },
-      "index_2": {
+      "index_3": {
         "location": "Ho Chi Minh City, Vietnam",
         "heading": "Exhibition - VietFuture Awards 2025",
         "content": "A milestone in HuLib’s journey, spreading the message of well-being and mental health."
       },
-      "index_3": {
+      "index_4": {
         "location": "Online",
         "heading": "Event “Tôi là ai giữa ngã ba đường”",
         "content": "May this event give you the courage to move forward with confidence and heart."
       },
-      "index_4": {
+      "index_5": {
         "location": "Online",
         "heading": "Story Competition “Nhặc lại khoảnh khắc”",
         "content": "Not just a contest but a space for us to pause, reflect, and appreciate our experiences. Happiness and sadness come together to create incredible journeys."
       },
-      "index_5": {
+      "index_6": {
         "location": "Online",
         "heading": "Event “Tiếng chuông tỉnh thức”",
         "content": "No one enjoys toxic relationships. The event reminds us to love ourself, and create our own happiness before expecting it from others."
       },
-      "index_6": {
+      "index_7": {
         "location": "Online",
         "heading": "Event “Đi học, đi làm - hướng nào dễ hơn”",
         "content": "Sharing was truly meaningful. Going in the right direction is important, but optimism and perseverance are key to success."
@@ -543,8 +552,12 @@
     "log_in": "Log in",
     "fullname": "Full name",
     "fullname_placeholder": "Emma Johnson",
+    "fullname_max_length": "Full name must be 30 characters or fewer.",
     "gender": "Gender",
     "birthday": "Date of birth",
+    "birthday_invalid": "Enter a valid date of birth.",
+    "birthday_too_early": "Date of birth must be on or after January 1, 1900.",
+    "birthday_in_future": "Date of birth cannot be in the future.",
     "register": "Create account",
     "accept_pp_and_tac": {
       "first": "By creating an account, I accept",
@@ -559,11 +572,11 @@
     "account_created": "Your account has been created",
     "get_started": "Get started",
     "reset_password": "Reset the password",
-    "at_least_8_characters": "At least 8 characters long",
-    "contains_special_character": "Contains a special character",
-    "contains_number": "Contains a number",
-    "contains_uppercase_letter": "Contains an uppercase letter",
-    "passwords_match": "Passwords match",
+    "at_least_8_characters": "Password has at least 8 characters.",
+    "contains_special_character": "Password has special characters.",
+    "contains_number": "Password has a number.",
+    "contains_uppercase_letter": "Password has a capital letter.",
+    "passwords_match": "Passwords match.",
     "resetting": "Resetting...",
     "back_to_login": "Back to login",
     "submit": "Submit",
@@ -700,6 +713,7 @@
       "education_type_vocational": "Vocational, short courses, trade school",
       "education_type_university": "College, University & Postgraduate",
       "education_type_life_experience": "Life school, real-world experience",
+      "education_type_high_school": "High school",
       "education_name_label": "Name",
       "education_name_placeholder": "Enter major / course name / role",
       "education_org_label": "Organization",
@@ -971,6 +985,14 @@
     "feedback": "Feedback",
     "reason": "Reason:",
     "share_reason_here": "Share the reason here",
+    "missed_reason": {
+      "title": "The conversation was missed",
+      "status_label": "Missed",
+      "time_label": "Time",
+      "meeting_with_label": "Meeting with",
+      "reason_label": "Reason:",
+      "submit": "Complete"
+    },
     "confirm": "Confirm",
     "status_updated": "Status updated successfully!",
     "status_update_failed": "Failed to update status. Please try again.",
@@ -1025,7 +1047,35 @@
     "meeting_with": "Meeting with",
     "meeting_schedule": "Meeting schedule",
     "view": "View",
-    "type_of_meeting": "Type of meeting"
+    "type_of_meeting": "Type of meeting",
+    "meeting_list": {
+      "send_to": "Send to",
+      "join": "Join",
+      "time_label": "Time",
+      "filter": {
+        "all": "All",
+        "approved": "Approved",
+        "requests": "Requests",
+        "done": "Done",
+        "missed": "Missed"
+      },
+      "badge": {
+        "right_now": "Right now!",
+        "time_left": "{days}d {hours}h left",
+        "my_request": "My request",
+        "invitation": "Invitation"
+      },
+      "empty": {
+        "title": "No meetings yet",
+        "description": "Once a Liber requests a conversation with you, or you request one, it will show up here."
+      },
+      "success": {
+        "updated": "Meeting updated successfully"
+      },
+      "error": {
+        "updated": "Failed to update the meeting. Please try again."
+      }
+    }
   },
   "notifications": {
     "title": "Notifications",
@@ -1061,13 +1111,14 @@
     "session_completion_title": "The session is finished",
     "session_cancellation": "We want you to notify that Liber {name} has canceled the meeting ({startTime} to {endTime}, {date}). Reason:",
     "session_cancellation_title": "The meeting is canceled",
-    "session_miss": "You didn't join the meeting today ({startTime} to {endTime}, {date}). We'd love to know what happened, so we can improve the experience for everyone.",
-    "session_miss_title": "Meeting not attended !",
+    "session_miss": "You didn't join today's meeting <hl>({startTime}–{endTime}, {date})</hl>. We hope everything's okay. Would you like to share why you missed today's conversation?",
+    "huber_no_show_reading_session": "We couldn't confirm your participation in the meeting <hl>({startTime}–{endTime}, {date})</hl>. If you were there, something may have gone wrong on our side — please let us know.",
+    "auto_cancel_reading_session": "Sorry! Your meeting request <hl>({startTime}–{endTime}, {date})</hl> has been auto cancelled because <b>{name}</b> has not responded yet.",
     "user_appeal": "User appeal report #{id}",
     "appeal_accepted": "Your appeal request is accepted, your account does not receive warning. Thank you for clarifying the situation.",
     "appeal_rejected": "After reviewing your appeal, we've decided to keep the warning. Please be careful that your account will be ban if you receive 3 reports.",
-    "time_slot_reminder_message": "Update your personal schedule to have more meaningful online conversations.",
-    "time_slot_reminder_cta": "Update now",
+    "update_time_slot_reminder_message": "Update your personal calendar to host meaningful online conversations.",
+    "update_time_slot_reminder_button": "Update now",
     "now": "Now",
     "join_now": "Join now",
     "feedback": "Feedback",
@@ -1078,7 +1129,31 @@
     "see_rejected_stories": "See the rejected stories",
     "explore_other_stories": "Explore other stories",
     "share_reason": "Share the reason",
-    "appeal": "Appeal"
+    "appeal": "Appeal",
+    "new_session_request_title": "You have a new request for a conversation session",
+    "requested_by": "Requested by",
+    "session_time_label": "Time",
+    "accept": "Accept",
+    "reject": "Reject",
+    "status_updated": "Status updated successfully",
+    "status_update_failed": "Failed to update status",
+    "confirm": "Confirm",
+    "meeting_with": "Meeting with",
+    "time_left": "{days}d {hours}h left",
+    "confirm_accept_title": "Confirm this meeting?",
+    "confirm_accept_message": "It’ll be added to your calendar, and the requester will be notified",
+    "confirm_accept_cancel_label": "Still deciding",
+    "confirm_reject_title": "Decline this meeting?",
+    "confirm_reject_message": "The requester will be notified, and it won’t be added to your calendar",
+    "confirm_reject_cancel_label": "Still deciding",
+    "confirm_reject_action": "Confirm rejection",
+    "invitation": "Invitation",
+    "reject_reason_label": "Reason for rejection:",
+    "reject_reason_placeholder": "The requester would appreciate knowing why you're rejecting this session.",
+    "session_approval_by_huber": "You accepted the meeting request from <b>{name}</b> at <hl>({startTime}– {endTime}, {date})</hl>.",
+    "session_rejection_by_huber": "You declined the meeting request from <b>{name}</b> at <hl>({startTime}– {endTime}, {date})</hl>.",
+    "session_approval_by_liber": "<b>{name}</b> accepted your meeting request at <hl>({startTime} – {endTime}, {date})</hl>",
+    "session_rejection_by_liber": "<b>{name}</b> declined your meeting request at <hl>({startTime} – {endTime}, {date})</hl>, reason:"
   },
   "HuberCTA": {
     "title": "Share Your Story",
@@ -1119,6 +1194,7 @@
     "submit_create_book_desktop": "Create book",
     "rejected": "Rejected",
     "in_review": "In review",
+    "draft": "Draft",
     "rejection_reason": "Rejection reason",
     "approve": "Approve",
     "report": "Report",
@@ -1195,13 +1271,12 @@
     "email_confirm_description": "We have sent the 4-digit confirmation codes to the email <bold>{email}</bold>.<br></br>Please check your inbox and enter your confirmation codes here.",
     "phone_number": "Phone Number (not required)",
     "phone_number_placeholder": "Your phone number",
-    "phone_number_invalid": "Phone number must start with + and include a country code, e.g. +84987654321",
+    "phone_number_invalid": "Invalid phone number",
     "guardian_name": "Your Guardian Name",
-    "guardian_phone_number": "Your Guardian Phone Number",
-    "guardian_phone_number_invalid": "Guardian phone number must start with + and include a country code, e.g. +84987654321",
-    "guardian_email": "Guardian email",
+    "guardian_phone_number": "Emergency Contact Email / Phone Number",
     "guardian_placeholder": "Required if you are under 18 years old",
-    "parent_phone_number_required": "Please specify a parent phone number if you are under 18!",
+    "guardian_required_1": "If you’re under 18, please provide this information for use in an emergency. We keep your information confidential and do not use it for commercial purposes.",
+    "guardian_required_2": "Security and Privacy",
     "invalid_verification_code": "Wrong confirmation codes, please enter again",
     "resend_otp": "Resend confirmation codes",
     "not_provided": "Not provided",
@@ -1220,6 +1295,9 @@
     "save": "Save",
     "not_found": "Not Found",
     "could_not_find_resource": "Could not find requested resource",
+    "close": "Close",
+    "loading": "Loading…",
+    "book_again": "Book this story again",
     "no_results_found": "Could not find what you're looking for",
     "return_home": "Return Home",
     "view_more": "View more",
@@ -1284,7 +1362,12 @@
     "sent_sticker": "Sent a sticker",
     "happy_new_year": "Happy New Year",
     "meeting_request": "Meeting request",
-    "reason_for_warning": "Reason for warning"
+    "reason_for_warning": "Reason for warning",
+    "draft_tooltip": "You can save your story as a draft and return later, if it's not possible to complete it yet",
+    "story_create_success": "Story created successfully",
+    "draft_create_success": "Draft saved successfully",
+    "draft_create_success_title": "Draft Saved Successfully",
+    "save_draft": "Save draft"
   },
   "feedback_form": {
     "session_feedback": "Feedback for the session",
@@ -1334,14 +1417,16 @@
         "quest_1": "1. How are you feeling today?",
         "quest_2": "2. How relevant does the story to your problem?",
         "quest_3": "3. How relevant does the Huber's profile to your interest?",
-        "quest_4": "4. How helpful do you think this session will be for you?"
+        "quest_4": "4. Do you concern about the interaction between you and the Huber?"
       },
       "not_good": "Not good",
       "very_good": "Very good",
+      "not_touched": "Not touched",
+      "very_touched": "Very touched",
       "not_relevant": "Not relevant",
       "very_relevant": "Very relevant",
-      "not_helpful": "Not helpful",
-      "very_helpful": "Very helpful"
+      "least_concerned": "Least concerned",
+      "most_concerned": "Most concerned"
     },
     "AgoraMeeting": {
       "meeting_topic": "Meeting topic",
@@ -1351,7 +1436,45 @@
       "recording_title": "Record this meeting ?",
       "recording_detail": "Do you want to record this meeting? Recording will be visible to all attendees.",
       "not_record": "No, do not record",
-      "start_recording": "Start recording"
+      "start_recording": "Start recording",
+      "screen_label": "Shared screen",
+      "share_content": "Share content",
+      "include_system_audio": "Include system audio",
+      "stop_sharing": "Stop sharing",
+      "share_failed": "Could not start sharing your screen",
+      "no_sources_available": "No screen available to share",
+      "cancel": "Cancel",
+      "screen_source": "Screen",
+      "window_source": "Window",
+      "recording_started": "Recording started",
+      "recording_stopped": "Recording stopped",
+      "recording_start_failed": "Could not start recording this meeting",
+      "recording_stop_failed": "Could not stop the recording",
+      "session_finished": "Session has finished successfully",
+      "session_finish_failed": "Could not finish the session",
+      "end_call_title": "End this meeting?",
+      "end_call_confirm": "You will leave the meeting. The other person will be notified.",
+      "end_call_cancel": "Stay in meeting",
+      "end_call": "End meeting",
+      "participant_joined": "Your partner joined the meeting",
+      "participant_left": "Your partner left the meeting",
+      "reconnecting": "Reconnecting…",
+      "connection_lost": "Connection lost",
+      "connection_restored": "Connection restored",
+      "join_failed": "Could not join the meeting",
+      "mic_permission_denied": "Microphone access was blocked",
+      "camera_permission_denied": "Camera access was blocked",
+      "no_microphone": "No microphone found",
+      "no_camera": "No camera found",
+      "turn_on_mic": "Turn on microphone",
+      "turn_on_camera": "Turn on camera",
+      "toggle_mic": "Toggle microphone",
+      "toggle_camera": "Toggle camera",
+      "share_screen": "Share screen",
+      "send_reaction": "Send reaction",
+      "open_chat": "Open chat",
+      "close_chat": "Close chat",
+      "generic_error": "Something went wrong"
     }
   },
   "LandingPage": {

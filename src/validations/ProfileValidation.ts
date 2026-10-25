@@ -1,10 +1,9 @@
 import { z } from 'zod';
 
-export const PHONE_NUMBER_REGEX = /^\+[1-9]\d{1,3}[ -]?\d{6,14}$/;
+export const PHONE_NUMBER_REGEX = /^\+?\d{7,15}$/;
 export const VALIDATION_MESSAGES = {
-  PHONE_NUMBER: 'phone_number_invalid',
-  PARENT_PHONE_NUMBER_REQUIRED: 'parent_phone_number_required',
-  GUARDIAN_PHONE_NUMBER: 'guardian_phone_number_invalid',
+  PHONE_NUMBER: 'phone_number_invalid', // remove this once BE modified away parent field
+  PARENT_REQUIRED: 'guardian_required',
   EMAIL_REQUIRED: 'email_required',
   EMAIL_INVALID: 'email_invalid',
 };
@@ -28,26 +27,24 @@ export const ProfileValidation = z
       .refine(value => !value || PHONE_NUMBER_REGEX.test(value), { message: VALIDATION_MESSAGES.PHONE_NUMBER }),
     address: z.string(),
     isUnderGuard: z.boolean(),
-    parentPhoneNumber: z.string().nullable().optional()
-      .refine(value => !value || PHONE_NUMBER_REGEX.test(value), { message: VALIDATION_MESSAGES.GUARDIAN_PHONE_NUMBER }),
-    parentEmail: z.string().trim().optional().or(z.literal(''))
-      .refine(value => !value || z.string().email().safeParse(value).success, { message: VALIDATION_MESSAGES.EMAIL_INVALID }),
+    parentPhoneNumber: z.string().nullable().optional(),
+    parentEmail: z
+      .string()
+      .trim()
+      .email({ message: VALIDATION_MESSAGES.EMAIL_INVALID })
+      .nullable()
+      .optional()
+      .or(z.literal('')),
     parentFullname: z.string().optional(),
+    countryCode: z.string().nullable(),
   })
   .superRefine((values, context) => {
     if (values.isUnderGuard) {
       if (!values.parentPhoneNumber || values.parentPhoneNumber.length <= 0) {
         context.addIssue({
           code: z.ZodIssueCode.custom,
-          message: VALIDATION_MESSAGES.PARENT_PHONE_NUMBER_REQUIRED,
+          message: VALIDATION_MESSAGES.PARENT_REQUIRED,
           path: ['parentPhoneNumber'],
-        });
-      }
-      if (!values.parentEmail || values.parentEmail.length <= 0) {
-        context.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'guardian_placeholder',
-          path: ['parentEmail'],
         });
       }
     }

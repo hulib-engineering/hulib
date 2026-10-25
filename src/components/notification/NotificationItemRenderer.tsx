@@ -1,7 +1,6 @@
 import React from 'react';
-import { notificationRegistry } from './private/registry';
+import { resolveNotificationComponent } from './private/registry';
 
-import { NotificationType } from '@/components/notification/private/types';
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
 import useNotificationActions from '@/libs/hooks/useNotificationActions';
 
@@ -9,6 +8,12 @@ export type INotificationItemRendererProps = {
   notification: Notification;
   onClick?: () => void;
   showExtras?: boolean;
+  /**
+   * Lets a parent (e.g. a popover that unmounts its content on close) take over
+   * rendering of the accept/reject confirmation modal so it survives the parent closing.
+   * Only consumed by MeetingRequestNotificationCard; ignored by other notification types.
+   */
+  onRequestDecision?: (type: 'accept' | 'reject', notification: Notification) => void;
 };
 
 // Isolates one bad notification (e.g. unregistered type) so it doesn't crash the whole list.
@@ -24,9 +29,8 @@ class ItemBoundary extends React.Component<{ children: React.ReactNode }, { hasE
   }
 }
 
-export default function NotificationItemRenderer({ notification, showExtras, onClick }: INotificationItemRendererProps) {
-  const Component
-    = notificationRegistry[notification.type.name as NotificationType] ?? notificationRegistry[NotificationType.OTHER];
+export default function NotificationItemRenderer({ notification, showExtras, onClick, onRequestDecision }: INotificationItemRendererProps) {
+  const Component = resolveNotificationComponent(notification);
 
   const { markAsSeen } = useNotificationActions();
 
@@ -39,7 +43,7 @@ export default function NotificationItemRenderer({ notification, showExtras, onC
 
   return (
     <ItemBoundary>
-      <Component notification={notification} showExtras={showExtras} onClick={handleClick} />
+      <Component notification={notification} showExtras={showExtras} onClick={handleClick} onRequestDecision={onRequestDecision} />
     </ItemBoundary>
   );
 }

@@ -3,7 +3,7 @@
 import { notFound, useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
-import { ArrowLeft } from '@phosphor-icons/react';
+import { ArrowLeftIcon } from '@phosphor-icons/react';
 import { redirect, useRouter } from '@/libs/i18nNavigation';
 
 import Button from '@/components/core/button/Button';
@@ -170,7 +170,7 @@ export default function Index() {
         <div className="flex flex-col gap-2">
           <Button
             variant="ghost"
-            iconLeft={<ArrowLeft />}
+            iconLeft={<ArrowLeftIcon />}
             className="w-fit text-black"
             onClick={handleBack}
           />

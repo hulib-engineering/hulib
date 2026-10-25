@@ -212,6 +212,7 @@ export default {
           40: '#8845C6',
           80: '#DDC9EF',
           90: '#EEE4F7',
+          98: '#FAF6FE',
         },
       },
       boxShadow: {

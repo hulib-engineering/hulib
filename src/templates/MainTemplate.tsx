@@ -50,7 +50,7 @@ const MainTemplate = (props: WithChildren) => {
         )}
       >
         <div className="flex size-full flex-col">
-          <Header />
+          {!pathname.includes('/register-huber/create-book') && <Header />}
           <main className={mergeClassnames('flex-1', !pathname.includes('messages') && 'overflow-y-auto')}>
             <div className={mergeClassnames(pathname.includes('messages') ? 'h-full' : 'min-h-[calc(100vh-410px)]')}>
               {props.children}

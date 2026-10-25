@@ -1,7 +1,7 @@
 // MyBook.tsx
 'use client';
 
-import MyStoriesPanel from '@/app/[locale]/(auth)/users/[id]/_components/MyStoriesPanel';
+import MyStoriesPanel from '@/features/users/components/stories/MyStoriesPanel';
 
 type Props = {
   topics: any;

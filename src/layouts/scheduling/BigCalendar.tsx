@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Calendar, Views, dateFnsLocalizer } from 'react-big-calendar';
 import { format, getDay, parse, startOfWeek } from 'date-fns';
 import { enUS } from 'date-fns/locale';
@@ -6,9 +6,9 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 import NowIndicator from '@/layouts/scheduling/NowIndicator';
 import SessionPopover from '@/layouts/scheduling/SessionPopover';
+import { isPendingSessionStatus } from '@/components/notification/private/types';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 import type { ReadingSession } from '@/libs/services/modules/reading-session/createNewReadingSession';
-import { StatusEnum } from '@/types/common';
 import { getGMTOffset } from '@/utils/dateUtils';
 import { useAppSelector } from '@/libs/hooks';
 
@@ -56,18 +56,24 @@ export default function BigCalendar({ dateInWeekView = new Date(), statusFilters
   };
   const { startedAt, endedAt } = getCurrentWeekRange(dateInWeekView);
 
-  const { data: readingSessions, isLoading } = useGetReadingSessionsQuery({
+  const { data: readingSessionsResponse, isLoading } = useGetReadingSessionsQuery({
     startedAt,
     endedAt,
   });
+  const readingSessions = useMemo(
+    () => readingSessionsResponse?.data ?? [],
+    [readingSessionsResponse],
+  );
 
   const filterEvents = (events: IEvent[], selectedStatuses: string[]) => {
     if (selectedStatuses.length === 0) {
       return events;
     } // show all if nothing selected
 
+    const normalized = selectedStatuses.map(status => status.toLowerCase());
+
     return events.filter(event =>
-      selectedStatuses.includes(event.resource.sessionStatus)
+      normalized.includes(event.resource.sessionStatus?.toLowerCase() ?? '')
       || (selectedStatuses.includes('isHuber') && event.resource.humanBookId === userInfo?.id)
       || (selectedStatuses.includes('isLiber') && event.resource.readerId === userInfo?.id),
     );
@@ -108,7 +114,7 @@ export default function BigCalendar({ dateInWeekView = new Date(), statusFilters
           event: ({ event }) => (
             <div className="size-full">
               <SessionPopover
-                isPending={event.resource.sessionStatus === StatusEnum.Pending}
+                isPending={isPendingSessionStatus(event.resource.sessionStatus)}
                 extendedProps={event.resource}
               />
             </div>

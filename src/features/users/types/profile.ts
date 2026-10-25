@@ -10,7 +10,7 @@ export type SectionMenu = {
   icon: ReactNode;
 };
 
-export type LearningType = 'vocational' | 'university' | 'life_experience';
+export type LearningType = 'vocational' | 'university' | 'life_experience' | 'high_school';
 
 export type LearningEntry = {
   id?: number | string;

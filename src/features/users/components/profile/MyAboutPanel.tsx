@@ -1,0 +1,66 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
+
+import LiberAboutSection from './MyAboutSection';
+import LiberLearningPathSection from './MyLearningPathSection';
+import MyWorkSection from './MyWorkSection';
+import MyTopicsSection from './MyTopicsSection';
+import type { LearningEntryFormValues, LiberAboutData, WorkEntryFormValues } from '@/features/users/types/profile';
+// TODO: Create a common custom gradient Seal Check component for the icon
+type LiberAboutPanelProps = {
+  data?: LiberAboutData;
+  editable?: boolean;
+  showTopics?: boolean;
+  availableTopics?: LiberAboutData['topics'];
+  onSaveText?: (key: 'bio', value: string) => Promise<void> | void;
+  onSaveLearningEntry?: (values: LearningEntryFormValues, editingId?: number | string) => Promise<void> | void;
+  onSaveWorkEntry?: (values: WorkEntryFormValues, editingId?: number) => Promise<void> | void;
+  onSaveTopics?: (topics: NonNullable<LiberAboutData['topics']>) => Promise<void> | void;
+};
+
+export default function MyAboutPanel({
+  data,
+  editable = false,
+  showTopics = false,
+  availableTopics = [],
+  onSaveText,
+  onSaveLearningEntry,
+  onSaveWorkEntry,
+  onSaveTopics,
+}: LiberAboutPanelProps) {
+  const t = useTranslations('MyProfile');
+
+  return (
+    <div className="flex flex-col gap-4 rounded-xl bg-white">
+      <LiberAboutSection
+        title={t('liber_about.journey_title')}
+        placeholder={t('liber_about.journey_placeholder')}
+        value={data?.journey}
+        editable={editable}
+        onSave={value => onSaveText?.('bio', value)}
+      />
+      <LiberLearningPathSection
+        title={t('liber_about.learning_path_title')}
+        entries={data?.learningPath}
+        editable={editable}
+        onSave={onSaveLearningEntry}
+      />
+      <MyWorkSection
+        title={t('liber_about.works_title')}
+        entries={data?.works}
+        editable={editable}
+        onSave={onSaveWorkEntry}
+      />
+      {showTopics && (
+        <MyTopicsSection
+          title={t('liber_about.topics_title')}
+          topics={data?.topics}
+          availableTopics={availableTopics}
+          editable={editable}
+          onSave={onSaveTopics}
+        />
+      )}
+    </div>
+  );
+}

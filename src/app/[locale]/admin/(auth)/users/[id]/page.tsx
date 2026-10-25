@@ -21,7 +21,7 @@ import Loading from '@/app/[locale]/loading';
 import { ProfileCover } from '@/components/ProfileCover';
 import { ActionOnUserModal } from '@/layouts/admin/ActionOnUserModal';
 import AboutPanel from '@/layouts/profile/AboutPanel';
-import MyStoriesPanel from '@/app/[locale]/(auth)/users/[id]/_components/MyStoriesPanel';
+import MyStoriesPanel from '@/features/users/components/stories/MyStoriesPanel';
 import UserActivityList from '@/layouts/profile/UserActivityList';
 import { useUnbanUserMutation, useUnwarnUserMutation } from '@/libs/services/modules/moderation';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';

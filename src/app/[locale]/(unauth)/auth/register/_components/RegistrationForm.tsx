@@ -35,10 +35,13 @@ import {
 } from '@/libs/services/modules/auth';
 import { PASSWORD_CHECKLIST_RULES } from '@/validations/PasswordValidation';
 import {
+  MIN_BIRTHDAY,
   RegisterStep1Validation,
   RegisterStep2Validation,
   RegisterStep3Validation,
+  getLatestBirthday,
 } from '@/validations/RegisterValidation';
+import type { RegisterStep2Values } from '@/validations/RegisterValidation';
 import { mergeClassnames } from '@/components/core/private/utils';
 
 const Step1Form = ({
@@ -126,6 +129,13 @@ const Step1Form = ({
           minLength={8}
           value={watch('password')}
           valueAgain={watch('confirmPassword')}
+          messages={{
+            minLength: t('at_least_8_characters'),
+            specialChar: t('contains_special_character'),
+            number: t('contains_number'),
+            capital: t('contains_uppercase_letter'),
+            match: t('passwords_match'),
+          }}
           iconComponents={{
             ValidIcon: (
               <CheckFat
@@ -159,9 +169,10 @@ const Step1Form = ({
 const Step2Form = ({
   onSubmit,
 }: {
-  onSubmit: (data: z.infer<typeof RegisterStep2Validation>) => void;
+  onSubmit: (data: RegisterStep2Values) => void;
 }) => {
   const t = useTranslations('SignUp');
+  const latestBirthday = getLatestBirthday();
 
   const {
     control,
@@ -171,7 +182,8 @@ const Step2Form = ({
     setValue,
     formState: { errors, isSubmitting },
   } = useForm({
-    resolver: zodResolver(RegisterStep2Validation),
+    resolver: zodResolver(RegisterStep2Validation(t)),
+    mode: 'onChange',
     defaultValues: {
       isUnderGuard: false,
       fullname: '',
@@ -234,6 +246,8 @@ const Step2Form = ({
             <TextInput
               type="date"
               label={t('birthday')}
+              min={MIN_BIRTHDAY}
+              max={latestBirthday}
               {...register('birthday')}
               isError={!!errors.birthday}
               hintText={errors.birthday?.message}
@@ -527,7 +541,7 @@ const RegistrationForm = () => {
   };
 
   const handleStep2FormSubmit = async (
-    data: z.infer<typeof RegisterStep2Validation>,
+    data: RegisterStep2Values,
   ) => {
     try {
       const result = await register({

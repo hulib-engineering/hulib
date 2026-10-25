@@ -89,7 +89,10 @@
   //    "types/next-auth.d.ts",
   //    "**/*.mts"
   //  ]
-  // Files to include/exclude from the project
-  "exclude": ["node_modules"],
+  // Files to include/exclude from the project.
+  // `tests/` is excluded on purpose: the remaining `*.check.spec.ts` file is executed by
+  // Checkly's own cloud runtime (which supplies Playwright), not by this app's build, so
+  // type-checking it here would only require a Playwright devDependency we do not install.
+  "exclude": ["node_modules", "tests"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
 }

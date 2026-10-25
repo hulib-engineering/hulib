@@ -1,13 +1,13 @@
 'use client';
 
 import {
-  Bell,
-  Books,
-  House,
-  SignOut,
-  UserCircle,
-  VideoCamera,
-  X,
+  BellIcon,
+  BooksIcon,
+  HouseIcon,
+  SignOutIcon,
+  UserCircleIcon,
+  VideoCameraIcon,
+  XIcon,
 } from '@phosphor-icons/react';
 import { signOut } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -98,14 +98,14 @@ const MobileBottomNav = () => {
     },
     {
       label: t('navigation.bookshelf'),
-      icon: <Books size={24} />,
+      icon: <BooksIcon size={24} />,
       href: '/explore-story',
     },
     {
       label: t('bottomNav.notification'),
       icon: (
         <div className="relative">
-          <Bell size={24} />
+          <BellIcon size={24} />
           {notifData && notifData.unseenCount > 0 && (
             <div className="absolute -right-1.5 -top-1.5 flex h-4 w-[18px] items-center justify-center rounded-lg border border-white bg-red-50 px-1 py-[0.5px] text-[10px] font-medium leading-3 text-white">
               {notifData.unseenCount}
@@ -161,7 +161,7 @@ const MobileBottomNav = () => {
                 className="rounded-full p-1 text-neutral-30 hover:bg-neutral-90"
                 onClick={closePopup}
               >
-                <X size={20} weight="bold" />
+                <XIcon size={20} weight="bold" />
               </button>
             </div>
             <div className="flex flex-col gap-1">
@@ -174,7 +174,7 @@ const MobileBottomNav = () => {
                         className="flex items-center gap-x-3 rounded-xl p-3 text-neutral-10 hover:bg-neutral-90"
                         onClick={closePopup}
                       >
-                        <House size={20} />
+                        <HouseIcon size={20} />
                         <span className="text-sm font-medium">{tHeader('dashboard')}</span>
                       </Link>
 
@@ -189,7 +189,7 @@ const MobileBottomNav = () => {
                           });
                         }}
                       >
-                        <SignOut size={20} />
+                        <SignOutIcon size={20} />
                         <span className="text-sm font-medium">{tHeader('sign_out')}</span>
                       </button>
                     </>
@@ -202,7 +202,7 @@ const MobileBottomNav = () => {
                         className="flex items-center gap-x-3 rounded-xl p-3 text-neutral-10 hover:bg-neutral-90"
                         onClick={closePopup}
                       >
-                        <UserCircle size={20} />
+                        <UserCircleIcon size={20} />
                         <span className="text-sm font-medium">{tHeader('my_profile')}</span>
                       </Link>
 
@@ -228,7 +228,7 @@ const MobileBottomNav = () => {
                         className="flex items-center gap-x-3 rounded-xl p-3 text-neutral-10 hover:bg-neutral-90"
                         onClick={closePopup}
                       >
-                        <VideoCamera size={20} />
+                        <VideoCameraIcon size={20} />
                         <span className="text-sm font-medium">{tHeader('my_schedule')}</span>
                       </Link>
 
@@ -243,7 +243,7 @@ const MobileBottomNav = () => {
                           });
                         }}
                       >
-                        <SignOut size={20} />
+                        <SignOutIcon size={20} />
                         <span className="text-sm font-medium">{tHeader('sign_out')}</span>
                       </button>
                     </>
@@ -267,7 +267,7 @@ const MobileBottomNav = () => {
               className="absolute right-4 top-0 z-10 rounded-full text-neutral-30 hover:bg-neutral-90 md:top-4"
               onClick={() => setIsCreateModalOpen(false)}
             >
-              <X size={20} weight="bold" />
+              <XIcon size={20} weight="bold" />
             </button>
             <StoryForm
               type="create"
@@ -279,7 +279,7 @@ const MobileBottomNav = () => {
       </Modal>
 
       {/* Bottom Nav */}
-      <nav ref={navRef} className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-90 bg-white lg:hidden">
+      <nav ref={navRef} className="fixed inset-x-0 bottom-0 z-[99] border-t border-neutral-90 bg-white lg:hidden">
         <div className="flex size-full items-center justify-around px-4 py-3">
           {navItems.map(item => (
             item.href
@@ -299,10 +299,9 @@ const MobileBottomNav = () => {
                       {item.icon}
                     </div>
                     <span
-                      className={`text-[10px] font-medium leading-3 ${
-                        isActive(item.href)
-                          ? 'text-primary-50'
-                          : 'text-neutral-30'
+                      className={`text-[10px] font-medium leading-3 ${isActive(item.href)
+                        ? 'text-primary-50'
+                        : 'text-neutral-30'
                       }`}
                     >
                       {item.label}

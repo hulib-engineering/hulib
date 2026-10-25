@@ -30,7 +30,7 @@ const ModalRoot: ModalComponentProps = ({
     <Dialog
       as="div"
       initialFocus={initialFocus}
-      className={mergeClassnames(poppins.className, 'relative z-[1000]')}
+      className={mergeClassnames(poppins.className, 'relative z-[1000000]')}
       onClose={() => !disableClosingTrigger && onClose()}
     >
       {children}

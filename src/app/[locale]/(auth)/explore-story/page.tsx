@@ -1,11 +1,11 @@
 'use client';
 
 import {
-  ArrowSquareDown,
-  ArrowSquareUp,
-  BookmarkSimple,
-  CaretCircleDown,
-  FadersHorizontal,
+  ArrowSquareDownIcon,
+  ArrowSquareUpIcon,
+  BookmarkSimpleIcon,
+  CaretCircleDownIcon,
+  FadersHorizontalIcon,
 } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -113,17 +113,17 @@ export default function Index() {
     {
       value: 'favorites',
       label: t('my_favorite'),
-      icon: <BookmarkSimple className="text-2xl text-primary-60" />,
+      icon: <BookmarkSimpleIcon className="text-2xl text-primary-60" />,
     },
     {
       value: 'newest',
       label: t('newest_stories'),
-      icon: <ArrowSquareUp className="text-2xl text-primary-60" />,
+      icon: <ArrowSquareUpIcon className="text-2xl text-primary-60" />,
     },
     {
       value: 'oldest',
       label: t('oldest_stories'),
-      icon: <ArrowSquareDown className="text-2xl text-primary-60" />,
+      icon: <ArrowSquareDownIcon className="text-2xl text-primary-60" />,
     },
   ];
 
@@ -158,6 +158,7 @@ export default function Index() {
             <div className="lg:hidden">
               <ChipFilter values={filterBy} onChange={setFilterBy} />
             </div>
+            Icon
           </div>
           <Dropdown
             position="bottom-end"
@@ -171,7 +172,7 @@ export default function Index() {
                 size="lg"
                 className="w-11 shrink-0"
               >
-                <FadersHorizontal />
+                <FadersHorizontalIcon />
               </IconButton>
             </Dropdown.Trigger>
             <Dropdown.Options className="my-2 w-max gap-4 p-4">
@@ -232,7 +233,7 @@ export default function Index() {
                 <Button
                   variant="outline"
                   size="sm"
-                  iconLeft={<CaretCircleDown />}
+                  iconLeft={<CaretCircleDownIcon />}
                   className="lg:hidden"
                   onClick={handleLoadMore}
                 >
@@ -241,7 +242,7 @@ export default function Index() {
                 <Button
                   variant="outline"
                   size="lg"
-                  iconLeft={<CaretCircleDown />}
+                  iconLeft={<CaretCircleDownIcon />}
                   className="hidden lg:flex"
                   onClick={handleLoadMore}
                 >

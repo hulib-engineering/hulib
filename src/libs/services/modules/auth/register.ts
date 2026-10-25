@@ -3,14 +3,14 @@ import type { z } from 'zod';
 
 import type {
   RegisterStep1Validation,
-  RegisterStep2Validation,
+  RegisterStep2Values,
 } from '@/validations/RegisterValidation';
 
 export default (build: EndpointBuilder<BaseQueryFn, string, string>) =>
   build.mutation({
     query: (
       body: z.infer<typeof RegisterStep1Validation> &
-        z.infer<typeof RegisterStep2Validation>,
+        RegisterStep2Values,
     ) => ({
       url: 'auth/email/register',
       method: 'POST',

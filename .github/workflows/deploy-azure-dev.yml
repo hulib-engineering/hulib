@@ -65,7 +65,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
-      - name: Install Playwright
+      - name: Install browsers for Storybook tests
         run: npx playwright install --with-deps
 
       - name: Storybook tests

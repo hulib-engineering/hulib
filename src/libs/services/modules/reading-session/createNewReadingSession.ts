@@ -22,7 +22,12 @@ export type StatusType =
   | 'unInitialized'
   | 'missed';
 
-type User = Omit<z.infer<typeof ProfileValidation>, 'isUnderGuard'> & { id: string; photo?: { path: string } };
+type User = Omit<z.infer<typeof ProfileValidation>, 'isUnderGuard'> & {
+  id: string;
+  photo?: { path: string };
+  /** Returned by the backend via `basicUserInclude`; the card renders the role as a chip. */
+  role?: { id: number; name: string };
+};
 export type ReadingSession = {
   id: string;
   humanBookId: string;
@@ -41,6 +46,9 @@ export type ReadingSession = {
   endedAt: string;
   startTime: string;
   endTime: string;
+  /** Set by `POST /reading-sessions/:id/attend`. Both stay null until the meeting happens. */
+  huberJoinedAt?: string | null;
+  readerJoinedAt?: string | null;
   feedbacks: FeedBack[];
 };
 

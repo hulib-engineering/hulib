@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 
 import type { LearningEntryFormValues, WorkEntryFormValues } from '../types/profile';
-import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
+import { pushApiError, pushSuccess } from '@/components/CustomToastifyContainer';
 import {
   useAddEducationMutation,
   useAddWorkExperienceMutation,
@@ -36,13 +36,27 @@ const useProfileActions = (skipAll = false) => {
     return `${year}-${month}-01`;
   };
 
+  /**
+   * Reports the backend's own wording when there is any — a 422 field error
+   * such as `company should not be empty` — and falls back to the generic
+   * string otherwise.
+   *
+   * The re-throw is deliberate: every caller (`MyWorkSection`,
+   * `MyLearningPathSection`, `MyAboutSection`, `MyTopicsSection`) keeps its
+   * inline editor open by closing it only after the awaited save resolves, and
+   * it swallows this rejection to avoid an unhandled promise rejection.
+   */
+  const reportFailure = (error: unknown): never => {
+    pushApiError(error, tCommon('error_contact_admin'));
+    throw new Error(tCommon('error_contact_admin'));
+  };
+
   const handleSaveText = async (key: 'bio', value: string) => {
     try {
       await updateProfile({ [key]: value }).unwrap();
       pushSuccess(tCommon('update_successfully'));
-    } catch {
-      pushError(tCommon('update_failed'));
-      throw new Error(tCommon('update_failed'));
+    } catch (error) {
+      reportFailure(error);
     }
   };
 
@@ -67,9 +81,8 @@ const useProfileActions = (skipAll = false) => {
         await addEducation(payload).unwrap();
       }
       pushSuccess(tCommon('update_successfully'));
-    } catch {
-      pushError(tCommon('update_failed'));
-      throw new Error(tCommon('update_failed'));
+    } catch (error) {
+      reportFailure(error);
     }
   };
 
@@ -92,9 +105,8 @@ const useProfileActions = (skipAll = false) => {
         await addWork(payload).unwrap();
       }
       pushSuccess(tCommon('update_successfully'));
-    } catch {
-      pushError(tCommon('update_failed'));
-      throw new Error(tCommon('update_failed'));
+    } catch (error) {
+      reportFailure(error);
     }
   };
 
@@ -106,9 +118,8 @@ const useProfileActions = (skipAll = false) => {
     try {
       await updateUserTopics({ topics: topicIds }).unwrap();
       pushSuccess(tCommon('update_successfully'));
-    } catch {
-      pushError(tCommon('update_failed'));
-      throw new Error(tCommon('update_failed'));
+    } catch (error) {
+      reportFailure(error);
     }
   };
 

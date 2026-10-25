@@ -48,9 +48,9 @@ export type Story = {
   cover: FileType;
   humanBookId?: number;
   humanBook: User;
-  rating: number;
+  rating?: number;
   topics?: Topic[];
-  storyReview: StoryReview; // TODO: check this type, seems to be a mismatch with API response
+  storyReview?: StoryReview; // TODO: check this type, seems to be a mismatch with API response
   createdAt?: string | undefined;
   updatedAt?: string | undefined;
   isFavorite?: boolean;

@@ -9,6 +9,7 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { Link } from '@/libs/i18nNavigation';
 import TextInput from '@/components/core/textInput-v1/TextInput';
+import { isApprovedSessionStatus, isPendingSessionStatus } from '@/components/notification/private/types';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
 import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
 import { useAppSelector } from '@/libs/hooks';
@@ -33,6 +34,8 @@ const SessionDetailCard: FC<SessionCardProps> = ({
   sharingMissingReason = false,
   className,
 }) => {
+  const isPending = isPendingSessionStatus(session.sessionStatus);
+  const isApproved = isApprovedSessionStatus(session.sessionStatus);
   const isMissed = session.sessionStatus === StatusEnum.Missed;
   const isDone = session.sessionStatus === StatusEnum.Finished;
 
@@ -141,7 +144,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                   {isMissed && sharingMissingReason
                     ? t('meeting_not_attended') : isLiber ? t('vibing_with_huber') : t('session_with_liber')}
                 </h5>
-                {session.sessionStatus === StatusEnum.Pending && (
+                {isPending && (
                   <span
                     className="rounded-[100px] bg-orange-90 p-[7px] text-sm font-medium leading-4 text-orange-50 hulib-open:hidden"
                   >
@@ -159,7 +162,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
               </div>
               <CaretDown className="text-2xl text-neutral-10 hulib-open:rotate-180" />
             </Accordion.Button>
-            {session.sessionStatus === StatusEnum.Pending && (
+            {isPending && (
               <span
                 className="hidden w-fit rounded-[100px] bg-orange-90 p-[7px] text-sm font-medium leading-4 text-orange-50 hulib-open:block"
               >
@@ -190,7 +193,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                 <Link href="#" className="text-sm font-medium leading-4 text-primary-60">{t('view_on_schedule')}</Link>
               )}
             </div>
-            {session.sessionStatus === StatusEnum.Approved && (
+            {isApproved && (
               <div className="mt-2 flex items-center gap-2 text-black">
                 <MapPinArea className="text-[#343330]" />
                 {session.sessionUrl
@@ -244,7 +247,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                     </div>
                   )}
                   <div className="flex items-center gap-2.5">
-                    {session.sessionStatus === StatusEnum.Pending && isLiber && (
+                    {isPending && isLiber && (
                       <Button
                         size="lg"
                         fullWidth
@@ -254,7 +257,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                         {t('cancel')}
                       </Button>
                     )}
-                    {session.sessionStatus === StatusEnum.Pending && !isLiber && (
+                    {isPending && !isLiber && (
                       <>
                         <Button
                           variant="outline"

@@ -2,8 +2,9 @@
 
 import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { differenceInMinutes } from 'date-fns';
+import { useTranslations } from 'next-intl';
 
 import { useAppSelector } from '@/libs/hooks';
 import { useRouter } from '@/libs/i18nNavigation';
@@ -16,9 +17,12 @@ import Loading from '@/app/[locale]/loading';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { StatusEnum } from '@/types/common';
 import { useStopCloudRecordingMutation } from '@/libs/services/modules/agora';
+import { readAgoraToken } from '@/features/meeting/utils/agoraToken';
 
-const AgoraMeeting = dynamic(
-  () => import('@/layouts/reading/AgoraMeeting'),
+// The meeting room touches `window` and the Agora SDK on mount, so it must not
+// be server-rendered.
+const MeetingShell = dynamic(
+  () => import('@/features/meeting/components/MeetingShell').then(mod => mod.MeetingShell),
   {
     ssr: false,
   },
@@ -27,8 +31,12 @@ const AgoraMeeting = dynamic(
 export default function ReadingPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useTranslations('Reading.AgoraMeeting');
   const channel = searchParams.get('channel');
   const sessionId = channel?.split('-')?.[1];
+
+  // "+" in the query string decodes to a space; join() needs it repaired.
+  const token = useMemo(() => readAgoraToken(searchParams.toString()), [searchParams]);
 
   const { data: readingSession } = useGetReadingSessionByIdQuery(sessionId || 0, {
     skip: !sessionId,
@@ -38,30 +46,8 @@ export default function ReadingPage() {
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
+  // Set when the survey is skipped or finished in this visit; a successful submit also writes the localStorage flag
   const [isDoneSurveyForReading, setIsDoneSurveyForReading] = useState(false);
-  const [showPreSurvey, setShowPreSurvey] = useState(false);
-
-  useEffect(() => {
-    if (!userInfo.id || !readingSession) {
-      return;
-    }
-    const savedIsDoneSurveyForReading = localStorage.getItem(
-      `is_done_survey_for_reading_${readingSession.id}`,
-    );
-    const isHuber = userInfo?.id === readingSession.humanBook.id;
-    if (isHuber || savedIsDoneSurveyForReading) {
-      setIsDoneSurveyForReading(true);
-    }
-
-    const meetingStart = new Date(readingSession.startedAt); // meetingTime in ISO format or valid date string
-    const now = new Date();
-
-    const diff = differenceInMinutes(meetingStart, now);
-
-    if (diff <= 5) {
-      setShowPreSurvey(true);
-    }
-  }, [userInfo.id, readingSession]);
 
   const handleEndCall = async (recordedInfo?: { resourceId: string; sid: string; uid: string }) => {
     const meetingEnd = new Date(readingSession.endedAt);
@@ -79,9 +65,9 @@ export default function ReadingPage() {
           channel,
           ...recordedInfo,
         }).unwrap();
-        pushSuccess('Session has finished successfully');
+        pushSuccess(t('session_finished'));
       } catch {
-        pushError('Failed to stop recording!');
+        pushError(t('recording_stop_failed'));
       }
     }
 
@@ -90,15 +76,16 @@ export default function ReadingPage() {
         id: sessionId,
         sessionStat: StatusEnum.Finished,
       }).unwrap();
-      pushSuccess('Session has finished successfully');
+      pushSuccess(t('session_finished'));
     } catch {
-      pushError('Failed to finish session');
+      pushError(t('session_finish_failed'));
     } finally {
       router.push('/notifications');
     }
   };
 
-  if (!readingSession) {
+  // Wait for the user and session so AgoraMeeting never mounts (and joins the channel) before the survey decision
+  if (!readingSession || !userInfo.id) {
     return (
       <div className="flex h-screen w-full flex-1 items-center justify-center">
         <Loading />
@@ -106,15 +93,43 @@ export default function ReadingPage() {
     );
   }
 
+  const isViewerLiber = Number(userInfo.id) === Number(readingSession.reader?.id);
+  const isHuber = userInfo.id === readingSession.humanBook.id;
+  const hasSavedSurvey = localStorage.getItem(`is_done_survey_for_reading_${readingSession.id}`) === 'true';
+  const needsSurvey = !isHuber && !hasSavedSurvey && !isDoneSurveyForReading;
+
   return (
     <div className="flex size-full items-center justify-center">
-      {!isDoneSurveyForReading && showPreSurvey ? (
+      {needsSurvey ? (
         <PreSurvey
           sessionId={Number.parseInt(sessionId || '0', 10)}
           onFinish={() => setIsDoneSurveyForReading(true)}
         />
       ) : (
-        <AgoraMeeting onEndCall={handleEndCall} />
+        <MeetingShell
+          channel={channel || ''}
+          token={token}
+          sessionId={sessionId}
+          storyTitle={readingSession.story?.title ?? ''}
+          localUser={{
+            id: String(userInfo.id),
+            name: userInfo.fullName,
+            avatarUrl: userInfo.photo?.path,
+          }}
+          remoteParticipant={{
+            id: isViewerLiber
+              ? readingSession.humanBook?.id
+              : readingSession.reader?.id,
+            name: isViewerLiber
+              ? readingSession.humanBook?.fullName
+              : readingSession.reader?.fullName,
+            avatarUrl: isViewerLiber
+              ? readingSession.humanBook?.photo?.path
+              : readingSession.reader?.photo?.path,
+          }}
+          isViewerLiber={isViewerLiber}
+          onEndCall={handleEndCall}
+        />
       )}
     </div>
   );

@@ -54,8 +54,8 @@ export default function Index() {
   const tCommon = useTranslations('Common');
   const locale = useLocale();
 
-  const { data: upcomingEvents, isLoading }
-    = useGetReadingSessionsQuery({ upcoming: true });
+  const { data: upcomingResponse, isLoading } = useGetReadingSessionsQuery({ upcoming: true });
+  const upcomingEvents = upcomingResponse?.data;
   const hasUpcomingEvent = upcomingEvents?.length > 0;
 
   const user = useAppSelector(state => state.auth.userInfo);

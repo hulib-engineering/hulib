@@ -34,7 +34,7 @@ Skills are triggered by **keyword detection** in the user's message (no native s
 
 ### Commit flow
 
-Each AI-flow commit must comply with the real lint config that the Git hooks run — never bypass with `--no-verify`:
+Each AI-flow commit must comply with the real lint config that the Git hooks run. Interim sub-task commits are the one exception: they use `--no-verify` for speed, and the **final** commit of each task is made without it so the real hook runs. See "Local verification rules" in `.ai/skills/implement-plan.md`.
 
 - **Commit message** (`.husky/commit-msg` → `npx commitlint --edit`, config `commitlint.config.ts`)
   - Must be a Conventional Commit: `<type>: <description>`, type is one of `build` / `chore` / `ci` / `docs` / `feat` / `fix` / `perf` / `refactor` / `revert` / `style` / `test`.
@@ -46,7 +46,7 @@ Each AI-flow commit must comply with the real lint config that the Git hooks run
 
 **Trigger carry-over:** every commit message in a flow step carries the issue reference `#<issue>` and uses `<type>: <sub-task description>` (e.g. `feat: add cover preview (#412)`). The next skill in the flow (`plan` / `implement` / `pr`) resolves from the message, and each commit can be traced back to its task.
 
-Pre-PR gates (real commands, reflected in `.ai/skills/implement-plan.md`): `npm run lint`, `npm run check:types`, `npm run check:i18n`, `npm run test`, plus `npm run test-storybook:ci` when a story changed.
+Pre-PR gates (real commands, reflected in `.ai/skills/implement-plan.md`): `npm run lint`, `npm run check:types`, `npm run check:i18n`, `npm run test`. Storybook stories are committed but `npm run test-storybook:ci` is **CI-only** — it drives Playwright through `@storybook/test-runner`, so it must not be run locally (see "Local verification rules" in `.ai/skills/implement-plan.md`, which also cover committing sub-tasks with `--no-verify` and running each gate exactly once).
 
 ---
 
@@ -73,7 +73,6 @@ npm run dev            # starts Next.js (port 3001) + Sentry Spotlight sidecar
 | `npm run lint` | ESLint (flat config, Antfu preset) |
 | `npm run check:types` | `tsc --noEmit --pretty` |
 | `npm run test` | Jest unit tests |
-| `npm run test:e2e` | Playwright E2E tests |
 | `npm run storybook` | Storybook on port 6006 |
 | `npm run check:deps` | Knip dead code analysis |
 | `npm run check:i18n` | i18n key coverage check |
@@ -92,7 +91,7 @@ npm run dev            # starts Next.js (port 3001) + Sentry Spotlight sidecar
 | Validation | Zod + react-hook-form |
 | i18n | next-intl (en + vi), synced via Crowdin |
 | Real-time | Socket.IO client + Agora RTC SDK |
-| Testing | Jest (unit), Playwright (E2E), Storybook test-runner |
+| Testing | Jest (unit), Storybook test-runner (CI only — not run locally) |
 | Monitoring | Sentry + Checkly |
 | CI/CD | GitHub Actions (lint/typecheck/test/build → semantic-release) |
 
@@ -150,14 +149,14 @@ Copy `.env` → `.env.local` and configure. All vars validated at runtime by `sr
 | Type | Status | Notes |
 |------|--------|-------|
 | Unit (Jest) | Minimal (1 test file: `BaseTemplate.test.tsx`) | Marked "pending" in README |
-| E2E (Playwright) | 3 test files, commented out in CI | Needs browser install + CI uncomment |
+| E2E | Local Playwright suites removed; production browser checks run in Checkly cloud | `checkly.config.ts` + `tests/e2e/*.check.spec.ts` |
 | Storybook tests | Configured, runs in CI | 9 story files present |
 | Coverage | Collected but threshold at 0% | Not enforced |
 
 ## CI/CD Pipeline (`.github/workflows/CI.yml`)
 
 1. Build (Node 20 + 22 matrix, caching) — runs on push/PR to `main` or `develop`
-2. Test (Node 22): commitlint → lint → typecheck → jest + coverage → Playwright install → Storybook tests
+2. Test (Node 22): commitlint → lint → typecheck → jest + coverage → browser install → Storybook tests
 3. On merge to `main`: semantic-release (auto-changelog, version bump, GitHub release)
 
 **Other workflows:** Crowdin i18n sync, Checkly monitoring, monthly dependency update PR via Dependabot.
@@ -211,7 +210,7 @@ The team has been focused on:
 
 - **Node:** 18+ (local), 20/22 (CI), 20 (Netlify)
 - **npm** (not yarn/pnpm) — `legacy-peer-deps=true` in `.npmrc`
-- **Playwright** — `npx playwright install` for E2E tests
+- **Browsers** — `npx playwright install` is still required by `@storybook/test-runner`, which declares `playwright` as its own dependency
 - **Spotlight** — Sentry sidecar for local error monitoring (`spotlight-sidecar`)
 
 ## Deployment

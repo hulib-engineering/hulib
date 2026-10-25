@@ -27,22 +27,23 @@ function RatingScale<T extends FieldValues>({
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-black sm:text-lg">
+      <p className="text-[16px] text-black xxl:text-[18px]">
         {question}
       </p>
-      <div className="flex w-full items-end gap-4">
-        <span className="grow text-right text-sm font-medium leading-4 text-primary-60">
-          {leftLabel}
-        </span>
-        <Radio name={fieldName} value={value} onChange={onChange} className="flex grow-0 justify-center gap-[27px]">
+      {/* Below 1440px: radios on top, labels under them. From 1440px: labels beside the radios */}
+      <div className="grid w-full grid-cols-2 gap-x-4 gap-y-2 xxl:flex xxl:items-end">
+        <Radio name={fieldName} value={value} onChange={onChange} className="col-span-2 row-start-1 flex justify-between xxl:order-2 xxl:grow-0 xxl:justify-center xxl:gap-[27px]">
           {[1, 2, 3, 4, 5].map(rating => (
-            <Radio.Option key={rating} value={rating} className="flex-col-reverse">
+            <Radio.Option key={rating} value={rating} className="flex-col-reverse text-[16px]">
               <Radio.Indicator checked={value === rating} />
               {rating}
             </Radio.Option>
           ))}
         </Radio>
-        <span className="grow text-xs font-medium text-primary-60 sm:text-sm">
+        <span className="col-start-1 row-start-2 text-left text-[14px] font-medium leading-4 text-primary-60 xxl:order-1 xxl:grow xxl:text-right xxl:text-[16px]">
+          {leftLabel}
+        </span>
+        <span className="col-start-2 row-start-2 text-right text-[14px] font-medium text-primary-60 xxl:order-3 xxl:grow xxl:text-[16px]">
           {rightLabel}
         </span>
       </div>

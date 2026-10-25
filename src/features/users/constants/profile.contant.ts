@@ -11,6 +11,7 @@ export const HUBER_OWN_TABS = [
 
 export const LIBER_OWN_TABS = [
   { value: 'about', label: 'about' },
+  { value: 'schedule', label: 'my_schedule' },
   { value: 'stories', label: 'my_stories' },
   { value: 'favorite', label: 'my_favorite' },
   { value: 'personal_info', label: 'personal_info' },

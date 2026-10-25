@@ -27,7 +27,6 @@ Developer experience first, extremely flexible code structure and only keep what
 - 🚓 Lint git commit with Commitlint
 - 📓 Write standard compliant commit messages with Commitizen
 - 🦺 Unit Testing with Jest and React Testing Library (pending)
-- 🧪 Integration and E2E Testing with Playwright (pending)
 - 👷 Run tests on pull request with GitHub Actions (pending)
 - 🎉 Storybook for UI development (pending)
 - 🚨 Error Monitoring with [Sentry](https://sentry.io) (Spotlightjs) (pending)
@@ -171,12 +170,9 @@ npm run test
 
 ### Integration & E2E Testing
 
-The project uses Playwright for Integration and E2E testing. You can run the tests with:
-
-```shell
-npx playwright install # Only for the first time in a new environment
-npm run test:e2e
-```
+Local E2E suites were removed. Production browser checks run in the cloud via Checkly
+(`checkly.config.ts` + `tests/e2e/*.check.spec.ts`), so they are unaffected by the local
+test setup.
 
 ### Enable Edge runtime (optional)
 

@@ -14,10 +14,16 @@
 # storybook
 storybook-static
 
-# playwright
+# test runner artifacts
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# local agent/tooling scratch dirs
+/.opencode/
+/.playwright-mcp/
+/.playwright-simulate/
+/.serena/
 
 # next.js
 /.next
