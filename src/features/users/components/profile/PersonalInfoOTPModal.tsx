@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,6 +8,7 @@ import type { z } from 'zod';
 import Image from 'next/image';
 import Link from 'next/link';
 import { XIcon } from '@phosphor-icons/react';
+import type { AuthCodeRef } from '@/components/core/authCode/private/types';
 import Modal from '@/components/Modal';
 import AuthCode from '@/components/core/authCode/AuthCode';
 import Hint from '@/components/Hint';
@@ -16,50 +17,22 @@ import Button from '@/components/core/button/Button';
 import Form from '@/components/core/form/Form';
 
 import { EmailChangeValidation } from '@/validations/ProfileValidation';
+import { useRequestOTPMutation, useVerifyNewEmailMutation } from '@/libs/services/modules/auth';
 
-export default function CodeConfirmationModal({ email, onSuccess }: { email: string; onSuccess: () => void }) {
+type OTPProps = {
+  email: string;
+  onSuccess: () => void;
+  id: string | number;
+};
+
+export default function CodeConfirmationModal({ email, onSuccess, id }: OTPProps) {
   const t = useTranslations('Common');
-  // MOCK-UP DATA, REMOVE THE ENTIRE THING ONCE BE API ENDPOINTS ARE AVAILABLE
-  // BEGIN ---
-  const MOCK_VALID_CODE = '1234';
 
-  function useConfirmEmailMutation() {
-    const [isLoading, setIsLoading] = useState(false);
+  // const [verifyNewEmail, { isLoading, error }] = useVerifyNewEmailMutation();
+  const [verifyNewEmail, { isLoading: isConfirming }] = useVerifyNewEmailMutation();
+  const [resendOTP] = useRequestOTPMutation(); // mock-up function
 
-    const confirmEmail = async ({ email, code }: { email: string; code: string }) => {
-      setIsLoading(true);
-      await new Promise(resolve => setTimeout(resolve, 800));
-      setIsLoading(false);
-
-      if (code !== MOCK_VALID_CODE) {
-        const error = new Error('Invalid verification code') as Error & {
-          data: { errors: { code: string } };
-        };
-        error.data = { errors: { code: 'invalidCode' } };
-        throw error;
-      }
-
-      return { email, verified: true };
-    };
-
-    return [confirmEmail, { isLoading }] as const;
-  }
-
-  function useResendOTPMutation() {
-    const [isLoading, setIsLoading] = useState(false);
-
-    const resendOTP = async ({ email }: { email: string }) => {
-      setIsLoading(true);
-      await new Promise(resolve => setTimeout(resolve, 500));
-      setIsLoading(false);
-      return { email, code: MOCK_VALID_CODE };
-    };
-
-    return [resendOTP, { isLoading }] as const;
-  }
-  // END ---
-  const [confirmEmail, { isLoading: isConfirming }] = useConfirmEmailMutation(); // mock-up function
-  const [resendOTP] = useResendOTPMutation(); // mock-up function
+  const authCodeRef = useRef<AuthCodeRef | null>(null);
 
   const {
     control,
@@ -67,12 +40,15 @@ export default function CodeConfirmationModal({ email, onSuccess }: { email: str
     clearErrors,
     setError,
     formState: { errors },
+    setFocus,
   } = useForm<z.infer<typeof EmailChangeValidation>>({
     resolver: zodResolver(EmailChangeValidation),
     defaultValues: {
       verificationCode: '',
     },
   });
+
+  setFocus('verificationCode');
 
   const handleAuthCodeSubmit: SubmitHandler<
     z.infer<typeof EmailChangeValidation>
@@ -83,12 +59,11 @@ export default function CodeConfirmationModal({ email, onSuccess }: { email: str
 
     clearErrors('verificationCode');
     try {
-      const result = await confirmEmail({ email, code: verificationCode });
-      if (result) {
-        onSuccess();
-        pushSuccess(t('verified'));
-      }
+      await verifyNewEmail({ id, newEmail: email, otp: verificationCode }).unwrap();
+      onSuccess();
+      pushSuccess(t('verified'));
     } catch (_error: any) {
+      // Note: Consider adding more specific error warnings (400, 401, 402, 429, network error)
       setError('verificationCode', {
         type: 'unverified',
         message: t('invalid_verification_code'),
@@ -96,13 +71,12 @@ export default function CodeConfirmationModal({ email, onSuccess }: { email: str
     }
   };
 
-  // add to or modify this function once BE has the endpoint
   const handleResendOTP = async () => {
     try {
-      const result = await resendOTP({ email });
-      if (result) {
-        pushSuccess(t('verified_resent_OTP'));
-      }
+      authCodeRef.current?.clear();
+      setFocus('verificationCode');
+      await resendOTP({ id, email, digits: 4 }).unwrap();
+      pushSuccess(t('verified_resent_OTP'));
     } catch (error: any) {
       if (error && error?.data && error?.data?.errors) {
         pushError(`Error: ${JSON.stringify(error?.data?.errors)}`);
@@ -142,11 +116,16 @@ export default function CodeConfirmationModal({ email, onSuccess }: { email: str
                   <>
                     <AuthCode
                       {...field}
+                      ref={(instance) => {
+                        authCodeRef.current = instance;
+                        field.ref(instance);
+                      }}
                       length={4}
                       size="sm"
                       disabled={isConfirming}
                       onChange={(value) => {
                         field.onChange(value);
+
                         if (value.length === 4) {
                           handleAuthCodeSubmit({ verificationCode: value });
                         }

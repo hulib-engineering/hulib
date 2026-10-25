@@ -1,5 +1,13 @@
 import * as Select from '@radix-ui/react-select';
 import { CaretDownIcon, EnvelopeSimpleIcon } from '@phosphor-icons/react';
+import type { z } from 'zod';
+
+import type {
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form';
+import type { ProfileValidation } from '@/validations/ProfileValidation';
 
 const VnFlag = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
@@ -33,10 +41,18 @@ const CODES = [
   { value: 'US', label: '+1', flag: <UsFlag /> },
 ];
 
-export default function PhoneCodeSelect({ register, setValue, watch }: any) {
+type TProfileForm = z.infer<typeof ProfileValidation>;
+
+type PhoneCodeSelectProps = {
+  register: UseFormRegister<TProfileForm>;
+  setValue: UseFormSetValue<TProfileForm>;
+  watch: UseFormWatch<TProfileForm>;
+};
+
+export default function PhoneCodeSelect({ register, setValue, watch }: PhoneCodeSelectProps) {
   return (
     <Select.Root
-      value={watch('countryCode')}
+      value={watch('countryCode') ?? undefined}
       onValueChange={value =>
         setValue('countryCode', value, {
           shouldDirty: true,

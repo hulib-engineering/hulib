@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form';
+import type { Control, FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import type { z } from 'zod';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
@@ -47,6 +47,13 @@ type ServerErrorField = keyof typeof SERVER_ERROR_MESSAGES;
 type SectionProps = {
   register: UseFormRegister<TProfileForm>;
   errors: FieldErrors<TProfileForm>;
+};
+
+type GuardianSectionProps = {
+  register: UseFormRegister<TProfileForm>;
+  errors: FieldErrors<TProfileForm>;
+  setValue: UseFormSetValue<TProfileForm>;
+  watch: UseFormWatch<TProfileForm>;
 };
 
 type IProfileFormProps = {
@@ -200,7 +207,7 @@ function PhoneNumberSection({ register, errors }: SectionProps) {
   );
 }
 
-function GuardianSection({ register, errors, setValue, watch }: any /* SectionProps */) {
+function GuardianSection({ register, errors, setValue, watch }: GuardianSectionProps) {
   const t = useTranslations('Common');
   const message = errors.parentPhoneNumber?.message;
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
@@ -431,7 +438,11 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
       </Form>
 
       <Modal open={isOpenConfirmCodeModal} onClose={() => setIsOpenConfirmCodeModal(false)}>
-        <CodeConfirmationModal email={getValues('email')} onSuccess={() => setIsOpenConfirmCodeModal(false)} />
+        <CodeConfirmationModal
+          id={data.id}
+          email={getValues('email')}
+          onSuccess={() => setIsOpenConfirmCodeModal(false)}
+        />
       </Modal>
     </>
   );

@@ -18,7 +18,9 @@ import addWorkExperience from './addWorkExperience';
 import editWorkExperience from './editWorkExperience';
 import addEducation from './addEducation';
 import editEducation from './editEducation';
+import verifyNewEmail from './verifyNewEmail';
 
+import requestOTP from './requestOTP';
 import type { Topic } from '@/libs/services/modules/topics/topicType';
 import markHuberOnboardingSeen from '@/libs/services/modules/auth/markHuberOnboardingSeen';
 import updateUserTopics from '@/libs/services/modules/auth/updateUserTopics';
@@ -72,7 +74,9 @@ export const authApi = authenticationApiWithTag.injectEndpoints({
     loginAsManager: loginAsUser(build),
     refresh: refresh(build),
     register: register(build),
-    resendOTP: resendOTP(build),
+    resendOTP: resendOTP(build), // Note: consider discarding this one and use requestOTP instead
+    requestOTP: requestOTP(build),
+    verifyNewEmail: verifyNewEmail(build),
     forgotPassword: forgotPassword(build),
     resetPassword: resetPassword(build),
     changePassword: changePassword(build),
@@ -94,6 +98,8 @@ export const {
   useGetPersonalInfoQuery,
   useRegisterMutation,
   useResendOTPMutation,
+  useRequestOTPMutation,
+  useVerifyNewEmailMutation,
   useLoginAsManagerMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
