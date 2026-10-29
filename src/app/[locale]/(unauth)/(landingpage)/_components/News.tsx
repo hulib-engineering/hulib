@@ -25,8 +25,9 @@ const NewsAndEvents = [
   {
     index: 'index_3',
     date: '18 - 19/09/2025',
-    link: 'https://www.facebook.com/photo/?fbid=122213856482058653&set=pb.61551759614724.-2207520000&locale=vi_VN',
+    link: 'https://www.facebook.com/share/p/1MGBXoXRtg/',
   },
+  { index: 'index_4', date: '14/06/2025', link: 'https://www.facebook.com/share/p/1DSihtqEE3/' },
   { index: 'index_5', date: '22/02 - 23/03/2025', link: 'https://www.facebook.com/share/p/182uL1J1jX' },
   {
     index: 'index_6',
