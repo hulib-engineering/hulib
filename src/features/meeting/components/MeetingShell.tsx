@@ -20,16 +20,22 @@ import { ReconnectingOverlay } from './ReconnectingOverlay';
 import { RecordingBadge } from './RecordingBadge';
 import { RecordingConsentModal } from './RecordingConsentModal';
 import { ScreenSharePicker } from './ScreenSharePicker';
+import { SessionEndedOverlay } from './SessionEndedOverlay';
 import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
 import ChatInCall from '@/layouts/reading/ChatInCall';
 import Popover from '@/components/core/popover/Popover';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 
+/** Brief pause so the "Session ended" overlay is visible before navigation. */
+const SESSION_ENDED_OVERLAY_MS = 1500;
+
 export type MeetingShellProps = {
   channel: string;
   token: string;
   sessionId?: string;
+  /** ISO timestamp from the API — source of truth for auto-end (not FE clock alone). */
+  endedAt?: string;
   storyTitle: string;
   localUser: {
     id: string;
@@ -43,7 +49,7 @@ export type MeetingShellProps = {
   };
   /** True when the viewer is the Liber (the reader), who alone is prompted to record. */
   isViewerLiber: boolean;
-  onEndCall: (recordedInfo?: { resourceId: string; sid: string; uid: string }) => void;
+  onEndCall: () => void;
 };
 
 /**
@@ -57,6 +63,7 @@ export function MeetingShell({
   channel,
   token,
   sessionId,
+  endedAt,
   storyTitle,
   localUser,
   remoteParticipant,
@@ -69,12 +76,17 @@ export function MeetingShell({
   const remoteVideoRef = useRef<HTMLDivElement>(null);
   const localVideoTrackRef = useRef<ICameraVideoTrack | null>(null);
   const remoteVideoTrackRef = useRef<IRemoteVideoTrack | null>(null);
+  /** Prevents manual / timeout / peer-end from racing into a double teardown. */
+  const endInFlightRef = useRef(false);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const [isEndCallOpen, setIsEndCallOpen] = useState(false);
   const [isEnding, setIsEnding] = useState(false);
   const [isLocalReactionShown, setIsLocalReactionShown] = useState(false);
+  const [sessionEndedReason, setSessionEndedReason] = useState<
+    'timeout' | 'peer' | 'manual' | null
+  >(null);
 
   const handleLocalVideoTrack = useCallback((track: ICameraVideoTrack) => {
     localVideoTrackRef.current = track;
@@ -216,23 +228,101 @@ export function MeetingShell({
     setTimeout(() => setIsLocalReactionShown(false), 5000);
   }, [meetingSocket]);
 
-  const handleEndCall = useCallback(async () => {
+  // Hook return objects are new each render — keep latest helpers in a ref so the
+  // timeout/peer effects do not reset every paint.
+  const teardownDepsRef = useRef({
+    screenShare,
+    recording,
+    meetingSocket,
+    leave: session.leave,
+    onEndCall,
+  });
+  teardownDepsRef.current = {
+    screenShare,
+    recording,
+    meetingSocket,
+    leave: session.leave,
+    onEndCall,
+  };
+
+  /**
+   * Shared teardown for manual end, timeout, and peer `call-ended`.
+   * Always leaves Agora explicitly — do not rely on unmount alone.
+   */
+  const teardownAndEnd = useCallback(async (
+    reason: 'timeout' | 'peer' | 'manual',
+  ) => {
+    if (endInFlightRef.current) {
+      return;
+    }
+    endInFlightRef.current = true;
+    setSessionEndedReason(reason);
     setIsEnding(true);
+    setIsEndCallOpen(false);
+
+    const {
+      screenShare: share,
+      recording: rec,
+      meetingSocket: sock,
+      leave,
+      onEndCall: finish,
+    } = teardownDepsRef.current;
+
     try {
       // Stop sharing first so the camera teardown does not fight a live track.
-      if (screenShare.isSharing) {
-        await screenShare.stop();
+      if (share.isSharing) {
+        await share.stop();
       }
 
-      const recordedInfo = await recording.stop();
+      await rec.stop();
 
-      meetingSocket.notifyCallEnded();
-      onEndCall(recordedInfo ?? undefined);
+      // Peer already knows; BE also emits on POST /end. Still notify as FE fallback for manual/timeout.
+      if (reason !== 'peer') {
+        sock.notifyCallEnded();
+      }
+
+      await leave();
+
+      await new Promise<void>((resolve) => {
+        setTimeout(resolve, SESSION_ENDED_OVERLAY_MS);
+      });
+
+      finish();
     } finally {
       setIsEnding(false);
-      setIsEndCallOpen(false);
     }
-  }, [screenShare, recording, meetingSocket, onEndCall]);
+  }, []);
+
+  const handleEndCall = useCallback(() => {
+    void teardownAndEnd('manual');
+  }, [teardownAndEnd]);
+
+  // Auto-end at/after API endedAt (backend is source of truth for the instant).
+  useEffect(() => {
+    if (!endedAt) {
+      return;
+    }
+
+    const endMs = new Date(endedAt).getTime();
+    if (Number.isNaN(endMs)) {
+      return;
+    }
+
+    const delay = Math.max(0, endMs - Date.now());
+    const timer = window.setTimeout(() => {
+      void teardownAndEnd('timeout');
+    }, delay);
+
+    return () => window.clearTimeout(timer);
+  }, [endedAt, teardownAndEnd]);
+
+  // Peer hung up (or BE emitted call-ended after /end) — leave and finish locally.
+  useEffect(() => {
+    if (!meetingSocket.isRemoteCallEnded) {
+      return;
+    }
+    void teardownAndEnd('peer');
+  }, [meetingSocket.isRemoteCallEnded, teardownAndEnd]);
 
   // Toast exactly once when the connection comes back after a loss.
   const wasConnectedRef = useRef(false);
@@ -266,8 +356,11 @@ export function MeetingShell({
   const renderStage = () => {
     if (screenShare.isSharing) {
       return (
-        <div className="flex size-full items-center justify-center rounded-3xl bg-black">
+        <div className="relative flex size-full items-center justify-center rounded-3xl bg-black">
           <p className="text-sm text-neutral-70">{t('screen_label')}</p>
+          {sessionEndedReason && (
+            <SessionEndedOverlay reason={sessionEndedReason} />
+          )}
         </div>
       );
     }
@@ -280,6 +373,9 @@ export function MeetingShell({
           isWaiting={!session.hasParticipantJoined}
         />
         <ReconnectingOverlay connectionState={session.connectionState} />
+        {sessionEndedReason && (
+          <SessionEndedOverlay reason={sessionEndedReason} />
+        )}
       </div>
     );
   };
