@@ -2,21 +2,19 @@
 
 import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
-import { useMemo, useState } from 'react';
-import { differenceInMinutes } from 'date-fns';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { useAppSelector } from '@/libs/hooks';
 import { useRouter } from '@/libs/i18nNavigation';
 import {
+  useEndReadingSessionMutation,
   useGetReadingSessionByIdQuery,
-  useUpdateReadingSessionMutation,
 } from '@/libs/services/modules/reading-session';
 import PreSurvey from '@/layouts/reading/PreSurvey';
 import Loading from '@/app/[locale]/loading';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { StatusEnum } from '@/types/common';
-import { useStopCloudRecordingMutation } from '@/libs/services/modules/agora';
 import { readAgoraToken } from '@/features/meeting/utils/agoraToken';
 
 // The meeting room touches `window` and the Agora SDK on mount, so it must not
@@ -27,6 +25,21 @@ const MeetingShell = dynamic(
     ssr: false,
   },
 );
+
+const TERMINAL_SESSION_STATUSES = new Set([
+  StatusEnum.Finished,
+  StatusEnum.Canceled,
+  StatusEnum.Missed,
+  StatusEnum.Rejected,
+]);
+
+function isTerminalSessionStatus(status: string | undefined): boolean {
+  if (!status) {
+    return false;
+  }
+  return TERMINAL_SESSION_STATUSES.has(status as StatusEnum)
+    || TERMINAL_SESSION_STATUSES.has(status.toLowerCase() as StatusEnum);
+}
 
 export default function ReadingPage() {
   const router = useRouter();
@@ -41,43 +54,38 @@ export default function ReadingPage() {
   const { data: readingSession } = useGetReadingSessionByIdQuery(sessionId || 0, {
     skip: !sessionId,
   });
-  const [stopRecording] = useStopCloudRecordingMutation();
-  const [updateReadingSession] = useUpdateReadingSessionMutation();
+  const [endReadingSession] = useEndReadingSessionMutation();
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
   // Set when the survey is skipped or finished in this visit; a successful submit also writes the localStorage flag
   const [isDoneSurveyForReading, setIsDoneSurveyForReading] = useState(false);
 
-  const handleEndCall = async (recordedInfo?: { resourceId: string; sid: string; uid: string }) => {
-    const meetingEnd = new Date(readingSession.endedAt);
-    const now = new Date();
-
-    const diff = differenceInMinutes(now, meetingEnd);
-
-    if (diff < 0) {
-      return router.push('/my-schedule');
+  // Block Agora for sessions that are already finished/canceled/missed/rejected.
+  useEffect(() => {
+    if (!readingSession) {
+      return;
     }
+    if (isTerminalSessionStatus(readingSession.sessionStatus)) {
+      const isFinished
+        = readingSession.sessionStatus === StatusEnum.Finished
+          || readingSession.sessionStatus?.toLowerCase() === StatusEnum.Finished;
+      router.replace(isFinished ? '/notifications' : '/my-schedule');
+    }
+  }, [readingSession, router]);
 
-    if (recordedInfo?.resourceId && recordedInfo.sid && recordedInfo.uid) {
-      try {
-        await stopRecording({
-          channel,
-          ...recordedInfo,
-        }).unwrap();
-        pushSuccess(t('session_finished'));
-      } catch {
-        pushError(t('recording_stop_failed'));
-      }
+  const handleEndCall = async () => {
+    if (!sessionId) {
+      router.push('/notifications');
+      return;
     }
 
     try {
-      await updateReadingSession({
-        id: sessionId,
-        sessionStat: StatusEnum.Finished,
-      }).unwrap();
+      await endReadingSession({ id: sessionId }).unwrap();
       pushSuccess(t('session_finished'));
     } catch {
+      // Backend is idempotent; a race where the peer already finished still
+      // counts as success for leaving the room.
       pushError(t('session_finish_failed'));
     } finally {
       router.push('/notifications');
@@ -86,6 +94,14 @@ export default function ReadingPage() {
 
   // Wait for the user and session so AgoraMeeting never mounts (and joins the channel) before the survey decision
   if (!readingSession || !userInfo.id) {
+    return (
+      <div className="flex h-screen w-full flex-1 items-center justify-center">
+        <Loading />
+      </div>
+    );
+  }
+
+  if (isTerminalSessionStatus(readingSession.sessionStatus)) {
     return (
       <div className="flex h-screen w-full flex-1 items-center justify-center">
         <Loading />
@@ -110,6 +126,7 @@ export default function ReadingPage() {
           channel={channel || ''}
           token={token}
           sessionId={sessionId}
+          endedAt={readingSession.endedAt}
           storyTitle={readingSession.story?.title ?? ''}
           localUser={{
             id: String(userInfo.id),
