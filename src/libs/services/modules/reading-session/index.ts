@@ -1,6 +1,7 @@
 import { api } from '../../api';
 import attendReadingSession from './attendReadingSession';
 import createNewReadingSession from './createNewReadingSession';
+import endReadingSession from './endReadingSession';
 import getReadingSessionById from './getReadingSessionById';
 import getReadingSessions from './getReadingSessions';
 import updateReadingSession from './updateReadingSession';
@@ -22,6 +23,7 @@ const readingSessionApi = apiWithTag.injectEndpoints({
     updateReadingSession: updateReadingSession(build),
     getReadingSessionById: getReadingSessionById(build),
     attendReadingSession: attendReadingSession(build),
+    endReadingSession: endReadingSession(build),
   }),
   overrideExisting: false,
 });
@@ -32,4 +34,5 @@ export const {
   useUpdateReadingSessionMutation,
   useGetReadingSessionByIdQuery,
   useAttendReadingSessionMutation,
+  useEndReadingSessionMutation,
 }: any = readingSessionApi;
