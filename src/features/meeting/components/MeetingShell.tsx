@@ -20,16 +20,28 @@ import { ReconnectingOverlay } from './ReconnectingOverlay';
 import { RecordingBadge } from './RecordingBadge';
 import { RecordingConsentModal } from './RecordingConsentModal';
 import { ScreenSharePicker } from './ScreenSharePicker';
+import { SessionEndedOverlay } from './SessionEndedOverlay';
 import { HeaderIconButtonWithBadge } from '@/app/[locale]/(auth)/_components/Header';
 import ChatInCall from '@/layouts/reading/ChatInCall';
 import Popover from '@/components/core/popover/Popover';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 
+/** Brief pause so the "Session ended" overlay is visible before navigation. */
+const SESSION_ENDED_OVERLAY_MS = 1500;
+
+/**
+ * Feature flag: hides the recording-consent prompt without deleting the
+ * recording implementation behind it. Flip back to `true` to re-enable.
+ */
+const SHOW_RECORDING_PROMPT = false;
+
 export type MeetingShellProps = {
   channel: string;
   token: string;
   sessionId?: string;
+  /** ISO timestamp from the API — source of truth for auto-end (not FE clock alone). */
+  endedAt?: string;
   storyTitle: string;
   localUser: {
     id: string;
@@ -43,7 +55,7 @@ export type MeetingShellProps = {
   };
   /** True when the viewer is the Liber (the reader), who alone is prompted to record. */
   isViewerLiber: boolean;
-  onEndCall: (recordedInfo?: { resourceId: string; sid: string; uid: string }) => void;
+  onEndCall: () => void;
 };
 
 /**
@@ -57,6 +69,7 @@ export function MeetingShell({
   channel,
   token,
   sessionId,
+  endedAt,
   storyTitle,
   localUser,
   remoteParticipant,
@@ -69,12 +82,17 @@ export function MeetingShell({
   const remoteVideoRef = useRef<HTMLDivElement>(null);
   const localVideoTrackRef = useRef<ICameraVideoTrack | null>(null);
   const remoteVideoTrackRef = useRef<IRemoteVideoTrack | null>(null);
+  /** Prevents manual / timeout / peer-end from racing into a double teardown. */
+  const endInFlightRef = useRef(false);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const [isEndCallOpen, setIsEndCallOpen] = useState(false);
   const [isEnding, setIsEnding] = useState(false);
   const [isLocalReactionShown, setIsLocalReactionShown] = useState(false);
+  const [sessionEndedReason, setSessionEndedReason] = useState<
+    'timeout' | 'peer' | 'manual' | null
+  >(null);
 
   const handleLocalVideoTrack = useCallback((track: ICameraVideoTrack) => {
     localVideoTrackRef.current = track;
@@ -141,8 +159,28 @@ export function MeetingShell({
 
   /** Recreates the camera after a share ends and re-publishes it. */
   const restoreCamera = useCallback(async () => {
+    // The suspended track was only stopped, never closed, so it still holds the
+    // camera device. Close it first or `createCameraVideoTrack` throws
+    // NOT_READABLE ("Could not start video source").
+    const previous = session.cameraTrack;
+    if (previous) {
+      try {
+        previous.close();
+      } catch {
+        // Already closed.
+      }
+      session.setCameraTrack(null);
+    }
+
     const { default: AgoraRTC } = await import('agora-rtc-sdk-ng');
-    const camera = await AgoraRTC.createCameraVideoTrack();
+    let camera: ICameraVideoTrack;
+    try {
+      camera = await AgoraRTC.createCameraVideoTrack();
+    } catch {
+      // Camera busy or permission lost — the toggle must not claim it is on.
+      session.setIsCameraOn(false);
+      return null;
+    }
 
     // The camera was torn down for the share, so the toggle has to reflect that
     // it is off until the user turns it back on. Leaving the previous flag would
@@ -155,7 +193,11 @@ export function MeetingShell({
       camera.play(localVideoRef.current);
     }
 
-    await session.publishTrack(camera);
+    try {
+      await session.publishTrack(camera);
+    } catch {
+      // The channel may have dropped mid-share; the track is still live locally.
+    }
 
     return camera;
   }, [session]);
@@ -216,23 +258,174 @@ export function MeetingShell({
     setTimeout(() => setIsLocalReactionShown(false), 5000);
   }, [meetingSocket]);
 
-  const handleEndCall = useCallback(async () => {
+  // Hook return objects are new each render — keep latest helpers in a ref so the
+  // timeout/peer effects do not reset every paint.
+  const teardownDepsRef = useRef({
+    screenShare,
+    recording,
+    meetingSocket,
+    leave: session.leave,
+    onEndCall,
+  });
+  teardownDepsRef.current = {
+    screenShare,
+    recording,
+    meetingSocket,
+    leave: session.leave,
+    onEndCall,
+  };
+
+  /**
+   * Shared teardown for manual end, timeout, and peer `call-ended`.
+   * Always leaves Agora explicitly — do not rely on unmount alone.
+   *
+   * Each step is isolated in its own try/catch so one failure (e.g.
+   * NOT_READABLE from a camera restore during screen share) cannot abort the
+   * rest: the peer must always be notified, Agora must always be left, and
+   * `finish()` must always run.
+   */
+  const teardownAndEnd = useCallback(async (
+    reason: 'timeout' | 'peer' | 'manual',
+  ) => {
+    if (endInFlightRef.current) {
+      return;
+    }
+    endInFlightRef.current = true;
+    console.log('[831] teardownAndEnd START', { reason });
+    setSessionEndedReason(reason);
     setIsEnding(true);
+    setIsEndCallOpen(false);
+
+    const {
+      screenShare: share,
+      recording: rec,
+      meetingSocket: sock,
+      leave,
+      onEndCall: finish,
+    } = teardownDepsRef.current;
+
+    // Notify the peer first: even if a later step throws, the other side must
+    // not be stranded waiting for a call-ended that never arrives.
+    if (reason !== 'peer') {
+      try {
+        sock.notifyCallEnded();
+        console.log('[831] step 1/5 notify peer (socket "call-ended") ok');
+      } catch (err) {
+        // Socket emit is best-effort; the backend also emits on POST /end.
+        console.warn('[831] step 1/5 notify peer FAILED (continuing)', err);
+      }
+    }
+
     try {
-      // Stop sharing first so the camera teardown does not fight a live track.
-      if (screenShare.isSharing) {
-        await screenShare.stop();
+      // Stop sharing without restoring the camera — the session is ending and
+      // `leave()` closes every remaining local track. Restoring here is what
+      // used to throw NOT_READABLE and freeze the whole teardown.
+      if (share.isSharing) {
+        console.log('[831] step 2/5 screen share teardown…');
+        try {
+          await share.teardown();
+          console.log('[831] step 2/5 screen share teardown ok');
+        } catch (err) {
+          console.warn('[831] step 2/5 screen share teardown FAILED (continuing)', err);
+        }
       }
 
-      const recordedInfo = await recording.stop();
+      try {
+        const stoppedRecording = await rec.stop();
+        console.log('[831] step 3/5 recording stop', stoppedRecording ? 'ok' : 'no recording running');
+      } catch (err) {
+        console.warn('[831] step 3/5 recording stop FAILED (continuing)', err);
+      }
 
-      meetingSocket.notifyCallEnded();
-      onEndCall(recordedInfo ?? undefined);
+      try {
+        await leave();
+        console.log('[831] step 4/5 agora leave ok');
+      } catch (err) {
+        console.warn('[831] step 4/5 agora leave FAILED (continuing)', err);
+      }
+
+      console.log('[831] overlay shown — holding 1.5s before finish()');
+      await new Promise<void>((resolve) => {
+        setTimeout(resolve, SESSION_ENDED_OVERLAY_MS);
+      });
+
+      console.log('[831] step 5/5 finish() → POST /end + navigate');
+      finish();
     } finally {
       setIsEnding(false);
-      setIsEndCallOpen(false);
     }
-  }, [screenShare, recording, meetingSocket, onEndCall]);
+  }, []);
+
+  const handleEndCall = useCallback(() => {
+    console.log('[831] manual end clicked → teardownAndEnd("manual")');
+    void teardownAndEnd('manual');
+  }, [teardownAndEnd]);
+
+  // Auto-end at/after API endedAt (backend is source of truth for the instant).
+  // An interval (not a one-shot timeout) re-checks every second so a throttled
+  // or missed timer cannot leave the call running past the booked end; the
+  // immediate tick also covers mounts that happen after endedAt has passed.
+  //
+  // [831] every line is tagged so the console (filter: `831`) shows whether the
+  // timer armed, stayed alive, and fired.
+  useEffect(() => {
+    if (!endedAt) {
+      console.warn('[831] auto-end NOT armed: endedAt prop is missing/empty', { sessionId });
+      return undefined;
+    }
+
+    const endMs = new Date(endedAt).getTime();
+    if (Number.isNaN(endMs)) {
+      console.warn('[831] auto-end NOT armed: endedAt is unparseable', { endedAt, sessionId });
+      return undefined;
+    }
+
+    const remainingMs = endMs - Date.now();
+    console.log('[831] auto-end ARMED', {
+      endedAt,
+      now: new Date().toISOString(),
+      remainingMs,
+      remainingSec: Math.round(remainingMs / 1000),
+      sessionId,
+    });
+    if (remainingMs > 60 * 60 * 1000) {
+      console.warn('[831] deadline is >1h away — check for a timezone skew between BE and FE');
+    }
+
+    let elapsedSeconds = 0;
+    const tick = () => {
+      if (endInFlightRef.current) {
+        return;
+      }
+      const msLeft = endMs - Date.now();
+      if (msLeft <= 0) {
+        console.log('[831] DEADLINE reached → teardownAndEnd("timeout")');
+        void teardownAndEnd('timeout');
+        return;
+      }
+      elapsedSeconds += 1;
+      if (elapsedSeconds % 15 === 0) {
+        console.log(`[831] timer alive — ${Math.round(msLeft / 1000)}s to deadline`);
+      }
+    };
+
+    tick();
+    const timer = window.setInterval(tick, 1000);
+
+    return () => {
+      console.log('[831] auto-end effect cleaned up (endedAt changed or component unmounted)');
+      window.clearInterval(timer);
+    };
+  }, [endedAt, teardownAndEnd, sessionId]);
+
+  // Peer hung up (or BE emitted call-ended after /end) — leave and finish locally.
+  useEffect(() => {
+    if (!meetingSocket.isRemoteCallEnded) {
+      return;
+    }
+    console.log('[831] socket "call-ended" received from peer → teardownAndEnd("peer")');
+    void teardownAndEnd('peer');
+  }, [meetingSocket.isRemoteCallEnded, teardownAndEnd]);
 
   // Toast exactly once when the connection comes back after a loss.
   const wasConnectedRef = useRef(false);
@@ -266,8 +459,11 @@ export function MeetingShell({
   const renderStage = () => {
     if (screenShare.isSharing) {
       return (
-        <div className="flex size-full items-center justify-center rounded-3xl bg-black">
+        <div className="relative flex size-full items-center justify-center rounded-3xl bg-black">
           <p className="text-sm text-neutral-70">{t('screen_label')}</p>
+          {sessionEndedReason && (
+            <SessionEndedOverlay reason={sessionEndedReason} />
+          )}
         </div>
       );
     }
@@ -280,6 +476,9 @@ export function MeetingShell({
           isWaiting={!session.hasParticipantJoined}
         />
         <ReconnectingOverlay connectionState={session.connectionState} />
+        {sessionEndedReason && (
+          <SessionEndedOverlay reason={sessionEndedReason} />
+        )}
       </div>
     );
   };
@@ -439,12 +638,14 @@ export function MeetingShell({
         />
       )}
 
-      <RecordingConsentModal
-        open={recording.isConsentOpen}
-        isStarting={false}
-        onAccept={() => void recording.start()}
-        onDecline={recording.decline}
-      />
+      {SHOW_RECORDING_PROMPT && (
+        <RecordingConsentModal
+          open={recording.isConsentOpen}
+          isStarting={false}
+          onAccept={() => void recording.start()}
+          onDecline={recording.decline}
+        />
+      )}
 
       <EndCallConfirmModal
         open={isEndCallOpen}

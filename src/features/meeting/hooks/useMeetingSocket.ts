@@ -27,6 +27,7 @@ export function useMeetingSocket({ remoteParticipantId }: UseMeetingSocketOption
         setTimeout(() => setIsReactionReceived(false), 5000);
       },
       'call-ended': () => {
+        console.log('[831] socket event "call-ended" RECEIVED (peer or BE auto-end)');
         setIsRemoteCallEnded(true);
       },
     },

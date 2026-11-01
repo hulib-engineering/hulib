@@ -60,6 +60,10 @@ export function useScreenShare({
         // a share the UI claimed the camera was off while it was actually on.
         cameraWasOnRef.current = true;
       }
+    } catch {
+      // A restore failure (e.g. NOT_READABLE while the camera is still held)
+      // must not rethrow: `stop()` is called from user paths that would abort
+      // mid-teardown. `restoreCamera` already reports the failure itself.
     } finally {
       restoringRef.current = false;
     }
@@ -81,6 +85,30 @@ export function useScreenShare({
     await restoreCameraTrack();
     setStatus('idle');
   }, [unpublishTrack, restoreCameraTrack]);
+
+  /**
+   * Ends the share for good when the call itself is ending.
+   *
+   * Unlike `stop()` (the manual share toggle) this does NOT restore the camera:
+   * recreating the camera track during session teardown can throw NOT_READABLE
+   * and abort the rest of the teardown, stranding the peer. The session's own
+   * `leave()` closes every remaining local track.
+   */
+  const teardown = useCallback(async () => {
+    const track = screenTrackRef.current;
+    screenTrackRef.current = null;
+    if (track) {
+      await unpublishTrack(track);
+    }
+
+    const audioTrack = screenAudioTrackRef.current;
+    screenAudioTrackRef.current = null;
+    if (audioTrack) {
+      await unpublishTrack(audioTrack);
+    }
+
+    setStatus('idle');
+  }, [unpublishTrack]);
 
   const start = useCallback(async (source?: ScreenShareSource) => {
     if (!navigator.mediaDevices?.getDisplayMedia) {
@@ -211,5 +239,6 @@ export function useScreenShare({
     loadSources,
     start,
     stop,
+    teardown,
   };
 }
