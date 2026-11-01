@@ -968,6 +968,16 @@
     "you_have_meeting_now": "Bạn có cuộc họp ngay bây giờ",
     "detail": "Chi tiết"
   },
+  "MeetingAlert": {
+    "title": "Buổi gặp tiếp theo",
+    "now": "Bây giờ",
+    "time_left": "{hours}h {minutes}m",
+    "time_left_minutes": "{minutes}m",
+    "go_to": "Đến buổi gặp gỡ",
+    "dismiss_all": "Tắt cả",
+    "show_alert": "Hiện các buổi gặp sắp tới",
+    "more": "+{count} buổi khác"
+  },
   "Schedule": {
     "waiting": "Đang chờ",
     "missed": "đã bỏ lỡ",
