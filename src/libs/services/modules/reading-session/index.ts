@@ -17,6 +17,7 @@ export type {
   UpcomingReadingSessionCounterpart,
   UpcomingReadingSessionsResponse,
 } from './getUpcomingReadingSessions';
+export { USE_UPCOMING_ENDPOINT } from './getUpcomingReadingSessions';
 
 const apiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['ReadingSession'],
