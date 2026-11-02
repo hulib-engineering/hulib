@@ -11,7 +11,6 @@ import FooterWebApp from '@/app/[locale]/(auth)/_components/FooterWebApp';
 import CustomToastifyContainer from '@/components/CustomToastifyContainer';
 import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
-import { MeetingAlertWidget } from '@/features/meeting-alert';
 import MessengerWidget from '@/layouts/webapp/MultipleChatWidget';
 import { useAppDispatch } from '@/libs/hooks';
 import { usePathname } from '@/libs/i18nNavigation';
@@ -61,7 +60,6 @@ const MainTemplate = (props: WithChildren) => {
           </main>
           {!pathname.includes('messages') && <MobileBottomNav />}
           {!pathname.includes('messages') && <MessengerWidget />}
-          <MeetingAlertWidget />
         </div>
         <CustomToastifyContainer />
       </div>

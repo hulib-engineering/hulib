@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { MeetingAlertItem, UseMeetingAlertResult } from '../types';
 import { getCountdown } from '../utils/countdown';
 import { toUpcomingSessions } from '../utils/upcoming';
-import { useAppSelector } from '@/libs/hooks';
+import { usePathname } from '@/libs/i18nNavigation';
 import type { StatusType } from '@/libs/services/modules/reading-session/createNewReadingSession';
 import {
   USE_UPCOMING_ENDPOINT,
@@ -15,7 +15,6 @@ import {
 import type { UpcomingReadingSessionsResponse } from '@/libs/services/modules/reading-session/getUpcomingReadingSessions';
 
 const WITHIN_HOURS = 24;
-const POLL_INTERVAL_MS = 60_000;
 const CLOCK_TICK_MS = 30_000;
 const FALLBACK_LOOKBACK_MS = 2 * 60 * 60 * 1000;
 const STORAGE_PREFIX = 'hulib.meeting-alert';
@@ -43,9 +42,8 @@ function writeStorage(key: string | null, value: unknown) {
   }
 }
 
-export function useMeetingAlert(): UseMeetingAlertResult {
-  const userId = useAppSelector(state => state.auth.userInfo?.id);
-
+export function useMeetingAlert(userId?: number | string): UseMeetingAlertResult {
+  const pathname = usePathname();
   const isEnabled = Boolean(userId);
 
   // Local clock used for countdowns. 30s is frequent enough for minute-level copy
@@ -56,34 +54,47 @@ export function useMeetingAlert(): UseMeetingAlertResult {
     return () => window.clearInterval(timer);
   }, []);
 
-  // Keeps the fallback query's window params stable between polls: a new `now`
-  // every render would otherwise create a new cache key and refetch continuously.
-  const minuteBucket = Math.floor(now.getTime() / POLL_INTERVAL_MS);
+  // Frozen at mount and moved only on navigation. The fallback endpoint takes a time
+  // window, so deriving it from the ticking clock would create a new cache key and
+  // refetch every minute.
+  const [fetchAnchor, setFetchAnchor] = useState(() => Date.now());
 
   const upcomingQuery = useGetUpcomingReadingSessionsQuery(
     { withinHours: WITHIN_HOURS, limit: 20 },
-    {
-      pollingInterval: POLL_INTERVAL_MS,
-      refetchOnFocus: true,
-      skip: !isEnabled || !USE_UPCOMING_ENDPOINT,
-    },
+    { skip: !isEnabled || !USE_UPCOMING_ENDPOINT },
   );
 
   const fallbackParams = useMemo(() => {
-    const bucketNow = minuteBucket * POLL_INTERVAL_MS;
     return {
       sessionStatuses: ['approved'] as StatusType[],
-      startedAt: new Date(bucketNow - FALLBACK_LOOKBACK_MS).toISOString(),
-      endedAt: new Date(bucketNow + (WITHIN_HOURS + 1) * 60 * 60 * 1000).toISOString(),
+      startedAt: new Date(fetchAnchor - FALLBACK_LOOKBACK_MS).toISOString(),
+      endedAt: new Date(fetchAnchor + (WITHIN_HOURS + 1) * 60 * 60 * 1000).toISOString(),
       limit: 100,
     };
-  }, [minuteBucket]);
+  }, [fetchAnchor]);
 
   const fallbackQuery = useGetReadingSessionsQuery(fallbackParams, {
-    pollingInterval: POLL_INTERVAL_MS,
-    refetchOnFocus: true,
     skip: !isEnabled || USE_UPCOMING_ENDPOINT,
   });
+
+  const refetchUpcoming = USE_UPCOMING_ENDPOINT ? upcomingQuery.refetch : fallbackQuery.refetch;
+  const lastPathnameRef = useRef(pathname);
+  useEffect(() => {
+    if (lastPathnameRef.current === pathname) {
+      return;
+    }
+    lastPathnameRef.current = pathname;
+
+    if (!isEnabled) {
+      return;
+    }
+
+    if (USE_UPCOMING_ENDPOINT) {
+      refetchUpcoming();
+    } else {
+      setFetchAnchor(Date.now());
+    }
+  }, [isEnabled, pathname, refetchUpcoming]);
 
   const response = useMemo<UpcomingReadingSessionsResponse | undefined>(() => {
     if (USE_UPCOMING_ENDPOINT) {
@@ -92,14 +103,15 @@ export function useMeetingAlert(): UseMeetingAlertResult {
     return toUpcomingSessions(
       fallbackQuery.data?.data,
       userId,
-      new Date(minuteBucket * POLL_INTERVAL_MS),
+      new Date(fetchAnchor),
       WITHIN_HOURS,
     );
-  }, [fallbackQuery.data, minuteBucket, upcomingQuery.data, userId]);
+  }, [fallbackQuery.data, fetchAnchor, upcomingQuery.data, userId]);
 
   // The API's `serverTime` is captured on arrival and turned into a stable skew;
-  // recomputing it on every render would silently freeze the countdown.
-  const serverTime = response?.meta.serverTime;
+  // recomputing it on every render would silently freeze the countdown. The
+  // fallback adapter has no server clock, so it uses the browser's.
+  const serverTime = USE_UPCOMING_ENDPOINT ? response?.meta.serverTime : undefined;
   const [skewMs, setSkewMs] = useState(0);
   const lastServerTimeRef = useRef<string | undefined>(undefined);
   useEffect(() => {
