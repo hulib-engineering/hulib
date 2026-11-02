@@ -2,12 +2,14 @@
 
 import { CalendarDots } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import * as React from 'react';
 
 import { mergeClassnames } from '@/components/core/private/utils';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
 import { DAY_KEYS } from '@/libs/constants/date';
 import { useTimeslotGrouping } from '@/libs/hooks/useTimeslotGrouping';
+import { usePathname, useRouter } from '@/libs/i18nNavigation';
 import { useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
 import { PersonalCalendarEditor } from '@/features/stories/components/PersonalCalendarModal';
 import MeetingCardGrid from '@/features/users/features/schedule/components/MeetingCardGrid';
@@ -21,13 +23,43 @@ type HuberSchedulePanelProps = {
 
 const PERIODS = ['morning', 'afternoon', 'evening'] as const;
 
+type ScheduleSection = 'personal' | 'meeting';
+
+const isScheduleSection = (value: string | null): value is ScheduleSection =>
+  value === 'personal' || value === 'meeting';
+
 function OwnerSchedule({ canManageSlots }: { canManageSlots: boolean }) {
   const tTimeslot = useTranslations('Time_slots');
-  const [tab, setTab] = React.useState<'personal' | 'meeting'>('personal');
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const sectionParam = searchParams.get('section');
+
+  // `?tab=schedule&section=meeting` is the destination of the floating meeting alert;
+  // without it, a Huber would land on "Personal time" instead of the meeting list.
+  const [tab, setTab] = React.useState<ScheduleSection>(
+    isScheduleSection(sectionParam) ? sectionParam : 'personal',
+  );
   const tabs = [
     { value: 'personal', label: tTimeslot('personal_time_tab') },
     { value: 'meeting', label: tTimeslot('meeting_tab') },
   ] as const;
+
+  // Adopt external URL changes (e.g. the alert navigating while this page is already open).
+  React.useEffect(() => {
+    if (canManageSlots && isScheduleSection(sectionParam)) {
+      setTab(sectionParam);
+    }
+  }, [canManageSlots, sectionParam]);
+
+  React.useEffect(() => {
+    if (!canManageSlots || searchParams.get('section') === tab) {
+      return;
+    }
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('section', tab);
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [canManageSlots, pathname, router, searchParams, tab]);
 
   // Availability slots belong to the Huber who is being read. A Liber has no slots of
   // their own to publish, so they go straight to the meeting list.
