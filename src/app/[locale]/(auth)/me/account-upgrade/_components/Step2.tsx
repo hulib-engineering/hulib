@@ -8,6 +8,7 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { useAccountUpgradeStep } from '@/features/users/hooks/useAccountUpgradeStep';
 import TimeslotRegistrationSection from '@/layouts/timeslots/TimeslotRegistrationSection';
 import { useCreateTimeslotsMutation } from '@/libs/services/modules/time-slots';
+import { useSafetyGate } from '@/features/users/hooks/useSafetyGate';
 import type { Timeslot } from '@/utils/convertTimeSlotToUtc';
 import { convertTimeSlotToUtc } from '@/utils/convertTimeSlotToUtc';
 import type { AccountUpgradeValidationType } from '@/validations/AccountUpgradeValidation';
@@ -29,6 +30,7 @@ const Step2 = () => {
   const timeSlots = watch('timeSlots') || [];
 
   const [registerTimeSlots, { isLoading: isRegisteringTimeslots }] = useCreateTimeslotsMutation();
+  const isBlockedBySafety = useSafetyGate();
 
   const handleSlotToggle = (slot: Timeslot) => {
     const currentSlots = watch('timeSlots') || [];
@@ -52,6 +54,9 @@ const Step2 = () => {
     }
     clearErrors('timeSlots');
 
+    if (isBlockedBySafety()) {
+      return;
+    }
     try {
       const result = await registerTimeSlots({
         timeSlots: timeSlots.map(slot => convertTimeSlotToUtc(slot)),
