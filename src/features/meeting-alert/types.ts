@@ -11,10 +11,8 @@ export type MeetingAlertItem = {
 
 export type UseMeetingAlertResult = {
   items: MeetingAlertItem[];
-  count: number;
   isCollapsed: boolean;
   isLoading: boolean;
   collapse: () => void;
   expand: () => void;
-  dismissAll: () => void;
 };

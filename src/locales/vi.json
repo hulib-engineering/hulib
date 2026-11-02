@@ -974,9 +974,9 @@
     "time_left": "{hours}h {minutes}m",
     "time_left_minutes": "{minutes}m",
     "go_to": "Đến buổi gặp gỡ",
-    "dismiss_all": "Tắt cả",
     "show_alert": "Hiện các buổi gặp sắp tới",
-    "more": "+{count} buổi khác"
+    "collapse": "Thu gọn",
+    "expand": "Xem tất cả buổi gặp"
   },
   "Schedule": {
     "waiting": "Đang chờ",

@@ -24,7 +24,6 @@ const meta = {
   },
   decorators: [withIntl],
   args: {
-    count: 2,
     isLive: false,
     minutesUntilNext: 10,
     onExpand: () => {},

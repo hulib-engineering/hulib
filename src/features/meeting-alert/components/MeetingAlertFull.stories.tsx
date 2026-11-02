@@ -53,7 +53,6 @@ const meta = {
   args: {
     href: '/users/9?tab=schedule&section=meeting',
     onCollapse: () => {},
-    onDismissAll: () => {},
   },
 } satisfies Meta<typeof MeetingAlertFull>;
 
@@ -61,20 +60,21 @@ export default meta;
 type Story = StoryObj<typeof MeetingAlertFull>;
 
 export const Now: Story = {
-  args: { items: [nowItem, laterItem], count: 2 },
+  args: { items: [nowItem, laterItem] },
 };
 
 export const UpcomingOnly: Story = {
-  args: { items: [laterItem], count: 1 },
+  args: { items: [laterItem] },
 };
 
+/** More than two sessions adds the expand/collapse control on the last visible card. */
 export const ManyMeetings: Story = {
   args: {
     items: [
       nowItem,
       laterItem,
       { ...laterItem, id: 387, counterpart: { ...laterItem.counterpart, fullName: 'Persephone' } },
+      { ...laterItem, id: 388, counterpart: { ...laterItem.counterpart, fullName: 'Minh Anh' } },
     ],
-    count: 7,
   },
 };

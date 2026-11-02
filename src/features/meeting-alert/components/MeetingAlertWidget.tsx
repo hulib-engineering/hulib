@@ -9,12 +9,10 @@ export default function MeetingAlertWidget() {
   const userId = useAppSelector(state => state.auth.userInfo?.id);
   const {
     items,
-    count,
     isCollapsed,
     isLoading,
     collapse,
     expand,
-    dismissAll,
   } = useMeetingAlert();
 
   if (!userId || isLoading || items.length === 0) {
@@ -31,7 +29,6 @@ export default function MeetingAlertWidget() {
   if (isCollapsed) {
     return (
       <MeetingAlertMini
-        count={count}
         isLive={isLive}
         minutesUntilNext={isLive ? null : nearest.countdown.totalMinutes}
         onExpand={expand}
@@ -42,10 +39,8 @@ export default function MeetingAlertWidget() {
   return (
     <MeetingAlertFull
       items={items}
-      count={count}
       href={href}
       onCollapse={collapse}
-      onDismissAll={dismissAll}
     />
   );
 }

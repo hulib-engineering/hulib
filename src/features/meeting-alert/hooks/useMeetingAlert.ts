@@ -6,7 +6,6 @@ import type { MeetingAlertItem, UseMeetingAlertResult } from '../types';
 import { getCountdown } from '../utils/countdown';
 import { toUpcomingSessions } from '../utils/upcoming';
 import { useAppSelector } from '@/libs/hooks';
-import { usePathname } from '@/libs/i18nNavigation';
 import type { StatusType } from '@/libs/services/modules/reading-session/createNewReadingSession';
 import {
   USE_UPCOMING_ENDPOINT,
@@ -20,15 +19,6 @@ const POLL_INTERVAL_MS = 60_000;
 const CLOCK_TICK_MS = 30_000;
 const FALLBACK_LOOKBACK_MS = 2 * 60 * 60 * 1000;
 const STORAGE_PREFIX = 'hulib.meeting-alert';
-
-/** The widget is pointless — and its polling wasteful — while the user is inside these flows. */
-const EXCLUDED_ROUTE_PREFIXES = [
-  '/reading',
-  '/messages',
-  '/register-huber/create-book',
-];
-
-type DismissedEntry = { id: number; endedAt: string };
 
 function readStorage<T>(key: string | null, fallback: T): T {
   if (!key || typeof window === 'undefined') {
@@ -54,11 +44,9 @@ function writeStorage(key: string | null, value: unknown) {
 }
 
 export function useMeetingAlert(): UseMeetingAlertResult {
-  const pathname = usePathname();
   const userId = useAppSelector(state => state.auth.userInfo?.id);
 
-  const isEnabled = Boolean(userId)
-    && !EXCLUDED_ROUTE_PREFIXES.some(prefix => pathname.startsWith(prefix));
+  const isEnabled = Boolean(userId);
 
   // Local clock used for countdowns. 30s is frequent enough for minute-level copy
   // without re-rendering every second.
@@ -127,33 +115,15 @@ export function useMeetingAlert(): UseMeetingAlertResult {
 
   const effectiveNow = useMemo(() => new Date(now.getTime() + skewMs), [now, skewMs]);
 
-  const dismissedKey = userId ? `${STORAGE_PREFIX}.dismissed-ids.v1.${userId}` : null;
   const collapsedKey = userId ? `${STORAGE_PREFIX}.collapsed.v1.${userId}` : null;
 
   // Defaults on the first render keep SSR and hydration identical; the effect
-  // below loads the persisted values once auth has hydrated.
-  const [dismissed, setDismissed] = useState<DismissedEntry[]>([]);
+  // below loads the persisted value once auth has hydrated.
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   useEffect(() => {
-    setDismissed(readStorage<DismissedEntry[]>(dismissedKey, []));
     setIsCollapsed(readStorage<boolean>(collapsedKey, false));
-  }, [dismissedKey, collapsedKey]);
-
-  // Dismissals only live until their session ends, so the set cannot grow forever.
-  useEffect(() => {
-    if (dismissed.length === 0) {
-      return;
-    }
-    const stillActive = dismissed.filter((entry) => {
-      const endMs = new Date(entry.endedAt).getTime();
-      return Number.isNaN(endMs) || endMs > now.getTime();
-    });
-    if (stillActive.length !== dismissed.length) {
-      setDismissed(stillActive);
-      writeStorage(dismissedKey, stillActive);
-    }
-  }, [dismissed, dismissedKey, now]);
+  }, [collapsedKey]);
 
   const items = useMemo<MeetingAlertItem[]>(() => {
     if (!response) {
@@ -180,11 +150,6 @@ export function useMeetingAlert(): UseMeetingAlertResult {
       });
   }, [response, effectiveNow]);
 
-  const visibleItems = useMemo(() => {
-    const dismissedIds = new Set(dismissed.map(entry => entry.id));
-    return items.filter(item => !dismissedIds.has(item.id));
-  }, [items, dismissed]);
-
   const collapse = useCallback(() => {
     setIsCollapsed(true);
     writeStorage(collapsedKey, true);
@@ -195,29 +160,14 @@ export function useMeetingAlert(): UseMeetingAlertResult {
     writeStorage(collapsedKey, false);
   }, [collapsedKey]);
 
-  const dismissAll = useCallback(() => {
-    setDismissed((previous) => {
-      const merged = new Map(previous.map(entry => [entry.id, entry]));
-      visibleItems.forEach(item => merged.set(item.id, { id: item.id, endedAt: item.endedAt }));
-      const next = [...merged.values()];
-      writeStorage(dismissedKey, next);
-      return next;
-    });
-    // The next meeting the user has not dismissed re-opens as the small pill.
-    setIsCollapsed(true);
-    writeStorage(collapsedKey, true);
-  }, [visibleItems, dismissedKey, collapsedKey]);
-
   const isLoading = isEnabled
     && (USE_UPCOMING_ENDPOINT ? upcomingQuery.isLoading : fallbackQuery.isLoading);
 
   return {
-    items: visibleItems,
-    count: visibleItems.length,
+    items,
     isCollapsed,
     isLoading,
     collapse,
     expand,
-    dismissAll,
   };
 }

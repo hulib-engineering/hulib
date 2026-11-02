@@ -4,14 +4,12 @@ import { Plus, VideoCamera } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 
 type MeetingAlertMiniProps = {
-  count: number;
   isLive: boolean;
   minutesUntilNext: number | null;
   onExpand: () => void;
 };
 
 export default function MeetingAlertMini({
-  count,
   isLive,
   minutesUntilNext,
   onExpand,
@@ -37,9 +35,9 @@ export default function MeetingAlertMini({
     <button
       type="button"
       onClick={onExpand}
-      aria-label={`${t('show_alert')} (${count})`}
+      aria-label={t('show_alert')}
       aria-expanded={false}
-      className="fixed bottom-[84px] right-4 z-40 flex h-[52px] w-[132px] items-center gap-2 rounded-2xl border-[3px] border-transparent bg-white p-2 shadow-[0_4px_16px_rgba(1,13,38,0.18)] focus-visible:ring-2 focus-visible:ring-primary-60 focus-visible:outline-none lg:bottom-auto lg:right-[18px] lg:top-[56px]"
+      className="fixed right-4 top-[87px] z-40 flex h-[52px] w-[132px] items-center gap-2 rounded-2xl border-[3px] border-transparent bg-white p-2 shadow-[0_4px_16px_rgba(1,13,38,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-60"
       style={{
         backgroundImage: 'linear-gradient(#fff, #fff), linear-gradient(135deg, #4682FB, #84ACFC)',
         backgroundOrigin: 'border-box',
