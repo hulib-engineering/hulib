@@ -22,6 +22,7 @@ import TimeSlotList from '@/layouts/timeslots/TimeSlotList';
 import TimeslotRegistrationSection from '@/layouts/timeslots/TimeslotRegistrationSection';
 import { convertTimeSlotToUtc } from '@/utils/convertTimeSlotToUtc';
 import { useAppSelector } from '@/libs/hooks';
+import { useSafetyGate } from '@/features/users/hooks/useSafetyGate';
 import { useCreateTimeslotsMutation } from '@/libs/services/modules/time-slots';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
@@ -76,7 +77,12 @@ export default function Index() {
 
   const [registerTimeSlots, { isLoading: isRegisteringTimeslots }] = useCreateTimeslotsMutation();
 
+  const isBlockedBySafety = useSafetyGate();
+
   const handleSaveMobileTimeSlots = async () => {
+    if (isBlockedBySafety()) {
+      return;
+    }
     try {
       const result = await registerTimeSlots({
         timeSlots: selectedSlots.map(slot => convertTimeSlotToUtc(slot)),

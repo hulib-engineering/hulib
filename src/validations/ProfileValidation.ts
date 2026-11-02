@@ -43,7 +43,9 @@ export const ProfileValidation = z
   })
   .superRefine((values, context) => {
     if (values.isUnderGuard) {
-      if (!values.parentPhoneNumber || values.parentPhoneNumber.length <= 0) {
+      // Only the contact kind picked in the form is saved (see PersonalInformation's handleUpdate).
+      const guardianContact = values.countryCode === 'email' ? values.parentEmail : values.parentPhoneNumber;
+      if (!guardianContact) {
         context.addIssue({
           code: z.ZodIssueCode.custom,
           message: VALIDATION_MESSAGES.PARENT_REQUIRED,

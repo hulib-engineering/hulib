@@ -25,6 +25,7 @@ import {
 } from '@/libs/services/modules/time-slots';
 import { ROLE_NAME, Role } from '@/types/common';
 import { convertTimeSlotToUtc } from '@/utils/convertTimeSlotToUtc';
+import { useSafetyGate } from '@/features/users/hooks/useSafetyGate';
 import { REFERENCE_MONDAY } from '@/utils/dateUtils';
 
 type TPeriodLabel = 'morning' | 'afternoon' | 'evening';
@@ -41,6 +42,7 @@ export default function TimeSlotList() {
   );
 
   const [registerTimeSlots, { isLoading: isRegisteringTimeslots }] = useCreateTimeslotsMutation();
+  const isBlockedBySafety = useSafetyGate();
 
   const [weekDay, setWeekDay] = useState(new Date().getDay());
   const [timeslotsByDayAndPeriod, setTimeslotsByDayAndPeriod] = useState<Record<string, TDaySlots>>({});
@@ -119,6 +121,9 @@ export default function TimeSlotList() {
   const totalSlotNum = currentDayMorningSlots.length + currentDayAfternoonSlots.length + currentDayEveningSlots.length;
 
   const handleSaveEditedTimeSlots = async () => {
+    if (isBlockedBySafety()) {
+      return;
+    }
     try {
       const result = await registerTimeSlots({
         timeSlots: selectedSlots.map(slot => convertTimeSlotToUtc(slot)),

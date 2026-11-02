@@ -8,9 +8,11 @@ import type { Control, FieldErrors, UseFormRegister, UseFormSetValue, UseFormWat
 import type { z } from 'zod';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
 
 import { isEmpty } from 'lodash';
 
+import { SafeContactModal } from './SafeContactModal';
 import Button from '@/components/core/button/Button';
 // import { CustomDatePicker } from '@/components/CustomDatePicker';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
@@ -29,6 +31,7 @@ import Alert from '@/components/Alert';
 import PhoneCodeSelect from '@/components/PhoneCodeByCountryDropdown';
 import { detectPhoneCountry } from '@/utils/detectPhoneCountry';
 import Modal from '@/components/Modal';
+import { getSafetyRequirement } from '@/features/users/utils/profile.util';
 import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';// TODO: use some state to trigger this from the layout instead
 
 const CodeConfirmationModal = dynamic(
@@ -329,6 +332,12 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
 
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
   const [isOpenConfirmCodeModal, setIsOpenConfirmCodeModal] = useState(false);
+  // Schedule/booking flows redirect here with ?safety=1 when the birthday or emergency contact is missing.
+  const searchParams = useSearchParams();
+  const safetyRequirement = getSafetyRequirement(data);
+  const [isSafetyModalOpen, setIsSafetyModalOpen] = useState(
+    () => searchParams.get('safety') === '1' && !!safetyRequirement,
+  );
 
   const dispatch = useAppDispatch();
 
@@ -342,6 +351,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
     getValues,
     handleSubmit,
     reset,
+    setFocus,
     formState: { errors, isSubmitting, isDirty, dirtyFields },
   } = useForm<z.infer<typeof ProfileValidation>>({
     resolver: zodResolver(ProfileValidation),
@@ -353,7 +363,7 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
       gender: data?.gender && data?.gender?.id
         ? { id: data.gender.id, name: genders[data.gender.id - 1]?.label }
         : { id: 3, name: 'Other' },
-      birthday: data?.birthday ?? new Date().toISOString().slice(0, 10),
+      birthday: data?.birthday ?? '',
       phoneNumber: data?.phoneNumber ?? null,
       address: data?.address ?? '',
       parentPhoneNumber: data?.parentPhoneNumber ?? null,
@@ -436,6 +446,20 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
           onCancel={() => reset()}
         />
       </Form>
+
+      {safetyRequirement && (
+        <SafeContactModal
+          open={isSafetyModalOpen}
+          requirement={safetyRequirement}
+          onClose={() => setIsSafetyModalOpen(false)}
+          onConfirm={() => {
+            setIsSafetyModalOpen(false);
+            setFocus(safetyRequirement === 'birthday'
+              ? 'birthday'
+              : getValues('countryCode') === 'email' ? 'parentEmail' : 'parentPhoneNumber');
+          }}
+        />
+      )}
 
       <Modal open={isOpenConfirmCodeModal} onClose={() => setIsOpenConfirmCodeModal(false)}>
         <CodeConfirmationModal

@@ -26,6 +26,7 @@ import TermOfUseModal from '@/components/TermOfUseModal';
 import TextInput from '@/components/core/textInput-v1/TextInput';
 import { VerifiedPhoneNumberInput } from '@/components/VerifiedPhoneNumberInput';
 import { genders } from '@/libs/constants';
+import { calculateAge } from '@/utils/dateUtils';
 import { Link, useRouter } from '@/libs/i18nNavigation';
 import {
   useCheckEmailMutation,
@@ -195,20 +196,10 @@ const Step2Form = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentModalRef, setCurrentModalRef] = useState('');
 
+  const birthday = watch('birthday');
   useEffect(() => {
-    const today = new Date();
-    const birthDate = new Date(watch('birthday'));
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age -= 1;
-    }
-    if (age < 18) {
-      setValue('isUnderGuard', true);
-    } else {
-      setValue('isUnderGuard', false);
-    }
-  }, [setValue, watch]);
+    setValue('isUnderGuard', !!birthday && calculateAge(birthday) < 18);
+  }, [setValue, birthday]);
 
   const handleFormSubmit = handleSubmit((data) => {
     onSubmit(data);
