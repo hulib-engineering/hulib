@@ -1,5 +1,5 @@
-import type { UpcomingReadingSessionCounterpart } from '@/libs/services/modules/reading-session/getUpcomingReadingSessions';
 import type { Countdown } from './utils/countdown';
+import type { UpcomingReadingSessionCounterpart } from '@/libs/services/modules/reading-session/getUpcomingReadingSessions';
 
 export type MeetingAlertItem = {
   id: number;

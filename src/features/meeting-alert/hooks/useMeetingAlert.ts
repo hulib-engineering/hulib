@@ -13,6 +13,7 @@ import {
   useGetReadingSessionsQuery,
   useGetUpcomingReadingSessionsQuery,
 } from '@/libs/services/modules/reading-session';
+import type { UpcomingReadingSessionsResponse } from '@/libs/services/modules/reading-session/getUpcomingReadingSessions';
 
 const WITHIN_HOURS = 24;
 const POLL_INTERVAL_MS = 60_000;
@@ -96,7 +97,7 @@ export function useMeetingAlert(): UseMeetingAlertResult {
     skip: !isEnabled || USE_UPCOMING_ENDPOINT,
   });
 
-  const response = useMemo(() => {
+  const response = useMemo<UpcomingReadingSessionsResponse | undefined>(() => {
     if (USE_UPCOMING_ENDPOINT) {
       return upcomingQuery.data;
     }

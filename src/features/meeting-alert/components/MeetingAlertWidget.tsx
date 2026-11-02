@@ -23,6 +23,9 @@ export default function MeetingAlertWidget() {
 
   const href = `/users/${userId}?tab=schedule&section=meeting`;
   const nearest = items[0];
+  if (!nearest) {
+    return null;
+  }
   const isLive = nearest.countdown.state === 'now';
 
   if (isCollapsed) {

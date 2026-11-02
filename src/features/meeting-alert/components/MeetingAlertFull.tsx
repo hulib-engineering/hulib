@@ -4,12 +4,11 @@ import { Minus, VideoCamera, XCircle } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 
 import type { MeetingAlertItem } from '../types';
-import Avatar from '@/components/core/avatar/Avatar';
+import MeetingAlertRow from './MeetingAlertRow';
 import Button from '@/components/core/button/Button';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { Link } from '@/libs/i18nNavigation';
-import MeetingAlertRow from './MeetingAlertRow';
 
 const MAX_VISIBLE_ROWS = 2;
 
@@ -88,7 +87,7 @@ export default function MeetingAlertFull({
       {hiddenCount > 0 && (
         <Link
           href={href}
-          className="mx-auto mt-1 rounded px-2 py-0.5 text-[10px] font-medium leading-4 text-primary-50 no-underline hover:underline focus-visible:ring-2 focus-visible:ring-primary-60 focus-visible:outline-none"
+          className="mx-auto mt-1 rounded px-2 py-0.5 text-[10px] font-medium leading-4 text-primary-50 no-underline hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-60"
         >
           {t('more', { count: hiddenCount })}
         </Link>
@@ -97,7 +96,7 @@ export default function MeetingAlertFull({
       <button
         type="button"
         onClick={onDismissAll}
-        className="mx-auto mt-1 flex items-center gap-1 rounded px-2 py-1 text-[10.5px] font-medium leading-4 text-neutral-30 hover:text-primary-50 focus-visible:ring-2 focus-visible:ring-primary-60 focus-visible:outline-none"
+        className="mx-auto mt-1 flex items-center gap-1 rounded px-2 py-1 text-[10.5px] font-medium leading-4 text-neutral-30 hover:text-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-60"
       >
         <XCircle className="size-3 shrink-0" />
         {t('dismiss_all')}
