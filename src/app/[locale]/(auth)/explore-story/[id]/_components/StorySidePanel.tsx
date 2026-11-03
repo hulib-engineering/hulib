@@ -12,7 +12,7 @@ import {
   XIcon,
 } from '@phosphor-icons/react';
 import { useSession } from 'next-auth/react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 import * as React from 'react';
@@ -27,7 +27,6 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import Modal from '@/components/Modal';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { copyToClipboard } from '@/app/[locale]/(unauth)/(landingpage)/_components/home/utils';
-import { AppConfig } from '@/utils/AppConfig';
 import ShareModal from '@/app/[locale]/(auth)/explore-story/[id]/_components/ShareModal';
 import { setPostLoginRedirect } from '@/utils/authRedirect';
 import AuthorBasicInfo from '@/components/author/AuthorBasicInfo';
@@ -103,7 +102,6 @@ export default function StorySidePanel({ data, floatingBooking }: StorySidePanel
   const router = useRouter();
   const { data: session } = useSession();
   const pathname = usePathname();
-  const locale = useLocale();
   const t = useTranslations('ExploreStory');
   const tCommon = useTranslations('Common');
   const tHuber = useTranslations('Huber');
@@ -201,26 +199,18 @@ export default function StorySidePanel({ data, floatingBooking }: StorySidePanel
     }
   }, [data?.likedUserIds, data?.sharedUserIds, userId]);
 
-  const storyUrl = React.useMemo(() => {
-    if (!data?.id) {
-      return '';
-    }
-    const localePrefix = locale === AppConfig.defaultLocale ? '' : `/${locale}`;
-    return new URL(
-      `${localePrefix}/explore-story/${data.id}`,
-      'https://hulib.org',
-    ).toString();
-  }, [data?.id, locale]);
+  // URL captured at click time (see handleClickShare), so it is never stale.
+  const [shareUrl, setShareUrl] = React.useState('');
 
   const shareOptions = React.useMemo(() => [
     {
       icon: FacebookLogoIcon,
       label: 'Facebook',
-      url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(storyUrl)}`,
+      url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
     },
     { icon: InstagramLogoIcon, label: 'Instagram', url: 'https://www.instagram.com/' },
     { icon: ThreadsLogoIcon, label: 'Threads', url: 'https://www.threads.net/' },
-  ], [storyUrl]);
+  ], [shareUrl]);
 
   const clickLikeStory = React.useCallback(async () => {
     if (!requireAuth()) {
@@ -252,29 +242,58 @@ export default function StorySidePanel({ data, floatingBooking }: StorySidePanel
     }
   }, [requireAuth, isLiked, handleUpdateLikeCount, data.id, userId, t]);
 
+  // Guards against double-counting when Share is tapped again before the API returns.
+  const isRecordingShareRef = React.useRef(false);
+
+  const recordShare = React.useCallback(async () => {
+    if (isShared || isRecordingShareRef.current) {
+      return;
+    }
+    isRecordingShareRef.current = true;
+    try {
+      const rs = await shareStory({ storyId: data.id, userId }).unwrap();
+      setIsShared(true);
+      setShareCount(rs.shareCount);
+    } catch {
+      // Counting is best-effort: the link was already shared/copied, so don't
+      // block the user; isShared stays false and the next share retries.
+    } finally {
+      isRecordingShareRef.current = false;
+    }
+  }, [isShared, shareStory, data.id, userId]);
+
   const handleClickShare = React.useCallback(async () => {
     if (!requireAuth()) {
       return;
     }
-    if (!storyUrl) {
+    const url = window.location.href;
+
+    // Touch devices (iPhone): native share sheet, which also offers "Copy".
+    // Must be the first async call so it still runs inside the user gesture.
+    if (navigator.share && window.matchMedia('(pointer: coarse)').matches) {
+      try {
+        await navigator.share({ url });
+        void recordShare();
+        return;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') {
+          return; // user dismissed the sheet
+        }
+        // Any other failure: fall back to copying below.
+      }
+    }
+
+    const isCopied = await copyToClipboard(url);
+    if (!isCopied) {
+      pushError(t('copy_link_error'));
       return;
     }
 
-    if (!isShared) {
-      const isCopied = await copyToClipboard(storyUrl);
-      const rs = await shareStory({ storyId: data.id, userId }).unwrap();
-      setIsShared(true);
-
-      if (!isCopied) {
-        pushError(t('copy_link_error'));
-        return;
-      }
-
-      setShareCount(rs.shareCount);
-    }
+    void recordShare();
     pushSuccess(t('copy_link_success'));
+    setShareUrl(url);
     setIsShareModalOpen(true);
-  }, [t, requireAuth, storyUrl, isShared, shareStory, data.id, userId]);
+  }, [t, requireAuth, recordShare]);
 
   const handleCloseShareModal = React.useCallback(() => {
     setIsShareModalOpen(false);

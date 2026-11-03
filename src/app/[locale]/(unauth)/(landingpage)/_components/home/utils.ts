@@ -21,6 +21,9 @@ export const fallbackCopyText = (value: string) => {
   document.body.appendChild(textArea);
   textArea.focus();
   textArea.select();
+  // iOS Safari ignores select() on a readonly textarea, so execCommand('copy')
+  // returns true while copying nothing.
+  textArea.setSelectionRange(0, value.length);
 
   const isCopied = document.execCommand('copy');
   document.body.removeChild(textArea);

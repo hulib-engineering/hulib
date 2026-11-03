@@ -21,6 +21,7 @@ import MeetingDecisionModal from '@/components/notification/styles/MeetingDecisi
 import { mergeClassnames } from '@/components/core/private/utils';
 import { useRouter } from '@/libs/i18nNavigation';
 import { useUpdateReadingSessionMutation } from '@/libs/services/modules/reading-session';
+import { useSafetyGate } from '@/features/users/hooks/useSafetyGate';
 import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
 import { formatSessionDateWithWeekday, formatSessionTime } from '@/utils/dateUtils';
 import { GreenTick } from '@/features/users/components/profile/GreenTick';
@@ -75,7 +76,12 @@ export default function MeetingCard({ card, now = new Date() }: MeetingCardProps
     }
   })();
 
+  const isBlockedBySafety = useSafetyGate();
+
   const runUpdate = async (payload: Record<string, unknown>) => {
+    if (payload.sessionStatus === StatusEnum.Approved && isBlockedBySafety()) {
+      return;
+    }
     try {
       await updateStatus({ id: session.id, ...payload } as any).unwrap();
       pushSuccess(t('success.updated'));

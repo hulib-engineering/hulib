@@ -13,6 +13,7 @@ import { mergeClassnames } from '@/components/core/private/utils';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { useRouter } from '@/libs/i18nNavigation';
 import { useUpdateReadingSessionMutation } from '@/libs/services/modules/reading-session';
+import { useSafetyGate } from '@/features/users/hooks/useSafetyGate';
 import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
 import { formatMeetingDateLabel, formatNotificationTimestamp, formatSessionTime, resolveSessionTimeRange } from '@/utils/dateUtils';
 
@@ -52,7 +53,12 @@ export default function MeetingRequestNotificationCard({ notification, showExtra
     setIsRejectModalOpen(true);
   };
 
+  const isBlockedBySafety = useSafetyGate();
+
   const confirmDecision = async (sessionStatus: StatusEnum.Approved | StatusEnum.Rejected, rejectReason?: string) => {
+    if (sessionStatus === StatusEnum.Approved && isBlockedBySafety()) {
+      return;
+    }
     try {
       await updateStatus({ id: session?.id, sessionStatus, rejectReason }).unwrap();
       pushSuccess(t('status_updated'));
