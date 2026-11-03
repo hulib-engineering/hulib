@@ -968,6 +968,16 @@
     "you_have_meeting_now": "You have meeting now",
     "detail": "Detail"
   },
+  "MeetingAlert": {
+    "title": "Next meeting",
+    "now": "Now",
+    "time_left": "{hours}h {minutes}m",
+    "time_left_minutes": "{minutes}m",
+    "go_to": "Go to meeting",
+    "show_alert": "Show upcoming meetings",
+    "collapse": "Collapse",
+    "expand": "Show all meetings"
+  },
   "Schedule": {
     "waiting": "Waiting",
     "missed": "missed",
