@@ -49,6 +49,15 @@ export type ReadingSession = {
   /** Set by `POST /reading-sessions/:id/attend`. Both stay null until the meeting happens. */
   huberJoinedAt?: string | null;
   readerJoinedAt?: string | null;
+  /** Post-meeting feedback for the Liber. */
+  feelingRating?: number;
+  satisfactionRating?: number;
+  sessionContent?: string | null;
+  huberRating?: number | null;
+  huberContent?: string | null;
+  huberFeedbackSkipped?: boolean;
+  /** Set once the Liber has submitted (or skipped Huber feedback for) this session. */
+  feedbackSubmittedAt?: string | null;
   feedbacks: FeedBack[];
 };
 

@@ -3,16 +3,13 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-import type {
-  HuberFeedbackValue,
-  PostMeetingFeedbackPayload,
-  SessionFeedbackValue,
-} from './types';
+import type { HuberFeedbackValue, SessionFeedbackValue } from './types';
 import { FeedbackSuccessStep } from './FeedbackSuccessStep';
 import { HuberFeedbackStep } from './HuberFeedbackStep';
 import { SessionFeedbackStep } from './SessionFeedbackStep';
 import Modal from '@/components/Modal';
 import { pushError } from '@/components/CustomToastifyContainer';
+import type { ReadingSessionFeedbackPayload } from '@/libs/services/modules/reading-session';
 import type { ReadingSession } from '@/libs/services/modules/reading-session/createNewReadingSession';
 
 type FeedbackStep = 'session' | 'huber' | 'success';
@@ -22,7 +19,7 @@ export type PostMeetingFeedbackModalProps = {
   session: ReadingSession;
   onCancel: () => void;
   onHome: () => void;
-  onSubmit: (payload: PostMeetingFeedbackPayload) => Promise<boolean>;
+  onSubmit: (payload: ReadingSessionFeedbackPayload) => Promise<boolean>;
 };
 
 const DEFAULT_SESSION_VALUE: SessionFeedbackValue = {
@@ -63,7 +60,7 @@ export function PostMeetingFeedbackModal({
   const submit = async (skipped: boolean) => {
     setIsSubmitting(true);
 
-    const payload: PostMeetingFeedbackPayload = {
+    const payload: ReadingSessionFeedbackPayload = {
       feelingRating: sessionValue.feelingRating + 1,
       satisfactionRating: sessionValue.satisfactionRating + 1,
       sessionContent: sessionValue.content.trim() || undefined,

@@ -5,6 +5,7 @@ import endReadingSession from './endReadingSession';
 import getReadingSessionById from './getReadingSessionById';
 import getReadingSessions from './getReadingSessions';
 import getUpcomingReadingSessions from './getUpcomingReadingSessions';
+import submitReadingSessionFeedback from './submitReadingSessionFeedback';
 import updateReadingSession from './updateReadingSession';
 
 export type {
@@ -18,6 +19,10 @@ export type {
   UpcomingReadingSessionsResponse,
 } from './getUpcomingReadingSessions';
 export { USE_UPCOMING_ENDPOINT } from './getUpcomingReadingSessions';
+export type {
+  ReadingSessionFeedbackPayload,
+  ReadingSessionFeedbackResponse,
+} from './submitReadingSessionFeedback';
 
 const apiWithTag = api.enhanceEndpoints?.({
   addTagTypes: ['ReadingSession'],
@@ -32,6 +37,7 @@ const readingSessionApi = apiWithTag.injectEndpoints({
     getReadingSessionById: getReadingSessionById(build),
     attendReadingSession: attendReadingSession(build),
     endReadingSession: endReadingSession(build),
+    submitReadingSessionFeedback: submitReadingSessionFeedback(build),
   }),
   overrideExisting: false,
 });
@@ -44,4 +50,5 @@ export const {
   useGetReadingSessionByIdQuery,
   useAttendReadingSessionMutation,
   useEndReadingSessionMutation,
+  useSubmitReadingSessionFeedbackMutation,
 }: any = readingSessionApi;
