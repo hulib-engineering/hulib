@@ -15,3 +15,14 @@ export type HuberIdentity = {
     path?: string;
   };
 };
+
+export type HuberFeedbackPayload
+  = | { skipped: true }
+    | { skipped: false; rating: number; content?: string };
+
+export type PostMeetingFeedbackPayload = {
+  feelingRating: number;
+  satisfactionRating: number;
+  sessionContent?: string;
+  huber: HuberFeedbackPayload;
+};
