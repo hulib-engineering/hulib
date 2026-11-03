@@ -1397,8 +1397,6 @@
     "did_session_satisfy": "Buổi họp có đáp ứng được vấn đề/sở thích của bạn không?",
     "not_satisfied": "Không hài lòng",
     "very_satisfied": "Rất hài lòng",
-    "rate_for_story": "Đánh giá cho câu chuyện",
-    "share_thought": "Chia sẻ suy nghĩ của bạn về câu chuyện",
     "share_more": "Chia sẻ thêm nếu bạn muốn tại đây nha!",
     "cancel": "Hủy bỏ",
     "next": "Tiếp theo",
@@ -1410,9 +1408,7 @@
     "thank_you": "Cảm ơn phản hồi của bạn",
     "feedback_value": "Mỗi phản hồi từ bạn đều rất quý giá và là động lực để Hulib ngày càng phát triển và mang đến những trải nghiệm tốt nhất",
     "continue_reading": "Tiếp tục đọc sách",
-    "submit_failed": "Không thể gửi phản hồi. Vui lòng thử lại.",
-    "go_to_schedule": "Lịch trò chuyện",
-    "back_to_home": "Về Trang chủ"
+    "submit_failed": "Không thể gửi phản hồi. Vui lòng thử lại."
   },
   "Messages": {
     "your_messages": "Tin nhắn của bạn",

@@ -1397,8 +1397,6 @@
     "did_session_satisfy": "Did the meeting meet your problems/interests?",
     "not_satisfied": "Not satisfied",
     "very_satisfied": "Very satisfied",
-    "rate_for_story": "Rate for story",
-    "share_thought": "Share your thought about the story",
     "share_more": "Share more here if you want!",
     "cancel": "Cancel",
     "next": "Next",
@@ -1410,9 +1408,7 @@
     "thank_you": "Thank you for your feedback",
     "feedback_value": "Every piece of feedback is valuable and motivates Hulib to grow and bring you the best experiences.",
     "continue_reading": "Continue reading",
-    "submit_failed": "Could not send feedback. Please try again.",
-    "go_to_schedule": "Go to schedule",
-    "back_to_home": "Back to Home"
+    "submit_failed": "Could not send feedback. Please try again."
   },
   "ScheduleBasicInfo": {
     "duration": "Duration",
