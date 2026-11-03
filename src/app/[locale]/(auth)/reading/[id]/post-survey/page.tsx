@@ -1,8 +1,8 @@
 'use client';
 
-import { ArrowLeft, CalendarDot, User } from '@phosphor-icons/react';
+import { ArrowLeft } from '@phosphor-icons/react';
 import { useParams } from 'next/navigation';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,22 +21,19 @@ import Label from '@/components/Label';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { Rating } from '@/components/Rating';
 import TextArea from '@/components/core/textArea/TextArea';
-import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
-import { SessionAttendees } from '@/layouts/scheduling/SessionAttendees';
 import { useDeviceType } from '@/libs/hooks';
 import {
   useGetReadingSessionByIdQuery,
   useUpdateReadingSessionMutation,
 } from '@/libs/services/modules/reading-session';
 import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
-import { toLocaleDateString } from '@/utils/dateUtils';
 import { PostSurveyValidation } from '@/validations/SurveyValidation';
+import { SessionSummaryCard } from '@/features/meeting/components/feedback/SessionSummaryCard';
 
 export default function PostSurvey() {
   const router = useRouter();
   const { id } = useParams();
 
-  const locale = useLocale();
   const t = useTranslations('feedback_form');
 
   const { data: readingSession } = useGetReadingSessionByIdQuery(Number(id), {
@@ -144,19 +141,14 @@ export default function PostSurvey() {
             <h4 className="text-center text-xl font-medium leading-7 text-black xl:text-2xl">
               {t('session_feedback')}
             </h4>
-            <div className="flex w-full flex-col gap-2">
-              <ScheduleInfoItemLayout
-                icon={<CalendarDot className="text-primary-60" />}
-                title={`${toLocaleDateString(readingSession?.startedAt, locale === 'en' ? 'en-GB' : 'vi-VI')} | ${readingSession?.startTime} - ${readingSession?.endTime}`}
-              />
-              <SessionAttendees
-                bookedHuber={readingSession?.humanBook}
-                me={readingSession?.reader}
-                isVibing
-                icon={<User className="text-primary-60" />}
-                childClassname="pl-4"
-              />
-            </div>
+            <SessionSummaryCard
+              startedAt={readingSession.startedAt}
+              startTime={readingSession.startTime}
+              endTime={readingSession.endTime}
+              bookedHuber={readingSession.humanBook}
+              me={readingSession.reader}
+              isVibing
+            />
             <div className="flex flex-col justify-center gap-4">
               <p className="text-center font-medium leading-5 text-neutral-10">
                 {t('how_do_you_feel')}
