@@ -16,10 +16,10 @@ export function FeedbackSuccessStep({ onHome }: FeedbackSuccessStepProps) {
     <div className="flex h-full flex-col items-center justify-between gap-6">
       <div className="flex flex-1 flex-col items-center justify-center gap-6">
         <Image
-          src="/assets/images/heroes/Hulib Webapp.png"
+          src="/assets/images/feedback/feedback-success-illustration.png"
           alt=""
-          width={1080}
-          height={1080}
+          width={400}
+          height={400}
           className="h-auto w-full max-w-md object-contain"
           priority
         />

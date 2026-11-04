@@ -54,8 +54,7 @@
 
 - **Visual verification was not performed by the AI.** Check at 320 / 375 / 768 / 1280 / 1440 and
   in both locales before merging.
-- The success illustration is a **placeholder**: the design export does not exist in
-  `public/assets`, so `Hulib Webapp.png` is used. Replace with
-  `public/assets/images/feedback/feedback-success-illustration.png` when provided.
+- The success illustration is wired from
+  `public/assets/images/feedback/feedback-success-illustration.png`.
 - End-to-end submit cannot be exercised until the backend endpoint ships; until then the mutation
   returns an error and the modal shows `submit_failed`.
