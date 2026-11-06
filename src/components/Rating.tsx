@@ -18,7 +18,7 @@ const Rating = ({
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
   return (
-    <div className="flex justify-center gap-4">
+    <div className="flex justify-center gap-2 sm:gap-4">
       {[...Array(5)].map((_, index) => {
         const isActive
             = hoverIndex !== null ? index <= hoverIndex : index < value;
@@ -28,7 +28,7 @@ const Rating = ({
             <Heart
               weight="fill"
               className={mergeClassnames(
-                'size-12 cursor-pointer transition-all duration-200',
+                'size-8 cursor-pointer transition-all duration-200 sm:size-10',
                 isActive ? `text-${activeColor}` : `text-${inactiveColor}`,
               )}
               onMouseEnter={() => setHoverIndex(index)}

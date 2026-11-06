@@ -7,9 +7,11 @@ import { useTranslations } from 'next-intl';
 
 import { useAppSelector } from '@/libs/hooks';
 import { useRouter } from '@/libs/i18nNavigation';
+import type { ReadingSessionFeedbackPayload } from '@/libs/services/modules/reading-session';
 import {
   useEndReadingSessionMutation,
   useGetReadingSessionByIdQuery,
+  useSubmitReadingSessionFeedbackMutation,
 } from '@/libs/services/modules/reading-session';
 import PreSurvey from '@/layouts/reading/PreSurvey';
 import Loading from '@/app/[locale]/loading';
@@ -17,6 +19,7 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { StatusEnum } from '@/types/common';
 import { readAgoraToken } from '@/features/meeting/utils/agoraToken';
 import { resolveMeetingEndAt } from '@/features/meeting/utils/resolveMeetingEndAt';
+import { PostMeetingFeedbackModal } from '@/features/meeting/components/feedback/PostMeetingFeedbackModal';
 
 // The meeting room touches `window` and the Agora SDK on mount, so it must not
 // be server-rendered.
@@ -61,6 +64,7 @@ export default function ReadingPage() {
     skip: !sessionId,
   });
   const [endReadingSession] = useEndReadingSessionMutation();
+  const [submitReadingSessionFeedback] = useSubmitReadingSessionFeedbackMutation();
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
 
@@ -78,6 +82,22 @@ export default function ReadingPage() {
 
   // Set when the survey is skipped or finished in this visit; a successful submit also writes the localStorage flag
   const [isDoneSurveyForReading, setIsDoneSurveyForReading] = useState(false);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [isFeedbackDoneInVisit, setIsFeedbackDoneInVisit] = useState(false);
+
+  const isViewerLiber = !!readingSession
+    && Number(userInfo.id) === Number(readingSession.reader?.id);
+  const isHuber = !!readingSession
+    && String(userInfo.id) === String(readingSession.humanBook?.id);
+  const isFinished = !!readingSession
+    && (readingSession.sessionStatus === StatusEnum.Finished
+      || readingSession.sessionStatus?.toLowerCase() === StatusEnum.Finished);
+  const hasSubmittedFeedback = !!readingSession?.feedbackSubmittedAt;
+  const showFeedback = !!readingSession
+    && isViewerLiber
+    && !isHuber
+    && (!hasSubmittedFeedback || isFeedbackDoneInVisit)
+    && (isFeedbackOpen || isFinished);
 
   // [831] diagnostics: everything the auto-end timer needs, straight from the API.
   // Filter the console by `831` to trace the whole end-of-session chain.
@@ -114,16 +134,22 @@ export default function ReadingPage() {
       return;
     }
     if (isTerminalSessionStatus(readingSession.sessionStatus)) {
-      const isFinished
-        = readingSession.sessionStatus === StatusEnum.Finished
-          || readingSession.sessionStatus?.toLowerCase() === StatusEnum.Finished;
+      // The Liber still owes feedback: keep them on the page so the popup can
+      // collect it instead of bouncing them to notifications.
+      if (isFinished && showFeedback) {
+        console.log('[842] session finished → holding for feedback');
+        return;
+      }
       console.log(
         '[831] session is terminal → redirect',
         readingSession.sessionStatus,
       );
-      router.replace(isFinished ? '/notifications' : '/my-schedule');
+      // Huber has no feedback popup, so home is the natural exit.
+      router.replace(
+        isFinished ? (isHuber ? '/' : '/notifications') : '/my-schedule',
+      );
     }
-  }, [readingSession, router]);
+  }, [readingSession, router, isFinished, showFeedback, isHuber]);
 
   // Poll the session so a BE-side auto-end is noticed within ≤30s even when
   // the local endedAt timer and the call-ended socket event both missed.
@@ -149,15 +175,43 @@ export default function ReadingPage() {
       await endReadingSession({ id: sessionId }).unwrap();
       console.log('[831] POST /end ok → session FINISHED on BE');
       pushSuccess(t('session_finished'));
+
+      if (isViewerLiber) {
+        console.log('[842] Liber ended call → open feedback popup');
+        setIsFeedbackOpen(true);
+        void refetchReadingSession();
+        return;
+      }
     } catch (err) {
       // Backend is idempotent; a race where the peer already finished still
       // counts as success for leaving the room.
       console.warn('[831] POST /end FAILED', err);
       pushError(t('session_finish_failed'));
-    } finally {
-      router.push('/notifications');
-      console.log('[831] navigate → /notifications');
     }
+
+    // The Liber gets the feedback popup above; Huber has nothing to do here.
+    router.push(isHuber ? '/' : '/notifications');
+    console.log('[831] navigate →', isHuber ? '/' : '/notifications');
+  };
+
+  const handleSubmitFeedback = async (payload: ReadingSessionFeedbackPayload) => {
+    if (!sessionId) {
+      return false;
+    }
+
+    try {
+      await submitReadingSessionFeedback({ id: sessionId, ...payload }).unwrap();
+      console.log('[842] feedback submitted');
+      setIsFeedbackDoneInVisit(true);
+      return true;
+    } catch (err) {
+      console.warn('[842] feedback submit FAILED', err);
+      return false;
+    }
+  };
+
+  const handleCloseFeedback = () => {
+    router.push('/');
   };
 
   // Wait for the user and session so AgoraMeeting never mounts (and joins the channel) before the survey decision
@@ -169,7 +223,7 @@ export default function ReadingPage() {
     );
   }
 
-  if (isTerminalSessionStatus(readingSession.sessionStatus)) {
+  if (isTerminalSessionStatus(readingSession.sessionStatus) && !showFeedback) {
     return (
       <div className="flex h-screen w-full flex-1 items-center justify-center">
         <Loading />
@@ -177,45 +231,53 @@ export default function ReadingPage() {
     );
   }
 
-  const isViewerLiber = Number(userInfo.id) === Number(readingSession.reader?.id);
-  const isHuber = userInfo.id === readingSession.humanBook.id;
   const hasSavedSurvey = localStorage.getItem(`is_done_survey_for_reading_${readingSession.id}`) === 'true';
   const needsSurvey = !isHuber && !hasSavedSurvey && !isDoneSurveyForReading;
 
   return (
     <div className="flex size-full items-center justify-center">
-      {needsSurvey ? (
-        <PreSurvey
-          sessionId={Number.parseInt(sessionId || '0', 10)}
-          onFinish={() => setIsDoneSurveyForReading(true)}
-        />
-      ) : (
-        <MeetingShell
-          channel={channel || ''}
-          token={token}
-          sessionId={sessionId}
-          endedAt={effectiveEndedAt}
-          storyTitle={readingSession.story?.title ?? ''}
-          localUser={{
-            id: String(userInfo.id),
-            name: userInfo.fullName,
-            avatarUrl: userInfo.photo?.path,
-          }}
-          remoteParticipant={{
-            id: isViewerLiber
-              ? readingSession.humanBook?.id
-              : readingSession.reader?.id,
-            name: isViewerLiber
-              ? readingSession.humanBook?.fullName
-              : readingSession.reader?.fullName,
-            avatarUrl: isViewerLiber
-              ? readingSession.humanBook?.photo?.path
-              : readingSession.reader?.photo?.path,
-          }}
-          isViewerLiber={isViewerLiber}
-          onEndCall={handleEndCall}
-        />
+      {!showFeedback && (
+        needsSurvey ? (
+          <PreSurvey
+            sessionId={Number.parseInt(sessionId || '0', 10)}
+            onFinish={() => setIsDoneSurveyForReading(true)}
+          />
+        ) : (
+          <MeetingShell
+            channel={channel || ''}
+            token={token}
+            sessionId={sessionId}
+            endedAt={effectiveEndedAt}
+            storyTitle={readingSession.story?.title ?? ''}
+            localUser={{
+              id: String(userInfo.id),
+              name: userInfo.fullName,
+              avatarUrl: userInfo.photo?.path,
+            }}
+            remoteParticipant={{
+              id: isViewerLiber
+                ? readingSession.humanBook?.id
+                : readingSession.reader?.id,
+              name: isViewerLiber
+                ? readingSession.humanBook?.fullName
+                : readingSession.reader?.fullName,
+              avatarUrl: isViewerLiber
+                ? readingSession.humanBook?.photo?.path
+                : readingSession.reader?.photo?.path,
+            }}
+            isViewerLiber={isViewerLiber}
+            onEndCall={handleEndCall}
+          />
+        )
       )}
+
+      <PostMeetingFeedbackModal
+        open={showFeedback}
+        session={readingSession}
+        onCancel={handleCloseFeedback}
+        onHome={handleCloseFeedback}
+        onSubmit={handleSubmitFeedback}
+      />
     </div>
   );
 }

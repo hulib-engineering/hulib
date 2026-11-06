@@ -53,12 +53,12 @@ const EmojiRateScale = ({
           </button>
 
           {index === 0 && (
-            <span className="hidden text-xs font-medium text-primary-60 xl:block">
+            <span className="text-xs font-medium text-primary-60">
               {lowest}
             </span>
           )}
           {index === 4 && (
-            <span className="hidden text-xs font-medium text-primary-60 xl:block">
+            <span className="text-xs font-medium text-primary-60">
               {highest}
             </span>
           )}
