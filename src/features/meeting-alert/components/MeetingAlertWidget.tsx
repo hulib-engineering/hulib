@@ -4,21 +4,28 @@ import { useMeetingAlert } from '../hooks/useMeetingAlert';
 import MeetingAlertFull from './MeetingAlertFull';
 import MeetingAlertMini from './MeetingAlertMini';
 import { useAppSelector } from '@/libs/hooks';
+import { usePathname } from '@/libs/i18nNavigation';
 import { useGetPersonalInfoQuery } from '@/libs/services/modules/auth';
 
 export default function MeetingAlertWidget() {
+  const pathname = usePathname();
   const storedUserId = useAppSelector(state => state.auth.userInfo?.id);
   const isSessionHydrated = useAppSelector(state => state.auth.isSessionHydrated);
   const accessToken = useAppSelector(state => state.auth.accessToken);
+
+  // Never cover the call screen or the post-call survey.
+  const isReadingRoute = pathname === '/reading' || pathname.startsWith('/reading/');
+
+  const isAuthenticated = Boolean(accessToken);
 
   // Mounted in the root layout, so on public pages (home, story detail) nothing has
   // populated `userInfo` yet. Skip the request until the session is hydrated and an
   // authenticated token exists, otherwise anonymous pages would fire a 401.
   const { data: personalInfo } = useGetPersonalInfoQuery(undefined, {
-    skip: !isSessionHydrated || !accessToken || Boolean(storedUserId),
+    skip: !isSessionHydrated || !isAuthenticated || Boolean(storedUserId),
   });
 
-  const userId = storedUserId ?? personalInfo?.id;
+  const userId = isAuthenticated ? storedUserId ?? personalInfo?.id : undefined;
   const {
     items,
     isCollapsed,
@@ -27,7 +34,7 @@ export default function MeetingAlertWidget() {
     expand,
   } = useMeetingAlert(userId);
 
-  if (!userId || isLoading || items.length === 0) {
+  if (isReadingRoute || !isSessionHydrated || !isAuthenticated || !userId || isLoading || items.length === 0) {
     return null;
   }
 

@@ -13,14 +13,14 @@ export function FeedbackSuccessStep({ onHome }: FeedbackSuccessStepProps) {
   const t = useTranslations('feedback_form');
 
   return (
-    <div className="flex h-full flex-col items-center justify-between gap-6">
-      <div className="flex flex-1 flex-col items-center justify-center gap-6">
+    <div className="flex h-full min-h-0 flex-col items-center justify-between gap-6">
+      <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-6 overflow-y-auto">
         <Image
           src="/assets/images/feedback/feedback-success-illustration.png"
           alt=""
           width={400}
           height={400}
-          className="h-auto w-full max-w-md object-contain"
+          className="size-auto max-h-[40dvh] max-w-md object-contain"
           priority
         />
         <h4 className="text-center text-2xl font-semibold leading-9 text-black xl:text-[28px]">

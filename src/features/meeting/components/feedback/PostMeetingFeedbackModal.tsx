@@ -90,7 +90,7 @@ export function PostMeetingFeedbackModal({
   return (
     <Modal open={open} disableClosingTrigger onClose={onCancel}>
       <Modal.Backdrop className="bg-[#2E3032]/50" />
-      <Modal.Panel className="flex h-[calc(100dvh-2rem)] w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-white p-5 sm:h-auto sm:max-h-[calc(100dvh-2rem)]">
+      <Modal.Panel className="flex h-[calc(100dvh-2rem)] w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-white p-4 sm:h-[min(44rem,calc(100dvh-2rem))] sm:p-5">
         {step === 'session' && (
           <SessionFeedbackStep
             summary={{

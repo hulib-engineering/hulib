@@ -29,12 +29,12 @@ export function SessionFeedbackStep({
   const t = useTranslations('feedback_form');
 
   return (
-    <div className="flex h-full flex-col gap-5">
-      <h4 className="text-center text-xl font-semibold leading-7 text-black xl:text-2xl">
+    <div className="flex h-full min-h-0 flex-col gap-3 sm:gap-4">
+      <h4 className="shrink-0 text-center text-xl font-semibold leading-7 text-black xl:text-2xl">
         {t('session_feedback')}
       </h4>
 
-      <div className="flex flex-1 flex-col gap-6 overflow-y-auto pb-2">
+      <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto pb-2">
         <SessionSummaryCard {...summary} />
 
         <div className="flex flex-col gap-3">
@@ -62,14 +62,14 @@ export function SessionFeedbackStep({
         </div>
 
         <TextArea
-          rows={5}
+          rows={3}
           placeholder={t('share_more')}
           value={value.content}
           onChange={event => onChange({ content: event.target.value })}
         />
       </div>
 
-      <div className="flex w-full gap-3">
+      <div className="flex w-full shrink-0 gap-3">
         <Button variant="outline" fullWidth onClick={onCancel} disabled={isSubmitting}>
           {t('cancel')}
         </Button>

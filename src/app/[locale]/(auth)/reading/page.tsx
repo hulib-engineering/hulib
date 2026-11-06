@@ -144,9 +144,12 @@ export default function ReadingPage() {
         '[831] session is terminal → redirect',
         readingSession.sessionStatus,
       );
-      router.replace(isFinished ? '/notifications' : '/my-schedule');
+      // Huber has no feedback popup, so home is the natural exit.
+      router.replace(
+        isFinished ? (isHuber ? '/' : '/notifications') : '/my-schedule',
+      );
     }
-  }, [readingSession, router, isFinished, showFeedback]);
+  }, [readingSession, router, isFinished, showFeedback, isHuber]);
 
   // Poll the session so a BE-side auto-end is noticed within ≤30s even when
   // the local endedAt timer and the call-ended socket event both missed.
@@ -186,8 +189,9 @@ export default function ReadingPage() {
       pushError(t('session_finish_failed'));
     }
 
-    router.push('/notifications');
-    console.log('[831] navigate → /notifications');
+    // The Liber gets the feedback popup above; Huber has nothing to do here.
+    router.push(isHuber ? '/' : '/notifications');
+    console.log('[831] navigate →', isHuber ? '/' : '/notifications');
   };
 
   const handleSubmitFeedback = async (payload: ReadingSessionFeedbackPayload) => {
