@@ -25,7 +25,7 @@ import { useAppDispatch } from '@/libs/hooks';
 import type { User } from '@/libs/services/modules/auth';
 import { useUpdateProfileMutation } from '@/libs/services/modules/auth';
 import { setUserInfo } from '@/libs/store/authentication';
-import { PHONE_NUMBER_REGEX, ProfileValidation, VALIDATION_MESSAGES } from '@/validations/ProfileValidation';
+import { ProfileValidation, VALIDATION_MESSAGES } from '@/validations/ProfileValidation';
 import { calculateAge } from '@/utils/dateUtils';
 import Alert from '@/components/Alert';
 import PhoneCodeSelect from '@/components/PhoneCodeByCountryDropdown';
@@ -198,7 +198,6 @@ function PhoneNumberSection({ register, errors }: SectionProps) {
       <Form.Item>
         <TextInput
           type="tel"
-          pattern={PHONE_NUMBER_REGEX.source}
           placeholder={t('phone_number_placeholder')}
           label={(<span className="font-medium">{t('phone_number')}</span>)}
           {...register('phoneNumber')}
@@ -212,7 +211,8 @@ function PhoneNumberSection({ register, errors }: SectionProps) {
 
 function GuardianSection({ register, errors, setValue, watch }: GuardianSectionProps) {
   const t = useTranslations('Common');
-  const message = errors.parentPhoneNumber?.message;
+  const guardianError = errors.parentPhoneNumber ?? errors.parentEmail;
+  const message = guardianError?.message;
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
 
   return (
@@ -236,6 +236,7 @@ function GuardianSection({ register, errors, setValue, watch }: GuardianSectionP
           {watch('countryCode') === 'email'
             ? (
                 <TextInput
+                  key="parentEmail"
                   className="pl-28"
                   placeholder={t('guardian_placeholder')}
                   {...register('parentEmail')}
@@ -244,6 +245,7 @@ function GuardianSection({ register, errors, setValue, watch }: GuardianSectionP
               )
             : (
                 <TextInput
+                  key="parentPhoneNumber"
                   type="tel"
                   className="pl-28"
                   placeholder={t('guardian_placeholder')}
@@ -254,7 +256,7 @@ function GuardianSection({ register, errors, setValue, watch }: GuardianSectionP
         </div>
       </Form.Item>
 
-      {errors.parentPhoneNumber && (
+      {guardianError && (
         <Alert>
           {message === VALIDATION_MESSAGES.PARENT_REQUIRED ? (
             <>
@@ -276,7 +278,6 @@ function GuardianSection({ register, errors, setValue, watch }: GuardianSectionP
           )}
         </Alert>
       )}
-      {errors.parentEmail && (<Alert>{t(errors.parentEmail.message as any)}</Alert>)}
 
       <PrivacyPolicyModal
         open={isPrivacyOpen}
@@ -368,11 +369,22 @@ export default function PersonalInformation({ data }: IProfileFormProps) {
       address: data?.address ?? '',
       parentPhoneNumber: data?.parentPhoneNumber ?? null,
       parentEmail: data?.parentEmail ?? null,
-      countryCode: detectPhoneCountry(data?.parentPhoneNumber),
+      // Saved contact kind wins; with no contact yet the picker starts on +84 (design default).
+      countryCode: data?.parentEmail
+        ? 'email'
+        : data?.parentPhoneNumber
+          ? detectPhoneCountry(data.parentPhoneNumber)
+          : 'VN',
     },
   });
 
   const birthday = watch('birthday');
+  const countryCode = watch('countryCode');
+
+  // Each contact kind keeps its own value, so re-validate when the kind changes to clear the other kind's stale error.
+  useEffect(() => {
+    void trigger(['parentPhoneNumber', 'parentEmail']);
+  }, [countryCode, trigger]);
 
   useEffect(() => {
     if (!birthday) {
