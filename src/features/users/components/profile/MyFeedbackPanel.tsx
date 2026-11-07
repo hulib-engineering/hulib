@@ -74,7 +74,7 @@ export default function MyFeedbackPanel({ huberId }: MyFeedbackPanelProps) {
     <div className="flex flex-col gap-6">
       <div
         className={mergeClassnames(
-          'flex flex-col gap-6 lg:px-5',
+          'flex flex-col gap-4 sm:gap-6 sm:px-2 lg:px-5',
           isFetching && 'opacity-60 transition-opacity',
         )}
       >
@@ -86,7 +86,7 @@ export default function MyFeedbackPanel({ huberId }: MyFeedbackPanelProps) {
               index !== feedbackList.length - 1 && 'border-b border-neutral-90',
             )}
           >
-            <div className="flex flex-row items-start gap-3">
+            <div className="flex flex-row items-start gap-3 sm:gap-4">
               <Avatar
                 imageUrl={item.feedbackBy.photo}
                 name={item.feedbackBy.fullName}
@@ -94,10 +94,10 @@ export default function MyFeedbackPanel({ huberId }: MyFeedbackPanelProps) {
                 className="shrink-0"
               />
               <div className="flex min-w-0 flex-col gap-1">
-                <span className="break-words text-xl font-medium text-neutral-20">{item.feedbackBy.fullName}</span>
-                <div className="flex flex-row items-center gap-3">
+                <span className="break-words text-lg font-medium text-neutral-20 sm:text-xl">{item.feedbackBy.fullName}</span>
+                <div className="flex flex-row flex-wrap items-center gap-2 sm:gap-3">
                   <Rating userRating={item.rating} />
-                  <span className="text-sm text-neutral-40">
+                  <span className="whitespace-nowrap text-sm text-neutral-40">
                     {formatFeedbackDate(item.createdAt, locale)}
                   </span>
                 </div>
