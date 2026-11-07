@@ -1,7 +1,9 @@
 'use client';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { HeartIcon } from '@phosphor-icons/react';
+import Avatar from '@/components/core/avatar/Avatar';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
 import type { UserFeedbackItem } from '@/libs/services/modules/user/getUserFeedback';
 import { useGetUserFeedbackQuery } from '@/libs/services/modules/user';
@@ -11,6 +13,18 @@ type MyFeedbackPanelProps = {
 };
 
 const PAGE_SIZE = 10;
+
+const formatFeedbackDate = (createdAt: string, locale: string) => {
+  const date = new Date(createdAt);
+  if (Number.isNaN(date.getTime())) {
+    return '';
+  }
+  return date.toLocaleDateString(locale === 'en' ? 'en-US' : 'vi-VN', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+};
 
 function Rating({ userRating }: { userRating: number }) {
   return (
@@ -29,6 +43,7 @@ function Rating({ userRating }: { userRating: number }) {
 
 export default function MyFeedbackPanel({ huberId }: MyFeedbackPanelProps) {
   const tCommon = useTranslations('Common');
+  const locale = useLocale();
 
   const { data, isLoading } = useGetUserFeedbackQuery(
     { userId: huberId as number, page: 1, limit: PAGE_SIZE },
@@ -52,19 +67,32 @@ export default function MyFeedbackPanel({ huberId }: MyFeedbackPanelProps) {
 
   return (
     <div className="flex flex-col gap-6 lg:px-5">
-      {feedbackList.map(item => (
-        <div key={item.id} className="border-b">
-          <div className="flex flex-row gap-2">
-            <Image className="rounded-4xl" alt="icon" height={44} width={44} src={item.feedbackBy.photo ?? ''} />
-            <div>
-              <span className="text-xl font-medium">{item.feedbackBy.fullName}</span>
-              <div className="flex flex-row gap-3">
+      {feedbackList.map((item, index) => (
+        <div
+          key={item.id}
+          className={mergeClassnames(
+            'flex flex-col gap-4 pb-6',
+            index !== feedbackList.length - 1 && 'border-b border-neutral-90',
+          )}
+        >
+          <div className="flex flex-row items-start gap-3">
+            <Avatar
+              imageUrl={item.feedbackBy.photo}
+              name={item.feedbackBy.fullName}
+              size="lg"
+              className="shrink-0"
+            />
+            <div className="flex min-w-0 flex-col gap-1">
+              <span className="break-words text-xl font-medium text-neutral-20">{item.feedbackBy.fullName}</span>
+              <div className="flex flex-row items-center gap-3">
                 <Rating userRating={item.rating} />
-                <div className="text-sm text-[#00000080]">{item.createdAt}</div>
+                <span className="text-sm text-neutral-40">
+                  {formatFeedbackDate(item.createdAt, locale)}
+                </span>
               </div>
             </div>
           </div>
-          <p className="pb-5 pt-2 text-sm">{item.content}</p>
+          <p className="break-words text-sm leading-6 text-neutral-20">{item.content}</p>
         </div>
       ))}
     </div>
