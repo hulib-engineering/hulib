@@ -1,68 +1,33 @@
 'use client';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { HeartIcon } from '@phosphor-icons/react';
+import { ArrowLeft, ArrowRight, HeartIcon } from '@phosphor-icons/react';
+import { useState } from 'react';
+import Avatar from '@/components/core/avatar/Avatar';
+import IconButton from '@/components/core/iconButton/IconButton';
+import Pagination from '@/components/core/pagination/Pagination';
+import { mergeClassnames } from '@/components/core/private/utils';
 import { StoriesSkeleton } from '@/components/loadingState/Skeletons';
+import type { UserFeedbackItem } from '@/libs/services/modules/user/getUserFeedback';
+import { useGetUserFeedbackQuery } from '@/libs/services/modules/user';
 
 type MyFeedbackPanelProps = {
   huberId?: number;
 };
 
-// ========================V MOCK UP DATA V==============================
-// TODO: remove MOCK UP DATA once integrated FE to BE
-type HuberFeedback = {
-  id: number;
-  userName: string;
-  userAvatar: string; // URL
-  rating: 1 | 2 | 3 | 4 | 5;
-  createdAt: string;
-  content: string;
-};
-// Note: uncomment the below for mock up data
-const MOCK_HUBER_FEEDBACK: HuberFeedback[] = [/*
-  {
-    id: 1,
-    userName: 'Emily Carter',
-    userAvatar: '',
-    rating: 5,
-    createdAt: '2024-07-24T09:15:00Z',
-    content: 'Super responsive and professional. Everything was delivered ahead of schedule.',
-  },
-  {
-    id: 2,
-    userName: 'Daniel Nguyen',
-    userAvatar: '',
-    rating: 4,
-    createdAt: '2024-06-18T14:40:00Z',
-    content: 'Great communication and solid results. Would work together again.',
-  },
-  {
-    id: 3,
-    userName: 'Sophia Martinez',
-    userAvatar: '',
-    rating: 5,
-    createdAt: '2024-05-02T03:05:00Z',
-    content: 'Exceeded my expectations. Very attentive to detail and easy to work with.',
-  },
-  {
-    id: 4,
-    userName: 'Liam Johnson',
-    userAvatar: '',
-    rating: 3,
-    createdAt: '2024-03-11T18:22:00Z',
-    content: 'Good overall, but there were a few delays along the way.',
-  },
-*/];
+const PAGE_SIZE = 10;
 
-// Mimics RTK Query's { data, isLoading } shape — swap for the real hook later
-const useMockHuberFeedbackQuery = (
-  _args: { id?: number },
-  options?: { skip?: boolean },
-) => ({
-  data: options?.skip ? undefined : MOCK_HUBER_FEEDBACK,
-  isLoading: false,
-});
-// =====================^ MOCK UP DATA ^=================================
+const formatFeedbackDate = (createdAt: string, locale: string) => {
+  const date = new Date(createdAt);
+  if (Number.isNaN(date.getTime())) {
+    return '';
+  }
+  return date.toLocaleDateString(locale === 'en' ? 'en-US' : 'vi-VN', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+};
 
 function Rating({ userRating }: { userRating: number }) {
   return (
@@ -81,16 +46,22 @@ function Rating({ userRating }: { userRating: number }) {
 
 export default function MyFeedbackPanel({ huberId }: MyFeedbackPanelProps) {
   const tCommon = useTranslations('Common');
+  const locale = useLocale();
+  const [page, setPage] = useState(1);
 
-  // TODO: replace with real feedback query when BE ready
-  // const { data: feedbackList, isLoading } = useGetHuberFeedbackQuery({ id: huberId }, { skip: !huberId });
-  const { data: feedbackList, isLoading } = useMockHuberFeedbackQuery({ id: huberId }, { skip: !huberId }); // Note: this one is mockup query, replace when ready
+  const { data, isLoading, isFetching } = useGetUserFeedbackQuery(
+    { userId: huberId as number, page, limit: PAGE_SIZE },
+    { skip: !huberId },
+  );
+
+  const feedbackList: UserFeedbackItem[] = data?.data ?? [];
+  const totalPages = data?.meta?.totalPages ?? 0;
 
   if (isLoading) {
     return <StoriesSkeleton />;
   }
 
-  if (!feedbackList || feedbackList.length === 0) {
+  if (feedbackList.length === 0) {
     return (
       <div className="flex min-h-[320px] flex-col items-center gap-4 rounded-2xl text-center">
         <Image src="/assets/icons/profile/feedback/heart.svg" alt="heart" height={120} width={116} />
@@ -100,22 +71,65 @@ export default function MyFeedbackPanel({ huberId }: MyFeedbackPanelProps) {
   }
 
   return (
-    <div className="flex flex-col gap-6 lg:px-5">
-      {feedbackList.map((item: any) => (
-        <div key={item.id} className="border-b">
-          <div className="flex flex-row gap-2">
-            <Image className="rounded-4xl" alt="icon" height={44} width={44} src={item.userAvatar} />
-            <div>
-              <span className="text-xl font-medium">{item.userName}</span>
-              <div className="flex flex-row gap-3">
-                <Rating userRating={item.rating} />
-                <div className="text-sm text-[#00000080]">{item.createdAt}</div>
+    <div className="flex flex-col gap-6">
+      <div
+        className={mergeClassnames(
+          'flex flex-col gap-4 sm:gap-6 sm:px-2 lg:px-5',
+          isFetching && 'opacity-60 transition-opacity',
+        )}
+      >
+        {feedbackList.map((item, index) => (
+          <div
+            key={item.id}
+            className={mergeClassnames(
+              'flex flex-col gap-4 pb-6',
+              index !== feedbackList.length - 1 && 'border-b border-neutral-90',
+            )}
+          >
+            <div className="flex flex-row items-start gap-3 sm:gap-4">
+              <Avatar
+                imageUrl={item.feedbackBy.photo}
+                name={item.feedbackBy.fullName}
+                size="lg"
+                className="shrink-0"
+              />
+              <div className="flex min-w-0 flex-col gap-1">
+                <span className="break-words text-lg font-medium text-neutral-20 sm:text-xl">{item.feedbackBy.fullName}</span>
+                <div className="flex flex-row flex-wrap items-center gap-2 sm:gap-3">
+                  <Rating userRating={item.rating} />
+                  <span className="whitespace-nowrap text-sm text-neutral-40">
+                    {formatFeedbackDate(item.createdAt, locale)}
+                  </span>
+                </div>
               </div>
             </div>
+            <p className="break-words text-sm leading-6 text-neutral-20">{item.content}</p>
           </div>
-          <p className="pb-5 pt-2 text-sm">{item.content}</p>
-        </div>
-      ))}
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <Pagination
+          className="justify-center"
+          totalPages={totalPages}
+          currentPage={page - 1}
+          setCurrentPage={nextPage => setPage(nextPage + 1)}
+        >
+          <Pagination.PrevButton as="div">
+            {({ disabled }) => (
+              <IconButton icon={<ArrowLeft />} variant="ghost" size="lg" disabled={disabled || isFetching} />
+            )}
+          </Pagination.PrevButton>
+
+          <Pagination.Pages as="button" type="button" />
+
+          <Pagination.NextButton as="div">
+            {({ disabled }) => (
+              <IconButton icon={<ArrowRight />} variant="ghost" size="lg" disabled={disabled || isFetching} />
+            )}
+          </Pagination.NextButton>
+        </Pagination>
+      )}
     </div>
   );
 }
