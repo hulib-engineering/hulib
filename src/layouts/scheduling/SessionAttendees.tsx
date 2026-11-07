@@ -14,7 +14,7 @@ import type { ProfileValidation } from '@/validations/ProfileValidation';
 // import type { User as Huber }  from '@/features/users/types'
 
 // TODO: create a different type for Huber, if API response schema of getUser and getHuber turned out to be different
-type User = Omit<z.infer<typeof ProfileValidation>, 'isUnderGuard'> & { photo?: { path: string }; role?: { name: string } };
+type User = Omit<z.infer<typeof ProfileValidation>, 'isUnderGuard'> & { photo?: { path: string }; role?: { id?: number; name?: string } };
 export type ISessionAttendeesProps = {
   bookedHuber: User;
   me: User;
@@ -41,7 +41,8 @@ function Attendee({ user }: { user: User }) {
         />
       )}
       <div className="flex flex-row items-center">
-        {user?.role?.name === 'Liber' ? (
+        {/* Compare by id: the API names the role "reader", not "Liber". */}
+        {user?.role?.id === Role.LIBER ? (
           <span
             className="mr-1 rounded-[100px] border border-yellow-70 bg-yellow-90
           px-2 py-0.5
