@@ -20,6 +20,7 @@ import {
 } from '@/libs/services/modules/auth';
 import { setAvatarUrl, setUserInfo } from '@/libs/store/authentication';
 import Modal from '@/components/Modal';
+import { Role } from '@/types/common';
 
 export default function HomeTemplateInner({ children }: { children: ReactNode }) {
   const { data: session } = useSession();
@@ -47,7 +48,8 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
     if (personalInfo) {
       dispatch(setUserInfo(personalInfo));
       dispatch(setAvatarUrl(personalInfo.photo));
-      if (personalInfo?.role?.name === 'Huber' && !personalInfo?.hasSeenHuberOnboarding) {
+      // Compare by id: the API names the role "humanBook", not "Huber".
+      if (personalInfo?.role?.id === Role.HUBER && !personalInfo?.hasSeenHuberOnboarding) {
         setIsFirstBookModalOpen(true);
       }
     }
