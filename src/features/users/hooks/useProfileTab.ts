@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
@@ -23,14 +23,25 @@ export function useProfileTab<T extends TabDef>(tabs: readonly T[], withTopics =
 
   const { data: topicsData } = useGetTopicsQuery({ limit: 100 }, { skip: !withTopics });
 
+  // Last `?tab=` seen, to tell a URL change (follow it) from a tab click (push it to the URL).
+  const lastTabParam = useRef(tabParam);
+
   useEffect(() => {
-    if (searchParams.get('tab') === currentTab) {
+    // Navigating to another tab of the profile already on screen (e.g. `?tab=personal_info&safety=1`) must switch tabs.
+    if (tabParam !== lastTabParam.current) {
+      lastTabParam.current = tabParam;
+      if (tabParam && tabs.some(tab => tab.value === tabParam)) {
+        setCurrentTab(tabParam);
+        return;
+      }
+    }
+    if (tabParam === currentTab) {
       return;
     }
     const params = new URLSearchParams(searchParams.toString());
     params.set('tab', currentTab);
     router.push(`${currentPathname}?${params.toString()}`, { scroll: false });
-  }, [currentPathname, currentTab, router, searchParams]);
+  }, [currentPathname, currentTab, router, searchParams, tabParam, tabs]);
 
   const translatedTabs = tabs.map(({ value, label }) => ({ value, label: t(label as any) }));
 
