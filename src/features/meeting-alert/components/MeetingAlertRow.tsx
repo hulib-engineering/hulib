@@ -8,7 +8,7 @@ import Avatar from '@/components/core/avatar/Avatar';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { GreenTick } from '@/features/users/components/profile/GreenTick';
 import { Link } from '@/libs/i18nNavigation';
-import { ROLE_NAME, Role } from '@/types/common';
+import { Role } from '@/types/common';
 
 type MeetingAlertRowProps = {
   item: MeetingAlertItem;
@@ -23,7 +23,8 @@ export default function MeetingAlertRow({ item, href, toggle }: MeetingAlertRowP
   const t = useTranslations('MeetingAlert');
   const { countdown, counterpart } = item;
   const isNow = countdown.state === 'now';
-  const isCounterpartLiber = counterpart.role?.name === ROLE_NAME[Role.LIBER];
+  // Compare by id: the API names the role "reader", not "Liber".
+  const isCounterpartLiber = counterpart.role?.id === Role.LIBER;
 
   const timeLabel = (() => {
     if (isNow) {

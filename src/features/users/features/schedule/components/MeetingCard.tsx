@@ -50,7 +50,8 @@ export default function MeetingCard({ card, now = new Date() }: MeetingCardProps
 
   const isMuted = (MUTED_VARIANTS as readonly string[]).includes(variant);
   const isRequest = variant === 'invitation' || variant === 'my_request';
-  const isCounterpartLiber = counterpart?.role?.name === ROLE_NAME[Role.LIBER];
+  // Compare by id: the API names the role "reader", not "Liber".
+  const isCounterpartLiber = counterpart?.role?.id === Role.LIBER;
 
   const dateLabel = formatSessionDateWithWeekday(session.startedAt, locale);
   const startLabel = formatSessionTime(session.startTime, locale);
