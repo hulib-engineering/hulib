@@ -22,6 +22,7 @@ import TimeSlotList from '@/layouts/timeslots/TimeSlotList';
 import TimeslotRegistrationSection from '@/layouts/timeslots/TimeslotRegistrationSection';
 import { convertTimeSlotToUtc } from '@/utils/convertTimeSlotToUtc';
 import { useAppSelector } from '@/libs/hooks';
+import { useCalendarSavedGate } from '@/features/users/hooks/useCalendarSavedGate';
 import { useCreateTimeslotsMutation } from '@/libs/services/modules/time-slots';
 import { useGetReadingSessionsQuery } from '@/libs/services/modules/reading-session';
 import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
@@ -59,7 +60,8 @@ export default function Index() {
   const hasUpcomingEvent = upcomingEvents?.length > 0;
 
   const user = useAppSelector(state => state.auth.userInfo);
-  const isHuber = user?.role?.name === 'Huber';
+  // Compare by id: the API names the role "humanBook", not "Huber".
+  const isHuber = user?.role?.id === Role.HUBER;
   const searchParams = useSearchParams();
   const upcomingParticipant = hasUpcomingEvent
     ? (isHuber ? upcomingEvents[0].reader : upcomingEvents[0].humanBook)
@@ -76,15 +78,20 @@ export default function Index() {
 
   const [registerTimeSlots, { isLoading: isRegisteringTimeslots }] = useCreateTimeslotsMutation();
 
+  const { check: checkCalendarSaved, modal: calendarSavedModal } = useCalendarSavedGate();
+
   const handleSaveMobileTimeSlots = async () => {
     try {
       const result = await registerTimeSlots({
         timeSlots: selectedSlots.map(slot => convertTimeSlotToUtc(slot)),
       }).unwrap();
+      setShowMobileTimeslotRegistration(false);
+      if (checkCalendarSaved()) {
+        return;
+      }
       if (result !== null) {
         pushSuccess('Time slots saved successfully!');
       }
-      setShowMobileTimeslotRegistration(false);
     } catch (error: any) {
       pushError(error?.message || 'Failed to save time slots');
     }
@@ -272,6 +279,7 @@ export default function Index() {
           </Button>
         </div>
       )}
+      {calendarSavedModal}
     </div>
   );
 }

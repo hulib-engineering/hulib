@@ -14,6 +14,7 @@ import { useAppSelector } from '@/libs/hooks';
 import type { GroupingTimeslots } from '@/libs/hooks/useTimeslotGrouping';
 import { useTimeslotGrouping } from '@/libs/hooks/useTimeslotGrouping';
 import { useCreateTimeslotsMutation, useGetTimeslotsByHuberQuery } from '@/libs/services/modules/time-slots';
+import { useCalendarSavedGate } from '@/features/users/hooks/useCalendarSavedGate';
 import Loading from '@/app/[locale]/loading';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { convertTimeSlotToUtc } from '@/utils/convertTimeSlotToUtc';
@@ -112,6 +113,7 @@ function PersonalCalendar({ savedSlots }: PersonalCalendarProps) {
   // Backend replaces the whole week on save, so start from the saved schedule to avoid wiping other days.
   const [timeSlotsByDay, setTimeSlotsByDay] = useState(() => toSlotsByDay(savedSlots));
   const [createTimeslots, { isLoading: isCreating }] = useCreateTimeslotsMutation();
+  const { check: checkCalendarSaved, modal: calendarSavedModal } = useCalendarSavedGate();
 
   const toggleTimeSlot = useCallback((slot: string) => {
     setTimeSlotsByDay((prev) => {
@@ -150,6 +152,10 @@ function PersonalCalendar({ savedSlots }: PersonalCalendarProps) {
       );
       try {
         await createTimeslots({ timeSlots }).unwrap();
+        // The schedule is saved; a user still missing a birthday / emergency contact is sent to their profile next.
+        if (checkCalendarSaved()) {
+          return;
+        }
         pushSuccess(tSlots('save_success'));
       } catch {
         pushError(tCommon('error_contact_admin'));
@@ -157,7 +163,7 @@ function PersonalCalendar({ savedSlots }: PersonalCalendarProps) {
       }
     }
     setCurrentChosenDay(current => nextDay(current));
-  }, [currentChosenDay, timeSlotsByDay, createTimeslots, nextDay, tSlots, tCommon]);
+  }, [currentChosenDay, timeSlotsByDay, createTimeslots, nextDay, tSlots, tCommon, checkCalendarSaved]);
 
   const handleSkip = useCallback(() => {
     setCurrentChosenDay(current => nextDay(current));
@@ -245,6 +251,7 @@ function PersonalCalendar({ savedSlots }: PersonalCalendarProps) {
           isSaving={isCreating}
         />
       </div>
+      {calendarSavedModal}
     </div>
   );
 }

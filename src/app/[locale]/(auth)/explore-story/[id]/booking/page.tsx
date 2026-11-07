@@ -1,19 +1,15 @@
 'use client';
 
-import { ArrowLeft, Note, Timer, Warning } from '@phosphor-icons/react';
-import { fromZonedTime, toZonedTime } from 'date-fns-tz';
-import { format } from 'date-fns';
-import { isEmpty } from 'lodash';
-import { useTranslations } from 'next-intl';
-// import { useRouter } from '@/libs/i18nNavigation';
+import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
-// import { useState, useEffect } from 'react';
-
+import { useTranslations } from 'next-intl';
+import { format } from 'date-fns';
+import { fromZonedTime, toZonedTime } from 'date-fns-tz';
+import { isEmpty } from 'lodash';
+import { ArrowLeft, Note, Timer, Warning } from '@phosphor-icons/react';
 import Success from './_components/SuccessScreen';
 import SelectTime from './_components/SelectTimeScreen';
 import { Time } from './_components/ScheduleInfoItems';
-
 import Button from '@/components/core/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -25,9 +21,11 @@ import { useAppSelector } from '@/libs/hooks';
 import { useCreateNewReadingSessionMutation } from '@/libs/services/modules/reading-session';
 import { useGetUsersByIdQuery } from '@/libs/services/modules/user';
 import { CURRENT_TZ } from '@/utils/dateUtils';
+import { useRouter } from '@/libs/i18nNavigation';
+import { getSafetyRequirement, safetyRequirementPath } from '@/features/users/utils/profile.util';
 
 export default function Index() {
-  // const router = useRouter();
+  const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const [storyId, humanBookId] = id.split('_').map(Number);
 
@@ -41,6 +39,14 @@ export default function Index() {
   const [placeRequest] = useCreateNewReadingSessionMutation();
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
+  // Every booking entry point lands here, so the birthday / emergency-contact gate lives here once.
+  const safetyRequirement = getSafetyRequirement(userInfo);
+
+  useEffect(() => {
+    if (userInfo?.id && safetyRequirement) {
+      router.replace(safetyRequirementPath(userInfo.id));
+    }
+  }, [userInfo?.id, safetyRequirement, router]);
 
   const [currentStep, setCurrentStep] = useState<
     'select-time' | 'confirm' | 'success'
@@ -95,7 +101,7 @@ export default function Index() {
     return null;
   } */
 
-  if (!humanBook) {
+  if (!humanBook || safetyRequirement) {
     return (
       <div className="flex h-screen w-full flex-1 items-center justify-center">
         <Loading />

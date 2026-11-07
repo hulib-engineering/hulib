@@ -23,8 +23,9 @@ import {
   useCreateTimeslotsMutation,
   useGetTimeslotsByHuberQuery,
 } from '@/libs/services/modules/time-slots';
-import { ROLE_NAME, Role } from '@/types/common';
+import { Role } from '@/types/common';
 import { convertTimeSlotToUtc } from '@/utils/convertTimeSlotToUtc';
+import { useCalendarSavedGate } from '@/features/users/hooks/useCalendarSavedGate';
 import { REFERENCE_MONDAY } from '@/utils/dateUtils';
 
 type TPeriodLabel = 'morning' | 'afternoon' | 'evening';
@@ -33,7 +34,8 @@ export default function TimeSlotList() {
   const t = useTranslations('Time_slots');
 
   const userInfo = useAppSelector(state => state.auth.userInfo);
-  const isHuber = userInfo?.role?.name === ROLE_NAME[Role.HUBER];
+  // Compare by id: the API names the role "humanBook", not "Huber".
+  const isHuber = userInfo?.role?.id === Role.HUBER;
 
   const { data, isLoading: isGettingTimeslots } = useGetTimeslotsByHuberQuery(
     { id: userInfo?.id },
@@ -41,6 +43,7 @@ export default function TimeSlotList() {
   );
 
   const [registerTimeSlots, { isLoading: isRegisteringTimeslots }] = useCreateTimeslotsMutation();
+  const { check: checkCalendarSaved, modal: calendarSavedModal } = useCalendarSavedGate();
 
   const [weekDay, setWeekDay] = useState(new Date().getDay());
   const [timeslotsByDayAndPeriod, setTimeslotsByDayAndPeriod] = useState<Record<string, TDaySlots>>({});
@@ -123,10 +126,13 @@ export default function TimeSlotList() {
       const result = await registerTimeSlots({
         timeSlots: selectedSlots.map(slot => convertTimeSlotToUtc(slot)),
       }).unwrap();
+      setIsEditModalOpen(false);
+      if (checkCalendarSaved()) {
+        return;
+      }
       if (result !== null) {
         pushSuccess(t('success_time_slots_description'));
       }
-      setIsEditModalOpen(false);
     } catch (error: any) {
       pushError(t(error?.message || 'error_contact_admin'));
     }
@@ -232,6 +238,7 @@ export default function TimeSlotList() {
           </Modal.Panel>
         </Modal>
       )}
+      {calendarSavedModal}
     </div>
   );
 };

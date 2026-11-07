@@ -16,6 +16,7 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { useGetNotificationsQuery } from '@/libs/services/modules/notifications';
 import type { Notification } from '@/libs/services/modules/notifications/notificationType';
 import { useUpdateReadingSessionMutation } from '@/libs/services/modules/reading-session';
+import { useSafetyGate } from '@/features/users/hooks/useSafetyGate';
 import { StatusEnum } from '@/types/common';
 
 type NotificationButtonProps = {
@@ -75,6 +76,7 @@ export default function NotificationPopover({
   // (headlessui unmounts Popover.Panel's children when it closes).
   const [pendingDecision, setPendingDecision] = useState<PendingDecision>({ open: false, type: 'accept', notification: null });
   const [updateStatus, { isLoading: isDecisionLoading }] = useUpdateReadingSessionMutation();
+  const isBlockedBySafety = useSafetyGate();
 
   const handleRequestDecision = (type: 'accept' | 'reject', notification: Notification) => {
     setPendingDecision({ open: true, type, notification });
@@ -87,6 +89,10 @@ export default function NotificationPopover({
   const confirmDecision = async (reason?: string) => {
     const session = pendingDecision.notification?.relatedEntity;
     if (!session?.id) {
+      return;
+    }
+    if (pendingDecision.type === 'accept' && isBlockedBySafety()) {
+      closeDecisionModal();
       return;
     }
     try {

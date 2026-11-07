@@ -25,29 +25,37 @@ export const ProfileValidation = z
       name: z.string().trim().min(1).optional(),
     }),
     phoneNumber: z.string().nullable().optional()
+      // Strip whitespace first: the regex below and the value sent to the backend both expect digits only.
+      .transform(value => value && value.replace(/\s+/g, ''))
       .refine(value => !value || PHONE_NUMBER_REGEX.test(value), { message: VALIDATION_MESSAGES.PHONE_NUMBER }),
     address: z.string(),
     isUnderGuard: z.boolean(),
     parentPhoneNumber: z.string()
       .nullable()
-      .optional(),
-    parentEmail: z
-      .string()
-      .trim()
-      .email({ message: VALIDATION_MESSAGES.EMAIL_INVALID })
-      .nullable()
       .optional()
-      .or(z.literal('')),
+      .transform(value => value && value.replace(/\s+/g, '')),
+    // Format is checked in superRefine, only while the email kind is selected: the form keeps the value of the hidden kind.
+    parentEmail: z.string().trim().nullable().optional(),
     parentFullname: z.string().optional(),
     countryCode: z.string().nullable(),
   })
   .superRefine((values, context) => {
+    if (values.countryCode === 'email' && values.parentEmail && !z.string().email().safeParse(values.parentEmail).success) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: VALIDATION_MESSAGES.EMAIL_INVALID,
+        path: ['parentEmail'],
+      });
+    }
     if (values.isUnderGuard) {
-      if (!values.parentPhoneNumber || values.parentPhoneNumber.length <= 0) {
+      // Only the contact kind picked in the form is saved (see PersonalInformation's handleUpdate).
+      // The error must sit on the field being edited, or onChange validation never clears it.
+      const field = values.countryCode === 'email' ? 'parentEmail' : 'parentPhoneNumber';
+      if (!values[field]) {
         context.addIssue({
           code: z.ZodIssueCode.custom,
           message: VALIDATION_MESSAGES.PARENT_REQUIRED,
-          path: ['parentPhoneNumber'],
+          path: [field],
         });
       }
     }
