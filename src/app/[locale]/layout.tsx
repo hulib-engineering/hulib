@@ -10,6 +10,7 @@ import { Suspense } from 'react';
 
 import StoreProvider from '@/app/StoreProvider';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import { MeetingAlertWidget } from '@/features/meeting-alert';
 import { AppConfig } from '@/utils/AppConfig';
 
 export const metadata: Metadata = {
@@ -79,7 +80,10 @@ export default function RootLayout({
         )}
         <Suspense>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <StoreProvider>{children}</StoreProvider>
+            <StoreProvider>
+              {children}
+              <MeetingAlertWidget />
+            </StoreProvider>
           </NextIntlClientProvider>
         </Suspense>
       </body>

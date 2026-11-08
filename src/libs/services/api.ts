@@ -65,19 +65,23 @@ const baseQueryWithInterceptor = async (
 
   // Check if args is an object (FetchArgs) and not a string
   if (typeof args !== 'string') {
+    // Endpoints often pass a plain object (e.g. `headers: { 'Content-Type': ... }`),
+    // but this interceptor uses the Headers API. Normalise both shapes first.
     if (!args.headers) {
       args.headers = new Headers();
+    } else if (!(args.headers instanceof Headers)) {
+      args.headers = new Headers(args.headers as unknown as HeadersInit);
     }
 
     // For regular POST requests, set application/json
     if (args.method === 'POST' && !(args.body instanceof FormData)) {
-      (args.headers as Headers).set('Content-Type', 'application/json');
+      args.headers.set('Content-Type', 'application/json');
     }
 
     // For FormData, we don't set Content-Type - browser will handle it
     if (args.method === 'POST' && args.body instanceof FormData) {
       // Remove Content-Type header if it exists
-      (args.headers as Headers).delete('Content-Type');
+      args.headers.delete('Content-Type');
     }
   }
 
