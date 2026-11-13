@@ -3,6 +3,7 @@ import {
   PaintBrushBroadIcon,
   PlusIcon,
   TextAUnderlineIcon,
+  UploadSimple,
 } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
@@ -10,6 +11,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 
 import { ColorPicker } from './ColorPicker';
 import { FontSelect } from './FontSelect';
+import { CoverImageCropper } from './CoverImageCropper';
 
 import Button from '@/components/core/button/Button';
 import { mergeClassnames } from '@/components/core/private/utils';
@@ -49,15 +51,34 @@ export const CustomCoverModal = ({
   const [selectedIllustrationId, setSelectedIllustrationId] = useState<string | null>(null);
   const [rightPanelHeight, setRightPanelHeight] = useState<number | null>(null);
   const rightPanelRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [cropSrc, setCropSrc] = useState<string | null>(null);
+  const [uploadError, setUploadError] = useState(false);
+
+  const patchCustomization = useCallback((patch: Partial<CoverCustomization>) => {
+    setCustomization(prev => ({ ...prev, ...patch }));
+  }, []);
+
+  const handleSelectIllustration = (id: string, src: string) => {
+    setSelectedIllustrationId(id);
+    patchCustomization({ illustrationSrc: src });
+  };
+
+  const savePersonalImage = (src: string) => {
+    handleSelectIllustration('uploaded', src);
+    setCropSrc(null);
+  };
 
   const isExpanded = selectedIllustrationId !== null;
 
   useEffect(() => {
     if (open) {
+      setCropSrc(null);
+      setUploadError(false);
       setCustomization(initialCustomization);
       setSelectedIllustrationId(
         initialCustomization.illustrationSrc
-          ? COVER_ILLUSTRATIONS.find(item => item.src === initialCustomization.illustrationSrc)?.id ?? null
+          ? COVER_ILLUSTRATIONS.find(item => item.src === initialCustomization.illustrationSrc)?.id ?? 'uploaded'
           : null,
       );
     }
@@ -82,17 +103,35 @@ export const CustomCoverModal = ({
     return () => observer.disconnect();
   }, [isExpanded, customization, title, authorName]);
 
-  const patchCustomization = useCallback((patch: Partial<CoverCustomization>) => {
-    setCustomization(prev => ({ ...prev, ...patch }));
-  }, []);
-
-  const handleSelectIllustration = (id: string, src: string) => {
-    setSelectedIllustrationId(id);
-    patchCustomization({ illustrationSrc: src });
+  const handleCancel = () => {
+    setCropSrc(null);
+    onClose();
   };
 
-  const handleCancel = () => {
-    onClose();
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) {
+      return;
+    }
+    setUploadError(false);
+    if (!file.type.startsWith('image/')) {
+      setUploadError(true);
+      return;
+    }
+    const reader = new FileReader();
+    reader.onerror = () => setUploadError(true);
+    reader.onload = () => {
+      const src = reader.result;
+      if (typeof src !== 'string') {
+        return;
+      }
+      const image = new window.Image();
+      image.onload = () => setCropSrc(src);
+      image.onerror = () => setUploadError(true);
+      image.src = src;
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleDoneClick = () => {
@@ -111,146 +150,160 @@ export const CustomCoverModal = ({
     <Modal open={open} onClose={onClose}>
       <Modal.Backdrop />
       <Modal.Panel className="w-auto overflow-hidden rounded-[20px] shadow-xl">
-        <div className="flex max-h-[90vh] flex-col gap-8 bg-white p-8">
-          <div
-            className={mergeClassnames(
-              'flex min-h-0 flex-1 gap-6',
-              isExpanded ? 'lg:flex-row lg:items-start' : 'flex-col',
-            )}
-          >
-            <div
-              className={mergeClassnames(
-                'w-full shrink-0',
-                isExpanded && 'lg:w-[384px]',
-              )}
-            >
+        <div className={mergeClassnames('flex max-h-[90vh] flex-col overflow-y-auto', cropSrc ? 'bg-[#242526]' : 'gap-8 bg-white p-8')}>
+          {cropSrc ? (
+            <CoverImageCropper src={cropSrc} onCancel={() => setCropSrc(null)} onSave={savePersonalImage} />
+          ) : (
+            <>
               <div
                 className={mergeClassnames(
-                  'flex flex-col overflow-hidden rounded-2xl bg-neutral-variant-98 p-5',
-                  !isExpanded && 'max-h-[456px]',
+                  'flex min-h-0 flex-1 gap-6',
+                  isExpanded ? 'lg:flex-row lg:items-start' : 'flex-col',
                 )}
-                style={
-                  isExpanded && rightPanelHeight != null
-                    ? { maxHeight: rightPanelHeight }
-                    : undefined
-                }
               >
-                <div className="custom-scrollbar min-h-0 flex-1 overflow-y-auto overflow-x-hidden pr-3">
-                  <div className="grid grid-cols-3 gap-3">
-                    {COVER_ILLUSTRATIONS.map(item => (
-                      <button
-                        key={item.id}
-                        type="button"
-                        onClick={() => handleSelectIllustration(item.id, item.src)}
-                        className={mergeClassnames(
-                          'flex items-center justify-center overflow-hidden rounded-lg border transition',
-                          !isExpanded
-                            ? 'size-[132px]'
-                            : 'size-[100px]',
-                          selectedIllustrationId === item.id
-                            ? 'border-primary-50'
-                            : 'border-neutral-80',
-                        )}
-                      >
-                        <Image
-                          src={item.src}
-                          alt={`Illustration cover ${item.id}`}
-                          width={isExpanded ? 131 : 100}
-                          height={isExpanded ? 131 : 100}
-                          className="size-full rounded-lg object-cover"
-                          unoptimized
-                        />
+                <div
+                  className={mergeClassnames(
+                    'w-full shrink-0',
+                    isExpanded && 'lg:w-[384px]',
+                  )}
+                >
+                  <div
+                    className={mergeClassnames(
+                      'flex flex-col overflow-hidden rounded-2xl bg-neutral-variant-98 p-5',
+                      !isExpanded && 'max-h-[456px]',
+                    )}
+                    style={
+                      isExpanded && rightPanelHeight != null
+                        ? { maxHeight: rightPanelHeight }
+                        : undefined
+                    }
+                  >
+                    <div className="custom-scrollbar min-h-0 flex-1 overflow-y-auto overflow-x-hidden pr-3">
+                      <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                      <button type="button" onClick={() => fileInputRef.current?.click()} className="mb-3 flex w-full items-center justify-center gap-2 rounded-full bg-primary-90 px-4 py-2 text-sm text-primary-50">
+                        <UploadSimple size={16} />
+                        {' '}
+                        {t('upload_photo')}
                       </button>
-                    ))}
+                      {uploadError && <p role="alert" className="mb-2 text-sm text-red-600">{t('cover_crop_error')}</p>}
+                      <p className="mb-3 text-sm">{t('cover_library')}</p>
+                      <div className="grid grid-cols-3 gap-3">
+                        {COVER_ILLUSTRATIONS.map(item => (
+                          <button
+                            key={item.id}
+                            type="button"
+                            onClick={() => handleSelectIllustration(item.id, item.src)}
+                            className={mergeClassnames(
+                              'flex items-center justify-center overflow-hidden rounded-lg border transition',
+                              !isExpanded
+                                ? 'size-[132px]'
+                                : 'size-[100px]',
+                              selectedIllustrationId === item.id
+                                ? 'border-primary-50'
+                                : 'border-neutral-80',
+                            )}
+                          >
+                            <Image
+                              src={item.src}
+                              alt={`Illustration cover ${item.id}`}
+                              width={isExpanded ? 131 : 100}
+                              height={isExpanded ? 131 : 100}
+                              className="size-full rounded-lg object-cover"
+                              unoptimized
+                            />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {isExpanded && (
+                {isExpanded && (
+                  <div
+                    ref={rightPanelRef}
+                    className="flex w-auto shrink-0 flex-col items-center gap-5 self-start rounded-2xl bg-neutral-variant-98 p-5"
+                  >
+                    <div className="flex w-full items-center gap-4">
+                      <FontSelect
+                        value={customization.titleFontFamily}
+                        onChange={fontFamily => patchCustomization({ titleFontFamily: fontFamily })}
+                        ariaLabel={t('cover_font')}
+                      />
+                      <div className="flex shrink-0 items-center gap-2 rounded-full bg-white px-4 py-3">
+                        <button
+                          type="button"
+                          aria-label={t('decrease_font_size')}
+                          onClick={() => adjustFontSize(-TITLE_FONT_SIZE_STEP)}
+                          className="flex size-5 items-center justify-center text-primary-10"
+                        >
+                          <MinusIcon size={20} weight="bold" />
+                        </button>
+                        <span className="min-w-6 text-center text-base font-medium leading-5 text-primary-10">
+                          {customization.titleFontSize}
+                        </span>
+                        <button
+                          type="button"
+                          aria-label={t('increase_font_size')}
+                          onClick={() => adjustFontSize(TITLE_FONT_SIZE_STEP)}
+                          className="flex size-5 items-center justify-center text-primary-10"
+                        >
+                          <PlusIcon size={20} weight="bold" />
+                        </button>
+                      </div>
+                    </div>
+
+                    <ColorPicker
+                      icon={TextAUnderlineIcon}
+                      colors={TEXT_COLORS}
+                      value={customization.titleColor}
+                      ariaLabel={t('cover_text_color')}
+                      onChange={color => patchCustomization({
+                        titleColor: color,
+                        authorColor: color,
+                      })}
+                    />
+
+                    <div className="flex justify-center overflow-visible">
+                      <CustomCoverBuilder
+                        previewId={COVER_PREVIEW_ELEMENT_ID}
+                        storyTitle={title.trim() || t('placeholder_title')}
+                        authorName={authorName}
+                        customization={customization}
+                        active
+                      />
+                    </div>
+
+                    <ColorPicker
+                      icon={PaintBrushBroadIcon}
+                      colors={BACKGROUND_COLORS}
+                      value={customization.backgroundColor}
+                      ariaLabel={t('cover_background_color')}
+                      onChange={color => patchCustomization({ backgroundColor: color })}
+                    />
+                  </div>
+                )}
+              </div>
+
               <div
-                ref={rightPanelRef}
-                className="flex w-auto shrink-0 flex-col items-center gap-5 self-start rounded-2xl bg-neutral-variant-98 p-5"
+                className={mergeClassnames(
+                  'flex justify-between gap-8',
+                  isExpanded && 'w-2/3 justify-center self-center',
+                )}
               >
-                <div className="flex w-full items-center gap-4">
-                  <FontSelect
-                    value={customization.titleFontFamily}
-                    onChange={fontFamily => patchCustomization({ titleFontFamily: fontFamily })}
-                    ariaLabel={t('cover_font')}
-                  />
-                  <div className="flex shrink-0 items-center gap-2 rounded-full bg-white px-4 py-3">
-                    <button
-                      type="button"
-                      aria-label={t('decrease_font_size')}
-                      onClick={() => adjustFontSize(-TITLE_FONT_SIZE_STEP)}
-                      className="flex size-5 items-center justify-center text-primary-10"
-                    >
-                      <MinusIcon size={20} weight="bold" />
-                    </button>
-                    <span className="min-w-6 text-center text-base font-medium leading-5 text-primary-10">
-                      {customization.titleFontSize}
-                    </span>
-                    <button
-                      type="button"
-                      aria-label={t('increase_font_size')}
-                      onClick={() => adjustFontSize(TITLE_FONT_SIZE_STEP)}
-                      className="flex size-5 items-center justify-center text-primary-10"
-                    >
-                      <PlusIcon size={20} weight="bold" />
-                    </button>
-                  </div>
-                </div>
-
-                <ColorPicker
-                  icon={TextAUnderlineIcon}
-                  colors={TEXT_COLORS}
-                  value={customization.titleColor}
-                  ariaLabel={t('cover_text_color')}
-                  onChange={color => patchCustomization({
-                    titleColor: color,
-                    authorColor: color,
-                  })}
-                />
-
-                <div className="flex justify-center overflow-visible">
-                  <CustomCoverBuilder
-                    previewId={COVER_PREVIEW_ELEMENT_ID}
-                    storyTitle={title.trim() || t('placeholder_title')}
-                    authorName={authorName}
-                    customization={customization}
-                    active
-                  />
-                </div>
-
-                <ColorPicker
-                  icon={PaintBrushBroadIcon}
-                  colors={BACKGROUND_COLORS}
-                  value={customization.backgroundColor}
-                  ariaLabel={t('cover_background_color')}
-                  onChange={color => patchCustomization({ backgroundColor: color })}
-                />
+                <Button variant="outline" size="lg" fullWidth onClick={handleCancel}>
+                  {t('cancel')}
+                </Button>
+                <Button
+                  size="lg"
+                  fullWidth
+                  onClick={handleDoneClick}
+                  disabled={!isExpanded}
+                >
+                  {t('done')}
+                </Button>
               </div>
-            )}
-          </div>
-
-          <div
-            className={mergeClassnames(
-              'flex justify-between gap-8',
-              isExpanded && 'w-2/3 justify-center self-center',
-            )}
-          >
-            <Button variant="outline" size="lg" fullWidth onClick={handleCancel}>
-              {t('cancel')}
-            </Button>
-            <Button
-              size="lg"
-              fullWidth
-              onClick={handleDoneClick}
-              disabled={!isExpanded}
-            >
-              {t('done')}
-            </Button>
-          </div>
+            </>
+          )}
         </div>
       </Modal.Panel>
     </Modal>
