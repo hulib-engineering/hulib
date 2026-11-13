@@ -1,4 +1,5 @@
 #!/bin/sh
+export PATH="$HOME/.local/bin:$PATH"
 #. "$(dirname "$0")/_/husky.sh"
 
 # Disable concurrent to run `check-types` after ESLint in lint-staged
