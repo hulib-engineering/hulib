@@ -15,7 +15,7 @@ import { PublishStatusEnum } from '@/libs/services/modules/stories/storiesType';
 import { AWAITING_STORIES_QUERY_ARGS } from '@/app/[locale]/admin/(auth)/(portal)/awaiting-stories/queryArgs';
 
 const STATUS_FILTERS = [
-  { status: PublishStatusEnum.DRAFT, label: 'filter_pending' },
+  { status: PublishStatusEnum.PENDING, label: 'filter_pending' },
   { status: PublishStatusEnum.PUBLISHED, label: 'filter_published' },
   { status: PublishStatusEnum.REJECTED, label: 'filter_rejected' },
   { status: PublishStatusEnum.DELETED, label: 'filter_deleted' },
@@ -24,7 +24,7 @@ const STATUS_FILTERS = [
 export default function AwaitingStoriesPage() {
   const t = useTranslations('Admin');
   const [currentPage, setCurrentPage] = useState(1);
-  const [publishStatus, setPublishStatus] = useState<PublishStatusEnum>(PublishStatusEnum.DRAFT);
+  const [publishStatus, setPublishStatus] = useState<PublishStatusEnum>(PublishStatusEnum.PENDING);
   const { data: awaitingStories, isLoading, isFetching } = useGetAdminStoriesQuery({
     ...AWAITING_STORIES_QUERY_ARGS,
     page: currentPage,
@@ -95,7 +95,7 @@ export default function AwaitingStoriesPage() {
           <StoryCard
             key={item.id}
             data={item}
-            showAdminControls={publishStatus === PublishStatusEnum.DRAFT}
+            showAdminControls={publishStatus === PublishStatusEnum.PENDING}
           />
         ))}
       </div>
