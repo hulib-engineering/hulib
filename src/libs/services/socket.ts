@@ -212,7 +212,7 @@ export const acquireSocket = (
 
   // Reuses the namespace's socket if the Manager already has one registered,
   // otherwise creates one bound to this Manager — never a second connection.
-  const instance = manager.socket(`/${namespace}`, {});
+  const instance = manager.socket(`/${namespace}`, { auth: { token: authToken } });
   dbgWatch(namespace, instance);
 
   instances.set(namespace, {

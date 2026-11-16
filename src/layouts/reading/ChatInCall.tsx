@@ -5,8 +5,8 @@ import { X } from '@phosphor-icons/react';
 
 import { Transition } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { StickerImage } from '@/components/messages/StickerImage';
 import { MessengerInput } from '@/components/messages/MessengerInput';
 import { useSocket } from '@/libs/hooks/useSocket';
 import { ChatTypeMap } from '@/libs/services/modules/chat';
@@ -109,13 +109,7 @@ export default function ChatInCall({ isShow, participantId, participantAvatarUrl
                     each.direction === 'sent' ? 'justify-end' : 'justify-start',
                   )}
                 >
-                  <Image
-                    alt={`Sticker ${each.msg}`}
-                    width={120}
-                    height={120}
-                    className="size-[120px] object-contain"
-                    src={each.stickerUrl ?? ''}
-                  />
+                  <StickerImage src={each.stickerUrl} alt={`Sticker ${each.msg}`} />
                 </div>
               );
             }

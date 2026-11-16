@@ -1,9 +1,8 @@
 'use client';
 
 import { SmileySticker, TelegramLogo } from '@phosphor-icons/react';
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import IconButton from '@/components/core/iconButton/IconButton';
 import Popover from '@/components/core/popover/Popover';
@@ -12,6 +11,7 @@ import TextInput from '@/components/core/textInput/TextInput';
 import Tooltip from '@/components/core/tooltip/Tooltip';
 import { useGetStickersQuery } from '@/libs/services/modules/stickers';
 import type { Sticker } from '@/libs/services/modules/stickers/getStickers';
+import { StickerImage } from '@/components/messages/StickerImage';
 
 const StickerPicker = ({
   stickers = [],
@@ -28,13 +28,7 @@ const StickerPicker = ({
             type="button"
             onClick={() => onStickerClick(sticker.id.toString())}
           >
-            <Image
-              alt={`Sticker ${sticker.name}`}
-              width={120}
-              height={120}
-              className="size-full cursor-pointer object-contain"
-              src={sticker.image?.path ?? ''}
-            />
+            <StickerImage src={sticker.image?.path} alt={`Sticker ${sticker.name}`} />
           </button>
         </Tooltip.Trigger>
         <Tooltip.Content position="top-center" className="z-[999] p-2">
@@ -59,22 +53,32 @@ export const MessengerInput = ({
 
   const { data: stickers } = useGetStickersQuery();
 
-  const textInputRef = useRef<HTMLInputElement | null>(null);
+  const stickerTriggerRef = useRef<HTMLSpanElement>(null);
+  const stickerPickerRef = useRef<HTMLDivElement>(null);
 
-  const [isTyping, setIsTyping] = useState(false);
   const [typingMessage, setTypingMessage] = useState('');
   const [stickerPickerOpen, setStickerPickerOpen] = useState(false);
 
-  const handleTyping = () => {
-    if (!isTyping) {
-      setIsTyping(true);
+  useEffect(() => {
+    if (!stickerPickerOpen) {
+      return undefined;
     }
-  };
+    const closeOnOutsideClick = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (!stickerTriggerRef.current?.contains(target) && !stickerPickerRef.current?.contains(target)) {
+        setStickerPickerOpen(false);
+      }
+    };
+    document.addEventListener('click', closeOnOutsideClick);
+    return () => document.removeEventListener('click', closeOnOutsideClick);
+  }, [stickerPickerOpen]);
+
   const handleClick = () => {
-    onSend(typingMessage);
-    if (textInputRef.current) {
-      textInputRef.current.value = '';
+    if (!typingMessage.trim()) {
+      return;
     }
+    onSend(typingMessage);
+    setTypingMessage('');
   };
 
   return (
@@ -82,19 +86,21 @@ export const MessengerInput = ({
       <div className="flex items-center justify-between gap-2.5 px-3">
         <TextInput
           id="message"
-          ref={textInputRef}
           type="text"
+          value={typingMessage}
           placeholder={t('placeholder')}
           icon={
             !outerStickerPicker
               ? (
-                  <SmileySticker
-                    className={mergeClassnames(
-                      'size-6 cursor-pointer',
-                      stickerPickerOpen && 'text-primary-60',
-                    )}
-                    onClick={() => setStickerPickerOpen(!stickerPickerOpen)}
-                  />
+                  <span ref={stickerTriggerRef}>
+                    <SmileySticker
+                      className={mergeClassnames(
+                        'size-6 cursor-pointer',
+                        stickerPickerOpen && 'text-primary-60',
+                      )}
+                      onClick={() => setStickerPickerOpen(!stickerPickerOpen)}
+                    />
+                  </span>
                 )
               : (
                   <Popover position="bottom-end">
@@ -116,26 +122,26 @@ export const MessengerInput = ({
                 )
           }
           onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              onSend(e.currentTarget.value);
-              e.currentTarget.value = '';
+            if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+              e.preventDefault();
+              handleClick();
             }
           }}
-          onInput={handleTyping}
-          onBlur={() => setIsTyping(false)}
           onChange={e => setTypingMessage(e.currentTarget.value)}
         />
-        {(isTyping || typingMessage !== '') && (
+        {typingMessage.trim() !== '' && (
           <IconButton size="lg" className="h-11" onClick={handleClick}>
             <TelegramLogo size={20} />
           </IconButton>
         )}
       </div>
       {stickerPickerOpen && (
-        <StickerPicker
-          stickers={stickers?.data}
-          onStickerClick={stickerId => onSend(stickerId, 'img')}
-        />
+        <div ref={stickerPickerRef} className="max-h-[35dvh] max-h-[35vh] overflow-y-auto">
+          <StickerPicker
+            stickers={stickers?.data}
+            onStickerClick={stickerId => onSend(stickerId, 'img')}
+          />
+        </div>
       )}
     </div>
   );

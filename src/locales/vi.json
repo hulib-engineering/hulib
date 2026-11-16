@@ -1373,6 +1373,7 @@
     "activities_title": "Hoạt động của {name}",
     "error_editing": "Lỗi khi chỉnh sửa {type}",
     "cover_crop_move": "Kéo ảnh hoặc dùng phím mũi tên để điều chỉnh vị trí",
+    "cover_crop_touch": "Kéo để di chuyển, chụm hai ngón để phóng to hoặc thu nhỏ",
     "cover_crop_zoom_out": "Thu nhỏ",
     "cover_crop_zoom_in": "Phóng to",
     "cover_crop_title": "Chỉnh sửa ảnh",
