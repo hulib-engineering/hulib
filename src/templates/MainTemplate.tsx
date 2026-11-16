@@ -44,6 +44,7 @@ const MainTemplate = (props: WithChildren) => {
     <SessionProvider>
       <AuthSessionSync />
       <div
+        style={pathname.includes('messages') ? { height: '100dvh' } : undefined}
         className={mergeClassnames(
           poppins.className,
           'relative antialiased h-screen flex flex-col',
@@ -51,7 +52,7 @@ const MainTemplate = (props: WithChildren) => {
       >
         <div className="flex size-full flex-col">
           {!pathname.includes('/register-huber/create-book') && <Header />}
-          <main className={mergeClassnames('flex-1', !pathname.includes('messages') && 'overflow-y-auto')}>
+          <main className={mergeClassnames('min-h-0 flex-1', !pathname.includes('messages') && 'overflow-y-auto')}>
             <div className={mergeClassnames(pathname.includes('messages') ? 'h-full' : 'min-h-[calc(100vh-410px)]')}>
               {props.children}
             </div>

@@ -2,13 +2,13 @@
 
 import { Minus, X } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { MessageItem, groupMessagesByTime } from './Messages/ChatDetail';
 import Avatar from '@/components/core/avatar/Avatar';
 import IconButton from '@/components/core/iconButton/IconButton';
 import { MessengerInput } from '@/components/messages/MessengerInput';
+import { StickerImage } from '@/components/messages/StickerImage';
 import { mergeClassnames } from '@/components/core/private/utils';
 import StatusBadge from '@/components/StatusBadge';
 import Tooltip from '@/components/core/tooltip/Tooltip';
@@ -122,8 +122,8 @@ const ChatWindow = (props: IChatWindowProps) => {
   const { data: isOnline } = useGetUserOnlineStatusQuery(id, {
     pollingInterval: 10 * 60 * 1000,
   });
-  const { data } = useGetConversationQuery(id);
-  const reversedData = data ? data.toReversed() : [];
+  const { data } = useGetConversationQuery(Number(id));
+  const reversedData = data ? [...data].reverse() : [];
   const groupedMessages = groupMessagesByTime(reversedData);
   const lastReadMessageId
     = (data
@@ -186,8 +186,12 @@ const ChatWindow = (props: IChatWindowProps) => {
   };
 
   const handleReceiveMessage = useCallback(
-    (payload: { id: number; from: number; to: number; msg: string; time: number }) => {
+    (payload: { id: number; from: number; to: number; msg: string; time: number; type?: string }) => {
       if (payload.from !== Number(id)) {
+        return;
+      }
+      if (payload.type === 'img') {
+        dispatch(chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${id}` }]));
         return;
       }
       const isVisible = isVisibleRef.current;
@@ -229,10 +233,10 @@ const ChatWindow = (props: IChatWindowProps) => {
   });
 
   return (
-    <div className="flex h-[576px] w-[391px] flex-col overflow-hidden rounded-2xl bg-white shadow-popup">
+    <div className="flex size-full flex-col overflow-hidden bg-white shadow-popup lg:h-[576px] lg:max-h-[calc(100dvh-12px)] lg:max-h-[calc(100vh-12px)] lg:w-[391px] lg:rounded-2xl">
       {/* Header */}
-      <div className="flex items-center justify-between bg-primary-70 p-3 text-neutral-98">
-        <div className="flex items-center gap-3">
+      <div className="flex shrink-0 items-center justify-between bg-primary-70 p-3 text-neutral-98">
+        <div className="flex min-w-0 items-center gap-3">
           <div className="relative">
             <Avatar
               imageUrl={props.participant.avatarUrl}
@@ -244,11 +248,11 @@ const ChatWindow = (props: IChatWindowProps) => {
               className="absolute bottom-[-6px] right-[-6px]"
             />
           </div>
-          <span className="text-[18px] font-bold leading-7">
+          <span className="truncate text-[18px] font-bold leading-7">
             {props.participant.name}
           </span>
         </div>
-        <div className="flex gap-6">
+        <div className="flex shrink-0 gap-3 sm:gap-6">
           <Minus className="size-8 cursor-pointer" onClick={props.onMinimize} />
           <X className="size-8 cursor-pointer" onClick={props.onClose} />
         </div>
@@ -256,7 +260,7 @@ const ChatWindow = (props: IChatWindowProps) => {
 
       {/* Messages */}
       <div
-        className="flex flex-1 flex-col-reverse overflow-y-auto bg-green-98 p-3 text-xs leading-5 text-neutral-30"
+        className="flex min-h-0 flex-1 flex-col-reverse overflow-y-auto bg-green-98 p-3 text-xs leading-5 text-neutral-30"
       >
         {groupedMessages.reverse().map((item, index) => {
           if (item.type === 'separator') {
@@ -282,13 +286,7 @@ const ChatWindow = (props: IChatWindowProps) => {
                     : 'justify-start',
                 )}
               >
-                <Image
-                  alt={`Sticker ${message.msg}`}
-                  width={120}
-                  height={120}
-                  className="size-[120px] object-contain"
-                  src={message.stickerUrl ?? ''}
-                />
+                <StickerImage src={message.stickerUrl} alt={`Sticker ${message.msg}`} />
               </div>
             );
           }
@@ -366,11 +364,9 @@ export default function MessengerWidget() {
         ),
       );
 
-      emit('send', { recipientId: id, message: text, chatType: type ?? 'txt' });
-
-      dispatch(
-        chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${id}` }]),
-      );
+      emit('send', { recipientId: id, message: text, chatType: type ?? 'txt' }, () => {
+        dispatch(chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${id}` }]));
+      });
 
       playSentMessageSound();
     },
@@ -392,21 +388,22 @@ export default function MessengerWidget() {
   return (
     <>
       {/* Chat Windows - aligned horizontally leftward like Messenger */}
-      <div className="fixed bottom-1.5 right-28 z-50 flex flex-row-reverse gap-4">
-        {openChats.map(chat => (
-          <ChatWindow
-            key={chat.id}
-            id={chat.id}
-            participant={{
-              id: chat.id,
-              name: chat.name,
-              avatarUrl: chat.avatarUrl,
-            }}
-            onSend={(_id, text, type) => handleSendMessage(chat.id, text, type)}
-            onClose={() => handleCloseChat(chat.id)}
-            onMinimize={() => handleMinimizeChat(chat.id)}
-            onMarkAsRead={() => handleMarkAsRead(chat.id)}
-          />
+      <div className={mergeClassnames('fixed inset-0 z-[1001] flex flex-row-reverse gap-4 lg:inset-auto lg:bottom-1.5 lg:right-28', openChats.length === 0 && 'pointer-events-none')}>
+        {openChats.map((chat, index) => (
+          <div key={chat.id} className={mergeClassnames('h-full w-full lg:h-auto lg:w-auto', index !== openChats.length - 1 && 'hidden lg:block')}>
+            <ChatWindow
+              id={chat.id}
+              participant={{
+                id: chat.id,
+                name: chat.name,
+                avatarUrl: chat.avatarUrl,
+              }}
+              onSend={(_id, text, type) => handleSendMessage(chat.id, text, type)}
+              onClose={() => handleCloseChat(chat.id)}
+              onMinimize={() => handleMinimizeChat(chat.id)}
+              onMarkAsRead={() => handleMarkAsRead(chat.id)}
+            />
+          </div>
         ))}
       </div>
 

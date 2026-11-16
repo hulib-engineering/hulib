@@ -1373,6 +1373,7 @@
     "activities_title": "{name}'s Activities",
     "error_editing": "Error editing {type}",
     "cover_crop_move": "Drag or use arrow keys to reposition image",
+    "cover_crop_touch": "Drag to move, pinch to zoom",
     "cover_crop_zoom_out": "Zoom out",
     "cover_crop_zoom_in": "Zoom in",
     "cover_crop_title": "Edit image",

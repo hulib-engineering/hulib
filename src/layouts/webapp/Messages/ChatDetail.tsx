@@ -9,7 +9,6 @@ import {
   isYesterday,
 } from 'date-fns';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import React, { useCallback, useEffect, useRef } from 'react';
 
 import Avatar from '@/components/core/avatar/Avatar';
@@ -17,6 +16,7 @@ import Button from '@/components/core/button/Button';
 import type { WithChildren } from '@/components/core/private/types';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { MessengerInput } from '@/components/messages/MessengerInput';
+import { StickerImage } from '@/components/messages/StickerImage';
 import StatusBadge from '@/components/StatusBadge';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useSocket } from '@/libs/hooks/useSocket';
@@ -133,10 +133,10 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
       pollingInterval: 10 * 60 * 1000,
     },
   );
-  const { data } = useGetConversationQuery(currentOpeningChat?.id, {
+  const { data } = useGetConversationQuery(Number(currentOpeningChat?.id), {
     skip: !currentOpeningChat,
   });
-  const reversedData = data ? data.toReversed() : [];
+  const reversedData = data ? [...data].reverse() : [];
   const groupedMessages = groupMessagesByTime(reversedData);
   const lastReadMessageId
     = (data
@@ -159,8 +159,12 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
   }, []);
 
   const handleReceiveMessage = useCallback(
-    (payload: { id: number; from: number; to: number; msg: string; time: number }) => {
+    (payload: { id: number; from: number; to: number; msg: string; time: number; type?: string }) => {
       if (!currentOpeningChat || payload.from !== Number(currentOpeningChat.id)) {
+        return;
+      }
+      if (payload.type === 'img') {
+        dispatch(chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${currentOpeningChat.id}` }]));
         return;
       }
       const isVisible = isVisibleRef.current;
@@ -282,11 +286,9 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
         ),
       );
 
-      emit('send', { recipientId: id, message: text, chatType: type ?? 'txt' });
-
-      dispatch(
-        chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${id}` }]),
-      );
+      emit('send', { recipientId: id, message: text, chatType: type ?? 'txt' }, () => {
+        dispatch(chatApi.util.invalidateTags([{ type: 'Messages', id: `LIST-${id}` }]));
+      });
 
       playSentMessageSound();
     },
@@ -298,8 +300,8 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
   }
 
   return (
-    <div className="flex size-full flex-1 flex-col">
-      <div className="w-full bg-white lg:hidden">
+    <div className="flex size-full min-h-0 flex-1 flex-col">
+      <div className="w-full shrink-0 bg-white lg:hidden">
         <Button variant="ghost" size="sm" onClick={onBack}>
           <div className="flex items-center gap-1.5 text-black">
             <ArrowLeft />
@@ -307,8 +309,8 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
           </div>
         </Button>
       </div>
-      <div className="flex flex-1 flex-col bg-green-98">
-        <div className="flex gap-4 border-neutral-90 bg-white px-[13px] py-[11px] shadow-sm md:border-t">
+      <div className="flex min-h-0 flex-1 flex-col bg-green-98">
+        <div className="flex shrink-0 gap-4 border-neutral-90 bg-white px-[13px] py-[11px] shadow-sm md:border-t">
           <Avatar
             size="lg"
             imageUrl={currentOpeningChat?.avatarUrl}
@@ -324,7 +326,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
         </div>
         <div
           ref={messageContainerRef}
-          className="flex flex-1 flex-col-reverse overflow-y-auto"
+          className="flex min-h-0 flex-1 flex-col-reverse overflow-y-auto"
         >
           {groupedMessages.reverse().map((item, index) => {
             if (item.type === 'separator') {
@@ -348,13 +350,7 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
                     message.direction === 'sent' ? 'justify-end' : 'justify-start',
                   )}
                 >
-                  <Image
-                    alt={`Sticker ${message.msg}`}
-                    width={120}
-                    height={120}
-                    className="size-[120px] object-contain"
-                    src={message.stickerUrl ?? ''}
-                  />
+                  <StickerImage src={message.stickerUrl} alt={`Sticker ${message.msg}`} />
                 </div>
               );
             }
@@ -377,10 +373,10 @@ export default function ChatDetail({ onBack, isTypeFixed = false }: { isTypeFixe
         </div>
       </div>
       <MessengerInput
+        className="shrink-0 pb-[max(10px,env(safe-area-inset-bottom))]"
         onSend={(value, type) =>
           handleSendMessage(currentOpeningChat?.id, value, type)}
         outerStickerPicker={!isTypeFixed}
-        // className={mergeClassnames(isTypeFixed && 'fixed bottom-0 left-0 right-0 z-10')}
       />
     </div>
   );
