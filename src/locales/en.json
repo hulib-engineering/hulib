@@ -1183,6 +1183,8 @@
     "followers": "followers"
   },
   "Common": {
+    "profile_load_error": "Could not load your account. Please try again.",
+    "try_again": "Try again",
     "error_contact_admin": "An error occurred, please contact admin for support!",
     "update_successfully": "Update successfully",
     "update_failed": "Update failed",
@@ -1460,6 +1462,9 @@
       "most_concerned": "Most concerned"
     },
     "AgoraMeeting": {
+      "session_load_failed": "Could not load this meeting. Check the link or try again.",
+      "session_retry": "Try again",
+      "session_schedule": "Go to my schedule",
       "meeting_topic": "Meeting topic",
       "waiting": "Waiting for partner to join..",
       "you": "You",

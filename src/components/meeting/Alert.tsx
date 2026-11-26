@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import React from 'react';
+import { meetingLink } from '@/features/meeting/utils/meetingLink';
 
 type AlertProps = {
   type?: 'success' | 'info';
@@ -32,7 +33,7 @@ const Alert: React.FC<AlertProps> = ({
 
   const handleDetailClick = () => {
     if (sessionUrl) {
-      window.open(sessionUrl, '_blank');
+      window.open(meetingLink(sessionUrl), '_blank', 'noopener,noreferrer');
     }
   };
 

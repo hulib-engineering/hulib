@@ -1183,6 +1183,8 @@
     "followers": "theo dõi"
   },
   "Common": {
+    "profile_load_error": "Không thể tải thông tin tài khoản. Vui lòng thử lại.",
+    "try_again": "Thử lại",
     "error_contact_admin": "Đã xảy ra lỗi, vui lòng liên hệ quản trị viên để được hỗ trợ!",
     "update_failed": "Cập nhật thất bại",
     "update_successfully": "Cập nhật thành công",
@@ -1469,6 +1471,9 @@
       "most_concerned": "Rất lo"
     },
     "AgoraMeeting": {
+      "session_load_failed": "Không thể tải cuộc hẹn. Hãy kiểm tra đường dẫn hoặc thử lại.",
+      "session_retry": "Thử lại",
+      "session_schedule": "Đến lịch của tôi",
       "meeting_topic": "Đề tài",
       "waiting": "Hãy đợi bạn đồng hành của mình một lúc nhé..",
       "you": "Bạn",

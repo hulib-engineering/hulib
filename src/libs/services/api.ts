@@ -138,7 +138,7 @@ const baseQueryWithInterceptor = async (
     }
   }
 
-  if (result.error && result.error.status === 422) {
+  if (result.error && (result.error.status === 422 || api.endpoint === 'getPersonalInfo')) {
     return result;
   }
 

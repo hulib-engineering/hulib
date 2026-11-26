@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { notificationConfig } from '../private/config';
 import type { INotificationItemRendererProps } from '../NotificationItemRenderer';
 import { useRouter } from '@/libs/i18nNavigation';
+import { meetingLink } from '@/features/meeting/utils/meetingLink';
 
 import Button from '@/components/core/button/Button';
 import { NotificationType } from '@/components/notification/private/types';
@@ -21,7 +22,7 @@ export default function SystemNotificationCard({ notification, onClick }: INotif
       onClick();
     }
     if (cfg.route && notification.relatedEntity?.sessionUrl) {
-      router.push(cfg.route(notification.relatedEntity.sessionUrl));
+      router.push(meetingLink(cfg.route(notification.relatedEntity.sessionUrl)));
     }
   };
 
