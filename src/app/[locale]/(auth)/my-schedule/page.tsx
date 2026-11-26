@@ -9,6 +9,7 @@ import { useCallback, useState } from 'react';
 
 import Avatar from '@/components/core/avatar/Avatar';
 import { Link } from '@/libs/i18nNavigation';
+import { meetingLink } from '@/features/meeting/utils/meetingLink';
 import Button from '@/components/core/button/Button';
 import Combobox from '@/components/core/combobox/Combobox';
 import MenuItem from '@/components/core/menuItem/MenuItem';
@@ -160,7 +161,7 @@ export default function Index() {
                     <MapPinArea className="text-neutral-20" weight="bold" />
                     {upcomingEvents[0].sessionUrl ? (
                       <Link
-                        href={upcomingEvents[0].sessionUrl}
+                        href={meetingLink(upcomingEvents[0].sessionUrl)}
                         className="line-clamp-1 block truncate text-sm font-medium leading-4 text-primary-70 underline"
                         title={upcomingEvents[0].sessionUrl}
                       >

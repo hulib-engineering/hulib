@@ -2,6 +2,7 @@
 
 import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { poppins } from '@/styles/fonts';
 
 import Header from '@/app/[locale]/(auth)/_components/Header';
@@ -19,13 +20,14 @@ import { logout, setAvatarUrl, setUserInfo } from '@/libs/store/authentication';
 
 const MainTemplate = (props: WithChildren) => {
   const pathname = usePathname();
+  const t = useTranslations('Common');
 
-  const { data, error } = useGetPersonalInfoQuery();
+  const { data, error, refetch } = useGetPersonalInfoQuery();
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (error) {
+    if (error && 'status' in error && error.status === 401) {
       dispatch(logout());
       return;
     }
@@ -36,8 +38,13 @@ const MainTemplate = (props: WithChildren) => {
     }
   }, [data, error, dispatch]);
 
-  if (error) {
-    return null;
+  if (error && (!('status' in error) || error.status !== 401)) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4">
+        <p>{t('profile_load_error')}</p>
+        <button type="button" onClick={() => refetch()}>{t('try_again')}</button>
+      </div>
+    );
   }
 
   return (

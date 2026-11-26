@@ -38,7 +38,7 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
   const [isPersonalCalendarModalOpen, setIsPersonalCalendarModalOpen] = useState(false);
 
   useEffect(() => {
-    if (personalInfoError) {
+    if (personalInfoError && 'status' in personalInfoError && personalInfoError.status === 401) {
       dispatch(setUserInfo({}));
       dispatch(setAvatarUrl(undefined));
       signOut({ redirect: false });
@@ -64,7 +64,7 @@ export default function HomeTemplateInner({ children }: { children: ReactNode })
     setIsPersonalCalendarModalOpen(false);
   };
 
-  if (isAuthenticated && !personalInfoError) {
+  if (isAuthenticated) {
     return (
       <div className={mergeClassnames(poppins.className, 'relative antialiased h-screen flex flex-col')} style={pathname.includes('messages') ? { height: '100dvh' } : undefined}>
         <div className="flex size-full flex-col overflow-hidden">

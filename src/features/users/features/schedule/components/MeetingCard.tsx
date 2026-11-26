@@ -20,6 +20,7 @@ import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import MeetingDecisionModal from '@/components/notification/styles/MeetingDecisionModal';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { useRouter } from '@/libs/i18nNavigation';
+import { meetingLink } from '@/features/meeting/utils/meetingLink';
 import { useUpdateReadingSessionMutation } from '@/libs/services/modules/reading-session';
 import { useSafetyGate } from '@/features/users/hooks/useSafetyGate';
 import { ROLE_NAME, Role, StatusEnum } from '@/types/common';
@@ -190,7 +191,7 @@ export default function MeetingCard({ card, now = new Date() }: MeetingCardProps
             fullWidth
             disabled={!canJoin}
             className="text-primary-98 enabled:hover:bg-primary-40"
-            onClick={() => session.sessionUrl && router.push(session.sessionUrl)}
+            onClick={() => session.sessionUrl && router.push(meetingLink(session.sessionUrl))}
           >
             <VideoCamera className="size-4 shrink-0 text-primary-98" />
             <span>{t('join')}</span>
