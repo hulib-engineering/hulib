@@ -8,6 +8,7 @@ import Button from '@/components/core/button/Button';
 import { pushError, pushSuccess } from '@/components/CustomToastifyContainer';
 import { mergeClassnames } from '@/components/core/private/utils';
 import { Link } from '@/libs/i18nNavigation';
+import { meetingLink } from '@/features/meeting/utils/meetingLink';
 import TextInput from '@/components/core/textInput-v1/TextInput';
 import { isApprovedSessionStatus, isPendingSessionStatus } from '@/components/notification/private/types';
 import { ScheduleInfoItemLayout } from '@/layouts/scheduling/ScheduleInfoItemLayout';
@@ -199,7 +200,7 @@ const SessionDetailCard: FC<SessionCardProps> = ({
                 {session.sessionUrl
                   ? (
                       <Link
-                        href={session.sessionUrl}
+                        href={meetingLink(session.sessionUrl)}
                         className="text-sm font-medium leading-4 text-primary-70 underline"
                       >
                         {session.sessionUrl}

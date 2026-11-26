@@ -214,6 +214,16 @@ export default function ReadingPage() {
     router.push('/');
   };
 
+  if (!sessionId || sessionError) {
+    return (
+      <div role="alert" className="flex min-h-screen w-full flex-col items-center justify-center gap-4 p-6 text-center">
+        <p>{t('session_load_failed')}</p>
+        {sessionId && <button type="button" onClick={() => refetchReadingSession()}>{t('session_retry')}</button>}
+        <button type="button" onClick={() => router.push('/my-schedule')}>{t('session_schedule')}</button>
+      </div>
+    );
+  }
+
   // Wait for the user and session so AgoraMeeting never mounts (and joins the channel) before the survey decision
   if (!readingSession || !userInfo.id) {
     return (
